@@ -1,0 +1,112 @@
+System requirements
+-------------------
+
+=== Compilers
+
+{feelpp} uses {cpp}14 compilers such as GCC6 and Clang. Currently it is not mandatory to have a C++14 stantard library but it will be soon.
+
+[WARNING]
+====
+There used to be a major compatibility issue between llvm/clang and GCC
+compilers since GCC5 released the ABI tag which makes it impossible to compile
+{feelpp} using llvm/clang with GCC5 or GCC6 standard libraries for a
+time. Please see the following table to understand the working {cpp} compiler /
+{cpp} standard library combinations.
+====
+
+.Table {cpp} compilers and standard libraries combinations
+|===
+| Compiler  | Standard Library 
+
+| clang (3.6, 3.7, 3.8) | libstdc{plus}{plus} 4.9 
+| clang  |  libc{plus}{plus} (corresponding clang version)
+| clang (3.8(requires patches), 3.9)  | libstdc{plus}{plus} 6
+| GCC 6 | libstdc{plus}{plus} 6
+
+|===
+
+CAUTION: GCC 6.2.1 seems to be problematic on debian/testing -- the tests in the testsuite fail. -- GCC 6.3.1 or GCC 6.2.0 don't have any problems.
+
+=== Required tools and libraries
+
+Other than {cpp}14 compilers, {feelpp} requires only a few tools and libraries, namely CMake, Boost C++ libraries and an MPI implementation such as open-mpi or mpich. The table below provides information regarding the minimum and maximum version supported. A -- means it has not necessarily been tested with the latest version but we do not expect any issues. Note that for MPI, an implementation with MPI-IO support would be best.
+
+.Table required tools to compile Feel++
+|===
+| Name | Minimum Version | Maximum Version | Notes
+
+| CMake | 3.0 | -- | 
+| MPI   | -- | -- | openmpi or mpich
+| Boost | 1.55 | 1.63 | 
+
+|===
+
+=== Recommended libraries
+
+Here is a list of libraries that we recommend to use jointly with Feel++.
+
+.Table optional external libraries
+
+|===
+| Library | Minimum Version | Maximum Version  | Notes
+
+| HDF5  | 1.8.6  | 1.8.16  | Enables high performance I/O; Enables MED Support; Be careful on Debian/sid a more recent version of HDF5 breaks MED support
+| PETSc | 3.2 | 3.7 | Last is best; a requirement for parallel and high performance computing
+| SLEPc | 3.2 | 3.7 | last is best; a requirement for eigenvalue problem; depends on PETSc
+| Gmsh  | 2.8.7 | 2.16 | last is best; a requirement if you want to be able to read many file formats; HDF5 version in Debian/sid currently breaks MED format support.
+| Superlu  ||| superlu and superlu_dist
+| Suitesparse ||| umfpack (colamd,amd)
+| OpenTURNS | 2.0 || Uncertainty quantification
+|===
+
+=== Recommended tools
+
+Here is a list of tools that we recommend to use jointly with Feel++.
+
+
+.Table of recommended tools
+|===
+| Tool | License | Notes
+
+3+>| *Computer Aided Design*
+| Gmsh  | Open Source | 
+
+3+>| *Mesh Generation*
+| Gmsh  | Open Source | 
+| MeshGems  | Commercial | 
+
+
+3+>| *Post-Processing*
+| Paraview | Open Source | 
+| Ensight | Commercial | 
+| Octave | Open Source | 
+| Gmsh  | Open Source | 
+
+|===
+
+Note that all these packages are available under Debian GNU/Linux and Ubuntu. Once you have installed those dependencies, you can go to link:#Compiling[Compiling].
+
+=== Suggested tools
+
+Here is a list of tools that we suggest to use jointly with Feel++.
+
+.Table of suggested tools
+|===
+| Tool | License | Notes
+
+3+>| *Computer Aided Design (CAD)*
+| Freecad | Open Source |
+| Salome | Open Source  | HDF5 version in Debian/sid currently breaks MED format support.
+
+
+3+>| *Modeling, Compilation and Simulation Environment*
+| Open Modelica | Open Source  |
+
+3+>| *Debugging and Profiling* 
+| Google perftools| Open Source  |
+| Valgrind | Open Source |
+
+|===
+
+
+

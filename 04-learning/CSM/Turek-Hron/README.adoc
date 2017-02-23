@@ -1,0 +1,267 @@
+Turek Hron CSM Benchmark
+========================
+:toc:
+:toc-placement: preamble
+:toclevels: 1
+:biblio: ../../Appendix/Bibliography/readme.adoc 
+
+In order to validate our fluid-structure interaction solver, we realize here a benchmark on the deformation of an elastic structure, initially proposed by link:{biblio}#turek2006proposal[Turek and Hron].
+
+Computer codes, used for the acquisition of results, are from Vincent link:{biblio}#bloodflowChabannes[Chabannes].
+
+> **Note** This benchmark is linked to the link:../../CFD/Turek-Hron/readme.adoc[Turek Hron CFD] and link:../../FSI/Turek-Hron/readme.adoc[Turek Hron FSI ] benchmarks.
+
+== Problem Description
+
+We consider a solid structure, composed of a hyperelastic bar, bound to one of his extremity $$\Gamma_F^*$$ to a rigid stationary circular structure. We denote $$\Gamma_{L}^*=\partial\Omega_s^* \backslash \Gamma_F^*$$ the other boundaries. 
+The geometry can be represented as follows
+
+[[img-geometry1]]
+image::TurekHronCSMGeometry.png[caption="Figure 1 : ", title="Geometry of the Turek & Hron CSM benchmark.", alt="CSM Geometry", width="500", align="center"]
+
+$$\Omega_s^*$$ represent the initial domain, before any deformations. We denote $$\Omega^t_s$$ the domain obtained during the deformations application, at the time t.
+
+By link:../readme.adoc#_Second_Newton's_law[ the Newton's second law], we can describe the fundamental equation of the solid mechanic in a Lagrangian frame. Furthermore, we will suppose that the hyperelastic material follows a link:../readme.adoc#_Compressible_Saint-Venant-Kirchhoff_model[ compressible Saint-Venant-Kirchhoff model]. The link:../readme.adoc#_Lamé_coefficients[ Lamé coefficients], used in this model, are deducing from the Young's modulus $$E_s$$ and the Poisson's ratio $$\nu_s$$ of the material.
+
+
+We will observe, during this simulation, the displacement of $$A$$, on the $$x$$ and $$y$$ axis, when the elastic structure is subjected to its own weight, and compare our results to the reference ones given Turek and Hron.
+
+In the first two cases, CSM1 and CSM2, we want to determine the steady state condition. To find it, a quasi-static algorithm is used, which increase at each step the gravity parameter. 
+
+For the third cases, CSM3, we realise a transient simulation, where we will observe the comportment of $$A$$ subjected to its weight during a given time span.
+
+=== Boundary conditions
+
+We set
+
+* on $$\Gamma_{F}^*$$, a condition that imposes this boundary to be fixed.
+$$
+  \boldsymbol{\eta}_s=0
+$$
+
+* on $$\Gamma_{L}^*$$, a condition that lets these boundaries be free from constraints.
+$$
+  (\boldsymbol{F}_s\boldsymbol{\Sigma}_s)\boldsymbol{n}^*_s=\boldsymbol{0}
+$$
+
+where $$\boldsymbol{n}_s^*$$ is the outer unit normal vector from $$\partial \Omega_s^*$$.
+
+=== Initial conditions
+
+The source term $$\boldsymbol{f}_s$$, chosen in order to set in motion the elastic structure, is define by 
+
+$$
+\boldsymbol{f}_s=(0,-\rho^*_s g)
+$$
+
+where $$g$$ is a gravitational constant.
+
+The reference document ( link:{biblio}#turek2006proposal[Turek and Hron] ) don't specify the time interval used to obtain their results. In our case, it's chosen as $$[0,10]$$.
+
+== Inputs
+
+The following table displays the various fixed and variables
+parameters of this test-case.
+
+.Fixed and Variable Input Parameters
+|===
+| Name |Description | Nominal Value | Units
+
+|$$g$$| gravitational constant | 2 | $$m / s^2$$
+|$$l$$ | elastic structure length | $$0.35$$  |$$m$$
+|$$h$$ | elastic structure height | $$0.02$$  |$$m$$ |
+$$r$$ | cylinder radius | $$0.05$$  |$$m$$
+|$$C$$ | cylinder center coordinates | $$(0.2,0.2)$$|$$m$$
+|$$A$$ | control point coordinates | $$(0.2,0.2)$$|$$m$$
+|$$B$$ | point coordinates | $$(0.15,0.2)$$|$$m$$
+|$$E_s$$ | Young's modulus | $$1.4\times 10^6$$  | $$kg / ms^2$$
+|$$\nu_s$$ | Poisson's ratio | $$0.4$$  |dimensionless
+|$$\rho^*_s$$ | density | $$1000$$  |$$kg/ m^3$$
+|===
+
+As for solvers we used, Newton's method is chosen for the non-linear part and a direct method based on LU decomposition is selected for the linear part.
+
+== Outputs
+
+As described before, we have 
+
+$$
+\rho^*_s \frac{\partial^2\boldsymbol{\eta}_s}{\partial t^2} - \nabla \cdot (\boldsymbol{F}_s\boldsymbol{\Sigma}_s) = \boldsymbol{f}^t_s
+$$
+
+We search the displacement $$\boldsymbol{\eta}_s$$, on $$\Omega_s^*$$, which will satisfy this equation.
+
+In particular, the displacement of the point $$A$$ is the one that interests us.
+
+== Discretization
+
+To realize these tests, we made the choice to used Finite Elements Method, with Lagrangian elements of order $$N$$ to discretize space.
+
+Newmark-beta method, presented into link:{biblio}#bloodflowChabannes[Chabannes] papers, is the one we used for the time discretization. We used this method with $$\gamma=0.5$$ and $$\beta=0.25$$.
+
+=== Solvers
+
+Here are the different solvers ( linear and non-linear ) used during results acquisition.
+
+|===
+2+|
+$$
+\text{KSP}
+$$
+|type|gmres
+|relative tolerance|$$1e-13$$
+|max iteration|$$1000$$
+|reuse preconditioner| true
+|===
+
+|===
+2+|
+$$
+\text{SNES}
+$$
+|relative tolerance|$$1e-8$$
+|steps tolerance|$$1e-8$$
+|max iteration|$$500$$
+|max iteration with reuse|$$10$$
+|reuse jacobian|false
+|reuse jacobian rebuild at first Newton step|true
+|===
+
+|===
+2+|
+$$
+\text{KSP in SNES}
+$$
+|relative tolerance|$$1e-5$$
+|max iteration|$$500$$
+|reuse preconditioner| CSM1/CSM2 : false \| CSM3 : true
+|reuse preconditioner rebuild at first Newton step|true
+|===
+
+|===
+2+|
+$$
+\text{PC}
+$$
+|type|lu
+|package|mumps
+|===
+
+
+== Implementation
+
+To realize the acquisition of the benchmark results, code files contained and using the Feel++ library will be used. Here is a quick look to the different location of them.
+
+First at all, the main code can be found in
+
+----
+    feelpp/applications/models/solid
+----
+
+The configuration file for the CSM3 case, the only one we work on, is located at 
+
+----
+    feelpp/applications/models/solid/TurekHron
+----
+
+The result files are then stored by default in 
+
+----
+    feel/applications/models/solid/TurekHron/csm3/"OrderDisp""Geometric_order"/"processor_used"
+----
+
+Like that, for the CSM3 case executed on $$8$$ processors, with a $$P_1$$ displacement approximation space and a geometric order of $$1$$, the path is 
+
+----
+    feel/applications/models/solid/TurekHron/csm3/P1G1/np_8
+----
+
+
+At least, to retrieve results that interested us for the benchmark and to generate graphs, we use a Python script located at 
+
+----
+    feelpp-benchmarking-book/CFD/Turek-Hron/postprocess_cfd.py
+----
+
+== Results
+
+=== CSM1
+
+|===
+|$$N_{elt}$$|$$N_{dof}$$|$$x$$  displacement $$[\times 10^{-3}]$$|$$y $$ displacement $$[\times 10^{-3}]$$
+2+^.^|Reference link:{biblio}#turek2006proposal[TurekHron]|-7.187|-66.10
+|1061|4620 ($$P_2$$)|-7.039|-65.32
+|4199|17540 ($$P_2$$)|-7.047|-65.37
+|16495|67464 ($$P_2$$)|-7.048|-65.37
+|1061|10112 ($$P_3$$)|-7.046|-65.36
+|1906|17900 ($$P_3$$)|-7.049|-65.37
+|1061|17726 ($$P_4$$)|-7.048|-65.37
+
+|===
+
+All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron[rep] [ https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron/csm.geo[geo file], https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron/csm1.cfg[config file], https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron/csm1.json[json file] ]
+
+=== CSM2
+
+|===
+|$$N_{elt}$$|$$N_{dof}$$|$$x$$  displacement $$[\times 10^{-3}]$$|$$y $$ displacement $$[\times 10^{-3}]$$
+2+^.^|Reference link:{biblio}#turek2006proposal[TurekHron]|-0.4690|-16.97
+|1061|4620 ($$P_2$$)|-0.459|-16.77
+|4201|17548 ($$P_2$$)|-0.459|-16.77
+|16495|67464 ($$P_2$$)|-0.459|-16.78
+|1061|10112 ($$P_3$$)|-0.4594|-16.78
+|16475|150500 ($$P_3$$)| -0.460|-16.78
+|1061|17726 ($$P_4$$)|-0.460|-16.78
+|===
+
+All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron[rep] [https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron/csm.geo[geo file], https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron/csm2.cfg[config file], https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron/csm2.json[json file]].
+
+=== CSM3
+The results of the CSM3 benchmark are detailed below.
+
+.Results for CSM3
+|===
+|$$\Delta t$$|$$N_{elt}$$|$$N_{dof}$$|$$x$$  displacement $$[\times 10^{-3}]$$|$$y $$ displacement $$[\times 10^{-3}]$$
+|/ 2+^.^|Reference link:{biblio}#turek2006proposal[TurekHron]|−14.305 ± 14.305 [1.0995]|−63.607 ± 65.160 [1.0995]
+|===
+|===
+.4+^|0.02|4199|17536($$P_2$$)|-14.585 ± 14.590 [1.0953]|-63.981 ± 65.521 [1.0930]
+|4199|38900($$P_3$$)|-14.589 ± 14.594 [1.0953]|-63.998 ± 65.522 [1.0930]
+|1043|17536($$P_4$$)|-14.591 ± 14.596 [1.0953]|-64.009 ± 65.521 [1.0930]
+|4199|68662($$P_4$$)|-14.590 ± 14.595 [1.0953]|-64.003 ± 65.522 [1.0930]
+|===
+|===
+.4+^|0.01|4199|17536($$P_2$$)|-14.636 ± 14.640 [1.0969]|-63.937 ± 65.761 [1.0945]
+|4199|38900($$P_3$$)|-14.642 ± 14.646 [1.0969]|-63.949 ± 65.771 [1.0945]
+|1043|17536($$P_4$$)|-14.645 ± 14.649 [1.0961]|-63.955 ± 65.778 [1.0945]
+|4199|68662($$P_4$$)|-14.627 ± 14.629 [1.0947]|-63.916 ± 65.739 [1.0947]
+|===
+|===
+.4+^|0.005|4199|17536($$P_2$$)|-14.645 ± 14.645 [1.0966]|-64.083 ± 65.521 [1.0951]
+|4199|38900($$P_3$$)|-14.649 ± 14.650 [1.0966]|-64.092 ± 65.637 [1.0951]
+|1043|17536($$P_4$$)|-14.652 ± 14.653 [1.0966]|-64.099 ± 65.645 [1.0951]
+|4199|68662($$P_4$$)|-14.650 ± 14.651 [1.0966]|-64.095 ± 65.640 [1.0951]
+|===
+
+image::fullviewCSM.png[]
+$$
+\text{Figure 2: x and y displacements}
+$$
+
+All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron[rep] [ https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron/csm.geo[geo file], https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron/csm3.cfg[config file], https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron/csm3.json[json file] ]
+
+=== Conclusion
+
+To obtain these data, we used several different mesh refinements and different polynomial approximations for the displacement on the time interval $$[0,10]$$.
+
+Our results are pretty similar to those from Turek and Hron, despite a small gap. This gap can be caused by the difference between our time interval and the one used for the reference acquisitions.
+
+
+== Bibliography
+
+[bibliography]
+.References for this benchmark
+- [[[TurekHron]]] S. Turek and J. Hron, _Proposal for numerical benchmarking of fluid-structure interaction between an elastic object and laminar incompressible flow_, Lecture Notes in Computational Science and Engineering, 2006.
+
+- [[[Chabannes]]] Vincent Chabannes, _Vers la simulation numérique des écoulements sanguins_, Équations aux dérivées partielles [math.AP], Université de Grenoble, 2013.
+

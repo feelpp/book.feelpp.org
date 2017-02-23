@@ -1,0 +1,44 @@
+NAFEMS LE1 Benchmarck
+======================
+
+This benchmark is extract from the link:http://things.maths.cam.ac.uk/computing/software/abaqus_docs/docs/v6.12/pdf_books/BENCHMARKS.pdf[Abaqus Benchmarks Manual].
+
+== Definition
+
+We focus on the link:http://www.caesarsystems.co.uk/NAFEMS_benchmarks/le1.html[LE1] benchmarks in particular.
+
+=== Geometry
+
+The geometry is given link:http://www.caesarsystems.co.uk/NAFEMS_benchmarks/le1.html[here] by : +
+image:../NAFEMS-LE10/geoLE10.png[]
+
+=== Boundary conditions
+
+We set:
+
+- $$u_y = 0$$ on $$DC$$
+- $$u_x = 0$$ on $$AB$$
+- $$\bar{\bar{\varepsilon}}\cdot\mathbf{n}=1e^7$$ on $$BC$$.
+
+== Inputs
+
+We have the following parameters:
+
+.Inputs
+|===
+| Name | Value
+
+|$$E$$ | $$210\, GPa$$
+|$$\nu$$ | $$0.3$$
+|$$\rho$$ | $$7800\, kg/m^2$$
+|===
+
+== Outputs
+
+We want to compare the value of $$\sigma_{yy}$$ at the point $$D$$. The reference value is $$92.7\, MPa$$.
+
+== Results
+
+The value of $$\sigma_{yy}$$ at the point $$D$$ is $$94.09\, MPa$$ for $$32 000$$ dofs, which is $$1.49%$$ higher than the target.
+
+One possibility to get a more accurate output is to use a mixed formulation, where the stress tensor would also be an unknown.

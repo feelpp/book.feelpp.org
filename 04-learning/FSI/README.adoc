@@ -1,0 +1,54 @@
+= Fluid Structure Interaction
+:toc:
+:toc-placement: preamble
+:toclevels: 2
+
+We will interest now to the different interactions a fluid and a structure can have together with specific conditions. 
+
+== Fluid structure model 
+
+To describe and solve our fluid-structure interaction problem, we need to define a model, which regroup structure model and fluid model parts.
+
+We have then in one hand link:../CFD/readme.adoc[the fluid equations], and in the other hand link:../CSM/readme.adoc[the structure equations].
+
+[[img-geometry1]]
+image::FSIModel.png[caption="Figure 1 : ", title="FSI case example", alt="FSI", width="500", align="center"] 
+
+The solution of this model are $$(\mathcal{A}^t, \boldsymbol{u}_f, p_f, \boldsymbol{\eta}_s)$$.
+
+{% include "git+https://github.com/feelpp/feelpp-book.git/en/03-modeling/FluidStructure/FSIModel.adoc" %}
+
+
+== ALE
+
+Generally, the solid mechanic equations are expressed in a Lagrangian frame, and the fluid part in Eulerian frame. To define and take in account the fluid domain displacement, we use a technique name ALE ( Arbitrary Lagrangian Eulerian ). This allow the flow to follow the fluid-structure interface movements and also permit us to have a different deformation velocity than the fluid one.
+
+Let denote $$\Omega^{t_0}$$ the calculation domain, and $$\Omega^t$$ the deformed domain at time $$t$$. As explain before, we want to conserve the Lagrangian and Eulerian characteristics of each part, and to do this, we introduce $$\mathcal{A}^t$$ the ALE map.
+
+This map give us the position of $$x$$, a point in the deformed domain at time $$t$$ from the position of $$x^*$$ in the initial configuration $$\Omega^*$$.
+
+[[img-geometry2]]
+image::ALE.png[caption="Figure 2 : ", title="ALE map", alt="ALE", width="500", align="center"]  
+
+$$\mathcal{A}^t$$ is a homeomorphism, i.e. a continuous and bijective application we can define as 
+
+$$
+\begin{eqnarray*}
+  \mathcal{A}^t : \Omega^* &\longrightarrow & \Omega^{t} \\
+  \mathbf{x}^* &\longmapsto & \mathbf{x} \left(\mathbf{x}^*,t \right)  = \mathcal{A}^t \left(\mathbf{x}^*\right)
+\end{eqnarray*}
+$$
+
+We denote also  $$\forall \mathbf{x}^* \in \Omega^* $$, the application :
+
+$$
+\begin{eqnarray*}
+\mathbf{x} : \left[t_0,t_f \right] &\longrightarrow & \Omega^t \\
+t &\longmapsto & \mathbf{x} \left(\mathbf{x}^*,t \right)
+\end{eqnarray*}
+$$
+
+This ALE map can then be retrieve into the fluid-structure model. 
+
+
+

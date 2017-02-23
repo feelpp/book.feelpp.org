@@ -1,0 +1,115 @@
+= Feel++ Book
+Christophe Prud'homme <https://github.com/prudhomm[@prudhomm]>
+v1.0, 2017/02/20
+:description: This guide describes the Feel++ installation, its features and provides some references
+:keywords: Feel++, partial differential equations, finite element method
+:doctype: book
+:docinfo: shared
+:sectanchors:
+:sectlinks:
+:sectnums:
+:linkattrs:
+:icons: font
+:stem: latexmath
+:toc: left
+:y: icon:check[role="green"]
+:n: icon:times[role="red"]
+:c: icon:file-text-o[role="blue"]
+:source-highlighter: pygments
+:imagesdir: images/
+:sources: ../../
+:uri-github: https://github.com/
+:uri-feelpp-issues: https://github.com/feelpp/feelpp/issues
+:feelpp: Feel++
+:cpp: C++
+
+[NOTE]
+.This document is under active development and discussion!
+====
+If you find errors or omissions in this document, please don’t hesitate to
+link:https://github.com/feelpp/feelpp/issues[submit an issue or open a pull
+request] with a fix. We also encourage you to ask questions and discuss any
+aspects of the project on the link:http://gitter.im/feelpp/feelpp[{feelpp}
+Gitter forum]. New contributors are always welcome!
+====
+
+
+include::preface.adoc[]
+
+= Introduction to {feelpp}
+
+.Discuss and Contribute
+TIP: Use {uri-feelpp-issues}/858[Issue 858] to drive development of this
+section. Your contributions make a difference. No contribution is too small.
+
+
+== What is {feelpp}?
+
+{feelpp} is a unified {cpp} implementation of Galerkin methods (finite and
+spectral element methods) in 1D, 2D and 3D to solve partial differential
+equations.
+
+{feelpp} is
+
+ . a **versatile mathematical kernel** solving easily problems using
+   different techniques thus allowing testing and comparing methods, e.g. cG versus dG.
+   
+ . a *small* and *manageable* library which nevertheless encompasses a wide
+   range of numerical methods and techniques and in particular reduced order
+   methods such as the reduced basis method.
+   
+ . a software that follows closely the mathematical abstractions
+   associated with partial differential equations (PDE) and in
+   particular the finite element mathematical framework and
+   variational formulations.
+   
+ . a library that offers solving strategies that scales up to
+   thousands and even tens of thousands of cores.
+   
+ . a library entirely in {cpp} allowing to create {cpp} complex and typically
+   non-linear multi-physics applications currently in industry, physics and
+   health-care.
+
+= Quick Starts   
+
+== Installation Quick Start
+
+
+Using {feelpp} inside
+link:../02-docker/what-is-docker.adoc[Docker] is the recommended and
+fastest way to use {feelpp}. The
+link:../02-docker/README.adoc[docker chapter] is dedicated to Docker
+and using {feelpp} in Docker.
+
+We strongly encourage you to follow these steps if you begin with
+{feelpp} in particular as an end-user.
+
+People who would like to develop with and in {feelpp} should
+read through the remaining sections of this chapter.
+
+== Syntax Start
+
+Here is a sample code that solves the Laplacian problem
+
+[source,cpp]
+.Laplacian problem in an arbitrary geometry
+----
+include::../../quickstart/qs_laplacian.cpp[tag=global]
+----
+
+= Installing Feel++
+
+include::01-installation/README.adoc[leveloffset=+1]
+
+include::02-docker/README.adoc[leveloffset=+1]
+
+= Quick Reference
+
+include::07-quickref/README.adoc[leveloffset=+1]
+
+
+include::resources.adoc[leveloffset=+1]
+
+[glossary]
+= Glossary
+include::GLOSSARY.adoc[]

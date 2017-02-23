@@ -1,0 +1,158 @@
+# Lid-driven Cavity Flow benchmark
+:toc:
+:toc-placement: preamble
+:toclevels: 1
+:biblio: ../../Appendix/Bibliography/readme.adoc 
+
+This test case has originally been proposed by link:{bilbio}#mok2001partitioned[Mok & Wall].
+
+Computer codes, used for the acquisition of results, are from Vincent link:{biblio}#bloodflowChabannes[Chabannes].
+
+This benchmark has aso been realized by link:{biblio}#gerbeau2003quasi[Gerbeau], link:{bilbio}#valdes2007nonlinear[Vàzquez], link:{bilbio}#kuttler2008fixed[Kuttler] and link:{bilbio}#kassiotis2011nonlinear[Kassiotis].
+
+== Problem Description 
+
+We study here an incompressible fluid flowing into a cavity, where its walls are elastic. We use the following geometry to represent it.
+
+[[img-geometry1]]
+image::LidDriven.png[caption="Figure 1 : ", title="Geometry of lid-driven cavity flow.", alt="LidDriven Geometry", width="600", align="center"]  
+
+The domain $$\Omega_f^*$$ is define by a square $$[0,1]^2$$, $$\Gamma^{i,*}_f$$ and $$\Gamma^{o,*}_f$$ are respectively the flow entrance and the flow outlet. A constant flow velocity, following the $$x$$ axis, will be imposed on $$\Gamma_f^{h,*}$$ border, while a null flow velocity will be imposed on $$\Gamma_f^{f,*}$$. This last point represent also a non-slip condition for the fluid.
+
+Furthermore, we add a structure domain, at the bottom of the fluid one, named $$\Omega_s^*$$. It is fixed by his two vertical sides $$\Gamma_s^{f,*}$$, and we denote by $$\Gamma_f^{w,*}$$ the border which will interact with $$\Omega_f^*$$.
+
+
+During this test, we will observe the displacement of a point $$A$$, positioned at $$(0;0.5)$$, into the $$y$$ direction, and compare our results to ones found in other references.
+
+=== Boundary conditions 
+
+Before enunciate the boundary conditions, we need to describe a oscillatory velocity, following the $$x$$ axis and dependent of time.
+
+$$
+  v_{in} = 1-cos\left( \frac{2\pi t}{5} \right)
+$$
+
+Then we can set 
+
+* on $$\Gamma^{h,*}_f$$, an inflow Dirichlet condition.
+$$
+\boldsymbol{u}_{f} = ( v_{in}, 0 )
+$$
+
+* on $$\Gamma^{i,*}_f$$, an inflow Dirichlet condition.
+$$
+\boldsymbol{u}_{f} = ( v_{in}(8 y -7) ,0)
+$$ 
+
+* on $$\Gamma^{f,*}_f$$, a homogeneous Dirichlet condition. 
+$$
+\boldsymbol{u}_{f} = \boldsymbol{0}
+$$
+
+* on $$\Gamma^{o,*}_f$$, a Neumann condition
+$$
+\boldsymbol{\sigma}_{f} \boldsymbol{n}_f = \boldsymbol{0}
+$$ 
+
+* on $$\Gamma^{f,*}_s$$, a condition that imposes this boundary to be fixed.
+$$
+\boldsymbol{\eta}_{s} = \boldsymbol{0}
+$$
+
+* on $$\Gamma^{e,*}_s$$, a condition that lets these boundaries be free from constraints.
+$$
+\boldsymbol{F}_{s} \boldsymbol{\Sigma}_s \boldsymbol{n}_s = \boldsymbol{0}
+$$
+
+To them we also add the fluid-structure coupling conditions on $$\Gamma_{fsi}^*$$
+
+$$
+\frac{\partial \boldsymbol{\eta_{s}} }{\partial t} - \boldsymbol{u}_f \circ \mathcal{A}^t_f
+  = \boldsymbol{0} \quad \left( \text{Velocities continuity}\right) 
+$$
+$$
+  \boldsymbol{F}_{s} \boldsymbol{\Sigma}_{s} \boldsymbol{n}^*_s + J_{\mathcal{A}^t_f} \boldsymbol{F}_{\mathcal{A}^t_f}^{-T} \hat{\boldsymbol{\sigma}}_f \boldsymbol{n}^*_f
+  = \boldsymbol{0} \quad \left( \text{ Constraint continuity}\right) 
+$$
+
+$$
+  \boldsymbol{\varphi}_s^t  - \mathcal{A}^t_f
+  = \boldsymbol{0} \quad \left( \text{Geometric continuity}\right) 
+$$
+
+=== Initial conditions
+
+To realize the simulations, we used a time step $$\Delta t$$ equals to $$0.01$$ s.
+    
+== Inputs
+
+The following table displays the various fixed and variables
+parameters of this test-case.
+
+[cols="1,1,^1a,1"]
+.Fixed and Variable Input Parameters
+|===
+| Name |Description | Nominal Value | Units
+|$$E_s$$ | Young's modulus | $$250 $$  | $$N/m^2$$
+|$$\nu_s$$ | Poisson's ratio | $$0$$  | dimensionless
+|$$\rho_s$$ | structure density | $$500$$  |$$kg/m^3$$
+|$$\mu_f$$ |viscosity | $$1\times 10^{-3}$$  |$$m^2/s$$ 
+|$$\rho_f$$ | density | $$1$$ | $$kg/m^3$$
+|===
+
+== Outputs
+$$(\boldsymbol{u}_f, p_f, \boldsymbol{\eta}_s, \mathcal{A}_f^t)$$, checking the link:../readme.adoc#_fluid_structure_model[fluid-structure system],  are the output of this problem.
+
+== Discretization
+
+To discretize space, we used $$P_N$$-$$P_{N-1}$$ Taylor-Hood finite elements.
+
+For the structure time discretization,  Newmark-beta method is the one we used. And for the fluid time discretization, we used BDF, at order $$q$$.
+
+== Implementation 
+
+All the codes files are into feelpp/FSI
+
+== Results
+
+We begin with a $$P_2P_1$$ approximation for the fluid with a geometry order equals at $$1$$, and a fluid-structure stable interface.
+
+|===
+|
+|===
+
+Then we retry with a $$P_3P_2$$ approximation for the fluid with a geometry order equals at $$2$$, and a fluid-structure stable interface.
+
+|===
+|
+|===
+
+Finally we launch it with the same conditions as before, but with a deformed interface. 
+
+|===
+|
+|===
+
+=== Conclusion 
+
+First at all, we can see that the first two tests offer us similar results, despite different orders uses. At contrary, the third result set are better than the others.
+
+The elastic wall thinness, in the stable case, should give an important refinement on the fluid domain, and so a better fluid-structure coupling control. However, the deformed case result are closer to the stable case made measure.
+
+== Bibliography
+
+[bibliography]
+.References for this benchmark
+
+- [[[MokWall]]] DP Mok and WA Wall, _Partitioned analysis schemes for the transient interaction of incompressible flows and nonlinear flexible structures_, Trends in computational structural mechanics, Barcelona, 2001.
+
+- [[[Chabannes]]] Vincent Chabannes, _Vers la simulation numérique des écoulements sanguins_, Équations aux dérivées partielles [math.AP], Université de Grenoble, 2013.
+
+- [[[Gerbeau]]] J.F. Gerbeau, M. Vidrascu, et al, _A quasi-newton algorithm based on a reduced model for fluid-structure interaction problems in blood flows_, 2003.
+
+- [[[Vazquez]]] J.G. Valdés Vazquèz et al, _Nonlinear analysis of orthotropic membrane and shell structures including fluid-structure interaction_, 2007.
+
+- [[[KuttlerWall]]] U. Kuttler and W.A. Wall, _Fixed-point fluid–structure interaction solvers with dynamic relaxation_, Computational Mechanics, 2008.
+
+- [[[Kassiotis]]] C. Kassiotis, A. Ibrahimbegovic, R. Niekamp, and H.G. Matthies,  _Nonlinear fluid–structure interaction problem ,part i : implicit partitioned algorithm, nonlinear stability proof and validation examples_, Computational Mechanics, 2011.
+

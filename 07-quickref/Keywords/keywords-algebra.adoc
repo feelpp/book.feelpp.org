@@ -1,0 +1,57 @@
+== Vectors and Matrix
+
+=== Building Vectors
+
+Usual syntax to create vectors:
+
+|===
+|Feel++ Keyword | Math Object | Description | Dimension 
+|`vec<n>(v_1,v_2,...,v_n)`|stem:[\begin{pmatrix} v_1\\v_2\\ \vdots \\v_n \end{pmatrix}]| Column Vector with stem:[n] rows entries being expressions|stem:[n \times 1]
+|===
+
+You can also use expressions and the unit base vectors:
+
+|===
+|Feel++ Keyword | Math Object | Description 
+|`oneX()` | stem:[\begin{pmatrix} 1\\0\\0 \end{pmatrix}]|Unit vector stem:[\overrightarrow{i}]
+|`oneY()` | stem:[\begin{pmatrix} 0\\1\\0 \end{pmatrix}]|Unit vector stem:[\overrightarrow{j}]
+|`oneZ()` | stem:[\begin{pmatrix} 0\\0\\1 \end{pmatrix}]|Unit vector stem:[\overrightarrow{k}]
+|===
+
+
+
+=== Building Matrix
+
+.Matrix and vectors creation
+|===
+|Feel++ Keyword | Math Object | Description | Dimension
+
+|`mat<m,n>(m_11,m_12,...,m_mn)`|stem:[\begin{pmatrix} m_{11} & m_{12} & ...\\ m_{21} & m_{22} & ...\\ \vdots & & \end{pmatrix}]|stem:[m\times n] Matrix entries being expressions |stem:[m \times n]
+|`ones<m,n>()`|stem:[\begin{pmatrix} 1 & 1 & ...\\ 1 & 1 & ...\\ \vdots & & \end{pmatrix}]|stem:[m\times n] Matrix Filled with 1 |stem:[m \times n]
+|`zero<m,n>()`|stem:[\begin{pmatrix} 0 & 0 & ...\\ 0 & 0 & ...\\ \vdots & & \end{pmatrix}]|stem:[m\times n] Matrix Filled with 0 |stem:[m \times n]
+|`constant<m,n>(c)`|stem:[\begin{pmatrix} c & c & ...\\ c & c & ...\\ \vdots & & \end{pmatrix}]|stem:[m\times n] Matrix Filled with a constant c |stem:[m \times n]
+|`eye<n>()`|stem:[\begin{pmatrix} 1 & 0 & ...\\ 0 & 1 & ...\\ \vdots & & \end{pmatrix}]|Unit diagonal Matrix of size stem:[n\times n] |stem:[n \times n]
+|`Id<n>()`|stem:[\begin{pmatrix} 1 & 0 & ...\\ 0 & 1 & ...\\ \vdots & & \end{pmatrix}]|Unit diagonal Matrix of size stem:[n\times n] |stem:[n \times n]
+|===
+
+
+=== Manipulating Vectors and Matrix
+
+Let stem:[A] and stem:[B] be two matrix (or two vectors) of same dimension stem:[m \times n].
+
+.Matrix operations
+|===
+|Feel++ Keyword | Math Object | Description | Dimension
+
+|`inv(A)`|stem:[A^{-1}]|Inverse of matrix stem:[A] |stem:[n \times n]
+|`det(A)`|stem:[\det (A)]|Determinant of matrix stem:[A] |stem:[1 \times 1]
+|`sym(A)`|stem:[\text{Sym}(A)]|Symmetric part of matrix stem:[A]: stem:[\frac{1}{2}(A+A^T)] |stem:[n \times n]
+|`antisym(A)`|stem:[ \text{Asym}(A)]|Antisymmetric part of  stem:[A]: stem:[\frac{1}{2}(A-A^T)] |stem:[n \times n]
+
+
+|`trace(A)`|stem:[\text{tr}(A)]|Trace of matrix stem:[A] Generalized on non-squared Matrix Generalized on Vectors |stem:[1 \times 1]
+|`trans(B)`|stem:[B^T]|Transpose of matrix stem:[B] Can be used on non-squared Matrix Can be used on Vectors |stem:[n \times m]
+|`inner(A,B)`|stem:[ A.B \\ A:B = \text{tr}(A*B^T)]|Scalar product of two vectors Generalized scalar product of two matrix |stem:[1 \times 1]
+|`cross(A,B)`|stem:[ A\times B]|Cross product of two vectors|stem:[n \times 1]
+
+|===

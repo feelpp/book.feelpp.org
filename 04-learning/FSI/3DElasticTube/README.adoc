@@ -1,0 +1,199 @@
+# 3D FSI elastic tube
+:toc:
+:toc-placement: preamble
+:toclevels: 1
+:biblio: ../../Appendix/Bibliography/readme.adoc 
+
+
+Computer codes, used for the acquisition of results, are from Vincent link:{biblio}#bloodflowChabannes[Chabannes].
+
+== Problem Description 
+
+As in the link:../2DElasticTube/readme.adoc[2D case], the blood flow modelisation, by observing a pressure wave progression into a vessel, is the subjet of this benchmark. But this time, instead of a two-dimensional model, we use a three-dimensional model, with a cylinder
+
+[[img-geometry1]]
+image::3DElasticTube.png[caption="Figure 1 : ", title="Geometry of three-dimensional elastic tube.", alt="Elastic Tube Geometry", width="600", align="center"]  
+
+
+This represent the domains into the initial condition, with $$\Omega_f$$ and $$\Omega_s$$ respectively the fluid and the solid domain. The cylinder radius equals to $$r+\epsilon$$, where $$r$$ is the radius of the fluid domain and $$\epsilon$$ the part of the solid domain.
+
+[[img-geometry2]]
+image::3DElasticTubeSection.png[caption="Figure 2 : ", title="Sections of the three-dimensional elastic tube.", alt="Elastic Tube Geometry", width="400", align="center"]  
+
+$$\Gamma^*_{fsi}$$ is the interface between the fluid and solid domains, whereas $$\Gamma^{e,*}_s$$ is the interface between the solid domain and the exterior. $$\Gamma_f^{i,*}$$ and $$\Gamma_f^{o,*}$$ are respectively the inflow and the outflow of the fluid domain. Likewise, $$\Gamma_s^{i,*}$$ and $$\Gamma_s^{o,*}$$ are the extremities of the solid domain
+
+During this benchmark, we will study two different cases, named BC-1 and BC-2, that differ from boundary conditions. BC-2 are conditions imposed to be more physiological than the ones from BC-1. So we waiting for more realistics based results from BC-2.
+
+=== Boundary conditions
+
+* on $$\Gamma_f^{i,*}$$ the pressure wave pulse
+
+$$
+\boldsymbol{\sigma}_{f} \boldsymbol{n}_f =
+  \left\{
+  \begin{aligned}
+    & \left(-\frac{1.3332 \cdot 10^4}{2} \left( 1 - \cos \left(  \frac{ \pi t} {1.5 \cdot 10^{-3}} \right) \right), 0 \right)^T \quad & \text{ si } t < 0.003 \\
+    & \boldsymbol{0} \quad & \text{ sinon }
+  \end{aligned}
+  \right.
+  $$
+  
+* We add the link:../readme.adoc#_fluid_structure_coupling_conditions[coupling conditions] on $$\Gamma^*_{fsi}$$ 
+
+$$
+  \frac{\partial \boldsymbol{\eta_{s}} }{\partial t} - \boldsymbol{u}_f \circ \mathcal{A}_{f}^t
+  = \boldsymbol{0} , \quad \text{ on } \Gamma_{fsi}^* \times \left[t_i,t_f \right] \quad \boldsymbol{(1)}
+$$
+
+$$
+  \boldsymbol{F}_{s} \boldsymbol{\Sigma}_{s} \boldsymbol{n}^*_s + J_{\mathcal{A}_{f}^t} \hat{\boldsymbol{\sigma}}_f \boldsymbol{F}_{\mathcal{A}_{f}^t}^{-T} \boldsymbol{n}^*_f
+  = \boldsymbol{0} , \quad \text{ on } \Gamma_{fsi}^* \times \left[t_i,t_f \right] \quad \boldsymbol{(2)}
+$$
+
+$$
+  \boldsymbol{\varphi}_s^t  - \mathcal{A}_{f}^t = \boldsymbol{0} , \quad \text{ on } \Gamma_{fsi}^* \times \left[t_i,t_f \right] \quad \boldsymbol{(3)}
+$$
+
+Then we have two different cases :
+
+- Case BC-1
+* on $$\Gamma_f^{o,*}$$
+    $$
+    \boldsymbol{\sigma}_{f} \boldsymbol{n}_f =0
+    $$
+
+* on $$\Gamma_s^{i,*}$$U $$\Gamma_s^{o,*}$$ a null displacement
+$$
+\boldsymbol{\eta}_s=0
+$$
+
+* on $$\Gamma^{e,*}_{s}$$ 
+$$
+\boldsymbol{F}_s\boldsymbol{\Sigma}_s\boldsymbol{n}_s^*=0
+$$
+
+* on $$\Gamma_f^{i,*}$$U $$\Gamma_f^{o,*}$$
+$$
+\mathcal{A}^t_f=\boldsymbol{\mathrm{x}}^*
+$$
+
+- Case BC-2
+* on $$\Gamma_f^{o,*}$$
+    $$
+    \boldsymbol{\sigma}_{f} \boldsymbol{n}_f = -P_0\boldsymbol{n}_f
+    $$
+
+* on $$\Gamma_s^{i,*}$$ a null displacement
+$$
+\boldsymbol{\eta}_s=0
+$$
+
+* on $$\Gamma^{e,*}_{s}$$ 
+$$
+\boldsymbol{F}_s\boldsymbol{\Sigma}_s\boldsymbol{n}_s^* + \alpha \boldsymbol{\eta}_s=0
+$$
+
+* on $$\Gamma^{o,*}_{s}$$ 
+$$
+\boldsymbol{F}_s\boldsymbol{\Sigma}_s\boldsymbol{n}_s^* =0
+$$
+
+* on $$\Gamma_f^{i,*}$$
+$$
+\mathcal{A}^t_f=\boldsymbol{\mathrm{x}}^*
+$$
+
+* on $$\Gamma_f^{o,*}$$
+$$
+\nabla \mathcal{A}^t_f \boldsymbol{n}_f^*=\boldsymbol{n}_f^*
+$$
+
+=== Initial conditions
+
+The chosen time step is $$\Delta t=0.0001$$
+
+== Inputs
+
+[cols="1,1,^1a,1"]
+.Fixed and Variable Input Parameters
+|===
+| Name |Description | Nominal Value | Units
+
+|$$E_s$$ | Young's modulus | $$3 \times 10^6 $$  | $$dynes/cm^2$$
+|$$\nu_s$$ | Poisson's ratio | $$0.3$$  |dimensionless
+|$$r$$|fluid tube radius|0.5|$$cm$$
+|$$\epsilon$$|solid tube radius|0.1|$$cm$$
+|$$L$$|tube length|5|$$cm$$
+|$$A$$|A coordinates|(0,0,0)|$$cm$$
+|$$B$$|B coordinates|(5,0,0)|$$cm$$
+|$$\mu_f$$ |viscosity | $$0.03$$ |$$poise$$ 
+|$$\rho_f$$ | density | $$1$$  | $$g/cm^3$$
+|$$R_p$$ | proximal resistance | $$400$$  | 
+|$$R_d$$ | distal resistance| $$6.2 \times 10^3$$  | 
+|$$C_d$$ | capacitance | $$2.72 \times 10^{-4}$$  |
+|===
+
+== Outputs
+
+After solving the link:../readme.adoc#_fluid_structure_model[fluid struture model], we obtain $$(\mathcal{A}^t, \boldsymbol{u}_f, p_f, \boldsymbol{\eta}_s)$$ 
+
+with $$\mathcal{A}^t$$ the ALE map, $$\boldsymbol{u}_f$$ the fluid velocity, $$p_f$$ the fluid pressure and $$\boldsymbol\eta_s$$ the structure displacement
+
+== Discretization
+
+Here are the different configurations we worked on. The parameter Incomp define if we use the incompressible constraint or not.
+[cols="1,1,1,3,3,3,3,3,3,1"]
+|===
+3.2+|Config 3+|Fluid 4+| Structure
+|$$N_{elt}$$|$$N_{geo}$$|$$N_{dof}$$|$$N_{elt}$$|$$N_{geo}$$|$$N_{dof}$$|Incomp
+3+|$$(1)$$|$$13625$$|$$1$$ $$(P2P1)$$|$$69836$$|$$12961$$|$$1$$|$$12876$$ $$(P1)$$|No
+3+|$$(2)$$|$$13625$$|$$1$$ $$(P2P1)$$|$$69836$$|$$12961$$|$$1$$|$$81536$$ $$(P1)$$|Yes
+3+|$$(3)$$|$$1609$$|$$2$$ $$(P3P2)$$|$$30744$$|$$3361$$|$$2$$|$$19878$$ $$(P2)$$|No
+|===
+
+For the structure time discretization, we will use Newmark-beta method, with parameters $$\gamma=0.5$$ and $$\beta=0.25$$.
+
+And for the fluid time discretization, BDF, at order $$2$$, is the method we choose.
+
+These two methods can be found in link:{biblio}#bloodflowChabannes[Chabannes] papers.
+
+== Implementation 
+
+To realize the acquisition of the benchmark results, code files contained and using the Feel++ library will be used. Here is a quick look to the different location of them.
+
+Let's start with the main code, that can be retrieve in
+
+----
+    feelpp/applications/models/fsi
+----
+
+The configuration file associated to this test is named wavepressure3d.cfg and is located at 
+
+----
+    feelpp/applications/models/fsi/wavepressure3d
+----
+
+The result files are then stored by default in 
+
+----
+    applications/models/fsi/wavepressure3d/P2P1G1-P1G1/np_1
+----
+
+All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron[rep]
+[https://github.com/feelpp/feelpp/blob/develop/applications/models/fsi/wavepressure3d/straightpipe.geo[geo file],  https://github.com/feelpp/feelpp/blob/develop/applications/models/fsi/wavepressure3d/wavepressure3d.cfg[config file], 
+https://github.com/feelpp/feelpp/blob/develop/applications/models/fsi/wavepressure3d/wavepressure3d_fluid.json[fluid json file], 
+https://github.com/feelpp/feelpp/blob/develop/applications/models/fsi/wavepressure3d/wavepressure3d_solid.json[solid json file]].
+
+== Results
+
+
+
+=== Conclusion 
+
+
+== Bibliography
+
+[bibliography]
+.References for this benchmark
+
+- [[[Chabannes]]] Vincent Chabannes, _Vers la simulation numérique des écoulements sanguins_, Équations aux dérivées partielles [math.AP], Université de Grenoble, 2013.

@@ -1,0 +1,258 @@
+= Advection Models
+:toc:
+:toc-placement: macro
+:toclevels: 2
+
+toc::[]
+
+
+== JSON file
+
+Let's describe how the json file is build.
+
+=== Properties
+
+
+.Table of Models for `model` option
+|===
+| Model | Name 
+
+| Advection|`Advection`
+| Stokes|`Stokes`
+
+|===
+
+
+=== Boundary Conditions
+
+Boundary conditions are set in the json files
+[source,json]
+.Example for boundary conditions
+----
+"BoundaryConditions":
+{
+    "field":
+    {
+        "<condition type>":
+        {
+            "marker":
+            {
+                "expr": "value"
+            }
+        }
+    }
+}
+----
+where all component of vectorial field can be access with `<field>_x` for the $$x$$ component where `<field>` is the name of the vectorial field. +
+The condition types are explain in the two following tables.
+
+.Boundary conditions
+|===
+| Name | Options | Type 
+
+| Dirichlet 
+| faces, edges and component-wise
+| "Dirichlet"
+
+| Neumann 
+| scalar, vectorial
+| "Neumann_scalar" or "Neumann_vectorial"
+
+|===
+
+== Action
+
+Here is a example code, that use this model on a ring domain.
+
+=== Feel++ code
+Here is the code 
+
+First at all, we define our model type with 
+
+----
+typedef FeelModels::Advection<
+        Simplex<FEELPP_DIM,1>,
+        Lagrange<OrderAdvection, Scalar,Continuous,PointSetFekete> > model_type;
+----
+
+This definition allows us to create our advection model object FM like this
+ 
+----
+auto Adv = model_type::New("advection");
+----
+
+The method `New` retrieve all data from the configuration and json files, as well build a mesh if need.
+
+With this object, we can initialize our model parameters, such as boundaries conditions. Data on our model and on the numeric solver are then save and print on the terminal. This is made by 
+
+----
+Adv->init();
+Adv->printAndSaveInfo();
+----
+
+Now that our model is completed, we can solve the associated problem. To begin the resolution
+
+----
+Adv->isStationary()
+----
+
+determine if our model is stationary or not.
+
+If it is, then we need to solve our system only one time and export the obtained results.
+
+----
+Adv->solve();
+Adv->exportResults();
+----
+
+If it's not, our model is time reliant, and a loop on time is necessary. Our model is then solved and the results are export at each time step.
+
+----
+ for ( ; !Adv->timeStepBase()->isFinished(); Adv->updateTimeStep() )
+ {
+   Adv->solve();
+   Adv->exportResults();
+ }
+----
+
+==== Code
+
+[source,cpp]
+----
+{% include "../Examples/advection_model.cpp" %}
+----
+
+
+=== Configuration file
+
+The config file is used to define options, linked to our case, we would have the possibility to change at will. It can be, for example, files paths as follows
+
+----
+#      advection
+[advection]
+geofile=$cfgdir/ring2d.geo
+filename=$cfgdir/ring2d.json
+
+[exporter]
+directory=simul/advect2d/ring/data
+format=ensightgold
+----
+
+It can also be resolution dependent parameters such as mesh elements size, methods used  to define our problem and solvers.
+
+----
+#       time
+[advection.bdf]
+order=2
+[ts]
+time-initial=0.0
+time-step=1
+time-final=1
+steady=true
+
+[advection.gmsh]
+hsize=0.03
+
+# backend advection and projection
+pc-factor-mat-solver-package-type=mumps
+pc-type=lu
+
+#ksp-monitor=1
+ksp-converged-reason=true
+ksp-maxit=1000
+#snes-monitor=1
+snes-converged-reason=true
+snes-maxit-reuse=3
+snes-ksp-maxit-reuse=20
+----
+
+In this case, we choose LU as the preconditioner method, with a mesh size equal to $$0.03$$. As for time discretization, we use a BDF at order $$2$$.
+
+==== Code
+
+[source,cfg]
+----
+{% include "../Examples/ring2d.cfg" %}
+----
+
+=== Json file
+
+First at all, we define some general information like the name ( and short name ) and the model we would like to use
+
+[source,json]
+----
+"Name": "Ring2d",
+"ShortName": "Ring2d",
+"Model": "Advection",
+----
+
+In this case, we have only link:#Boundary_Conditions[boundary conditions]  to define. Here, we impose homogeneous Dirichlet conditions.
+
+[source,json]
+----
+"BoundaryConditions":
+    {
+        "advection":
+        {
+            "Dirichlet":
+            {
+                "Bottom":
+                {
+                    "expr":"0"
+                },
+                "Left":
+                {
+                    "expr":"0"
+                },
+                "InnerCircle":
+                {
+                    "expr":"0"
+                },
+                "OuterCircle":
+                {
+                    "expr":"0"
+                }
+            }
+        }
+    }
+----
+
+
+==== Code
+
+[source,json]
+----
+{% include "../Examples/ring2d.json" %}
+----
+
+=== Compilation/Execution
+
+Once you've a build dir, you just have to realise the command `make` at 
+
+--------------------
+{buildir}/applications/models/advection
+--------------------
+
+This will generate an executable named `feelpp_application_advection_2d`. To execute it, you need to give the path of the cfg file associated to your case, with `--config-file`.
+
+For example
+
+----
+./feelpp_application_advection_2d --config-file={sourcedir}/applications/models/advection/ring/ring2d.cfg
+----
+
+is how to execute the case ahead.
+
+The result files are then stored by default in 
+
+----
+feel/simul/advect2d/{domain_shape}/data/{processor_used}
+----
+
+If we return once again at our example, the result files are in 
+
+----
+ feel/simul/advect2d/ring/data/np_1
+----
+
+

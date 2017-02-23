@@ -1,0 +1,389 @@
+# 2D FSI elastic tube
+:toc:
+:toc-placement: preamble
+:toclevels: 1
+:biblio: ../../Appendix/Bibliography/readme.adoc 
+
+This test case has originally been realised by
+link:{biblio}#pena09:_high_order_method_in_space[Pena],
+link:{biblio}#nobile2001numerical[Nobile] and
+link:{biblio}#gerbeau2003quasi[GerbeauVidrascu] only with the free outlet
+condition.
+
+Computer codes, used for the acquisition of results, are from Vincent
+link:{biblio}#bloodflowChabannes[Chabannes].
+
+== Problem Description 
+
+We interest here to the case of bidimensional blood flow modelisation. We want
+to reproduce and observe pressure wave spread into a canal with a
+link:../readme.adoc#_fluid_structure_model[fluid-structure interaction model].
+
+
+[[img-geometry1]]
+image::ElasticTube.png[caption="Figure 1 : ", title="Geometry of two-dimension elastic tube.", alt="Elastic Tube Geometry", width="600", align="center"]  
+
+The figure above shows us the initial geometry we will work on. The canal is
+represent by a rectangle with width and height, respectively  equal to 6 and 1
+cm. The upper and lower walls are mobile and so, can be moved by flow action.
+
+By using the link:../../CSM/readme.adoc#_axisymmetric_reduced_model[1D reduced
+model], named generalized string and explained by
+link:{biblio}#bloodflowChabannes[Chabannes], we didn't need to define the
+elastic domain ( for the vascular wall ) here. So the structure domain is
+$$\Omega_s^*=\Gamma_{fsi}^*$$
+
+During this benchmark, we will compare two different cases : the free outlet
+condition and the Windkessel model. The first one, as its name said, impose a
+free condition on the fluid at the end of the domain. The second one is used to
+model more realistically an flow outlet into our case. The chosen time step is
+$$\Delta t=0.0001$$
+
+=== Boundary conditions 
+
+We set :
+
+* on $$\Gamma_f^{i,*}$$ the pressure wave pulse
+
+$$
+\boldsymbol{\sigma}_{f} \boldsymbol{n}_f =
+  \left\{
+  \begin{aligned}
+    & \left(-\frac{2 \cdot 10^4}{2} \left( 1 - \cos \left(  \frac{ \pi t} {2.5 \cdot 10^{-3}} \right) \right), 0\right)^T  \quad & \text{ si } t < 0.005 \\
+    & \boldsymbol{0} \quad & \text{ sinon }
+  \end{aligned}
+  \right.
+$$
+
+* on $$\Gamma_f^{o,*}$$
+    - Case 1 : free outlet
+    $$
+    \boldsymbol{\sigma}_{f} \boldsymbol{n}_f =0
+    $$
+    - Case 2 : Windkessel model ( $$P_0$$ proximal pressure, see link:{biblio}#bloodflowChabannes[Chabannes] )
+    $$
+    \boldsymbol{\sigma}_{f} \boldsymbol{n}_f = -P_0\boldsymbol{n}_f
+    $$
+
+* on $$\Gamma_f^{i,*}$$ U $$\Gamma_f^{o,*}$$ a null displacement
+
+$$
+\boldsymbol{\eta}_f=0
+$$
+
+* on $$\Gamma^*_{fsi}$$ 
+
+$$
+\eta_s=0
+$$
+
+* We add also the link:../../CSM/readme.adoc#_axisymmetric_reduced_model[specific coupling conditions], obtained from the axisymmetric reduced model, on $$\Gamma^*_{fsi}$$ 
+
+$$
+\dot{\eta}_s \boldsymbol{e}_r - \boldsymbol{u}_f = \boldsymbol{0}
+$$
+
+$$
+f_s  + \left(J_{\mathcal{A}_f^t} \boldsymbol{F}_{\mathcal{A}_f^t}^{-T} \hat{\boldsymbol{\sigma}}_f \boldsymbol{n}^*_f\right) \cdot \boldsymbol{e}_r
+=  0
+$$
+
+$$
+\boldsymbol{\varphi}_s^t  - \mathcal{A}_f^t = \boldsymbol{0}
+$$
+
+=== Initial conditions
+
+== Inputs
+
+[cols="1,1,^1a,1"]
+.Fixed and Variable Input Parameters
+|===
+| Name |Description | Nominal Value | Units
+|$$E_s$$ | Young's modulus | $$0.75 $$  | $$dynes/cm^2$$
+|$$\nu_s$$ | Poisson's ratio | $$0.5$$  |dimensionless
+|$$h$$|walls thickness|0.1|$$cm$$
+|$$\rho_s$$ | structure density | $$1.1$$  |$$g/cm^3$$
+|$$R_0$$|tube radius|$$0.5$$|$$cm$$
+|$$G_s$$| shear modulus |$$10^5$$|$$Pa$$
+|$$k$$|Timoshenko’s correction factor|$$2.5$$|dimensionless
+|$$\gamma_v$$|viscoelasticity parameter|$$0.01$$|dimensionless
+|$$\mu_f$$ |viscosity | $$0.003$$  |$$poise$$ 
+|$$\rho_f$$ | density | $$1$$  | $$g/cm^3$$
+|$$R_p$$ | proximal resistance | $$400$$  | 
+|$$R_d$$ | distal resistance| $$6.2 \times 10^3$$  | 
+|$$C_d$$ | capacitance | $$2.72 \times 10^{-4}$$  |
+|===
+
+== Outputs
+
+After solving the link:../readme.adoc#_fluid_structure_model[fluid struture model], we obtain $$(\mathcal{A}^t, \boldsymbol{u}_f, p_f, \boldsymbol{\eta}_s)$$ 
+
+with $$\mathcal{A}^t$$ the ALE map, $$\boldsymbol{u}_f$$ the fluid velocity,
+$$p_f$$ the fluid pressure and $$\boldsymbol\eta_s$$ the structure displacement
+
+
+== Discretization
+
+$$\mathcal{F}$$ is the set of all mesh faces, we denote $$\mathcal{F}_{stab}$$
+the face we stabilize 
+$$
+\mathcal{F}_{stab} = \mathcal{F} \bigcap \left( \left\{ (x,y) \in \mathrm{R}^2:
+(x - 0.3) \leqslant 0 \right\} \cup  \left\{ (x,y) \in \mathrm{^2: (x - 5.7) }
+\geqslant 0   \right\} \right)
+$$
+
+In fact, after a first attempt, numerical instabilities can be observed at the
+fluid inlet. These instabilities, caused by pressure wave, and especially by
+the Neumann condition, make our fluid-structure solver diverge.
+
+To correct them, we choose to add a stabilization term, obtain from the
+stabilized CIP formulation ( see link:{biblio}#bloodflowChabannes[Chabannes]
+Chapter 6 ).
+
+As this stabilization bring an important cost with it, by increasing the number
+of non-null term into the problem matrix, we only apply it at the fluid
+entrance, where the instabilities are located. 
+
+
+Now we present the different situations we worked on. 
+
+[cols="1,1,1,2,2,2,2,2,2"]
+|===
+3.2+|Config 3+|Fluid 3+| Structure
+|$$N_{elt}$$|$$N_{geo}$$|$$N_{dof}$$|$$N_{elt}$$|$$N_{geo}$$|$$N_{dof}$$
+3+|$$(1)$$|$$342$$|$$3$$ $$(P4P3)$$|$$7377$$|$$58$$|$$1$$|$$176$$ $$(P3)$$
+3+|$$(2)$$|$$342$$|$$4$$ $$(P5P4)$$|$$11751$$|$$58$$|$$1$$|$$234$$ $$(P4)$$
+|===
+
+For the fluid time discretization, BDF, at order $$2$$, is the method we use.
+
+And Newmark-beta method is the one we choose for the structure time
+discretization, with parameters $$\gamma=0.5$$ and $$\beta=0.25$$.
+
+These methods can be retrieved in link:{biblio}#bloodflowChabannes[Chabannes] papers.
+
+=== Solvers
+
+Here are the different solvers ( linear and non-linear ) used during results acquisition.
+
+|===
+3+|
+$$
+\text{KSP}
+$$
+|case|fluid|solid
+|type 2+|
+$$
+\text{gmres}
+$$
+|relative tolerance 2+|
+$$
+1e-13
+$$
+|max iteration|$$30$$|$$10$$
+|reuse preconditioner|true|false
+|===
+
+|===
+3+|
+$$
+\text{SNES}
+$$
+|case|fluid|solid
+|relative tolerance 2+|
+$$
+1e-8
+$$
+|steps tolerance 2+|
+$$
+1e-8
+$$
+|max iteration 2+|$$
+50
+$$
+|max iteration with reuse 2+|
+$$
+50
+$$
+|reuse jacobian 2+|
+$$
+\text{false}
+$$
+|reuse jacobian rebuild at first Newton step|false|true
+|===
+
+|===
+3+|
+$$
+\text{KSP in SNES}
+$$
+|case|fluid|solid
+|relative tolerance 2+|
+$$
+1e-5
+$$
+|max iteration 2+|
+$$
+1000
+$$
+|max iteration with reuse 2+|
+$$
+1000
+$$
+|reuse preconditioner|true|false
+|reuse preconditioner rebuild at first Newton step 2+|
+$$
+\text{false}
+$$
+|===
+
+|===
+3+|
+$$
+\text{PC}
+$$
+|case|fluid|solid
+|type 2+|
+$$
+\text{lu}
+$$
+|package 2+|
+$$
+\text{mumps}
+$$
+|===
+
+|===
+2+|
+$$
+\text{FSI}
+$$
+|solver method|fix point
+|tolerance|$$1e-6$$
+|max iterations|$$1$$
+|===
+
+
+
+
+== Implementation 
+
+To realize the acquisition of the benchmark results, code files contained and
+using the Feel++ library will be used. Here is a quick look to the different
+location of them.
+
+Let's start with the main code, that can be retrieve in
+
+----
+    feelpp/applications/models/fsi
+----
+
+The configuration file associated to this test is named wavepressure2d.cfg and
+is located at 
+
+----
+    feelpp/applications/models/fsi/wavepressure2d
+----
+
+The result files are then stored by default in 
+
+----
+    applications/models/fsi/wavepressure2d/P2P1G1-P1G1/np_1
+----
+
+
+== Results
+
+The two following pictures have their pressure and velocity magnitude amplify by 5.
+
+[[img-geometry2]]
+image::SimuFree.png[caption="Figure 2 : ", title="Results with free outlet conditon", alt="Elastic Tube Free outlet", width="900", align="center"]  
+
+[[img-geometry3]]
+image::SimuWindkessel.png[caption="Figure 3 : ", title="Results with the Windkessel model", alt="Elastic Tube Windkessel", width="900", align="center"] 
+
+[[img-geometry4]]
+image::FlowEvolution.png[caption="Figure 4 : ", title="Evolution of the inflow and the outflow", alt="Inflow Outflow", width="400", align="center"]  
+
+[[img-geometry5]]
+image::DispMagni.png[caption="Figure 5 : ", title="Maximum displacement magnitude", alt="Displacement Magnitude", width="400", align="center"]  
+
+To draw the next two figures, we define 60 sections $$\{x_i\}_{i=0}^{60}$$ with
+$$x_i=0.1i$$.
+[[img-geometry6]]
+image::AverPressure.png[caption="Figure 5 : ", title="Average pressure with the free outlet and the Windkessel model", alt="Average Pressure", width="700", align="center"]  
+
+[[img-geometry7]]
+image::FlowRate.png[caption="Figure 7 : ", title="Flow rate with the free outlet and the Windkessel model", alt="Flow Rate", width="710", align="center"]  
+
+[[img-geometry8]]
+image::ImplicitSemi_Implicit.png[caption="Figure 8 : ", title="Implicit and semi-implicit FSI coupling comparison", alt="FSI 1", width="700", align="center"]  
+
+[[img-geometry9]]
+image::FSICoupling.png[caption="Figure 9 : ", title="Implicit and semi-implicit FSI coupling comparison", alt="FSI 2", width="700", align="center"]  
+
+All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron[rep] [https://github.com/feelpp/feelpp/blob/develop/applications/models/fsi/wavepressure2d/wavepressure2d_fluid.geo[geo file],  https://github.com/feelpp/feelpp/blob/develop/applications/models/fsi/wavepressure2d/wavepressure2d.cfg[config file], https://github.com/feelpp/feelpp/blob/develop/applications/models/fsi/wavepressure2d/wavepressure2d_fluid.json[fluid json file], https://github.com/feelpp/feelpp/blob/develop/applications/models/fsi/wavepressure2d/wavepressure2d_solid.json[solid json file]].
+
+=== Conclusion 
+
+Let's begin with results with the free outlet condition ( see figure 2 ). These
+pictures show us how the pressure wave progresses into the tube. We can denote
+an increase of the fluid velocity at the end of the tube. Also, the wave eases
+at the same place. For the simulation with the Windkessel model, we observe a
+similar comportment at the beginning ( see figure 3 ). However, the outlet is
+more realistic than before. In fact, the pressure seems to propagate more
+naturally with this model. + In the two cases, the velocity field is disturbed
+at the fluid-structure interface. A mesh refinement around this region
+increases the quality. However, this is not crucial for the blood flow
+simulation.
+
+Now we can interest us to the quantitative results.
+
+The inflow and outflow evolution figure ( see figure 4 ) shows us similarities
+for the two tests at the inlet. At the outlet, in contrast, the flow increases
+for the free outlet condition. In fact, when the pressure wave arrived at
+the outlet of the tube, it is reflected to the other way. In the same
+way, when the reflected wave arrived at the inlet, it is reflected
+again. The Windkessel model reduce significantly this phenomenon. Some
+residues stay due to 0D coupling model and structure fixation.
+
+We also have calculate the maximum displacement magnitude for the two model (
+see figure 5 ). The same phenomenons explained ahead are retrieve here. We
+denote that, for the free outlet, the structure undergoes movements during the
+test time, caused by the wave reflection. The Windkessel model reduces these
+perturbations thanks to the 0D model.
+
+The average pressure and the fluid flow ( see figure 6 and 7 ) show us the same
+non-physiological phenomenons as before. The results we obtain are in
+accordance with the ones proposed by link:{biblio}#nobile2001numerical[Nobile].
+
+To end this benchmark, we will compare the two resolution algorithms used with
+the fluid-structure model : the implicit and the semi-implicit ones. The
+link:readme.adoc#Discretization[second configuration] with Windkessel model is
+used for the measures. 
+
+We have then the fluid flow and the displacement magnitude ( figure 8 ) curves,
+which superimposed on each other. So the  accuracy obtained by the
+semi-implicit method  seems good here. 
+
+The performances of the two algorithms ( figure 9 ) are expressed from number
+of iterations and CPU time at each step time. The semi-implicit method is a bit
+ahead of the implicit one on number of iterations. However, the CPU time is
+smaller for 2 or 3 time,  due to optimization in this method. First an unique
+ALE map estimation is need. Furthermore, linear terms of the Jacobian matrix,
+residuals terms and dependent part of the ALE map can be stored and reused at
+each iteration. 
+
+== Bibliography
+
+[bibliography]
+.References for this benchmark
+
+- [[[Pena]]] G. Pena, _Spectral element approximation of the incompressible Navier-Stokes equations evolving in a moving domain and applications_, École Polytechnique Fédérale de Lausanne, November 2009.
+
+- [[[Nobile]]] F. Nobile, _Numerical approximation of fluid-structure interaction problems with application to haemodynamics_, École Polytechnique Fédérale de Lausanne, Switzerland, 2001.
+
+- [[[GerbeauVidrascu]]] J.F. Gerbeau, M. Vidrascu, _A quasi-newton algorithm based on a reduced model for fluid-structure interaction problems in blood flows_, 2003.
+
+- [[[Chabannes]]] Vincent Chabannes, _Vers la simulation numérique des écoulements sanguins_, Équations aux dérivées partielles [math.AP], Université de Grenoble, 2013.

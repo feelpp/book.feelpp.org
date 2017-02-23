@@ -1,0 +1,73 @@
+// -*- mode: adoc -*-
+
+CMake and Feel++ applications
+-----------------------------
+
+Feel{plus}{plus} offers a development environment for solving partial
+differential equations. It uses many tools to cover the different
+steps pre-processing, processing and post-processing and large range
+of numerical methods and needs. To this end it is crucial to have a
+powerful build environment. Feel{plus}{plus} uses CMake from Kitware and
+provides various macros to help setting up your own application or
+research project.
+
+=== CMake macros
+
+==== Setting up Feel++ environment
+
+See section link:../GettingStart/using.adoc:[Using Feel++].
+
+==== Adding a new application
+
+See section link:../GettingStart/using.adoc:[Using Feel++].
+
+==== Adding a new testcase
+
+For a give application or multiple applications you may define
+testcases. testcases are difrectory containing a set of files that may
+include geometry, mesh, cfg or json files.
+
+To define a new testcase case, create a sub-directory where your
+application, say `myapp` like in the previous section, stands and copy
+the required files there.
+
+[source,bash]
+----
+cd <source directory of my application>
+mkdir mytestcase
+# copy files (.geo, .msh, .cfg...) to mytestcase
+...
+----
+
+then edit the `CMakeLists.txt` in your application directory and add
+the following line:
+
+[source,cmake]
+----
+feelpp_add_testcase(mytestcase)
+----
+
+Then type `make feelpp_add_testcase_mytestcase` in the build directory
+of your application `myapp`. It will copy in the build directory of
+your application the directory mytestcase.
+
+INFO: if you updated the testcase data files, executing `make
+feelpp_testcase_mytestcase` will use `rsync` to update the files that
+were changed in the source.
+
+The macro `feelpp_add_testcase` supports options:
+
+`PREFIX`:: (default is `feelpp`) set the prefix of the target to avoid eg name clash
+[source,cmake]
+----
+feelpp_add_testcase(mytestcase PREFIX foo)
+----
+then the target is `foo_add_testcase_mytestcase`.
+
+`DEPS`:: set the dependencies of the testcase
+[source,cmake]
+----
+feelpp_add_testcase(mytestcase DEPS myothertestcase)
+----
+
+it allows to update a testcase depending on changes in an other one.

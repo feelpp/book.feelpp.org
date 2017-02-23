@@ -1,0 +1,33 @@
+// -*- mode: adoc -*-
+
+Visualizing functions over a mesh
+---------------------------------
+
+The next step is to visualize function over the mesh. The source code that generate our output is
+available in link:../codes/05-myexporter.cpp[myexporter.cpp], presented in the previous section.
+
+
+
+You can visualize data via :
+
+- link::https://www.ceisoftware.com/[ensight]
+
+- link::http://www.paraview.org/[paraview]
+
+- link::http://geuz.org/gmsh[gmsh]
+
+The results files are in
+
+- `$HOME/feel/myexporter/np_1`
+
+or
+
+- `$FEELPP_WORKDIR/feel/myexporter/np_1`.
+
+We discriminate output directories based on the name of the simulation
+(the parameter `_name` in the environment), the number of process
+(`mpirun -np ...`) and the type of the chosen exporter
+[source,bash]
+----
+--exporter.format={ensight|ensightgold|gmsh|...}
+----

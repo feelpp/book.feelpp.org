@@ -1,0 +1,277 @@
+Mac OS X
+--------
+
+Feel++ is  supported on Mac OSX, starting from OS X 10.9 Mavericks to OS X 10.12 Sierra using <<Homebrew>> or <<MacPorts>>.
+
+=== First step
+
+Xcode is required on Mac OSX to install Feel{plus}{plus}.
+
+The easiest way to do so is to go through the Apple Store application and to search for Xcode. Xcode will provide the programming environment, _e.g_ clang, for the next steps.
+
+[[Homebrew]]
+=== Homebrew
+
+==== Introduction to HomeBrew
+Homebrew is a free/open source software introduced to simplify the installation of other free/open source software on MacOS X. Homebrew is distributed under the link:https://github.com/mxcl/homebrew/blob/master/Library/Homebrew/LICENSE[BSD] 2 Clause (NetBSD) license. For more information, visit their link:http://brew.sh[website].
+
+===== Installation
+
+To install the latest version of Homebrew, simply
+visit their link:http://brew.sh[website] and follow the instructions. Each new package Homebrew installs is built into an intermediate place called the Cellar (usually /usr/local/Cellar) and
+then the packages are symlinked into /usr/local (default).
+
+===== Key commands 
+
+Homebrew base command is `brew`. Here is a list of base available commands:
+
+* `brew doctor`: Check if the system has any problem with the current installation of Homebrew;
+
+* `brew install mypackage`: This command installs the package mypackage;
+
+* `brew install [--devel|--HEAD] mypackage`: These options respectively installs either the development version or the HEAD version of the package mypackage, if such versions are specified in the Formula file;
+
+* `brew uninstall mypackage`: This command allows to uninstall the package mypackage.
+
+===== Formulas 
+
+A Formula is a link:https://www.ruby-lang.org[Ruby] script format specific to Homebrew. It allows to describe the installation process of a package. Feel\++ uses specific Formulae that you can get in the Feel++ github repository: link:https://github.com/feelpp/homebrew-feelpp[feelpp/homebrew-feelpp].
+
+====  Installation
+
+This section is aimed at users that do not have Homebrew already installed. +
+In order to build Feel++ from Homebrew, you have to do the following steps:
+
+First install Homebrew
+[source,sh]
+----
+$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+----
+
+then check your Homebrew installation and fix warnings/errors if necessary
+
+[source,sh]
+----
+$ brew doctor
+----
+
+Install Homebrew-science tap to get the link:prerequisites.adoc[scientific software] recommended or suggested for Feel{plus}{plus}.
+----
+$ brew tap homebrew/homebrew-science 
+----
+you should see something like
+[source,sh]
+----
+==> Tapping homebrew/science
+Cloning into '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-science'...
+remote: Counting objects: 661, done.
+remote: Compressing objects: 100% (656/656), done.
+remote: Total 661 (delta 0), reused 65 (delta 0), pack-reused 0
+Receiving objects: 100% (661/661), 591.93 KiB | 0 bytes/s, done.
+Tapped 644 formulae (680 files, 1.9M)
+----
+
+Next you install Feel{plus}{plus} tap with
+[source,sh]
+----
+brew tap feelpp/homebrew-feelpp
+----
+you should read something like
+[source,sh]
+----
+==> Tapping feelpp/feelpp
+Cloning into '/usr/local/Homebrew/Library/Taps/feelpp/homebrew-feelpp'...
+remote: Counting objects: 5, done.
+remote: Compressing objects: 100% (5/5), done.
+remote: Total 5 (delta 0), reused 4 (delta 0), pack-reused 0
+Unpacking objects: 100% (5/5), done.
+Tapped 1 formula (30 files, 60.7K)
+----
+
+The final step is to either install Feel{plus}{plus} 
+[source,sh]
+----
+$ brew install feelpp
+----
+
+or just Feel{plus}{plus} dependencies if you plan to build Feel++ from sources yourself
+[source,sh]
+----
+$ brew install --only-dependencies feelpp
+----
+
+> **Note** If you encounter problems, you can fix them using `brew doctor`. A frequent issue is to force `open-mpi` with `brew link --overwrite open-mpi`
+
+====  Advanced usage
+
+If Homebrew is already installed on your system, you might want to customize your installation for the correct dependencies to be met for Feel++.
+
+===== Feel++ Dependencies
+You can browse Feel++ dependencies using the following command:
+
+[source,sh]
+----
+$ brew deps feelpp | column
+----
+
+you get the list of formulas Feel{plus}{plus} depends on for its installation
+[source,txt]
+----
+ann		fftw		libtool		slepc
+arpack		gcc		metis		suite-sparse
+autoconf	glpk		mumps		sundials
+automake	gmp		netcdf		superlu
+boost		gmsh		open-mpi	superlu_dist
+cln		hdf5		parmetis	szip
+cmake		hwloc		petsc		tbb
+eigen		hypre		scalapack	veclibfort
+----
+
+===== Customizing builds
+If you want to customize the compilation process for a dependency (Set debug mode, Remove checking steps, Remove the link with certain libraries, etc.), you can access to the building options with the `info` flag. For exemple, with open-mpi:
+
+[source,sh]
+----
+$ brew info open-mpi
+----
+
+You get various information about the `open-mpi` formula
+[source,sh]
+----
+open-mpi: stable 2.0.1 (bottled), HEAD
+High performance message passing library
+https://www.open-mpi.org/
+Conflicts with: lcdf-typetools, mpich
+/usr/local/Cellar/open-mpi/2.0.1 (688 files, 8.6M) *
+  Built from source on 2016-09-26 at 10:36:46 with: --c++11 --with-mpi-thread-multiple
+From: https://github.com/Homebrew/homebrew-core/blob/master/Formula/open-mpi.rb
+==> Dependencies
+Required: libevent ✔
+==> Requirements
+Recommended: fortran ✔
+Optional: java ✔
+==> Options
+--c++11
+	Build using C++11 mode
+--with-cxx-bindings
+	Enable C++ MPI bindings (deprecated as of MPI-3.0)
+--with-java
+	Build with java support
+--with-mpi-thread-multiple
+	Enable MPI_THREAD_MULTIPLE
+--without-fortran
+	Build without fortran support
+--HEAD
+	Install HEAD version
+----
+
+Then, you then just have to pass the needed flags, when installing the dependency. 
+
+> **Important:**  `boost` has to be installed with mpi and c++11 support and `mumps` needs to be installed with the following scotch5 support.
+
+
+[[MacPorts]]
+=== MacPorts
+
+==== Introduction
+
+MacPorts is an open-source community projet which aims to design an easy-to-use system for compiling, installing and upgrading open-source software on Mac OS X operating system. It is distributed under link:http://opensource.org/licenses/bsd-license.php[BSD License] and facilitate the access to thousands of ports (software) without installing or compiling open-source software. MacPorts provides a single software tree which includes the latest stable releases of approximately 17700 ports targeting the current Mac OS X release (10.9). If you want more information, please visit their link:http://www.macports.org/[website].
+
+===== MacPorts Installation
+
+To install the latest version of MacPorts, please go
+to http://www.macports.org/install.php[Installing
+MacPorts] page and follow the instructions. The simplest way is to
+install it with the Mac OS X Installer using the `pkg` file
+provided on their website. It is recommended that you install X11 (X Window System) which is normally used to display X11 applications. +
+If you have installed with the package installer (`MacPorts-2.x.x.pkg`) that means MacPorts will be installed in
+`/opt/local`. From now on, we will suppose that macports has
+been installed in `/opt/local` which is the default MacPorts
+location. Note that from now on, all tools installed by MacPorts will be installed in `/opt/local/bin` or `/opt/local/sbin`
+for example (that's here you'll find gcc4.7 or later e.g
+`/opt/local/bin/g++-mp-4.7` once being installed).
+
+===== Key commands
+
+In your command-line, the software MacPorts is called by the command `port`. Here is a list of key commands for using MacPorts, if you want more informations please go to http://guide.macports.org/#using.port[MacPorts Commands].
+
+ * `sudo port -v selfupdate`: This action should be used regularly to update the local tree with the global MacPorts ports. The option `-v` enables verbose which generates verbose messages.
+ 
+ * `port info mypackage`: This action is used to get information about a port. (description, license, maintainer, etc.)
+ 
+ * `sudo port install mypackage`: This action install the port mypackage.
+ 
+ * `sudo port uninstall mypackage`: This action uninstall the port mypackage.
+ 
+ * `port installed`: This action displays all ports installed and their versions, variants and activation status. You can also use the `-v` option to also display the platform and CPU architecture(s) for which the ports were built, and any variants which were explicitly negated.
+ 
+ * `sudo port upgrade mypackage`: This action updgrades installed ports and their dependencies when a `Portfile` in the repository has been updated. To avoid the upgrade of a port's dependencies, use the option `-n`.
+
+===== Portfile 
+
+A Portfile is a TCL script which usually contains simple
+keyword values and TCL expressions. Each package/port has a
+corresponding Portfile but it's only a part of a port description.
+Feel\++ provides some mandatory Portfiles for its compilation which are either not available in MacPorts or are buggy but Feel++ also provides some Portfiles which are already available in MacPorts such as gmsh or petsc. They usually provide either some fixes to ensure Feel++ works properly or new version not yet available in MacPorts. These Portfiles are installed in `ports/macosx/macports`.
+
+
+==== Installation
+
+To be able to install Feel++, add the following line in
+`/opt/local/etc/macports/source.conf` at the top of the file
+before any other sources:
+
+[source,sh]
+----
+file:///<path to feel top directory>/ports/macosx/macports
+----
+
+Once it's done, type in a command-line:
+
+[source,sh]
+----
+ $ cd <your path to feel top directory>/ports/macosx/macports
+ $ sudo portindex -f
+----
+
+You should have an output like this:
+
+[source,sh]
+----
+Reading port index in $<$your path to feel top directory$>$/ports/macosx/macports
+Adding port science/feel++
+Adding port science/gmsh
+Adding port science/petsc
+
+Total number of ports parsed:   3
+Ports successfully parsed:      3
+Ports failed:                   0
+Up-to-date ports skipped:       0
+----
+
+Your are now able to type
+
+[source,bash]
+----
+$ sudo port install feel++
+----
+
+It might take some time (possibly an entire day) to compile all the requirements for Feel++ to compile properly. If you have several cores on your MacBook Pro, iMac or MacBook, we suggest that you configure macports to use all or some of them.
+
+To do that uncomment the following line in the file
+`/opt/local/etc/macports/macports.conf`
+
+[source,bash]
+----
+buildmakejobs	0 $\#$ all the cores
+----
+
+At the end of the `sudo port install feel++`, you have all
+dependencies installed. To build all the Makefile, `\cmake` is
+automatically launched but can have some libraries may not be found but they are not mandatory for build Feel{plus}+, only the features related to the missing libraries will be missing.
+
+.Missing ports
+[NOTE]
+====
+`cmake` can build Makefiles even if some packages are missing (latex2html, VTK ...). It's not necessary to install them but you can complete the installation with MacPorts, `cmake` will find them by itself once they have been installed.
+====

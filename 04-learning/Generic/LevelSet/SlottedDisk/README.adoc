@@ -1,0 +1,200 @@
+Solid rotation of a slotted disk
+================================
+:toc:
+:toc-placement: preamble
+:toclevels: 1
+
+We describe the benchmark proposed by link:{biblio}#Zalesak1979[Zalesak].
+
+Computer codes, used for the acquisition of results, are from Vincent link:{biblio}#phd_doyeux[Doyeux].
+
+== Problem Description 
+
+In order to test our interface propagation method, i.e. the levelset method $$\phi$$, we will study the rotation of a slotted disk into a square domain. The geometry can be represented as 
+
+[[img-geometry1]]
+image::SlottedDisk.png[caption="Figure 1 : ", title="Initial Geometry.", alt="Slotted Disk Geometry", width="300", align="center"] 
+
+We denote $$\Omega$$, the square domain $$[0,1]\times[0,1]$$. The center of the slotted disk is placed at $$(0.5,0.75)$$. +
+To model the rotation, we will apply an angular velocity, centered in $$(0.5,0.5)$$, as the disk is back to its initial position after $$t_f=628$$.
+
+During this test, we  observe three different errors to measure the quality of our method. With these values, two kinds of convergence will be studied : the time convergence, with different time step on an imposed grid and the space one, where the space discretization and the time step are linked by a relation. Several stabilization methods are used such as CIP ( Continuous Interior Penalty ) or SUPG ( Streamline-Upwing/Petrov-Galerkin ).
+
+=== Boundary conditions 
+
+We set a Neumann boundary condition on the boundary of the domain.
+
+=== Initial conditions
+
+The velocity is imposed as 
+$$
+\boldsymbol{u}=\left( \frac{\pi}{314} (50-y),\frac{\pi}{314} (x-50) \right)
+$$
+
+Here is the velocity look in the square domain
+
+[[img-geometry2]]
+image::SlottedDiskVelocity.png[caption="Figure 2 : ", title="Imposed velocity in $$\Omega$$.", alt="Velocity Geometry", width="350", align="center"] 
+    
+== Inputs
+
+The following table displays the various fixed and variables
+parameters of this test-case.
+
+.Fixed and Variable Input Parameters
+|===
+| Name |Description | Nominal Value | Units
+|r|disk radius|$$0.15$$|$$m$$
+|l|slot base|$$0.05$$|$$m$$
+|h|slot height|$$0.25$$|$$m$$
+|$$t_f$$|slotted disk rotation period|$$628$$|$$s$$
+
+|===
+
+== Outputs
+
+We observe during this benchmark three different errors. +
+First at all, the mass error, define by 
+$$
+ e_{\text{m}} = \frac{ \left| m_{\phi_f} - m_{\phi_0}\right|  }{m_{\phi_0}} = \frac{ \left| \displaystyle \int_{\Omega} \chi( \phi_f < 0 ) - \displaystyle \int_{\Omega} \chi( \phi_0 < 0 ) \right| }{ \displaystyle \int_{\Omega} \chi( \phi_0 < 0 )} 
+ $$
+
+where $$\chi$$ is the characteristic function.
+$$
+\chi( f( \phi ) ) = \left\{
+    \begin{array}{rcl}
+      1 & \text{ if } & f( \phi ) \neq 0 \\
+      0 & \text{ if } & f( \phi ) = 0 
+    \end{array}
+\right.
+$$
+
+However, mass is gain and loose at different emplacements on the mesh, and at the same time, with the level set method.
+
+Secondly, the sign change error
+$$
+e_{\text{sc}} = \sqrt{ \int_\Omega \left( (1-H_0) - (1-H_f) \right)^2 }
+$$
+
+with $$H_0=H_\epsilon(\phi_0)$$ and $$H_f=H_\epsilon(\phi_f)$$, $$H_\epsilon$$ the smoothed Heaviside function of thickness 2ε.
+
+This error is better to define the interface displacement. In fact, we can determine where $$\phi_0\phi_f<0$$, in other words where the interface has moved.
+
+Finally, we define the classical $$L^2$$ error at the interface, as 
+$$
+  e_{L^2} = \sqrt{ \frac{1}{\displaystyle \int_\Omega  \chi( \delta(\phi_0) > 0 ) }   \int_\Omega (\phi_0 - \phi_f)^2 \chi( \delta(\phi_0) > 0 ) }.
+$$
+
+== Discretization
+
+=== Time convergence
+
+For this case, we set a fixed grid with mesh step size $$h=0.04$$, and so 72314 degree of freedom on a $$\mathbb{P}^1$$.
+
+Then, after the disk made one round, we measure the errors obtained from two different discretizations ( BDF2 and Euler ) and compared them.
+
+We repeat this with several time step $$ dt\in \{2.14, 1, 0.5, 0.25, 0.20\}$$.
+
+Only one stabilization method is used : SUPG
+
+=== Space convergence
+
+We define the following relation, between time step and mesh step size :
+$$
+dt=C\frac{h}{U_{max}}
+$$
+
+where $$C<1$$ constant and $$U_{max}$$ the maximum velocity of $$\Omega$$.
+
+From the definition of our velocity, $$U_{max}$$ is reached at the farthest point from the center of $$\Omega$$. In this case, we have  $$U_{max}=0.007$$, and we  set $$C=0.8$$. 
+
+We  use the BDF2 method for time discretization. As in time convergence, we wait one round of the disk to measure the errors and we repeat this test for these values of $$h$$: 0.32, 0.16, 0.08, 0.04.
+
+We  compare the results from different stabilization methods : CIP, SUPG, GLS ( Galerkin-Least-Squares ) and SGS ( Sub-Grid Scale ).
+
+== Implementation 
+
+
+
+== Results
+
+=== Time convergence
+
+.Time convergence with Euler scheme
+|===
+|$$dt$$|$$e_{L^2}$$|$$e_{sc}$$|$$e_m$$
+|2.14|0.0348851|0.202025|0.202025
+|1.00|0.0187567|0.147635|0.147635
+|0.5|0.0098661|0.10847|0.10847
+|0.25|0.008791|0.0782569|0.0782569
+|0.20|0.00803373|0.0670677|0.0670677
+|===
+
+.Time convergence with BDF2 scheme
+|===
+|$$dt$$|$$e_{L^2}$$|$$e_{sc}$$|$$e_m$$
+|2.14|0.0118025|0.0906617|0.0492775
+|1.00|0.00436957|0.0445275|0.0163494
+|0.5|0.00173637|0.0216359|0.0100621
+|0.25|0.001003|0.0125971|0.00354644
+|0.20|0.000949343|0.0117449|0.00317368
+|===
+
+[[img-geometry2]]
+image::TimeConvMass.png[caption="Figure 2 : ", title="Mass error of Zalesac benchmark", alt="Time mass error", width="400", align="center"]
+
+[[img-geometry3]]
+image::TimeConvSign.png[caption="Figure 3 : ", title="Sign change error of Zalesac benchmark", alt="Time sign change ", width="400", align="center"]
+
+[[img-geometry4]]
+image::TimeConvL2.png[caption="Figure 4 : ", title="$$L^2$$ error of Zalesac benchmark", alt="Time L2 error", width="400", align="center"]
+
+[[img-geometry5]]
+image::ShapeTime.png[caption="Figure 5 : ", title="Slotted disk shape after a round", alt="Time shape", width="600", align="center"]
+
+=== Space convergence
+
+|===
+|stab|h|$$e_{L^2}$$|$$e_{sc}$$|$$e_m$$
+.4+|CIP|0.32|0.0074|0.072|0.00029
+|0.16|0.0046|0.055|0.00202
+|0.08|0.0025|0.033|0.00049
+|0.04|0.0023|0.020|0.00110
+.4+|SUPG|0.32|0.012|0.065|0.01632
+|0.16|0.008|0.049|0.07052
+|0.08|0.004|0.030|0.00073
+|0.04|0.001|0.018|0.00831
+.4+|GLS|0.32|0.013|0.066|0.02499
+|0.16|0.008|0.051|0.05180
+|0.08|0.004|0.031|0.00805
+|0.04|0.001|0.019|0.00672
+.4+|SGS|0.32|0.012|0.065|0.01103
+|0.16|0.008|0.050|0.07570
+|0.08|0.004|0.030|0.00084
+|0.04|0.001|0.018|0.00850
+|===
+
+[[img-geometry6]]
+image::SpaceConvSign.png[caption="Figure 6 : ", title="Sign change error of Zalesac benchmark", alt="Space sign change", width="400", align="center"]
+
+[[img-geometry7]]
+image::SpaceConvL2.png[caption="Figure 7 : ", title="$$L^2$$ error of Zalesac benchmark", alt="Space L2 error", width="400", align="center"]
+
+[[img-geometry8]]
+image::ShapeSpace.png[caption="Figure 8 : ", title="Slotted disk shape after a round", alt="Space Shape", width="300", align="center"]
+
+=== Conclusion 
+
+Let's begin with time convergence results. Tables shows us that sign change error is better to define the quality of the chosen scheme than the mass error. In fact, the loss of mass somewhere can be nullify by a gain of mass elsewhere. Sign change error shows half an order gain from Euler scheme to $$BDF2$$ one, as $$L^2$$ errors show us a gain of one order. 
+For the slotted disk shape, $$BDF2$$ uses the two previous iterations to obtain the current result, while Euler only need the previous iteration. This explain why we can see an asymmetrical tendency in the first one.
+
+As for space convergence, the different stabilization methods we used give us the same convergence rate equals to $$0.6$$, with close error values, for the sign change error. For the $$L^2$$ error case, it's not as evident as the previous one. Aside the CIP stabilization method with a $$0.6$$ convergence rate, the others show us a convergence rate of $$0.9$$.
+
+
+== Bibliography
+
+[bibliography]
+.References for this benchmark
+- [[[Zalesak]]] Steven T. Zalesak, _Fully multidimensional flux-corrected transport algorithms for fluids_, Journal of Computational Physics, 1979.
+
+- [[[Doyeux]]] Vincent Doyeux, _Modelisation et simulation de systemes multi-fluides. Application aux ecoulements sanguins._,  Physique Numérique [physics.comp-ph], Université de Grenoble, 2014

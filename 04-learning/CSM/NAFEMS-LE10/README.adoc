@@ -1,0 +1,49 @@
+NAFEMS LE10 Benchmarck
+======================
+
+This benchmark is extract from the link:http://things.maths.cam.ac.uk/computing/software/abaqus_docs/docs/v6.12/pdf_books/BENCHMARKS.pdf[Abaqus Benchmarks Manual].
+
+== Definition
+
+We focus on the link:http://www.caesarsystems.co.uk/NAFEMS_benchmarks/le10.html[LE10] benchmarks in particular.
+
+=== Geometry
+
+The geometry is given link:http://www.caesarsystems.co.uk/NAFEMS_benchmarks/le10.html[here] by : +
+image:geoLE10.png[] +
+image:geo3DLE10.png[alt="", align="center"] +
+where the thickness is $$0.6$$.
+
+In addition, we define the point $$E$$ which is the midpoint of $$CC'$$ and $$E'$$ the midpoint of $$BB'$$.
+
+=== Boundary conditions
+
+We set:
+
+- $$u_y = 0$$ on $$DCD'C'$$
+- $$u_x = 0$$ on $$ABA'B'$$
+- $$u_x = u_y = 0$$ on $$BCB'C'$$
+- $$\bar{\bar{\varepsilon}}\cdot\mathbf{n}=-1e^6$$ on the top surface.
+
+== Inputs
+
+We have the following parameters:
+
+.Inputs
+|===
+| Name | Value
+
+|$$E$$ | $$210\, GPa$$
+|$$\nu$$ | $$0.3$$
+|$$\rho$$ | $$7800\, kg/m^2$$
+|===
+
+== Outputs
+
+We want to compare the value of $$\sigma_{yy}$$ at the point $$D$$. The reference value is $$5.38\, MPa$$.
+
+== Results
+
+The value of $$\sigma_{yy}$$ at the point $$D$$ is $$5.53\, MPa$$ for $$300 000$$ dofs, which is $$2.78%$$ higher than the target.
+
+One possibility to get a more accurate output is to use a mixed formulation, where the stress tensor would also be an unknown.

@@ -1,0 +1,71 @@
+Output Directories
+------------------
+
+NOTE: merge with link:02-SettingUpEnvironment.adoc[] and rewrite pending!
+
+Feel{plus}+ generates various files that are spread over various directories.
+For this tutorial, it would be beneficial to check the content of these files
+to familiarize yourself with Feel{plus}+. 
+
+toc::[]
+
+=== Environment variables
+
+Some of Feel++ behavior can be driven by environment variables such as
+
+ * FEELPP_REPOSITORY
+ * FEELPP_WORKDIR
+
+Both variables should point to the same place. They define the root directory where the simulation results will be stored. By default they are set to `$HOME/feel`. 
+
+If you want to change the root directory where the results are stored, define e.g. FEELPP_REPOSITORY. For example in the docker image `feel/apps:latest`, it points to `/feel`.
+
+For running,
+[source,shell]
+----
+docker run -it -v $HOME/feel:/feel feelpp/apps:latest
+----
+should get you this output
+[source,shell]
+----
+# Feel++ applications
+
+This image provides the Feel++ applications in
+ . advection
+ . fluid mechanics
+ . solid mechanics
+ . fluid-structure interaction
+ . thermodynamics
+The testcases are in $HOME/Testcases/ and the results are in
+$HOME/feel
+
+Follow the steps described in
+
+http://book.feelpp.org/content/Applications/Models/readme.html
+
+to use the models.
+
+feelpp@50381de2bd23:~$ 
+----
+
+and here is the result of `echo $FEELPP_REPOSITORY` in the docker image
+[source,shell]
+----
+feelpp@50381de2bd23:~$ echo $FEELPP_REPOSITORY 
+/feel
+----
+
+=== Results
+
+- Results `$FEELPP_REPOSITORY/feel/<your_app_name>/np_1`
+
+=== Log files
+
+Feel++ uses https://github.com/google/glog[Google Glog].  
+
+  
+- Log files : `$FEELPP_REPOSITORY/feel/<your_app_name>/np_1/logs` 
+
+-  Mesh : `$FEELPP_REPOSITORY/feel/<your_app_name>/np_1`   
+
+- Config files : `$FEELPP_REPOSITORY/<your_build_folder>/doc/manual/tutorial`

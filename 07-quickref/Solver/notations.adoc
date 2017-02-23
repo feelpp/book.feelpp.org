@@ -1,0 +1,536 @@
+===  Definitions
+
+====  Matrices
+
+**Matrix Definition** A  matrix is a linear transformation between finite dimensional vector spaces.
+
+**Assembling a matrix**
+Assembling a matrix means defining its action as entries stored in a **sparse** or **dense** format. For example, in the finite element context, the storage format is sparse to take advantage of the many zero entries.
+
+**Symmetric matrix**
+$$A = A^T$$
+
+
+**Definite (resp. semi-definite) positive matrix**
+All eigenvalue are 
+ 1. $$>0$$ (resp $$\geq 0$$) or 
+ 2. $$x^T A x > 0, \forall\ x $$ (resp. $$x^T\ A\ x
+\geq 0\, \forall\ x$$)
+
+**Definite (resp. semi-negative) matrix**
+All eigenvalue are 
+ 1. $$<0$$ (resp. $$\leq 0$$) or
+ 2. $$x^T\ A\ x < 0\ \forall\ x$$ (resp. $$x^T\ A\ x \leq 0\, \forall\ x$$)
+
+**Indefinite matrix**
+There exists 
+ 1. positive and negative eigenvalue (Stokes, Helmholtz) or
+ 2. there exists $$x,y$$ such that $$x^TAx > 0 > y^T A y$$
+
+==== Preconditioners
+
+===== Definition
+
+Let $$A$$ be a $$\mathbb{R}^{n\times n}$$ matrix, $$x$$ and $$b$$ be $$\mathbb{R}^n$$ vectors, we wish to solve
+$$A x = b.$$
+
+**Definition**: A preconditioner $$\mathcal{P}$$ is a method for constructing a matrix (just a linear function, not assembled!)  $$P^{-1} = \mathcal{P}(A,A_p)$$ using a matrix $$A$$ and extra information $$A_p$$, such that the spectrum of $$P^{-1}A$$ (left preconditioning) or $$A P^{-1}$$ (right preconditioning) is well-behaved. The action of preconditioning improves the conditioning of the previous linear system. 
+
+**Left preconditioning**:  We solve for
+$$  (P^{-1} A) x = P^{-1} b $$
+and we build the Krylov space 
+$$\{ P^{-1} b, (P^{-1}A) P^{-1} b, (P^{-1}A)^2 P^{-1} b, \dots\}$$
+
+**Right preconditioning**: We solve for
+$$  (A P^{-1}) P x = b $$
+and we build the Krylov space 
+$$\{ b, (P^{-1}A)b, (P^{-1}A)^2b, \dotsc \}$$
+
+Note that the product $$P^{-1}A$$ or $$A P^{-1}$$ is never assembled.
+
+===== Properties
+
+Let us now describe some  properties of preconditioners
+
+  - $$P^{-1}$$ is dense, $$P$$ is often not available and is not needed
+  
+  - $$A$$ is rarely used by $$\mathcal{P}$$, but $$A_p = A$$ is common
+  
+  - $$A_p$$ is often a sparse matrix, the \e preconditioning  \e matrix
+  
+Here are some numerical methods to solve the system $$A x = b$$
+
+  - **Matrix-based**: Jacobi, Gauss-Seidel, SOR, ILU(k), LU
+ 
+  - **Parallel**: Block-Jacobi, Schwarz, Multigrid, FETI-DP, BDDC
+ 
+  - **Indefinite**: Schur-complement, Domain Decomposition, Multigrid
+
+==== Preconditioner strategies
+
+
+===== Relaxation
+
+Split into lower, diagonal, upper parts: $$ A = L + D + U $$.
+
+====== Jacobi
+
+Cheapest preconditioner: $$P^{-1}=D^{-1}$$.
+
+[source,bash]
+----
+# sequential
+pc-type=jacobi
+# parallel
+pc-type=block_jacobi
+----
+
+====== Successive over-relaxation (SOR)
+
+$$
+\left(L + \frac 1 \omega D\right) x_{n+1} = \left[\left(\frac 1\omega-1\right)D - U\right] x_n + \omega b \\
+P^{-1} = \text{$k$ iterations starting with $x_0=0$}\\
+$$
+
+* Implemented as a sweep.
+
+* $$\omega = 1$$ corresponds to Gauss-Seidel.
+
+* Very effective at removing high-frequency components of residual.
+
+[source,bash]
+----
+# sequential
+pc-type=sor
+----
+
+===== Factorization
+
+Two phases
+
+   - symbolic factorization: find where fill occurs, only uses 
+   sparsity pattern.
+   
+   - numeric factorization: compute factors.
+
+====== LU decomposition
+
+   - preconditioner.
+   
+   - Expensive, for $$m\times m$$ sparse matrix with bandwidth $$b$$, traditionally requires $$\mathcal{O}(mb^2)$$ time and $$\mathcal{O}(mb)$$ space.
+   
+    * Bandwidth scales as $$m^{\frac{d-1}{d}}$$ in $$d$$-dimensions.
+    
+    * Optimal in 2D: $$\mathcal{O}(m \cdot \log m)$$ space, $$\mathcal{O}(m^{3/2})$$ time.
+    
+    * Optimal in 3D: $$\mathcal{O}(m^{4/3})$$ space, $$\mathcal{O}(m^2)$$ time.
+   
+   - Symbolic factorization is problematic in parallel.
+
+====== Incomplete LU
+
+   - Allow a limited number of levels of fill: ILU($$k$$).
+   
+   - Only allow fill for entries that exceed threshold: ILUT.
+   
+   - Usually poor scaling in parallel.
+   
+   - No guarantees.
+
+===== 1-level Domain decomposition
+
+   Domain size $$L$$, subdomain size $$H$$, element size $$h$$
+
+ * Overlapping/Schwarz
+    
+    - Solve Dirichlet problems on overlapping subdomains.
+    
+    - No overlap: $$\textit{its} \in \mathcal{O}\big( \frac{L}{\sqrt{Hh}} \big)$$.
+    
+    - Overlap $$\delta$$: $$\textit{its} \in \big( \frac L {\sqrt{H\delta}} \big)$$.
+
+[source,shell]
+----
+pc-type=gasm # has a coarse grid preconditioner
+pc-type=asm
+----
+
+ * Neumann-Neumann
+
+    - Solve Neumann problems on non-overlapping subdomains.
+    
+    - $$\textit{its} \in \mathcal{O}\big( \frac{L}{H}(1+\log\frac H h) \big)$$.
+    
+    - Tricky null space issues (floating subdomains).
+    
+    - Need subdomain matrices, not globally assembled matrix.
+
+> **Notes:** Multilevel variants knock off the leading $$\frac L H$$. +
+Both overlapping and nonoverlapping with this bound.
+
+ * BDDC and FETI-DP
+    
+     - Neumann problems on subdomains with coarse grid correction.
+    
+     - $$\textit{its} \in \mathcal{O}\big(1 + \log\frac H h \big)$$.
+
+
+===== Multigrid
+
+
+Hierarchy: Interpolation and restriction operators $$ \Pi^\uparrow : X_{\text{coarse}} \to X_{\text{fine}} \qquad \Pi^\downarrow :  X_{\text{fine}} \to X_{\text{coarse}} $$
+   
+   - Geometric: define problem on multiple levels, use grid to compute hierarchy.
+   
+   - Algebraic: define problem only on finest level, use matrix structure to build hierarchy.
+
+Galerkin approximation
+
+Assemble this matrix: $$A_{\text{coarse}} = \Pi^\downarrow A_{\text{fine}} \Pi^\uparrow$$
+
+Application of multigrid preconditioner ($$ V $$-cycle)
+
+- Apply pre-smoother on fine level (any preconditioner).
+
+- Restrict residual to coarse level with $$\Pi^\downarrow$$.
+
+- Solve on coarse level $$A_{\text{coarse}} x = r$$.
+
+- Interpolate result back to fine level with $$\Pi^\uparrow$$.
+
+- Apply post-smoother on fine level (any preconditioner).
+
+
+====== Multigrid convergence properties
+
+- Textbook: $$P^{-1}A$$ is spectrally equivalent to identity
+    
+    * Constant number of iterations to converge up to discretization error.
+
+- Most theory applies to SPD systems
+    
+    * variable coefficients (e.g. discontinuous): low energy interpolants.
+    
+    * mesh- and/or physics-induced anisotropy: semi-coarsening/line smoothers.
+    
+    * complex geometry: difficult to have meaningful coarse levels.
+    
+- Deeper algorithmic difficulties
+
+    * nonsymmetric (e.g. advection, shallow water, Euler).
+    
+    * indefinite (e.g. incompressible flow, Helmholtz).
+
+- Performance considerations
+   
+    * Aggressive coarsening is critical in parallel.
+    
+    * Most theory uses SOR smoothers, ILU often more robust.
+    
+    * Coarsest level usually solved semi-redundantly with direct solver.
+
+- Multilevel Schwarz is essentially the same with different language
+
+    * assume strong smoothers, emphasize aggressive coarsening.
+
+===== List of PETSc Preconditioners
+
+See this link:http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/PC/PCType.html[PETSc page] for a complete list.
+
+.Table of Preconditioners as of PETSc 3.7
+|===
+| PETSc | Description |  Parallel
+| none |No preconditioner| yes 
+| jacobi | diagonal preconditioner | yes 
+| bjacobi | block diagonal preconditioner | yes 
+| sor | SOR preconditioner | yes
+| lu | Direct solver as preconditioner | depends on the factorization package (e.g.mumps,pastix: OK) 
+| shell | User defined preconditioner | depends on the user preconditioner  
+| mg | multigrid prec| yes 
+| ilu |incomplete lu| 
+| icc |incomplete cholesky| 
+| cholesky |Cholesky factorisation| yes
+| asm | Additive Schwarz Method| yes 
+| gasm | Scalable Additive Schwarz Method | yes  
+| ksp | Krylov subspace preconditioner | yes 
+| fieldsplit | block preconditioner framework |  yes
+| lsc | Least Square Commutator | yes 
+| gamg | Scalable Algebraic Multigrid | yes
+| hypre | Hypre framework (multigrid...)| 
+| bddc |balancing domain decomposition by constraints preconditioner| yes
+|===
+
+
+=== Principles 
+
+Feel++ abstracts the PETSc library and provides a subset (sufficient in most cases) to the PETSc features. It interfaces with the following PETSc libraries: `Mat` , `Vec` , `KSP` , `PC` , `SNES.` 
+ 
+  - `Vec`  Vector handling library
+  
+  - `Mat`  Matrix handling library
+  
+  - `KSP`  Krylov SubSpace library implements various iterative solvers
+  
+  - `PC`  Preconditioner library implements various  preconditioning strategies
+  
+  - `SNES`  Nonlinear solver library implements various  nonlinear solve strategies
+
+All linear algebra are encapsulated within backends using the command line option `--backend=<backend>` or config file option `backend=<backend>` which provide interface to several libraries
+
+|===
+| Library | Format  | Backend 
+| PETSc   | sparse  | `petsc` 
+| Eigen   | sparse  | `eigen` 
+| Eigen   | dense   | `eigen_dense` 
+|===
+
+The default `backend` is `petsc.` 
+
+=== Somes generic examples
+
+The configuration files `.cfg` allow for a wide range of options to solve a linear or non-linear system.
+
+We consider now the following example 
+[import:"marker1"](../../codes/mylaplacian.cpp)
+
+To execute this example
+
+[source,shell]
+----
+# sequential
+./feelpp_tut_laplacian
+# parallel on 4 cores
+mpirun -np 4 ./feelpp_tut_laplacian 
+----
+
+As described in section 
+
+==== Direct solver
+
+`cholesky` and `lu` factorisation are available. However the parallel implementation depends on the availability of MUMPS. The configuration is very simple.
+
+[source,ini]
+----
+# no iterative solver
+ksp-type=preonly
+# 
+pc-type=cholesky
+----
+
+Using the link:backends.adoc[PETSc backend] allows to choose different packages to compute the factorization.
+
+.Table of factorization package
+|===
+| Package | Description |  Parallel
+| `petsc` | PETSc own implementation|  yes
+| `mumps` | MUltifrontal Massively Parallel sparse direct Solver| yes
+| `umfpack` | Unsymmetric MultiFrontal package | no
+| `pastix` | Parallel Sparse matriX package| yes
+|===
+
+To choose between these factorization package
+
+[source,ini]
+----
+# choose mumps
+pc-factor-mat-solver-package=mumps
+# choose umfpack (sequential)
+pc-factor-mat-solver-package=umfpack
+----
+
+In order to perform a cholesky type of factorisation, it is required to set the underlying matrix to be SPD.
+
+[source,cpp]
+----
+// matrix
+auto A = backend->newMatrix(_test=...,_trial=...,_properties=SPD);
+// bilinear form
+auto a = form2( _test=..., _trial=..., _properties=SPD );
+----
+
+==== Using iterative solvers
+
+===== Using CG and ICC(3) 
+
+with a relative tolerance of 1e-12:
+[source,ini]
+--
+ksp-rtol=1.e-12
+ksp-type=cg
+pc-type=icc
+pc-factor-levels=3
+--
+
+===== Using GMRES and ILU(3) 
+
+with a relative tolerance of 1e-12 and a restart of 300:
+
+[source,ini]
+----
+ksp-rtol=1.e-12
+ksp-type=gmres
+ksp-gmres-restart=300
+pc-type=ilu
+pc-factor-levels=3
+----
+
+===== Using GMRES and Jacobi 
+
+With a relative tolerance of 1e-12 and a restart of 100:
+
+[source,ini]
+----
+ksp-rtol=1.e-12
+ksp-type=gmres
+ksp-gmres-restart 100
+pc-type=jacobi
+----
+
+==== Monitoring  linear non-linear and eigen problem solver residuals
+
+[source,ini]
+----
+# linear
+ksp_monitor=1
+# non-linear
+snes-monitor=1
+# eigen value problem
+eps-monitor=1
+----
+
+=== Solving the Laplace problem
+
+We start with the quickstart Laplacian example, recall that we wish to, given a domain $$\Omega$$, find $$u$$ such that
+
+$$
+-\nabla \cdot (k \nabla u) = f \mbox{ in } \Omega \subset \mathbb{R}^{2},\\
+u = g \mbox{ on } \partial \Omega
+$$
+
+===== Monitoring KSP solvers
+
+[source,sh]
+----
+feelpp_qs_laplacian --ksp-monitor=true
+----
+
+===== Viewing KSP solvers
+
+[source,sh]
+----
+shell> mpirun -np 2 feelpp_qs_laplacian --ksp-monitor=1  --ksp-view=1
+  0 KSP Residual norm 8.953261456448e-01
+  1 KSP Residual norm 7.204431786960e-16
+KSP Object: 2 MPI processes
+  type: gmres
+    GMRES: restart=30, using Classical (unmodified) Gram-Schmidt
+     Orthogonalization with no iterative refinement
+    GMRES: happy breakdown tolerance 1e-30
+  maximum iterations=1000
+  tolerances:  relative=1e-13, absolute=1e-50, divergence=100000
+  left preconditioning
+  using nonzero initial guess
+  using PRECONDITIONED norm type for convergence test
+PC Object: 2 MPI processes
+  type: shell
+    Shell:
+  linear system matrix = precond matrix:
+  Matrix Object:   2 MPI processes
+    type: mpiaij
+    rows=525, cols=525
+    total: nonzeros=5727, allocated nonzeros=5727
+    total number of mallocs used during MatSetValues calls =0
+      not using I-node (on process 0) routines
+----
+
+===== Solvers and preconditioners
+
+You can now change the Krylov subspace solver using the `--ksp-type` option and the preconditioner using `--pc-ptype` option.
+
+For example, 
+
+* to solve use the conjugate gradient,`cg`, solver and the default preconditioner use the following
+[source,shell]
+----
+./feelpp_qs_laplacian --ksp-type=cg --ksp-view=1 --ksp-monitor=1
+----
+
+* to solve using the algebraic multigrid preconditioner, `gamg`, with `cg` as a solver use the following
+[source,shell]
+----
+./feelpp_qs_laplacian --ksp-type=cg --ksp-view=1 --ksp-monitor=1 --pc-type=gamg
+----
+
+
+
+=== Block factorisation
+
+==== Stokes
+
+We now turn to the quickstart Stokes example, recall that we wish to,
+given a domain $$\Omega$$, find $$(\mathbf{u},p) $$ such that
+
+[stem]
+++++
+  -\Delta \mathbf{u} + \nabla p = \mathbf{ f} \mbox{ in } \Omega,\\
+  \nabla \cdot \mathbf{u} =    0 \mbox{ in } \Omega,\\
+  \mathbf{u} = \mathbf{g} \mbox{ on } \partial \Omega
+++++
+
+This problem is indefinite. Possible solution strategies are
+
+ - Uzawa, 
+ 
+ - penalty(techniques from optimisation), 
+ 
+ - augmented lagrangian approach (Glowinski,Le Tallec)
+
+**Note** that The Inf-sup condition must be satisfied. In particular for a multigrid strategy, the smoother needs to preserve it.
+
+### General approach for saddle point problems
+
+The Krylov subspace solvers for indefinite problems are MINRES, GMRES. As to preconditioning, we look first at the saddle point matrix $$M$$ and its block factorization $$M = LDL^T$$, indeed we have :
+
+[stem]
+++++
+M =   \begin{pmatrix}
+          A & B \\
+          B^T & 0
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+          I & 0\\
+          B^T C & I
+        \end{pmatrix}
+        \begin{pmatrix}
+          A & 0\\
+          0 & - B^T A^{-1} B
+        \end{pmatrix}
+        \begin{pmatrix}
+          I & A^{-1} B\\
+          0 & I
+        \end{pmatrix}
+++++
+        
+- Elman, Silvester and Wathen propose 3 preconditioners:
+
+[stem]
+++++
+P_1 =
+\begin{pmatrix}
+\tilde{A}^{-1} & B\\
+B^T & 0
+\end{pmatrix}, \quad
+P_2 =
+\begin{pmatrix}
+\tilde{A}^{-1} & 0\\
+0 & \tilde{S}
+\end{pmatrix},\quad
+P_3 =
+\begin{pmatrix}
+\tilde{A}^{-1} & B\\
+0 & \tilde{S}
+\end{pmatrix}
+++++
+
+where stem:[\tilde{S} \approx S^{-1} = B^T A^{-1} B] and  stem:[\tilde{A}^{-1} \approx A^{-1}]

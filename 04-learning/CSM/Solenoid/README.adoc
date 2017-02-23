@@ -1,0 +1,232 @@
+Solenoïd Benchmark
+==================
+
+An analytical solution of the elasticity equation exists in an infinitely long solenoid. Such a geometry has the advantage to be axisymetrical, we can first expresse the solution with cylindrical coordinates. +
+
+== Definition
+
+=== Equilibrium equation in cylindrical coordinates
+
+The analytical solution comes from the link:../../ElectroMagnetism/README.adoc[electromagnetism equations], indeed this case of a soleinoid crossed by an electric current can model the behaviour of a resistive magnet. The volumic forces $$\mathbf{f}$$ of the equilibrium equation are consequently dependent on the current density $$\mathbf{J}$$ and the induced magnetic field $$\mathbf{B}$$,
+which gives :
+$$
+\nabla\cdot\bar{\bar{\sigma}} + \mathbf{J}\times\mathbf{B} = \mathbf{0}
+$$
+
+We will use the following notations:
+$$
+\mathbf{u} =
+\begin{pmatrix}
+u \\
+v \\
+w \\
+\end{pmatrix}
+\quad
+\mathbf{J} =
+\begin{pmatrix}
+J_{r} \\
+J_{\theta} \\
+J_{z} \\
+\end{pmatrix},
+\quad
+\mathbf{B} =
+\begin{pmatrix}
+B_{r} \\
+B_{\theta} \\
+B_{z} \\
+\end{pmatrix},
+\quad
+\text{and}
+\quad
+\bar{\bar{\sigma}} =
+\begin{pmatrix}
+\sigma_{r r} & \sigma_{r \theta} & \sigma_{r z} \\
+\sigma_{\theta r} & \sigma_{\theta \theta} & \sigma_{\theta z} \\
+\sigma_{z r} & \sigma_{z \theta} & \sigma_{z z} \\
+\end{pmatrix}
+$$
+
+We consider here that the current distribution in the soleinoid is uniform. That means that $$J_{\theta}$$ is constant, and $$J_r = J_z = 0$$. +
+The volumic forces $$\mathbf{J} \times \mathbf{B}$$ becomes :
+$$
+\mathbf{J}\times\mathbf{B} =
+\begin{pmatrix}
+J_{\theta} B_z \\
+0 \\
+- J_{\theta} B_r
+\end{pmatrix}
+$$
+
+The revwriting of the equilibrium equation in cylindrical coordinates gives :
+$$
+\left\{
+\begin{array}{l}
+\displaystyle{ \frac{\partial \sigma_{rr}}{\partial r}
++ \frac{1}{r}\frac{\partial \sigma_{r\theta}}{\partial \theta}
++ \frac{\partial \sigma_{rz}}{\partial z}
++ \frac{1}{r}( \sigma_{rr} - \sigma_{\theta \theta} )
++  J_{\theta} B_z = 0 }\\[0.4cm]
+\displaystyle{ \frac{\partial \sigma_{\theta r}}{\partial r}
++ \frac{1}{r}\frac{\partial \sigma_{\theta \theta}}{\partial \theta}
++ \frac{\partial \sigma_{\theta z}}{\partial z}
++ \frac{2}{r} \sigma_{\theta r} = 0 }\\[0.4cm]
+\displaystyle{ \frac{\partial \sigma_{zr}}{\partial r}
++ \frac{1}{r}\frac{\partial \sigma_{\theta z}}{\partial \theta}
++ \frac{\partial \sigma_{zz}}{\partial z}
++ \frac{1}{r} \sigma_{rz}
+- J_{\theta} B_r = 0 }\\
+\end{array}
+\right.
+$$
+
+The axisymetrical properties of this geometries means that the displacement is invariant with respect to $$\theta$$. +
+Furthermore, the soleinoid we consider has the particularity to be infinitely long, so there is no displacement along $$z$$ axis. +
+We can consequently get rid of all derivatives $$\frac{\partial \cdot}{\partial \theta}$$ and $$\frac{\partial \cdot}{\partial z}$$. +
+Finally, we shall note that components $$\sigma_{\theta r}$$ and $$\sigma_{zr}$$ of the stress tensor $$\bar{\bar{\sigma}}$$ are expressed from Hooke's law only from the components $$v$$ and $$w$$ of the displacement vector $$\mathbf{u}$$, which nullify the two last equations.
+
+Thus, the equilibrium equation is reduced to:
+$$
+-\sigma_{\theta \theta} + \frac{\partial}{\partial r}(r \sigma_{rr}) = -r J_{\theta} B_z
+$$
+We need to express this equation in terms of the displacement $$\mathbf{u}$$, This can be done using Hooke's law which links the stress tensor to the tensor of small deformation by:
+$$
+\bar{\bar{\sigma}}=2\mu\bar{\bar{\varepsilon}} + \lambda Tr(\bar{\bar{\varepsilon}})Id
+$$
+where $$\mu$$ and $$\lambda$$ are the Lamé coefficients, and the tensor of small deformation is given in cylindrical coordinates by:
+$$
+\bar{\bar{\varepsilon}} = \frac{1}{2}(\nabla \mathbf{u} + \nabla \mathbf{u}^T) =
+\begin{pmatrix}
+\frac{\partial u}{\partial r}
+& \frac{1}{2}\left( \frac{1}{r}\frac{\partial u}{\partial \theta} - \frac{v}{r} + \frac{\partial v}{\partial r} \right)
+& \frac{1}{2} \left( \frac{\partial u}{\partial z} + \frac{\partial w}{\partial r} \right) \\
+\frac{1}{2}\left( \frac{1}{r}\frac{\partial u}{\partial \theta} - \frac{v}{r} + \frac{\partial v}{\partial r} \right)
+& \frac{1}{r}\frac{\partial v}{\partial \theta} + \frac{u}{r}
+& \frac{1}{2} \left( \frac{1}{r}\frac{\partial w}{\partial \theta} + \frac{\partial v}{\partial z} \right) \\
+\frac{1}{2} \left( \frac{\partial u}{\partial z} + \frac{\partial w}{\partial r} \right)
+& \frac{1}{2} \left( \frac{1}{r}\frac{\partial w}{\partial \theta} + \frac{\partial v}{\partial z} \right)
+& \frac{\partial w}{\partial z}
+\end{pmatrix}
+$$
+
+Then, using the last two definitions and the properties of the solenoid (axisymmetric and infinitely long), we can rewrite the equilibrium equation as:
+$$
+\frac{\partial}{\partial r}\left( r \frac{\partial u}{\partial r} \right) - \frac{u}{r} =
+- \frac{(1+\nu)(1-2\nu)}{E(1-\nu)}r J_{\theta} B_z
+$$
+
+=== Analytical solution
+
+We want to find an analytical solution of the form :
+$$
+u_{cyl}(r) = C_1 r + \frac{C_2}{r} + u_p(r)
+$$
+where $$C_1$$ and $$C_2$$ are constants, and $$u_p(r)$$ a particular solution of the equilibrium equation in cylindrical coordinates.
+
+From Ampére's theorem and considering that the soleinoid is axisymetrical and infinitely long, we deduce that $$B_r = 0$$, and $$B_z$$ depends only on $$r$$, such that :
+$$
+B_z(r_1) - B_z(r) = \frac{1}{\mu} \int_{r_1}^r J_{\theta} dr
+$$
+with $$r_1$$ the internal radius of the soleinoid.
+
+For a uniform distribution of current in the solenoid ($$j_{\theta}$$ constant), we deduce that $$B_z$$ can be expressed as :
+$$
+B_z(r) = B_z(r_1) - \frac{\Delta B_z}{\alpha - 1} \left( \frac{r}{r_1} - 1 \right)
+$$
+
+Replacing $$b_z$$ with his expression in the equilibrium equation, this gives :
+$$
+ \frac{\partial}{\partial r}\left( r \frac{\partial u}{\partial r} \right) - \frac{u}{r} =
+- \frac{(1+\nu)(1-2\nu)}{E(1-\nu)}r J_{\theta} \left( B_z(r_1) - \frac{\Delta B_z}{\alpha - 1} \left( \frac{r}{r_1} - 1 \right) \right)
+$$
+where $$r_2$$ is the external radius, $$\alpha = \frac{r_2}{r_1}$$ and $$\Delta b_z = B_z(r_1) - B_z(r_2)$$.
+
+A particular solution $$u_p(r)$$ for this equation is given by:
+$$
+u_p(r) = \frac{(1+\nu)(1-2\nu)}{E(1-\nu)}r_1 J_{\theta} \left[ -\frac{r_1}{3}\left( B_z(r_1) + \frac{\Delta B_z}{\alpha - 1} \right)
+\left( \frac{r}{r_1}\right)^2 + \frac{r_1}{8}\frac{\Delta B_z}{\alpha - 1} \left( \frac{r}{r_1}\right)^3 \right]
+$$
+
+The constants $$C_1$$ and $$C_2$$ are set by the boundary conditions, we consider here that there is no surface forces. That gives $$\bar{\bar{\sigma}}\cdot\mathbf{n} = 0$$ on internal and external radius, that is $$\sigma_{rr}(r_1)=\sigma_{rr}(r_2)=0$$.
+
+Using the definition of $$u_{cyl}$$ in
+$$
+\sigma_{rr} = \frac{E}{(1+\nu)(1-2\nu)} \left[ (1-\nu)\frac{\partial u}{\partial r} + \nu \frac{u}{r} \right]
+$$
+we can solve the system to find the constants:
+$$
+\begin{align}
+C_1 = \frac{(1+\nu)(1-2\nu)}{E(1-\nu)}J_{\theta}r_1 &\left[
+\left( B_z(r_1) + \frac{\Delta B_z}{\alpha - 1}\right) \left( \frac{2 - \nu}{3} \right)
+\left( 1 - \frac{r_2^2}{(r_2^2 - r_1^2)}\left( 1 - \frac{r_2}{r_1} \right) \right) \right. \\
+&+ \left. \frac{\Delta B_z}{\alpha - 1}\left( \frac{2\nu - 3}{8} \right)
+\left( 1 - \frac{r_2^2}{(r_2^2 - r_1^2)} \left( 1 - \left( \frac{r_2}{r_1} \right)^2 \right) \right) \right]
+\end{align}
+$$
+$$
+C_2 = \frac{-r_1^3 r_2^2 J_{\theta}}{(r_2^2 - r_1^2)}\frac{(1+\nu)}{E(1-\nu)}
+\left[ \left( B_z(r_1) + \frac{\Delta B_z}{\alpha - 1}\right) \left( \frac{2 - \nu}{3} \right)\left( 1 - \frac{r_2}{r_1} \right)
++\frac{\Delta B_z}{\alpha - 1}\left( \frac{2\nu - 3}{8} \right)\left( 1 - \left( \frac{r_2}{r_1} \right)^2 \right)  \right]
+$$
+
+The final step is to translate this analytical solution $$u_{cyl}(r)$$ into cartesian coordinates to obtain the analytical cartesian displacement $$\mathbf{u}_{cart}$$:
+$$
+\mathbf{u}_{cart}(x,y)=
+\begin{pmatrix}
+  cos( \theta )u_{cyl}(\sqrt{x^2 + y^2})\\
+  sin( \theta )u_{cyl}(\sqrt{x^2 + y^2})\\
+  0
+\end{pmatrix}
+=
+\begin{pmatrix}
+  \frac{x}{\sqrt{x^2 + y^2}}u_{cyl}(\sqrt{x^2 + y^2}) \\
+  \frac{y}{\sqrt{x^2 + y^2}}u_{cyl}(\sqrt{x^2 + y^2}) \\
+  0
+\end{pmatrix}
+$$
+
+=== Geometry
+
+We use a solenoïd of thickness one with $$r_1=1$$ and $$r_2=2$$ and with a length sufficiently important ($$l=10\,r_2$$) so that the influence of the top and of the bottom of the geometry, which are supposed not to exist, is close to zero. +
+
+=== Boundary conditions
+
+The boundary conditions taken into account for the analytical solution have to be reproduced for the simulation. That means null pressure forces on internal and external radius, and displacement set to zero (Dirichlet) on the top and on the bottom to keep only the radial component.
+
+We set:
+
+- $$\mathbf{u} = 0$$ on $$\Gamma_{top}\cup\Gamma_{bottom}$$
+- $$\bar{\bar{\sigma}}\cdot \mathbf{n} = 0$$ on $$\Gamma_{int}\cup\Gamma_{ext}$$
+- $$\mathbf{f} = 
+\begin{pmatrix}
+\frac{x}{\sqrt{x^2+y^2}}5000(10+20(\sqrt{x^2+y^2}-1))\\
+\frac{y}{\sqrt{x^2+y^2}}5000(10+20(\sqrt{x^2+y^2}-1))\\
+0
+\end{pmatrix}$$ in $$\Omega$$
+
+== Inputs
+
+We use the following parameters:
+
+.Inputs
+|===
+|Name |Value
+
+|$$E$$ | $$2.1e^6$$
+|$$\nu$$ | $$0.33$$
+|$$\mathbf{f}$$ |$$\begin{pmatrix}
+\frac{x}{\sqrt{x^2+y^2}}5000(10+20(\sqrt{x^2+y^2}-1))\\
+\frac{y}{\sqrt{x^2+y^2}}5000(10+20(\sqrt{x^2+y^2}-1))\\
+0
+\end{pmatrix}$$
+|===
+
+== Output
+
+We compare the radial component of the displacement on the segment $$z=l/2$$, $$y=0$$ and $$x\in [1,2]$$.
+
+== Results
+
+Here are the analytical and the computed $$x$$ component of the displacement. This has been obtain with a characteristic size of $$O.1$$ and $$646 233$$ dofs. +
+image:solenoid.png[alt=""]
+
+We can see that the errors grows as we approach the external radius. But the max of the error is $$5e^{-4}$$ and it converges as the characteristic size decreases.

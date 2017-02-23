@@ -1,0 +1,68 @@
+# Levelset
+:toc:
+:toc-placement: preamble
+:toclevels: 2
+
+Having the possibility to determine where two regions meeting can be really useful in some scientific domains. That's why the levelset method is born.
+
+== Levelset introduction 
+
+=== Levelset function 
+By using a scalar function $$\phi$$, define on all regions as the null value is obtained when it's placed on an interface of two domains.
+
+We denote $$\Omega_1$$ and $$ \Omega_2$$ two domains with $$\Gamma$$ the interface betwen them. Then $$\phi$$ can be define as
+
+$$
+\phi(\boldsymbol{x}) = \left\{  \begin{array}{cccc}
+        \text{dist}(\boldsymbol{x}, \Gamma), & \boldsymbol{x}& \in &\Omega_1 \\
+        0, & \boldsymbol{x}& \in &\Gamma\\
+        -\text{dist}(\boldsymbol{x}, \Gamma), & \boldsymbol{x}& \in & \Omega_2 \end{array} \right.
+$$
+
+with $$ \text{dist}(\boldsymbol{x}, \Gamma ) = \underset{\boldsymbol{y} \; \in \; \Gamma}{\min}( |\boldsymbol{x} - \boldsymbol{y}| ).$$
+
+This function $$\phi$$ had also the following property $$|\nabla\phi|=1$$.
+
+Moreover, the unit normal vector $$\boldsymbol{n}$$ outgoing from the interface and the curvature $$\mathcal{\kappa}$$ can be obtained from the levelset function.
+
+$$
+\boldsymbol{n}=\frac{\nabla\phi}{|\nabla\phi} \\
+\mathcal{\kappa}=\nabla \cdot \boldsymbol{n}= \nabla \cdot \frac{\nabla\phi}{|\nabla\phi|}
+$$
+
+Now we have exposed the levelset function, we need to define how the levelset will evolve and will spread into all the space. To do this, we use the following advection equation :
+
+$$
+\partial_t\phi+\boldsymbol{u}\cdot\nabla\phi=0
+$$
+
+where $$\boldsymbol{u}$$ is an incompressible velocity field.
+
+
+=== Heaviside and Dirac functions 
+
+We define also the regularized Heaviside function
+$$
+H_\varepsilon(\phi) = \left\{ \begin{array}{cc}
+      0, & \phi \leq - \varepsilon,\\
+      \dfrac{1}{2} \left(1+\dfrac{\phi}{\varepsilon}+\dfrac{\sin\left(\dfrac{\pi \phi}{\varepsilon}\right)}{\pi}\right),  & -\varepsilon \leq \phi \leq \varepsilon, \\
+      1, & \phi \geq \varepsilon \end{array} \right.
+$$
+
+and the regularized Dirac function
+$$
+\delta_\varepsilon(\phi) = \left\{ \begin{array}{cc}
+      0, & \phi \leq - \varepsilon,\\
+      \displaystyle\dfrac{1}{2 \varepsilon} \left(1+\cos\left(\dfrac{\pi \phi}{\varepsilon}\right)\right),  & -\varepsilon \leq \phi \leq \varepsilon, \\
+      0, & \phi \geq \varepsilon. \end{array} \right.
+$$
+
+The first one gives a different value to each side of the interface ( here 0 in and 1 out ).
+The second one allow us to define quantities, with value different from 0 at the interface. A typical value of $$\varepsilon$$ in literature is $$1.5h$$ where $$h$$ is the mesh step size.
+
+It should be noted that these functions allow us to determine respectively the volume and the surface of the interface by 
+$$
+V^+_{\varepsilon} = \int_{\Omega} H_\varepsilon \\
+S^{\Gamma}_{\varepsilon} = \int_{\Omega} \delta_\varepsilon
+$$
+

@@ -1,0 +1,76 @@
+= Computational Solid Mechanics
+:toc:
+:toc-placement: preamble
+:toclevels: 2
+
+
+Computational solid mechanics ( or CSM ) is a part of mechanics that studies solid deformations or motions under applied forces or other parameters.
+
+
+== Second Newton's law
+
+The second Newton's law allows us to define the fundamental equation of the solid mechanic, as follows 
+
+$$
+\rho^*_s \frac{\partial^2\boldsymbol{\eta}_s}{\partial t^2} - \nabla \cdot (\boldsymbol{F}_s\boldsymbol{\Sigma}_s) = \boldsymbol{f}^t_s
+$$
+
+It's define here into a Lagrangian frame.
+
+=== Variables, symbols and units
+|===
+| Notation | Quantity | Unit 
+|$$\rho_s^*$$|strucure density|$$kg/m^3$$
+|$$\boldsymbol{\eta}_s$$|displacement|$$m
+$$|$$\boldsymbol{F}_s$$|deformation gradient|
+|$$\boldsymbol{\Sigma}_s$$| second Piola-Kirchhoff tensor | $$N/m^2$$
+|$$f_s^t$$|body force|$$N/m^2$$
+|===
+
+
+
+{% include "git+https://github.com/feelpp/feelpp-book.git/en/03-modeling/Solid/SaintVenantKirchhoff.adoc" %}
+
+== Lamé coefficients 
+
+
+The Lamé coefficients are deducing from the Young's modulus $$E_s$$ and the Poisson's ratio $$\nu_s$$ of the material we work on and can be express 
+
+$$
+\lambda_s = \frac{E_s\nu_s}{(1+\nu_s)(1-2\nu_s)}
+\hspace{0.5 cm} 
+,
+\hspace{0.5 cm} 
+\mu_s = \frac{E_s}{2(1+\nu_s)}
+$$
+
+== Axisymmetric reduced model
+
+We interest us here to a 1D reduced model, named _generalized string_.
+
+The axisymmetric form, which will interest us here, is a tube of length $$L$$ and radius $$R_0$$. It is oriented following the axis $$z$$ and $$r$$ represent the radial axis. The reduced domain, named $$\Omega_s^*$$ is represented by the dotted line. So the domain, where radial displacement $$\eta_s$$ is calculated, is $$\Omega_s^*=[0,L]$$.
+
+We introduce then $$\Omega_s^{'*}$$, where we also need to estimate a radial displacement as before. The unique variance is this displacement direction.
+
+[[img-geometry1]]
+image::ReduceModel.png[caption="Figure 1 : ", title="Geometry of the reduce model", alt="Reduced Model Geometry", width="500", align="center"]  
+
+The mathematical problem associated to this reduce model can be describe as 
+$$
+ \rho^*_s h \frac{\partial^2 \eta_s}{\partial t^2} - k G_s h \frac{\partial^2 \eta_s}{\partial x^2} + \frac{E_s h}{1-\nu_s^2} \frac{\eta_s}{R_0^2} - \gamma_v \frac{\partial^3 \eta}{\partial x^2 \partial t} = f_s.
+ $$
+ 
+where $$\eta_s$$, the radial displacement that satisfy this equation.
+
+$$k$$ is the Timoshenko's correction factor, and $$\gamma_v$$ is a viscoelasticity parameter. The material is defined by its density $$\rho_s^*$$, its Young's modulus $$E_s$$, its Poisson's ratio $$\nu_s$$ and its shear modulus $$G_s$$
+
+At the end, we take 
+
+$$
+\eta_s=0\text{ on }\partial\Omega_s^*
+$$
+
+as a boundary condition, which will fixed the wall to its extremities.
+
+
+

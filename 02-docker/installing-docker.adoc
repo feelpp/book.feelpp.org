@@ -1,0 +1,90 @@
+== Installation
+:toclevels: 1
+
+
+
+This section covers briefly the installation of Docker. It should be a relatively simple smooth process to install Docker. 
+
+=== Channels
+
+Docker offers two channels: the stable and beta channels. 
+
+_stable channel_:: is fully baked and tested software providing a reliable platform to work with. Releases are not frequent.
+
+_beta channel_:: offers cutting edge features and experimental versions of the Docker Engine. This is a continuation of the initial Beta program of Docker to experiment with the latest features in development. It incurs far more instabilities than the stable channel but releases are done frequently -- possibly several releases per month.
+
+In the latter we shall consider only installing and using the _stable channel_.
+
+=== Installing Docker
+
+At the time of writing this section, Docker is available on Linux, Mac and Windows. 
+
+==== Mac and Windows
+The support for Mac and Windows as Host OS was recently released and Docker Inc provides installation processes link:https://docs.docker.com/docker-for-mac/[_Docker For Mac_] and link:https://docs.docker.com/docker-for-windows/[_Docker for Windows_] which are the recommended way of installing Docker on these platforms.
+
+==== Linux
+
+Most Linux distributions have their own packages but they tend to lag behind the stable releases of Docker which could be a serious  issue considering the development speed of Docker.
+
+To follow Docker releases, it is probably best to use the link:https://docs.docker.com/engine/installation/linux/[packages distributed by Docker].
+
+==== Installing Binaries
+
+The last possibility is to use link:https://docs.docker.com/engine/installation/binaries/[Docker Binaries] to install Docker. This should be used at the last resort if packages are provided neither by your distribution nor by Docker Inc.
+
+==== Tested with Docker 1.12
+
+At the time of writing this book, the Docker version we used is Docker 1.12. All commands have been tested with this version.
+
+=== Running without sudo
+
+On Linux, Docker is a priviledged binary, you need to prefix all your commands with `sudo`, e.g. on Ubuntu. You need first to belong to the `docker` group with the following command on Ubuntu
+
+----
+$ sudo usermod -aG docker
+----
+
+It creates the `docker` group if it doesn't already exist and adds the current user to the `docker` group. Then you need to log out and log in again. Similar process is available on other distributions. You need also to restart the `docker` service
+
+----
+$ sudo service docker restart
+----
+
+NOTE: From now on, we omit the `sudo` command when using `Docker` for the sake of brevity.
+
+CAUTION: Adding a user to the  `docker` group has security implications. On a shared machine, you should consider reading the link:https://docs.docker.com/engine/security/security/[Docker security page].
+
+
+=== Checking Docker
+
+We now check your installation by running `docker version`
+To make sure everything is installed correctly and working, try running the docker version command. You should see something like the following on Linux or Mac.
+
+.Listing : Output of `docker version` on Linux
+----
+include::docker-version-linux.txt[]
+----
+ 
+.Listing : Output of `docker version` on Mac
+----
+include::docker-version-mac.txt[]
+----
+ 
+If so, you are ready for the next step. If instead you get something like
+
+.Listing : Bad response output of `docker version` on Linux
+----
+include::docker-version-linux-bad.txt[]
+----
+
+
+.Listing : Bad response output of `docker version` on Mac
+----
+include::docker-version-mac-bad.txt[]
+----
+
+then it means that the Docker daemon is not running or that the client cannot access it.
+
+To investigate the problem you can try running the daemon manually --
+e.g. `sudo docker daemon`. This should give you some informations of
+what might have gone wrong with your installation.

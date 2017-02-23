@@ -1,0 +1,233 @@
+Feel++ Containers
+-----------------
+:toc:
+:toc-placement: macro
+:toclevels: 2
+
+Feel++ leverages the power of Docker and provides a stack of container images.
+
+toc::[]
+
+
+
+=== First steps
+
+To test Docker is installed properly, try
+
+----
+$ docker run feelpp/feelpp-env  echo 'Hello World!'
+----
+
+We have called the `docker run` command which takes care of executing
+containers. We passed the argument `feelpp/feelpp-env` which is a
+Feel{plus}{plus} Ubuntu 16.10 container with the required programming
+and execution environment for Feel{plus}{plus}.
+
+[NOTE]
+====
+`feelpp/` in `feelpp/feelpp-env` provides the organization name (or namespace) of the image and `feelpp-env` is the image name. Note also that Docker specifies a more complete name `feelpp/feelpp-env:latest` including the tag name `:latest`. We will see later how we defined the `latest` tag at the Feel++ organization. See <<FCS>> for more details.
+====
+
+This may take a while depending on your internet connection but
+eventually you should see something like
+
+----
+Unable to find image 'feelpp/feelpp-env:latest' locally <1>
+latest: Pulling from feelpp/feelpp-env
+8e21f82d32cf: Pull complete
+[...]
+0a8dee947f9b: Pull complete
+Digest: sha256:457539dbd781594eccd4ddf26a7aefdf08a2fff9dbeb1f601a22d9e7e3761fbc
+Status: Downloaded newer image for feelpp/feelpp-env:latest
+Hello World!
+----
+<1> The first line tells us that there is no local copy of this Feel++
+image. Docker checks automatically online on the
+link:http:://hub.docker.com[Docker Hub] if an image is available.
+
+Once the image is downloaded, Docker launches the container and
+executes the command we provided `echo 'Hello World!'` from inside the
+container. The result of the command is showed on the last line of the
+output log above.
+
+If you run the command again, you won't see the download part and the
+command will be executed very fast.
+
+We can ask Docker to give us a shell using the following command
+
+----
+$ docker run -it feelpp/feelpp-env
+----
+
+It provides a shell prompt from inside the container which is very
+similar to what you obtain when login with `ssh` on a remote
+machine. The flags `-i` and `-t` tell Docker to provide an interactive
+session (`-i`) with a TTY attached (`-t`).
+
+[[FCS]]
+=== Feel++ Container System
+
+The _Feel++ Container System_ (FCS) is organized in layers and provides a set of images.
+
+==== Naming
+
+The naming convention of the FCS allows the user to know where they
+come from and where they are stored on the
+link:http://hub.docker.com[Docker Hub]. The name of the images is
+built as follows
+
+[source,bash]
+----
+feelpp/feelp-<component>[:tag]
+----
+
+where
+
+ * `feelpp/` is the namespace of the image and organization name
+ * `feelpp-<component>` the image name and Feel++ component
+ * `[:tag]` an optional tag for the image, by default set to `:latest`
+
+Feel++ images(components) are defined as layers in the FCS in the table below.
+
+.Table of the current components of the FCS
+|===
+| Component | Description | Built From
+
+| `feelpp-env` | Execution and Programming environment | <OS>
+| `feelpp-libs`  | Feel++ libraries and tools | `feelpp-env`
+| `feelpp-base` | Feel++ base applications | `feelpp-libs`
+| `feelpp-toolboxes` | Feel++ toolboxes   | `feelpp-toolboxes`
+
+|===
+
+| **Note:** `feelpp-env` depends on an operating system image `<OS>`, the recommended and default `<OS>` is Ubuntu 16.10. In the future, we will build upon the next Ubuntu LTS or Debian Stable releases.
+
+==== Tags
+
+By default, the `:latest` tag is assumed in the name of the images, for example when running
+[source,bash]
+----
+$ docker run -it feelpp/feelpp-base
+----
+it is in fact `feelpp/feelpp-base:latest` which is being launched.
+The following table displays how the different images depend from one another.
+
+|===
+| Image |  Built from
+
+| `feelpp-env:latest` | Ubuntu 16.10
+| `feelpp-libs:latest` | `feelpp-env:latest`
+| `feelpp-base:latest` | `feelpp-libs:latest`
+| `feelpp-toolboxes:latest` | `feelpp-base:latest`
+
+|===
+
+==== Host OS
+
+As we said before the default Host OS is Ubuntu 16.10.
+However Docker shines in continuous integration. It provides a large set of operating system to build upon and allows to check the software in various contexts. The FCS takes advantage of Docker to build  `feelpp-libs` for several operating systems provided by `feelpp-env` and with different compilers any time a commit in the Feel++ repository is done.
+
+.Table providing the list of supported Host OS
+|===
+| Operating system | version | `feelpp-env` Tags | Compilers
+
+| Ubuntu | 16.10 | `ubuntu-16.10`,  `latest` | GCC 6.x, Clang 3.9
+| Ubuntu | 16.04 | `ubuntu-16.04` | GCC 6.x, Clang 3.8
+| Debian | sid   | `debian-sid` | GCC 6.x, Clang 3.9,4.0
+| Debian | testing | `debian-testing`| GCC 6.x, Clang 3.9
+
+|===
+
+If you are interested in testing Feel++ in these systems, you can run these flavors.
+
+==== Containers
+
+===== feelpp-env
+
+`feelpp-env` provides the Host OS and  link:../01-installation/prerequisites.adoc[Feel++ dependencies].
+
+[source,sh]
+----
+$ docker run feelpp/feelpp-env
+----
+
+===== feelpp-libs
+
+`feelpp-libs` builds from `feelpp-env` and provides:
+
+  . the Feel{plus}{plus} libraries
+  . the Feel++ mesh partitioner application
+
+----
+$ docker run feelpp/feelpp-libs
+----
+
+===== feelpp-base
+
+`feelpp-base` builds from `feelpp-libs` and provides two basic applications:
+
+ . `feelpp_qs_laplacian_*`: 2D and 3D laplacian problem
+ . `feelpp_qs_stokes_*`: 2D stokes problem
+
+
+----
+$ docker run feelpp/feelpp-base
+----
+
+===== feelpp-toolboxes
+
+`feelpp-toolboxes` builds from `feelpp-base` and provides
+
+----
+$ docker run feelpp/feelpp-toolboxes
+----
+
+
+=== Running Feel++ Applications
+
+To run Feel{plus}{plus} applications in docker, you need first to
+create a directory where you will store the Feel{plus}{plus}
+simulation files. For example, type
+
+[source,sh]
+----
+> mkdir $HOME/feel
+----
+
+and then type the following docker command
+
+----
+> docker run -it -v $HOME/feel:/feel feelpp/feelpp-libs
+----
+
+The previous command will execute the latest `feelpp/feelpp-libs` docker
+image in interactive mode in a terminal (`-ti`) and mount `$HOME/feel`
+in the directory `/feel` of the docker image.
+
+Running the command `df` inside the Docker container launched by the previous command
+
+----
+feelpp@4e7b485faf8e:~$ df
+----
+
+will get you this kind of output
+
+
+----
+Filesystem     1K-blocks      Used Available Use% Mounted on
+none           982046716 505681144 426457452  55% /
+tmpfs          132020292         0 132020292   0% /dev
+tmpfs          132020292         0 132020292   0% /sys/fs/cgroup
+/dev/sda2      982046716 505681144 426457452  55% /feel
+shm                65536         0     65536   0% /dev/shm
+----
+
+You see on the last but one line the directory `$HOME/feel` mounted on `/feel` in the Docker image.
+
+IMPORTANT: Note that mouting a host sub-directory on `/feel` is
+mandatory. If you don't, the Feel++ applications will exit due to lack
+of permissions. If you prefer running inside the docker environment
+you can type `unset FEELPP_REPOSITORY` and then all results from
+Feel{plus}{plus} applications will be store in `$HOME/feel. But then
+you will have to use `rsync` or `ssh` to copy your results out of the
+docker image if needed.
