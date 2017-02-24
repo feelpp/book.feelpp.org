@@ -18,4 +18,4 @@ quickref.html: quickref.adoc $(shell find 07-quickref -type f)
 modeling.html: modeling.adoc $(shell find 03-modeling 04-learning 05-applications -type f)
 
 clean:
-	rm *.html
+	rm book.html math.html install.html programming.html quickref.html quickref-cards.html modeling.html
