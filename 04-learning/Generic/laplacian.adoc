@@ -1,10 +1,4 @@
-The Laplacian
-=============
-:toc:
-:toc-placement: macro
-:toclevels: 3
-
-toc::[]
+= The Laplacian
 
 == Problem statement
 
@@ -13,7 +7,7 @@ We are interested in this section in the _conforming finite element approximatio
 [[laplacian]]
 .Laplacian problem
 ****
-Look for stem:[u] such that                              
+Look for stem:[u] such that
 
 [stem]
 ++++
@@ -32,7 +26,7 @@ In the implementation presented later, stem:[\partial \Omega_D =\partial \Omega_
 
 .Laplacian Problem with inhomogeneous Dirichlet conditions
 ****
-Look for stem:[u] such that                              
+Look for stem:[u] such that
 
 [stem]
 .Inhomogeneous Dirichlet Laplacian problem
@@ -45,37 +39,37 @@ Look for stem:[u] such that
 
 == Variational formulation
 
-We assume that stem:[f, h, l \in L^2(\Omega)]. The weak formulation of the problem then reads:                                                                                                                                            
+We assume that stem:[f, h, l \in L^2(\Omega)]. The weak formulation of the problem then reads:
 
 .Laplacian problem variational formulation
 ****
-Look for stem:[u \in H^1_{g,\Gamma_D}(\Omega)] such that                                                                                                                                    
+Look for stem:[u \in H^1_{g,\Gamma_D}(\Omega)] such that
 
 [stem]
 .Variational formulation
 ++++
-\displaystyle\int_\Omega \nabla u \cdot \nabla v +\int_{\Gamma_R} u v = \displaystyle \int_\Omega f\ v+ \int_{\Gamma_N} g\ v + \int_{\Gamma_R} l\ v,\quad \forall v \in H^1_{0,\Gamma_D}(\Omega)                                                                              
+\displaystyle\int_\Omega \nabla u \cdot \nabla v +\int_{\Gamma_R} u v = \displaystyle \int_\Omega f\ v+ \int_{\Gamma_N} g\ v + \int_{\Gamma_R} l\ v,\quad \forall v \in H^1_{0,\Gamma_D}(\Omega)
 ++++
 ****
 
 == Conforming Approximation
-                                                                                                                                                            
+
 We now turn to the finite element approximation using Lagrange finite
 element. We assume stem:[\Omega] to be a segment in 1D, a polygon in
 2D or a polyhedron in 3D.  We denote stem:[V_\delta \subset
 H^1(\Omega)] an approximation space such that stem:[V_{g,\delta}
 \equiv P^k_{c,\delta}\cap H^1_{g,\Gamma_D}(\Omega)].
 
-The weak formulation reads: 
+The weak formulation reads:
 
 .Laplacian problem weak formulation
 ****
-Look for stem:[u_\delta \in V_\delta  ] such that                                                                                                                                    
+Look for stem:[u_\delta \in V_\delta  ] such that
 
 [stem]
 ++++
-\displaystyle\int_{\Omega_\delta} \nabla u_{\delta} \cdot \nabla v_\delta +\int_{\Gamma_{R,\delta}} u_\delta\ v_\delta = \displaystyle \int_{\Omega_\delta} f\ v_\delta+ \int_{\Gamma_{N,\delta}} g\ v_\delta + \int_{\Gamma_{R,\delta}} l\ v_\delta,\quad \forall v_\delta \in V_{0,\delta}                                                      
-++++ 
+\displaystyle\int_{\Omega_\delta} \nabla u_{\delta} \cdot \nabla v_\delta +\int_{\Gamma_{R,\delta}} u_\delta\ v_\delta = \displaystyle \int_{\Omega_\delta} f\ v_\delta+ \int_{\Gamma_{N,\delta}} g\ v_\delta + \int_{\Gamma_{R,\delta}} l\ v_\delta,\quad \forall v_\delta \in V_{0,\delta}
+++++
 ****
 
 NOTE: from now on, we omit stem:[\delta] to lighten the notations. Be
@@ -84,10 +78,10 @@ careful that it appears both the geometrical and approximation level.
 
 
 [[implementation]]
-== Feel++ Implementation   
+== Feel++ Implementation
 
-In Feel{plus}{plus},  stem:[V_{g,\delta}] is not built but rather                                                                                                                 
-stem:[P^k_{c,\delta}]. 
+In Feel{plus}{plus},  stem:[V_{g,\delta}] is not built but rather
+stem:[P^k_{c,\delta}].
 
 NOTE: The Dirichlet boundary conditions can be treated using different techniques and we use from now on the elimination technique.
 
@@ -99,7 +93,7 @@ include::qs_laplacian.cpp[tag=mesh]
 ----
 
 
-NOTE: the keyword `auto` enables type inference, for more details see link:https://en.wikipedia.org/wiki/C%2B%2B11#Type_inference[Wikipedia C{plus}{plus}11 page]. 
+NOTE: the keyword `auto` enables type inference, for more details see link:https://en.wikipedia.org/wiki/C%2B%2B11#Type_inference[Wikipedia C{plus}{plus}11 page].
 
 
 Next the discretization setting by first defining `Vh=Pch<k>(mesh)` stem:[\equiv P^k_{c,h}], then elements of `Vh` and expressions `f`, `n` and `g` given by command line options or configuration file.
@@ -118,7 +112,7 @@ at the following line
 include::qs_laplacian.cpp[tag=v]
 ----
 
-`v` is set to the expression `g`, which means more precisely that `v` is the interpolant of `g` in `Vh`. 
+`v` is set to the expression `g`, which means more precisely that `v` is the interpolant of `g` in `Vh`.
 ======
 
 the variational formulation is implemented below, we define the
@@ -140,8 +134,8 @@ We have the following correspondance:
 |===
 | Element sets  | Domain
 
-| `elements(mesh)` | stem:[\Omega] 
-| `boundaryfaces(mesh)` | stem:[\partial \Omega] 
+| `elements(mesh)` | stem:[\Omega]
+| `boundaryfaces(mesh)` | stem:[\partial \Omega]
 
 | `markedfaces(mesh,"Dirichlet")`  |  stem:[\Gamma_D]
 | `markedfaces(mesh,"Neumann")`  |  stem:[\Gamma_R]
@@ -201,8 +195,8 @@ This give us some data such as solution of our problem or the mesh used in the a
 
 [cols="^,^"]
 |========
-|image:../figures/pngs/Laplacian/TestCases/Circle/ucircle.png[]|image:../figures/pngs/Laplacian/TestCases/Circle/meshCircle.png[]
-|Solution stem:[u_\delta]| Used mesh
+|image:{imagesdir}/Laplacian/TestCases/Circle/ucircle.png[]|image:{imagesdir}/Laplacian/TestCases/Circle/meshCircle.png[]
+|Solution stem:[u_\delta]| Mesh
 |========
 
 
@@ -220,12 +214,12 @@ cd Testcases/quickstart/feelpp2d
 mpirun -np 4 /usr/local/bin/feelpp_qs_laplacian_2d --config-file feelpp2d.cfg
 ----
 
-we obtain the result stem:[u_\delta] and also the mesh 
+we obtain the result stem:[u_\delta] and also the mesh
 
 [cols="^,^"]
 |======
-|image:../figures/pngs/Laplacian/TestCases/Feelpp2d/ufeelpp2d.png[]|image:../figures/pngs/Laplacian/TestCases/Feelpp2d/meshfeelpp2d.png[]
-|Solution stem:[u_\delta]| Used mesh
+|image:{imagesdir}/Laplacian/TestCases/Feelpp2d/ufeelpp2d.png[]|{imagesdir}/Laplacian/TestCases/Feelpp2d/meshfeelpp2d.png[]
+|Solution stem:[u_\delta]| Mesh
 |======
 
 ==== feelpp3d
@@ -238,11 +232,10 @@ cd Testcases/quickstart/feelpp3d
 mpirun -np 4 /usr/local/bin/feelpp_qs_laplacian_3d --config-file feelpp3d.cfg
 ----
 
-When it's finish, we can extract some informations 
+When it's finish, we can extract some informations
 
 [cols="^,^"]
 |======
-|image:../figures/pngs/Laplacian/TestCases/Feelpp3d/ufeelpp3d.png[]|image:../figures/pngs/Laplacian/TestCases/Feelpp3d/meshfeelpp3d.png[]
-|Solution stem:[u_\delta]| Used mesh
+|image:{imagesdir}/Laplacian/TestCases/Feelpp3d/ufeelpp3d.png[]|image:{imagesdir}/Laplacian/TestCases/Feelpp3d/meshfeelpp3d.png[]
+|Solution stem:[u_\delta]| Mesh
 |======
-

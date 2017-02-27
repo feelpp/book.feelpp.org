@@ -1,16 +1,10 @@
-Feel++ Containers
------------------
-:toc:
-:toc-placement: macro
-:toclevels: 2
+[[feelpp-containers]]
+= Feel++ Containers
 
 Feel++ leverages the power of Docker and provides a stack of container images.
 
-toc::[]
 
-
-
-=== First steps
+== First steps
 
 To test Docker is installed properly, try
 
@@ -69,7 +63,7 @@ session (`-i`) with a TTY attached (`-t`).
 
 The _Feel++ Container System_ (FCS) is organized in layers and provides a set of images.
 
-==== Naming
+=== Naming
 
 The naming convention of the FCS allows the user to know where they
 come from and where they are stored on the
@@ -102,7 +96,7 @@ Feel++ images(components) are defined as layers in the FCS in the table below.
 
 | **Note:** `feelpp-env` depends on an operating system image `<OS>`, the recommended and default `<OS>` is Ubuntu 16.10. In the future, we will build upon the next Ubuntu LTS or Debian Stable releases.
 
-==== Tags
+=== Tags
 
 By default, the `:latest` tag is assumed in the name of the images, for example when running
 [source,bash]
@@ -122,7 +116,7 @@ The following table displays how the different images depend from one another.
 
 |===
 
-==== Host OS
+=== Host OS
 
 As we said before the default Host OS is Ubuntu 16.10.
 However Docker shines in continuous integration. It provides a large set of operating system to build upon and allows to check the software in various contexts. The FCS takes advantage of Docker to build  `feelpp-libs` for several operating systems provided by `feelpp-env` and with different compilers any time a commit in the Feel++ repository is done.
@@ -140,9 +134,9 @@ However Docker shines in continuous integration. It provides a large set of oper
 
 If you are interested in testing Feel++ in these systems, you can run these flavors.
 
-==== Containers
+=== Containers
 
-===== feelpp-env
+==== feelpp-env
 
 `feelpp-env` provides the Host OS and  link:../01-installation/prerequisites.adoc[Feel++ dependencies].
 
@@ -151,7 +145,7 @@ If you are interested in testing Feel++ in these systems, you can run these flav
 $ docker run feelpp/feelpp-env
 ----
 
-===== feelpp-libs
+==== feelpp-libs
 
 `feelpp-libs` builds from `feelpp-env` and provides:
 
@@ -162,7 +156,7 @@ $ docker run feelpp/feelpp-env
 $ docker run feelpp/feelpp-libs
 ----
 
-===== feelpp-base
+==== feelpp-base
 
 `feelpp-base` builds from `feelpp-libs` and provides two basic applications:
 
@@ -174,7 +168,7 @@ $ docker run feelpp/feelpp-libs
 $ docker run feelpp/feelpp-base
 ----
 
-===== feelpp-toolboxes
+==== feelpp-toolboxes
 
 `feelpp-toolboxes` builds from `feelpp-base` and provides
 
@@ -183,7 +177,7 @@ $ docker run feelpp/feelpp-toolboxes
 ----
 
 
-=== Running Feel++ Applications
+== Running Feel++ Applications
 
 To run Feel{plus}{plus} applications in docker, you need first to
 create a directory where you will store the Feel{plus}{plus}
