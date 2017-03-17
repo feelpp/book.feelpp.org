@@ -1,64 +1,92 @@
-Thermo-Electric Toolbox
-=======================
+= Thermo-Electric Toolbox
 :toc:
 :toc-placement: macro
 :toclevels: 2
 
 toc::[]
 
-Let $$\Omega \subset \mathbb{R}^d, d=2,3$$ with $$\partial\Omega=\Gamma=\Gamma_{C}\cup\Gamma_{T}=\Gamma_E\cup\Gamma_{in}\cup\Gamma_{out}$$.
-We are interested in defining and solving an thermo-electric model involving the coupling of electrostatic and heat transfer models.
+:icons: font
+:stem: latexmath
+
+This section focuses on defining and solving of a thermo-electric model, which couples heat transfer and electrostatic models.
+The current flow inside an electrical conductor leads to the heating of the material, due to Joule effect.
+The temperature in the conductor can be deduced from the standard heat equation whose source term reads from the electrical potential to mimic the Joule effect.
+
+In the following sections, the domain is denoted by stem:[\Omega \subset \mathbb{R}^d], stem:[d=2,3] and its border by stem:[\Gamma].
 
 == Electrostatic problem
-We need to find the electric potential $$V$$ by solving:
-$$
-\begin{align}
-\nabla\cdot(-\sigma\nabla V) &= 0 &\text{ in } \Omega
-\end{align}
-$$where $$\sigma$$ is the electric conductivity. We denote by $$\mathbf{j} = - \sigma \nabla V$$ the electric current. On the boundary, we impose the electric potential on $$\Gamma_{in}$$ and $$\Gamma_{out}$$:
 
-- $$V=0$$ on $$\Gamma_{in}$$
-- $$V=V_{out}$$ on $$\Gamma_{out}$$.
+The electrostatic model consists in a diffusion equation. The electrical potential stem:[V] satisfies
+[stem]
+++++
+\nabla\cdot(-\sigma\nabla V) = 0 ~~\text{in}~~ \Omega
+++++
+where stem:[\sigma] is the electrical conductivity.
 
-We also want the other boundaries to be electrically insulating:
+NOTE: The electrical conductivity stem:[\sigma] often depends on the temperature. The thermo-electric model becomes non-linear in this case.
 
-- $$-\sigma\nabla V\cdot\mathbf{n}=\mathbf{j}\cdot\mathbf{n} = 0$$ on $$\Gamma_E$$
+The current flow within the conductor is modeled by a difference in electrical potential between the current input stem:[\Gamma_{in} \subset \Gamma] and the current output stem:[\Gamma_{out} \subset \Gamma].
+
+* stem:[V=0 ~~\text{on}~~ \Gamma_{in}]
+* stem:[V=V_{out} ~~\text{on}~~ \Gamma_{out}].
+
+We consider in this model that all other boundaries are electrically insulating. This conditions reads from the current density stem:[\mathbf{j} = - \sigma \nabla V] as
+
+* stem:[\mathbf{j}\cdot\mathbf{n} = -\sigma\nabla V\cdot\mathbf{n} = 0 ~~\text{on}~~ \Gamma  \setminus (\Gamma_{in} \cup \Gamma_{out})].
+
+The local form of Joule's law defines the heat source corresponding to Joule effect as the dot product of the current density stem:[\mathbf{j} = - \sigma \nabla V] by the electric field stem:[E=-\nabla V].
+This product stem:[P = \sigma \nabla V \cdot \nabla V] will be the source term of the heat equation defined in the next section.
 
 == Heat transfer problem
 
-Find the temperature $$T$$ by solving a thermal problem, where the source term comes from Joule effect:
-$$
-\begin{align}
-\nabla\cdot(-k\nabla T) &= \sigma\nabla V\cdot \nabla V &\text{ in } \Omega
-\end{align}
-$$where $$k$$ is the thermal conductivity. +
-The thermal exchanges with air are not considered, leading to a Neumann condition on $$\Gamma_T$$. While the thermal exchanges with the cooling water depends on a heat transfer coefficient $$h$$ and the cooling temperature $$T_c$$, leading to a Robin condition on $$\Gamma_C$$:
+The temperature stem:[T] satisfies the standard heat equation with the previously introduced Joule effect as source term,
+[stem]
+++++
+\nabla\cdot(-k\nabla T) = \sigma\nabla V\cdot \nabla V ~~\text{in}~~ \Omega
+++++
+where stem:[k] is the thermal conductivity. +
 
-- $$-k\nabla T\cdot \mathbf{n} = 0$$ on $$\Gamma_T$$
-- $$-k\nabla T\cdot\mathbf{n} = h(T-T_c)$$ on $$\Gamma_{C}$$
+NOTE: As for the electrical conductivity stem:[\sigma], the thermal conductivity stem:[k] can also depends on temperature.
+
+The thermal flux can eventually be controled by a water cooling process which limit the heating.
+The thermal exchange between the electrical conductor and the cooling water is governed by a convection phenomenon involving a heat transfert coefficient stem:[h] and the water temperature stem:[T_c].
+This cooling process is handled by a Robin condition on the cooled regions stem:[\Gamma_{c} \subset \Gamma]
+
+* stem:[-k\nabla T\cdot\mathbf{n} = h(T-T_c) ~~\text{on}~~ \Gamma_{C}]
+
+We consider that the thermal exchanges are limited to the cooled region, which amounts to apply an homogeneous Neumann condition on all other boundaries.
+
+* stem:[-k\nabla T\cdot \mathbf{n} = 0 ~~\text{on}~~ \Gamma \setminus \Gamma_{C}]
 
 
 == Thermo-Electric problem
 
 In the thermo-electric model, we have 4 parameters
-$$\sigma, k, T_c, h$$ which can be scalars or fields.
 
-We gather in the following table parameter ranges, nominal values as well as units for $$\sigma, k, T_c, h$$.
+* stem:[\sigma] the electrical conductivity
+* stem:[k] the thermal conductivity
+* stem:[T_c] the water cooling temperature
+* stem:[h] the heat transfer coefficient
+
+NOTE: These parameters can be scalars of fields. 
+
+We gather in the following table parameter ranges, nominal values as well as units for stem:[\sigma, k, T_c, h].
 
 .Table of parameters for the simulation
 |===
 | Parameters | Ranges |  Nominal value | Units
-| $$\sigma$$ | $$[52.10^{6};58.10^{6}]$$ | $$53\cdot 10^{6}$$ | $$S \cdot m^{-1}$$
-| $$k$$ | $$[360;380]$$| $$370$$ | $$W\cdot m^{-1} \cdot K^{-1}$$
-| $$T_c$$ | $$[293;310]$$ | 300 | K
-| $$h$$ | $$[70000;90000]$$ | $$850000$$ | $$W \cdot m^{-2} \cdot K^{-1}$$
+| stem:[\sigma] | stem:[[52.10^{6};58.10^{6}]] | stem:[53\cdot 10^{6}] | stem:[S \cdot m^{-1}]
+| stem:[k] | stem:[[360;380]]| stem:[370] | stem:[W\cdot m^{-1} \cdot K^{-1}$]
+| stem:[T_c] | stem:[[293;310]] | stem:[300] | K
+| stem:[h] | stem:[[70000;90000]] | stem:[850000] | stem:[W \cdot m^{-2} \cdot K^{-1}]
 |===
 
-In the linear case, we first solve for $$V$$ and then  for $$T$$ using $$V$$ to compute the joule effect that generate heat inside $$\Omega$$.
+In the linear case, we first solve for stem:[V] and then  for stem:[T] using stem:[V] to compute the Joule effect that generates heat inside stem:[\Omega].
 
 == Running the Thermo-electric application
 
-Using link:../../02-docker/feelpp-containers.adoc[] , you can run Feel++ model application and in particular the thermo-electric model using the following command
+Using link:../02-docker/README.adoc[Docker],
+you can run Feel++ model application and in particular the thermo-electric model using the following command
 
 .Docker command
 [source,shell]
