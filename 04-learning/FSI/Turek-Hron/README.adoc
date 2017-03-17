@@ -3,29 +3,31 @@ Turek Hron FSI Benchmark
 :toc:
 :toc-placement: preamble
 :toclevels: 1
-:biblio: ../../Appendix/Bibliography/readme.adoc 
+//:biblio: ../../Appendix/Bibliography/readme.adoc
+
+:icons: font
+:stem: latexmath
+:imagesdir: .
 
 
-In order to validate our fluid-structure interaction solver, a benchmark, initially proposed by link:{biblio}#turek2006proposal[Turek and Hron], is realized.
+In order to validate our fluid-structure interaction solver, a benchmark, initially proposed by <<TurekHron>>, is realized.
 
-Computer codes, used for the acquisition of results, are from Vincent link:../../Appendix/Bibliography/readme.adoc#bloodflowChabannes[Chabannes].
+Computer codes, used for the acquisition of results, are from Vincent <<Chabannes>>.
 
-> **Note** This benchmark is linked to the link:../../CFD/Turek-Hron/readme.adoc[Turek Hron CFD] and link:../../CSM/Turek-Hron/readme.adoc[Turek Hron CSM ] benchmarks.
+> **Note** This benchmark is linked to the link:../../CFD/Turek-Hron/README.adoc[Turek Hron CFD] and link:../../CSM/Turek-Hron/README.adoc[Turek Hron CSM ] benchmarks.
 
 == Problem Description
 
-In this case, we want to study the flow of a laminar incrompressible flow around an elastic obstacle, fixed to a rigid cylinder, we combine here the study realized on link:../../CFD/Turek-Hron/readme.adoc[Turek Hron CFD benchmark] and link:../../CFD/Turek-Hron/readme.adoc[Turek Hron CSM benchmark].
-So a 2D model, representative of this state, is consider. 
+In this case, we want to study the flow of a laminar incrompressible flow around an elastic obstacle, fixed to a rigid cylinder, we combine here the study realized on link:../../CFD/Turek-Hron/README.adoc[Turek Hron CFD benchmark] and link:../../CFD/Turek-Hron/README.adoc[Turek Hron CSM benchmark]. So a 2D model, representative of this state, is considered. 
 
 [[img-geometry1]]
 image::TurekHronFSIGeometry.png[caption="Figure 1 : ", title="Geometry of the Turek & Hron FSI Benchmark.", alt="TurekHron Geometry", width="600", align="center"]  
 
-
-We denote $$\Omega_f^*$$ the fluid domain, represented by a rectangle of dimension $$[0,2.5] \times [0,0.41] $$. This domain is characterized by its density $$\rho_f$$ and its dynamic viscosity $$\mu_f$$. In this case, the fluid material we used is glycerin.
+We denote stem:[\Omega_f^*] the fluid domain, represented by a rectangle of dimension stem:[ [0,2.5\] \times [0,0.41\] ]. This domain is characterized by its density stem:[\rho_f] and its dynamic viscosity stem:[\mu_f]. In this case, the fluid material we used is glycerin.
 
 Furthermore, the model chosen to describe the flow is the incompressible Navier-Stockes model. It is defined by the conservation of momentum equation and the conservation of mass equation. We also have the material constitutive equation to take in account in this domain, as well as the harmonic extension operator for the fluid movement.
 
-On the other side, the structure domain, named $$\Omega_s^*$$, represent the hyperelastic bar, bound to the stationary cylinder. As we want to work in a Lagrangian frame, and by Newton's second law, the fundamental equation of the solid mechanic will be used. For the model, that our hyperelastic material follows, we use the Saint-Venant-Kirchhoff one, define with Lamé coefficients. These coefficients are obtained from the the Young's modulus $$E_s$$ and the Poisson's ratio $$\nu_s$$ of the material.
+On the other side, the structure domain, named stem:[\Omega_s^*], represent the hyperelastic bar, bound to the stationary cylinder. As we want to work in a Lagrangian frame, and by Newton's second law, the fundamental equation of the solid mechanic will be used. For the model, that our hyperelastic material follows, we use the Saint-Venant-Kirchhoff one, define with Lamé coefficients. These coefficients are obtained from the the Young's modulus stem:[E_s] and the Poisson's ratio stem:[\nu_s] of the material.
 
 All of these are then gather into the fluid-structure coupling system.
 
@@ -33,56 +35,50 @@ All of these are then gather into the fluid-structure coupling system.
 
 We set
 
-* on $$\Gamma_{in}^*$$, an inflow Dirichlet condition.
-$$
-  \boldsymbol{u}_f=(v_{in},0);
-$$
+* on stem:[\Gamma_{in}^*], an inflow Dirichlet condition : stem:[  \boldsymbol{u}_f=(v_{in},0);]
 
-* on $$\Gamma_{wall}^*$$ and $$\Gamma_{circ}^*$$, a homogeneous Dirichlet condition. 
-$$
-  \boldsymbol{u}_f=\boldsymbol{0};
-$$
+* on stem:[\Gamma_{wall}^* \cup \Gamma_{circ}^*], a homogeneous Dirichlet condition : stem:[\boldsymbol{u}_f=\boldsymbol{0};]
 
-* on $$\Gamma_{out}^*$$, a Neumann condition
-$$
-  \boldsymbol{\sigma}_f\boldsymbol{n}_f=\boldsymbol{0};
-$$
+* on stem:[\Gamma_{out}^*], a Neumann condition : stem:[\boldsymbol{\sigma}_f\boldsymbol{n}_f=\boldsymbol{0};]
 
-* on $$\Gamma_{fixe}^*$$, a condition that imposes this boundary to be fixed.
-$$
-  \boldsymbol{\eta}_s=0
-$$
+* on stem:[\Gamma_{fixe}^*], a condition that imposes this boundary to be fixed : stem:[\boldsymbol{\eta}_s=0;]
 
-* on $$\Gamma_{fsi}^*$$
+* on stem:[\Gamma_{fsi}^*] :
 
-$$
+[stem]
+++++
 \frac{\partial \boldsymbol{\eta_{s}} }{\partial t} - \boldsymbol{u}_f \circ \mathcal{A}^t_f
   = \boldsymbol{0} \quad \left( \text{Velocities continuity}\right) 
-$$
-$$
+++++
+
+[stem]
+++++
   \boldsymbol{F}_{s} \boldsymbol{\Sigma}_{s} \boldsymbol{n}^*_s + J_{\mathcal{A}^t_f} \boldsymbol{F}_{\mathcal{A}^t_f}^{-T} \hat{\boldsymbol{\sigma}}_f \boldsymbol{n}^*_f
   = \boldsymbol{0} \quad \left( \text{ Constraint continuity}\right) 
-$$
+++++
 
-$$
+[stem]
+++++
   \boldsymbol{\varphi}_s^t  - \mathcal{A}^t_f
   = \boldsymbol{0} \quad \left( \text{Geometric continuity}\right) 
-$$
+++++
 
-where $$\boldsymbol{n}_f$$ is the outer unit normal vector from $$\partial \Omega_f^*$$.
+where stem:[\boldsymbol{n}_f] is the outer unit normal vector from stem:[\partial \Omega_f^*].
 
 === Initial conditions
 
 ==== Fluid 
-In order to describe the flow inlet by $$\Gamma_{in}$$, a parabolic velocity profile is used. It can be expressed by
+In order to describe the flow inlet by stem:[\Gamma_{in}], a parabolic velocity profile is used. It can be expressed by
 
-$$
+[stem]
+++++
   v_{cst} = 1.5 \bar{U} \frac{4}{0.1681} y \left(0.41-y\right)
-$$
-where $$\bar{U}$$ is the mean inflow velocity.
+++++
+where stem:[\bar{U}] is the mean inflow velocity.
 
 However, to impose a progressive increase of this velocity profile, we define
-$$
+
+\[
   v_{in} =
   \left\{
   \begin{aligned}
@@ -90,11 +86,11 @@ $$
    & v_{cst}  \quad & \text{ otherwise }
   \end{aligned}
   \right.
-$$
+\]
 
 With t the time.
 
-Finally, we don't want a source term, so $$f_f\equiv 0$$.
+Finally, we don't want a source term, so stem:[f_f\equiv 0].
 
 == Inputs
 
@@ -106,40 +102,40 @@ parameters of this test-case.
 |===
 | Name |Description | Nominal Value | Units
 
-|$$l$$ | elastic structure length | $$0.35$$  |$$m$$
-|$$h$$ | elastic structure height | $$0.02$$  |$$m$$ |$$r$$ | cylinder radius | $$0.05$$  |$$m$$
-|$$C$$ | cylinder center coordinates | $$(0.2,0.2)$$|$$m$$
-|$$A$$ | control point coordinates | $$(0.2,0.2)$$|$$m$$
-|$$B$$ | point coordinates | $$(0.15,0.2)$$|$$m$$
-|$$E_s$$ | Young's modulus | $$5.6 \times 10^6$$  | $$kg/(ms^2)$$
-|$$\nu_s$$ | Poisson's ratio | $$0.4$$ | dimensionless
-|$$\rho_s$$ | structure density | $$1000$$  |$$kg/m^3$$
-|$$\nu_f$$ | kinematic viscosity | $$1\times 10^{-3}$$ |$$m^2/s$$ 
-|$$\mu_f$$ | dynamic viscosity | $$1$$  | $$kg/(m \times s)$$
-|$$\rho_f$$ | density | $$1000$$  | $$kg/m^3$$
-|$$f_f$$| source term | 0  | 
-|$$\bar{U}$$| mean inflow velocity|2|$$m/s$$
+|stem:[l] | elastic structure length | stem:[0.35]  |stem:[m]
+|stem:[h] | elastic structure height | stem:[0.02]  |stem:[m] |stem:[r] | cylinder radius | stem:[0.05]  |stem:[m]
+|stem:[C] | cylinder center coordinates | stem:[(0.2,0.2)]|stem:[m]
+|stem:[A] | control point coordinates | stem:[(0.2,0.2)]|stem:[m]
+|stem:[B] | point coordinates | stem:[(0.15,0.2)]|stem:[m]
+|stem:[E_s] | Young's modulus | stem:[5.6 \times 10^6]  | stem:[kg.m^{-1}s^{-2}]
+|stem:[\nu_s] | Poisson's ratio | stem:[0.4] | dimensionless
+|stem:[\rho_s] | structure density | stem:[1000]  |stem:[kg.m^{-3}]
+|stem:[\nu_f] | kinematic viscosity | stem:[1\times 10^{-3}] |stem:[m^2.s^{-1}] 
+|stem:[\mu_f] | dynamic viscosity | stem:[1]  | stem:[kg.m^{-1}.s^{-1}]
+|stem:[\rho_f] | density | stem:[1000]  | stem:[kg.m^{-3}]
+|stem:[f_f]| source term | 0  | 
+|stem:[\bar{U}]| mean inflow velocity|2|stem:[m.s^{-1}]
 |===
 
 As for solvers we used, Newton's method is chosen for the non-linear part and a direct method based on LU decomposition is selected for the linear part.
 
 == Outputs
 
-The quantities we observe during this benchmark are on one hand the lift and drag forces ( respectively $$F_L$$ and $$F_D$$ ), as well as the displacement, on $$x$$ and $$y$$ axis, of the point A is the second value that interest us here.
+The quantities we observe during this benchmark are on one hand the lift and drag forces ( respectively stem:[F_L] and stem:[F_D] ), as well as the displacement, on stem:[x] and stem:[y] axis, of the point A is the second value that interest us here.
 
-They are the solution of the link::../readme.adoc#_fluid_structure_model[fluid-structure system].
+They are the solution of the link::../README.adoc[fluid-structure system].
 
-This system also give us the ALE map $$\mathcal{A}_f^t$$.
+This system also give us the ALE map stem:[\mathcal{A}_f^t].
 
 == Discretization
 
-To realize these tests, we made the choice to used $$P_N$$-$$P_{N-1}$$ Taylor-Hood finite elements to discretize the space.
+To realize these tests, we made the choice to used stem:[P_N~-~P_{N-1}] Taylor-Hood finite elements to discretize the space.
 
-For the fluid time discretization, BDF, at order $$q$$, is the method we have chosen.
+For the fluid time discretization, BDF, at order stem:[q], is the method we have chosen.
 
-And finally Newmark-beta method is the one we used for the structure time discretization, with parameters $$\gamma=0.5$$ and $$\beta=0.25$$.
+And finally Newmark-beta method is the one we used for the structure time discretization, with parameters stem:[\gamma=0.5] and stem:[\beta=0.25].
 
-These methods can be retrieved in link:../../Appendix/Bibliography/readme.adoc#bloodflowChabannes[Chabannes] papers.
+These methods can be retrieved in <<Chabannes>> papers.
 
 === Solvers
 
@@ -147,98 +143,65 @@ Here are the different solvers ( linear and non-linear ) used during results acq
 
 |===
 3+|
-$$
-\text{KSP}
-$$
+KSP
 |case|fluid|solid
 |type 2+|
-$$
-\text{gmres}
-$$
+gmres
 |relative tolerance 2+|
-$$
-1e-13
-$$
+stem:[1e-13]
 |max iteration 2+|
-$$
-1000
-$$
+stem:[1000]
 |reuse preconditioner 2+|
-$$
-\text{true}
-$$
+true
 |===
 
 |===
 3+|
-$$
-\text{SNES}
-$$
+SNES
 |case|fluid|solid
 |relative tolerance 2+|
-$$
-1e-8
-$$
+stem:[1e-8]
 |steps tolerance 2+|
-$$
-1e-8
-$$
-|max iteration 2+|$$
-50
-$$
-|max iteration with reuse |$$50$$|$$10$$
+stem:[1e-8]
+|max iteration 2+|
+stem:[50]
+|max iteration with reuse |stem:[50]|stem:[10]
 |reuse jacobian | true | false
 |reuse jacobian rebuild at first Newton step|false|true
 |===
 
 |===
 3+|
-$$
-\text{KSP in SNES}
-$$
+SNES
 |case|fluid|solid
 |relative tolerance 2+|
-$$
-1e-5
-$$
+stem:[1e-5]
 |max iteration 2+|
-$$
-1000
-$$
-|max iteration with reuse |$$1000$$|$$10$$
+stem:[1000]
+|max iteration with reuse |stem:[1000]|stem:[10]
 |reuse preconditioner 2+|true
 |reuse preconditioner rebuild at first Newton step 2+|
-$$
-\text{true}
-$$
+true
 |===
 
 |===
 3+|
-$$
-\text{PC}
-$$
+PC
 |case|fluid|solid
 |type 2+|
-$$
-\text{lu}
-$$
+LU
 |package 2+|
-$$
-\text{mumps}
-$$
+mumps
 |===
 
 |===
 2+|
-$$
-\text{FSI}
-$$
+FSI
 |solver method|fix point with Aitken relaxation
-|tolerance|$$1e-6$$
-|max iterations|$$1000$$
-|initial $$\theta$$|$$0.98$$
-|minimum $$\theta$$|$$1e-12$$
+|tolerance|stem:[1e-6]
+|max iterations|stem:[1000]
+|initial stem:[\theta]|stem:[0.98]
+|minimum stem:[\theta]|stem:[1e-12]
 |===
 
 == Implementation
@@ -261,10 +224,11 @@ The result files are then stored by default in
 
 ----
     feel/applications/models/fsi/TurekHron/fsi3/
-    velocity_space""pression_space""Geometric_order"-"OrderDisp""Geometric_order"/"processor_used"
+    <velocity_space><pression_space><Geometric_order>-<OrderDisp><Geometric_order>/np_<processor_used>
 ----
 
-For example, for the FSI3 case executed on $$4$$ processors, with a $$P_2$$ velocity approximation space, a $$P_1$$ pressure approximation space, a geometric order of $$1$$ for fluid part and a $$P_1$$ displacement approximation space and geometric order equals to $$1$$ for solid part, the path is 
+For example, for the FSI3 case executed on stem:[4] processors, with a stem:[P_2] velocity approximation space, a stem:[P_1] pressure approximation space, 
+a geometric order of stem:[1] for fluid part and a stem:[P_1] displacement approximation space and geometric order equals to stem:[1] for solid part, the path is 
 
 ----
     feel/applications/models/fsi/TurekHron/fsi3/P2P1G1-P1G1/np_4
@@ -276,12 +240,12 @@ First at all, we will discretize the simulation parameters for the different cas
 
 .Simulation parameters
 |===
-||$$N_{elt}$$|$$N_{dof}$$|$$[P^N_c(\Omega_{f,\delta}]^2 \times P^{N-1}_c(\Omega_{f,\delta}) \times V^{N-1}_{s,\delta}$$|$$\Delta t$$
+||stem:[N_{elt}]|stem:[N_{dof}]|stem:[ [P^N_c(\Omega_{f,\delta}\]^2 \times P^{N-1}_c(\Omega_{f,\delta}) \times V^{N-1}_{s,\delta}]|stem:[\Delta t]
 |link:../../Appendix/Bibliography/readme.adoc#turek2006proposal[Turek and Hron]|15872|304128||0.00025
-|(1)|1284|27400|$$[P^4_c(\Omega_{f,(h,3)}]^2 \times P^3_c(\Omega_{f,(h,3)}) \times V^3_{s,(h,3)}$$|0.005
-|(2)|2117|44834|$$[P^4_c(\Omega_{f,(h,3)}]^2 \times P^3_c(\Omega_{f,(h,3)}) \times V^3_{s,(h,3)}$$|0.005
-|(3)|4549|95427|$$[P^4_c(\Omega_{f,(h,3)}]^2 \times P^3_c(\Omega_{f,(h,3)}) \times V^3_{s,(h,3)}$$|0.005
-|(4)|17702|81654|$$[P^2_c(\Omega_{f,(h,1)}]^2 \times P^1_c(\Omega_{f,(h,1)}) \times V^1_{s,(h,1)}$$|0.0005
+|(1)|1284|27400|stem:[ [P^4_c(\Omega_{f,(h,3)}\]^2 \times P^3_c(\Omega_{f,(h,3)}) \times V^3_{s,(h,3)}]|0.005
+|(2)|2117|44834|stem:[ [P^4_c(\Omega_{f,(h,3)}\]^2 \times P^3_c(\Omega_{f,(h,3)}) \times V^3_{s,(h,3)}]|0.005
+|(3)|4549|95427|stem:[ [P^4_c(\Omega_{f,(h,3)}\]^2 \times P^3_c(\Omega_{f,(h,3)}) \times V^3_{s,(h,3)}]|0.005
+|(4)|17702|81654|stem:[ [P^2_c(\Omega_{f,(h,1)}\]^2 \times P^1_c(\Omega_{f,(h,1)}) \times V^1_{s,(h,1)}]|0.0005
 |===
 
 Then the FSI3 benchmark results are detailed below.
@@ -289,23 +253,23 @@ Then the FSI3 benchmark results are detailed below.
 [cols="1,2,2,2,2"]
 .Results for FSI3
 |===
-||$$x$$ displacement $$[\times 10^{-3}]$$|$$y$$ displacement $$[\times 10^{-3}]$$|Drag|Lift
-|link:../../Appendix/Bibliography/readme.adoc#turek2006proposal[Turek and Hron]|-2.69 ± 2.53 [10.9]|1.48 ± 34.38 [5.3]|457.3 ± 22.66 [10.9]|2.22 ± 149.78 [5.3]
-|link:../../Appendix/Bibliography/readme.adoc#breuer2012fluid[Breuer]|||464.5 ± 40.50|6.00 ± 166.00 [5.5]
-|link:../../Appendix/Bibliography/readme.adoc#turek2010numerical[Turek and Hron 2]|-2.88 ± 2.72 [10.9]|1.47 ± 34.99 [5.5]|460.5 ± 27.74 [10.9]|2.50 ± 153.91 [5.5]
-|link:../../Appendix/Bibliography/readme.adoc#munsch2010numerical[MunschBreuer]|-4.54 ± 4.34 [10.1]|1.50 ± 42.50 [5.1]|467.5 ± 39.50 [10.1]|16.2 ± 188.70 [5.1]
-|link:../../Appendix/Bibliography/readme.adoc#gallinger2010effiziente[Gallinger]|||474.9 ± 28.10|3.90 ± 165.90 [5.5]
-|link:../../Appendix/Bibliography/readme.adoc#sandboge2010fluid[Sandboge]|-2.83 ± 2.78 [10.8]|1.35 ± 34.75 [5.4]|458.5 ± 24.00 [10.8]|2.50 ± 147.50 [5.4]
+||stem:[x] displacement stem:[ [\times 10^{-3}\] ]|stem:[y] displacement stem:[ [\times 10^{-3}\] ]|Drag|Lift
+|<<TurekHron>>|-2.69 ± 2.53 [10.9]|1.48 ± 34.38 [5.3]|457.3 ± 22.66 [10.9]|2.22 ± 149.78 [5.3]
+|<<Breuer>>|||464.5 ± 40.50|6.00 ± 166.00 [5.5]
+|<<TurekHron2>>|-2.88 ± 2.72 [10.9]|1.47 ± 34.99 [5.5]|460.5 ± 27.74 [10.9]|2.50 ± 153.91 [5.5]
+|<<MunschBreuer>>|-4.54 ± 4.34 [10.1]|1.50 ± 42.50 [5.1]|467.5 ± 39.50 [10.1]|16.2 ± 188.70 [5.1]
+|<<Gallinger>>|||474.9 ± 28.10|3.90 ± 165.90 [5.5]
+|<<Sandboge>>|-2.83 ± 2.78 [10.8]|1.35 ± 34.75 [5.4]|458.5 ± 24.00 [10.8]|2.50 ± 147.50 [5.4]
 |(1)|-2.86 ± 2.74 [10.9]|1.31 ± 34.71 [5.4]|459.7 ± 29.97 [10.9]|4.46 ± 172.53 [5.4]
 |(2)|-2.85 ± 2.72 [10.9]|1.35 ± 34.62 [5.4]|459.2 ± 29.62 [10.9]|3.53 ± 172.73 [5.4]
 |(3)|-2.88 ± 2.75 [10.9]|1.35 ± 34.72 [5.4]|459.3 ± 29.84 [10.9]|3.19 ± 171.20 [5.4]
 |(4)|-2.90 ± 2.77 [11.0]|1.33 ± 34.90 [5.5]|457.9 ± 31.79 [11.0]|8.93 ± 216.21 [5.5]
 |===
 
-All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron[rep]
-[https://github.com/feelpp/feelpp/tree/develop/applications/models/fsi/TurekHron/fsi.geo[geo file], https://github.com/feelpp/feelpp/tree/develop/applications/models/fsi/TurekHron/fsi3.cfg[config file],
-https://github.com/feelpp/feelpp/tree/develop/applications/models/fsi/TurekHron/fsi3_fluid.json[fluid json file],
-https://github.com/feelpp/feelpp/tree/develop/applications/models/fsi/TurekHron/fsi3_solid.json[solid json file]].
+All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/toolboxes/solid/TurekHron[rep]
+[https://github.com/feelpp/feelpp/tree/develop/toolboxes/fsi/TurekHron/fsi.geo[geo file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fsi/TurekHron/fsi3.cfg[config file],
+https://github.com/feelpp/feelpp/tree/develop/toolboxes/fsi/TurekHron/fsi3_fluid.json[fluid json file],
+https://github.com/feelpp/feelpp/tree/develop/toolboxes/fsi/TurekHron/fsi3_solid.json[solid json file]].
 
 
 === Conclusion
@@ -315,7 +279,7 @@ Our first three results are quite similar to given references values. That show 
 However, the lift force seems to undergo some disturbances, compared to reference results, and it's more noticeable in our fourth case.
 This phenomenon is describe by <<Beuer>>, where they're explaining these disturbances are caused by Aitken dynamic relaxation, used in fluid structure relation for the fixed point algorithm.
 
-In order to correct them, they propose to lower the fixed point tolerance, but this method also lowers calculation performances. An other method to solve this deviation is to use a fixed relaxation parameter $$\theta$$. In this case, the optimal $$\theta$$ seems to be equal to $$0.5$$.
+In order to correct them, they propose to lower the fixed point tolerance, but this method also lowers calculation performances. An other method to solve this deviation is to use a fixed relaxation parameter stem:[\theta]. In this case, the optimal $$\theta$$ seems to be equal to stem:[0.5].
 
 == Bibliography
 
