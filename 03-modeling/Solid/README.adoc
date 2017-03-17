@@ -6,17 +6,13 @@ Computational Solid Mechanics Toolbox
 
 toc::[]
 
+:stem: latexmath
+
 == Notations
 
-- strain tensor
-$$
-  \boldsymbol{F}_s = \boldsymbol{I} + \nabla \boldsymbol{\eta}_s
-$$
- - Cauchy-Green tensor
-$$
-  \boldsymbol{C}_s = \boldsymbol{F}_s^{T} \boldsymbol{F}_s
-$$
-- Green-Lagrange tensor
+* strain tensor stem:[\boldsymbol{F}_s = \boldsymbol{I} + \nabla \boldsymbol{\eta}_s]
+* Cauchy-Green tensor stem:[\boldsymbol{C}_s = \boldsymbol{F}_s^{T} \boldsymbol{F}_s]
+* Green-Lagrange tensor
 $$
 \begin{align}
   \boldsymbol{E}_s &= \frac{1}{2} \left( \boldsymbol{C}_s - \boldsymbol{I} \right)  \\
@@ -29,24 +25,22 @@ $$
 
 |===
 | Notation | Quantity | Unit
-|$$\rho_s$$|density|$$kg/m^3$$
-|$$\lambda_s$$|first Lamé coefficients|$$N/m^2$$
-|$$\mu_s$$|second Lamé coefficients|$$N/m^2$$
-|$$E_s$$|Young modulus|$$kg/(m\cdot s^2)$$
-|$$\nu_s$$|Poisson's ratio|dimensionless
+|stem:[\rho_s]|density|stem:[kg.m^{-3}]
+|stem:[\lambda_s]|first Lamé coefficients|stem:[N.m^{-2}]
+|stem:[\mu_s]|second Lamé coefficients|stem:[N.m^{-2}]
+|stem:[E_s]|Young modulus|stem:[kg.m^{-1}.s^{-2}]
+|stem:[\nu_s]|Poisson's ratio|dimensionless
 
 
 |===
 
-
-
-
 == Models
-$$
+[stem]
+++++
   \rho^*_{s} \frac{\partial^2 \boldsymbol{\eta}_s}{\partial t^2}
   - \nabla \cdot \left(\boldsymbol{F}_s \boldsymbol{\Sigma}_s\right)
   =    \boldsymbol{f}^t_s
-$$
+++++
 
 === Linear elasticity
 $$
@@ -61,42 +55,42 @@ $$
 
 
 ==== Saint-Venant-Kirchhoff
-$$
+[stem]
+++++
 \boldsymbol{\Sigma}_s=\lambda_s tr( \boldsymbol{E}_s)\boldsymbol{I} +
 2\mu_s\boldsymbol{E}_s
-$$
+++++
 
 ==== Neo-Hookean
-
-$$
-\boldsymbol{\Sigma}_s= \mu_s J^{-2/3}(\mathbb{I} - \frac{1}{3}
+[stem]
+++++
+\boldsymbol{\Sigma}_s= \mu_s J^{-2/3}(\boldsymbol{I} - \frac{1}{3}
 \text{tr}(\boldsymbol{C}) \ \boldsymbol{C}^{-1})
-$$
+++++
 
-
-$$
+[stem]
+++++
 \boldsymbol{\Sigma}_s^ = \boldsymbol{\Sigma}_s^\text{iso} +
 \boldsymbol{\Sigma}_s^\text{vol}
-$$
-
+++++
 
 ===== Isochoric part : $$\boldsymbol{\Sigma}_s^\text{iso}$$
 
 [cols="1,1,1", options="header"]
 .Isochoric law
 |===
-| Name | $$\mathcal{W}_S(J_s)$$ | $$\boldsymbol{\Sigma}_s^{\text{iso}}$$
-| Neo-Hookean | | $$ \mu_s J^{-2/3}(\mathbb{I} - \frac{1}{3} \text{tr}(\boldsymbol{C}) \ \boldsymbol{C}^{-1}) $$
+| Name | stem:[\mathcal{W}_S(J_s)] | stem:[\boldsymbol{\Sigma}_s^{\text{iso}}]
+| Neo-Hookean | | stem:[\mu_s J^{-2/3}(\boldsymbol{I} - \frac{1}{3} \text{tr}(\boldsymbol{C}) \ \boldsymbol{C}^{-1}) ]
 |===
 
-===== Volumetric part : $$\boldsymbol{\Sigma}_s^\text{vol}$$
+===== Volumetric part : stem:[\boldsymbol{\Sigma}_s^\text{vol}]
 
 [cols="1,1,1", options="header"]
 .Volumetric law
 |===
-| Name | $$\mathcal{W}_S(J_s)$$ | $$\boldsymbol{\Sigma}_s^\text{vol}$$
-| classic | $$\frac{\kappa}{2} \left( J_s - 1 \right)^2$$ |
-| simo1985 | $$\frac{\kappa}{2} \left( ln(J_s) \right)$$ |
+| Name | stem:[\mathcal{W}_S(J_s)] | stem:[\boldsymbol{\Sigma}_s^\text{vol}]
+| classic | stem:[\frac{\kappa}{2} \left( J_s - 1 \right)^2] |
+| simo1985 | stem:[\frac{\kappa}{2} \left( ln(J_s) \right)] |
 |===
 
 
