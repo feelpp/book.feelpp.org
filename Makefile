@@ -1,7 +1,7 @@
 all: quickref.html quickref-cards.html install.html programming.html book.html
 
 %.html: %.adoc
-	asciidoctor-latex -a reproducible -b html -r asciidoctor-bibtex  -a allow-uri-read $<
+	asciidoctor -a reproducible -b html -r asciidoctor-bibtex  -a allow-uri-read $<
 
 # asciidoctor-latex -a reproducible -a linkcss -a stylesheet=colony.css -a stylesdir=astylesheets/stylesheets -b html -r asciidoctor-bibtex  -a allow-uri-read $<
 

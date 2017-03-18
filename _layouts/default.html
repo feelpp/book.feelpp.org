@@ -11,6 +11,7 @@
     <meta name="copyright" content="Maybe consider a Creative Commons license">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="{{page.root}}css/custom.css">
     <link rel="stylesheet" href="{{page.root}}css/foundation.css">
     <link rel="stylesheet" href="{{page.root}}css/font-awesome.css">
     <link rel="stylesheet" href="{{page.root}}css/coderay.css">
@@ -48,7 +49,7 @@
         <a href="{{ site.github.zip_url }}" class="btn">Download .zip</a>
         <a href="{{ site.github.tar_url }}" class="btn">Download .tar.gz</a>
         {% endif %}
-        <a href="http://www.feelpp.org/index.html" class="btn">Feel++ web site </a>
+        <a href="http://www.feelpp.org/" class="btn">Feel++ web site </a>
     </section>
 
 <!-- Main Page Content and Sidebar -->
@@ -60,7 +61,7 @@
     <div  class="small-3 columns">
 
 
-      <div id="toc" > <!--class="panel">-->
+      <div id="toc" class="toc3" > <!--class="panel">-->
         <div id="toctitle">Table of Contents</div>
       {{ page.document | tocify_asciidoc:2 }}
       </div>

@@ -1,24 +1,35 @@
-Computational Heat transfer
-===========================
-:toc:
-:toc-placement: macro
-:toclevels: 2
+= Models
 
-toc::[]
-
-NOTE: this documentation has not been written yet however the principles follow closely those of the CFD and CSM toolboxes. We suggest to have a look at the link:../04-learning/Thermic/[thermic examples].
-
-== Notations
+== Notations and Units 
 
 
+== Equation
 
-== Models
-
-== Materials
-
-== Boundary Conditions
-
-== Volumic forces
+Given a domain stem:[\Omega \subset \mathbb{R}^d, d=1,2,3], stem:[\Omega] is partitioned into stem:[N_r] regions stem:[\Omega_i,i=1,\ldots,N_r] corresponding to different materials (solid or fluid).
 
 
-== Post Process
+[stem]
+++++
+\rho C_p \frac{\partial T}{\partial t} + \mathb{u} \cdot \nabla T - \nabla \cdot \left\( k \nabla T \right\) = Q
+++++
+
+which is completed with initial value and boundary conditions
+
+.Initial value
+[stem]
+++++
+\text{at } t=0, \quad T(x,0) = T_0(x)
+++++
+
+.Dirichlet Boundary condition
+[stem]
+++++
+\
+++++
+
+
+
+
+
+= Toolbox
+

@@ -1,58 +1,8 @@
-= Computational Fluid Mechanics Toolbox
+= CFD Toolbox
 
-== Notations and units
+== Models
 
-|===
-| Notation | Quantity | Unit
-
-|stem:[\rho_f]|fluid density|$$kg.m^{-3}$$
-|stem:[\boldsymbol{u}_f]|fluid velocity|$$m.s^{-1}$$
-|stem:[\boldsymbol{\sigma}_f]|fluid stress tensor|$$N.m^{-2}$$
-|stem:[\boldsymbol{f}^t_f]| source term | $$kg.m^{-3}.s^{-1}$$
-|stem:[p_f]|pressure fields|$$kg.m^{-1}.s^{-2}$$
-|stem:[\mu_f]| dynamic viscosity|$$kg.m^{-1}.s^{-1}$$
-|stem:[\bar{U}]|characteristic inflow velocity|$$m.s^{-1}$$
-|stem:[\nu]|kinematic viscosity|$$m^2.s^{-1}$$
-|stem:[L]| characteristic length|stem:[m]
-|===
-
-
-== Équations
-
-Navier-Stokes model is used to model incompressible Newtonian fluid.
-It can be described by these conservative laws :
-
-[stem]
-.Momentum conservation equation
-++++
-\rho_{f} \left. \frac{\partial\mathbf{u}_f}{\partial t} \right|_\mathrm{x}
-+ \rho_{f} \left( \boldsymbol{u}_{f} \cdot \nabla_{\mathrm{x}} \right) \boldsymbol{u}_{f}
-- \nabla_{\mathrm{x}} \cdot \boldsymbol{\sigma}_{f} = \boldsymbol{f}^t_f , \quad \text{ in } \Omega^t_f \times \left[t_i,t_f \right]
-++++
-
-[env.equation]
-.Mass conservation equation
---
-\nabla_{\mathrm{x}} \cdot \boldsymbol{u}_{f} = 0, \quad \text{ in } \Omega^t_f \times \left[t_i,t_f \right]
---
-
-we complete this set of equations with the fluid constitutive law
-
-[env.equation]
-.Material constitutive equation
---
-\boldsymbol{\sigma}_{f} = -p_f \boldsymbol{I} + 2\mu_f D(\boldsymbol{u}_{f})
---
-
-with strain tensor stem:[D(\boldsymbol{u}_{f})] defined by :
-
-[env.equation]
-.Strain tensor
---
-D(\boldsymbol{u}_{f}) = \frac{1}{2} (\nabla_\mathrm{x} \boldsymbol{u}_f + (\nabla_\mathrm{x} \boldsymbol{u}_f)^T)
---
-
-An alternative model is the Stokes model. It is valid in the case of small Reynolds number. It corresponds to the same formulation than Navier-Stokes equations but without the convective term $$\left( \boldsymbol{u}_{f} \cdot \nabla_{\mathrm{x}} \right) \boldsymbol{u}_{f}$$ .
+The CFD Toolbox supports both the Stokes and the incompressible Navier-Stokes equations.
 
 The fluid mechanics model (`Navier-Stokes` or `Stokes`) can be selected in json file:
 
@@ -93,8 +43,12 @@ A `Materials` section is introduced in json file in order to configure the fluid
     }
 }
 ----
+
 === Generalised Newtonian fluid
-A non newtonian fluid is characterized by a non constant viscosity, which is a function of strain rate stem:[\boldsymbol{D}\left(\boldsymbol{u}_{f}\right)]. We start by introducing a metric of the rate of deformation, denoted by stem:[\dot{\gamma}]:
+
+A non newtonian fluid is characterized by a non constant viscosity, which is a function of strain rate stem:[\boldsymbol{D}\left(\boldsymbol{u}_{f}\right)].
+
+We start by introducing a metric of the rate of deformation, denoted by stem:[\dot{\gamma}]:
 
 [env.equation]
 .Rate of deformation
@@ -244,12 +198,12 @@ dimensionless
 
 
 
-=== Boundary Conditions
+== Boundary Conditions
 We start by a listing of boundary conditions supported in fluid mechanics model.
 
 
 
-==== Dirichlet on velocity
+=== Dirichlet on velocity
 
 A Dirichlet condition on velocity field reads:
 [env.equation]
@@ -271,7 +225,7 @@ Several methods are available to enforce the boundary condition:
 * Nitsche
 * Lagrange multiplier
 
-==== Dirichlet on pressure
+=== Dirichlet on pressure
 
 
 [env.equation]

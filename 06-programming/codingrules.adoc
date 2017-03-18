@@ -1,0 +1,464 @@
+[[feel-coding-styles]]
+= Feel++ Coding Styles
+Christophe Prud'homme <https://github.com/prudhomm[@prudhomm]>
+v1.0, 2017/03/07
+ifndef::env-site[]
+:feelpp: Feel++
+:cpp: C++
+:toc: left
+:toclevels: 1
+:source-highlighter: pygments
+:icons: font
+endif::[]
+
+
+This is an overview of the coding conventions we use when writing {feelpp}
+code.
+
+== Clang Format
+
+`clang-format` is a powerful tool to reformat your code according to
+rules defined in a `.clang-format` file at the toplevel directory of
+your software.
+
+{feelpp} has such a file and define the indentation, space and breaks
+rules defined later on.
+
+For `clang-format` to function properly, follow the <<comments>> rules.
+
+To apply {feelpp} rules on a file `a.cpp` in a {feelpp} sub-directory, type
+----
+clang-format a.cpp
+----
+to dump the results of the reformating to the standard output
+or type
+----
+clang-format -i a.cpp
+----
+which will replace `a.cpp` by the reformated file.
+
+WARNING: be careful when reformating, make sure nobody is working on that file, to avoid creating possibly massive conflicts with the persons currently modifying the same code when they get merged.
+
+[[headers]]
+== Header files and multiple inclusions
+
+To avoid multiple inclusions, wrap every header files using the following technique
+
+[source,cpp]
+----
+// say we have myheader.hpp
+#if !defined(FEELPP_MYHEADER_HPP)
+#define FEELPP_MYHEADER_HPP 1
+
+// your header here...
+
+#endif // FEELPP_MYHEADER_HPP
+----
+
+more details
+link:http://en.wikipedia.org/wiki/Include_guard#Double_inclusion[here]
+
+== Naming Convention
+
+In {feelpp}, we basically follow the same naming conventions as in Qt and
+KDE.
+
+Class names starts with a capital. The rest is in camel case. Function
+names starts with a lower case, but the first letter of each successive
+word is capitalized.
+
+Functions and classes should be in the `Feel` namespace.
+
+The prefix `set` is used for setters, but the prefix `get` is not used
+for accessors. Accessors are simply named with the name of the property
+they access. The exception is for accessors of a boolean which may start
+with the prefix `is`.
+
+Acronyms are lowercased too. Example: Url instead of URL and
+isFemEnabled() instead of isFEMEnabled()
+
+Accessors should usually be const.
+
+This example shows some possible functions names
+
+[source,cpp]
+----
+class A
+{
+public:
+    void setMatrix(const Matrix& c);
+    Matrix matrix() const;
+    void setDiagonal(bool b);
+    bool isDiagonal() const;
+};
+----
+
+[[reserved-identifiers]]
+== Reserved identifiers
+
+* Do not use underscores to start identifiers, see
+link:http://stackoverflow.com/questions/228783/what-are-the-rules-about-using-an-underscore-in-a-c-identifier/228794#228797[StackOverFlow
+comments here] for the reasons
+
+
+
+== Indentation
+
+* 4 spaces are used for indentation but not in namespace
+* Spaces, not tabs!
+* Suggestion: use emacs and [http://emacswiki.org/emacs/dirvars.el
+dirvars.el], here is the content of `.emacs-dirvars` in top {feelpp}
+directory
++
+----
+indent-tabs-mode: nil
+tab-width: 4
+c-basic-offset: 4
+evaluate: (c-set-offset 'innamespace '0)
+show-trailing-whitespace: t
+indicate-empty-lines: t
+evaluate: (add-hook 'write-file-hooks 'delete-trailing-whitespace)
+----
+
+[source,cpp]
+----
+namespace Feel
+{
+// no space indentation in namespace
+Class A
+{
+    // 4 spaces indentation
+    A() {}; 
+    void f();
+};
+}
+----
+
+[[comments]]
+== Comments
+
+Use {cpp} style comment `//` rather than `/* */`. It uses less
+characters but also it is easier to reflow using clang format.
+
+[source,cpp]
+----
+
+/* Wrong
+  the doc
+  */
+
+// Correct
+// the doc
+----
+=== Doxygen
+
+TIP: link:http://www.doxygen.org[Doxygen] is the tool to document {feelpp} and create a reference manual
+
+Use `//!` to comment function, variables, classes rather than `/**
+*/`, it allows to reflow comments using clang format.
+
+[source,cpp]
+----
+//!
+//! @brief the class
+//! @author me <me@email>
+//!
+class TheClass
+{
+public:
+  //! constructor
+  TheClass() {}
+
+private:
+  //! member
+  int member;
+};
+
+//! the function
+void thefunction() {}
+----
+
+[[declvariables]]
+== Declaring variables
+
+* Declare each variable on a separate line
+* Avoid short (e.g. `a`, `rbarr`, `nughdeget`) names whenever possible
+* Single character variable names are only okay for counters and
+temporaries, where the purpose of the variable is obvious
+* Wait when declaring a variable until it is needed
+
+[source,cpp]
+----
+// Wrong
+int a, b;
+char __c, __d;
+
+// Correct
+int height;
+int width;
+char __nameOfThis;
+char __nameOfThat;
+----
+
+* Variables and functions start with a lower-case letter. Each consecutive word in a variable's or function's name starts with an upper-case letter
+ * Avoid abbreviations
+
+[source,cpp]
+----
+
+// Wrong
+short Cntr; char ITEM_DELIM = '';
+
+// Correct
+short counter; char itemDelimiter = '';
+
+----
+
+ * Classes always start with an upper-case letter.
+ 
+[source,cpp]
+----
+
+// Wrong
+class meshAdaptation {};
+
+// Correct
+class MeshAdaptation {};
+
+----
+
+ * Non-static data members name of structures and classes always start with `M_` . M stands for Member. The rational behind this is for example :
+ ** to be able to immediately see that the data is a member of a class or a struct
+ ** to easily search and query-replace
+ 
+[source,cpp] 
+----
+
+// Wrong
+class meshAdaptation { std::vector directions_; };
+
+// Correct
+class MeshAdaptation { std::vector M_directions; };
+
+----
+
+ * Static data members name of structures and classes always start with `S_` . `S` stands for Static. The rational behind this is for example :
+ ** to be able to immediately see that the data is a static member of a class or a struct
+ ** to easily search and query-replace
+
+[source,cpp]   
+----
+
+// Wrong
+class meshAdaptation { static std::vector directions_; };
+
+// Correct
+class MeshAdaptation { static std::vector S_directions; };
+
+----
+
+[[whitespace]]
+== Whitespace
+
+ * Use blank lines to group statements together where suited
+ * Always use only one blank line
+ * Always use a single space after a keyword and before a curly brace.
+
+[source,cpp] 
+----
+
+// Correct
+if (foo) { }
+
+// Wrong
+if(foo) { }
+----
+
+ * For pointers or references, always use a single space between the type and `*` or `&`, but no space between the `*` or `&` and the variable name.
+
+[source,cpp]
+----
+
+char *x;
+const std::string &myString;
+const char * const y = "hello";
+
+----
+
+ * Surround binary operators with spaces.
+ * No space after a cast.
+ * Avoid C-style casts when possible.
+
+[source,cpp] 
+----
+
+// Wrong
+char* blockOfMemory = (char* ) malloc(data.size());
+
+// Correct
+char *blockOfMemory = reinterpret_cast(malloc(data.size()));
+
+----
+
+[[braces]]
+== Braces
+
+ * As a base rule, the left curly brace goes on the same line as the start of the statement:
+
+[source,cpp]
+----
+
+// Wrong
+if (codec) { }
+
+// Correct
+if (codec) { }
+
+----
+
+* Function implementations and class declarations always have the left brace on the start of a line:
+
+[source,cpp] 
+----
+
+static void foo(int g) { std::cout << g << "" }
+
+class Moo { };
+
+----
+
+* Use curly braces when the body of a conditional statement contains more than one line, and also if a single line statement is somewhat complex.
+
+[source,cpp]
+----
+// Wrong
+if (address.isEmpty()) { return false; }
+
+for (int i = 0; i < 10; ++i) { std::cout << "i=" << i << ""; }
+
+// Correct
+if (address.isEmpty()) return false;
+
+for (int i = 0; i < 10; ++i) std::cout << "=" << i << "";
+
+----
+
+* Exception 1: Use braces also if the parent statement covers several lines / wraps
+
+[source,cpp] 
+----
+// Correct
+if (address.isEmpty() || !isValid() || !codec)
+{
+    return false;
+}
+
+----
+
+* Exception 2: Use braces also in if-then-else blocks where either the if-code or the else-code covers several lines
+
+[source,cpp]
+----
+// Wrong
+if (address.isEmpty())
+  return false;
+else
+{
+  std::cout << address << ""; ++it;
+ }
+
+// Correct
+if (address.isEmpty())
+{
+    return false;
+}
+else
+{
+    std::cout << address << ""; ++it;
+}
+
+// Wrong
+if (a) if (b) ... else ...
+
+// Correct
+if (a) { if (b) ... else ... }
+
+----
+
+* Use curly braces when the body of a conditional statement is empty
+
+[source,cpp]
+----
+
+// Wrong
+while (a);
+
+// Correct
+while (a) {}
+
+----
+
+[[parens]]
+== Parentheses
+
+ * Use parentheses to group expressions:
+
+[source,cpp]
+----
+
+// Wrong
+if (a && b || c)
+
+// Correct
+if ((a && b) || c)
+
+// Wrong
+a + b & c
+
+// Correct
+(a + b) & c
+
+----
+
+[[switch]]
+== Switch statements
+
+ * The case labels are in the same column as the switch
+ * Every case must have a break (or return) statement at the end or a comment to indicate that there's intentionally no break, unless another case follows immediately.
+
+[source,cpp] 
+----
+switch (myEnum)
+{
+  case Value1:
+    doSomething();
+    break;
+  case Value2:
+  case Value3:
+    doSomethingElse(); // fall through
+  default:
+    defaultHandling();
+    break;
+}
+----
+
+[[breaks]]
+== Line breaks
+
+ * Keep lines shorter than 100 characters; insert breaks if necessary.
+ * Commas go at the end of a broken line; operators start at the beginning of the new line. An operator at the end of the line is easy to not see if your editor is too narrow.
+
+[source,cpp]
+----
+// Correct
+if (longExpression + otherLongExpression + otherOtherLongExpression) { }
+
+// Wrong
+if (longExpression + otherLongExpression + otherOtherLongExpression) { }
+----
+
+[[inheritance]]
+== Inheritance and the `virtual` keyword
+
+When reimplementing a virtual method, do not put the `virtual` keyword in the header file.
+

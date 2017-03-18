@@ -1,0 +1,25 @@
+set terminal png size 800,600
+set output "plot_over_time.png"
+set ylabel "Temperature [deg. celsius]"
+set xlabel "Time [sec]"
+plot \
+"1_over_time.log" u 1:2 w p lw 2 t "cf=cr=15 mm - 3D FEM", \
+"2_over_time.log" u 1:2 w p lw 2 t "cf= 6mm, cr=15mm - 3D FEM", \
+"3_over_time.log" u 1:2 w p lw 2 t "cf=15mm, cr= 6mm - 3D FEM",\
+"goldak_1.res" i 1 u 1:2 w lp t "cf=cr=15 mm - Analytical", \
+"goldak_2.res" i 1 u 1:2 w lp t "cf= 6mm, cr=15mm - Analytical", \
+"goldak_3.res" i 1 u 1:2 w lp t "cf=15mm, cr= 6mm - Analytical"
+
+set output "plot_over_path.png"
+set ylabel "Temperature [deg. celsius]"
+set xlabel "Distance from the start [m]"
+set xrange [0:0.1];
+plot \
+"1_over_path.log" u 1:2 w p lw 2 t "cf=cr=15 mm - 3D FEM", \
+"2_over_path.log" u 1:2 w p lw 2 t "cf= 6mm, cr=15mm - 3D FEM", \
+"3_over_path.log" u 1:2 w p lw 2 t "cf=15mm, cr= 6mm - 3D FEM",\
+"goldak_1.res" i 0 u 1:2 w lp t "cf=cr=15 mm - Analytical", \
+"goldak_2.res" i 0 u 1:2 w lp t "cf= 6mm, cr=15mm - Analytical", \
+"goldak_3.res" i 0 u 1:2 w lp t "cf=15mm, cr= 6mm - Analytical"
+
+reset
