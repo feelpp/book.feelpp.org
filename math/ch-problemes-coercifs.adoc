@@ -1,0 +1,595 @@
+// -*- mode: adoc -*-
+[[cha:appr-de-probl]]
+= Approximation de problèmes coercifs
+
+Dans ce chapitre, on s’intéresse à l’approximation de problèmes coercifs:
+
+* le Laplacien et des variantes sur les conditions aux limites et le l’équation elle-même;
+* l’élasticité linéaire qui permet de modéliser de petites déformations d’un milieu continu déformable.
+
+[[sec:le-laplacien]]
+== Le Laplacien
+
+On s’instéresse dans cette section à l’_approximation élément fini conforme_ du problème suivant:
+
+.Formulation forte du Laplacien
+[env.problem#prob:1]
+--
+On cherche stem:[u] telle que
+[[eq:64]]
+\[
+    \begin{split}
+      -\Delta u &= f \mbox{ dans } \Omega\\
+      u &= 0 \mbox{ sur } \partial \Omega
+\end{split}
+\]
+--
+
+[[sec:cadre-mathematique]]
+=== Cadre Mathematique
+
+On suppose que stem:[f \in L^2(\Omega)].
+
+La formulation faible du problème <<prob:1>> est la suivante:
+
+.Formulation faible pour des conditions de Dirichlet homogènes
+[env.problem#prob:2]
+--
+On cherche stem:[u \in H^1_0(\Omega)] telle que
+\[\label{eq:65}
+    \int_\Omega \nabla u \cdot \nabla v =  \int_\Omega f\, v,\quad \forall v \in H^1_0(\Omega)
+\]
+--
+
+[[sec:probleme-bien-pose]]
+=== Problème bien posé
+
+Introduisons
+
+* stem:[V = H^1_0(\Omega)] doté de la norme
+stem:[\|\cdot\|_{1,\Omega}] telle que
+stem:[\|v\|_{1,\Omega} = (\|v\|^2_{0,\Omega} + \|\nabla v\|^2_{0,\Omega})^{1/2}]
+* la forme bilinéaire stem:[a \in \mathcal{L}(V \times V, \R)]
+telle que stem:[a(u,v) = \int_\Omega
+  \nabla u \cdot \nabla v ]
+* la forme linéaire stem:[\ell \in \mathcal{L}(V, \R)] telle que
+stem:[l(v) = \int_\Omega   f \nabla v ]
+
+Le problème <<prob:2>> s’écrit sous forme abstraite
+
+[env.problem#prob:5]
+--
+On cherche stem:[u \in V] telle que
+\[
+    a(u, v) = \ell(v), \quad \forall v \in V
+\]
+--
+
+L’espace stem:[V] est un espace de Hilbert et les formes stem:[a] et stem:[\ell] sont continues sur stem:[V\times V] et stem:[V] respectivement.
+
+Il ne reste plus qu’à vérifier si le problème est bien posé (existence d’une solution unique).
+
+Pour cela on utilise démontre la _coercivité_ de la forme bilinéaire stem:[a] sur stem:[V \equiv H^1_0(\Omega)].
+
+Ceci se fait grâce au lemme suivant:
+
+[env.lemma#lem:1]
+--
+Soit stem:[\Omega] un ouvert borné de stem:[\R].
+Il existe une constante stem:[c_\Omega] (dépendente de stem:[\Omega] telle que
+\[
+    \forall v \in H^1_0(\Omega),\quad \|v\|_{0,\Omega} \le c_\Omega \|\nabla v\|_{0,\Omega}
+\]
+--
+
+[[rem:24]]
+NOTE: stem:[c_\Omega] est homogène à une longeur et peut être interprétée comme une mesure caractéristique de stem:[\Omega].
+
+Grâce à l’inégalité de Poincaré, on a le résultat suivant
+
+[env.proposition#prop:7]
+--
+La forme bilinéaire stem:[a] du problème <<prob:2>> est _coercive_
+--
+
+[env.proof]
+--
+On note tout d’abord que par l’inégalité de Poincaré et la définition de
+stem:[\|\cdot\|_{1,\Omega}]
+[[eq:68]]
+\[
+      \|v\|^2_{1,\Omega} \le (1 + c^2_\Omega) \|\nabla v\|^2_{0,\Omega}
+\]
+On en déduit que
+[[eq:67]]
+\[
+\forall v \in H^1_0(\Omega),\quad a(v,v) = \|\nabla v\|^2_{0,\Omega} \ge \frac{1}{1+c^2_\Omega} \|v\|^2_{1,\Omega}
+\]
+
+Le Lemme de Lax-Milgram <<thr:12>> permet alors de conclure sur l’existence d’une solution unique pour le problème <<prob:2>>.
+--
+
+[[sec:appr-conf]]
+=== Approximation conforme
+
+On utilise une approximation conforme par éléments finis de Lagrange.
+
+On considère stem:[\Omega] un polygone ou polyhèdre régulier de stem:[\RR^2] ou stem:[\RR^3] respectivement et un maillage stem:[\calTh = \{K_e\}_{e=1...\Ne}] de stem:[\Omega].
+
+On considère un élément fini de référence stem:[(\hat{K},\hat{P},\hat{\Sigma})] tel que stem:[\Pk \subset \hat{P}] et stem:[k+1 > \frac{d}{2}], voir le théorème <<thr:16>>.
+
+On note
+[[eq:70]]
+\[
+  L^k_{c,h} = \{ v_h \in C^0(\bar{\Omega}); \forall K \in \mathcal{T}_h,\ v_h   \circ T_K \in \hat{P}\}
+\]
+où stem:[T_K] est la tranformation géométrique de stem:[\hat{K}] dans stem:[K].
+
+* Si on utilise stem:[\hat{P}=\Pk{k}] on a stem:[L^k_{c,h} = P^k_{c,h}].
+* Si on utilise stem:[\hat{P}=\Qk{k}] on a stem:[L^k_{c,h} = Q^k_{c,h}].
+
+Afin de construire un espace d’approximation conforme stem:[V_h \subset V =H^1_0(\Omega)] on prend
+\[
+\label{eq:71}
+V_h = L^k_{c,h} \cap H^1_0(\Omega)
+\]
+c’est à dire que les fonctions de stem:[V_h] satisfont les conditions aux limites outre le fait d’être dans stem:[L^k_{c,h}].
+
+Le problème discret s’écrit alors
+
+[env.problem#prob:6]
+--
+Trouver stem:[u_h \in V_h] telle que
+\[
+    a(u_h,v_h) = \ell(v_h),\, \forall v_h \in V_h
+\]
+--
+
+qui est bien posé (existence et unicité de stem:[u_h]) car stem:[a] est coercive sur stem:[V] et que stem:[V_h \subset V].
+
+On a le résultat suivant:
+
+[env.theorem#thr:17]
+--
+On suppose que stem:[u] solution de <<prob:2>> est dans
+stem:[H^{k+1}(\Omega) \cap   H^1_0(\Omega)], alors il existe une constante stem:[c_1] telle que pour tout stem:[h]
+[[eq:73]]
+\[
+    \|u-u_v\|_{1,\Omega} \le c_1 h^k |u|_{k+1,\Omega}
+\]
+et il existe
+une constante stem:[c_2] telle que pour tout stem:[h]
+[[eq:74]]
+\[
+    \|u-u_v\|_{0,\Omega} \le c_2 h^{k+1} |u|_{k+1,\Omega}
+\]
+--
+
+[env.proof]
+--
+La preuve de (<<eq:73>>) est obtenue grâce au lemme de Cea (<<eq:cea>>) et du théorème d’interpolation (<<eq:62>>).
+
+La preuve de (<<eq:74>>) est obtenue grâce au lemme d’Aubin-Nitsche qui permet d’affirmer qu’il existe une constante stem:[c] telle que
+
+[[eq:75]]
+\[
+    \|u-u_h\|_{0,\Omega} \leq c h |u-u_h|_{1,\Omega}
+\]
+et donc que (<<eq:74>>) se déduit de (<<eq:74>>).
+--
+
+[[sec:impl-en-feelpp]]
+=== Implémentation avec {feelpp}
+
+Avec {feelpp}, on ne construit pas explicitement l’espace stem:[V_h] mais stem:[L^k_{c,h}].
+
+Le traitement des conditions aux limites de Dirichlet du problème (<<eq:64>>) peut être effectué de diverses façons, nous en verrons une.
+
+Commencons par le maillage, dans un premier temps nous définissons le type du maillage contenant soit des éléments de type simplexe (segment,triangle, tetrahèdre) ou de type hypercube (segment, quadrangle, hexahèdre).
+
+[source,cpp]
+----
+  // un maillage de simplexe dans $\R$ telle que la transformation
+  // géométrique $T_K,\ K \in \calTh$  soit affine
+  typedef Mesh<Simplex<d,1> > mesh_type;
+
+  // un maillage d'hypercube dans $\R$ telle que la transformation
+  // géométrique $T_K,\ K \in \calTh$  soit affine en chacune des variables
+  // typedef Mesh<Hypercube<d,1> > mesh\_type;
+
+  // generate the mesh associated to the unit square $[0,1]^2$ using triangles
+  auto mesh = unitSquare();
+----
+
+[[rem:25]]
+NOTE: Le mot clé `auto` permet de faire de l’inférence de type, pour plus de détails consultez
+link:http://fr.wikipedia.org/wiki/C%2B%2B11#Inf.C3.A9rence_de_types[la page C++11 de Wikipedia].
+
+Ensuite nous pouvons définir l’espace stem:[L^k_{c,h}],
+
+[source,cpp]
+----
+  // Vh est une structure de donnée allouée dynamiquement
+  auto Vh = Pch<1>( mesh );
+  // u est un élément de Vh
+  auto u = Vh->element();
+  // u est un autre élément de Vh
+  auto u = Vh->element();
+----
+
+À présent, nous définissons les formes bilinéaires stem:[a] et stem:[\ell] qui sont respectivement des formes bilinéaires et linéaires.
+
+[source,cpp]
+----
+  auto a = form2( _test=Vh, _trial=Vh ); <1>
+  a = integrate( _range=elements(mesh), _expr=gradt(u)*trans(grad(v)) ); <2>
+
+  auto l = form1( _test=Vh ); <3>
+  l = integrate( _range=elements(mesh), _expr=f*id(v) ); <4>
+----
+<1> stem:[a \in \mathcal{L}(V_h \times V_h,\ \RR)]
+<2> stem:[a = \sum_{e=1...\Ne} \int_{K_e} \nabla \varphi_j \cdot \nabla \varphi_i,\quad  i,j=1...,\dim{V_h}]
+<3> stem:[\ell \in \mathcal{L}(V_h,\ \RR)]
+<4> stem:[\ell = \sum_{e=1...\Ne} \int_{K_e} f  \varphi_i,\quad  i=1...,\dim{V_h}]
+
+
+Afin de traiter les conditions aux limites de Dirichlet homogènes, on peut utiliser le mot-clé `on` qui permet de les imposer de manière forte.
+
+[source,cpp]
+----
+  a += on(_range=boundaryfaces(mesh), _element=u, _rhs=l, _expr=constant(0.) );
+----
+
+[[rem:26]]
+NOTE: Le mot-clé `constant` permet de transformer une type numérique ( entier, flottant) en une expression utilisable par le langage de {feelpp}.
+Notez également l’opération `+=` qui permet de rajouter le traitement des conditions de Dirichlet tout en gardant les contributions précédentes.
+L’opération `=` aurait d’abord remis à stem:[0] les entrées de la matrice associée à stem:[a].
+
+Enfin nous pouvons résoudre le problème <<prob:6>>
+
+[source,cpp]
+----
+  a.solve( _rhs=l, _solution=u );
+----
+
+Le listing complet
+
+[[sec:cond-aux-limit]]
+==== Conditions aux limites
+
+[[sec:cond-aux-limit-1]]
+===== Conditions aux limites de Dirichlet non homogène
+
+
+On suppose toujours stem:[f \in L^2(\Omega)] et on se donne une fonction stem:[g \in C^{0,1}(\partial \Omega)]
+
+[stem:[g] est Lipschitzienne
+sur stem:[\partial
+\Omega]].
+
+On s’intéresse au problème suivant:
+
+[env.problem#prob:7]
+--
+On cherche stem:[u : \Omega \rightarrow \RR] telle que
+
+[[eq:76]]
+\[
+    \begin{split}
+    -\Delta u &= f \mbox{ dans } \Omega\\
+    u &= g \mbox{ sur } \partial \Omega
+    \end{split}
+\]
+--
+
+[[rem:27]]
+NOTE: L’hypothèse stem:[g \in C^{0,1}(\partial \Omega)] permet d’affirmer qu’il existe stem:[u_g \in H^1(\Omega)] telle que stem:[u_{g_{|\partial \Omega}} = g].
+
+On se ramène au problème avec conditions de Dirichlet homogène en faisant le change d’inconnue stem:[u_0=u-u_g] et on s’intéresse au problème suivant:
+
+
+[env.problem#prob:8]
+--
+On cherche stem:[u_0 \in H^1_0(\Omega)] telle que
+[[eq:77]]
+\[
+    a(u_0,v) = \ell(v) - a(u_g,v),\quad \forall v \in H^1_0(\Omega)
+\]
+--
+
+Ce problème est _bien posé_ d’après Lax-Milgram, voir section précédente.
+
+
+[env.theorem#thr:18]
+--
+On suppose que stem:[u] solution de [prob:8] est dans stem:[H^{k+1}(\Omega) \cap   H^1_0(\Omega)],
+alors il existe une constante stem:[c_1] telle que pour tout stem:[h]
+
+[[eq:73]]
+\[
+    \|u-u_v\|_{1,\Omega} \le c_1 h^k |u|_{k+1,\Omega}
+\]
+et il existe une constante stem:[c_2] telle que pour tout stem:[h]
+[[eq:74]]
+\[
+    \|u-u_v\|_{0,\Omega} \le c_2 h^{k+1} |u|_{k+1,\Omega}
+\]
+--
+
+Avec {feelpp}, les conditions Dirichlet non-homogènes sont traitées par exemple avec le mot-clé `on`.
+
+
+.Conditions de Dirichlet non homogènes
+[source,cpp]
+----
+  auto g = sin(2*pi*Px() ); <1>
+  <2>
+  ...
+  a += on( _range=boundaryfaces(mesh), _expr=g ); <3>
+----
+<1>  définition de la fonction, p.ex stem:[g=sin(2 \pi x)]
+<2>  définition de stem:[a]
+<3>  ajout des conditions de Dirichlet non-homogènes
+
+[[rem:28]]
+NOTE: Il n’y a pas besoin de rajouter le terme stem:[a(u_g,v)] au second membre stem:[\ell(v)], il est pris en compte automatiquement par `on`.
+
+Voici le listing complet de l’exemple du laplacien avec conditions de Dirichlet non-homogène
+
+[[sec:cond-aux-limit-2]]
+==== Condition aux limites de Neumann
+
+Étant donnés un réel stem:[\mu] strictement positif, stem:[f \in L^2(\Omega)] et stem:[g \in L^2(\partial \Omega)], on s’intéresse au problème suivant:
+
+
+[env.problem#prob:9]
+--
+On cherche stem:[u : \Omega \rightarrow \RR] telle que
+[[eq:78]]
+\[
+    \begin{split}
+      -\Delta u + \mu u &= f, \mbox{ dans } \Omega\\
+      \partial_\Next u &= g, \mbox{ sur } \partial\Omega
+    \end{split}
+\]
+--
+
+où stem:[\partial_\Next u = \nabla u \cdot \Next = \sum_{i=1}^d n_i \partial_i u] dénote la dérivée normale de stem:[u] avec stem:[\Next=(n_1,...,n_d) \in \RR^d] la normale extérieure unitaire en un point du bord de stem:[\Omega].
+
+La formulation faible s’écrit
+
+
+[env.problem#prob:13]
+--
+On cherche stem:[u \in H^1(\Omega)] telle que
+[[eq:79]]
+\[
+    a( u, v ) = \ell(v),\ \forall v \in H^1(\Omega)
+\]
+avec
+[[eq:80]]
+\[
+    a( u, v ) =  \int_\Omega \nabla u \cdot \nabla v + \mu u v
+\]
+et
+[[eq:81]]
+\[
+    \ell( v ) =  \int_\Omega f v + \int_{\partial\Omega} g v
+\]
+--
+
+
+On a
+[[eq:82]]
+\[
+  a(v, v) =  \int_\Omega \nabla v \cdot \nabla v + \mu v v \ge \min(1,\mu)
+  \int_\Omega \nabla v \cdot \nabla v +  v v  = \min(1,\mu) \|v\|_{1,\Omega}, \quad
+  \forall v \in H^1(\Omega)
+\]
+ce qui nous permet d’affirmer que stem:[a] est coercive sur stem:[H^1(\Omega)] et que le problème <<prob:13>> est bien posé grâce à Lax-Milgram.
+
+[[sec:cond-aux-limit-3]]
+==== Conditions aux limites de Robin
+
+
+Étant donnés un réel stem:[\mu] strictement positif, stem:[f \in L^2(\Omega)] et stem:[g \in L^2(\partial \Omega)], on s’intéresse au problème suivant:
+
+[env.problem#prob:14]
+--
+On cherche stem:[u : \Omega \rightarrow \RR] telle que
+[[eq:83]]
+\[
+    \begin{split}
+      -\Delta u  &= f, \mbox{ dans } \Omega\\
+      \mu u + \partial_\Next u &= g, \mbox{ sur } \partial\Omega.
+    \end{split}
+\]
+--
+
+La formulation faible s’écrit
+
+
+[env.problem#prob:15]
+--
+On cherche stem:[u \in H^1(\Omega)] telle que
+\[\label{eq:84}
+    a( u, v ) = \ell(v),\ \forall v \in H^1(\Omega)
+\]
+avec
+[[eq:85]]
+\[
+    a( u, v ) =  \int_\Omega \nabla u \cdot \nabla v + \int_{\partial     \Omega} \mu u v
+\]
+et
+[[eq:86]]
+\[
+    \ell( v ) =  \int_\Omega f v + \int_{\partial\Omega} g v
+\]
+--
+
+On a
+[[eq:69]]
+\[
+  \begin{split}
+    a(v, v) & =  \int_\Omega \nabla v \cdot \nabla v + \int_{\partial\Omega} \mu v v \\
+    & \geq \min(1,\mu)\left( \int_\Omega \nabla v \cdot \nabla v +
+      \int_{\partial\Omega} v v\right)  \\
+    &\geq \min(1,\mu) \|v\|_{1,\Omega}, \quad \forall v \in H^1(\Omega)
+  \end{split}
+\]
+
+La forme bilinéaire stem:[a] est donc coercive et le problème <<prob:15>> est bien posé grâce à Lax-Milgram.
+
+On considère le problème discret suivant
+
+[env.problem#prob:11]
+--
+On cherche stem:[u_h \in L^k_{c,h}(\Omega)] telle que
+[[eq:87]]
+\[
+    a(u_h,v_h) = \ell(v_h)\quad \forall v_h \in L^k_{c,h}
+\]
+--
+
+Le problème est _bien posé_ (stem:[L^k_{c,h} \subset H^1(\Omega)]).
+
+La convergence de stem:[u_h] est donnée par le théorème <<thr:17>>.
+
+Considérons stem:[\Omega=[0,1]^2] et les données stem:[\mu=0.01], stem:[f=1] et stem:[g=0].
+
+Le code permettant de résoudre le problème discret <<prob:11>>
+
+[source,cpp]
+.Listing pour les conditions de Robin
+----
+include::../Codes/prudhomme/laplacian/robin.cpp[]
+----
+
+[[sec:advection-diffusion]]
+== Advection-diffusion-réaction avec diffusion dominante
+
+
+On s’intéresse au problème suivant:
+
+
+[env.problem#prob:10]
+--
+On cherche stem:[u : \Omega \rightarrow \RR] telle que
+[[eq:30]]
+\[
+    \begin{split}
+      -\nabla \cdot ( \mathbf{\alpha} \nabla u  ) + \mathbf{\beta} \cdot \nabla u + \mu u &= f
+      \mbox{ dans } \Omega\\
+      u &= 0 \mbox{ sur } \partial \Omega\\
+    \end{split}
+\]
+--
+
+La variation sur les conditions aux limites de la section [sec:cond-aux-limit] s’appliquent.
+
+* stem:[-\nabla \cdot ( \mathbf{\alpha} \nabla u  )] est un terme de diffusion,
+* stem:[\mathbf{\beta} \cdot \nabla u] est un terme de convection,
+* stem:[\mu u] est un terme de réaction
+
+Ce type d’équation est très fréquente en ingéniérie, biologie ou encore finance.
+
+On suppose que stem:[\mathbf{\alpha} \in [L^{\infty}(\Omega)\]^{d\times d}], stem:[\mathbf{\beta} \in [L^{\infty}(\Omega)\]^d] et stem:[\mu \in L^\infty(\Omega)].
+
+On suppose que l’opérateur stem:[\mathcal{L}] tel que stem:[\mathcal{L} u = -\nabla \cdot ( \alpha \nabla u ) + \beta \cdot \nabla u + \mu u] est elliptique au sens suivant:
+
+
+[env.definition#def:39]
+--
+L’opérateur stem:[\mathcal{L}] est elliptique si il existe une constante stem:[\alpha_0] telle que presque pour tout stem:[x\in\Omega]
+[[eq:88]]
+\[
+    \forall \xi=(\xi_1, \ldots , \xi_n)\in\RR^n,\quad { \sum_{i,j=1}^n  \alpha_{ij}(x) \, \xi_i \, \xi_j  \ge \alpha_0 \, \| \xi \|^2 }
+\]
+--
+
+[[rem:29]]
+TIP: Le Laplacien est dans la catégorie des opérateurs elliptiques, il correspond à stem:[\mathbf{\beta} = 0], stem:[\mu = 0] et stem:[\mathbf{\alpha}=\mathcal{I}_d] avec stem:[\mathcal{I}_d] la matrice identité de stem:[\RR^{d\times d}].
+
+La formulation faible s’écrit sous la forme suivante:
+
+[env.problem#prob:12]
+--
+On cherche stem:[u \in H^1_0(\Omega)] telle que
+[[eq:89]]
+\[
+    a(u,v) = \ell(v) \quad \forall v \in H^1_0(\Omega)
+\]
+avec
+[[eq:90]]
+\[
+    a(u,v)=\int_\Omega (\mathbf{\alpha} \nabla u ) \cdot \nabla v + (\mathbf{\beta} \cdot
+    \nabla u) v + \mu u v
+\]
+et
+[[eq:91]]
+\[
+    \ell(v) = \int_\Omega f v
+\]
+--
+
+On note stem:[\gamma = \essinf_{x \in \Omega} (\mu -\frac{1}{2} \nabla \cdot \mathbf{\beta})], on peut alors montrer que sous la condition
+[[eq:92]]
+\[
+  \alpha_0 > - \min( 0, \gamma c_\Omega  )
+\]
+où stem:[c_\Omega] est la constante de l’inégalité de Poincaré.
+
+La forme bilinéaire stem:[a] est coercive et donc que, grâce au théorème de Lax-Milgram, le problème <<prob:12>> est _bien posé_.
+
+La coercivité est garantie si stem:[\alpha_0] est suffisamment grand c’est à dire que si la diffusion est dominante.
+
+L’approximation élément fini est similaire à celle du Laplacian, de plus les variantes sur les conditions aux limites s’appliquent également: condition de Dirichlet non homogène, de Neumann ou de Robin.
+
+[[sec:elasticite-lineaire]]
+== Élasticité Linéaire
+
+On s’intéresse dans cette section à l’approximation par éléments finis de problèmes de mécanique des milieux continus en 3D.
+
+Soit stem:[\mathbf{f}: \Omega \rightarrow \mathbb{R}^3] la charge extérieur s’appliquant au domaine stem:[\Omega].
+
+On note stem:[\disp: \Omega \rightarrow \mathbb{R}^3] le déplacement de la structure induit par cette charge stem:[\mathbf{f}].
+
+En supposant que les déformations soient petites pour être modélisées dans le cadre de l’elasticité linéaire, on a la relation suivante à l’équilibre:
+
+[[eq:31]]
+\[
+  \nabla \cdot \stresst + \mathbf{f} = \mathbf{0} \mbox{ dans } \Omega
+\]
+où stem:[\stresst: \Omega \rightarrow \RR^{d\times d}] est le _tenseur des contraintes_ défini par la relation
+[[eq:93]]
+\[
+  \stresst = \lambda \tr(\deformt) \Id + 2 \mu \deformt
+\]
+et stem:[\deformt : \Omega \rightarrow \RR^{d\times d}] est  le _tenseur des déformations_ défini par
+[[eq:94]]
+\[
+  \deformt = \frac{1}{2} \left( \nabla \disp + \nabla \disp^T \right),
+\]
+stem:[\lambda] et stem:[\mu] les coefficients de Lamé et stem:[\Id] la matrice identité de stem:[\RR^{d\times d}].
+
+On a alors
+[[eq:95]]
+\[
+  \stresst = \lambda( \nabla \cdot \disp ) \Id + \mu( \nabla \disp + \nabla \disp^T)
+\]
+
+[[sec:coefficients-de-lame]]
+=== Coefficients de Lamé
+
+Ils sont des coefficients phénoménologiques contraints par les relations suivants:
+
+* stem:[\mu >0]
+* stem:[\lambda + \frac{2}{3} \mu \ge 0]
+
+Dans ce qui suit, on supposera que stem:[\lambda \ge 0] et ces coefficients constants.
+
+D’un point de vue pratique, ces coefficients sont obtenus par les _module d’Young_ stem:[E] et _coefficient de Poisson_ stem:[\nu] tels que
+[[eq:96]]
+\[
+  \lambda =  \frac{E \nu}{( 1+\nu )*( 1-2 \nu )} , \quad \mu =\frac{E}{2 ( 1+\nu )}
+\]
