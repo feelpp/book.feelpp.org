@@ -2,23 +2,21 @@
 :toc:
 :toc-placement: preamble
 :toclevels: 1
-:biblio: ../../Appendix/Bibliography/readme.adoc 
+//:biblio: ../../Appendix/Bibliography/readme.adoc
 
-This test case has originally been realised by
-link:{biblio}#pena09:_high_order_method_in_space[Pena],
-link:{biblio}#nobile2001numerical[Nobile] and
-link:{biblio}#gerbeau2003quasi[GerbeauVidrascu] only with the free outlet
-condition.
+:icons: font
+:stem: latexmath
+:imagesdir: .
 
-Computer codes, used for the acquisition of results, are from Vincent
-link:{biblio}#bloodflowChabannes[Chabannes].
+This test case has originally been realised by <<Pena>>, <<Nobile>> and <<GerbeauVidrascu>> only with the free outlet condition.
+
+Computer codes, used for the acquisition of results, are from Vincent <<Chabannes>>
 
 == Problem Description 
 
 We interest here to the case of bidimensional blood flow modelisation. We want
 to reproduce and observe pressure wave spread into a canal with a
-link:../readme.adoc#_fluid_structure_model[fluid-structure interaction model].
-
+link:../README.adoc[fluid-structure interaction model].
 
 [[img-geometry1]]
 image::ElasticTube.png[caption="Figure 1 : ", title="Geometry of two-dimension elastic tube.", alt="Elastic Tube Geometry", width="600", align="center"]  
@@ -27,70 +25,55 @@ The figure above shows us the initial geometry we will work on. The canal is
 represent by a rectangle with width and height, respectively  equal to 6 and 1
 cm. The upper and lower walls are mobile and so, can be moved by flow action.
 
-By using the link:../../CSM/readme.adoc#_axisymmetric_reduced_model[1D reduced
-model], named generalized string and explained by
-link:{biblio}#bloodflowChabannes[Chabannes], we didn't need to define the
-elastic domain ( for the vascular wall ) here. So the structure domain is
-$$\Omega_s^*=\Gamma_{fsi}^*$$
+By using the link:../../CSM/README.adoc[1D reduced model], named generalized string and explained by <<Chabannes>>, we didn't need to define the
+elastic domain ( for the vascular wall ) here. So the structure domain is stem:[\Omega_s^*=\Gamma_{fsi}^*]
 
 During this benchmark, we will compare two different cases : the free outlet
 condition and the Windkessel model. The first one, as its name said, impose a
 free condition on the fluid at the end of the domain. The second one is used to
 model more realistically an flow outlet into our case. The chosen time step is
-$$\Delta t=0.0001$$
+stem:[\Delta t=0.0001]
 
 === Boundary conditions 
 
 We set :
 
-* on $$\Gamma_f^{i,*}$$ the pressure wave pulse
-
-$$
+* on stem:[\Gamma_f^{i,*}] the pressure wave pulse
+\[
 \boldsymbol{\sigma}_{f} \boldsymbol{n}_f =
-  \left\{
-  \begin{aligned}
-    & \left(-\frac{2 \cdot 10^4}{2} \left( 1 - \cos \left(  \frac{ \pi t} {2.5 \cdot 10^{-3}} \right) \right), 0\right)^T  \quad & \text{ si } t < 0.005 \\
-    & \boldsymbol{0} \quad & \text{ sinon }
-  \end{aligned}
-  \right.
-$$
+\left\{
+\begin{aligned}
+& \left(-\frac{2 \cdot 10^4}{2} \left( 1 - \cos \left(  \frac{ \pi t} {2.5 \cdot 10^{-3}} \right) \right), 0\right)^T  \quad & \text{ if } t < 0.005 \\
+& \boldsymbol{0} \quad & \text{ else }
+\end{aligned}
+\right.
+\]
 
-* on $$\Gamma_f^{o,*}$$
-    - Case 1 : free outlet
-    $$
-    \boldsymbol{\sigma}_{f} \boldsymbol{n}_f =0
-    $$
-    - Case 2 : Windkessel model ( $$P_0$$ proximal pressure, see link:{biblio}#bloodflowChabannes[Chabannes] )
-    $$
-    \boldsymbol{\sigma}_{f} \boldsymbol{n}_f = -P_0\boldsymbol{n}_f
-    $$
+* on stem:[\Gamma_f^{o,*}]
+    ** Case 1 : free outlet : stem:[\boldsymbol{\sigma}_{f} \boldsymbol{n}_f =0]
+    ** Case 2 : Windkessel model ( stem:[P_0] proximal pressure, see <<Chabannes>> ) : stem:[\boldsymbol{\sigma}_{f} \boldsymbol{n}_f = -P_0\boldsymbol{n}_f]
 
-* on $$\Gamma_f^{i,*}$$ U $$\Gamma_f^{o,*}$$ a null displacement
+* on stem:[\Gamma_f^{i,*} \cup \Gamma_f^{o,*}] a null displacement : stem:[\boldsymbol{\eta}_f=0]
 
-$$
-\boldsymbol{\eta}_f=0
-$$
+* on stem:[\Gamma^*_{fsi}] : stem:[\eta_s=0]
 
-* on $$\Gamma^*_{fsi}$$ 
+* We add also the link:../../CSM/README.adoc[specific coupling conditions], obtained from the axisymmetric reduced model, on stem:[\Gamma^*_{fsi}]
 
-$$
-\eta_s=0
-$$
-
-* We add also the link:../../CSM/readme.adoc#_axisymmetric_reduced_model[specific coupling conditions], obtained from the axisymmetric reduced model, on $$\Gamma^*_{fsi}$$ 
-
-$$
+[stem]
+++++
 \dot{\eta}_s \boldsymbol{e}_r - \boldsymbol{u}_f = \boldsymbol{0}
-$$
+++++
 
-$$
+[stem]
+++++
 f_s  + \left(J_{\mathcal{A}_f^t} \boldsymbol{F}_{\mathcal{A}_f^t}^{-T} \hat{\boldsymbol{\sigma}}_f \boldsymbol{n}^*_f\right) \cdot \boldsymbol{e}_r
 =  0
-$$
+++++
 
-$$
+[stem]
+++++
 \boldsymbol{\varphi}_s^t  - \mathcal{A}_f^t = \boldsymbol{0}
-$$
+++++
 
 === Initial conditions
 
@@ -100,46 +83,45 @@ $$
 .Fixed and Variable Input Parameters
 |===
 | Name |Description | Nominal Value | Units
-|$$E_s$$ | Young's modulus | $$0.75 $$  | $$dynes/cm^2$$
-|$$\nu_s$$ | Poisson's ratio | $$0.5$$  |dimensionless
-|$$h$$|walls thickness|0.1|$$cm$$
-|$$\rho_s$$ | structure density | $$1.1$$  |$$g/cm^3$$
-|$$R_0$$|tube radius|$$0.5$$|$$cm$$
-|$$G_s$$| shear modulus |$$10^5$$|$$Pa$$
-|$$k$$|Timoshenko’s correction factor|$$2.5$$|dimensionless
-|$$\gamma_v$$|viscoelasticity parameter|$$0.01$$|dimensionless
-|$$\mu_f$$ |viscosity | $$0.003$$  |$$poise$$ 
-|$$\rho_f$$ | density | $$1$$  | $$g/cm^3$$
-|$$R_p$$ | proximal resistance | $$400$$  | 
-|$$R_d$$ | distal resistance| $$6.2 \times 10^3$$  | 
-|$$C_d$$ | capacitance | $$2.72 \times 10^{-4}$$  |
+|stem:[E_s] | Young's modulus | stem:[0.75]  | stem:[dynes.cm^{-2}]
+|stem:[\nu_s] | Poisson's ratio | stem:[0.5]  |dimensionless
+|stem:[h]|walls thickness|0.1|stem:[cm]
+|stem:[\rho_s] | structure density | stem:[1.1] |stem:[g.cm^{-3}]
+|stem:[R_0]|tube radius|stem:[0.5]|stem:[cm]
+|stem:[G_s]| shear modulus |stem:[10^5]|stem:[Pa]
+|stem:[k]|Timoshenko’s correction factor|stem:[2.5]|dimensionless
+|stem:[\gamma_v]|viscoelasticity parameter|stem:[0.01]|dimensionless
+|stem:[\mu_f] |viscosity | stem:[0.003]  |stem:[poise]
+|stem:[\rho_f] | density | stem:[1]  | stem:[g.cm^{-3}]
+|stem:[R_p] | proximal resistance | stem:[400]  | 
+|stem:[R_d] | distal resistance| stem:[6.2 \times 10^3]  | 
+|stem:[C_d] | capacitance | stem:[2.72 \times 10^{-4}]  |
 |===
 
 == Outputs
 
-After solving the link:../readme.adoc#_fluid_structure_model[fluid struture model], we obtain $$(\mathcal{A}^t, \boldsymbol{u}_f, p_f, \boldsymbol{\eta}_s)$$ 
+After solving the link:../readme.adoc#_fluid_structure_model[fluid struture model], we obtain stem:[(\mathcal{A}^t, \boldsymbol{u}_f, p_f, \boldsymbol{\eta}_s)]
 
-with $$\mathcal{A}^t$$ the ALE map, $$\boldsymbol{u}_f$$ the fluid velocity,
-$$p_f$$ the fluid pressure and $$\boldsymbol\eta_s$$ the structure displacement
-
+with stem:[\mathcal{A}^t] the ALE map, stem:[\boldsymbol{u}_f] the fluid velocity,
+stem:[p_f] the fluid pressure and stem:[\boldsymbol\eta_s] the structure displacement
 
 == Discretization
 
-$$\mathcal{F}$$ is the set of all mesh faces, we denote $$\mathcal{F}_{stab}$$
+stem:[\mathcal{F}] is the set of all mesh faces, we denote stem:[\mathcal{F}_{stab}]
 the face we stabilize 
-$$
+[stem]
+++++
 \mathcal{F}_{stab} = \mathcal{F} \bigcap \left( \left\{ (x,y) \in \mathrm{R}^2:
 (x - 0.3) \leqslant 0 \right\} \cup  \left\{ (x,y) \in \mathrm{^2: (x - 5.7) }
 \geqslant 0   \right\} \right)
-$$
+++++
 
 In fact, after a first attempt, numerical instabilities can be observed at the
 fluid inlet. These instabilities, caused by pressure wave, and especially by
 the Neumann condition, make our fluid-structure solver diverge.
 
 To correct them, we choose to add a stabilization term, obtain from the
-stabilized CIP formulation ( see link:{biblio}#bloodflowChabannes[Chabannes]
-Chapter 6 ).
+stabilized CIP formulation ( see <<Chabannes>>, Chapter 6 ).
 
 As this stabilization bring an important cost with it, by increasing the number
 of non-null term into the problem matrix, we only apply it at the fluid
@@ -151,17 +133,17 @@ Now we present the different situations we worked on.
 [cols="1,1,1,2,2,2,2,2,2"]
 |===
 3.2+|Config 3+|Fluid 3+| Structure
-|$$N_{elt}$$|$$N_{geo}$$|$$N_{dof}$$|$$N_{elt}$$|$$N_{geo}$$|$$N_{dof}$$
-3+|$$(1)$$|$$342$$|$$3$$ $$(P4P3)$$|$$7377$$|$$58$$|$$1$$|$$176$$ $$(P3)$$
-3+|$$(2)$$|$$342$$|$$4$$ $$(P5P4)$$|$$11751$$|$$58$$|$$1$$|$$234$$ $$(P4)$$
+|stem:[N_{elt}]|stem:[N_{geo}]|stem:[N_{dof}]|stem:[N_{elt}]|stem:[N_{geo}]|stem:[N_{dof}]
+3+|stem:[(1)]|stem:[342]|stem:[3~(P4P3)]|stem:[7377]|stem:[58]|stem:[1]|stem:[176~(P3)]
+3+|stem:[(2)]|stem:[342]|stem:[4~(P5P4)]|stem:[11751]|stem:[58]|stem:[1]|stem:[234~(P4)]
 |===
 
-For the fluid time discretization, BDF, at order $$2$$, is the method we use.
+For the fluid time discretization, BDF, at order stem:[2], is the method we use.
 
 And Newmark-beta method is the one we choose for the structure time
-discretization, with parameters $$\gamma=0.5$$ and $$\beta=0.25$$.
+discretization, with parameters stem:[\gamma=0.5] and stem:[\beta=0.25].
 
-These methods can be retrieved in link:{biblio}#bloodflowChabannes[Chabannes] papers.
+These methods can be retrieved in <<Chabannes>> papers.
 
 === Solvers
 
@@ -169,102 +151,65 @@ Here are the different solvers ( linear and non-linear ) used during results acq
 
 |===
 3+|
-$$
-\text{KSP}
-$$
+KSP
 |case|fluid|solid
 |type 2+|
-$$
-\text{gmres}
-$$
+gmres
 |relative tolerance 2+|
-$$
-1e-13
-$$
-|max iteration|$$30$$|$$10$$
+stem:[1e-13]
+|max iteration|stem:[30]|stem:[10]
 |reuse preconditioner|true|false
 |===
 
 |===
 3+|
-$$
-\text{SNES}
-$$
+SNES
 |case|fluid|solid
 |relative tolerance 2+|
-$$
-1e-8
-$$
+stem:[1e-8]
 |steps tolerance 2+|
-$$
-1e-8
-$$
-|max iteration 2+|$$
-50
-$$
+stem:[1e-8]
+|max iteration 2+|
+stem:[50]
 |max iteration with reuse 2+|
-$$
-50
-$$
+stem:[50]
 |reuse jacobian 2+|
-$$
-\text{false}
-$$
+false
 |reuse jacobian rebuild at first Newton step|false|true
 |===
 
 |===
 3+|
-$$
-\text{KSP in SNES}
-$$
+KSP in SNES
 |case|fluid|solid
 |relative tolerance 2+|
-$$
-1e-5
-$$
+stem:[1e-5]
 |max iteration 2+|
-$$
-1000
-$$
+stem:[1000]
 |max iteration with reuse 2+|
-$$
-1000
-$$
+stem:[1000]
 |reuse preconditioner|true|false
 |reuse preconditioner rebuild at first Newton step 2+|
-$$
-\text{false}
-$$
+false
 |===
 
 |===
 3+|
-$$
-\text{PC}
-$$
+PC
 |case|fluid|solid
 |type 2+|
-$$
-\text{lu}
-$$
+LU
 |package 2+|
-$$
-\text{mumps}
-$$
+mumps
 |===
 
 |===
 2+|
-$$
-\text{FSI}
-$$
+FSI
 |solver method|fix point
-|tolerance|$$1e-6$$
-|max iterations|$$1$$
+|tolerance|stem:[1e-6]
+|max iterations|stem:[1]
 |===
-
-
 
 
 == Implementation 
@@ -309,8 +254,7 @@ image::FlowEvolution.png[caption="Figure 4 : ", title="Evolution of the inflow a
 [[img-geometry5]]
 image::DispMagni.png[caption="Figure 5 : ", title="Maximum displacement magnitude", alt="Displacement Magnitude", width="400", align="center"]  
 
-To draw the next two figures, we define 60 sections $$\{x_i\}_{i=0}^{60}$$ with
-$$x_i=0.1i$$.
+To draw the next two figures, we define 60 sections stem:[\{x_i\}_{i=0}^{60}] with stem:[x_i=0.1i].
 [[img-geometry6]]
 image::AverPressure.png[caption="Figure 5 : ", title="Average pressure with the free outlet and the Windkessel model", alt="Average Pressure", width="700", align="center"]  
 
@@ -356,7 +300,7 @@ perturbations thanks to the 0D model.
 
 The average pressure and the fluid flow ( see figure 6 and 7 ) show us the same
 non-physiological phenomenons as before. The results we obtain are in
-accordance with the ones proposed by link:{biblio}#nobile2001numerical[Nobile].
+accordance with the ones proposed by <<Nobile>>.
 
 To end this benchmark, we will compare the two resolution algorithms used with
 the fluid-structure model : the implicit and the semi-implicit ones. The
