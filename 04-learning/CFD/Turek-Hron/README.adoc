@@ -111,47 +111,39 @@ To realize these tests, we made the choice to used stem:[P_N]-stem:[P_{N-1}] Tay
 
 Here are the different solvers ( linear and non-linear ) used during results acquisition.
 
+[cols="1,1"]
+.KSP configuration
 |===
-2+|
-$$
-\text{KSP}
-$$
 |type|gmres
-|relative tolerance|$$1e-13$$
-|max iteration|$$1000$$
+|relative tolerance|1e-13
+|max iteration|1000
 |reuse preconditioner| false
 |===
 
+[cols="1,1"]
+.SNES configuration
 |===
-2+|
-$$
-\text{SNES}
-$$
-|relative tolerance|$$1e-8$$
-|steps tolerance|$$1e-8$$
-|max iteration|CFD1/CFD2 : $$100$$ \| CFD3 : $$50$$
-|max iteration with reuse|CFD1/CFD2 : $$100$$ \| CFD3 : $$50$$
+|relative tolerance|1e-8
+|steps tolerance|1e-8
+|max iteration|CFD1/CFD2 : 100 \| CFD3 : 50
+|max iteration with reuse|CFD1/CFD2 : 100 \| CFD3 : 50
 |reuse jacobian|false
 |reuse jacobian rebuild at first Newton step|true
 |===
 
+[cols="1,1"]
+.KSP in SNES configuration
 |===
-2+|
-$$
-\text{KSP in SNES}
-$$
-|relative tolerance|$$1e-5$$
-|max iteration|$$1000$$
-|max iteration with reuse|CFD1/CFD2 : $$100$$ \| CFD3 : $$1000$$
+|relative tolerance|1e-5
+|max iteration|1000
+|max iteration with reuse|CFD1/CFD2 : 100 \| CFD3 : 1000
 |reuse preconditioner| false
 |reuse preconditioner rebuild at first Newton step|false
 |===
 
+[cols="1,1"]
+.Preconditioner configuration
 |===
-2+|
-$$
-\text{PC}
-$$
 |type|lu
 |package|mumps
 |===
@@ -190,34 +182,36 @@ Here are results from the different cases studied in this benchmark.
 
 === CFD1
 
-
+[cols="1,1,1,1,1", options="header"]
 .Results for CFD1
 |===
-|$$N_{geo}$$|$$N_{elt}$$ |$$N_{dof}$$|Drag|Lift
+|stem:[\mathbf{N_{geo}}]|stem:[\mathbf{N_{elt}}] |stem:[\mathbf{N_{dof}}]|Drag|Lift
 3+^.^|Reference link:{biblio}#turek2006proposal[Turek and Hron]|14.29|1.119
-|1|9874|45533 ($$P_2/P_1$$)|14.217|1.116
-|1|38094|173608 ($$P_2/P_1$$)|14.253|1.120
-|1|59586|270867 ($$P_2/P_1$$)|14.262|1.119
-|2|7026|78758 ($$P_3/P_2$$)|14.263|1.121
-|2|59650|660518 ($$P_3/P_2$$)|14.278|1.119
-|3|7026|146057 ($$P_4/P_3$$)|14.270|1.120
-|3|59650|1228831 ($$P_4/P_3$$)|14.280|1.119
+|1|9874|45533 (stem:[P_2/P_1])|14.217|1.116
+|1|38094|173608 (stem:[P_2/P_1])|14.253|1.120
+|1|59586|270867 (stem:[P_2/P_1])|14.262|1.119
+|2|7026|78758 (stem:[P_3/P_2])|14.263|1.121
+|2|59650|660518 (stem:[P_3/P_2])|14.278|1.119
+|3|7026|146057 (stem:[P_4/P_3])|14.270|1.120
+|3|59650|1228831 (stem:[P_4/P_3])|14.280|1.119
 |===
 
 All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/toolboxes/solid/TurekHron[rep] [https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd.geo[geo file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd1.cfg[config file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd1.json[json file]]
 
 === CFD2
+
+[cols="1,1,1,1,1", options="header"]
 .Results for CFD2
 |===
-|$$N_{geo}$$|$$N_{elt}$$|$$N_{dof}$$|Drag|Lift
+|stem:[\mathbf{N_{geo}}]|stem:[\mathbf{N_{elt}}] |stem:[\mathbf{N_{dof}}]|Drag|Lift
 3+^.^|Reference link:{biblio}#turek2006proposal[Turek and Hron]|136.7|10.53
-|1|7020|32510 ($$P_2/P_1$$)|135.33|10.364
-|1|38094|173608 ($$P_2/P_1$$)|136.39|10.537
-|1|59586|270867 ($$P_2/P_1$$)|136.49|10.531
-|2|7026|78758 ($$P_3/P_2$$)|136.67|10.548
-|2|59650|660518 ($$P_3/P_2$$)|136.66|10.532
-|3|7026|146057 ($$P_4/P_3$$)|136.65|10.539
-|3|59650|1228831 ($$P_4/P_3$$)|136.66|10.533
+|1|7020|32510 (stem:[P_2/P_1])|135.33|10.364
+|1|38094|173608 (stem:[P_2/P_1])|136.39|10.537
+|1|59586|270867 (stem:[P_2/P_1])|136.49|10.531
+|2|7026|78758 (stem:[P_3/P_2])|136.67|10.548
+|2|59650|660518 (stem:[P_3/P_2])|136.66|10.532
+|3|7026|146057 (stem:[P_4/P_3])|136.65|10.539
+|3|59650|1228831 (stem:[P_4/P_3])|136.66|10.533
 |===
 
 All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/toolboxes/solid/TurekHron[rep] [https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd.geo[geo file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd2.cfg[config file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd2.json[json file]]
@@ -226,64 +220,69 @@ All the files used  for this case can be found in this https://github.com/feelpp
 
 As CFD3 is time-dependent ( from BDF use ), results will be expressed as
 
-$$
- mean ± amplitude [frequency]
-$$
+[env.equation]
+--
+mean ± amplitude [frequency]
+--
 
-Where
+where
 
 * mean is the average of the min and max values at the last period of oscillations.
 
-$$
+[env.equation]
+--
 mean=\frac{1}{2}(max+min)
-$$
+--
 
 * amplitude is the difference of the max and the min at the last oscillation.
 
-$$
+[env.equation]
+--
 amplitude=\frac{1}{2}(max-min)
-$$
+--
 
 * frequency can be obtain by Fourier analysis on periodic data and retrieve the lowest frequency or by the following formula, if we know the period time T.
 
-$$
+[env.equation]
+--
 frequency=\frac{1}{T}
-$$
+--
 
-
+[cols="1,1,1,1,1,1,1", options="header"]
 .Results for CFD3
 |===
-|$$\Delta t$$|$$N_{geo}$$|$$N_{elt}$$|$$N_{dof}$$|$$N_{bdf}$$|Drag|Lift
+|stem:[\mathbf{\Delta t}]|stem:[\mathbf{N_{geo}}]|stem:[\mathbf{N_{elt}}]|stem:[\mathbf{N_{dof}}]|stem:[\mathbf{N_{bdf}}]|Drag|Lift
 |0.005 4+^.^|Reference link:{biblio}#turek2006proposal[Turek and Hron]|439.45 ± 5.6183[4.3956]|−11.893 ± 437.81[4.3956]
 |===
 
 
 |===
-.3+|0.01|1|8042|37514$$(P_2/P_1)$$|2|437.47 ± 5.3750[4.3457]|-9.786 ± 437.54[4.3457]
-|2|2334|26706$$(P_3/P_2)$$|2|439.27 ± 5.1620[4.3457]|-8.887 ± 429.06[4.3457]
-|2|7970|89790$$(P_2/P_2)$$|2|439.56 ± 5.2335[4.3457]|-11.719 ± 425.81[4.3457]
+.3+|0.01|1|8042|37514 (stem:[P_2/P_1])|2|437.47 ± 5.3750[4.3457]|-9.786 ± 437.54[4.3457]
+|2|2334|26706 (stem:[P_3/P_2])|2|439.27 ± 5.1620[4.3457]|-8.887 ± 429.06[4.3457]
+|2|7970|89790 (stem:[P_2/P_2])|2|439.56 ± 5.2335[4.3457]|-11.719 ± 425.81[4.3457]
 |===
 
 
 |===
 .6+|0.005|1|3509|39843$$(P_3/P_2)$$|2|438.24 ± 5.5375[4.3945]|-11.024 ± 433.90[4.3945]
-|1|8042|90582$$(P_3/P_2)$$|2|439.25 ± 5.6130[4.3945]|-10.988 ± 437.70[4.3945]
-|2|2334|26706$$(P_3/P_2)$$|2|439.49 ± 5.5985[4.3945]|-10.534 ± 441.02[4.3945]
-|2|7970|89790$$(P_3/P_2)$$|2|439.71 ± 5.6410[4.3945]|-11.375 ± 438.37[4.3945]
-|3|3499|73440$$(P_4/P_3)$$|3|439.93 ± 5.8072[4.3945]|-14.511 ± 440.96[4.3945]
-|4|2314|78168$$(P_5/P_4)$$|2|439.66 ± 5.6412[4.3945]|-11.329 ± 438.93[4.3945]
+|1|8042|90582 (stem:[P_3/P_2])|2|439.25 ± 5.6130[4.3945]|-10.988 ± 437.70[4.3945]
+|2|2334|26706 (stem:[P_3/P_2])|2|439.49 ± 5.5985[4.3945]|-10.534 ± 441.02[4.3945]
+|2|7970|89790 (stem:[P_3/P_2])|2|439.71 ± 5.6410[4.3945]|-11.375 ± 438.37[4.3945]
+|3|3499|73440 (stem:[P_4/P_3])|3|439.93 ± 5.8072[4.3945]|-14.511 ± 440.96[4.3945]
+|4|2314|78168 (stem:[P_5/P_4])|2|439.66 ± 5.6412[4.3945]|-11.329 ± 438.93[4.3945]
 |===
 
 |===
-.3+|0.002|2|7942|89482$$(P_3/P_2)$$|2|439.81 ± 5.7370[4.3945]|-13.730 ± 439.30[4.3945]
-|3|2340|49389$$(P_4/P_3)$$|2|440.03 ± 5.7321[4.3945]|-13.250 ± 439.64[4.3945]
-|3|2334|49266$$(P_4/P_3)$$|3|440.06 ± 5.7773[4.3945]|-14.092 ± 440.07[4.3945]
+.3+|0.002|2|7942|89482 (stem:[P_3/P_2)$$|2|439.81 ± 5.7370[4.3945]|-13.730 ± 439.30[4.3945]
+|3|2340|49389 (stem:[P_4/P_3])|2|440.03 ± 5.7321[4.3945]|-13.250 ± 439.64[4.3945]
+|3|2334|49266 (stem:[P_4/P_3])|3|440.06 ± 5.7773[4.3945]|-14.092 ± 440.07[4.3945]
 |===
 
 All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/toolboxes/solid/TurekHron[rep] [https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd.geo[geo file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd3.cfg[config file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd3.json[json file]].
 
+[[ImageModelingCFDTurekHronResultsCFD3]]
 .Lift and drag forces
-image::fullview.png[]
+image::modeling/cfd/TurekHronCFD3resultsLiftDrag.png[alt="TurekHron CFD3 results",align="center"]
 
 
 == Geometrical Order
@@ -292,9 +291,9 @@ NOTE: Add a section on geometrical order.
 
 == Conclusion
 
-The reference results, link:{biblio}#turek2006proposal[Turek and Hron], have been obtained with a time step $$\Delta t=0.05$$. When we compare our results, with the same step and $$\mathrm{BDF}_2$$, we observe that they are in accordance with the reference results.
+The reference results, link:{biblio}#turek2006proposal[Turek and Hron], have been obtained with a time step stem:[\Delta t=0.05]. When we compare our results, with the same step and stem:[\mathrm{BDF}_2], we observe that they are in accordance with the reference results.
 
-With a larger $$\Delta t$$, a discrepancy is observed, in particular for the drag force. It can also be seen at the same time step, with a higher order $$\mathrm{BDF}_n$$ ( _e.g._ $$\mathrm{BDF}_3$$ ). This suggests that the couple $$\Delta t=0.05$$ and $$\mathrm{BDF}_2$$ isn't enough accurate.
+With a larger stem:[\Delta t], a discrepancy is observed, in particular for the drag force. It can also be seen at the same time step, with a higher order stem:[\mathrm{BDF}_n] ( _e.g._ stem:[\mathrm{BDF}_3] ). This suggests that the couple $$\Delta t=0.05$$ and stem:[\mathrm{BDF}_2] isn't enough accurate.
 
 
 == Bibliography
