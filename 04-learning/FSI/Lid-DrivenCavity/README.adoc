@@ -2,13 +2,17 @@
 :toc:
 :toc-placement: preamble
 :toclevels: 1
-:biblio: ../../Appendix/Bibliography/readme.adoc 
+//:biblio: ../../Appendix/Bibliography/readme.adoc
 
-This test case has originally been proposed by link:{bilbio}#mok2001partitioned[Mok & Wall].
+:icons: font
+:stem: latexmath
+:imagesdir: .
 
-Computer codes, used for the acquisition of results, are from Vincent link:{biblio}#bloodflowChabannes[Chabannes].
+This test case has originally been proposed by <<MokWall>>.
 
-This benchmark has aso been realized by link:{biblio}#gerbeau2003quasi[Gerbeau], link:{bilbio}#valdes2007nonlinear[Vàzquez], link:{bilbio}#kuttler2008fixed[Kuttler] and link:{bilbio}#kassiotis2011nonlinear[Kassiotis].
+Computer codes, used for the acquisition of results, are from Vincent <<Chabannes>>.
+
+This benchmark has aso been realized by <<Gerbeau>>, <<Vàzquez>>, <<Kuttler>> and <<Kassiotis>>.
 
 == Problem Description 
 
@@ -17,72 +21,59 @@ We study here an incompressible fluid flowing into a cavity, where its walls are
 [[img-geometry1]]
 image::LidDriven.png[caption="Figure 1 : ", title="Geometry of lid-driven cavity flow.", alt="LidDriven Geometry", width="600", align="center"]  
 
-The domain $$\Omega_f^*$$ is define by a square $$[0,1]^2$$, $$\Gamma^{i,*}_f$$ and $$\Gamma^{o,*}_f$$ are respectively the flow entrance and the flow outlet. A constant flow velocity, following the $$x$$ axis, will be imposed on $$\Gamma_f^{h,*}$$ border, while a null flow velocity will be imposed on $$\Gamma_f^{f,*}$$. This last point represent also a non-slip condition for the fluid.
+The domain stem:[\Omega_f^*] is define by a square stem:[ [0,1\]^2 ], stem:[\Gamma^{i,*}_f] and stem:[\Gamma^{o,*}_f] are respectively the flow entrance and the flow outlet.
+A constant flow velocity, following the stem:[x] axis, will be imposed on stem:[\Gamma_f^{h,*}] border, while a null flow velocity will be imposed on stem:[\Gamma_f^{f,*}]. This last point represent also a non-slip condition for the fluid.
 
-Furthermore, we add a structure domain, at the bottom of the fluid one, named $$\Omega_s^*$$. It is fixed by his two vertical sides $$\Gamma_s^{f,*}$$, and we denote by $$\Gamma_f^{w,*}$$ the border which will interact with $$\Omega_f^*$$.
+Furthermore, we add a structure domain, at the bottom of the fluid one, named stem:[\Omega_s^*]. It is fixed by his two vertical sides stem:[\Gamma_s^{f,*}], and we denote by stem:[\Gamma_f^{w,*}] the border which will interact with stem:[\Omega_f^*].
 
-
-During this test, we will observe the displacement of a point $$A$$, positioned at $$(0;0.5)$$, into the $$y$$ direction, and compare our results to ones found in other references.
+During this test, we will observe the displacement of a point stem:[A], positioned at stem:[(0;0.5)], into the stem:[y] direction, and compare our results to ones found in other references.
 
 === Boundary conditions 
 
 Before enunciate the boundary conditions, we need to describe a oscillatory velocity, following the $$x$$ axis and dependent of time.
 
-$$
+[stem]
+++++
   v_{in} = 1-cos\left( \frac{2\pi t}{5} \right)
-$$
+++++
 
 Then we can set 
 
-* on $$\Gamma^{h,*}_f$$, an inflow Dirichlet condition.
-$$
-\boldsymbol{u}_{f} = ( v_{in}, 0 )
-$$
+* on stem:[\Gamma^{h,*}_f], an inflow Dirichlet condition : stem:[\boldsymbol{u}_{f} = ( v_{in}, 0 )]
 
-* on $$\Gamma^{i,*}_f$$, an inflow Dirichlet condition.
-$$
-\boldsymbol{u}_{f} = ( v_{in}(8 y -7) ,0)
-$$ 
+* on stem:[\Gamma^{i,*}_f], an inflow Dirichlet condition : stem:[\boldsymbol{u}_{f} = ( v_{in}(8 y -7) ,0)]
 
-* on $$\Gamma^{f,*}_f$$, a homogeneous Dirichlet condition. 
-$$
-\boldsymbol{u}_{f} = \boldsymbol{0}
-$$
+* on stem:[\Gamma^{f,*}_f], a homogeneous Dirichlet condition : stem:[\boldsymbol{u}_{f} = \boldsymbol{0}]
 
-* on $$\Gamma^{o,*}_f$$, a Neumann condition
-$$
-\boldsymbol{\sigma}_{f} \boldsymbol{n}_f = \boldsymbol{0}
-$$ 
+* on stem:[\Gamma^{o,*}_f], a Neumann condition : stem:[\boldsymbol{\sigma}_{f} \boldsymbol{n}_f = \boldsymbol{0}]
 
-* on $$\Gamma^{f,*}_s$$, a condition that imposes this boundary to be fixed.
-$$
-\boldsymbol{\eta}_{s} = \boldsymbol{0}
-$$
+* on stem:[\Gamma^{f,*}_s], a condition that imposes this boundary to be fixed : stem:[\boldsymbol{\eta}_{s} = \boldsymbol{0}]
 
-* on $$\Gamma^{e,*}_s$$, a condition that lets these boundaries be free from constraints.
-$$
-\boldsymbol{F}_{s} \boldsymbol{\Sigma}_s \boldsymbol{n}_s = \boldsymbol{0}
-$$
+* on stem:[\Gamma^{e,*}_s], a condition that lets these boundaries be free from constraints : stem:[\boldsymbol{F}_{s} \boldsymbol{\Sigma}_s \boldsymbol{n}_s = \boldsymbol{0}]
 
-To them we also add the fluid-structure coupling conditions on $$\Gamma_{fsi}^*$$
+To them we also add the fluid-structure coupling conditions on stem:[\Gamma_{fsi}^*] : 
 
-$$
+[stem]
+++++
 \frac{\partial \boldsymbol{\eta_{s}} }{\partial t} - \boldsymbol{u}_f \circ \mathcal{A}^t_f
   = \boldsymbol{0} \quad \left( \text{Velocities continuity}\right) 
-$$
-$$
+++++
+
+[stem]
+++++
   \boldsymbol{F}_{s} \boldsymbol{\Sigma}_{s} \boldsymbol{n}^*_s + J_{\mathcal{A}^t_f} \boldsymbol{F}_{\mathcal{A}^t_f}^{-T} \hat{\boldsymbol{\sigma}}_f \boldsymbol{n}^*_f
   = \boldsymbol{0} \quad \left( \text{ Constraint continuity}\right) 
-$$
+++++
 
-$$
+[stem]
+++++
   \boldsymbol{\varphi}_s^t  - \mathcal{A}^t_f
   = \boldsymbol{0} \quad \left( \text{Geometric continuity}\right) 
-$$
+++++
 
 === Initial conditions
 
-To realize the simulations, we used a time step $$\Delta t$$ equals to $$0.01$$ s.
+To realize the simulations, we used a time step stem:[\Delta t] equals to stem:[0.01] s.
     
 == Inputs
 
@@ -93,35 +84,35 @@ parameters of this test-case.
 .Fixed and Variable Input Parameters
 |===
 | Name |Description | Nominal Value | Units
-|$$E_s$$ | Young's modulus | $$250 $$  | $$N/m^2$$
-|$$\nu_s$$ | Poisson's ratio | $$0$$  | dimensionless
-|$$\rho_s$$ | structure density | $$500$$  |$$kg/m^3$$
-|$$\mu_f$$ |viscosity | $$1\times 10^{-3}$$  |$$m^2/s$$ 
-|$$\rho_f$$ | density | $$1$$ | $$kg/m^3$$
+|stem:[E_s] | Young's modulus | stem:[250]  | stem:[N.m^{-2}]
+|stem:[\nu_s] | Poisson's ratio | stem:[0]  | dimensionless
+|stem:[\rho_s] | structure density | stem:[500]  |stem:[kg.m^{-3}]
+|stem:[\mu_f] |viscosity | stem:[1\times 10^{-3}]  |stem:[m^2.s^{-1}] 
+|stem:[\rho_f] | density | stem:[1] | stem:[kg.m^{-3}]
 |===
 
 == Outputs
-$$(\boldsymbol{u}_f, p_f, \boldsymbol{\eta}_s, \mathcal{A}_f^t)$$, checking the link:../readme.adoc#_fluid_structure_model[fluid-structure system],  are the output of this problem.
+stem:[(\boldsymbol{u}_f, p_f, \boldsymbol{\eta}_s, \mathcal{A}_f^t)], checking the link:../README.adoc[fluid-structure system],  are the output of this problem.
 
 == Discretization
 
-To discretize space, we used $$P_N$$-$$P_{N-1}$$ Taylor-Hood finite elements.
+To discretize space, we used stem:[P_N~-~P_{N-1}] Taylor-Hood finite elements.
 
-For the structure time discretization,  Newmark-beta method is the one we used. And for the fluid time discretization, we used BDF, at order $$q$$.
+For the structure time discretization,  Newmark-beta method is the one we used. And for the fluid time discretization, we used BDF, at order stem:[q].
 
 == Implementation 
 
-All the codes files are into feelpp/FSI
+All the codes files are into https://github.com/feelpp/feelpp/tree/develop/toolboxes/feel/feelmodels/fsi[FSI]
 
 == Results
 
-We begin with a $$P_2P_1$$ approximation for the fluid with a geometry order equals at $$1$$, and a fluid-structure stable interface.
+We begin with a stem:[P_2~-~P_1] approximation for the fluid with a geometry order equals at stem:[1], and a fluid-structure stable interface.
 
 |===
 |
 |===
 
-Then we retry with a $$P_3P_2$$ approximation for the fluid with a geometry order equals at $$2$$, and a fluid-structure stable interface.
+Then we retry with a stem:[P_3~-~P_2] approximation for the fluid with a geometry order equals at stem:[2], and a fluid-structure stable interface.
 
 |===
 |

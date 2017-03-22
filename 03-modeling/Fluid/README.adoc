@@ -72,7 +72,7 @@ The simplest example of a generalised Newtonian model is the power-law fluid, wh
 \mu_f \left(\dot{\gamma} \right) = k \dot{\gamma}^{n-1}
 --
 
-where stem:[k] and $$n < 1$$ are two parameters related to fluid properties.
+where stem:[k] and stem:[n < 1] are two parameters related to fluid properties.
 
 [NOTE]
 .Blood flow viscosity
@@ -228,12 +228,10 @@ Several methods are available to enforce the boundary condition:
 === Dirichlet on pressure
 
 
-[env.equation]
+[env.equationalign]
 --
-\begin{eqnarray}
-p &=& g \\
-\boldsymbol{u}_f \times \boldsymbol{n} &=& \boldsymbol{0}
-\end{eqnarray}
+p & = g \\
+\boldsymbol{u}_f \times {\boldsymbol{ n }} & = \boldsymbol{0}
 --
 
 === Neumann
@@ -251,7 +249,7 @@ p &=& g \\
 
 [env.equation]
 --
-\boldsymbol{u}_f \cdot \boldsymbol{n} = 0
+\boldsymbol{u}_f \cdot \boldsymbol{ n } = 0
 --
 
 === Inlet
@@ -259,7 +257,7 @@ p &=& g \\
 The boundary condition at inlets allow to define a velocity profile on a set of marked faces stem:[\Gamma_{\mathrm{inlet}}] in fluid mesh:
 [env.equation]
 --
-\boldsymbol{u}_f = - g \ \boldsymbol{n} \quad \text{ on } \Gamma_{\mathrm{inlet}}
+\boldsymbol{u}_f = - g \ \boldsymbol{ n } \quad \text{ on } \Gamma_{\mathrm{inlet}}
 --
 
 The function stem:[g] is computed from flow velocity profiles:
@@ -320,7 +318,7 @@ flow_rate:: stem:[\int_\Gamma ( g \ \boldsymbol{n} ) \cdot \boldsymbol{n} = \alp
 
 [env.equation]
 --
-\boldsymbol{\sigma}_{f} \boldsymbol{n} = \boldsymbol{0}
+\boldsymbol{\sigma}_{f} \boldsymbol{ n } = \boldsymbol{0}
 --
 
 ==== Windkessel model
@@ -344,8 +342,8 @@ Then we define the coupling between this outflow model and the fluid model by th
 [env.equation]
 --
 \begin{align}
-  Q_l &= \int_{\Gamma_l} \boldsymbol{u}_f \cdot \boldsymbol{n}_f  \\
-  \boldsymbol{\sigma}_f \boldsymbol{n}_f &= -P_l \boldsymbol{n}_f
+  Q_l &= \int_{\Gamma_l} \boldsymbol{u}_f \cdot \boldsymbol{ n }_f  \\
+  \boldsymbol{\sigma}_f \boldsymbol{ n }_f &= -P_l \boldsymbol{ n }_f
 \end{align}
 --
 
@@ -514,7 +512,7 @@ alemesh_bc
 
 |===
 
-== Volumic forces
+== Body forces
 
 Body forces are also defined in `BoundaryConditions` category in json file.
 [source,json]
@@ -532,7 +530,7 @@ The marker corresponds to mesh elements marked with this tag.
 If the marker is an empty string, it corresponds to all elements of the mesh.
 
 
-=== Post Processing
+== Post Processing
 
 [source,json]
 ----
@@ -655,7 +653,7 @@ This function can be exported.
 }
 ----
 
-=== Action
+== Action
 
 Let's finish with a simple example in order to show how this works.
 We will interest us to a fluid flow into a cavity in 3D.
@@ -773,7 +771,7 @@ First at all, we define some general information like the name ( and short name 
 "Model":"Navier-Stokes",
 ----
 
-Then we define the link:#Material[material properties]. In our case, the fluid, define  by rho` its density in $$kg\cdot m^{-3}$$ and `mu` its dynamic viscosity in $$kg\cdot (m \cdot s)^{-1}$$, is the only material we have to define.
+Then we define the link:#Material[material properties]. In our case, the fluid, define  by rho` its density in stem:[kg\cdot m^{-3}] and `mu` its dynamic viscosity in stem:[kg\cdot (m \cdot s)^{-1}], is the only material we have to define.
 
 [source,json]
 ----
