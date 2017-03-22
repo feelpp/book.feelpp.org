@@ -11,46 +11,46 @@ NOTE: This benchmark is linked to the link:../../CSM/Turek-Hron/readme.adoc[Ture
 
 == Problem Description
 
-We consider a 2D model representative of a laminar incompressible flow around an obstacle. The flow domain, named $$\Omega_f$$, is contained into the rectangle $$[0,2.5] \times [0,0.41] $$. It is characterised, in particular, by its dynamic viscosity $$\mu_f$$ and by its density $$\rho_f$$. In this case, the fluid material we used is glycerine.
+We consider a 2D model representative of a laminar incompressible flow around an obstacle. The flow domain, named stem:[\Omega_f], is contained into
+the rectangle stem:[ \lbrack 0,2.5 \rbrack \times \lbrack 0,0.41 \rbrack ]. It is characterised, in particular, by its dynamic viscosity stem:[\mu_f] and by its density stem:[\rho_f]. In this case, the fluid material we used is glycerine.
 
-[[img-geometry1]]
-image::./TurekHronCFDGeometry.png[caption="Figure 1 : ", title="Geometry of the Turek & Hron CFD Benchmark.", alt="TurekHron Geometry", width="500", align="center"]
+[[ImageModelingCFDTurekHronGeometry]]
+.Geometry of the Turek & Hron CFD Benchmark
+image::modeling/cfd/TurekHronCFDGeometry.png[alt="TurekHron Geometry",align="center"]
 
 
-In order to describe the flow, the link:../readme.adoc#_Incompressible_Navier-Stokes_model[ incompressible Navier-Stokes model] is chosen for this case, define by the conservation of momentum equation and the conservation of mass equation. At them, we add the material constitutive equation, that help us to define $$\boldsymbol{\sigma}_f$$
+In order to describe the flow, the link:../readme.adoc#_Incompressible_Navier-Stokes_model[ incompressible Navier-Stokes model] is chosen for this case, define by the conservation of momentum equation and the conservation of mass equation. At them, we add the material constitutive equation, that help us to define stem:[\boldsymbol{\sigma}_f]
 
 
-The goal of this benchmark is to study the behavior of lift forces $$F_L$$ and drag forces $$F_D$$, with three different fluid dynamics applied on the obstacle, i.e on $$\Gamma_{obst}$$, we made rigid by setting specific structure parameters. To simulate these cases, different mean inflow velocities, and thus different Reynolds numbers, will be used.
+The goal of this benchmark is to study the behavior of lift forces stem:[F_L] and drag forces stem:[F_D], with three different fluid dynamics applied on the obstacle, i.e on stem:[\Gamma_{obst}], we made rigid by setting specific structure parameters. To simulate these cases, different mean inflow velocities, and thus different Reynolds numbers, will be used.
 
 === Boundary conditions
 
 We set
 
-* on $$\Gamma_{in}$$, an inflow Dirichlet condition.
-$$
-  \boldsymbol{u}_f=(v_{in},0);
-$$
+* on stem:[\Gamma_{in}], an inflow Dirichlet condition :
+ stem:[ \boldsymbol{u}_f=(v_{in},0) ]
 
-* on $$\Gamma_{wall}$$ and $$\Gamma_{obst}$$, a homogeneous Dirichlet condition.
-$$
-  \boldsymbol{u}_f=\boldsymbol{0};
-$$
+* on stem:[\Gamma_{wall}] and stem:[\Gamma_{obst}], a homogeneous Dirichlet condition :
+stem:[ \boldsymbol{u}_f=\boldsymbol{0} ]
 
-* on $$\Gamma_{out}$$, a Neumann condition
-$$
-  \boldsymbol{\sigma}_f\boldsymbol{n}_f=\boldsymbol{0};
-$$
+* on stem:[\Gamma_{out}], a Neumann condition :
+stem:[ \boldsymbol{\sigma}_f\boldsymbol{ n }_f=\boldsymbol{0} ]
+
 
 === Initial conditions
-We use a parabolic velocity profile, in order to describe the flow inlet by $$\Gamma_{in}$$, which can be express by
+We use a parabolic velocity profile, in order to describe the flow inlet by stem:[ \Gamma_{in} ], which can be express by
 
-$$
+[env.equation]
+--
   v_{cst} = 1.5 \bar{U} \frac{4}{0.1681} y \left(0.41-y\right)
-$$
-where $$\bar{U}$$ is the mean inflow velocity.
+--
+where stem:[\bar{U}] is the mean inflow velocity.
 
 However, we want to impose a progressive increase of this velocity profile. That's why we define
-$$
+
+[env.equation]
+--
   v_{in} =
   \left\{
   \begin{aligned}
@@ -58,11 +58,11 @@ $$
    & v_{cst}  \quad & \text{ otherwise }
   \end{aligned}
   \right.
-$$
+--
 
 With t the time.
 
-Moreover, in this case, there is no source term, so $$f_f\equiv 0$$.
+Moreover, in this case, there is no source term, so stem:[f_f\equiv 0].
 
 == Inputs
 
@@ -75,37 +75,37 @@ parameters of this test-case.
 | Name |Description | Nominal Value | Units
 
 
-|$$l$$ | elastic structure length | $$0.35$$ |$$m$$
-|$$h$$ | elastic structure height | $$0.02$$ | $$m$$ |
-$$r$$ | cylinder radius | $$0.05$$ | $$m$$
-|$$C$$ | cylinder center coordinates | $$(0.2,0.2)$$|$$m$$
-|$$\nu_f$$ | kinematic viscosity | $$1\times 10^{-3}$$  |$$m^2/s$$
-|$$\mu_f$$ | dynamic viscosity | $$1$$  | $$kg/(m \times s)$$
-|$$\rho_f$$ | density | $$1000$$  | $$kg/m^3$$
-|$$f_f$$| source term | 0  | $$kg/(m^3 \times s)$$
-|$$\bar{U}$$| characteristic inflow velocity |
+|stem:[l] | elastic structure length | stem:[0.35] |stem:[m]
+|stem:[h] | elastic structure height | stem:[0.02] | stem:[m]
+|stem:[r] | cylinder radius | stem:[0.05] | stem:[m]
+|stem:[C] | cylinder center coordinates | stem:[(0.2,0.2)]|stem:[m]
+|stem:[\nu_f] | kinematic viscosity | stem:[1\times 10^{-3}]  |stem:[m^2/s]
+|stem:[\mu_f] | dynamic viscosity | stem:[1]  | stem:[kg/(m \times s)]
+|stem:[\rho_f] | density | stem:[1000]  | stem:[kg/m^3]
+|stem:[f_f]| source term | 0  | stem:[kg/(m^3 \times s)]
+|stem:[\bar{U}]| characteristic inflow velocity |
 
 !====
-!$$CFD1$$!$$CFD2$$!$$CFD3$$
+!CFD1!CFD2!CFD3
 
-!$$0.2$$!$$1$$!$$2$$
+!stem:[0.2]!stem:[1]!stem:[2]
 !===
-|$$m/s$$
+|stem:[m/s]
 |===
 
 == Outputs
 
-As defined above, the goal of this benchmark is to measure the drag and lift forces, $$F_D$$ & $$F_L$$, to control the fluid solver behavior. They can be obtain from
+As defined above, the goal of this benchmark is to measure the drag and lift forces, stem:[F_D] and stem:[F_L], to control the fluid solver behavior. They can be obtain from
 
-$$
-(F_D,F_L)=\int_{\Gamma_{obst}}\boldsymbol{\sigma}_f \boldsymbol{n}_f
-$$
-
-where $$\boldsymbol{n}_f$$ the outer unit normal vector from $$\partial \Omega_f$$.
+[env.equation]
+--
+(F_D,F_L)=\int_{\Gamma_{obst}}\boldsymbol{\sigma}_f \boldsymbol{ n }_f
+--
+where stem:[\boldsymbol{n}_f] the outer unit normal vector from stem:[\partial \Omega_f].
 
 == Discretization
 
-To realize these tests, we made the choice to used $$P_N$$-$$P_{N-1}$$ Taylor-Hood finite elements, described by link:{biblio}#bloodflowChabannes[Chabannes], to discretize space. With the time discretization, we use BDF, for Backward Differentation Formulation, schemes at different orders $$q$$.
+To realize these tests, we made the choice to used stem:[P_N]-stem:[P_{N-1}] Taylor-Hood finite elements, described by link:{biblio}#bloodflowChabannes[Chabannes], to discretize space. With the time discretization, we use BDF, for Backward Differentation Formulation, schemes at different orders $$q$$.
 
 === Solvers
 
