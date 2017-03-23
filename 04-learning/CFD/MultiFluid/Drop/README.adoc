@@ -14,59 +14,61 @@ in \cite{Doyeux2012}.
 The benchmark objective is to simulate the rise of a 3D bubble in a Newtonian
 fluid. The equations solved are the incompressible Navier Stokes equations for
 the fluid and the advection for the level set:
-$$
+[stem]
+++++
 \begin{array}[lll]
  \rho\rho(\phi(\mathbf{x}) ) \left(\frac{\partial \mathbf{u}}{\partial t} + \mathbf{u} \cdot \nabla \mathbf{u} \right) + \nabla p - \nabla \cdot \left( \nu(\phi(\mathbf{x})) (\nabla \mathbf{u} + (\nabla \mathbf{u})^T) \right) &=& \rho ( \phi(\mathbf{x}) ) \mathbf{g}, \\
 \nabla \cdot \mathbf{u} &=& 0, \\
 \frac{\partial \phi}{\partial t} + \mathbf{u} \cdot \nabla \phi &=& 0, 
 \end{array}
-$$
-where $$\rho$$ is the density of the fluid, $$\nu$$ its viscosity, and $$\mathbf{g} \approx (0,
-0.98)^T$$ is the gravity acceleration.
+++++
+where stem:[\rho] is the density of the fluid, stem:[\nu] its viscosity, and stem:[\mathbf{g} \approx (0,
+0.98)^T] is the gravity acceleration.
 
-The computational domain is $$\Omega \times ]0, T]$$ where $$\Omega$$ is a cylinder which has a radius
-$$R$$ and a heigth $$H$$ so that $$R=0.5$$ and $$H=2$$ and $$T=3$$. We denote $$\Omega_1$$ the domain outside
-the bubble $$ \Omega_1= \{\mathbf{x} | \phi(\mathbf{x})>0 \} $$, $$\Omega_2$$ the domain inside the bubble $$
-\Omega_2 = \{\mathbf{x} | \phi(\mathbf{x})<0 \} $$ and $$\Gamma$$ the interface $$ \Gamma =
-\{\mathbf{x} | \phi(\mathbf{x})=0 \} $$.  On the lateral walls and on the bottom walls, no-slip boundary
-conditions are imposed, *i.e.* $$\mathbf{u} = 0$$ and $$\mathbf{t} \cdot (\nabla
-\mathbf{u} + (\nabla \mathbf{u})^T) \cdot \mathbf{n}=0$$ where $$\mathbf{n}$$ is the unit normal to
-the interface and $$\mathbf{t}$$ the unit tangent. Neumann condition is
-imposed on the top wall *i.e.* $$\dfrac{\partial \mathbf{u}}{\partial \mathbf{n}}=\mathbf{0}$$. The initial
-bubble is circular with a radius $$r_0 = 0.25$$ and centered on the point $$(0.5, 0.5, 0.)$$.
-A surface tension force $$\mathbf{f}_{st}$$ is applied on $$\Gamma$$, it reads :
-$$\mathbf{f}_{st} = \int_{\Gamma} \sigma \kappa \mathbf{n} \simeq \int_{\Omega} \sigma
-\kappa \mathbf{n} \delta_{\varepsilon}(\phi)$$ where $$\sigma$$ stands for the surface tension between the two-fluids and 
-$$\kappa = \nabla \cdot (\frac{\nabla   \mathbf{\phi}}{|\nabla \phi|})$$ is the curvature of the interface. Note that the
- normal vector $$\mathbf{n}$$ is defined here as $$\mathbf{n}=\frac{\nabla \phi}{|\nabla \phi|}$$.
+The computational domain is stem:[\Omega \times \rbrack0, T\rbrack ] where stem:[\Omega] is a cylinder which has a radius
+stem:[R] and a heigth stem:[H] so that stem:[R=0.5] and stem:[H=2] and stem:[T=3]. We denote stem:[\Omega_1] the domain outside
+the bubble stem:[ \Omega_1= \{\mathbf{x} | \phi(\mathbf{x})>0 \} ], stem:[\Omega_2] the domain inside the bubble stem:[
+\Omega_2 = \{\mathbf{x} | \phi(\mathbf{x})<0 \} stem:[ and stem:[\Gamma] the interface stem:[ \Gamma =
+\{\mathbf{x} | \phi(\mathbf{x})=0 \} ].  On the lateral walls and on the bottom walls, no-slip boundary
+conditions are imposed, *i.e.* stem:[\mathbf{u} = 0] and stem:[\mathbf{t} \cdot (\nabla
+\mathbf{u} + (\nabla \mathbf{u})^T) \cdot \mathbf{n}=0] where stem:[\mathbf{n}] is the unit normal to
+the interface and stem:[\mathbf{t}] the unit tangent. Neumann condition is
+imposed on the top wall *i.e.* stem:[\dfrac{\partial \mathbf{u}}{\partial \mathbf{n}}=\mathbf{0}]. The initial
+bubble is circular with a radius stem:[r_0 = 0.25] and centered on the point stem:[(0.5, 0.5, 0.)].
+A surface tension force stem:[\mathbf{f}_{st}] is applied on stem:[\Gamma], it reads :
+stem:[\mathbf{f}_{st} = \int_{\Gamma} \sigma \kappa \mathbf{n} \simeq \int_{\Omega} \sigma
+\kappa \mathbf{n} \delta_{\varepsilon}(\phi)] where stem:[\sigma] stands for the surface tension between the two-fluids and 
+stem:[\kappa = \nabla \cdot (\frac{\nabla   \mathbf{\phi}}{|\nabla \phi|})] is the curvature of the interface. Note that the
+ normal vector stem:[\mathbf{n}] is defined here as stem:[\mathbf{n}=\frac{\nabla \phi}{|\nabla \phi|}].
 
-We denote with indices $$1$$ and $$2$$ the quantities relative to the fluid in respectively in $$\Omega_1$$ and $$\Omega_2$$. The parameters of the benchmark are $$\rho_1$$, $$\rho_2$$, $$\nu_1$$, $$\nu_2$$ and $$\sigma$$ and we define two dimensionless numbers: first, the Reynolds number which is the  ratio between inertial and viscous terms and is defined as : 
-$$Re = \dfrac{\rho_1 \sqrt{|\mathbf{g}|  (2r_0)^3}}{\nu_1}$$; second, the E\"otv\"os number which represents the ratio between the gravity force and the surface tension 
-$$E_0 = \dfrac{4 \rho_1 |\mathbf{g}| r_0^2}{\sigma}$$. 
+We denote with indices stem:[1] and stem:[2] the quantities relative to the fluid in respectively in stem:[\Omega_1] and stem:[\Omega_2]. The parameters of the benchmark are stem:[\rho_1], stem:[\rho_2], stem:[\nu_1], stem:[\nu_2] and stem:[\sigma] and we define two dimensionless numbers: first, the Reynolds number which is the  ratio between inertial and viscous terms and is defined as : 
+stem:[Re = \dfrac{\rho_1 \sqrt{|\mathbf{g}|  (2r_0)^3}}{\nu_1}]; second, the E\"otv\"os number which represents the ratio between the gravity force and the surface tension 
+stem:[E_0 = \dfrac{4 \rho_1 |\mathbf{g}| r_0^2}{\sigma}]. 
 The table below reports the values  of the parameters used for two different test cases proposed in~\cite{Hysing2009}.
 
 .Numerical parameters taken for the benchmarks.
 |===
-| Tests  | $$\rho_1$$  | $$\rho_2$$  | $$\nu_1$$  | $$\nu_2$$  | $$\sigma$$  | $$Re$$  | $$E_0$$ 
+| Tests  | stem:[\rho_1]  | stem:[\rho_2]  | stem:[\nu_1]  | stem:[\nu_2]  | stem:[\sigma]  | Re  | stem:[E_0] 
 | Test 1 (ellipsoidal bubble)  | 1000     | 100       |  10     |   1       |    24.5   | 35    |  10
 | Test 2 (skirted bubble)     |  1000     |  1        |  10     |  0.1      |  1.96     | 35    | 125
 |===
 
-The quantities measured in \cite{Hysing2009} are $$\mathbf{X_c}$$ the center of mass
-of the bubble, $$\mathbf{U_c}$$ its velocity and the circularity. For the 3D case
+The quantities measured in \cite{Hysing2009} are stem:[\mathbf{X_c}] the center of mass
+of the bubble, stem:[\mathbf{U_c}] its velocity and the circularity. For the 3D case
 we extend the circularity to the sphericity defined as the ratio
 between the surface of a sphere which has the same volume and the surface
-of the bubble which reads $$\Psi(t) = \dfrac{4\pi\left(\dfrac{3}{4\pi} \int_{\Omega_2} 1 \right)^{\frac{2}{3}}}{\int_{\Gamma} 1}$$.
+of the bubble which reads stem:[\Psi(t) = \dfrac{4\pi\left(\dfrac{3}{4\pi} \int_{\Omega_2} 1 \right)^{\frac{2}{3}}}{\int_{\Gamma} 1}].
 
 == Simulations parameters
 
 The simulations have been performed on the supercomputer SUPERMUC using 160 or 320
 processors. The number of processors was chosen depending on the memory needed for
-the simulations. The table~\ref{tab:test_param} summarize for the test 1 the different simulation properties and the table~\ref{tab:mesh_carac} give the carachteristics of each mesh.
+the simulations. The table <<TableModelingCFDMultiFluid3dDropParamTest1>> summarize for the test 1 the different simulation properties and the table <<TableModelingCFDMultiFluid3dDropMeshSize>> give the carachteristics of each mesh.
 
+[[TableModelingCFDMultiFluid3dDropParamTest1]]
 .Numerical parameters used for the test 1 simulations: Mesh size, Number of processors, Time step, Average time per iteration, Total time of the simulation.
 |===
-| h         | Number of processors  | $$\Delta t$$  | Time per iteration (s)  | Total Time (h)
+| h         | Number of processors  | stem:[\Delta t]  | Time per iteration (s)  | Total Time (h)
 | 0.025     | 360                   | 0.0125      | 18.7                    | 1.25           
 | 0.02      | 360                   | 0.01        | 36.1                    | 3.0            
 | 0.0175    | 180                   | 0.00875     | 93.5                    | 8.9            
@@ -74,6 +76,7 @@ the simulations. The table~\ref{tab:test_param} summarize for the test 1 the dif
 | 0.0125    | 180                   | 0.00625     | 339.7                   | 45.3     
 |===
 
+[[TableModelingCFDMultiFluid3dDropMeshSize]]
 .Mesh caracteristics: mesh size given, number of Tetrahedra, number of points, number of order 1 degrees of freedom, number of order 2 degrees of freedom    
 |===
 | h         | Tetrahedra   | Points    | Order 1      | Order 2
@@ -86,9 +89,9 @@ the simulations. The table~\ref{tab:test_param} summarize for the test 1 the dif
 
 The Navier-Stokes equations are linearized using the Newton's method and we used a KSP method to
 solve the linear system. We use an Additive Schwarz Method for the preconditioning (GASM)
-and an $$LU$$ method as a sub preconditionner.
+and a LU method as a sub preconditionner.
 We run the simulations looking for solutions in finite element spaces spanned by
-Lagrange polynomials of order $$(2,1,1)$$ for respectively the velocity, the
+Lagrange polynomials of order stem:[(2,1,1)] for respectively the velocity, the
 pressure and the level set.
 
 == Results Test 1: Ellipsoidal bubble
