@@ -12,18 +12,18 @@ We focus on the link:http://www.caesarsystems.co.uk/NAFEMS_benchmarks/le10.html[
 The geometry is given link:http://www.caesarsystems.co.uk/NAFEMS_benchmarks/le10.html[here] by : +
 image:geoLE10.png[] +
 image:geo3DLE10.png[alt="", align="center"] +
-where the thickness is $$0.6$$.
+where the thickness is stem:[0.6].
 
-In addition, we define the point $$E$$ which is the midpoint of $$CC'$$ and $$E'$$ the midpoint of $$BB'$$.
+In addition, we define the point E which is the midpoint of CC' and E' the midpoint of BB'.
 
 === Boundary conditions
 
 We set:
 
-- $$u_y = 0$$ on $$DCD'C'$$
-- $$u_x = 0$$ on $$ABA'B'$$
-- $$u_x = u_y = 0$$ on $$BCB'C'$$
-- $$\bar{\bar{\varepsilon}}\cdot\mathbf{n}=-1e^6$$ on the top surface.
+- stem:[u_y = 0] on DCD'C'
+- stem:[u_x = 0] on ABA'B'
+- stem:[u_x = u_y = 0] on BCB'C'
+- stem:[\bar{\bar{\varepsilon}}\cdot\mathbf{n}=-1e^6] on the top surface.
 
 == Inputs
 
@@ -33,17 +33,17 @@ We have the following parameters:
 |===
 | Name | Value
 
-|$$E$$ | $$210\, GPa$$
-|$$\nu$$ | $$0.3$$
-|$$\rho$$ | $$7800\, kg/m^2$$
+|stem:[E] | stem:[210\, GPa]
+|stem:[\nu] | stem:[0.3]
+|stem:[\rho] | stem:[7800\, kg/m^2]
 |===
 
 == Outputs
 
-We want to compare the value of $$\sigma_{yy}$$ at the point $$D$$. The reference value is $$5.38\, MPa$$.
+We want to compare the value of stem:[\sigma_{yy}] at the point D. The reference value is stem:[5.38\, MPa].
 
 == Results
 
-The value of $$\sigma_{yy}$$ at the point $$D$$ is $$5.53\, MPa$$ for $$300 000$$ dofs, which is $$2.78%$$ higher than the target.
+The value of stem:[\sigma_{yy}] at the point D is stem:[5.53\, MPa] for stem:[300 000] dofs, which is stem:[2.78%] higher than the target.
 
 One possibility to get a more accurate output is to use a mixed formulation, where the stress tensor would also be an unknown.

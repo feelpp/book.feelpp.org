@@ -16,9 +16,9 @@ image:../NAFEMS-LE10/geoLE10.png[]
 
 We set:
 
-- $$u_y = 0$$ on $$DC$$
-- $$u_x = 0$$ on $$AB$$
-- $$\bar{\bar{\varepsilon}}\cdot\mathbf{n}=1e^7$$ on $$BC$$.
+- stem:[u_y = 0] on DC
+- stem:[u_x = 0] on AB
+- stem:[\bar{\bar{\varepsilon}}\cdot\mathbf{n}=1e^7] on BC.
 
 == Inputs
 
@@ -28,17 +28,17 @@ We have the following parameters:
 |===
 | Name | Value
 
-|$$E$$ | $$210\, GPa$$
-|$$\nu$$ | $$0.3$$
-|$$\rho$$ | $$7800\, kg/m^2$$
+|stem:[E] | stem:[210\, GPa]
+|stem:[\nu] | stem:[0.3]
+|stem:[\rho] | stem:[7800\, kg/m^2]
 |===
 
 == Outputs
 
-We want to compare the value of $$\sigma_{yy}$$ at the point $$D$$. The reference value is $$92.7\, MPa$$.
+We want to compare the value of stem:[\sigma_{yy}] at the point D. The reference value is stem:[92.7\, MPa].
 
 == Results
 
-The value of $$\sigma_{yy}$$ at the point $$D$$ is $$94.09\, MPa$$ for $$32 000$$ dofs, which is $$1.49%$$ higher than the target.
+The value of stem:[\sigma_{yy}] at the point D is stem:[94.09\, MPa] for stem:[32 000] dofs, which is stem:[1.49%] higher than the target.
 
 One possibility to get a more accurate output is to use a mixed formulation, where the stress tensor would also be an unknown.
