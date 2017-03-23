@@ -1,3 +1,4 @@
+// mode: -*- adoc -*-
 === Mesh iterators
 
 Feel++ mesh data structure allows to iterate over its entities:
@@ -25,17 +26,17 @@ auto r2 = elements(*mesh); // OK
 |`elements_t<MeshType>`|`elements(mesh)`|All the elements of a mesh
 |`markedelements_t<MeshType>`|`markedelements(mesh, id)`|All the elements marked by marked id
 |`boundaryelements_t<MeshType>`| `boundaryelements(mesh)` |All the elements of the mesh which share a face with the boundary of the mesh.
-| internalelements_t\<MeshType\>| `internalelements(mesh)` |All the elements of the mesh which share a face with the boundary of the mesh.
-|pid_faces_t\<MeshType\>| `faces(mesh)` |All the faces of the mesh.
-|markedfaces_t\<MeshType\>| `markedfaces(mesh)` |All the faces of the mesh which are marked.
-|boundaryfaces_t\<MeshType\>| `boundaryfaces(mesh)` |All elements that own a topological dimension one below the mesh. For example, if you mesh is a 2D one, `boundaryfaces(mesh)`  will return all the lines (because of dimension $$2-1=1$$). These elements which have one dimension less, are corresponding to the boundary faces.
-|internalfaces_t\<MeshType\>| `internalelements(mesh)` |All the elements of the mesh which are stricly within the domain that is to say they do not share a face with the boundary.
-| edges_t\<MeshType\>| `edges(mesh)` | All the edges of the mesh.
-| boundaryedges_t\<MeshType\> | `boundaryedges(mesh)` |All boundary edges of the mesh.
-| points_t\<MeshType\>| `points(mesh)` | All the points of the mesh.
-| markedpoints_t\<MeshType\>| `markedpoints(mesh,id)` | All the points marked id of  mesh.
-| boundarypoints_t\<MeshType\> | `boundarypoints(mesh)` |All boundary points of the mesh.
-| internalpoints_t\<MeshType\> | `internalpoints(mesh)` |All internal points of the mesh(not on the boundary)
+| `internalelements_t<MeshType>`| `internalelements(mesh)` |All the elements of the mesh which share a face with the boundary of the mesh.
+|`pid_faces_t<MeshType>`| `faces(mesh)` |All the faces of the mesh.
+|`markedfaces_t<MeshType>`| `markedfaces(mesh)` |All the faces of the mesh which are marked.
+|`boundaryfaces_t<MeshType>`| `boundaryfaces(mesh)` |All elements that own a topological dimension one below the mesh. For example, if you mesh is a 2D one, `boundaryfaces(mesh)`  will return all the lines (because of dimension $$2-1=1$$). These elements which have one dimension less, are corresponding to the boundary faces.
+|`internalfaces_t<MeshType>`| `internalelements(mesh)` |All the elements of the mesh which are stricly within the domain that is to say they do not share a face with the boundary.
+| `edges_t<MeshType>` | `edges(mesh)` | All the edges of the mesh.
+| `boundaryedges_t<MeshType>` | `boundaryedges(mesh)` |All boundary edges of the mesh.
+| `points_t<MeshType>` | `points(mesh)` | All the points of the mesh.
+| `markedpoints_t<MeshType>` | `markedpoints(mesh,id)` | All the points marked id of  mesh.
+| `boundarypoints_t<MeshType>` | `boundarypoints(mesh)` |All boundary points of the mesh.
+| `internalpoints_t<MeshType>` | `internalpoints(mesh)` |All internal points of the mesh(not on the boundary)
 |===
 
 Here are some examples on how to use these functionSpace
@@ -47,27 +48,45 @@ auto mesh = ...;
 auto r1 = elements(mesh);
 // iterate over the set of elements local to the process(no ghost cell selected, see next section)
 for ( auto const&  e : r2 )
-{ ... }
+{
+  auto const& elt = unwrap_ref( e );
+  // work with element elt
+  ...
+}
 
 auto r2 = markedelements(mesh,"iron");
 // iterate over the set of elements marked iron in the mesh
 for ( auto const&  e : r2 )
-{ ... }
+{
+  auto const& elt = unwrap_ref( e );
+  // work with element elt
+  ...
+}
 
 auto r3 = boundaryfaces(mesh);
 // iterate over the set of faces on the boundary of the mesh
 for ( auto const&  e : r3 )
-{ ... }
+{
+  auto const& elt = unwrap_ref( e );
+  // work with element elt
+  ...
+}
 
 auto r4 = markededges(mesh,"line");
 // iterate over the set of edges marked "line" in the mesh
 for ( auto const&  e : r4 )
-{ ... }
+{
+  auto const& elt = unwrap_ref( e );
+  // work with element elt
+  ...
+}
 ----
 
 ==== Extended set of entities
 
-Feel++ allows also to select an extended sets of entities from the mesh, you can extract entities which belongs to the local process but also ghost entities which satisfy the same property as the local ones. Actually you can select both or one one of them thanks to the enum data structure entity_process_t which provides the following options
+Feel++ allows also to select an extended sets of entities from the mesh, you can extract entities which belongs to the local process but also ghost entities which satisfy the same property as the local ones.
+
+Actually you can select both or one one of them thanks to the enum data structure entity_process_t which provides the following options
 
 |===
 | entity_process_t | Description
@@ -78,20 +97,17 @@ Feel++ allows also to select an extended sets of entities from the mesh, you can
 
 |===
 |Type|Function|Description
-|ext_elements_t\<MeshType\>|`elements(mesh,entity_process_t)`|all the elements of mesh associated to entity_process_t.
-|ext_elements_t\<MeshType\>|`markedelements(mesh, id, entity_process_t)`|all the elements marked id of mesh associated to entity_process_t.
-|ext_faces_t\<MeshType\>|`faces(mesh,entity_process_t)`|all the faces of mesh associated to entity_process_t.
-|ext_faces_t\<MeshType\>|`markedfaces(mesh, id, entity_process_t)`|all the faces marked id of mesh associated to entity_process_t.
-|ext_edges_t\<MeshType\>|`edges(mesh,entity_process_t)`|all the edges of mesh associated to entity_process_t.
-|ext_edges_t\<MeshType\>|`markededges(mesh, id, entity_process_t)`|all the edges marked id of mesh associated to entity_process_t.
+|`ext_elements_t<MeshType>`|`elements(mesh,entity_process_t)`|all the elements of mesh associated to entity_process_t.
+|`ext_elements_t<MeshType>`|`markedelements(mesh, id, entity_process_t)`|all the elements marked id of mesh associated to entity_process_t.
+|`ext_faces_t<MeshType>`|`faces(mesh,entity_process_t)`|all the faces of mesh associated to entity_process_t.
+|`ext_faces_t<MeshType>`|`markedfaces(mesh, id, entity_process_t)`|all the faces marked id of mesh associated to entity_process_t.
+|`ext_edges_t<MeshType>`|`edges(mesh,entity_process_t)`|all the edges of mesh associated to entity_process_t.
+|`ext_edges_t<MeshType>`|`markededges(mesh, id, entity_process_t)`|all the edges marked id of mesh associated to entity_process_t.
 |===
 
 [NOTE]
-The type of the object returned for an entity is always the
-same, for elements it is `ext_elements_t<MeshType>` whether the
-elements are marked or not. The reason is that in fact we have to
-create a temporary data structure embedded in the range object that
-stores a reference to the elements which are selected.
+The type of the object returned for an entity is always the same, for elements it is `ext_elements_t<MeshType>` whether the elements are marked or not.
+The reason is that in fact we have to create a temporary data structure embedded in the range object that stores a reference to the elements which are selected.
 
 Here is how to select both local and ghost elements from a Mesh
 
@@ -104,19 +120,16 @@ for (auto const& e : r )
   // do something on the local and ghost element
   ...
   // do something special on ghost cells
-  if ( e.isGhostCell() )
+  if ( unwrap_ref(e).isGhostCell() )
   {...}
 }
 ----
 
 ==== Concatenate sets of entities
 
-Denote stem:[\mathcal{E}_{1}, \ldots ,\mathcal{E}_{n}] stem:[n]
-*disjoints* sets of the same type of entities (eg elements, faces,
-edges or points), stem:[\cup_{i=1}^{n} \mathcal{E}_i] with
-stem:[\cap_{i=0}^{n} \mathcal{E}_i = \emptyset]. We wish to concatenate
-these stem:[n] sets. To this end, we use `concatenate` which takes an
-arbitrary number of *disjoints* sets.
+Denote stem:[\mathcal{E}_{1}, \ldots ,\mathcal{E}_{n}] stem:[n] *disjoints* sets of the same type of entities (eg elements, faces,edges or points), stem:[\cup_{i=1}^{n} \mathcal{E}_i] with stem:[\cap_{i=0}^{n} \mathcal{E}_i = \emptyset].
+
+We wish to concatenate these stem:[n] sets. To this end, we use `concatenate` which takes an arbitrary number of *disjoints* sets.
 
 [source,cpp]
 ----
@@ -199,3 +212,33 @@ Next, this range can be used in feel++ language.
 ----
 double eval = integrate(_range=myrange,_expr=cst(1.)).evaluate()(0,0);
 ----
+
+=== Mesh Markers
+
+Elements and their associated sub-entities can be marked.
+
+A _marker_ is an integer specifying for example a material id, a boundary condition id or some other property associated with the entity.
+
+A dictionary can map string to marker ids.
+
+The dictionary is stored in the Mesh data structures and provides the set of correspondances between strings and ids.
+
+To access a marker, it is necessary to verify that it exists as follows
+[source,cpp]
+----
+for( auto const& ewrap : elements(mesh))
+{
+  auto const& e = unwrap_ref( ewrap );
+  if ( e.hasMarker() ) <1>
+  {
+    std::cout << "Element " << e.id() << " has marker " << e.marker() << std::endl;
+  }
+  if ( e.hasMarker(5) ) <2>
+  {
+    std::cout << "Element " << e.id() << " has marker 5 " << e.marker(5) << std::endl;
+  }
+}
+----
+
+<1> check if marker 1 (the default marker) exists, if yes then print it
+<2> check if marker 5 exists, if yes then print it
