@@ -10,19 +10,6 @@ toc::[]
 
 == Notations
 
-* strain tensor stem:[\boldsymbol{F}_s = \boldsymbol{I} + \nabla \boldsymbol{\eta}_s]
-* Cauchy-Green tensor stem:[\boldsymbol{C}_s = \boldsymbol{F}_s^{T} \boldsymbol{F}_s]
-* Green-Lagrange tensor
-$$
-\begin{align}
-  \boldsymbol{E}_s &= \frac{1}{2} \left( \boldsymbol{C}_s - \boldsymbol{I} \right)  \\
-   &= \underbrace{\frac{1}{2} \left( \nabla \boldsymbol{\eta}_s + \left(\nabla
-   \boldsymbol{\eta}_s\right)^{T} \right)}_{\boldsymbol{\epsilon}_s}
-  + \underbrace{\frac{1}{2} \left(\left(\nabla \boldsymbol{\eta}_s\right)^{T}
-  \nabla \boldsymbol{\eta}_s \right)}_{\boldsymbol{\gamma}_s}
-\end{align}
-$$
-
 |===
 | Notation | Quantity | Unit
 |stem:[\rho_s]|density|stem:[kg.m^{-3}]
@@ -30,9 +17,21 @@ $$
 |stem:[\mu_s]|second Lamé coefficients|stem:[N.m^{-2}]
 |stem:[E_s]|Young modulus|stem:[kg.m^{-1}.s^{-2}]
 |stem:[\nu_s]|Poisson's ratio|dimensionless
-
-
 |===
+
+* strain tensor stem:[\boldsymbol{F}_s = \boldsymbol{I} + \nabla \boldsymbol{\eta}_s]
+* Cauchy-Green tensor stem:[\boldsymbol{C}_s = \boldsymbol{F}_s^{T} \boldsymbol{F}_s]
+* Green-Lagrange tensor
+[stem]
+++++
+\begin{align}
+  \boldsymbol{E}_s &= \frac{1}{2} \left( \boldsymbol{C}_s - \boldsymbol{I} \right)  \\
+   &= \underbrace{\frac{1}{2} \left( \nabla \boldsymbol{\eta}_s + \left(\nabla
+   \boldsymbol{\eta}_s\right)^{T} \right)}_{\boldsymbol{\epsilon}_s}
+  + \underbrace{\frac{1}{2} \left(\left(\nabla \boldsymbol{\eta}_s\right)^{T}
+  \nabla \boldsymbol{\eta}_s \right)}_{\boldsymbol{\gamma}_s}
+\end{align}
+++++
 
 == Models
 [stem]
@@ -43,13 +42,15 @@ $$
 ++++
 
 === Linear elasticity
-$$
+
+[stem]
+++++
 \begin{align}
 \boldsymbol{F}_s &= \text{Identity} \\
 \boldsymbol{\Sigma}_s &=\lambda_s tr( \boldsymbol{\epsilon}_s)\boldsymbol{I} +
 2\mu_s\boldsymbol{\epsilon}_s
 \end{align}
-$$
+++++
 
 === Hyper-elasticity
 
