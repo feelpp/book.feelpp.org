@@ -255,10 +255,10 @@ Enfin nous pouvons résoudre le problème <<prob:6>>
 Le listing complet
 
 [[sec:cond-aux-limit]]
-==== Conditions aux limites
+=== Conditions aux limites
 
 [[sec:cond-aux-limit-1]]
-===== Conditions aux limites de Dirichlet non homogène
+==== Conditions aux limites de Dirichlet non homogène
 
 
 On suppose toujours stem:[f \in L^2(\Omega)] et on se donne une fonction stem:[g \in C^{0,1}(\partial \Omega)]
@@ -337,7 +337,7 @@ NOTE: Il n’y a pas besoin de rajouter le terme stem:[a(u_g,v)] au second membr
 Voici le listing complet de l’exemple du laplacien avec conditions de Dirichlet non-homogène
 
 [[sec:cond-aux-limit-2]]
-==== Condition aux limites de Neumann
+=== Condition aux limites de Neumann
 
 Étant donnés un réel stem:[\mu] strictement positif, stem:[f \in L^2(\Omega)] et stem:[g \in L^2(\partial \Omega)], on s’intéresse au problème suivant:
 
@@ -388,8 +388,114 @@ On a
 \]
 ce qui nous permet d’affirmer que stem:[a] est coercive sur stem:[H^1(\Omega)] et que le problème <<prob:13>> est bien posé grâce à Lax-Milgram.
 
-[[sec:cond-aux-limit-3]]
-==== Conditions aux limites de Robin
+On peut approcher le problème <<prob:13>> par des éléments finis de Lagrange.
+
+On utilise la formulation développée dans la section <<sec:appr-conf>>
+[env.problem#prob:13_1]
+--
+On cherche stem:[u_h \in P^k_{c,h}] tel que
+\[
+a_h(u_h,w_h)=\ell(w_h), \quad \forall w_h \in P^k_{c,h}
+\]
+--
+
+NOTE: Par rapport aux conditions de Dirichet, les conditions de Neumann sont directement (*naturellement*) traitées par la formulation faible.
+Elles ne sont pas directement imposées dans l'espace et les fonctions tests peuvent prendre des valeurs non-nulles au bord.
+Ces conditions sont traitées de manière approchée et non pas exacte.
+
+L'analyse du problème <<prob:13_1>> est identique par le théorème <<thr:17>> aux mêmes estimations que dans le cas Dirichlet homogène.
+
+==== Cas stem:[\lambda=0]
+
+Le cas stem:[\lambda=0] présente quelques difficultés techniques.
+
+On a
+[env.problem#prob:13_2]
+--
+On cherche stem:[u : \Omega \rightarrow \RR] telle que
+[[eq:78.1]]
+\[
+    \begin{split}
+      -\Delta u &= f, \mbox{ dans } \Omega\\
+      \partial_\Next u &= g, \mbox{ sur } \partial\Omega
+    \end{split}
+\]
+--
+
+NOTE: On observe ici qu'une condition nécessaire d'existence de solution est que
+[stem]
+++++
+\int_\Omega f + \int_{\partial \Omega} g = 0
+++++
+de par le *théorème de la divergence*.
+
+NOTE: la deuxième observation est que la solution de <<prob:13_2>> est connue à une constante additive près: si stem:[u] est solution  et stem:[c\in \RR] alors stem:[u+c] est également solution.
+
+Il convient alors de chercher la solution dans l'espace fonctionel suivant
+[env.equation]
+--
+H^1_*(\Omega) = \{ v \in H^1(\Omega):\quad \int_\Omega v  = 0 \}
+--
+
+La formulation faible du problème <<prob:13_2>>  s'écrit alors
+[env.problem#prob:13_3]
+--
+On cherche stem:[u\in H^1_*(\Omega)], telle que
+\[
+a(u,v) = \ell(v) \quad \forall v\in H^1_*(\Omega)
+\]
+avec stem:[a(u,v)=\int_\Omega \nabla u \cdot \nabla v].
+--
+
+Le caractère bien posé du problème <<prob:13_3>> résulte de la coercivité de stem:[a] sur stem:[H^1_*(\Omega)] qui elle-même résulte du Lemme suivante
+
+
+[env.lemma]
+.Lemme d'inégalité de Poincaré-Wirtinger
+--
+Soit stem:[\Omega] un ouvert borné de stem:[\RR^d], il existe une constante stem:[C_\Omega] telle que
+\[
+\|v\| \leq C_\Omega \|\nabla v\|_{0,\Omega},\quad \forall v \in H^1_*(\Omega)
+\]
+--
+
+Le problème <<prob:13_3>> peut être approché par des éléments finis de Lagrange ce qui conduit au problème discret suivant
+[env.problem#prob:13_4]
+--
+On cherche stem:[u_h \in P^k_{c,h}] telle que
+a_h(u_h,v_h)=\ell(v_h) \quad \forall v_h\in P^k_{c,h}
+--
+
+NOTE: L'espace d'approximation stem:[P^k{c,h}] n'est pas conforme dans stem:[H^1_*(\Omega)]
+
+[NOTE]
+====
+le problème <<prob:13_4>> est *singulier*, il a une infinité de solution.
+L'une d'entre elle peut être approchée par une méthode itérative de type gradient conjugué.
+Notons stem:[u^*_h] cette solution alors la solution à moyenne nulle est
+[stem]
+++++
+u_h=u^*_h-\frac{1}{|\Omega|}\int_\Omega u^*_h
+++++
+Il s'agit donc d'effectuer a posteriori du calcul un post-processing pour se ramener à la solution à moyenne nulle.
+Dans {feelpp} on utilisera la fonction `mean`
+[source,cpp]
+----
+// ...
+// u est la solution du problème discret
+a.solve(_rhs=l,_solution=u);
+
+// calcul de la valeur moyenne de u
+double meanu = mean(_range=elements(mesh),_expr=idv(u))(0,0);
+
+// calcul de la solution à moyenne nulle u = u - meanu
+u.add(-meanu);
+----
+====
+
+
+[[sec:cond-aux-limit-robin]]
+=== Conditions aux limites de Robin
 
 
 Étant donnés un réel stem:[\mu] strictement positif, stem:[f \in L^2(\Omega)] et stem:[g \in L^2(\partial \Omega)], on s’intéresse au problème suivant:
@@ -444,26 +550,22 @@ On considère le problème discret suivant
 
 [env.problem#prob:11]
 --
-On cherche stem:[u_h \in L^k_{c,h}(\Omega)] telle que
+On cherche stem:[u_h \in P^k_{c,h}(\Omega)] telle que
 [[eq:87]]
 \[
-    a(u_h,v_h) = \ell(v_h)\quad \forall v_h \in L^k_{c,h}
+    a_h(u_h,v_h) = \ell(v_h)\quad \forall v_h \in P^k_{c,h}
 \]
 --
 
-Le problème est _bien posé_ (stem:[L^k_{c,h} \subset H^1(\Omega)]).
+Le problème est _bien posé_ (stem:[P^k_{c,h} \subset H^1(\Omega)]).
+
+NOTE: Comme pour le problème avec conditions de Neumann, les fonctions tests peuvent prendre des valeurs non nulles au bord.
+Les conditions de Robin(ou Fourier) ne sont satisfaites que de manière _approchée_ et non pas _exacte_.
 
 La convergence de stem:[u_h] est donnée par le théorème <<thr:17>>.
 
 Considérons stem:[\Omega=[0,1]^2] et les données stem:[\mu=0.01], stem:[f=1] et stem:[g=0].
 
-Le code permettant de résoudre le problème discret <<prob:11>>
-
-[source,cpp]
-.Listing pour les conditions de Robin
-----
-include::../Codes/prudhomme/laplacian/robin.cpp[]
-----
 
 [[sec:advection-diffusion]]
 == Advection-diffusion-réaction avec diffusion dominante
