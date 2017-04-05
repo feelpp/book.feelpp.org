@@ -1,1 +1,37 @@
 == Mixed Elasticity
+
+
+=== Notations and units
+
+|===
+| Notation | Quantity 
+|stem:[\mathcal A] | compliance operator
+|stem:[\lambda] | first Lamé parameter
+|stem:[\mu] | second Lamé parameter
+|===
+
+=== Equations
+
+Mixed Elasticity equations are
+[stem]
+++++
+\newcommand{\uv}{\underline{\underline{\mathbf v}}}
+\newcommand{\usigma}{\underline{\underline{\boldsymbol\sigma}}}
+\newcommand{\ueps}{\underline{\underline{\boldsymbol\varepsilon}}}
+\newcommand{\uw}{\underline{\mathbf w}}
+\newcommand{\un}{\underline{\mathbf n}}
+\newcommand{\uu}{\underline{\mathbf u}}
+\newcommand{\uzero}{\underline{\mathbf 0}}
+\newcommand{\ug}{\underline{\mathbf g}}
+\newcommand{\umu}{\underline{\boldsymbol\mu}}
+\newcommand{\ux}{\underline{\mathbf x}}
+\begin{align}
+\mathcal A\usigma - \ueps(\uu) &= \uzero & &\text{in }\Omega\times (0,T)\subset\mathbb R^n\times\mathbb{R} \\
+\rho \dfrac{\partial^2 \uu}{\partial t^2} &= \nabla\cdot\usigma + \underline{\mathbf F}_{ext} & &\text{in }\Omega\times (0,T) \\
+\usigma\;\un &= \underline{\mathbf g}_N & &\text{on }\Gamma_N \\
+\uu &= \underline{\mathbf g}_D & &\text{on }\Gamma_D \\ 
+\int_{\Gamma_I} \usigma \; \un &= \underline{\mathbf{F}}_{target} & & \text{on } \Gamma_I \\ 
+\uu(x,t) &= \uu(t) & & \text{on } \Gamma_I  
+\end{align}
+++++
+
