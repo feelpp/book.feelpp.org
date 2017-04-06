@@ -32,13 +32,11 @@ theme: jekyll-theme-cayman
 gems:
   - jekyll-feed
   - jekyll-asciidoc
-include:
-  - math/rbm/index.adoc
+
 exclude:
   - Gemfile
   - Gemfile.lock
-  - 0*
-  - math/*.tex
+  - "0*"
   - vendor
   - 00-preface
   - 01-installation
@@ -50,9 +48,13 @@ exclude:
   - 07-quickref
   - 08-faq
   - 09-annexes
-  - math/*.adoc
-  - math/*.html
+  - "math/*.tex"
+  - "math/*.adoc"
+  - "math/*.html"
   - math/auto
+  - book.html
+  - book.pdf
+  - "auto/*"
 
 asciidoctor:
   base_dir: :docdir
