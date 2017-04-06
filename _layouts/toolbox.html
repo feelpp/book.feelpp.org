@@ -24,20 +24,9 @@
 
 
 <!-- Nav Bar -->
-<div class="sticky">
-<nav class="top-bar" data-topbar>
-    <ul class="title-area">
-        <!-- Title Area -->
-        <li class="name">
-            <h1>
-                <a href="{{page.root}}">{{site.title}}</a>
-            </h1>
-        </li>
-        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-    </ul>
-</nav>
-</div>
+{% include topbar.html %}
 <!-- End Nav -->
+
 
     <section class="page-header">
       <h1 class="project-name" style="color:#ffffff">{{ site.title | default: site.github.repository_name }}</h1>
