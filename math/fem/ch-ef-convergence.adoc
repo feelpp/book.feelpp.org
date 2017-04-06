@@ -1,0 +1,387 @@
+// -*- mode: adoc -*-
+[[convergence-de-la-méthode-des-éléments-finis]]
+= Convergence de la méthode des éléments finis
+
+[[introduction]]
+== Introduction
+
+
+On suppose ici que l’on résout un problème sur un domaine stem:[\Omega\in\RR^n] de façon approchée par méthode d’éléments finis.
+
+Le but de ce chapitre est de fournir une estimation de l’erreur stem:[\|u-u_h\|_m] où stem:[\|.\|_m] désigne la norme stem:[H^m].
+
+La régularité de stem:[u] et de stem:[u_h] (et donc les valeurs possibles pour stem:[m]) dépendant évidemment du problème continu et du type d’éléments finis choisis pour sa résolution, on exposera ici la démarche de façon générale, en supposant les fonctions suffisamment régulières par rapport à la valeur de stem:[m].
+
+NOTE: En pratique, on aura le plus souvent stem:[m=0, 1, 2.]
+
+On notera stem:[{\cal T}_h] le maillage de stem:[\Omega] considéré.
+
+On supposera ici le domaine stem:[\Omega] polygonal, ce qui permet de recouvrir exactement stem:[\Omega] par le maillage.
+
+Si ce n’est pas le cas, les calculs qui suivent doivent être modifiés pour tenir compte de l’écart entre le domaine couvert par le maillage et le domaine réel.
+
+Les différentes étapes du calcul seront, de façon assez schématique, les suivantes :
+
+[cols=2*,separator=¦]
+|===
+¦ L’erreur d’approximation est bornée par l’erreur d’interpolation ¦
+stem:[\|u-u_h\|_m \le C \|u-\pi_h u\|_m]
+|===
+
+L’erreur d’approximation est bornée par l’erreur d’interpolation::
+stem:[\|u-u_h\|_m \le C \|u-\pi_h u\|_m]
+
+On se ramène à des majorations locales sur chaque élément::
+stem:[\|u-\pi_h u\|^2_{m} = \sum_{K\in{\cal T}_h}  \|u-\pi_h u\|_{m,K}^2]
+
+On se ramène à l’élément de référence::
+stem:[{\|u-\pi_h u\|_{m,K} \le C(K) \|\hat{u}-\hat{\pi}\hat{u}\|_{m,\hat{K}} }]
+
+Majoration sur l’élément de référence::
+stem:[\|\hat{u}-\hat{\pi} \hat{u}\|_{m,\hat{K}} \le \hat{C} |\hat{u}|_{k+1,\hat{K}}]
+
+Assemblage des majorations locales::
+stem:[{\|u-\pi_h u\|_m \le C' h^{k+1-m} |u|_{k+1} }]
+
+[[calcul-de-majoration-derreur]]
+== Calcul de majoration d’erreur
+
+[[etape-1-majoration-par-lerreur-dinterpolation]]
+=== Etape 1: majoration par l’erreur d’interpolation
+
+L’équation (<<eq:cea>>) établie dans la section <<sec:estim>> indique que
+[env.equation]
+--
+\|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-v_h\|_m \quad \forall v_h\in V_h
+--
+
+NOTE: Cette majoration est aussi appelée Lemme de Céa
+
+On peut l’appliquer dans le cas particulier où stem:[v_h=\pi_h u], ce qui donne
+
+[env.equation#eq:cea2]
+--
+\|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-\pi_h u\|_m
+--
+
+[[etape-2-décomposition-sur-les-éléments]]
+=== Etape 2: Décomposition sur les éléments
+
+On a, avec des notations évidentes :
+[stem]
+++++
+\begin{array}{lll}
+{\|u-\pi_h u\|_m^2 }& = &{\sum_{K\in{\cal T}_h} \|u-\pi_h u\|_{m,K}^2 }\\
+& = & {\sum_{K\in{\cal T}_h} \sum_{l=0}^m |u-\pi_h u|_{l,K}^2}
+\end{array}
+++++
+
+Le calcul est donc ramené à un calcul sur chaque élément, pour toutes les semi-normes stem:[|.|_{l,K},\; l=0,\ldots,m].
+
+[[etape-3-passage-à-lélément-de-référence]]
+=== Etape 3: Passage à l’élément de référence
+
+[env.theorem#thr1]
+--
+Soit stem:[K] un élément quelconque de stem:[{\cal T}_h], et stem:[\hat{K}] l’élément de référence.
+
+Soit stem:[F] la transformation affine de stem:[\hat{K}] vers stem:[K] :
+[[eq:majref]]
+\[
+\forall v\in H^l(K), \qquad |\hat{v}|_{l,\hat{K}} \le C(l,n)\; \|B\|^l_2 \; |\hbox{det} B|^{-1/2} \, |v|_{l,K}
+\]
+--
+
+Nous avons le corollaire suivant du théorème <<thr1>>
+[env.corollary]
+--
+On a de même :
+[[eq:majref2]]
+\[
+\forall v\in H^l(K), \qquad |v|_{l,K}  \le C(l,n)\; \|B^{-1}\|^l_2 \; |\mathrm{det} B|^{1/2} \; |\hat{v}|_{l,\hat{K}}
+\]
+--
+
+
+==== Preuve du théorème <<thr1>>
+
+Ce théorème se montre comme suit.
+Il s’agit là en fait d’un simple résultat de changement de variable dans une intégrale.
+
+Soit stem:[v] une fonction stem:[l] fois différentiable au point stem:[x].
+
+On note stem:[D^l v(x)] sa dérivée stem:[l^{\text{\tiny ème}}] au sens de Fréchet au point stem:[x].
+
+Il s’agit donc d’une forme stem:[l]-linéaire symétrique sur stem:[\RR^n].
+
+On notera stem:[D^l v(x).(\xi_1,\ldots,\xi_l)] sa valeur pour stem:[l] vecteurs stem:[\xi_i\in\RR^n] (stem:[1\le i \le l]).
+
+Reprenons les notations de la section <<sec:sobolev>>.
+
+stem:[\alpha=(\alpha_1,\ldots,\alpha_n)] désigne un multi-entier, et on note stem:[|\alpha|=\alpha_1+\cdots+\alpha_n]. On a alors :
+[stem]
+++++
+|v|_{l,K}^2 = \int_{x\in K} \sum_{|\alpha|=l}\left\|\partial^{|\alpha|}v (x)\right\|^2 dx
+++++
+et
+[stem]
+++++
+\partial^{|\alpha|}v (x) = D^{|\alpha|}v(x).(\underbrace{e_1,\ldots,e_1}_{\alpha_1 \text{{\tiny fois}}}, \ldots , \underbrace{e_n,\ldots,e_n}_{\alpha_n \text{{\tiny fois}}})
+++++
+où stem:[(e_1,\ldots,e_n)] désigne la base canonique de stem:[\RR^n].
+
+Alors, en posant :
+[stem]
+++++
+\|D^l v(x)\| = \sup_{\xi_1,\ldots,\xi_l \in \left(\RR^{\ast}\right)^n} \; \frac{D^l v(x).(\xi_1,\ldots,\xi_l)}{|\xi_1| \ldots |\xi_l|}\qquad ,
+++++
+
+on déduit qu’il existe des constantes stem:[\gamma_1] et stem:[\gamma_2] dépendant uniquement de stem:[n] et stem:[l] (donc en particulier indépendantes de stem:[v]) telles que
+[[eq:maj1]]
+[stem]
+++++
+\gamma_1 \; |v|_{l,K} \le \left( \int_{x\in K} \| D^l v(x)\|^2 \, dx\right)^{1/2} \le \gamma_2 \; |v|_{l,K}
+++++
+
+Par ailleurs, si l’on utilise le changement de variable stem:[x=F(\hat{x})=B\hat{x}+b] dans stem:[D^l v(x)], il vient :
+
+[env.equation]
+--
+\forall \xi_1,\ldots,\xi_l \in \RR^n,\qquad D^l \hat{v}(\hat{x}).(\xi_1,\ldots,\xi_l) = D^l v(x).(B\xi_1,\ldots,B\xi_l)
+--
+
+d'où
+
+[env.equation]
+--
+\|D^l \hat{v}(\hat{x})\| \le \|B\|^l\; \|D^l v(x)\|
+--
+Or, stem:[D^l v(x) = D^l v(F(\hat{x}))]. Donc
+
+[env.equation#eq:maj2]
+--
+\int_{\hat{x}\in \hat{K}}\|D^l \hat{v}(\hat{x})\|^2 \; d\hat{x} \le \|B\|^{2l}\; \int_{\hat{x}\in \hat{K}} \|D^l v(F(\hat{x}))\|^2 \; d\hat{x}
+= \|B\|^{2l}\; |\hbox{det }B|^{-1} \int_{x\in K} \|D^l v(x)\|^2 \; dx
+--
+
+En minorant et majorant (<<eq:maj2>>) grâce à la (<<eq:maj1,majoration>>), on obtient :
+[env.equation]
+--
+\gamma^2_1 \; |\hat{v}|^2_{l,\hat{K}} \le \|B\|^{2l}\; |\hbox{det }B|^{-1} \gamma^2_2 \; |v|^2_{l,K}
+--
+d’où le résultat de (<<eq:majref,majoration du théorème>>) ce qui conclut la preuve de <<thr1>> stem:[\blacksquare]
+
+
+[[estimation-de-b]]
+==== Estimation de stem:[\|B\|]
+
+Soit stem:[h_K] le diamètre de stem:[K], c’est à dire le maximum des distances euclidiennes entre deux points de stem:[K].
+
+Soit stem:[\rho_K] la rondeur de stem:[K], c’est à dire le diamètre maximum des sphères incluses dans stem:[K].
+
+On a :
+[env.equation]
+--
+\|B\| = \sup_{x\ne 0} \frac{\|Bx\|}{\|x\|} = \sup_{\|x\|=\hat{\rho}} \frac{\|Bx\|}{\hat{\rho}}
+--
+
+
+Soit stem:[x] un vecteur de stem:[\RR^n] tel que stem:[\|x\|=\hat{\rho}].
+
+Par définition de stem:[\hat{\rho}], il existe deux points stem:[\hat{y}] et stem:[\hat{z}] de stem:[\hat{K}] tels que stem:[x=\hat{y}-\hat{z}].
+
+Alors stem:[Bx=B\hat{y}-B\hat{z}=F(\hat{y})-F(\hat{z})=y-z] avec stem:[y] et stem:[z] appartenant à stem:[K].
+
+Par définition de stem:[h_K], stem:[\|y-z\| \le h_K].
+Donc stem:[\|Bx\| \le h_K].
+
+En reportant dans la définition de stem:[\|B\|], on obtient donc :
+[env.equation#eq:kk1]
+--
+\|B\| \le \frac{h_K}{\hat{\rho}}
+--
+
+Et on a évidemment de même :
+[env.equation#eq:kk2]
+--
+\|B^{-1}\| \le \frac{\hat{h}}{\rho_K}
+--
+
+[[etape-4-majoration-sur-lélément-de-référence]]
+=== Etape 4: Majoration sur l’élément de référence
+
+Le résultat principal est le suivant :
+[env.theorem#thr2]
+--
+Soient stem:[l] et stem:[k] deux entiers tels que stem:[0\le l \le k+1].
+Si stem:[\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))] laisse stem:[P_k(\hat{K})] invariant (c’est à dire vérifie stem:[\forall \hat{p}\in P_k(\hat{K}), \hat{\pi}\hat{p}=\hat{p}]), alors
+
+[[eq:majref0]]
+\[
+\exists C(\hat{K},\hat{\pi}) ,\;  \forall \hat{v} \in H^{k+1}(\hat{K}), \; |\hat{v}-\hat{\pi}\hat{v}|_{l,\hat{K}} \le C |\hat{v}|_{k+1,\hat{K}}
+\]
+--
+
+==== Preuve du théorème <<thr2>>
+
+On montre ce résultat comme suit:
+
+stem:[\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))], et donc stem:[I-\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))] car stem:[l\le k+1].
+
+Et donc
+
+[stem]
+++++
+|\hat{v}-\hat{\pi}\hat{v}|_{l,\hat{K}} \le \|I-\hat{\pi}\|_{\mathcal{L}(H^{k+1}(\hat{K}),H^l(\hat{K}))}\; \|\hat{v}\|_{k+1,\hat{K}}
+++++
+
+On utilise maintenant l’invariance de stem:[P_k(\hat{K})]:
+
+On aura donc démontré le théorème si l’on montre que
+[stem]
+++++
+\exists C,\; \forall \hat{v}\in H^{k+1}(\hat{K}) \;  \inf_{\hat{p}\in P_k(\hat{K})} \|\hat{v}+\hat{p}\|_{k+1,\hat{K}} \le C |\hat{v}|_{k+1,\hat{K}}
+++++
+
+Soit stem:[(f_i)_{i=0,\ldots,k}] une base du dual de stem:[P_k(\hat{K})].
+
+D’après le théorème d’Hahn-Banach, il existe des formes linéaires continues sur stem:[H^{k+1}(\hat{K})], que
+l’on notera encore stem:[f_i], et qui prolongent les stem:[f_i].
+
+En particulier, si stem:[\hat{p}\in P_k(\hat{K})] vérifie stem:[f_i(\hat{p})=0,\, (i=0,\ldots,k)], alors
+stem:[\hat{p}=0].
+
+Nous allons montrer que
+[[eqref2]]
+[stem]
+++++
+\exists C, \, \forall \hat{v}\in H^{k+1}(\hat{K}), \; \|\hat{v}\|_{k+1,\hat{K}} \le C \left\{ |\hat{v}|_{k+1,\hat{K}} + \sum_{i=0}^k |f_i(\hat{v})| \right\}
+++++
+
+NOTE: On aura le résultat souhaité en appliquant (<<eqref2>>) à stem:[\hat{v}+\hat{q}], avec stem:[\hat{q}] tel que stem:[f_i(\hat{q})=f_i(-\hat{v})].
+
+On montre la relation (<<eqref2>>) par l’absurde comme suit:
+
+Si <<eqref2>> n’est pas vraie, alors il existe une suite de fonctions stem:[\hat{v}_n] de stem:[H^{k+1}(\hat{K})] telles que :
+
+[stem]
+++++
+ \|\hat{v}_n\|_{k+1,\hat{K}} =1, \;\;
+|\hat{v}_n|_{k+1,\hat{K}} \longrightarrow 0,\; \hbox{ et } \forall i \;  f_i(\hat{v}_n)\longrightarrow 0
+++++
+
+Par complétude de stem:[H^{k+1}(\hat{K})], on extrait une sous-suite convergente vers stem:[\hat{v} \in H^{k+1}(\hat{K})].
+
+Mais stem:[|\hat{v}_n|_{k+1,\hat{K}} \longrightarrow 0].
+
+Donc stem:[\hat{v} \in P_k(\hat{K})] et stem:[f_i(\hat{v})=0].
+
+D’où une contradiction. stem:[\blacksquare].
+
+[[etape-5-assemblage-des-majorations-locales]]
+=== Etape 5: Assemblage des majorations locales
+
+[[majoration-sur-un-élément-quelconque]]
+==== Majoration sur un élément quelconque
+
+En rassemblant les résultats précédents, on peut établir une majoration sur un élément quelconque stem:[K] du maillage.
+
+On a :
+[stem]
+++++
+\begin{array}{rclr}
+|v-\pi_K v|_{l,K} & \le & C(l,n)\; \|B^{-1}\|^l\; |\hbox{det }B|^{1/2} \; |\hat{v}-\hat{\pi}\hat{v}|_{l,\hat{K}}&\hbox{d'après (<<eq:majref2>>)} \\
+ & \le & C(l,n)\; \|B^{-1}\|^l\; |\hbox{det }B|^{1/2} \; C(\hat{K},\hat{\pi})\; |\hat{v}|_{k+1,\hat{K}} &\hbox{d'après (<<eq:majref0>>)}\\
+& \le & C(l,n)\; \|B^{-1}\|^l\; |\hbox{det }B|^{1/2} \; C(\hat{K},\hat{\pi})\; C(k+1,n) \; \|B\|^{k+1} |\hbox{det }B|^{-1/2}\; |v|_{k+1,K}
+& \hbox{d'après (<<eq:majref>>)}\\
+& \le & C(l,n)\; \frac{\hat{h}^l}{\rho_K^l} \;  \; C(\hat{K},\hat{\pi})\; C(k+1,n) \; \frac{h_K^{k+1}}{\hat{\rho}^{k+1}} \; |v|_{k+1,K} & \hbox{d'après (<<eq:kk1>>) et (<<eq:kk2>>)}\\
+\end{array}
+++++
+
+
+D’où finalement :
+
+[[eqmajloc]]
+[stem]
+++++
+|v-\pi_K v|_{l,K}  \le  \hat{C}(\hat{\pi},\hat{K},l,k,n)\; \frac{h_K^{k+1}}{\rho_K^l} \;   |v|_{k+1,K}
+++++
+
+NOTE: Il est important de remarquer à ce niveau que stem:[\hat{C}] est indépendant de stem:[K].
+
+[[assemblage-des-résultats-locaux]]
+==== Assemblage des résultats locaux
+
+On va maintenant reprendre la majoration (<<eqmajloc>>) pour tous les éléments du maillage et toutes les valeurs de stem:[l=0,\ldots,m].
+
+On va définir deux quantités représentatives du maillage :
+
+* stem:[h\quad] tel que stem:[h_K \le h, \; \forall K\in {\cal T}_h\qquad] (diamètre maximum des éléments)
+
+* stem:[\sigma\quad] tel que stem:[{\frac{h_K}{\rho_K}} \le \sigma, \; \forall K\in {\cal T}_h\qquad] (caractérise l’aplatissement des éléments)
+
+On a
+[stem]
+++++
+\begin{array}{rcl}
+\|v-\pi_K v\|^2_{m,K} & = & \sum_{l=0}^m |v-\pi_K v|^2_{l,K} \\
+ & \le & \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\;
+ \left(\frac{h_K^{k+1}}{\rho_K^l}\right)^2 \;   |v|^2_{k+1,K}\qquad\hbox{d'apr\`es (\ref{eqmajloc})}\\
+ & \le & \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\; \left\{\left(\frac{h_K}{\rho_K}\right)^l\; h_K^{m-l}\; h_K^{k+1-m}\right\}^2 \;   |v|^2_{k+1,K}\\
+ & \le & \left\{ \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\; \sigma^{2l} h^{2m-2l} \right\} \; \left[ h^{k+1-m}\; |v|_{k+1,K} \right]^2
+ \end{array}
+++++
+
+
+Le terme entre accolades ne tend ni vers 0 ni vers l’infini quand stem:[h] tend vers 0.
+
+D’où :
+[stem]
+++++
+\|v-\pi_K v\|_{m,K} \le \hat{C}'(\hat{\pi},\hat{K},l,k,n,\sigma,h)\; h^{k+1-m}\; |v|_{k+1,K}
+++++
+
+En sommant ensuite sur tous les éléments du maillage :
+
+[stem]
+++++
+\begin{array}{rcl}
+\|v-\pi_h v\|^2_{m} & = & \sum_{K\in {\cal T}_h} \|v-\pi_K v\|^2_{m,K} \\
+ & \le & \sum_{K\in {\cal T}_h} \left[ \hat{C}'(\hat{\pi},\hat{K},l,k,n,\sigma,h)\; h^{k+1-m} \; |v|_{k+1,K} \right]^2
+\end{array}
+++++
+
+On obtient finalement :
+
+[[eqmajfinal]]
+[stem]
+++++
+\|v-\pi_h v\|_{m} \le C(\mathcal{T}_h,m,k,n) \; h^{k+1-m}\; |v|_{k+1}
+++++
+
+[[résultat-final]]
+=== Résultat final
+
+En reportant (<<eqmajfinal>>) dans (<<eq:cea2>>), on obtient le résultat
+final classique de majoration d’erreur :
+
+[[eqmajfinal2]]
+[stem]
+++++
+\|u-u_h\|_{m} \le \mathcal{C} \; h^{k+1-m}\; |u|_{k+1}
+++++
+
+[[quelques-commentaires]]
+== Quelques commentaires
+
+* Une utilisation fréquente de (<<eqmajfinal2>>) a lieu dans le cas stem:[m=1].
+Alors si l’espace de polynômes stem:[P_k(\hat{K})\subset H^1(\hat{K})] (ce qui est toujours le cas) et si stem:[\hat{\pi}] est bien défini sur stem:[H^{k+1}(\hat{K})], on a :
+[stem]
+++++
+\mbox{si }u\in H^{k+1}(\Omega),\quad \|u-u_h\|_1 \le \mathcal{C} \; h^k \; |u|_{k+1}
+++++
+
+* Si le domaine stem:[\Omega] n’est pas polygonal, la majoration précédente n’est plus valable.
+  On peut alors établir d’autres majorations du même type – se référer par exemple à cite:[raviart-thomas-t1983].
+
+* De même, si les calculs d’intégrales ne sont pas faits exactement mais à l’aide d’une intégration numérique, une erreur supplémentaire doit être prise en compte, qui conduit à une nouvelle majoration d’erreur – voir là-aussi par exemple cite:[raviart-thomas-t1983].

@@ -1,0 +1,598 @@
+\chapter{Approximation de problèmes coercifs}
+\label{cha:appr-de-probl}
+
+Dans ce chapitre, on s'intéresse à l'approximation de problèmes coercifs:
+\begin{itemize}
+\item le Laplacien et des variantes sur les conditions aux limites et le
+  l'équation elle-même;
+\item l'élasticité linéaire qui permet de modéliser de petites déformations
+  d'un milieu continu déformable.
+\end{itemize}
+
+\section{Le Laplacien}
+\label{sec:le-laplacien}
+
+on s'instéresse dans cette section à l'\emph{approximation élément fini
+conforme} du problème suivant:
+\begin{problem}
+  \label{prob:1}
+  On cherche $u$ telle que
+  \begin{equation}
+    \label{eq:64}
+    \begin{split}
+      -\Delta u &= f \mbox{ dans } \Omega\\
+      u &= 0 \mbox{ sur } \partial \Omega
+    \end{split}
+  \end{equation}
+\end{problem}
+
+
+\subsection{Cadre Mathematique}
+\label{sec:cadre-mathematique}
+
+On suppose que $f \in L^2(\Omega)$. La formulation faible du
+problème~\ref{prob:1} est la suivante:
+\begin{problem}
+  \label{prob:2}
+  On cherche $u \in H^1_0(\Omega)$ telle que
+  \begin{equation}
+    \label{eq:65}
+    \ds\int_\Omega \nabla u \cdot \nabla v = \ds \int_\Omega f\, v,\quad \forall v \in H^1_0(\Omega)
+  \end{equation}
+\end{problem}
+
+\subsubsection{Problème bien posé}
+\label{sec:probleme-bien-pose}
+
+Introduisons
+\begin{itemize}
+\item $V = H^1_0(\Omega)$ doté de la norme $\|\cdot\|_{1,\Omega}$ telle que
+  $\|v\|_{1,\Omega} = (\|v\|^2_{0,\Omega} + \|\nabla v\|^2_{0,\Omega})^{1/2}$
+\item la forme bilinéaire $a \in \mathcal{L}(V \times V, \R)$ telle que $a(u,v) = \int_\Omega
+  \nabla u \cdot \nabla v $
+\item la forme linéaire $\ell \in \mathcal{L}(V, \R)$ telle que $l(v) = \int_\Omega
+  f \nabla v $
+\end{itemize}
+
+Le problème~\ref{prob:2} s'écrit sous forme abstraite
+\begin{problem}
+  \label{prob:5}
+  On cherche $u \in V$ telle que
+  \begin{equation}
+    \label{eq:65}
+    a(u, v) = \ell(v), \quad \forall v \in V
+  \end{equation}
+\end{problem}
+
+L'espace $V$ est un espace de Hilbert et les formes $a$ et $\ell$ sont
+continues sur $V\times V$ et $V$ respectivement. Il ne reste plus qu'à
+vérifier si le problème est bien posé (existence d'une solution unique). Pour
+cela on utilise démontre la \emph{coercivité} de la forme bilinéaire $a$ sur
+$V \equiv H^1_0(\Omega)$. Ceci se fait grâce au lemme suivant:
+\begin{lemma}[Inégalité de Poincaré]
+  \label{lem:1}
+  Soit $\Omega$ un ouvert borné de $\R$. Il existe une constante $c_\Omega$
+  (dépendente de $\Omega$ telle que
+  \begin{equation}
+    \label{eq:66}
+    \forall v \in H^1_0(\Omega),\quad \|v\|_{0,\Omega} \le c_\Omega \|\nabla v\|_{0,\Omega}
+  \end{equation}
+\end{lemma}
+\begin{remark}
+  \label{rem:24}
+  $c_\Omega$ est homogène à une longeur et peut être interprétée comme une
+  mesure caractéristique de $\Omega$
+\end{remark}
+
+Grâce à l'inégalité de Poincaré, on a le résultat suivant
+\begin{proposition}
+  \label{prop:7}
+  La forme bilinéaire $a$ du problème~\ref{prob:2} est \emph{coercive}
+
+  \begin{proof}
+    On note tout d'abord que par l'inégalité de Poincaré et la définition de
+    $\|\cdot\|_{1,\Omega}$
+    \begin{equation}
+      \label{eq:68}
+      \|v\|^2_{1,\Omega} \le (1 + c^2_\Omega) \|\nabla v\|^2_{0,\Omega}
+    \end{equation}
+    On en déduit que
+    \begin{equation}
+      \label{eq:67}
+      \forall v \in H^1_0(\Omega),\quad a(v,v) = \|\nabla v\|^2_{0,\Omega} \ge
+      \ds \frac{1}{1+c^2_\Omega} \|v\|^2_{1,\Omega}
+    \end{equation}
+    Le Lemme de Lax-Milgram~\ref{thr:12} permet alors de conclure sur l'existence d'une
+    solution unique pour le problème~\ref{prob:2}.
+  \end{proof}
+\end{proposition}
+
+\subsubsection{Approximation conforme}
+\label{sec:appr-conf}
+
+On utilise une approximation conforme par éléments finis de Lagrange. On
+considère $\Omega$ un polygone ou polyhèdre régulier de $\R[2]$ ou $\R[3]$
+respectivement et un maillage $\calTh = \{K_e\}_{e=1...\Ne}$ de $\Omega$. On considère un élément
+fini de référence $(\hat{K},\hat{P},\hat{\Sigma})$ tel que $\Pk \subset \hat{P}$
+et $k+1 > \frac{d}{2}$, voir le théorème~\ref{thr:16}. On note
+\begin{equation}
+  \label{eq:70}
+  L^k_{c,h} = \{ v_h \in C^0(\bar{\Omega}); \forall K \in \mathcal{T}_h,\ v_h
+  \circ T_K \in \hat{P}\}
+\end{equation}
+où $T_K$ est la tranformation géométrique de $\hat{K}$ dans $K$.
+\begin{itemize}
+\item Si on utilise $\hat{P}=\Pk$ on a $L^k_{c,h} = P^k_{c,h}$.
+\item Si on utilise $\hat{P}=\Qk$ on a $L^k_{c,h} = Q^k_{c,h}$.
+\end{itemize}
+Afin de construire un espace d'approximation conforme \ie $V_h \subset V
+=H^1_0(\Omega)$ on prend
+\begin{equation}
+  \label{eq:71}
+  V_h = L^k_{c,h} \cap H^1_0(\Omega)
+\end{equation}
+c'est à dire que les fonctions de $V_h$ satisfont les conditions aux limites
+outre le fait d'être dans $L^k_{c,h}$. Le problème discret s'écrit alors
+\begin{problem}
+  \label{prob:6}
+  Trouver $u_h \in V_h$ telle que
+  \begin{equation}
+    \label{eq:72}
+    a(u_h,v_h) = \ell(v_h),\, \forall v_h \in V_h
+  \end{equation}
+\end{problem}
+qui est bien posé (existence et unicité de $u_h$) car $a$ est coercive sur $V$
+et que $V_h \subset V$. On a le résultat suivant:
+\begin{theorem}[Convergence de $u_h$]
+  \label{thr:17}
+  On suppose que $u$ solution de \ref{prob:2} est dans $H^{k+1}(\Omega) \cap
+  H^1_0(\Omega)$, alors il existe une constante $c_1$ telle que pour tout $h$
+  \begin{equation}
+    \label{eq:73}
+    \|u-u_v\|_{1,\Omega} \le c_1 h^k |u|_{k+1,\Omega}
+  \end{equation}
+  et il existe une constante $c_2$ telle que pour tout $h$
+  \begin{equation}
+    \label{eq:74}
+    \|u-u_v\|_{0,\Omega} \le c_2 h^{k+1} |u|_{k+1,\Omega}
+  \end{equation}
+\begin{proof}
+  La preuve de (\ref{eq:73}) est obtenue grâce au lemme de Cea~(\ref{eq:cea})
+  et du théorème d'interpolation~(\ref{eq:62}).
+  La preuve de (\ref{eq:74}) est obtenue grâce au lemme d'Aubin-Nitsche qui
+  permet d'affirmer qu'il existe une constante $c$ telle que
+  \begin{equation}
+    \label{eq:75}
+    \|u-u_h\|_{0,\Omega} \leq c h |u-u_h|_{1,\Omega}
+  \end{equation}
+  et donc que (\ref{eq:74}) se déduit de (\ref{eq:74}).
+\end{proof}
+\end{theorem}
+
+\subsubsection{Implémentation avec \Feel}
+\label{sec:impl-en-feel++}
+
+Avec \Feel, on ne construit pas explicitement l'espace $V_h$ mais
+$L^k_{c,h}$. Le traitement des conditions aux limites de Dirichlet du problème
+(\ref{eq:64}) peut être effectué de diverses fa\c {c}ons, nous en verrons une.
+
+Commencons par le maillage, dans un premier temps nous définissons le type du
+maillage contenant soit des éléments de type simplexe~(segment, triangle,
+tetrahèdre) ou de type hypercube~(segment, quadrangle, hexahèdre).
+
+\begin{lstlisting}[caption={Maillage $\calTh$}]
+  // un maillage de simplexe dans $\R$ telle que la transformation
+  // géométrique $T_K,\ K \in \calTh$  soit affine
+  typedef Mesh<Simplex<d,1> > mesh_type;
+
+  // un maillage d'hypercube dans $\R$ telle que la transformation
+  // géométrique $T_K,\ K \in \calTh$  soit affine en chacune des variables
+  // typedef Mesh<Hypercube<d,1> > mesh\_type;
+
+  // generate the mesh associated to the unit square $[0,1]^2$ using triangles
+  auto mesh = unitSquare();
+\end{lstlisting}
+\begin{remark}
+  \label{rem:25}
+  Le mot clé \texttt{auto} permet de faire de l'inférence de type, pour plus
+  de détails consultez
+  \href{http://fr.wikipedia.org/wiki/C%2B%2B11#Inf.C3.A9rence_de_types}{la page C++11 de Wikipedia}.
+\end{remark}
+Ensuite nous pouvons définir l'espace $L^k_{c,h}$,
+\begin{lstlisting}[caption={$L^k_{c,h}$}]
+  // Vh est une structure de donnée allouée dynamiquement
+  auto Vh = Pch<1>( mesh );
+  // u est un élément de Vh
+  auto u = Vh->element();
+  // u est un autre élément de Vh
+  auto u = Vh->element();
+\end{lstlisting}
+
+À présent, nous définissons les formes bilinéaires $a$ et $\ell$ qui sont
+respectivement des formes bilinéaires et linéaires.
+
+\begin{lstlisting}[caption={Définitions de $a$ et $\ell$}]
+  // $a \in \mathcal{L}(V_h \times V_h,\ \R[\phantom{1}])$
+  auto a = form2( _test=Vh, _trial=Vh );
+  // $a = \sum_{e=1...\Ne} \int_{K_e} \nabla \varphi_j \cdot \nabla \varphi_i,\quad  i,j=1...,\dim{V_h}$
+  a = integrate( _range=elements(mesh),
+                 _expr=gradt(u)*trans(grad(v)) );
+
+  // $\ell \in \mathcal{L}(V_h,\ \R[\phantom{1}])$
+  auto l = form1( _test=Vh );
+  // $\ell = \sum_{e=1...\Ne} \int_{K_e} f  \varphi_i,\quad  i=1...,\dim{V_h}$
+  l = integrate( _range=elements(mesh), _expr=f*id(v) );
+\end{lstlisting}
+
+Afin de traiter les conditions aux limites de Dirichlet homogènes, on peut
+utiliser le mot-clé \texttt{on} qui permet de les imposer de manière forte.
+\begin{lstlisting}[caption={Traitement des conditions de Dirichlet avec \texttt{on}}]
+  a += on(_range=boundaryfaces(mesh), _element=u, _rhs=l, _expr=constant(0.) );
+\end{lstlisting}
+\begin{remark}
+  \label{rem:26}
+  Le mot-clé \texttt{constant} permet de transformer une type numérique (\eg
+  entier, flottant) en une expression utilisable par le langage de
+  \Feel. Notez également l'opération \texttt{+=} qui permet de rajouter le
+  traitement des conditions de Dirichlet tout en gardant les contributions
+  précédentes. L'opération \texttt{=} aurait d'abord remis à $0$ les entrées
+  de la matrice associée à $a$.
+\end{remark}
+
+Enfin nous pouvons résoudre le problème~\ref{prob:6}
+
+\begin{lstlisting}[caption={Résolution du problème discret~\ref{prob:6}}]
+  a.solve( _rhs=l, _solution=u );
+\end{lstlisting}
+
+Le listing complet
+\lstinputlisting[linerange=12-25,caption={Exemple Laplacien avec conditions de
+Dirichlet homogènes}]{../Codes/prudhomme/laplacian/dirichlet_homogene.cpp}
+
+
+\subsection{Conditions aux limites}
+\label{sec:cond-aux-limit}
+
+\subsubsection{Conditions aux limites de Dirichlet non homogène}
+\label{sec:cond-aux-limit-1}
+
+On suppose toujours $f \in L^2(\Omega)$ et on se donne une fonction $g \in
+C^{0,1}(\partial \Omega)$\footnote{$g$ est Lipschitzienne sur $\partial
+\Omega$}. On s'intéresse au problème suivant:
+\begin{problem}
+  \label{prob:7}
+  On cherche $u : \Omega \rightarrow \R[]$ telle que
+  \begin{equation}
+    \label{eq:76}
+    \begin{split}
+    -\Delta u &= f \mbox{ dans } \Omega\\
+    u &= g \mbox{ sur } \partial \Omega
+    \end{split}
+  \end{equation}
+\end{problem}
+
+\begin{remark}
+  \label{rem:27}
+  L'hypothèse $g \in C^{0,1}(\partial \Omega)$ permet d'affirmer qu'il existe
+  $u_g \in H^1(\Omega)$ telle que $u_{g_{|\partial \Omega}} = g$.
+\end{remark}
+
+On se ramène au problème avec conditions de Dirichlet homogène en faisant le
+change d'inconnue $u_0=u-u_g$ et on s'intéresse au problème suivant:
+\begin{problem}
+  \label{prob:8}
+  On cherche $u_0 \in H^1_0(\Omega)$ telle que
+  \begin{equation}
+    \label{eq:77}
+    a(u_0,v) = \ell(v) - a(u_g,v),\quad \forall v \in H^1_0(\Omega)
+  \end{equation}
+\end{problem}
+Ce problème est bien posé d'après Lax-Milgram, voir section précédente.
+
+\begin{theorem}
+  \label{thr:18}
+  On suppose que $u$ solution de \ref{prob:8} est dans $H^{k+1}(\Omega) \cap
+  H^1_0(\Omega)$, alors il existe une constante $c_1$ telle que pour tout $h$
+  \begin{equation}
+    \label{eq:73}
+    \|u-u_v\|_{1,\Omega} \le c_1 h^k |u|_{k+1,\Omega}
+  \end{equation}
+  et il existe une constante $c_2$ telle que pour tout $h$
+  \begin{equation}
+    \label{eq:74}
+    \|u-u_v\|_{0,\Omega} \le c_2 h^{k+1} |u|_{k+1,\Omega}
+  \end{equation}
+\end{theorem}
+
+Avec \Feel, les conditions Dirichlet non-homogènes sont traitées par exemple
+avec le mot-clé \texttt{on}.
+\begin{lstlisting}
+  // définition de la fonction, p.ex $g=sin(2 \pi x)$
+  auto g = sin(2*pi*Px() );
+  // définition de $a$
+  ...
+  // ajout des conditions de Dirichlet non-homogène
+  a += on( _range=boundaryfaces(mesh), _expr=g );
+\end{lstlisting}
+\begin{remark}
+  \label{rem:28}
+  Il n'y a pas besoin de rajouter le terme $a(u_g,v)$ au second membre $\ell(v)$, il est
+  pris en compte automatiquement par \texttt{on}.
+\end{remark}
+Voici le listing complet de l'exemple du laplacien avec conditions de Dirichlet non-homogène
+\lstinputlisting[linerange=12-26,caption={Exemple Laplacien avec conditions de
+Dirichlet non-homogènes}]{../Codes/prudhomme/laplacian/dirichlet_nonhomogene.cpp}
+
+\subsubsection{Condition aux limites de Neumann}
+\label{sec:cond-aux-limit-2}
+
+Étant donnés un réel $\mu$ strictement positif, $f \in L^2(\Omega)$ et $g \in
+L^2(\partial \Omega)$, on s'intéresse au problème suivant:
+\begin{problem}
+  \label{prob:9}
+  On cherche $u : \Omega \rightarrow \R[]$ telle que
+  \begin{equation}
+    \label{eq:78}
+    \begin{split}
+      -\Delta u + \mu u &= f, \mbox{ dans } \Omega\\
+      \partial_\Next u &= g, \mbox{ sur } \partial\Omega
+    \end{split}
+  \end{equation}
+\end{problem}
+où $\partial_\Next u = \nabla u \cdot \Next = \sum_{i=1}^d n_i \partial_i u$
+dénote la dérivée normale de $u$ avec $\Next=(n_1,...,n_d) \in \R[d]$ la
+normale extérieure unitaire en un point du bord de $\Omega$.
+La formulation faible s'écrit
+\begin{problem}
+  \label{prob:13}
+  On cherche $u \in H^1(\Omega)$ telle que
+  \begin{equation}
+    \label{eq:79}
+    a( u, v ) = \ell(v),\ \forall v \in H^1(\Omega)
+  \end{equation}
+  avec
+  \begin{equation}
+    \label{eq:80}
+    a( u, v ) = \ds \int_\Omega \nabla u \cdot \nabla v + \mu u v
+  \end{equation}
+  et
+  \begin{equation}
+    \label{eq:81}
+    \ell( v ) = \ds \int_\Omega f v + \int_{\partial\Omega} g v
+  \end{equation}
+\end{problem}
+
+On a
+\begin{equation}
+  \label{eq:82}
+  a(v, v) = \ds \int_\Omega \nabla v \cdot \nabla v + \mu v v \ge \min(1,\mu)
+  \int_\Omega \nabla v \cdot \nabla v +  v v  = \min(1,\mu) \|v\|_{1,\Omega}, \quad
+  \forall v \in H^1(\Omega)
+\end{equation}
+ce qui nous permet d'affirmer que $a$ est coercive sur $H^1(\Omega)$ et que le
+problème~\ref{prob:13} est bien posé grâce à Lax-Milgram.
+
+\lstinputlisting[linerange=12-25,caption={Exemple Laplacien avec conditions de
+Neumann}]{../Codes/prudhomme/laplacian/neumann.cpp}
+
+\subsubsection{Conditions aux limites de Robin}
+\label{sec:cond-aux-limit-3}
+
+Étant donnés un réel $\mu$ strictement positif, $f \in L^2(\Omega)$ et $g \in
+L^2(\partial \Omega)$, on s'intéresse au problème suivant:
+\begin{problem}
+  \label{prob:14}
+  On cherche $u : \Omega \rightarrow \R[]$ telle que
+  \begin{equation}
+    \label{eq:83}
+    \begin{split}
+      -\Delta u  &= f, \mbox{ dans } \Omega\\
+      \mu u + \partial_\Next u &= g, \mbox{ sur } \partial\Omega.
+    \end{split}
+  \end{equation}
+\end{problem}
+La formulation faible s'écrit
+\begin{problem}
+  \label{prob:15}
+  On cherche $u \in H^1(\Omega)$ telle que
+  \begin{equation}
+    \label{eq:84}
+    a( u, v ) = \ell(v),\ \forall v \in H^1(\Omega)
+  \end{equation}
+  avec
+  \begin{equation}
+    \label{eq:85}
+    a( u, v ) = \ds \int_\Omega \nabla u \cdot \nabla v + \int_{\partial
+    \Omega} \mu u v
+  \end{equation}
+  et
+  \begin{equation}
+    \label{eq:86}
+    \ell( v ) = \ds \int_\Omega f v + \int_{\partial\Omega} g v
+  \end{equation}
+\end{problem}
+
+On a
+\begin{equation}
+  \label{eq:69}
+  \begin{split}
+    a(v, v) & = \ds \int_\Omega \nabla v \cdot \nabla v + \int_{\partial\Omega} \mu v v \\
+    & \geq \min(1,\mu)\left( \int_\Omega \nabla v \cdot \nabla v +
+      \int_{\partial\Omega} v v\right)  \\
+    &\geq \min(1,\mu) \|v\|_{1,\Omega}, \quad \forall v \in H^1(\Omega)
+  \end{split}
+\end{equation}
+La forme bilinéaire $a$ est donc coercive et le problème~\ref{prob:15} est
+bien posé grâce à Lax-Milgram.
+
+On considère le problème discret suivant
+\begin{problem}
+  \label{prob:11}
+  On cherche $u_h \in L^k_{c,h}(\Omega)$ telle que
+  \begin{equation}
+    \label{eq:87}
+    a(u_h,v_h) = \ell(v_h)\quad \forall v_h \in L^k_{c,h}
+  \end{equation}
+\end{problem}
+Le problème est bien posé  ($L^k_{c,h} \subset H^1(\Omega)$). La convergence de
+$u_h$ est donnée par le théorème~\ref{thr:17}.
+
+Considérons $\Omega=[0,1]^2$ et les données $\mu=0.01$, $f=1$ et $g=0$. Le
+code \Feel permettant de résoudre le problème discret~\ref{prob:11}, voir
+\texttt{../Codes/prudhomme/laplacian/robin.cpp} pour le listing complet.
+\lstinputlisting[linerange=12-26,caption={Exemple Laplacien avec conditions de
+Robin}]{../Codes/prudhomme/laplacian/robin.cpp}
+
+
+\subsection{Advection-diffusion-réaction avec diffusion dominante}
+\label{sec:advection-diffusion}
+
+On s'intéresse au problème suivant:
+\begin{problem}
+  \label{prob:10}
+  On cherche $u : \Omega \rightarrow \R[]$ telle que
+  \begin{equation}
+    \label{eq:30}
+    \begin{split}
+      -\nabla \cdot ( {\bm \alpha} \nabla u  ) + {\bm \beta} \cdot \nabla u + \mu u &= f
+      \mbox{ dans } \Omega\\
+      u &= 0 \mbox{ sur } \partial \Omega\\
+    \end{split}
+  \end{equation}
+\end{problem}
+
+La variations sur les conditions aux limites de la
+section~\ref{sec:cond-aux-limit} s'appliquent.
+\begin{itemize}
+\item $-\nabla \cdot ( {\bm \alpha} \nabla u  )$ est un terme de diffusion,
+\item ${\bm \beta} \cdot \nabla u$ est un terme de convection,
+\item $\mu u$ est un terme de réaction
+\end{itemize}
+Ce type d'équation est très fréquente en ingéniérie, biologie ou encore finance.
+
+On suppose que ${\bm \alpha} \in [L^{\infty}(\Omega)]^{d,d}$, ${\bm \beta} \in
+[L^{\infty}(\Omega)]^{d}$ et $\mu \in L^\infty(\Omega)$. On suppose que
+l'opérateur $\mathcal{L}$ tel que $\mathcal{L} u = -\nabla \cdot ( \alpha \nabla u
+) + \beta \cdot \nabla u + \mu u$ est elliptique au sens suivant:
+
+\begin{definition}[Opérateurs Elliptiques]
+  \label{def:39}
+  L'opérateur $\mathcal{L}$ est elliptique si il existe une constante $\alpha_0$
+  telle que presque pour tout $x\in\Omega$
+  \begin{equation}
+    \label{eq:88}
+    \forall \xi=(\xi_1, \ldots , \xi_n)\in\RR^n,\quad {\ds \sum_{i,j=1}^n  \alpha_{ij}(x) \, \xi_i \, \xi_j  \ge \alpha_0 \, \| \xi \|^2 }
+  \end{equation}
+\end{definition}
+
+\begin{remark}
+  \label{rem:29}
+  Le Laplacien est dans la catégorie est opérateurs elliptiques, il correspond à
+  ${\bm \beta} = 0$, $\mu = 0$ et ${\bm \alpha}=\mathcal{I}_d$ avec $\mathcal{I}_d$ la
+  matrice identité de $\R[d,d]$
+\end{remark}
+
+
+La formulation faible s'écrit
+\begin{problem}
+  \label{prob:12}
+  On cherche $u \in H^1_0(\Omega)$ telle que
+  \begin{equation}
+    \label{eq:89}
+    a(u,v) = \ell(v) \quad \forall v \in H^1_0(\Omega)\\
+  \end{equation}
+  avec
+  \begin{equation}
+    \label{eq:90}
+    a(u,v)=\int_\Omega ({\bm \alpha} \nabla u ) \cdot \nabla v + ({\bm \beta} \cdot
+    \nabla u) v + \mu u v
+  \end{equation}
+  et
+  \begin{equation}
+    \label{eq:91}
+    \ell(v) = \int_\Omega f v
+  \end{equation}
+\end{problem}
+
+On note $\gamma = \essinf_{x \in \Omega} (\mu -\frac{1}{2} \nabla \cdot {\bm
+\beta})$, on peut alors montrer que sous la condition
+\begin{equation}
+  \label{eq:92}
+  \alpha_0 > - \min( 0, \gamma c_\Omega  )
+\end{equation}
+où $c_\Omega$ est la constante de l'inégalité de Poincaré, la forme bilinéaire
+$a$ est coercive et donc que, grâce au théorème de Lax-Milgram, le problème
+\ref{prob:12} est bien posé. La coercivité est garantie si $\alpha_0$ est
+suffisamment grand c'est à dire que si la diffusion est dominante.
+
+L'approximation élément fini est similaire à celle du Laplacian, de plus les
+variantes sur les conditions aux limites s'appliquent également: condition de
+Dirichlet non homogène, de Neumann ou de Robin.
+
+
+
+\section{Élasticité Linéaire}
+\label{sec:elasticite-lineaire}
+
+On s'intéresse dans cette section à l'approximation par éléments finis de
+problèmes de mécanique des milieux continus en 3D.
+
+Si ${\bm f}: \Omega \rightarrow \mathbb{R}^3$ est la charge extérieur
+s'appliquant au domaine $\Omega$ et qu'on note $\disp: \Omega \rightarrow
+\mathbb{R}^3$ le déplacement de la structure induit par cette charge ${\bm f}$
+alors en supposant que les déformations soient petites pour être modélisées
+dans le cadre de l'elasticité linéaire on a la relation suivante à
+l'équilibre:
+\begin{equation}
+  \label{eq:31}
+  \nabla \cdot \stresst + {\bm f} = {\bm 0} \mbox{ dans } \Omega
+\end{equation}
+où $\stresst: \Omega \rightarrow \R[d,d]$ est le \emph{tenseur des
+contraintes} défini par la relation
+\begin{equation}
+  \label{eq:93}
+  \stresst = \lambda \tr(\deformt) \Id[3] + 2 \mu \deformt
+\end{equation}
+avec $\deformt : \Omega \rightarrow \R[d,d]$ le \emph{tenseur des déformations} défini par
+\begin{equation}
+  \label{eq:94}
+  \deformt = \frac{1}{2} \left( \nabla \disp + \nabla \disp^T \right),
+\end{equation}
+$\lambda$ et $\mu$ les coefficients de Lamé et $\Id[3]$ la matrice identité de
+$\R[3,3]$. On a alors
+\begin{equation}
+  \label{eq:95}
+  \stresst = \lambda( \nabla \cdot \disp ) \Id[3] + \mu( \nabla \disp + \nabla \disp^T)
+\end{equation}
+
+\paragraph{Coefficients de Lamé}
+\label{sec:coefficients-de-lame}
+Ils sont des coefficients phénoménologiques contraints par les relations
+suivants:
+\begin{itemize}
+\item $\mu >0$
+\item $\lambda + \frac{2}{3} \mu \ge 0$
+\end{itemize}
+Dans ce qui suit, on supposera que $\lambda \ge 0$ et ces coefficients
+constants. D'un point de vue pratique, ces coefficients sont obtenus par les
+\emph{module d'Young} $E$ et  \emph{coefficient de Poisson} $\nu$ tels que
+\begin{equation}
+  \label{eq:96}
+  \lambda = \ds \frac{E \nu}{( 1+\nu )*( 1-2 \nu )} , \quad \mu =\frac{E}{2 ( 1+\nu )}
+\end{equation}
+
+
+\lstinputlisting[linerange=12-33,caption={Exemple en élasticité linéaire}]{../Codes/prudhomme/elasticite_lineaire/trous.cpp}
+
+
+%%% Local Variables:
+%%% coding: utf-8
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% TeX-parse-self: t
+%%% TeX-auto-save: t
+%%% x-symbol-8bits: nil
+%%% TeX-auto-regexp-list: TeX-auto-full-regexp-list
+%%% TeX-master: "mef-intro"
+%%% ispell-local-dictionary: "american"
+%%% End:

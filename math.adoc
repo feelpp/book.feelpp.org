@@ -3,7 +3,7 @@
 Christophe Prud'homme <https://github.com/prudhomm[@prudhomm]>
 v1.0, 2017/02/20
 :page-layout!:
-:page-permalink: /math/
+:page-permalink: /math/fem/
 :page-root: /
 :description: This guide describes the Feel++ installation, its features and provides some references
 :title: The mathematics of Feel++
@@ -20,7 +20,7 @@ v1.0, 2017/02/20
 :toclevels: 2
 :bibtex-file: feelpp.bib
 :bibtex-order: alphabetical
-:bibtex-format: latex // asciidoc
+:bibtex-format: latex
 :y: icon:check[role="green"]
 :n: icon:times[role="red"]
 :c: icon:file-text-o[role="blue"]
@@ -42,22 +42,24 @@ aspects of the project on the link:http://gitter.im/feelpp/feelpp[{feelpp}
 Gitter forum]. New contributors are always welcome!
 ====
 
+include_latex_macros::math/fem/macros.tex[]
+
 = Functional analysis
 
 
-include::math/anafunc.adoc[leveloffset=+1]
+include::math/fem/anafunc.adoc[leveloffset=+1]
 
 = Finite Element Method
 
-include::math/intro-mef.adoc[leveloffset=+1]
+include::math/fem/intro-mef.adoc[leveloffset=+1]
 
-include::math/ch-ef-lagrange.adoc[leveloffset=+1]
+include::math/fem/ch-ef-lagrange.adoc[leveloffset=+1]
 
-//include::math/ch-ef-convergence.adoc[leveloffset=+1]
+include::math/fem/ch-ef-convergence.adoc[]
 
-include::math/ch-problemes-coercifs.adoc[]
+include::math/fem/ch-problemes-coercifs.adoc[]
 
-include::math/ch-problemes-mixtes.adoc[leveloffset=+1]
+//include::math/fem/ch-problemes-mixtes.adoc[leveloffset=+1]
 
 
 
