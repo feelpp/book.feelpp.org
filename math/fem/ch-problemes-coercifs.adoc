@@ -582,27 +582,53 @@ On cherche stem:[u : \Omega \rightarrow \RR] telle que
     \begin{split}
       -\nabla \cdot ( \mathbf{\alpha} \nabla u  ) + \mathbf{\beta} \cdot \nabla u + \mu u &= f
       \mbox{ dans } \Omega\\
-      u &= 0 \mbox{ sur } \partial \Omega\\
+      \mathcal{B} u &= 0 \mbox{ sur } \partial \Omega\\
     \end{split}
 \]
 --
 
+où stem:[\mathcal{B}] est l'opérateur prenant en compte les conditions aux limites.
 La variation sur les conditions aux limites de la section [sec:cond-aux-limit] s’appliquent.
 
-* stem:[-\nabla \cdot ( \mathbf{\alpha} \nabla u  )] est un terme de diffusion,
-* stem:[\mathbf{\beta} \cdot \nabla u] est un terme de convection,
-* stem:[\mu u] est un terme de réaction
+* stem:[\mathcal{B}u=u] condition de Dirichlet
+* stem:[\mathcal{B}u=(\mathbf{\alpha}\nabla{u}) \cdot n] condition de Neumann
+* stem:[\mathcal{B}u=\gamma u + (\mathbf{\alpha} \nabla u )\cdot n] condition de Robin
+
+Les différents termes de l'opérateur ont une interprétation physique
+
+* stem:[-\nabla \cdot ( \mathbf{\alpha} \nabla u  )] est un terme de link:https://en.wikipedia.org/wiki/Diffusion[diffusion],
+
+* stem:[\mathbf{\beta} \cdot \nabla u] est un terme d'link:https://en.wikipedia.org/wiki/Advection[advection],
+
+* stem:[\mu u] est un terme de réaction (production ou destruction).
 
 Ce type d’équation est très fréquente en ingéniérie, biologie ou encore finance.
 
-On suppose que stem:[\mathbf{\alpha} \in [L^{\infty}(\Omega)\]^{d\times d}], stem:[\mathbf{\beta} \in [L^{\infty}(\Omega)\]^d] et stem:[\mu \in L^\infty(\Omega)].
 
-On suppose que l’opérateur stem:[\mathcal{L}] tel que stem:[\mathcal{L} u = -\nabla \cdot ( \alpha \nabla u ) + \beta \cdot \nabla u + \mu u] est elliptique au sens suivant:
+[NOTE]
+.Transfert de chaleur
+====
+stem:[u] is the temperature, stem:[\alpha=\kappa \mathcal{I}] où stem:[\kappa] est la link:https://fr.wikipedia.org/wiki/Conductivité_thermique[_conductivité thermique_], stem:[\beta] est le champ d'écoulement, stem:[\mu = 0] et stem:[f] est chaleur apportée exterieurement par unité de volume.
+====
+
+[NOTE]
+.Advection Diffusion
+====
+stem:[u] est la concentration d'un link:https://en.wikipedia.org/wiki/Solution[soluté] transportée dans un champ d'écoulement stem:[\beta].
+La matrice stem:[\alpha] modélise la diffusivité du soluté soit de la link:https://en.wikipedia.org/wiki/Molecular_diffusion[diffusion moléculaire] soit du link:https://en.wikipedia.org/wiki/Turbulence[mélange turbulent] du fluide transporteur.
+La production ou destruction par réaction chimique is pris en compte par le terme linéaire stem:[\mu u].
+Le second membre stem:[f] modélise les sources ou puits.
+
+====
+
+On suppose que stem:[\mathbf{\alpha} \in [L^{\infty}(\Omega)\]^{d\times d}], stem:[\mathbf{\beta} \in [L^{\infty}(\Omega)\]^d], stem:[\nabla \cdot \mathbf{\beta} \in L^{\infty}(\Omega)] et stem:[\mu \in L^\infty(\Omega)].
+
+On suppose que l’opérateur stem:[\mathcal{L}] tel que stem:[\mathcal{L} u = -\nabla \cdot ( \alpha \nabla u ) + \beta \cdot \nabla u + \mu u] est _elliptique_ au sens suivant:
 
 
 [env.definition#def:39]
 --
-L’opérateur stem:[\mathcal{L}] est elliptique si il existe une constante stem:[\alpha_0] telle que presque pour tout stem:[x\in\Omega]
+L’opérateur stem:[\mathcal{L}] est _elliptique_ si il existe une constante stem:[\alpha_0] telle que presque pour tout stem:[x\in\Omega]
 [[eq:88]]
 \[
     \forall \xi=(\xi_1, \ldots , \xi_n)\in\RR^n,\quad { \sum_{i,j=1}^n  \alpha_{ij}(x) \, \xi_i \, \xi_j  \ge \alpha_0 \, \| \xi \|^2 }
@@ -612,8 +638,35 @@ L’opérateur stem:[\mathcal{L}] est elliptique si il existe une constante stem
 [[rem:29]]
 TIP: Le Laplacien est dans la catégorie des opérateurs elliptiques, il correspond à stem:[\mathbf{\beta} = 0], stem:[\mu = 0] et stem:[\mathbf{\alpha}=\mathcal{I}_d] avec stem:[\mathcal{I}_d] la matrice identité de stem:[\RR^{d\times d}].
 
-La formulation faible s’écrit sous la forme suivante:
+=== Condition de Dirichlet homogène
 
+Nous imposons stem:[u=0] sur stem:[\partial \Omega].
+
+Nous multiplions stem:[\mathcal{L} u = f] par une fonction test (suffisamment régulière) s'annulant au bord et on intègre sur stem:[\Omega].
+En intégrant par parties (formule de Green) nous avons
+
+[[eq:adr-green]]
+[stem]
+++++
+\int_\Omega \nabla \cdot (\mathbf{\alpha} \nabla u )  v  = \int_\Omega (\mathbf{\alpha} \nabla u ) \cdot \nabla v -\int_{\partial \Omega} ((\sigma \nabla u)\cdot n) v
+    \nabla u) v + \mu u v
+++++
+ce qui donne
+[stem]
+++++
+\int_\Omega (\mathbf{\alpha} \nabla u ) \cdot \nabla v + (\mathbf{\beta} \cdot
+    \nabla u) v + \mu u v = \int_\Omega f v
+++++
+
+Afin que les intégrales sur stem:[\Omega] aient un sens, nous demandons par exemple que stem:[u] et stem:[v] aient la régularité suivante:
+[stem]
+++++
+u\in H^1(\Omega)\quad\text{et}\quad v\in H^1(\Omega).
+++++
+
+Comme stem:[u\in H^1(\Omega)], le théorème <<toto>> implique que stem:[u] ait une _trace_ sur le bord.
+Comme stem:[u_{|\partial \Omega} = 0], on cherche en fait stem:[u] dans stem:[H^1_0(\Omega)].
+Les fonctions tests sont également prises dans stem:[H^1_0(\Omega)] ce qui donne la formulation faible suivante
 [env.problem#prob:12]
 --
 On cherche stem:[u \in H^1_0(\Omega)] telle que
@@ -634,18 +687,313 @@ et
 \]
 --
 
-On note stem:[\gamma = \essinf_{x \in \Omega} (\mu -\frac{1}{2} \nabla \cdot \mathbf{\beta})], on peut alors montrer que sous la condition
+Nous avons le résultat suivant
+.Une solution du problème faible est solution du problème fort
+[env.proposition#prop:prob12]
+--
+Si stem:[u] résout <<eq:89>>, alors stem:[\mathcal{L}u=f] presque partout dans stem:[\Omega] et stem:[u=0] presque partout sur stem:[\partial \Omega].
+--
+[env.proof]
+--
+Soit stem:[\phi\in \mathcal{D}(\Omega)] et stem:[u] une solution de <<prob:12>>.
+On a
+\[
+\begin{split}
+\left\langle-\nabla \cdot (\alpha \nabla u), \phi \right\rangle_{\mathcal{D}',\mathcal{D}} &= \left\langle (\alpha \nabla u), \nabla \phi \right\rangle_{\mathcal{D}',\mathcal{D}} = \int_\Omega \alpha \nabla u \cdot \nabla \phi \\
+ & = \int_\Omega (f - \beta \cdot \nabla u - \mu u ) \phi,
+\end{split}
+\]
+ce qui donne stem:[\langle\mathcal{L}u,\phi\rangle_{\mathcal{D}',\mathcal{D}} = \int_\Omega f \phi].
+Or stem:[\mathcal{D}(\Omega)] est _dense_ dans stem:[L^2(\Omega)], nous avons donc que stem:[\mathcal{L}u=f] dans stem:[L^2(\Omega)].
+C'est à dire que stem:[\mathcal{L}u=f] presque partout dans stem:[\Omega].
+Enfin stem:[u=0] presque partout sur stem:[\partial \Omega] par définition de stem:[H^1_0(\Omega)] d'après le théorème <<toto>> stem:[\blacksquare]
+--
+
+=== Conditions de Dirichlet Non homogène
+
+Nous imposons stem:[u=0] sur stem:[\partial \Omega] où stem:[g : \partial \Omega \rightarrow \RR] est une fonction donnée.
+
+Nous supposons que stem:[g] soit suffisamment régulière telle qu'il existe un relèvement stem:[u_g] de stem:[g] dans stem:[H^1(\Omega)], c'est à dire qu'il existe une fonction stem:[u_g] de stem:[H^1(\Omega)] telle que stem:[u_g=g] sur stem:[\partial \Omega].
+
+[env.problem#prob:12_1]
+--
+On cherche stem:[u \in H^1(\Omega)] telle que
+\[
+u=u_g+\phi,\quad \phi \in H^1_0(\Omega)
+\]
+où stem:[\phi] est solution de
+[[eq:89_1]]
+\[
+    a(\phi,v) = \ell(v) - a(u_g,v) \quad \forall v \in H^1_0(\Omega)
+\]
+avec
+[[eq:90_1]]
+\[
+    a(u,v)=\int_\Omega (\mathbf{\alpha} \nabla u ) \cdot \nabla v + (\mathbf{\beta} \cdot
+    \nabla u) v + \mu u v
+\]
+et
+[[eq:91_1]]
+\[
+    \ell(v) = \int_\Omega f v
+\]
+--
+
+[env.proposition#prop:prob12_1]
+--
+Soit stem:[g\in H^{\frac{1}{2}}(\partial \Omega)], si stem:[u] résout <<prob:12_1>>, alors stem:[\mathcal{L}u=f] presque partout dans stem:[\Omega] et stem:[u=g] presque partout sur stem:[\partial \Omega].
+--
+
+
+[env.proof]
+--
+La preuve est similaire à celle de <<prob:12>>.
+--
+
+NOTE: Lorsque l'opérateur stem:[\mathcal{L}] est le Laplacien, <<prob:12_1>> est appelé un _problème de Poisson_.
+
+
+=== Conditions de Neumann
+
+Soit une fonction stem:[g:\partial \Omega \rightarrow \RR], nous voulons imposer stem:[\mathcal{B}u=(\alpha \nabla u)\cdot n = g]  sur stem:[\partial \Omega].
+
+NOTE: Dans le cas où stem:[\alpha = \mathcal{I}], la condition de Neumann correspond à spécifier la dérivée normale de stem:[u] car stem:[\nabla u \cdot n = \partial_n u = \frac{\partial u}{\partial n}].
+
+Nous procédons de la même façon que précédemment et en utilisant la condition de Neumann dans l'intégrale de surface <<eq:adr-green>>, on obtient la formulation faible suivante:
+
+[env.problem#prob:12_2]
+--
+On cherche stem:[u \in H^1(\Omega)] telle que
+
+[[eq:89_2]]
+\[
+    a(u,v) = \ell(v) \quad \forall v \in H^1(\Omega)
+\]
+avec
+[[eq:90_2]]
+\[
+    a(u,v)=\int_\Omega (\mathbf{\alpha} \nabla u ) \cdot \nabla v + (\mathbf{\beta} \cdot
+    \nabla u) v + \mu u v
+\]
+et
+[[eq:91_2]]
+\[
+    \ell(v) = \int_\Omega f v + \int_{\partial \Omega} g v
+\]
+--
+
+[env.proposition#prop:prob12_2]
+--
+Soit stem:[g\in L^2(\partial \Omega)], si stem:[u] résout <<prob:12_2>>, alors stem:[\mathcal{L}u=f] presque partout dans stem:[\Omega] et stem:[\alpha \nabla u \cdot n = g] presque partout sur stem:[\partial \Omega].
+--
+[env.proof]
+--
+En prenant les fonctions tests dans stem:[\mathcal{D}(\Omega)] , on a immediatement que stem:[\mathcal{L}u = f] presque partout dans stem:[\Omega].
+Nous avons donc que stem:[-\nabla \cdot (\alpha \nabla u ) \in L^2(\Omega)].
+Le corollaire <<B59>> implique que stem:[\alpha \nabla u \cdot n \in H^{\frac{1}{2}}(\partial \Omega)' = H^{-\frac{1}{2}}(\partial \Omega)] du fait que
+\[
+\forall \phi \in H^{\frac{1}{2}}(\partial \Omega), \quad \left\langle\alpha \nabla u \cdot n, \phi\right\rangle_{H^{-\frac{1}{2}},H^{\frac{1}{2}}} = \int_{\Omega} -\nabla \cdot (\alpha \cdot \nabla u) u_\phi + \int_\Omega \alpha \nabla u \cdot \nabla u_\phi
+\]
+où stem:[u_\phi \in H^1(\Omega)] est un relèvement de stem:[\phi] dans stem:[H^1(\Omega)].
+On a alors que <<prob12_2>> donne
+\[
+\forall \phi \in H^{\frac{1}{2}}(\partial \Omega), \quad \left\langle\alpha \nabla u \cdot n, \phi\right\rangle_{H^{-\frac{1}{2}},H^{\frac{1}{2}}} = \int_{\partial \Omega} g \phi
+\]
+montrant que stem:[\alpha \nabla u \cdot n = g] dans stem:[H^{-\frac{1}{2}}(\partial \Omega)] et donc, par conséquent, dans stem:[L^2(\Omega)] du fait que stem:[g] soit dans stem:[L^2(\Omega)].stem:[\blacksquare]
+--
+
+
+=== Conditions mixtes Dirichlet-Neumann
+
+NOTE: documentation en cours
+
+
+=== Conditions de Robin
+
+NOTE: documentation en cours
+
+Soient deux fonctions stem:[g,\gamma : \partial \Omega \rightarrow \RR], nous voulons imposer stem:[\gamma u + (\alpha \nabla u)\cdot n = g] sur stem:[\partial \Omega].
+En utilisant la relation sur l'intégrale de surface <<eq:adr-green>>, nous avons la formulation faible suivante
+
+
+[env.problem#prob:12_4]
+--
+On cherche stem:[u \in H^1(\Omega)] telle que
+
+[[eq:89_4]]
+\[
+    a(u,v) + \int_{\partial \Omega} \gamma u v = \ell(v) \quad \forall v \in H^1(\Omega)
+\]
+avec
+[[eq:90_4]]
+\[
+    a(u,v)=\int_\Omega (\mathbf{\alpha} \nabla u ) \cdot \nabla v + (\mathbf{\beta} \cdot
+    \nabla u) v + \mu u v
+\]
+et
+[[eq:91_4]]
+\[
+    \ell(v) = \int_\Omega f v + \int_{\partial \Omega} g v
+\]
+--
+
+[env.proposition#prop:prob12_4]
+--
+Soit stem:[g\in L^2(\partial \Omega)] et stem:[\gamma \in L^\infty(\partial \Omega].
+Si stem:[u] résout <<prob:12_4>>, alors stem:[\mathcal{L}u=f] presque partout dans stem:[\Omega] et stem:[\gamma u + \alpha \nabla u \cdot n = g] presque partout sur stem:[\partial \Omega].
+--
+[env.proof]
+--
+On procède de manière similaire aux preuves précédentes. stem:[\blacksquare]
+--
+
+Nous récapitulons dans la table suivante les différentes formulations
+
+.Formulation faible pour différentes conditions aux limites
+|===
+| Problème | Espace | Forme bilinéaire | Forme linéaire
+
+|Dirichlet homogène
+| stem:[H^1_0(\Omega)]
+| stem:[a(u,v)]
+| stem:[\int_\Omega f v]
+
+| Neumann
+| stem:[H^1(\Omega)]
+| stem:[a(u,v)]
+| stem:[\int_\Omega f v + \int_{\partial \Omega} g v]
+
+|Dirichlet Neumann
+| stem:[H^1_{\partial \Omega_D}(\Omega)]
+| stem:[a(u,v)]
+| stem:[\int_\Omega f v + \int_{\partial \Omega_N} g v]
+
+| Robin (Fourier)
+| stem:[H^1(\Omega)]
+| stem:[a(u,v) + \int_{\partial \Omega} \gamma uv]
+| stem:[\int_\Omega f v + \int_{\partial \Omega} g v]
+
+|===
+
+.Résumé
+[NOTE]
+====
+Les problèmes considérés précédent se mettent tous sous la forme suivante, sauf le problème de Dirichlet non homogène
+[[eqpbadr]]
+[stem]
+++++
+\left\{\begin{array}{l}
+\text{ Chercher } u \in V \text{ telle que}\\
+a(u,v)=f(v), \quad \forall v \in V
+\end{array}\right.
+++++
+où stem:[V] est un espace de _Hilbert_ satisfaisant
+[stem]
+++++
+H^1_0(\Omega) \subset V \subset H^1(\Omega)
+++++
+
+Dans le cas de conditions de *Dirichlet non-homogènes*, nous avons stem:[u\in H^1(\Omega)] et stem:[u=u_g+\phi] où stem:[u_g] est un relèvement de la donnée au bord stem:[g] et stem:[\phi] résout le <<eqpbadr,problème générique>> avec des conditions de Dirichlet homogènes.
+====
+
+.Conditions aux limites essentielles et naturelles
+[NOTE]
+====
+Il est important d'observer le traitement différent entre les conditions de Dirichlet et Neumann ou Robin conditions.
+
+Les conditions de Dirichlet sont imposées explicitement dans l'espace fonctionnel où la solution est recherchée, et les fonctions de test disparaissent (_i.e._ stem:[v=0]) sur la partie correspondante de la frontière.
+Pour cette raison, les conditions de Dirichlet sont souvent appelées conditions aux limites _essentielles_ .
+
+Les conditions de Neumann et Robin ne sont pas imposées par le cadre fonctionnel mais par la formulation faible elle-même.
+Le fait que les fonctions test ont des degrés de liberté sur la partie correspondante de la frontière est suffisant pour faire respecter les conditions limites en question.
+Pour cette raison, ces conditions sont souvent appelées conditions aux limites _naturelles_.
+====
+
+[[sec:adr-coercivity]]
+=== Coercivité
+
+NOTE: Cette section est en cours d'écriture
+
+[env.theorem#adr-thr1]
+--
+Soient stem:[f\in L^2(\Omega),  stem:[\mathbf{\alpha} \in [L^{\infty}(\Omega)\]^{d\times d}], stem:[\mathbf{\beta} \in [L^{\infty}(\Omega)\]^d], stem:[\nabla \cdot \mathbf{\beta} \in L^{\infty}(\Omega)] et stem:[\mu \in L^\infty(\Omega)].
+
+On note stem:[p = \essinf_{x \in \Omega} (\mu -\frac{1}{2} \nabla \cdot \mathbf{\beta})] et stem:[c_\Omega] est la constante de l’inégalité de Poincaré <<B23>>.
+
+_(i)_ Les problèmes avec conditions de Dirichlet homogènes <<prob12>> et non-homogènes <<prob12_2>> sont bien posés si
 [[eq:92]]
 \[
-  \alpha_0 > - \min( 0, \gamma c_\Omega  )
+  \alpha_0 > - \min( 0, \frac{\gamma}{c_\Omega}  )
 \]
-où stem:[c_\Omega] est la constante de l’inégalité de Poincaré.
 
-La forme bilinéaire stem:[a] est coercive et donc que, grâce au théorème de Lax-Milgram, le problème <<prob:12>> est _bien posé_.
+_(ii)_ Le problème  avec condition de Neumann <<prob12_1>> est  bien posé si
+[[eq:92_1]]
+\[
+  p > 0\quad\text{et}\quad \essinf_{x \in \Omega}(\beta \cdot n ) \geq 0
+\]
+
+_(iii)_ Le problème  avec condition de Dirichlet-Neumann <<prob12_3>> est  bien posé si <<eq:92>> est vérifiée et
+[[eq:92_2]]
+\[
+  \mathrm{meas}(\partial \Omega_D) > 0\quad\text{et}\quad \partial \Omega^- = \{ x\in \partial \Omega ; (\beta \cdot n)(x) < 0\} \subset \partial \Omega_D
+\]
+
+_(iv)_ On pose stem:[q = \essinf_{x \in \Omega} (\gamma +\frac{1}{2} \mathbf{\beta}\cdot n)].
+Le problème avec conditions de Robin <<prob12_4>>  non-homogènes <<prob12_2>> est posé si
+[[eq:92_3]]
+\[
+  p \geq 0,\quad q \geq 0,\quad\text{et}\quad pq \neq 0.
+\]
+--
+
+[env.proof]
+--
+Nous prouvons _(i)_ et _(iv)_.
+
+*Preuve de _(i)_*
+En utilisant l'ellipticité de stem:[\mathcal{L}] et l'identité suivante(Formule de Green)
+\[
+\int_\Omega u(\beta \cdot \nabla u) = -\frac{1}{2} \int_\Omega (\nabla \cdot \beta) u^2 + \frac{1}{2} \int_{\partial \Omega} (\beta \cdot n) u^2
+\]
+alors on a
+\[
+\forall u \in H^1_0(\Omega),\quad a(u,u) \geq \alpha_0|u|^2_{1,\Omega} + p \|u\|^2_{0,\Omega}.
+\]
+En posant stem:[c=\min(0,\frac{p}{c_\Omega}] et en utilisant l'inégalité de Poincaré <<B53>> on a
+\[
+\forall u \in H^1_0(\Omega),\quad a(u,u) \geq \left(\alpha_0+\frac{c}{c_\Omega}\right)|u|^2_{1,\Omega} \geq \sigma \|u\|^2_{1,\Omega}.
+\]
+avec stem:[\sigma=\frac{c_\Omega(c_\Omega\alpha_0+c)}{1+c^2_\Omega}].
+
+Cela montre que stem:[a] est _coercive_ sur stem:[H^1_0(\Omega)].
+
+Le caractère bien posé résulte alors du Lemme de Lax-Milgram pour les conditions de Dicirichlet homogènes et de la proposition <<TODO>> pour les conditions de Dirichlet non-homogènes.stem:[\square]
+
+*Preuve de _(iv)_*
+Notons stem:[a(u,v)=\int_\Omega \alpha \nabla u\cdot \nabla u + (\beta \cdot \nabla u) v + \mu u v + \int_{\partial \Omega} \gamma u v]. Nous avons l'inégalité suivante:
+\[
+\forall u \in H^1(\Omega),\quad a(u,u) \geq \alpha_0|u|^2_{1,\Omega} + p \|u\|^2_{0,\Omega} + q\|u\|^2_{0,\partial \Omega}.
+\]
+
+Si stem:[p>0] et stem:[q\geq 0], la forme bilinéaire est _coercive_ sur stem:[H^1(\Omega)] avec comme constante stem:[\sigma = \min(\alpha_0,p).
+
+Si stem:[p\geq 0] et stem:[q > 0], la forme bilinéaire est _coercive_ sur stem:[H^1(\Omega)] grâce au Lemme <<TODO>>.
+
+Dans les deux cas, le caractère bien posé est obtenu par le Lemme de Lax-Milgram.stem:[\square]
+Ceci termine les preuves de _(i)_ et _(iv)_. stem:[\blacksquare]
+--
 
 La coercivité est garantie si stem:[\alpha_0] est suffisamment grand c’est à dire que si la diffusion est dominante.
 
+
+[[sec:adr-H1-conforming-approx]]
+=== Approximation conforme dans stem:[H^1]
+
+NOTE: Cette section est en cours d'écriture
+
 L’approximation élément fini est similaire à celle du Laplacian, de plus les variantes sur les conditions aux limites s’appliquent également: condition de Dirichlet non homogène, de Neumann ou de Robin.
+
+
 
 [[sec:elasticite-lineaire]]
 == Élasticité Linéaire

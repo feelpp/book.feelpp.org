@@ -12,7 +12,7 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <link rel="stylesheet" href="{{page.root}}css/custom.css">
-    <link rel="stylesheet" href="{{page.root}}css/foundation.min.css">
+    <link rel="stylesheet" href="{{page.root}}css/foundation.css">
     <link rel="stylesheet" href="{{page.root}}css/font-awesome.css">
     <link rel="stylesheet" href="{{page.root}}css/coderay.css">
     <link rel="stylesheet" href="{{page.root}}css/asciidoctor.css">
@@ -27,12 +27,11 @@
 {% include topbar.html %}
 <!-- End Nav -->
 
+
     <section class="page-header">
-      <h1 class="project-name" style="color:#ffffff;">{{ site.title | default: site.github.repository_name }}</h1>
-      <!--<h2 class="project-tagline">{{ site.description | default: site.github.project_tagline }}</h2>-->
-      {% unless site.title == page.title %}
+      <h1 class="project-name" style="color:#ffffff">{{ site.title | default: site.github.repository_name }}</h1>
+      <!--<h2 class="project-tagline" style="color:#ffffff">{{ site.description | default: site.github.project_tagline }}</h2>-->
       <h2 class="project-name" style="color:#ffffff">{{ page.title }}</h2>
-      {% endunless %}
       {% if site.github.is_project_page %}
         <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
       {% endif %}
@@ -47,36 +46,7 @@
 
 <div class="expanded row">
 
-      <!-- Sidebar -->
-
-    <div  class="small-3 columns">
-
-
-      <div id="toc" class="toc3" > <!--class="panel">-->
-        <div id="toctitle">Table of Contents</div>
-      {{ page.document | tocify_asciidoc:2 }}
-      </div>
-
-        <!--<h4>Posts</h4>
-        <ul id="posts" class="posts nav">
-            {% for post in site.posts limit: 5 %}
-            <li><a href=".{{ post.url }}">{{ post.navtitle }}</a></li>
-            {% endfor %}
-        </ul>
-
-        <div class="panel">
-            <h5>Featured</h5>
-
-            <p>Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon
-                nulla pork belly cupidatat meatloaf cow.</p>
-        </div>-->
-
-    </div>
-
-    <!-- End Sidebar -->
-
-    <!-- Main Blog Content -->
-    <div class="small-9 columns" role="content">
+    <div class="small-12 columns" role="content">
 
 
 
@@ -94,7 +64,7 @@
 
 <!-- Footer -->
 
-<footer class="row">
+<footer class="expanded row">
     <div class="small-12 columns">
         <hr>
         <div class="row">
