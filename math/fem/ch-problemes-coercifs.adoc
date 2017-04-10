@@ -994,6 +994,72 @@ NOTE: Cette section est en cours d'écriture
 L’approximation élément fini est similaire à celle du Laplacian, de plus les variantes sur les conditions aux limites s’appliquent également: condition de Dirichlet non homogène, de Neumann ou de Robin.
 
 
+Soit stem:[\Omega] un polyèdre dans stem:[\RR^d], soit stem:[\{\mathcal{T}_h\}] une famille de maillages de stem:[\Omega], et soit stem:[\{\hat{K}, \hat{P}, \hat{E}\}]  un élément fini Lagrange de référence du degré stem:[k \geq 1].
+
+Soit stem:[P^k_{c,h}] l'espace d'approximation conformé stem:[H^1] défini par
+[stem]
+++++
+P^k_{c,h}=\{v \in C^0(\bar{\Omega}); \quad \forall K \in \mathcal{T}_h v_{|K} \in \mathbb{P}^k (K) \}
+++++
+Pour obtenir une approximation conforme dans stem:[V], nous rajoutons les conditions aux limites, _i.e_, nous avons
+[stem]
+++++
+V_h = P^k_{c,h} \cap V
+++++
+Dans le cas de conditions de Dirichlet homogène cela donne
+[stem]
+++++
+V_h=\{ v_h \in P^k_{c,h} ;\ v_h = 0 \mbox{ sur } \partial \Omega\}
+++++
+Dans le cas Neumann et Robin, nous avons stem:[Vh=P^k_{c,h}].
+Enfin dans le cas Dirichlet-Neumann, nous avons
+[stem]
+++++
+V_h=\{v_h \in P^k_c; \ v_h = 0 \mbox{ sur } \partial \Omega_D\}
+++++
+
+Le problème discret s'ecrit
+[env.problem]
+--
+Trouver stem:[u_h] dans stem:[V_h] telle que
+\[
+a(u_h,v_h)=\ell(v_h), \quad \forall v_h \in V_h
+\]
+--
+
+Nous cherchons à présent à estimer l'erreur stem:[u-u_h] en norme stem:[H^1] et stem:[L^2].
+
+
+.Estimation stem:[H^1]
+[env.theorem#thr-adr-conv]
+--
+Soit stem:[\Omega] un polyèdre dans stem:[\RR^d], soit stem:[\{\mathcal{T}_h\}] une famille de maillages de stem:[\Omega], et soit stem:[\{\hat{K}, \hat{P}, \hat{E}\}]  un élément fini Lagrange de référence du degré stem:[k \geq 1].
+Nous avons stem:[\lim_{h\rightarrow 0} \|u-u_h\|_{1,\Omega} = 0] et pour stem:[\frac{d}{2} < s < k+1, il existe une constante stem:[c] telle que
+\[
+\forall h, \quad \|u-u_h\| \leq c h^{s-1} |u|_{s,\Omega}
+\]
+--
+
+.Estimation stem:[L^2]
+[env.theorem#thr-adr-conv]
+--
+Soient les hypothèse du théorème précédent, auxquelles nous ajoutons des hypothèses initial a des propriétés régularisantes
+Nous avons stem:[\lim_{h\rightarrow 0} \|u-u_h\|_{1,\Omega} = 0] et pour stem:[\frac{d}{2} < s < k+1, il existe une constante stem:[c] telle que
+\[
+\forall h, \quad \|u-u_h\|_{0,\Omega} \leq c h |u-u_h|_{1,\Omega}
+\]
+--
+
+NOTE: nous n'avons pas défini ce que sont ces propriétés régularisantes. Nous supposerons qu'elles sont vérifiées.
+
+.Exemple du Laplacien avec conditions de Dirichlet homogène en P1
+[NOTE]
+====
+\forall h, \quad \|u-u\|_{0,\Omega} + h \|u-u_h\|_{1,\Omega} \leq c h^2 \|f\|_{0,\Omega}
+====
+
+
+include::stab.adoc[]
 
 [[sec:elasticite-lineaire]]
 == Élasticité Linéaire
