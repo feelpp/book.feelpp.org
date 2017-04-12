@@ -1,13 +1,9 @@
 // key value arg to modify the image.
 // e.g :
 // cover({ bgcolor:"red"
-//         title:"toto" })
+//         title1:"toto" })
 var cover = function( kv={} ) {
     svgname="./images/book_cover_simple.svg"
-
-    div = document.createElement("div");
-    div.setAttribute("id","cover");
-    document.body.appendChild(div);
     xhr = new XMLHttpRequest();
     xhr.open("GET",svgname,false);
     xhr.overrideMimeType("image/svg+xml");
@@ -21,13 +17,19 @@ var cover = function( kv={} ) {
         elt = svg.getElementById("svg_book_bg_band");
         elt.style.fill=kv.bgbandcolor;
     }
-    if( kv.title != null ) {
+    if( kv.title0 != null ) {
         elt = svg.getElementById("svg_book_text_title");
-        elt.childNodes[0].childNodes[0].textContent = kv.title;
+        elt.childNodes[0].childNodes[0].textContent = kv.title0;
+    }
+    if( kv.title1 != null ) {
+        elt = svg.getElementById("svg_book_text_title");
+        elt.childNodes[1].childNodes[0].textContent = kv.title1;
     }
     if( kv.subtitle != null ) {
         elt = svg.getElementById("svg_book_text_subtitle");
         elt.childNodes[0].childNodes[0].textContent = kv.subtitle;
     }
-    document.getElementById("cover").appendChild(svg);
+    if( kv.id != null ) {
+        document.getElementById(kv.id).appendChild(svg);
+    }
 }
