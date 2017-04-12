@@ -17,5 +17,8 @@ quickref-cards.html: quickref-cards.adoc $(shell find 07-quickref -type f)
 quickref.html: quickref.adoc $(shell find 07-quickref -type f)
 modeling.html: modeling.adoc $(shell find 03-modeling 04-learning 05-applications -type f)
 
+serve:
+	bundle exec jekyll serve
+
 clean:
 	rm book.html math.html install.html programming.html quickref.html quickref-cards.html modeling.html
