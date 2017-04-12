@@ -1,10 +1,10 @@
-[[convection-diffusion-reaction-problems]]
-Convection-Diffusion-Reaction problems
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[[convection-dominated-flows]]
+= Convection dominated flows
+
 
 Let stem:[\Omega \subset \mathbb{R}^d, d=1,2,3], consider this
 equation defined in stem:[\Omega], find stem:[u] a scalar
-field (e.g. temperature or concentration) such that
+field (_e.g._ temperature or concentration) such that
 [[eq:stab1]]
 [stem]
 ++++
@@ -23,7 +23,7 @@ with the given data
 
 From now on we consider only steady problems (stem:[\frac{\partial u}{\partial t}=0])
 
-==== Applications
+== Applications
 
 * Transport of temperature
 * Transport of pollutants
@@ -35,9 +35,7 @@ equations (porous media) to obtain the velocity field
 stem:[\mathbf{ \beta}]. In this lesson we consider
 stem:[\mathbf{ \beta}] given.
 
-[[boundary-conditions]]
-Boundary conditions
-^^^^^^^^^^^^^^^^^^^
+== Boundary conditions
 
 Boundary conditions can be of 2 types on parts of the boundary or the
 whole boundary of the domain stem:[\Omega]:
@@ -53,8 +51,7 @@ whole boundary of the domain stem:[\Omega]:
         (e.g. \mathbf{\beta} = \mathbf{0})]
 
 [[variational-formulation]]
-Variational Formulation
-^^^^^^^^^^^^^^^^^^^^^^^
+== Variational Formulation
 
 The variational problem reads, Find stem:[u \in V] such that for
 all stem:[v\ in V]
@@ -70,30 +67,32 @@ where
 
 * stem:[V] is an Hilbert space
 * we used the identity below for the integration by part
+
 [[eq:stab7]]
 [stem]
 ++++
 \nabla \cdot (\mathbf{ c} w ) = \mathbf{ c} \cdot \nabla w +        \underbrace{w \nabla \cdot \mathbf{ c}}_{=0}
 ++++
 
-* Suppose that
-stem:[-\frac{1}{2} \nabla \cdot ( \mathbf{ \beta} ) + \mu \geq 0]
-almost everywhere in stem:[\Omega] then we can show that
-stem:[a] is coercive provide
-stem:[\epsilon \geq \epsilon_0 > 0] stem:[\label{eq:10}
-      a(v,v) \geq \alpha ||v||_{1,\Omega}, \quad \alpha = \frac{\epsilon_0}{1+C_\Omega^2}]
-* stem:[a] is continuous, there exists stem:[M] a constant
-such that
-[[eq:stab9]
+* Suppose that stem:[-\frac{1}{2} \nabla \cdot ( \mathbf{ \beta} ) + \mu \geq 0] almost everywhere in stem:[\Omega] then we can show that stem:[a] is coercive provide stem:[\epsilon \geq \epsilon_0 > 0]
+
+[[eq:10]]
 [stem]
 ++++
-      |a(u,v)| \leq < M ||u||_{H^1{(\Omega)}} ||v||_{H^1{(\Omega)}}, \quad M =
+a(v,v) \geq \alpha ||v||_{1,\Omega}, \quad \alpha = \frac{\epsilon_0}{1+C_\Omega^2}
+++++
+
+* stem:[a] is continuous, there exists stem:[M] a constant such that
+
+[[eq:stab9]]
+[stem]
+++++
+|a(u,v)| \leq < M ||u||_{H^1{(\Omega)}} ||v||_{H^1{(\Omega)}}, \quad M =
       ||\mu||_{0,\Omega} + ||\epsilon||_{\infty,\Omega} + ||\mathbf{\beta}||_{\infty,\Omega}
 ++++
 
 [[discrete-formulation]]
-Discrete formulation
-^^^^^^^^^^^^^^^^^^^^
+== Discrete formulation
 
 Let stem:[V_h \subset V \equiv H^1(\Omega)] a discrete space,
 consider the standard Galerkin approximation on stem:[V_h] for .
@@ -137,37 +136,20 @@ Galerkin method can yield to inaccurate solutions unless:
 * we use a stabilisation method (loss of stem:[\frac{1}{2}] in convergence rate)
 ====
 
-[[convection-dominated-flows]]
-Convection dominated flows
---------------------------
+[[stabilisation-methods]]
+== Stabilisation methods for convection dominated flows
 
-Consider this type of problem
-[[eq:46]]
-[stem]
-++++
--\epsilon \Delta u + \mathbf{ \beta} \cdot \nabla u + \gamma u = f,\quad \nabla \cdot \mathbf{ \beta} = 0
-++++
-
-Introduce
+We now introduce
 
 * stem:[\mathrm{Pe}=\frac{|\mathbf{ \beta}|L}{2 \epsilon}] the global number. stem:[L] is the characteristic size of the domain.
 * the local Péclet number stem:[\mathrm{Pe}_h=\frac{|\mathbf{\beta}|h}{2 \epsilon}]
 
 The dominating convection and inacurrate behavior occurs when, on at least some cells, stem:[\mathrm{Pe} > 1] or stem:[\mathrm{Pe}_h > 1].
 
-WARNING: A remedy is to use a sufficiently small stem:[h] same to ensure stem:[\mathrm{Pe}_h < 1].
+TIP: A remedy is to use a sufficiently small stem:[h] same to ensure stem:[\mathrm{Pe}_h < 1].
 For example if stem:[|\mathbf{beta}| = 1] and stem:[\epsilon=5e-4], we should take stem:[h=1e-4].
 
-[[stabilisation-methods]]
-Stabilisation methods
-~~~~~~~~~~~~~~~~~~~~~
-
-[[introduction]]
-Introduction
-^^^^^^^^^^^^
-
-Another remedy is to use a different approximation space for the unknown stem:[u_h] and the test functions stem:[v_h].
-
+TIP: Another remedy is to use a different approximation space for the unknown stem:[u_h] and the test functions stem:[v_h].
 We talk about *Petrov-Galerkin approximation*.
 
 [env.problem#prob:2]
@@ -183,15 +165,15 @@ with
 a_h(u_h,v_h) = a(u_h,v_h) + b_h(u_h,v_h),\quad \ell_h(v_h) = \ell(v_h) + g_h(v_h),\quad
 \].
 --
-NOTE: The purpose of stem:[b_h] and stem:[g_h] is to eliminate(or reduce) the numerical oscillations produced by the standard Galerkin method: they are called and depend on stem:[h].
 
-NOTE: the term is not exact.
-The Galerkin method is already stable (i.e. continuity).
-Here is to be understood as the aim of reducing (or elimination) numerical oscillations when stem:[\mathrm{Pe} > 1].
+NOTE: The purpose of stem:[b_h] and stem:[g_h] is to eliminate(or reduce) the numerical oscillations produced by the standard Galerkin method: they are called _stabilisation methods_ and depend on stem:[h].
+The term _stabilisation method_ is not _exact_.
+Indeed the Galerkin method is already stable (_i.e._ continuity).
+Here it is to be understood as the aim of reducing (or elimination) numerical oscillations when stem:[\mathrm{Pe} > 1].
 
+Without doing anything wiggles occur.
 
-
-Without doing anything wiggles occur. There are remedies so called _stabilisation techniques_, here some some examples:
+There are remedies so called _stabilisation techniques_, here some some examples:
 
 * Artificial diffusion (streamline diffusion) (SDFEM)
 * Galerkin Least Squares method (GaLS)
@@ -199,42 +181,42 @@ Without doing anything wiggles occur. There are remedies so called _stabilisatio
 * Continuous Interior Penalty methods (CIP)
 
 [[artificial-diffusion-or-streamline-diffusion-sdfem]]
-Artificial diffusion (or streamline diffusion) (SDFEM)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Artificial diffusion (or streamline diffusion) (SDFEM)
 
-[[streamline-diffusion-sdfem]]
-Streamline diffusion (SDFEM)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Method The method consists in adding an
 
-Method The method consists in adding an stem:[\epsilon_h =
-    \epsilon(1+\phi(\mathrm{Pe}))] with
-stem:[\phi(\mathrm{Pe}) \rightarrow 0] as stem:[h
-    \rightarrow 0], e.g.
-stem:[\phi(\mathrm{Pe}) = \mathrm{Pe}-1+B(2*\mathrm{Pe})] where
-stem:[B] is the so-called _Bernoulli function_ stem:[B(t) =
-    \frac{t}{e^t-1}] if stem:[t > 0] and stem:[B(0) = 1]
-(also exponential fitting scheme) stem:[\label{eq:15}
+[stem]
+++++
+\epsilon_h =\epsilon(1+\phi(\mathrm{Pe}))
+++++
+with
+stem:[\phi(\mathrm{Pe}) \rightarrow 0] as stem:[h \rightarrow 0], _e.g._ stem:[\phi(\mathrm{Pe}) = \mathrm{Pe}-1+B(2*\mathrm{Pe})]
+where stem:[B] is the so-called _Bernoulli function_
+stem:[B(t) =    \frac{t}{e^t-1}] if stem:[t > 0] and stem:[B(0) = 1] (also exponential fitting scheme)
+[[eq:15]]
+[stem]
+++++
       b_h(u_h,v_h) = \int_\Omega \epsilon \Phi(\mathrm{Pe}) \nabla u_h \cdot \nabla
-      v_h, \quad g_h(v_h) = 0]
+      v_h, \quad g_h(v_h) = 0
+++++
 
-[thr:1] for a given stem:[\epsilon] and for stem:[h]
-tending to stem:[0], we have for
-stem:[u \in H^{r+1}(\Omega)] stem:[\label{eq:16}
-      ||u-u_h||_{1,\Omega} \leq C_1  \Big[ h^r||u||_{r+1,\Omega} + \phi(\mathrm{Pe})||u||_{1,\Omega}\Big]]
+[env.theorem#thr:stab1]
+--
+for a given stem:[\epsilon] and for stem:[h] tending to stem:[0], we have for stem:[u \in H^{r+1}(\Omega)]
+[[eq:16]]
+\[
+||u-u_h||_{1,\Omega} \leq C_1  \Big[ h^r||u||_{r+1,\Omega} + \phi(\mathrm{Pe})||u||_{1,\Omega}\Big]
+\]
 and for a given stem:[h] and stem:[\epsilon] tending to 0,
-stem:[\label{eq:17}
-      ||u-u_h||_{1,\Omega} \leq C_1  \Big[ h^{r-1}||u||_{r+1,\Omega} + ||u||_{1,\Omega}\Big]]
-If stem:[\phi(\mathrm{Pe})=\frac{|\mathbf{ \beta}|h}{2 \epsilon}],
-the convergence is linear, with the exponential fitting scheme it is
-quadratic if stem:[r \geq 2].
+[[eq:17]]
+\[
+||u-u_h||_{1,\Omega} \leq C_1  \Big[ h^{r-1}||u||_{r+1,\Omega} + ||u||_{1,\Omega}\Big]
+\]
+If stem:[\phi(\mathrm{Pe})=\frac{|\mathbf{ \beta}|h}{2 \epsilon}], the convergence is linear, with the exponential fitting scheme it is quadratic if stem:[r \geq 2].
+--
 
 [[gals-and-supg]]
-GaLS and SUPG
-~~~~~~~~~~~~~
-
-[[gals-and-supg-1]]
-GaLs and SUPG
-^^^^^^^^^^^^^
+=== GaLS and SUPG
 
 First we decompose our operators into a symmetric (stem:[<Lu,v> = <u,Lv>] and skew symmetric (stem:[<L u, v> = -<u,L v>]) contributions, we start with
 [[eq:stab18]]
@@ -268,11 +250,11 @@ the term added statisfies
 \mathcal{L}_h(u,f;v_h) = 0, \forall v_h \in V_h
 \]
 --
+
 ====
 
 [[choice-for-consistent-methods]]
-Choice for consistent methods
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Choice for consistent methods
 
 A possible choice for stem:[\mathcal{L}_h] is the following
 [[eq:22]]
@@ -348,11 +330,25 @@ stem:[\delta] such that
 ++++
 \delta(h_K,\epsilon) \frac{h_K}{|\mathbf{ \beta}|} = \Big( \frac{1}{h_K} + \frac{\epsilon}{h^2_K} \Big)^{-1}
 ++++
-and we can prove the following estimate in stem:[L^2] norm:
+and we can prove the following estimates
+if stem:[u\in H^{k+1}(\Omega)],
+
 [[eq:stab29]]
 [stem]
 ++++
-{\|u-u_h\|_{0,\Omega}} \leq {\hat C} {h^{r+1/2}} \|u\|
+\forall \epsilon \quad {\|u-u_h\|_{0,\Omega}} \leq {\hat C} {h^{k+1/2}} \|u\|_{k+1,\Omega}
+++++
+
+[[eq:stab30]]
+[stem]
+++++
+\forall \epsilon \geq c h \quad {\|u-u_h\|_{1,\Omega}} \leq {\hat C} {h^{r}} \|u\|_{k+1,\Omega}
+++++
+
+and finally if the family stem:[\{\mathcal{T}_h\}_{h > 0}] is quasi-uniform and stem:[\epsilon \leq {\hat C} h ], then
+[stem]
+++++
+\| \beta \cdot (\nabla u -u_h) \|_{0,\Omega} \leq {\hat C} h^k \|u \|_{k+1,\Omega}
 ++++
 ====
 
@@ -360,31 +356,46 @@ and we can prove the following estimate in stem:[L^2] norm:
 Continuous Interior Penalty
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-CIP Add the term stem:[\label{eq:47}
-    \sum_{F \in \Gamma_\mathrm{int} } \int_{F} \gamma\ h_F^2\ |\mathbf{ \beta} \cdot \mathbf{n}|\  [\nabla u]  [\nabla v]]
-where stem:[\Gamma_\mathrm{int}] is the set of internal faces
-where the stem:[\mathrm{Pe}>>1] (typically it is applied to all
-internal faces) and stem:[\label{eq:50}
-    [\nabla u] = \nabla u \cdot \mathbf{n}|_1 + \nabla u \cdot \mathbf{n}|_2]
-is the jump of stem:[\nabla u](scalar valued) across the face. In
-the case of scalar valued functions stem:[\label{eq:53}
-    [u] = u \mathbf{n}|_1 + u \mathbf{n}|_2]
+In the continuous interior penalty we add the following term
 
-Choice for stem:[\gamma] stem:[\gamma] can be taken in the
-range stem:[[1e-2;1e-1]]. A typical value is
-stem:[2.5e-2]. A similar error estimate
-stem:[O(h^{r+1/2})] holds for CIP.
+[[eq:47]]
+[stem]
+++++
+\sum_{F \in \Gamma_\mathrm{int} } \int_{F} \eta\ h_F^2\ |\mathbf{ \beta} \cdot \mathbf{n}|\  \jump{\nabla u}  \jump{\nabla v}
+++++
+where
+
+* stem:[\Gamma_\mathrm{int}] is the set of internal faces
+* the stem:[\mathrm{Pe}>>1] (typically it is applied to all
+  internal faces)
+* we have
+[[eq:50]]
+[stem]
+++++
+\jump{\nabla u} = \nabla u \cdot \mathbf{n}|_1 + \nabla u \cdot \mathbf{n}|_2
+++++
+is the so called jump of stem:[\nabla u](scalar valued) across the face.
+
+In the case of scalar valued functions
+[[eq:53]]
+[stem]
+++++
+    \jump{u} = u \mathbf{n}|_1 + u \mathbf{n}|_2
+++++
+
+Choice for stem:[\eta] stem:[\eta] can be taken in the range stem:[[1e-2;1e-1]].
+A typical value is stem:[\eta=2.5e-2].
+A similar error estimate stem:[O(h^{r+1/2})] holds for CIP.
 
 Example CIP
 
-....
+[source,cpp]
+----
 // define the stabilisation coefficient expression
-auto stab_coeff = ($\gamma_\beta$ abs(trans(N())*idv(beta)))*
-                        vf::pow(hFace(),2.0));
+auto stab_coeff = (eta*abs(idv(beta))*abs(trans(N())*idv(beta)))*vf::pow(hFace(),2.0));
 
 // assemble the stabilisation operator
 form2( Xh, Xh, M ) +=
  integrate( internalfaces(Xh->mesh()), // faces of the mesh
             stab_coeff*(trans(jumpt(gradt(u)))*jump(grad(v))));
-
-....
+----
