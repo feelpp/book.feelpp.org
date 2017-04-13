@@ -3,7 +3,7 @@
 // cover({ bgcolor:"red"
 //         title1:"toto" })
 var cover = function( kv={} ) {
-    svgname="./images/book_cover_simple.svg"
+    svgname="/images/book_cover_simple.svg"
     xhr = new XMLHttpRequest();
     xhr.open("GET",svgname,false);
     xhr.overrideMimeType("image/svg+xml");
