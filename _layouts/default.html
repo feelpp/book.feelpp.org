@@ -120,7 +120,7 @@ MathJax.Hub.Config({
 </script>
 
     <!-- Return to top arrow -->
-    <a href="#" class="back-to-top" style="display: inline;">
+    <a href="" class="back-to-top" style="display: inline;">
       <i class="fa fa-arrow-circle-up fa-6"></i>
     </a>
 
@@ -154,31 +154,30 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- back to top action -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  jQuery(document).ready(function() {
+//  jQuery(document).ready(function() {
       var offset = 250;
       var duration = 800;
-      jQuery(window).scroll(function() {
-          if (jQuery(this).scrollTop() > offset) {
-              jQuery('.back-to-top').fadeIn(duration);
+      $(window).scroll(function() {
+          if ($(this).scrollTop() > offset) {
+              $('.back-to-top').fadeIn(duration);
           } else {
-              jQuery('.back-to-top').fadeOut(duration);
+              $('.back-to-top').fadeOut(duration);
           }
       });
-  
-      jQuery('.back-to-top').click(function(event) {
+      $('.back-to-top').click(function(event) {
           event.preventDefault();
-          jQuery('html, body').animate({
+          $('html, body').animate({
               scrollTop: 0
           }, duration);
           return false;
       })
-  });
+//  });
 },false);
 </script>
 <!-- drop down menu -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  jQuery(function($) {
+  $(function($) {
       if ($(window).width() > 769) {
           $('.navbar .dropdown').hover(function() {
               $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
