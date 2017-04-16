@@ -16,11 +16,6 @@
     <link rel="stylesheet" href="{{page.root}}css/font-awesome.css">
     <link rel="stylesheet" href="{{page.root}}css/coderay.css">
     <link rel="stylesheet" href="{{page.root}}css/asciidoctor.css">
-    <script src="{{page.root}}js/jquery-3.2.1.min.js"></script>
-    <script src="{{page.root}}js/cover.js"></script>
-    <script src="{{page.root}}js/vendor/modernizr.js"></script>
-    <script src="{{page.root}}js/toc.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
 
@@ -77,8 +72,6 @@
     </div>
 </footer>
 
-<script src="{{page.root}}js/vendor/jquery.js"></script>
-<script src="{{page.root}}js/vendor/foundation.min.js"></script>
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   messageStyle: "none",
@@ -94,14 +87,12 @@ MathJax.Hub.Config({
   TeX: { extensions: ["mhchem.js"] }
 });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
 
     <!-- Return to top arrow -->
     <a href="#" class="back-to-top" style="display: inline;">
       <i class="fa fa-arrow-circle-up fa-6"></i>
     </a>
 
-<script src="/js/jquery-1.11.3.min.js"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -110,69 +101,84 @@ MathJax.Hub.Config({
 
   ga('create', 'UA-65761593-1', 'auto');
   ga('send', 'pageview');
-
 </script>
 <!-- scroll to element -->
 <script>
-$('a[href^="#"]').on('click', function(event) {
-
-    var target = $($(this).attr('href'));
-
-    if (target.length) {
-        event.preventDefault();
-        $('html, body').animate({
-            scrollTop: target.offset().top
-        }, 1000);
-    }
-
-});
+document.addEventListener('DOMContentLoaded', function() {
+  $('a[href^="#"]').on('click', function(event) {
+  
+      var target = $($(this).attr('href'));
+  
+      if (target.length) {
+          event.preventDefault();
+          $('html, body').animate({
+              scrollTop: target.offset().top
+          }, 1000);
+      }
+  
+  });
+},false);
 </script>
-
 <!-- back to top action -->
 <script>
-jQuery(document).ready(function() {
-    var offset = 250;
-    var duration = 800;
-    jQuery(window).scroll(function() {
-        if (jQuery(this).scrollTop() > offset) {
-            jQuery('.back-to-top').fadeIn(duration);
-        } else {
-            jQuery('.back-to-top').fadeOut(duration);
-        }
-    });
-
-    jQuery('.back-to-top').click(function(event) {
-        event.preventDefault();
-        jQuery('html, body').animate({
-            scrollTop: 0
-        }, duration);
-        return false;
-    })
-});
+document.addEventListener('DOMContentLoaded', function() {
+  jQuery(document).ready(function() {
+      var offset = 250;
+      var duration = 800;
+      jQuery(window).scroll(function() {
+          if (jQuery(this).scrollTop() > offset) {
+              jQuery('.back-to-top').fadeIn(duration);
+          } else {
+              jQuery('.back-to-top').fadeOut(duration);
+          }
+      });
+  
+      jQuery('.back-to-top').click(function(event) {
+          event.preventDefault();
+          jQuery('html, body').animate({
+              scrollTop: 0
+          }, duration);
+          return false;
+      })
+  });
+},false);
 </script>
+<!-- drop down menu -->
 <script>
-jQuery(function($) {
-    if ($(window).width() > 769) {
-        $('.navbar .dropdown').hover(function() {
-            $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
-
-        }, function() {
-            $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideUp();
-
-        });
-
-        $('.navbar .dropdown > a').click(function() {
-            location.href = this.href;
-        });
-
-    }
-});
+document.addEventListener('DOMContentLoaded', function() {
+  jQuery(function($) {
+      if ($(window).width() > 769) {
+          $('.navbar .dropdown').hover(function() {
+              $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
+  
+          }, function() {
+              $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideUp();
+  
+          });
+  
+          $('.navbar .dropdown > a').click(function() {
+              location.href = this.href;
+          });
+  
+      }
+  });
+},false);
 </script>
 
 <script>
-$(document).foundation();
-var doc = document.documentElement;
-doc.setAttribute('data-useragent', navigator.userAgent);
+document.addEventListener('DOMContentLoaded', function() {
+  $(document).foundation();
+  var doc = document.documentElement;
+  doc.setAttribute('data-useragent', navigator.userAgent);
+},false);
 </script>
+<!-- Javascript includes -->
+<script src="{{page.root}}js/jquery-3.2.1.min.js"></script>
+<script src="{{page.root}}js/cover.js"></script>
+<script src="{{page.root}}js/vendor/modernizr.js"></script>
+<script src="{{page.root}}js/toc.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="{{page.root}}js/vendor/foundation.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
 </body>
 </html>

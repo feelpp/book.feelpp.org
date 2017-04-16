@@ -24,8 +24,18 @@ function modcover( kv ) {
         elt = svg.getElementById("svg_book_text_subtitle");
         elt.childNodes[0].childNodes[0].textContent = kv.subtitle;
     }
+    // We set the value.
     if( kv.id != null ) {
-        document.getElementById(kv.id).appendChild(svg);
+        var el = document.getElementById(kv.id)
+        var spin = el.getElementsByClassName("coverload")[0];
+        spin.style.display="none";
+        var an = "fadein 1s"
+        el.style.WebkitAnimation=an; /* Safari, Chrome and Opera > 12.1 */
+        el.style.MozAnimation=an; /* Firefox < 16 */
+        el.style.MsAnimation=an; /* Internet Explorer */
+        el.style.OAnimation=an; /* Opera < 12.1 */
+        el.style.animation=an;
+        el.appendChild(svg);
     }
 }
 
