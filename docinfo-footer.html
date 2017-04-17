@@ -2,8 +2,16 @@
     <a href="#" class="back-to-top" style="display: inline;">
       <i class="fa fa-arrow-circle-up fa-6"></i>
     </a>
+    <a href="#" class="back-to-bottom" style="display: inline;">
+      <i class="fa fa-arrow-circle-down fa-6"></i>
+    </a>
 
-<script src="/js/jquery-1.11.3.min.js"></script>
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/cover.js"></script>
+<!-- <script src="/js/jquery-1.11.3.min.js"></script>-->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -37,9 +45,11 @@ jQuery(document).ready(function() {
     var duration = 800;
     jQuery(window).scroll(function() {
         if (jQuery(this).scrollTop() > offset) {
-            jQuery('.back-to-top').fadeIn(duration);
+           jQuery('.back-to-top').fadeIn(duration);
+           jQuery('.back-to-bottom').fadeIn(duration);
         } else {
-            jQuery('.back-to-top').fadeOut(duration);
+           jQuery('.back-to-top').fadeOut(duration);
+           jQuery('.back-to-bottom').fadeOut(duration);
         }
     });
 
@@ -49,7 +59,14 @@ jQuery(document).ready(function() {
             scrollTop: 0
         }, duration);
         return false;
-    })
+    });
+    jQuery('.back-to-bottom').click(function(event) {
+        event.preventDefault();
+        jQuery('html, body').animate({
+            scrollTop: $(document).height()
+        }, duration);
+        return false;
+    });
 });
 </script>
 <script>
