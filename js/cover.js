@@ -1,14 +1,9 @@
-// key value arg to modify the image.
-// e.g :
-// cover({ bgcolor:"red"
-//         title1:"toto" })
-var cover = function( kv={} ) {
-    svgname="/images/book_cover_simple.svg"
-    xhr = new XMLHttpRequest();
-    xhr.open("GET",svgname,false);
-    xhr.overrideMimeType("image/svg+xml");
-    xhr.send("");
-    svg = xhr.responseXML.documentElement;
+// Custom cover
+// modify svg tags via key/value object.
+function modcover( kv ) {
+    //alert(this.responseText);
+    response = this.responseXML;
+    svg = response.documentElement;
     if( kv.bgcolor != null ) {
         elt = svg.getElementById("svg_book_bg");
         elt.style.fill=kv.bgcolor;
@@ -29,7 +24,45 @@ var cover = function( kv={} ) {
         elt = svg.getElementById("svg_book_text_subtitle");
         elt.childNodes[0].childNodes[0].textContent = kv.subtitle;
     }
+    // We set the value.
     if( kv.id != null ) {
-        document.getElementById(kv.id).appendChild(svg);
+        var el = document.getElementById(kv.id)
+        var spin = el.getElementsByClassName("coverload")[0];
+        spin.style.display="none";
+        var an = "fadein 1s"
+        el.style.WebkitAnimation=an; /* Safari, Chrome and Opera > 12.1 */
+        el.style.MozAnimation=an; /* Firefox < 16 */
+        el.style.MsAnimation=an; /* Internet Explorer */
+        el.style.OAnimation=an; /* Opera < 12.1 */
+        el.style.animation=an;
+        el.appendChild(svg);
     }
+}
+
+function loadFile( url, timeout, callback) {
+    var args = Array.prototype.slice.call(arguments,3);
+    var xhr = new XMLHttpRequest();
+    xhr.ontimeout = function () {
+        console.error("The request for " + url + " timed out.");
+    };
+    xhr.onload = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                callback.apply(xhr, args);
+            } else {
+                console.error(xhr.statusText);
+            }
+        }
+    };
+    xhr.open("GET", url, true);
+    xhr.timeout = timeout;
+    xhr.send(null);
+}
+
+// cover({ bgcolor:"red"
+//         title1:"toto" })
+// see modcover for details
+var cover = function( kv={} ) {
+    svgfile="/images/book_cover_simple.svg"
+    loadFile(svgfile, 2000, modcover, kv);
 }

@@ -3,19 +3,43 @@
   <div class="small-4 columns">
     <div class="panel">
       <h5><a href="/math/fem">Feel++ FEM Manual</a></h5>
-      <a href="/math/fem"><div id="femcover"></div></a>
+      <a href="/math/fem">
+      <div id="femcover" class="cover">
+        <div class="coverload">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+      </div>
+      </a>
     </div>
   </div>
   <div class="small-4 columns">
     <div class="panel">
       <h5><a href="/math/rbm/">Feel++ RBM Manual</a></h5>
-      <a href="/math/crb"><div id="rbmcover"></div></a>
+      <a href="/math/rbm">
+      <div id="rbmcover" class="cover">
+        <div class="coverload">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+      </div>
+      </a>
     </div>
   </div>
   <div class="small-4 columns">
     <div class="panel">
       <h5><a href="/math/hdg/">Feel++ HDG Manual</a></h5>
-      <a href="/math/hdg"><div id="hdgcover"></div></a>
+      <a href="/math/hdg">
+      <div id="hdgcover" class="cover">
+        <div class="coverload">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+      </div>
+      </a>
     </div>
   </div>
 </div>
@@ -23,23 +47,26 @@
 
 ++++
 <script>
-cover({
-    id:"femcover",
-    bgcolor:"red",
-    title0:"THE FEEL++",
-    title1:"FEM BOOK  "
-});
-cover({
-    id:"rbmcover",
-    bgcolor:"green",
-    title0:"THE FEEL++",
-    title1:"RBM BOOK  "
-});
-cover({
-    id:"hdgcover",
-    bgcolor:"magenta",
-    title0:"THE FEEL++",
-    title1:"HDG BOOK  "
-});
+// Load when is page ready.
+document.addEventListener('DOMContentLoaded', function() {
+  cover({
+      id:"femcover",
+      bgcolor:"red",
+      title0:"THE FEEL++",
+      title1:"FEM BOOK  "
+  });
+  cover({
+      id:"rbmcover",
+      bgcolor:"green",
+      title0:"THE FEEL++",
+      title1:"RBM BOOK  "
+  });
+  cover({
+      id:"hdgcover",
+      bgcolor:"magenta",
+      title0:"THE FEEL++",
+      title1:"HDG BOOK  "
+  });
+},false);
 </script>
 ++++
