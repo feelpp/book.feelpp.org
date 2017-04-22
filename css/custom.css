@@ -131,26 +131,30 @@ text-decoration: none;
   text-align: center;
 }
 
-.footer {
- padding: 20px 0;
- margin-top: 40px;
- border-top: 1px solid #e5e5e5;
- background-color: #f5f5f5;
- width: 100%;
+
+footer {
+    float:right;
+    width:80%;
+    max-width: 100%;
+    min-height: 80px;
+    margin: 0;
+    padding: 10px;
+    background-color:rgba(0,0,0,.8);
+    color:rgba(255,255,255,.8);
+    vertical-align: middle;
+    text-align:center;
 }
-.footer p {
- margin-bottom: 0;
- color: #777;
+
+#footer {
+    background-color:transparent;
 }
+
 .footer-links {
  text-align: center;
  list-style-type: none;
- margin-top: 10px;
- margin-bottom: -2px;
 }
 .footer-links li {
  display: inline-block;
- margin-right: 10px;
 }
 
 /* line 2048, ../../app/assets/stylesheets/layout.css.scss */
@@ -187,11 +191,13 @@ html, body{height:100%;}
 /* Let the nav bar at top */
 .sidebar{
     /*position:fixed;*/ /* fixed via jquery */
-    min-height:3000px;
-    max-width:320px;
+    margin:0;
+    min-height:20000px;
+    max-width:20%;
     background-color:#f8f8f7;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
+    z-index: 50;
 }
 
 /*#toc.toc3{
@@ -210,8 +216,6 @@ html, body{height:100%;}
     position: fixed;
     margin:0;
     padding:0;
-    padding-right: 100px;
-    padding-left: 62px;
     left:0;
     top:0;
     height:90px;
@@ -224,6 +228,14 @@ html, body{height:100%;}
     -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
        -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.top-bar-container {
+    display: table;
+    margin: 0 auto;
+    width:88vw; /*css3*/
+    max-width:1200px;
+    padding-right:30px;
 }
 
 .row.expanded, .page-header {
@@ -270,6 +282,11 @@ html, body{height:100%;}
     padding-right:14px;
 }
 
+.dropdown.menu > li > a
+{
+    border-top: 4px solid transparent;
+}
+
 .dropdown.menu > li > a:hover
 {
     color: grey;
@@ -280,20 +297,73 @@ html, body{height:100%;}
  display:none;
 }
 
-.top-bar-left,.dropdown,
+/*.top-bar-left,.dropdown,
 .menu,.sub-menu,
 .top-bar a {
     margin:0;
     padding:0;
-}
+}*/
 
 .top-bar nav ul .sub-menu {
     width:200px;
-    background-color:red;
+    background-color:white;
     line-height:1.5em;
 }
+
 .top-bar nav ul .sub-menu > li,
 .top-bar nav ul .sub-menu > a {
     margin:0;
     padding:0;
+    padding-left:10px;
+}
+
+.dropdown.menu > .sub-menu > a:hover {
+    color: red;
+}
+
+.top-bar nav ul .sub-menu {
+    box-sizing:border-box;
+    border: 1px solid #cccccc;
+    -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+       -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toc {
+    display:none;
+}
+
+/* content */
+.main {
+    margin:0;
+    padding:0;
+    width:80%;
+}
+
+.main-container {
+    display: table;
+    margin: 0 auto;
+    width:80%;
+    max-width:1200px;
+    padding-right:30px;
+    padding-top:15px;
+    padding-bottom:30px;*/
+}
+
+/* fix pygment */
+.pygments.highlight code {
+    border: 0;
+}
+
+.pygments.highlight code table tbody {
+    background-color:transparent;
+}
+
+#header,.page-title {
+    margin:0;
+    padding:0;
+    padding-left:0;
+    padding-right:0;
+    margin-left:0;
+    margin-right:0;
 }
