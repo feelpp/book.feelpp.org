@@ -138,16 +138,16 @@ MathJax.Hub.Config({
 <script>
 document.addEventListener('DOMContentLoaded', function() {
  $('a[href^="#"]').on('click', function(event) {
- 
+
      var target = $($(this).attr('href'));
- 
+
      if (target.length) {
          event.preventDefault();
          $('html, body').animate({
              scrollTop: target.offset().top
          }, 1000);
      }
- 
+
  });
 },false);
 </script>
@@ -181,16 +181,16 @@ document.addEventListener('DOMContentLoaded', function() {
       if ($(window).width() > 769) {
           $('.navbar .dropdown').hover(function() {
               $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
-  
+
           }, function() {
               $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideUp();
-  
+
           });
-  
+
           $('.navbar .dropdown > a').click(function() {
               location.href = this.href;
           });
-  
+
       }
   });
 },false);
@@ -207,6 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="{{page.root}}js/jquery-3.2.1.min.js"></script>
 <script src="{{page.root}}js/vendor/modernizr.js"></script>
 <script src="{{page.root}}js/toc.js"></script>
+<script src="{{page.root}}js/cover.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="{{page.root}}js/vendor/foundation.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>

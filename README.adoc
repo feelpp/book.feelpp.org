@@ -1,9 +1,25 @@
 = {feelpp}: Finite Element Embedded Library in {cpp}
 Christophe Prud'homme <https://github.com/prudhomm[@prudhomm]>
 v1.0, 2017/02/20
+:uri-org: https://github.com/feelpp
+:uri-repo: {uri-org}/book.feelpp.org
+:uri-www: http://book.feelpp.org
+ifndef::env-github[:icons: font]
+ifdef::env-github[]
+:status:
+:outfilesuffix: .adoc
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :feelpp: Feel++
 :cpp: C++
+:toc: left
 
+== What is {feelpp} ?
 {feelpp} is a unified {cpp} implementation of Galerkin methods (finite and spectral element methods) in 1D, 2D and 3D to solve partial differential equations.
 
 {feelpp} is
@@ -26,7 +42,11 @@ v1.0, 2017/02/20
  . a library entirely in {cpp} allowing to create {cpp} complex
    and typically non-linear multi-physics applications currently in industry, physics and health-care.
 
-=== Help and Support
+== Read the {feelpp} Book
+
+All the {feelpp} manuals are available at {uri-www}.
+
+== Help and Support
 
 We're always happy to help out with {feelpp} or any other questions you might
 have. You can ask a question or signal an issue at the Gitter {feelpp} salon.
@@ -35,21 +55,31 @@ https://gitter.im/feelpp/feelpp?utm_source=badge&utm_medium=badge&utm_campaign=p
 image:https://badges.gitter.im/Join%20Chat.svg[Join the chat at https://gitter.im/feelpp/feelpp]]
 
 
-=== Contribute to this documentation
+== Contribute to this documentation
 
-You can contribute to improve this documentation on
+You can <<index.adoc#book.contributing,contribute>> to improve this documentation on
 https://github.com/feelpp/feelpp-book[GitHub] and follow the
 https://gitter.im/feelpp/feelpp-book[Gitter {feelpp} Book] forum.
 
 
-=== Compiling the book
+== Compiling the book
+
+=== Using Docker
+
+The {feelpp} book toolchain is installed in the `feelpp/feelpp-env` docker image
+
+----
+docker run --rm -it feelpp/feelpp-env
+----
+
+==== Installing the toolchain
 
 install `ruby` and  `bundle`
 
 ----
-# on MacOSX
+# On MacOSX
 brew install ruby
-gem install bundle
+gem install rake bundle
 
 # on debian/ubuntu
 apt-get install ruby-bundler
@@ -68,5 +98,5 @@ then type
 bundle exec jekyll serve
 ----
 
-it will start a link:http://127.0.0.1:4000/[local web server] on the
+NOTE: it will start a link:http://127.0.0.1:4000/[local web server] on the
 port 4000 where you can see the book.
