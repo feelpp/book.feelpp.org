@@ -1,14 +1,8 @@
-= feelpp_mesh_partitioner
-=========================
-:toc:
-:toc-placement: macro
-:toclevels: 2
-
-toc::[]
+== feelpp_mesh_partitioner
 
 `feelpp_mesh_partitioner` is a simple application which can generate a partitioned mesh and save it in a Feel++ specific  `json+hdf5`  file format. The generated mesh can then be loaded very efficiently in parallel.
 
-== Options
+=== Options
 
 `feelpp_mesh_partitioner` requires some options.
 
@@ -24,16 +18,15 @@ toc::[]
 |===
 
 
-== Examples
+=== Examples
 
-We are now using the `feelpp/apps:latest` docker images
-as described in link:/GettingStarted/README.adoc[Getting Started] to demonstrate `feelpp_mesh_partitioner` usage.
+We are now using the `feelpp/toolboxes:latest` docker images as described in <<../../../book.adoc,Getting Started>> to demonstrate `feelpp_mesh_partitioner` usage.
 We use the meshes in `src/feelpp/data/gmsh/primitives` in the docker image.
 
 [source,shell]
-.Starting the docker `feelpp/apps:latest`
+.Starting the docker `feelpp/toolboxes:latest`
 ----
-docker run -ti -v $HOME/feel:/feel feelpp/apps:latest
+docker run -ti -v $HOME/feel:/feel feelpp/toolboxes:latest
 ----
 
 === Generating a single mesh partitioning
@@ -55,9 +48,10 @@ torus.geo  torus.h5  torus.json  torus.msh
 
 Now the file `torus.json` can be loaded in a Feel++ application distributed on 4 cores.
 
-=== Generating multiple mesh partitioning
+==== Generating multiple mesh partitioning
 
-Often we are interested in a set of partitioned meshes in order to do a speed-up study. `feelpp_mesh_partitioner` is the right tool for that. Let's consider a set of partitions $$\mathcal{P}=\{2, 4, 8, 16, 32 \}$$.
+Often we are interested in a set of partitioned meshes in order to do a speed-up study.
+`feelpp_mesh_partitioner` is the right tool for that. Let's consider a set of partitions stem:[\mathcal{P}=\{2, 4, 8, 16, 32 \}].
 
 [source,shell]
 ----
@@ -73,4 +67,4 @@ torus_p16.h5    torus_p2.h5    torus_p32.h5    torus_p4.h5    torus_p8.h5
 torus_p16.json  torus_p2.json  torus_p32.json  torus_p4.json  torus_p8.json
 ----
 
-> **Note** that the mesh filenames contain the partition information.
+NOTE: The mesh filenames contain the partition information.
