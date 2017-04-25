@@ -188,16 +188,26 @@ body.toc3.toc-right{padding-left:0;padding-right:20em}}
 
 html, body{height:100%;}
 
-/* Let the nav bar at top */
-.sidebar{
-    /*position:fixed;*/ /* fixed via jquery */
+/* see also js/sidebar */
+.sidebar-container{
     margin:0;
-    min-height:20000px;
-    max-width:20%;
+    padding:0;
+    float:left;
+    min-height:100vh; /* js/sidebar */
+    width: 19vw;
+    min-width:200px;
     background-color:#f8f8f7;
     height: 100%;
+    z-index: 99;
+}
+
+.sidebar{
+    /*position:fixed;*/ /* fixed via jquery */
+    padding: 20px;
+    width: inherit;
+    background-color:inherit;
     overflow-y: auto;
-    z-index: 50;
+    height:100%;
 }
 
 /*#toc.toc3{
@@ -337,17 +347,18 @@ html, body{height:100%;}
 .main {
     margin:0;
     padding:0;
-    width:80%;
+    width:80vw;
 }
 
-.main-container {
+.content-container {
     display: table;
     margin: 0 auto;
-    width:80%;
+    width:80vw;
     max-width:1200px;
     padding-right:30px;
     padding-top:15px;
     padding-bottom:30px;*/
+    float:right;
 }
 
 /* fix pygment */
@@ -357,6 +368,10 @@ html, body{height:100%;}
 
 .pygments.highlight code table tbody {
     background-color:transparent;
+}
+
+.listingblock > .content {
+    border: 1px solid lightgrey;
 }
 
 #header,.page-title {
