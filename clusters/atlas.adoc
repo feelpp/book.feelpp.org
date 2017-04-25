@@ -1,0 +1,129 @@
+= Atlas cluster
+Guillaume Dollé <https://github.com/gdolle[@gdolle]>
+v1.0, 2017/04/19
+include::../includes/header-uri.adoc[]
+include::../includes/header-generic.adoc[]
+include::../includes/header-macros.adoc[]
+:page-root: ../
+:page-layout: manual
+:page-permalink: /clusters/atlas
+:doctype: book
+:docinfo: shared
+:toc: left
+:toclevels: 1
+:sectnums:
+:imagesdir: ../images/
+
+[NOTE]
+.This document is under active development and discussion!
+====
+If you find errors or omissions in this document, please don’t hesitate to
+link:https://github.com/feelpp/feelpp/issues[submit an issue or open a pull
+request] with a fix. We also encourage you to ask questions and discuss any
+aspects of the project on the link:http://gitter.im/feelpp/feelpp[{feelpp}
+Gitter forum]. New contributors are always welcome!
+====
+
+'''
+image::clusters/atlas.jpg[role="related thumb right"]
+The proper ressources cluster of the 
+link:http://irma.math.unistra.fr/[Research Institute Advanced Mathematics (IRMA - UMR7501)].
+
+<<<
+
+== Prerequisites
+
+* You have to own an account on the machine. External user can ask for an account
+if they are related to an institute research project.
+* To learn how to use the cluster, we recommend reading the
+link:https://gitlab.math.unistra.fr/atlas/cluster-doc/wikis/home[official documentation]
+* To use differents libraries version that match your need, the cluster uses link:http://modules.sourceforge.net/[environment modules]
+You should familiarize first to know how to load specific softwares.
+* The cluster use link:https://slurm.schedmd.com/quickstart.html[slurm] job supervisor.
+You should be familiar with job creation and job submission before going further.
+
+TIP: We provide on the cluster Feel++ profile modules which loads all Feel++ dependencies
+and that are guaranty to works!
+you can type `module avail 2>&1 | grep profile` to list all profiles.
+
+== Feel++ usage
+
+WARNING: Work in progress
+
+In this section, we will learn basic usage of Feel++ on the cluster. We
+distinguish two cases, the first one uses the existing Feel++ module. You might
+want to modify the Feel++ library itself, the second case will explain how to
+proceed.
+
+=== Feel++ configuration
+
+The cluster mount points with different filesystems with more or less fast read/write
+operations.
+
+=== Feel++ atlas quickstart
+
+==== Use Feel++ module
+
+This way is recommended if you only need to use the {feelpp} library
+without any modification.
+Currently, a {feelpp} module is provided for a nightly build version.
+
+1. Load the feel++ library module.
+
+[source,sh]
+----
+module load science/feelpp/nightly
+----
+
+2. Load a feel++ profile to have access to all {feelpp} requirements for compiling
+your application.
+
+[source,sh]
+----
+module load feelpp-clang_gcc610.profile
+----
+
+NOTE: The profile should be the same used for the feel++ module to avoid
+mismatch setup for the compilation
+
+TIP: From here you can go to Quickstart section.
+
+3. Place yourself in a directory and create a cmake file named
+`CMakeLists.txt` containing the following code.
+
+[source,cmake,linenums]
+----
+cmake_minimum_required(VERSION 2.8)
+
+find_package(Feel++
+  PATHS $ENV{FEELPP_DIR}/share/feel/cmake/modules
+  /usr/share/feel/cmake/modules
+  /usr/local/share/feel/cmake/modules
+  /opt/share/feel/cmake/modules
+  )
+if(NOT FEELPP_FOUND)
+  message(FATAL_ERROR "Feel++ was not found on your system. Make sure to install it and specify the FEELPP_DIR to reference the installation directory.")
+endif()
+
+feelpp_add_application(youApplication SRCS yourCode.cpp)
+----
+
+This file describes to cmake how to find the Feel++ library in the given directories.
+By default, cmake will search in the system default path.
+
+
+4. Create a {cpp} file named `yourCode.cpp`  where you will write your first Feel++ code.
+
+5. Generate the Makefiles with cmake or using the configure script.
+`/path/to/feelpp-sources/configure`
+
+6. Compile you {feelpp} application `make`
+
+
+==== Recompile Feel++ 
+
+'''
+
+image::logos/svg/logoIRMA.svg[cemosis,80,float="left"]
+image::logos/logo_cemosis.png[cemosis,80,float="left"]
+image::logos/svg/logoUDS.svg[cemosis,80,float="left"]

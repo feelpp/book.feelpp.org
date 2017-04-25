@@ -1,30 +1,8 @@
 = The Feel++ Book
+include::includes/header-uri.adoc[]
+include::includes/header-macros.adoc[]
 :page-layout: default
-// URIs:
-:uri-org: https://github.com/feelpp
-:uri-repo: {uri-org}/feelpp
-:uri-www: http://www.feelpp.org
-:uri-project: http://book.feelpp.org
-ifdef::env-site[:uri-project: link:]
-:uri-docs: {uri-project}/docs
-:uri-news: {uri-project}/news
-:uri-manpage: {uri-project}/man/asciidoctor
-:uri-issues: {uri-repo}/issues
-:uri-contributors: {uri-repo}/graphs/contributors
-:uri-rel-file-base: link:
-:uri-rel-tree-base: link:
-:uri-rel-file-base: link:
-:uri-rel-tree-base: link:
-ifdef::env-site[]
-:uri-rel-file-base: {uri-repo}/blob/develop/
-:uri-rel-tree-base: {uri-repo}/tree/develop/
-endif::[]
-:uri-changelog: {uri-rel-file-base}CHANGELOG.adoc
-:uri-contribute: {uri-rel-file-base}CONTRIBUTING.adoc
-:uri-license: {uri-rel-file-base}LICENSE.adoc
-:uri-freesoftware: https://www.gnu.org/philosophy/free-sw.html
-//:docinfo: 
-:feelpp: Feel++
+:docinfo: shared
 
 .What is {feelpp}?
 ****
@@ -34,45 +12,8 @@ equations.
 ****
 
 == Manuals
-++++
-<div class="row">
-    <div class="small-6 columns">
-        <div class="panel">
-            <h5><a href="/user-manual/">Feel++ User Manual</a></h5>
-            <a href="/user-manual/">
-            <div id="mancover" class="cover">
-                <div class="coverload">
-                    <div class="bounce1"></div>
-                    <div class="bounce2"></div>
-                    <div class="bounce3"></div>
-                </div>
-            </div>
-            </a>
-        </div>
-        </div>
-            <div class="small-6 columns">
-        <div class="panel">
-            <h5><a href="/tools/">Feel++ Tools</a></h5>
-            <a href="/tools/">
-            <div id="mancover" class="cover">
-                <div class="coverload">
-                    <div class="bounce1"></div>
-                    <div class="bounce2"></div>
-                    <div class="bounce3"></div>
-                </div>
-            </div>
-            </a>
-        </div>
-   </div>
-</div>
 
-<script>
-// Load when is page ready.
-cover({
-  id:"mancover",
-});
-</script>
-++++
+include::man-list.adoc[]
 
 == The Mathematics of {feelpp}
 
@@ -100,6 +41,12 @@ link:/programming/syntax-quick-reference/[Syntax Quick Reference]::
 Quick reference cards for {feelpp} expressions that you can use in
 variational formulations.
 --
+
+== Supercomputers with {feelpp}
+
+First steps to use Feel++ on link:/clusters[clusters].
+
+include::cluster-list.adoc[]
 
 [[book.contributing]]
 == Contributing
@@ -158,16 +105,3 @@ See the {uri-license}[LICENSE] file for details.
 
 {feelpp} is led by https://github.com/prudhomm[Christophe Prud'homme] and has received contributions from {uri-contributors}[many other individuals].
 The project was initiated in 2006 by https://github.com/prudhomm[Christophe Prud'homme] and based initially on link:https://cmcsforge.epfl.ch/projects/lifev/[lifeV] and completely re-written since then.
-
-++++
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/feelpp/feelpp/doc/book">Feel++ Book</a> is open-sourced by <a href="https://github.com/feelpp">Feel++ Consortium </a>.</span>
-
-      </footer>
-
-    </section>
-
-
-  </body>
-</html>
-++++

@@ -13,10 +13,6 @@
 {% include topbar.html %}
 <!-- End Nav -->
 
-<!-- Page Header Bar -->
-{% include headerbar.html %}
-<!-- End Page Header -->
-
 <!-- Main Page Content and Sidebar -->
 <div class="expanded row">
     <!-- Sidebar -->
@@ -26,6 +22,7 @@
     <!-- Main Blog Content -->
     <div class="small-9 columns main" role="content">
         <div class="content-container">
+            {% include auth.html %}
             {{ content }}
         </div>
     </div>
