@@ -1,9 +1,33 @@
 == Mesh
 
-Create a Mesh of stem:[d]-simplex::
+|===
+| Function | Description
+
+| `makeSharedMesh<T>` | Create a `boost::shared_ptr` mesh
+| `makeMesh<T>` | Create a `shared_ptr` mesh
+| `makeUniqueMesh<T>` | Create a `std::unique_ptr` mesh
+
+| `loadMesh` | load a mesh
+| `createSubmesh` | Create a submesh out of a mesh from a range of element of subentities
+
+|===
+
+Create an empty Mesh of stem:[d]-simplex::
 [source,cpp]
 ----
-auto mesh = makeMesh<Simplex<d>>;
+// Create a shared mesh ptr
+// use default  constructor
+auto mesh = makeMesh<Simplex<d>>();
+
+// pass a worldComm
+auto mesh = makeMesh<Simplex<d>>( Environment::worldComm() );
+
+// Create a unique mesh ptr
+// use default  constructor
+auto mesh = makeUniqueMesh<Simplex<d>>();
+
+// pass a worldComm
+auto mesh = makeUniqueMesh<Simplex<d>>( Environment::worldComm() );
 ----
 
 Load a mesh of stem:[d]-simplex::
