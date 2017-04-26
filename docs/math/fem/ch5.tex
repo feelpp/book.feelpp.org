@@ -1,0 +1,286 @@
+\chapter{Convergence de la m\'ethode des \'el\'ements finis}
+%
+\section{Introduction}
+\noindent
+%
+On suppose ici que l'on r\'esout un probl\`eme sur un domaine $\Omega\in\RR^n$ de fa\c{c}on approch\'ee par m\'ethode d'\'el\'ements finis.\\
+Le but de ce chapitre est de fournir une estimation de l'erreur $\|u-u_h\|_m$ o\`u $\|.\|_m$ d\'esigne la norme $H^m$. La r\'egularit\'e de $u$ et de $u_h$ (et donc les valeurs possibles pour $m$) d\'ependant \'evidemment du probl\`eme continu et du type d'\'el\'ements finis choisis pour sa r\'esolution, on exposera ici la d\'emarche de fa\c{c}on g\'en\'erale, en supposant les fonctions suffisamment r\'eguli\`eres par rapport \`a la valeur de $m$. En pratique, on aura le plus souvent $m=$ 0, 1 ou 2.
+%
+%
+\saut
+On notera ${\cal T}_h$ le maillage de $\Omega$ consid\'er\'e. On supposera ici le domaine $\Omega$ polygonal, ce qui permet de recouvrir exactement $\Omega$ par le maillage. Si ce n'est pas le cas, les calculs qui suivent doivent \^etre modifi\'es pour tenir compte de l'\'ecart entre le domaine couvert par le maillage et le domaine r\'eel.
+\saut
+%
+%
+Les diff\'erentes \'etapes du calcul seront, de fa\c{c}on assez sch\'ematique, les suivantes :
+\begin{center}
+\begin{tabular}{lp{8 cm}}
+$\|u-u_h\|_m \le C \|u-\pi_h u\|_m$ & L'erreur d'approximation est born\'ee par l'erreur d'interpolation\\
+%
+$\ds{\|u-\pi_h u\|_m^2 = \sum_{K\in{\cal T}_h}  \|u-\pi_h u\|_{m,K}^2 }$ & On se ram\`ene \`a des majorations locales sur chaque \'el\'ement\\
+%
+$\ds{\|u-\pi_h u\|_{m,K} \le C(K) \|\hat{u}-\hat{\pi}\hat{u}\|_{m,\hat{K}} }$ & On se ram\`ene \`a l'\'el\'ement de r\'ef\'erence\\
+ & \\
+%
+$\ds{\|\hat{u}-\hat{\pi} \hat{u}\|_{m,\hat{K}} \le \hat{C} |\hat{u}|_{k+1,\hat{K}} }$ & Majoration sur l'\'el\'ement de r\'ef\'erence\\
+ & \\
+%
+$\ds{\|u-\pi_h u\|_m \le C' h^{k+1-m} |u|_{k+1} }$ & Assemblage des majorations locales
+%
+\end{tabular}
+\end{center}
+%
+\section{Calcul de majoration d'erreur}
+%
+\subsection{Etape 1: majoration par l'erreur d'interpolation}
+%
+\noindent
+%
+L'\'equation (\ref{eq:cea}) \'etablie au \S \/ \ref{sec:estim} indique que
+\be
+\|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-v_h\|_m \quad \forall v_h\in V_h
+\ee
+%
+On peut l'appliquer dans le cas particulier o\`u $v_h=\pi_h u$, ce qui donne
+\be
+\|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-\pi_h u\|_m
+\label{eq:cea2}
+\ee
+%
+%
+\subsection{Etape 2: D\'ecomposition sur les \'el\'ements}
+%
+\noindent
+%
+On a, avec des notations \'evidentes :
+$$
+\begin{array}{lll}
+\ds{\|u-\pi_h u\|_m^2 }& = &\ds{\sum_{K\in{\cal T}_h} \|u-\pi_h u\|_{m,K}^2 }\\
+& = & \ds{\sum_{K\in{\cal T}_h} \sum_{l=0}^m |u-\pi_h u|_{l,K}^2}
+\end{array}
+$$
+%
+Le calcul est donc ramen\'e \`a un calcul sur chaque \'el\'ement, pour toutes les semi-normes $|.|_{l,K},\; l=0,\ldots,m$.
+%
+%
+\subsection{Etape 3: Passage \`a l'\'el\'ement de r\'ef\'erence}
+%
+\noindent
+%
+{\bf Th\'eor\`eme :} Soit $K$ un \'el\'ement quelconque de ${\cal T}_h$, et $\hat{K}$ l'\'el\'ement de r\'ef\'erence. Soit $F$ la transformation affine de $\hat{K}$ vers $K$ : $F(\hat{x})=B\hat{x}+b$, avec $B$ inversible. On a :
+\be
+\forall v\in H^l(K), \qquad |\hat{v}|_{l,\hat{K}} \le C(l,n)\; \|B\|^l_2 \; |\hbox{det} B|^{-1/2} \, |v|_{l,K}
+\label{eq:majref}
+\ee
+%
+{\it D\'emonstration} : Il s'agit l\`a en fait d'un simple r\'esultat de changement de variable dans une int\'egrale.\\
+Soit $v$ une fonction $l$ fois diff\'erentiable au point $x$. On note $D^l v(x)$ sa d\'eriv\'ee $l^{\hbox{\tiny \`eme}}$ au sens de Fr\'echet au point $x$. Il s'agit donc d'une forme $l$-lin\'eaire sym\'etrique sur $\RR^n$. On notera $D^l v(x).(\xi_1,\ldots,\xi_l)$ sa valeur pour $l$ vecteurs $\xi_i\in\RR^n$ ($1\le i \le l$).\saut
+%
+Reprenons les notations du \S\ref{sec:sobolev}. $\alpha=(\alpha_1,\ldots,\alpha_n)$ d\'esigne un multi-entier, et on note $|\alpha|=\alpha_1+\cdots+\alpha_n$. On a alors :
+\be
+|v|_{l,K}^2 = \int_{x\in K} \sum_{|\alpha|=l}\left\|\partial^{|\alpha|}v (x)\right\|^2 dx
+\ee
+%
+et :
+\be
+\partial^{|\alpha|}v (x) = D^{|\alpha|}v(x).(\underbrace{e_1,\ldots,e_1}_{\alpha_1 \hbox{{\tiny fois}}}, \ldots , \underbrace{e_n,\ldots,e_n}_{\alpha_n \hbox{{\tiny fois}}})
+\ee
+o\`u $(e_1,\ldots,e_n)$ d\'esigne la base canonique de $\RR^n$.
+%
+Alors, en posant :
+\be
+\|D^l v(x)\| = \sup_{\xi_1,\ldots,\xi_l \in \left(\RR^{\ast}\right)^n} \; \frac{D^l v(x).(\xi_1,\ldots,\xi_l)}{|\xi_1| \ldots |\xi_l|}\qquad ,
+\ee
+%
+on d\'eduit qu'il existe des constantes $\gamma_1$ et $\gamma_2$ d\'ependant uniquement de $n$ et $l$ (donc en particulier ind\'ependantes de $v$) telles que \be
+\gamma_1 \; |v|_{l,K} \le \left( \int_{x\in K} \| D^l v(x)\|^2 \, dx\right)^{1/2} \le \gamma_2 \; |v|_{l,K}
+\label{eq:maj1}
+\ee
+%
+Par ailleurs, si l'on utilise le changement de variable $x=F(\hat{x})=B\hat{x}+b$ dans $D^l v(x)$, il vient :
+\be
+\forall \xi_1,\ldots,\xi_l \in \RR^n,\qquad
+D^l \hat{v}(\hat{x}).(\xi_1,\ldots,\xi_l) = D^l v(x).(B\xi_1,\ldots,B\xi_l)
+\ee
+d'o\`u
+\be
+\|D^l \hat{v}(\hat{x})\| \le \|B\|^l\; \|D^l v(x)\|
+\ee
+%
+Or, $D^l v(x) = D^l v(F(\hat{x}))$. Donc
+\be
+\int_{\hat{x}\in \hat{K}}\|D^l \hat{v}(\hat{x})\|^2 \; d\hat{x} \le \|B\|^{2l}\; \int_{\hat{x}\in \hat{K}} \|D^l v(F(\hat{x}))\|^2 \; d\hat{x}
+= \|B\|^{2l}\; |\hbox{det }B|^{-1} \int_{x\in K} \|D^l v(x)\|^2 \; dx
+\label{eq:maj2}
+\ee
+%
+En minorant et majorant (\ref{eq:maj2}) gr\^ace \`a (\ref{eq:maj1}), on obtient :
+\be
+\gamma^2_1 \; |\hat{v}|^2_{l,\hat{K}} \le \|B\|^{2l}\; |\hbox{det }B|^{-1} \gamma^2_2 \; |v|^2_{l,K}
+\ee
+d'o\`u le r\'esultat (\ref{eq:majref}).
+%
+\vspace*{5 mm}\\
+{\bf Corollaire :} On a de m\^eme :
+\be
+\forall v\in H^l(K), \qquad |v|_{l,K}  \le C(l,n)\; \|B^{-1}\|^l_2 \; |\hbox{det} B|^{1/2} \; |\hat{v}|_{l,\hat{K}}
+\label{eq:majref2}
+\ee
+%
+%
+\subsubsection{Estimation de $\|B\|$}
+%
+\noindent
+%
+Soit $h_K$ le diam\`etre de $K$, c'est \`a dire le maximum des distances euclidiennes entre deux points de $K$. Soit $\rho_K$ la rondeur de $K$, c'est \`a dire le diam\`etre maximum des sph\`eres incluses dans $K$. On a :
+\be
+\|B\| = \sup_{x\ne 0} \frac{\|Bx\|}{\|x\|} = \sup_{\|x\|=\hat{\rho}} \frac{\|Bx\|}{\hat{\rho}}
+\ee
+%
+Soit $x$ un vecteur de $\RR^n$ tel que $\|x\|=\hat{\rho}$. Par d\'efinition de $\hat{\rho}$, il existe deux points $\hat{y}$ et $\hat{z}$ de $\hat{K}$ tels que $x=\hat{y}-\hat{z}$. Alors $Bx=B\hat{y}-B\hat{z}=F(\hat{y})-F(\hat{z})=y-z$ avec $y$ et $z$ appartenant \`a $K$. Par d\'efinition de $h_K$, $\|y-z\| \le h_K$. Donc $\|Bx\| \le h_K$. En reportant dans la d\'efinition de $\|B\|$, on obtient donc :
+\be
+\|B\| \le \frac{h_K}{\hat{\rho}}
+\label{eq:kk1}
+\ee
+%
+Et on a \'evidemment de m\^eme :
+\be
+\|B^{-1}\| \le \frac{\hat{h}}{\rho_K}
+\label{eq:kk2}
+\ee
+%
+%
+\subsection{Etape 4: Majoration sur l'\'el\'ement de r\'ef\'erence}
+%
+\noindent
+%
+Le r\'esultat principal est le suivant :\saut
+{\bf Th\'eor\`eme :} Soient $l$ et $k$ deux entiers tels que $0\le l \le k+1$.
+Si $\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))$ laisse $P_k(\hat{K})$ invariant (c'est \`a dire v\'erifie $\forall \hat{p}\in P_k(\hat{K}), \hat{\pi}\hat{p}=\hat{p}$), alors
+\be
+\exists C(\hat{K},\hat{\pi}) ,\;  \forall \hat{v} \in H^{k+1}(\hat{K}), \; |\hat{v}-\hat{\pi}\hat{v}|_{l,\hat{K}} \le C |\hat{v}|_{k+1,\hat{K}}
+\label{eq:majref0}
+\ee
+%
+{\it D\'emonstration} :\\
+$\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))$, et donc  $I-\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))$ car $l\le k+1$.\\
+Et donc $|\hat{v}-\hat{\pi}\hat{v}|_{l,\hat{K}} \le \|I-\hat{\pi}\|_{{\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))}\; \|\hat{v}\|_{k+1,\hat{K}}$.\saut
+%
+On utilise maintenant l'invariance de $P_k(\hat{K})$:
+\be
+\forall \hat{p}\in P_k(\hat{K}), \; \hat{v}-\hat{\pi}\hat{v} = (I-\hat{\pi})(\hat{v}) = (I-\hat{\pi})(\hat{v}+\hat{p})
+\ee
+Donc
+\be
+|\hat{v}-\hat{\pi}\hat{v}|_{l,\hat{K}} \le \|I-\hat{\pi}\|_{{\cal L}(.,.)} \inf_{\hat{p}\in P_k(\hat{K})} \|\hat{v}+\hat{p}\|_{k+1,\hat{K}}
+\ee
+%
+On aura donc d\'emontr\'e le th\'eor\`eme si l'on montre que
+\be
+\exists C,\; \forall \hat{v}\in H^{k+1}(\hat{K}) \;  \inf_{\hat{p}\in P_k(\hat{K})} \|\hat{v}+\hat{p}\|_{k+1,\hat{K}} \le C |\hat{v}|_{k+1,\hat{K}}
+\ee
+%
+Soit $(f_i)_{i=0,\ldots,k}$ une base du dual de $P_k(\hat{K})$. D'apr\`es le th\'eor\`eme d'Hahn-Banach, il existe des formes lin\'eaires continues sur $H^{k+1}(\hat{K})$, que l'on notera encore $f_i$, et qui prolongent les $f_i$. En particulier, si $\hat{p}\in P_k(\hat{K})$ v\'erifie $f_i(\hat{p})=0,\, (i=0,\ldots,k)$, alors $\hat{p}=0$. Nous allons montrer que
+\be
+\exists C, \, \forall \hat{v}\in H^{k+1}(\hat{K}), \; \|\hat{v}\|_{k+1,\hat{K}} \le C \left\{ |\hat{v}|_{k+1,\hat{K}} + \sum_{i=0}^k |f_i(\hat{v})| \right\}
+\label{eq:ref2}
+\ee
+%
+On aura le r\'esultat souhait\'e en appliquant (\eq:ref2}) \`a $\hat{v}+\hat{q}$, avec $\hat{q}$ tel que $f_i(\hat{q})=f_i(-\hat{v})$.\\
+%
+La relation (\ref{eq:ref2}) se d\'emontre par l'absurde. Si elle n'est pas vraie, alors il existe une suite  de fonctions $\hat{v}_n$ de $H^{k+1}(\hat{K})$ telles que :
+\be
+ \|\hat{v}_n\|_{k+1,\hat{K}} =1, \;\;
+|\hat{v}_n|_{k+1,\hat{K}} \longrightarrow 0,\; \hbox{ et } \forall i \;  f_i(\hat{v}_n)\longrightarrow 0
+\ee
+%
+Par compl\'etude de $H^{k+1}(\hat{K})$, on extrait une sous-suite convergente vers $\hat{v} \in H^{k+1}(\hat{K})$. Mais $|\hat{v}_n|_{k+1,\hat{K}} \longrightarrow 0$. Donc $\hat{v} \in P_k(\hat{K})$ et $f_i(\hat{v})=0$. D'o\`u une contradiction.
+%
+%
+\subsection{Etape 5: Assemblage des majorations locales}
+%
+%
+\subsubsection{Majoration sur un \'el\'ement quelconque}
+%
+\noindent
+%
+En rassemblant les r\'esultats pr\'ec\'edents, on peut \'etablir une majoration sur un \'el\'ement quelconque $K$ du maillage. On a :
+%
+\begin{eqnarray*}
+|v-\pi_K v|_{l,K} & \le & C(l,n)\; \|B^{-1}\|^l\; |\hbox{det }B|^{1/2} \; |\hat{v}-\hat{\pi}\hat{v}|_{l,\hat{K}}\qquad\hbox{d'apr\`es (\ref{eq:majref2})} \\
+ & \le & C(l,n)\; \|B^{-1}\|^l\; |\hbox{det }B|^{1/2} \; C(\hat{K},\hat{\pi})\; |\hat{v}|_{k+1,\hat{K}} \qquad\hbox{d'apr\`es (\ref{eq:majref0})}\\
+& \le & C(l,n)\; \|B^{-1}\|^l\; |\hbox{det }B|^{1/2} \; C(\hat{K},\hat{\pi})\; C(k+1,n) \; \|B\|^{k+1} |\hbox{det }B|^{-1/2}\; |v|_{k+1,K}\\
+& & \qquad\qquad\qquad\qquad\hbox{d'apr\`es (\ref{eq:majref})}\\
+& \le & C(l,n)\; \frac{\hat{h}^l}{\rho_K^l} \;  \; C(\hat{K},\hat{\pi})\; C(k+1,n) \; \frac{h_K^{k+1}}{\hat{\rho}^{k+1}} \; |v|_{k+1,K} \qquad\hbox{d'apr\`es (\ref{eq:kk1}) et (\ref{eq:kk2})}\\
+ \end{eqnarray*}
+%
+D'o\`u finalement :
+\be
+|v-\pi_K v|_{l,K}  \le  \hat{C}(\hat{\pi},\hat{K},l,k,n)\; \frac{h_K^{k+1}}{\rho_K^l} \;   |v|_{k+1,K}
+\label{eq:majloc}
+\ee
+%
+Il est important de remarquer \`a ce niveau que $\hat{C}$ est ind\'ependant de $K$.
+%
+%
+\subsubsection{Assemblage des r\'esultats locaux}
+%
+\noindent
+%
+On va maintenant reprendre la majoration (\ref{eq:majloc}) pour tous les \'el\'ements du maillage et toutes les valeurs de $l=0,\ldots,m$. On va d\'efinir deux quantit\'es  repr\'esentatives du maillage :
+\begin{itemize}
+\item $h\quad$ tel que $h_K \le h, \; \forall K\in {\cal T}_h\qquad$ (diam\`etre maximum des \'el\'ements)
+\item $\sigma\quad$ tel que $\ds{\frac{h_K}{\rho_K}} \le \sigma, \; \forall K\in {\cal T}_h\qquad$ (caract\'erise l'aplatissement des \'el\'ements)
+\end{itemize}
+%
+Alors :
+%
+\begin{eqnarray*}
+\|v-\pi_K v\|^2_{m,K} & = & \sum_{l=0}^m |v-\pi_K v|^2_{l,K} \\
+ & \le & \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\;
+ \left(\frac{h_K^{k+1}}{\rho_K^l}\right)^2 \;   |v|^2_{k+1,K}\qquad\hbox{d'apr\`es (\ref{eq:majloc})}\\
+ & \le & \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\; \left\{\left(\frac{h_K}{\rho_K}\right)^l\; h_K^{m-l}\; h_K^{k+1-m}\right\}^2 \;   |v|^2_{k+1,K}\\
+ & \le & \left\{ \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\; \sigma^{2l} h^{2m-2l} \right\} \; \left[ h^{k+1-m}\; |v|_{k+1,K} \right]^2
+ \end{eqnarray*}
+%
+Le terme entre accolades ne tend ni vers 0 ni vers l'infini quand $h$ tend vers 0. D'o\`u :
+\be
+\|v-\pi_K v\|_{m,K} \le \hat{C}'(\hat{\pi},\hat{K},l,k,n,\sigma,h)\; h^{k+1-m}\; |v|_{k+1,K}
+\ee
+%
+En sommant ensuite sur tous les \'el\'ements du maillage :
+\begin{eqnarray*}
+\|v-\pi_h v\|^2_{m} & = & \sum_{K\in {\cal T}_h} \|v-\pi_K v\|^2_{m,K} \\
+ & \le & \sum_{K\in {\cal T}_h} \left[ \hat{C}'(\hat{\pi},\hat{K},l,k,n,\sigma,h)\; h^{k+1-m} \; |v|_{k+1,K} \right]^2
+ \end{eqnarray*}
+%
+D'o\`u finalement :
+\be
+\|v-\pi_h v\|_{m} \le C({\cal T}_h,m,k,n) \; h^{k+1-m}\; |v|_{k+1}
+\label{eq:majfinal}
+\ee
+%
+\subsection{R\'esultat final}
+%
+\noindent
+%
+En reportant (\ref{eq:majfinal}) dans (\ref{eq:cea2}), on obtient le r\'esultat final classique de majoration d'erreur :
+\be
+\|u-u_h\|_{m} \le {\cal C} \; h^{k+1-m}\; |u|_{k+1}
+\label{eq:majfinal2}
+\ee
+%
+\section{Quelques commentaires}
+%
+%
+\begin{itemize}
+\item
+Une utilisation fr\'equente de (\ref{eq:majfinal2}) a lieu dans le cas $m=1$. Alors si l'espace de polyn\^omes $P_k(\hat{K})\subset H^1(\hat{K})$ (ce qui est toujours le cas) et si $\hat{\pi}$ est bien d\'efini sur $H^{k+1}(\hat{K})$, on a :
+\be
+\hbox{si }u\in H^{k+1}(\Omega),\quad \|u-u_h\|_1 \le {\cal C} \; h^k \; |u|_{k+1}
+\ee
+%
+\item Si le domaine $\Omega$ n'est pas polygonal, la majoration pr\'ec\'edente n'est plus valable. On peut alors \'etablir d'autres majorations du m\^eme type -- se r\'ef\'erer par exemple \`a Raviart et Thomas (1983).
+%
+\item De m\^eme, si les calculs d'int\'egrales ne sont pas faits exactement mais \`a l'aide d'une int\'egration num\'erique, une erreur suppl\'ementaire doit \^etre prise en compte, qui conduit \`a une nouvelle majoration d'erreur -- voir l\`a-aussi par exemple Raviart et Thomas (1983).
+\end{itemize}

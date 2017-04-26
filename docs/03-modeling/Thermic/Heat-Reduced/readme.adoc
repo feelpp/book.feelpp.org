@@ -1,0 +1,19 @@
+= Reduced Basis
+
+We are interested on applying the reduced basis method to the heat equation for the 3D benchmark.
+$$
+\rho c \partial_t T - k \Delta T = f(x,t,v)
+$$
+The parameter of interest is $v$, the velocity of the torch.
+The output of interest is the mean temperature at each time.
+
+To mimic the torch, we will use the link:../Heat-3D-1/readme.adoc[Goldak] function.
+
+== Offline operations
+
+- Construct an EIM approximation of $f(x,t,v)$ such that $$f_M(x,t,v) \approx \sum_{i=1}^M g_M(t,v)\xi(x)$$
+- Construct the reduced basis 
+
+== Oneline operations
+
+- Evaluate the output

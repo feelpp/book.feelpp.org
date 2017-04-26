@@ -1,0 +1,564 @@
+\chapter{Outils d'analyse fonctionnelle}
+%
+%
+\section{Quelques rappels}
+%
+\subsection{Normes et produits scalaires}
+%
+\noindent
+Soit $E$ un espace vectoriel.\\
+%
+\begin{definition}
+  \label{def:7}
+  $\|.\|$ : $E \rightarrow \RR$ est une {\bf norme} sur $E$ ssi elle v\'erifie :
+  \begin{description}
+  \item[$\qquad$(N1)] $\left( \| x \| = 0 \right)  \Longrightarrow (x=0)$
+  \item[$\qquad$(N2)] $\forall\, \lambda\in\RR,\; \forall x\in E, \quad \| \lambda x \|  = |\lambda| \; \| x \| $
+  \item[$\qquad$(N3)] $\forall\,  x,y \in E, \quad \| x+ y \| \le \|x \| + \|y\|\qquad$ (in\'egalit\'e triangulaire)
+    \\
+  \end{description}
+\end{definition}
+
+
+%
+%
+\begin{example}
+Pour $E=\RR^n$ et $x=(x_1,\ldots,x_n) \in\RR^n$, on d\'efinit les normes
+$$
+\| x \|_1 = \sum_{i=1}^n |x_i|
+\qquad
+\| x \|_2 = \left( \sum_{i=1}^n x_i^2 \right)^{1/2}
+\qquad
+\| x \|_\infty = \sup_{i} |x_i|
+$$
+\end{example}
+
+%
+
+%
+%
+%
+\begin{definition}
+  On appelle {\bf produit scalaire} sur $E$ toute forme bilin\'eaire sym\'etrique d\'efinie positive.\\
+  $\quad<.,.>$ : $E\times E \rightarrow \RR$ est donc un produit scalaire sur
+  $E$ ssi il v\'erifie :
+  \begin{description}
+  \item[$\qquad$(S1)] $\forall\; x,y \in E, \quad <x,y> = <y,x>$
+  \item[$\qquad$(S2)] $\forall\; x_1,x_2,y \in E, \quad <x_1+x_2,y> = <x_1,y>
+    + <x_2,y> $
+  \item[$\qquad$(S3)] $\forall\; x,y \in E, \, \forall\, \lambda\in\RR,\quad
+    <\lambda x,y> = \lambda <x,y> $
+  \item[$\qquad$(S4)] $\forall\;  x \in E, x\ne 0, \quad  <x,x>\; > 0 $\\
+  \end{description}
+  \label{def:8}
+\end{definition}
+
+%
+A partir d'un produit scalaire, on peut d\'efinir une {\bf norme induite} : $ \| x \| = \sqrt{<x,x>} $\\
+%
+On a alors, d'apr\`es (N3), l'{\bf in\'egalit\'e de Cauchy-Schwarz} : $\ds{ | <x,y> | \le \| x \| \; \| y \| }$
+
+%
+%
+{\bf Exemple :} Pour $E=\RR^n$, on d\'efinit le produit scalaire $\ds{<x,y> = \sum_{i=1}^n x_i \, y_i}$. Sa norme induite est $\| . \|_2$ d\'efinie pr\'ec\'edemment.
+
+%
+%
+Un espace vectoriel muni d'une norme est appel\'e {\bf espace norm\'e}. \\
+Un espace vectoriel muni d'un produit scalaire est appel\'e {\bf espace pr\'ehilbertien}. En particulier, c'est donc un espace norm\'e pour la norme induite.
+%
+%
+\subsection{Suites de Cauchy - espaces complets}
+%
+%
+\noindent
+\begin{definition}
+  \label{def:1}
+  Soit $E$ un espace vectoriel et $(x_n)_n$ une suite de $E$. $(x_n)_n$ est une {\bf suite de Cauchy} ssi $\forall \varepsilon > 0,\;\; \exists N / \forall p>N, \forall q>N, \quad \|x_p - x_q \| < \varepsilon$
+
+\end{definition}
+
+%
+Toute suite convergente est de Cauchy. La r\'eciproque est fausse.
+%
+\begin{definition}
+  \label{def:2}
+  Un espace vectoriel est {\bf complet} ssi toute suite de Cauchy y est convergente.
+\end{definition}
+
+
+%
+\begin{definition}
+  \label{def:3}
+  Un espace norm\'e complet est un {\bf espace de Banach}.
+\end{definition}
+
+%
+\begin{definition}
+  \label{def:4}
+  Un espace pr\'ehilbertien complet est un {\bf espace de Hilbert}.\\
+\end{definition}
+
+%
+\begin{definition}
+  \label{def:5}
+  Un espace de Hilbert de dimension finie est appel\'e  {\bf espace euclidien}.
+\end{definition}
+
+%
+%
+%
+\section{Espaces fonctionnels}
+%
+%
+\noindent
+\begin{definition}
+  \label{def:6}
+  Un {\bf espace fonctionnel} est un espace vectoriel dont les \'el\'ements
+  sont des fonctions.\end{definition}
+
+\begin{example}
+  ${\cal C}^p([a;b])$ d\'esigne l'espace des fonctions d\'efinies sur
+  l'intervalle $[a,b]$, dont toutes les d\'eriv\'ees jusqu'\`a l'ordre $p$
+  existent et sont continues sur $[a,b]$.
+\end{example}
+
+
+
+%
+Dans la suite, les fonctions seront d\'efinies sur un sous-ensemble de $\RR^n$ (le plus souvent un ouvert not\'e $\Omega$), \`a valeurs dans $\RR$ ou $\RR^p$.
+%
+
+\begin{example}
+  La temp\'erature $T(x,y,z,t)$ en tout point d'un objet $\bar{\Omega}\subset \RR^3$ est une fonction de $ \bar{\Omega} \times \RR \longrightarrow \RR$.
+\end{example}
+
+
+%
+
+%
+Les normes usuelles les plus simples sur les espaces fonctionnels sont les
+{\bf normes} $\bf L^p$ d\'efinies par :
+$$
+\| u \|_{L^p} = \left ( \int_{\Omega } |u|^p \right) ^{1/p} \quad ,\; p\in [1,+ \infty[ ,
+\qquad
+\hbox{et}\qquad
+\| u \|_{L^\infty} = {\hbox{Sup}}_{\Omega } |u|
+$$
+%
+%
+Comme on va le voir, ces formes $L^p$ ne sont pas n\'ecessairement des
+normes. Et lorsqu'elles le sont, les espaces fonctionnels munis de ces normes
+ne sont pas n\'ecessairement des espaces de Banach. Par exemple, les formes
+$L^\infty$ et $L^1$ sont bien des normes sur l'espace ${\cal C}^0([a;b])$, et
+cet espace est complet si on le munit de la norme $L^\infty$, mais ne l'est
+pas si on le munit de la norme $L^1$.
+%
+Pour cette raison, on va d\'efinir les espaces ${\cal L}^p(\Omega)$ ($p\in [1,+ \infty[$) par
+$$
+{\cal L}^p(\Omega) = \left\{  u : \Omega \rightarrow \RR, \hbox{ mesurable, et telle que } \int_\Omega |u|^p<\infty  \right\}
+$$
+%
+( on rappelle qu'une fonction $u$ est mesurable ssi $\{ x /  |u(x)|<r \}$ est mesurable $\forall r>0$. )
+%
+Sur ces espaces ${\cal L}^p(\Omega)$, les formes $L^p$ ne sont pas des normes. En effet, $\| u \|_{L^p} = 0$ implique que $u$ est nulle presque partout dans ${\cal L}^p(\Omega)$, et non pas $u=0$. C'est pourquoi on va d\'efinir les {\bf espaces} $\bf L^p(\Omega)$ :
+%
+\begin{definition}
+  $L^p(\Omega)$ est la classe d'\'equivalence des fonctions de ${\cal
+  L}^p(\Omega)$ pour la relation d'\'equivalence ``\'egalit\'e presque
+  partout''. Autrement dit, on confondra deux fonctions d\`es lors qu'elles
+  sont \'egales presque partout, c'est \`a dire qu'elles ne diff\`erent que
+  sur un ensemble de mesure nulle.\label{def:9}
+\end{definition}
+
+%
+\begin{theorem}
+  La forme $L^p$ est une norme sur $L^p(\Omega)$, et $L^p(\Omega)$ muni de la
+  norme $L^p$ est un espace de Banach (c.a.d. est complet).\label{thr:1}
+\end{theorem}
+
+%
+Un cas particulier tr\`es important est $p=2$. On obtient alors \boldmath
+l'{\bf espace fonctionnel $L^2(\Omega)$}, \unboldmath c'est \`a dire l'espace
+des fonctions de carr\'e sommable sur $\Omega$ (\`a la relation
+d'\'equivalence ``\'egalit\'e presque partout'' pr\`es). A la norme $L^2$ :
+$\| u \|_{L^2} = \left( \int_\Omega u^2 \right)^{1/2} $, on peut associer la
+forme bilin\'eaire $(u,v)_{L^2} = \int_\Omega u\, v$. Il s'agit d'un produit
+scalaire, dont d\'erive la norme $L^2$. D'o\`u :
+%
+\begin{theorem}
+  $L^2(\Omega)$ est un espace de Hilbert.\label{thr:2}
+\end{theorem}
+
+%
+%
+%
+%
+\section{Notion de d\'eriv\'ee g\'en\'eralis\'ee}
+\label{sec:notion-de-derivee}
+%
+%
+\noindent
+Nous venons de d\'efinir des espaces fonctionnels complets, ce qui sera un bon
+cadre pour d\'emontrer l'existence et l'unicit\'e de solutions d'\'equations
+aux d\'eriv\'ees partielles, comme on le verra plus loin notamment avec le
+th\'eor\`eme de Lax-Milgram. Toutefois, on a vu que les \'el\'ements de ces
+espaces $L^p$ ne sont pas n\'ecessairement des fonctions tr\`es
+r\'eguli\`eres. D\`es lors, les d\'eriv\'ees partielles de telles fonctions ne
+sont pas forc\'ement d\'efinies partout. Pour s'affranchir de ce probl\`eme,
+on va \'etendre la notion de d\'erivation.
+%
+Le v\'eritable outil \`a introduire pour cela est la notion de {\bf
+distribution}, due \`a L. Schwartz (1950). Par manque de temps dans ce cours,
+on se contentera ici d'en donner une id\'ee tr\`es simplifi\'ee, avec la
+notion de {\bf d\'eriv\'ee g\'en\'eralis\'ee}.  Cette derni\`ere a des
+propri\'et\'es beaucoup plus limit\'ees que les distributions, mais permet de
+``sentir" les aspects n\'ecessaires pour mener \`a la formulation
+variationnelle.
+%
+%
+Dans la suite, $\Omega$ sera un ouvert (pas n\'ecessairement born\'e) de $\RR^n$.
+%
+%
+\subsection{Fonctions tests}
+\label{sec:fonctions-tests}
+%
+%
+\noindent
+\begin{definition}
+  Soit $\varphi : \Omega \rightarrow \RR$. On appelle {\bf support de $\bf
+  \varphi$} l'adh\'erence de $\{ x \in \Omega / \varphi(x) \ne 0 \}$.\label{def:10}
+\end{definition}
+
+%
+\begin{example}
+  Pour $\Omega = ]-1,1[$, et $\varphi$ la fonction constante \'egale \`a 1,
+  $\hbox{Supp}\, \varphi = [-1,1]$.
+\end{example}
+
+%
+\begin{definition}
+  On note ${\cal D}(\Omega)$ l'espace des fonctions de $\Omega$ vers $\RR$, de
+  classe ${\cal C}^\infty$, et \`a support compact inclus dans $\Omega$.
+  ${\cal D}(\Omega)$ est parfois appel\'e {\bf espace des fonctions-tests}.\label{def:11}
+\end{definition}
+
+ %
+\begin{example}
+  L'exemple le plus classique dans le cas 1-D est la fonction \be \varphi(x) =
+  \left\{
+    \begin{array}{ll}
+      \ds{ e^{- \frac{1}{1-x^2}} } & \hbox{si } |x|<1\\
+      0 &  \hbox{si } |x|\ge 1\\
+    \end{array}
+  \right.
+  \label{eq:fonction-test1}
+  \ee
+%
+$\varphi$ est une fonction de ${\cal D}(]a,b[)$ pour tous $a < -1 < 1 < b$.
+\end{example}
+
+%
+Cet exemple s'\'etend ais\'ement au cas multi-dimensionnel ($n>1$). Soit $a\in\Omega$ et $r>0$ tel que la boule ferm\'ee de centre $a$ et de rayon $r$ soit incluse dans $\Omega$. On pose alors :
+\be
+ \varphi(x) = \left\{
+ \begin{array}{ll}
+ \ds{ e^{- \frac{1}{r^2-|x-a|^2}} } & \hbox{si } |x-a|<r\\
+ 0 &  \hbox{sinon }\\
+ \end{array}
+ \right.
+\label{eq:fonction-test2}
+\ee
+%
+$\varphi$ ainsi d\'efinie est \'el\'ement de  ${\cal D}(\Omega)$.
+%
+\begin{theorem}
+  $\overline{{\cal D}(\Omega) } = L^2(\Omega)$\label{thr:4}
+\end{theorem}
+
+%
+%
+%
+\subsection{D\'eriv\'ee g\'en\'eralis\'ee}
+\label{sec:derivee-generalisee}
+%
+%
+\noindent
+Soit $u\in {\cal C}^1(\Omega)$ et $\varphi \in {\cal D}(\Omega)$. Par int\'egration par parties (\cf annexe \ref{sec:green}), on a :
+$$
+\int_\Omega \partial_i u\;  \varphi = - \int_\Omega u \; \partial_i\varphi + \int_{\partial \Omega} u \; \varphi \; {\bf e}_i.{\bf n}
+$$
+%
+%
+Ce dernier terme (int\'egrale sur le bord de $\Omega$) est nul car $\varphi$
+est \`a support compact (donc nul sur $\partial \Omega$). Or $\int_\Omega u
+\; \partial_i\varphi$ a un sens par exemple d\`es que $u\in L^2(\Omega)$. Donc
+le terme $\int_\Omega \partial_i u\; \varphi$ a aussi du sens, sans que $u$ ne
+soit n\'ecessairement de classe ${\cal C}^1$. Ceci permet de d\'efinir
+$\partial_i u$ m\^eme dans ce cas.
+%
+\begin{definition}{cas 1-D}
+  $\quad$ Soit $I$ un intervalle de \RR, pas forc\'ement born\'e. On
+  dit que $u\in L^2(I)$ admet une {\bf d\'eriv\'ee g\'en\'eralis\'ee} dans
+  $L^2(I)$ ssi $\exists u_1\in L^2(I)$ telle que $\forall \varphi\in {\cal
+  D}(I), \quad \int_I u_1\;\varphi = - \int_I u \varphi'$\label{def:12}
+\end{definition}
+
+%
+\begin{example}
+  Soit $I=]a,b[$ un intervalle born\'e, et $c$ un point de $I$. On consid\`ere
+  une fonction $u$ form\'ee de deux branches de classe ${\cal C}^1$, l'une sur
+  $]a,c[$, l'autre sur $]c,b[$, et se raccordant de fa\c{c}on continue mais
+  non d\'erivable en $c$. Alors $u$ admet une d\'eriv\'ee g\'en\'eralis\'ee
+  d\'efinie par $u_1(x)=u'(x)\quad \forall x\ne c$. En effet :
+$$
+\forall \varphi\in {\cal D}(]a,b[)\qquad \int_a^b u \varphi' = \int_a^c +
+\int_c^b = - \int_a^c u' \varphi - \int_c^b u'\varphi +
+\underbrace{(u(c^-)-u(c^+))}_{=0} \, \varphi(c)
+$$
+par int\'egration par parties. La valeur $u_1(c)$ n'a pas d'importance: on a
+de toute fa\c{c}on au final la m\^eme fonction de $L^2(I)$, puisqu'elle est
+d\'efinie comme classe d'\'equivalence de la relation d'\'equivalence
+``\'egalit\'e presque partout".
+\end{example}
+
+%o
+%
+\begin{definition}
+  En it\'erant, on dit que $u$ admet une {\bf d\'eriv\'ee g\'en\'eralis\'ee
+  d'ordre $\bf k$} dans $L^2(I)$, not\'ee $u_k$, ssi $\ds{\forall \varphi\in
+  {\cal D}(I), \quad \int_I u_k\;\varphi = (- 1)^k \; \int_I u \varphi^{(k)}
+  }$\label{def:13}
+\end{definition}
+
+%
+Ces d\'efinitions s'\'etendent naturellement pour la d\'efinition de d\'eriv\'ees partielles g\'en\'eralis\'ees, dans le cas $n>1$.
+
+%
+\begin{theorem}
+  Quand elle existe, la d\'eriv\'ee g\'en\'eralis\'ee est unique.\label{thr:5}
+\end{theorem}
+
+\begin{theorem}
+  Quand $u$ est de classe ${\cal C}^1(\bar{\Omega})$, la d\'eriv\'ee
+  g\'en\'eralis\'ee est \'egale \`a la d\'eriv\'ee classique.\label{thr:6}
+\end{theorem}
+
+
+%
+%
+%
+%
+\section{Espaces de Sobolev}
+%
+%
+\subsection{Les espaces $H^m$}
+\label{sec:sobolev}
+\noindent
+
+\begin{definition}
+  $\ds{ H^1(\Omega) = \left\{ u \in L^2(\Omega)\; / \; \partial_i u \; \in
+    L^2(\Omega), \quad 1 \le i \le n \right\} }$ o\`u $\partial_i u$ est
+  d\'efinie au sens de la d\'eriv\'ee g\'en\'eralis\'ee.\label{def:14}
+\end{definition}
+%
+$H^1(\Omega)$ est appel\'e {\bf espace de Sobolev d'ordre 1}.
+%
+\begin{definition}
+  Pour tout entier $m\ge 1$,
+$$
+H^m(\Omega) = \left\{ u \in L^2(\Omega) \; / \; \partial^\alpha u \; \in
+  L^2(\Omega) \quad \forall \alpha =(\alpha_1,\ldots,\alpha_n) \in \NN^n\hbox{
+  tel que}\; |\alpha|= \alpha_1+\cdots+\alpha_n \le m \right\} $$\label{def:15}
+\end{definition}
+%
+$H^m(\Omega)$ est appel\'e {\bf espace de Sobolev d'ordre $\bf m$}.
+%
+Par extension, on voit aussi que $H^0(\Omega)=L^2(\Omega)$.
+Dans le cas de la dimension 1, on \'ecrit plus simplement pour $I$ ouvert de $\RR$ :
+$$ H^m(I) =  \left\{ u \in L^2(I)  \; / \;   u', \ldots, u^{(m)} \in L^2(I) \right\} $$
+
+%
+\begin{theorem}
+  $H^1(\Omega)$ est un espace de Hilbert pour le produit scalaire
+$$
+(u,v)_1 = \int_\Omega u \, v\, + \sum_{i=1}^n \; \int_\Omega \partial_i u
+\; \partial_i v = (u,v)_0 + \sum_{i=1}^n (\partial_i u, \partial_i v )_0
+$$
+en notant $(.,.)_0$ le produit scalaire $L^2$. On notera $\|.\|_1$ la norme
+associ\'ee \`a $(.,.)_1$.\label{thr:7}
+\end{theorem}
+%
+On d\'efinit de m\^eme un produit scalaire et une norme sur $H^m(\Omega)$ par
+$$
+(u,v)_m =   \sum_{|\alpha| \le m} ( \partial^\alpha u , \partial^\alpha v )_0 \qquad
+\hbox{ et }\qquad
+\| u \|_m = (u,u)_m^{1/2}
+$$
+%
+\begin{theorem}
+  $H^m(\Omega)$ muni du produit scalaire $(.,.)_m$ est un espace de Hilbert.\label{thr:8}
+\end{theorem}
+
+
+%
+\begin{theorem}
+  Si $\Omega$ est un ouvert de $\RR^n$ de fronti\`ere $\partial\Omega$
+  ``suffisamment r\'eguli\`ere" (par exemple ${\cal C}^1$), on a l'inclusion :
+  $H^m(\Omega) \subset {\cal C}^k(\bar{\Omega})$ pour $\ds{ k < m-\frac{n}{2}
+  }$\label{thr:9}
+\end{theorem}
+
+%
+\begin{example}
+  En particulier, on voit que pour un intervalle $I$ de $\RR$, on a $H^1(I)
+  \subset {\cal C}^0(\bar{I})$, c'est \`a dire que, en 1-D, toute fonction
+  $H^1$ est continue.
+
+  L'exemple de $u(x) = x\, \sin\frac{1}{x}$ pour $x\in]0,1]$ et $u(0)=0$
+  montre que la r\'eciproque est fausse.
+
+  L'exemple de $u(x,y) = | \ln (x^2+y^2) |^k$ pour $0<k<1/2$ montre qu'en
+  dimension sup\'erieure \`a 1 il existe des fonctions $H^1$ discontinues.
+\end{example}
+
+%
+%
+\subsection{Trace d'une fonction}
+%
+%
+Pour pouvoir faire les int\'egrations par parties qui seront utiles par exemple pour la formulation variationnelle, il faut pouvoir d\'efinir le prolongement ({\em la trace}) d'une fonction sur le bord de l'ouvert $\Omega$.
+%
+\underline{Si $n=1$ (cas 1-D)} : on consid\`ere un intervalle ouvert $I=]a,b[$ born\'e. On a vu que  $H^1(I) \subset {\cal C}^0(\bar{I})$. Donc, pour $u\in H^1(I)$, $u$ est continue sur $[a,b]$, et $u(a)$ et $u(b)$ sont bien d\'efinies.
+%
+\underline{Si $n>1$} : on n'a plus $H^1(\Omega) \subset {\cal C}^0(\bar{\Omega})$. Comment alors d\'efinir la trace ? La d\'emarche est la suivante :
+\begin{itemize}
+\item On d\'efinit l'espace
+$$
+{\cal C}^1(\bar{\Omega}) = \left\{  \varphi : \Omega \rightarrow \RR \;/\;  \exists O \hbox{ ouvert contenant } \bar{\Omega},\; \exists \psi \in {\cal C}^1(O),\; \psi_{|\Omega} = \varphi \right\}
+$$
+Autrement dit, ${\cal C}^1(\bar{\Omega})$ est l'espace des fonctions ${\cal C}^1$ sur $\Omega$, prolongeables par continuit\'e sur $\partial\Omega$ et dont le gradient est lui-aussi prolongeable par continuit\'e. Il n'y a donc pas de probl\`eme pour d\'efinir la trace de telles fonctions.
+%
+\item On montre que, si $\Omega$ est un ouvert born\'e de fronti\`ere $\partial\Omega$ ``assez r\'eguli\`ere", alors ${\cal C}^1(\bar{\Omega})$ est dense dans $H^1(\Omega)$.
+%
+\item L'application lin\'eaire continue, qui \`a toute fonction $u$ de  ${\cal C}^1(\bar{\Omega})$  associe sa trace sur $\partial\Omega$, se prolonge alors en une application lin\'eaire continue de $H^1(\Omega)$ dans $L^2(\partial\Omega)$, not\'ee $\gamma_0$, qu'on appelle {\bf application trace}.
+\boldmath
+On dit que $\gamma_0(u)$ {\bf est la trace de $u$ sur }$\partial\Omega$.
+\unboldmath
+%
+\end{itemize}
+%
+%
+Pour une fonction $u$ de $H^1(\Omega)$ qui soit en m\^eme temps continue sur $\bar{\Omega}$, on a \'evidemment $\gamma_0(u) = u_{|\partial\Omega}$. C'est pourquoi on note souvent par abus simplement $u_{|\partial\Omega}$ plut\^ot que $\gamma_0(u)$.
+
+%
+%
+On peut de fa\c{c}on analogue d\'efinir $\gamma_1$, application trace qui permet de prolonger la d\'efinition usuelle de la d\'eriv\'ee normale sur $\partial\Omega$.  Pour $u\in H^2(\Omega)$, on a $\partial_i u \in H^1(\Omega)$, $\forall i=1,\ldots,n$, et on peut donc d\'efinir $\gamma_0(\partial_i u)$. La fronti\`ere $\partial\Omega$ \'etant ``assez r\'eguli\`ere" (par exemple, id\'ealement, de classe ${\cal C}^1$), on peut d\'efinir la normale $n=\left(   \begin{array}{l}  n_1 \\ \vdots \\ n_n \end{array} \right)$ en tout point de $\partial\Omega$. On pose alors $\ds{\gamma_1(u) = \sum_{i=1}^n \gamma_0(\partial_i u) n_i}$. Cette application continue $\gamma_1$ de $H^2(\Omega)$ dans $L^2(\partial\Omega)$ permet donc bien de prolonger la d\'efinition usuelle de la d\'eriv\'ee normale. Dans le cas o\`u $u$ est une fonction  de $H^2(\Omega)$ qui soit en m\^eme temps dans  ${\cal C}^1(\bar{\Omega})$, la d\'eriv\'ee normale au sens usuel de $u$ existe, et $\gamma_1(u)$ lui est \'evidemment  \'egal. C'est pourquoi on note souvent, par abus, $\partial_n u$ plut\^ot que $\gamma_1(u)$.
+%
+%
+\subsection{Espace $\bf H^1_0(\Omega)$}
+\label{sec:H10}
+%
+%
+\noindent
+\begin{definition}
+  Soit $\Omega$ ouvert de $\RR^n$. L'espace $H^1_0(\Omega)$ est d\'efini comme
+  l'adh\'erence de ${\cal D}(\Omega)$ pour la norme $\|.\|_1$ de
+  $H^1(\Omega)$. (on rappelle que ${\cal D}(\Omega)$ est l'espace des
+  fonctions ${\cal C}^\infty$ sur $\Omega$ \`a support compact, encore
+  appel\'e espace des fonctions tests)\label{def:16}
+\end{definition}
+
+%
+\begin{theorem}
+  Par construction $H^1_0(\Omega)$ est un espace complet. C'est un espace de
+  Hilbert pour la norme $\|.\|_1$\label{thr:10}
+\end{theorem}
+
+%
+\underline{Si $n=1$ (cas 1-D)} : on consid\`ere un intervalle ouvert $I=]a,b[$ born\'e. Alors $$H^1_0(]a,b[) = \left\{ u \in H^1(]a,b[),\; u(a)=u(b)=0 \right\}$$
+%
+\underline{Si $n>1$} :  Si $\Omega$ est un ouvert born\'e de fronti\`ere``assez r\'eguli\`ere" (par exemple ${\cal C}^1$ par morceaux), alors  $H^1_0(\Omega) = \ker \gamma_0$.
+%
+$H^1_0(\Omega)$ est donc le sous-espace des fonctions de  $H^1(\Omega)$ de trace nulle sur la fronti\`ere $\partial\Omega$.
+%
+\begin{definition}
+  Pour toute fonction $u$ de $H^1(\Omega)$, on peut d\'efinir :
+$$\ds{ |u|_1 = \left( \sum_{i=1}^n \| \partial_i u \|_0^2 \right)^{1/2}
+= \left( \int_\Omega \sum_{i=1}^n \left( \partial_i u \right)^2 dx
+\right)^{1/2} } \vspace*{5 mm}
+$$\label{def:17}
+\end{definition}
+
+%
+\begin{theorem}[\textbf{In\'egalit\'e de Poincar\'e}]
+  \label{thr:11}
+  Si $\Omega$ est born\'e dans au moins une direction, alors il existe une
+  constante $C(\Omega)$ telle que $\forall u \in H^1_0(\Omega), \; \|u\|_0 \le
+  C(\Omega)\; |u|_1$.
+\end{theorem}
+
+%
+On en d\'eduit que $|.|_1$ est une norme sur $H^1_0(\Omega)$, \'equivalente \`a la norme $\|.\|_1$.
+%
+
+%
+%
+\begin{corollary}
+  Le r\'esultat pr\'ec\'edent s'\'etend au cas o\`u l'on a une condition de
+  Dirichlet nulle seulement sur une partie de $\partial\Omega$, si $\Omega$
+  est connexe.
+\end{corollary}
+
+On suppose que $\Omega$ est un ouvert born\'e connexe, de fronti\`ere ${\cal
+C}^1$ par morceaux. Soit $V=\left\{ v\in H^1(\Omega),\, v=0 \hbox{ sur
+  }\Gamma_0 \right\}$ o\`u $\Gamma_0$ est une partie de $\partial\Omega$ de
+mesure non-nulle. Alors il existe une constante $C(\Omega)$ telle que $\forall
+u \in V, \; \|u\|_{0,V} \le C(\Omega)\; |u|_{1,V}$, o\`u $\|.\|_{0,V}$ et
+$|.|_{1,V}$ d\'esignent les norme et semi-norme induites sur $V$.
+%
+On en d\'eduit que $|.|_{1,V}$ est une norme sur $V$, \'equivalente \`a la norme $\|.\|_{1,V}$.
+%
+%
+\small
+~\vspace*{5mm}\\
+\subsection*{Exercices}
+%
+\begin{enumerate}
+\item Montrer que les fonctions d\'efinies par (\ref{eq:fonction-test1}) et
+  (\ref{eq:fonction-test2}) sont bien ${\cal C}^\infty$ \`a support compact.
+\item Montrer que ${\cal C}^0([a,b])$ est un espace complet pour la norme $L^\infty$.
+\item Montrer que ce n'est pas le cas pour la norme $L^1$ (exhiber une suite
+  de Cauchy non convergente dans ${\cal C}^0([a,b])$).
+%\item Montrer que $L^1( est le complété de C0 pour la norme L1
+%Lp complété de C0 pour norme Lp ? est-ce vrai ??
+%
+\item D\'emontrer que, lorsqu'elle existe, la d\'eriv\'ee g\'en\'eralis\'ee est unique.
+\item D\'emontrer que, pour une fonction de classe ${\cal C}^1$, la
+  d\'eriv\'ee g\'en\'eralis\'ee est \'egale \`a la d\'eriv\'ee classique.
+\item Soit une fonction de $[a,b]$ vers $\RR$, form\'ee de deux branches de
+  classe ${\cal C}^1$ sur $[a,c[$ et $]c,b]$, et discontinue en $c$.  Montrer
+  qu'elle n'admet pas de d\'eriv\'ee g\'en\'eralis\'ee. (il faudrait alors
+  avoir recours \`a la notion de distribution pour d\'eriver cette fonction).
+\item Montrer que $|.|_1$ est une norme sur $H^1_0(\Omega)$, \'equivalente \`a la norme $\|.\|_1$
+\end{enumerate}
+
+%
+\normalsize
+
+%%
+%
+
+
+
+%%% Local Variables:
+%%% coding: utf-8
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% TeX-parse-self: t
+%%% TeX-auto-save: t
+%%% x-symbol-8bits: nil
+%%% TeX-auto-regexp-list: TeX-auto-full-regexp-list
+%%% TeX-master: "mef-intro"
+%%% ispell-local-dictionary: "american"
+%%% End:

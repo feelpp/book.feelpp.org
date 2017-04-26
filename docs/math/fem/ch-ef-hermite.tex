@@ -1,0 +1,183 @@
+\chapter{El\'ements finis d'Hermite}
+%
+\section{Classe d'un \'el\'ement fini}
+%
+\noindent
+Une question naturelle survenant dans la m\'ethode des \'el\'ements finis est de savoir quelle est la r\'egularit\'e de la solution approch\'ee $u_h$ ? En particulier, $u_h$ est-elle continue ? d\'erivable~?\\
+%
+$u_h$ \'etant combinaison lin\'eaire des fonctions de base globales $\varphi_i$, la question est donc de d\'eterminer la r\'egularit\'e de ces fonctions de base globales. Or, la restriction d'une fonction de base globale \`a un \'el\'ement de maillage est une fonction de base locale de cet \'el\'ement, c'est \`a dire qu'elle appartient \`a un espace de fonctions de r\'egularit\'e connue (en g\'en\'eral il s'agit d'un espace de polyn\^omes, donc de fonctions ${\cal C}^\infty$). La r\'egularit\'e de $\varphi_i$ sera donc en fait donn\'ee par sa r\'egularit\'e au niveau des interfaces entre les \'el\'ements adjacents formant son support.\saut
+%
+Pour les \'el\'ements finis de Lagrange introduits au chapitre pr\'ec\'edent, les fonctions de base globales sont le plus souvent continues, sauf dans quelques cas particuliers (par exemple les fonctions constantes par maille). Par contre, elles ne sont jamais d\'erivables (cf figure \ref{fig:fnglob}).\\
+%
+Prenons par exemple le cas tr\`es simple des \'el\'ements finis $P_m$ ($m\ge
+1$) en 1-D (cf \S \ref{par:ex1d}). Soient $K_1$ et $K_2$ deux mailles
+adjacentes, et $\{a\}=K_1 \cap K_2$ leur point commun. $a$ est un noeud du
+maillage. Notons $\varphi_a$ la fonction de base globale associ\'ee. On impose
+\`a $\varphi_a$ de v\'erifier $\varphi_a\, _{|K_1} = p_1$ avec $p_1 \in
+P_m(K_1)$, $\varphi_a\, _{|K_2} = p_2$ avec $p_2 \in P_m(K_2)$ et
+$p_1(a)=p_2(a)=1$. Ceci va imposer la continuit\'e de $\varphi_a$ au point $a$
+(et donc sur $K_1\cup K_2$). Par contre, cela n'impose pas du tout la
+d\'erivabilit\'e de $\varphi_a$ en $a$. Il faudrait pour cela contr\^oler la
+d\'eriv\'ee de $\varphi_a$ en imposant $p'_1(a)=p'_2(a)$.\\
+% 
+C'est pour permettre ce type d'am\'elioration que l'on va g\'en\'eraliser la notion
+d'\'el\'ement fini. 
+% 
+% 
+\section{El\'ements finis d'Hermite} 
+%
+\subsection{D\'efinitions} 
+\noindent
+% 
+% 
+\definition Un {\bf \'el\'ement fini d'Hermite}
+ou {\bf \'el\'ement fini g\'en\'eral} est un triplet $(K,\Sigma,P)$ tel que 
+\begin{itemize} \item $K$ est un \'el\'ement g\'eom\'etrique de $\RR^n$ ($n=$
+1, 2 ou 3), compact, connexe, et d'int\'erieur non vide. 
+% 
+\item
+$\Sigma=\{\sigma_1,\ldots,\sigma_N\}$ est un ensemble de $N$ formes
+lin\'eaires sur l'espace des fonctions d\'efinies sur $K$, ou sur un
+sous-espace plus r\'egulier contenant $P$. 
+% 
+\item $P$ est un espace vectoriel
+de dimension $N$ de fonctions r\'eelles d\'efinies sur $K$, et tel que
+$\Sigma$ soit $P$-unisolvant. 
+\end{itemize} 
+% 
+~\\ 
+%
+{\bf Remarque :} La d\'efinition de l'unisolvance est l\'eg\`erement modifi\'ee par rapport aux \'el\'ements finis de Lagrange. $\Sigma$ est $P$-unisolvant ssi
+pour tous r\'eels $\alpha_1,\ldots,\alpha_N$, il existe un unique \'el\'ement $p$ de $P$ tel que $\sigma_i(p)=\alpha_i,\; i=1,\ldots,N$.\\
+Ceci revient \`a dire que la fonction :
+\be
+\begin{array}{rcl}
+{\cal L} : P & \longrightarrow & \RR^N\\
+p & \longrightarrow & (\sigma_1(p),\ldots,\sigma_N(p))
+\end{array}
+\ee
+est bijective.\saut
+%
+%
+\definition Soit $(K,\Sigma,P)$ un \'el\'ement fini g\'en\'eral. On appelle {\bf fonctions de base locales} de l'\'el\'ement les $N$ fonctions $p_i$ ($i=1,\ldots,N$) de $P$ telles que 
+\be
+\sigma_j(p_i)=\delta_{ij}\qquad 1\le i,j \le N.
+\ee
+%
+~\\
+%
+%
+\definition On appelle {\bf op\'erateur de $P$-interpolation} sur $\Sigma$ l'op\'erateur $\pi_K$ qui, \`a toute fonction $v$ d\'efinie sur $K$ associe la fonction $\pi_K v$ de $P$ d\'efinie par $\ds{\pi_K v = \sum_{i=1}^N \sigma_i(v)\, p_i}$. $\pi_K v$ est donc l'unique \'el\'ement de $P$ qui prend les m\^emes valeurs que $v$ sur les \'el\'ements de $\Sigma$.
+%
+%
+\subsection{Lien avec les \'el\'ements finis de Lagrange}
+%
+\noindent
+%
+Avec les d\'efinitions pr\'ec\'edentes, les \'el\'ements finis de Lagrange  apparaissent donc comme un cas particulier des \'el\'ements finis g\'en\'eraux, pour lequel
+\be
+\sigma_i(p) = p(a_i)\qquad i=1,\ldots,N
+\ee
+%
+%
+Cette g\'en\'eralisation permet maintenant d'introduire des op\'erateurs de
+d\'erivation dans $\Sigma$, et donc d'am\'eliorer la r\'egularit\'e des fonctions de $V_h$.
+%
+%
+\subsection{Fonctions de base globales}
+%
+\noindent
+%
+On reprend les notations du \S \ref{sec:glob}.
+Les $N_h$ degr\'es de libert\'e sont maintenant les valeurs des formes lin\'eaires sur les $N_e$ \'el\'ements du maillage. Pour le cas d'un probl\`eme dans $\RR^2$ avec un maillage par des triangles, ce pourront \^etre par exemple les valeurs de $u_h$, $\ds{\frac{\partial u_h}{\partial x}}$ et $\ds{\frac{\partial u_h}{\partial y}}$ sur les sommets de la triangulation.\saut
+%
+Les fonctions de base globales $\varphi_i \; (i=1,\ldots,N_h)$ sont d\'efinies par :
+\be
+\varphi_i \,_{|K_j} \in P_j, \quad j=1,\ldots,N_e\qquad \hbox{ et }\qquad \sigma_j(\varphi_i)=\delta_{ij}, \; 1\le i,j \le N_h
+\ee
+%
+%
+Suivant les \'el\'ements utilis\'es, ces fonctions de base pourront \^etre de classe ${\cal C}^1$ ou plus, et il en sera donc de m\^eme pour la solution approch\'ee $u_h$.
+%
+%
+\section{Exemples}
+%
+%
+%
+\subsection{Exemples 1-D}
+%
+\subsubsection{El\'ement d'Hermite cubique}
+\begin{itemize}
+\item $K=[a,b]$
+\item $\Sigma=\{p(a),p'(a),p(b),p'(b)\}$
+\item $P=P_3$
+\end{itemize}
+%
+Cet \'el\'ement fini est ${\cal C}^1$ et $H^2$.
+%
+\subsubsection{El\'ement d'Hermite quintique}
+\begin{itemize}
+\item $K=[a,b]$
+\item $\Sigma=\{p(a),p'(a),p"(a),p(b),p'(b),p"(b)\}$
+\item $P=P_3$
+\end{itemize}
+%
+Cet \'el\'ement fini est ${\cal C}^2$ et $H^3$.
+%
+%
+\subsection{Exemples 2-D triangulaires}
+%
+\subsubsection{El\'ement d'Hermite cubique}
+\begin{itemize}
+\item $K$=triangle de sommets $a_1, a_2, a_3$
+\item $\ds{ \Sigma=\left\{p(a_i),\frac{\partial p}{\partial x}(a_i), \frac{\partial p}{\partial y}(a_i), \; i=1,2,3\right\} \cup \left\{p(a_0)\right\} }$
+\item $P=P_3$
+\end{itemize}
+%
+Cet \'el\'ement fini est ${\cal C}^0$, mais pas ${\cal C}^1$.
+%
+\subsubsection{El\'ement d'Argyris}
+\begin{itemize}
+\item $K$=triangle de sommets $a_1, a_2, a_3$
+\item $\ds{ \Sigma=\left\{p(a_i),\frac{\partial p}{\partial x}(a_i), \frac{\partial p}{\partial y}(a_i),\frac{\partial^2 p}{\partial x^2}(a_i), \frac{\partial^2 p}{\partial y^2}(a_i), \frac{\partial^2 p}{\partial x\; \partial y}(a_i),\; i=1,2,3\right\} }$\\
+\hspace*{5 cm}$\ds{\cup \left\{\frac{\partial p}{\partial n}(a_{ij}), \; 1\le i < j \le 3\right\} }$
+\item $P=P_5$
+\end{itemize}
+%
+Cet \'el\'ement fini est ${\cal C}^1$.
+%
+%
+\subsection{Exemple 2-D rectangulaire}
+%
+\subsubsection{El\'ement $Q_3$}
+\begin{itemize}
+\item $K$=rectangle de sommets $a_1, a_2, a_3, a_4$, de c\^ot\'es parall\`eles aux axes
+\item $\ds{ \Sigma=\left\{p(a_i),\frac{\partial p}{\partial x}(a_i), \frac{\partial p}{\partial y}(a_i), \frac{\partial^2 p}{\partial x\; \partial y}(a_i),\; i=1,\ldots,4\right\} }$
+\item $P=Q_3$ 
+\end{itemize}
+%
+Cet \'el\'ement fini est ${\cal C}^1$.
+%
+%
+%
+%
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.95\linewidth]{FIG/hermite.jpg}
+%\vspace*{8 cm}
+\caption{El\'ement triangulaire d'Hermite cubique, \'el\'ement d'Argyris et \'el\'ement rectangulaire $Q_3$}
+\end{center}
+\end{figure}
+%
+%
+%
+\small
+~\vspace*{3cm}\\
+\subsection*{Compl\'ements}
+\noindent
+%
+Pour chaque \'el\'ement fini  d'Hermite 1-D et 2-D pr\'esent\'e dans ce chapitre, calculer ses fonctions de base locales, et d\'emontrer sa r\'egularit\'e (${\cal C}^1$, etc).
+%
+\normalsize
+
+

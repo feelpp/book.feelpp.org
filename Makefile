@@ -1,4 +1,4 @@
-all: quickref.html quickref-cards.html install.html programming.html book.html
+#all: quickref.html quickref-cards.html install.html programming.html book.html
 
 %.html: %.adoc
 	asciidoctor -a reproducible -b html -r asciidoctor-bibtex  -a allow-uri-read $<

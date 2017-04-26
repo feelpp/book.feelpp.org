@@ -1,0 +1,975 @@
+\chapter{Introduction \`a la méthode des éléments finis}
+%
+%
+\section{Formulation variationnelle}
+%
+\subsection{Exemple 1-D}
+\label{sec:modele-1D}
+%
+\noindent
+Soit \`a résoudre le problème
+\be
+({\cal P})\qquad
+\left\{
+\begin{array}{l}
+-u"(x)+c(x)u(x) = f(x)\qquad a<x<b\\
+u(a)=u(b)=0\\
+\end{array}\right.
+\label{eq:modele-1D}
+\ee
+où $f$ et $c$ sont des fonctions données continues sur $[a,b]$. On supposera de plus que la fonction $c$ est strictement positive sur $[a,b]$. Un tel problème est appelé {\it problème aux limites}.\saut
+%
+\begin{definition}
+  Une {\bf solution classique} (ou {\bf solution forte}) de $({\cal P})$ est
+  une fonction de ${\cal C}^2([a,b])$ telle que $u(a)=u(b)=0$ et $\forall x
+  \in ]a,b[, \; -u"(x)+c(x)u(x) = f(x)$.
+  \label{def:18}
+\end{definition}
+
+%
+En faisant le produit scalaire $L^2(]a,b[)$ de l'équation différentielle avec une fonction-test $v \in {\cal D}(]a,b[)$ (c'est \`a dire en intégrant sur $[a,b]$), on a :
+$$
+- \int_a^b u"(x)v(x)\; dx + \int_a^b c(x)u(x)v(x)\; dx = \int_a^b f(x)v(x)\; dx
+$$
+soit, en intégrant par parties le premier terme :
+$$
+\int_a^b u'(x)v'(x)\; dx + \int_a^b c(x)u(x)v(x)\; dx = \int_a^b f(x)v(x)\; dx
+$$
+car $v(a)=v(b)=0$ puisque $v\in{\cal D}(]a,b[)$. Chaque terme de cette équation a en fait un sens dès lors que $v\in H^1_0(]a,b[)$. De plus, ${\cal D}(]a,b[)$ étant dense dans $H^1_0(]a,b[)$ (\cf \S \ref{sec:H10}), cette équation est vérifiée pour tout $v\in H^1_0(]a,b[)$. \par
+%
+%
+On peut donc définir le nouveau problème :
+\begin{equation}
+({\cal Q})\quad
+\left\{
+\begin{array}{l}
+\hbox{Trouver }u\in H^1_0(]a,b[) \hbox{ tel que }\\
+\ds{ \int_a^b u'(x)v'(x)\; dx + \int_a^b c(x)u(x)v(x)\; dx = \int_a^b f(x)v(x)\; dx \quad\forall v\in H^1_0(]a,b[)}
+\end{array}
+\right.
+\label{eq:FV}
+\end{equation}
+%
+%
+Ce problème est la {\bf formulation variationnelle} (ou {\bf formulation
+faible}) du problème $({\cal P})$.  Toute solution de $({\cal Q})$ est appelée
+{\bf solution faible}. Il est immédiat que toute solution forte de $({\cal
+P})$ est aussi une solution faible.
+%
+%
+%
+\subsection{Exemple 2-D}
+\label{sec:modele-2D}
+%
+\noindent
+Soit $\Omega$ ouvert borné de $\RR^n$. On veut résoudre le problème
+\be
+({\cal P})\qquad
+\left\{
+\begin{array}{ll}
+-\Delta u+u = f & \hbox{ dans }\Omega\\
+\partial_n u=0& \hbox{ sur }\partial\Omega\\
+\end{array}\right.
+\label{eq:modele-2D}
+\ee
+%
+Une solution classique de ce problème est une fonction de ${\cal C}^2(\bar{\Omega})$ vérifiant (\ref{eq:modele-2D}) en tout point de $\Omega$. Au passage, on voit que ceci impose que $f$ soit ${\cal C}^0(\bar{\Omega})$. Toute solution classique vérifie donc :
+%
+$$
+\forall v\in {\cal C}^1(\bar{\Omega}) \quad \int_\Omega -\Delta u\; v + \int_\Omega uv = \int_\Omega fv
+$$
+%
+soit par intégration par parties  : $\ds{  \int_\Omega \nabla u \cdot \nabla v + \int_\Omega uv = \int_\Omega fv
+ }$ puisque $\partial_n u = 0 $ sur $\partial\Omega$.
+%
+%
+Or, $\overline{{\cal C}^1(\bar{\Omega})} = H^1(\Omega)$. On peut donc définir le nouveau problème :
+\be
+({\cal Q})\quad
+\left\{
+\begin{array}{l}
+\hbox{Trouver }u\in H^1(\Omega) \hbox{ tel que }\\
+ \qquad \ds{ \int_\Omega \nabla u \cdot \nabla v + \int_\Omega u v = \int_\Omega f v \quad\forall v\in H^1(\Omega)}
+\end{array}
+\right.
+\label{eq:FV2}
+\ee
+%
+C'est la formulation variationnelle de $({\cal P})$. On voit aussi que ce problème est défini dès lors que $f\in L^2(\Omega)$.
+%
+%
+\subsection{Formulation générale}
+%
+\noindent
+Les exemples précédents montre que, d'une fa\c{c}on générale, la formulation variationnelle sera obtenue en faisant le produit scalaire $L^2(\Omega)$ de l'équation avec une fonction $v$ appartenant \`a un espace \`a préciser (c'est \`a dire en multipliant par $v$ et en intégrant sur $\Omega$), et en intégrant par parties les termes d'ordre les plus élevés en tenant compte des conditions aux limites du problème. On arrive alors \`a une formulation du type :
+$$
+\qquad\qquad
+\hbox{Trouver }u\in V \hbox{ tel que }
+a(u, v) =l(v) \quad\forall v\in V
+$$
+%
+où $a(.,.)$ est une forme sur $V\times V$ (bilinéaire si l'EDP de départ est linéaire) et $l(.)$ est une forme sur $V$ (linéaire si les conditions aux limites de  l'EDP de départ le sont).
+%
+%
+\section{Théorème de Lax-Milgram}
+\subsection{Définitions et théorèmes}
+\label{sec:lax-milgram}
+%
+%
+\noindent
+On va introduire ici un outil important pour assurer l'existence et l'unicité de solutions \`a la formulation variationnelle de problèmes aux limites de type elliptique.\saut
+%
+Soit $V$ un espace de Hilbert.\\
+%
+\begin{definition}
+  Une {\bf forme linéaire} $l(u)$ sur $V$ est {\bf continue} ssi il existe une
+  constante $K$ telle que $|l(u)| \le K\, \|u\| \quad \forall u \in V$.\label{def:19}
+\end{definition}
+
+%
+\begin{definition}
+  Une {\bf forme bilinéaire} $a(u,v)$ sur $V\times V$ est {\bf continue} ssi
+  il existe une constante $M$ telle que $|a(u,v)| \le M\, \|u\| \|v\| \quad
+  \forall (u,v) \in V\times V$.\label{def:20}
+\end{definition}
+
+%
+%
+\begin{definition}
+  Une {\bf forme bilinéaire} $a(u,v)$ sur $V\times V$ est {\bf coercive} (ou
+  {\bf V-elliptique}) ssi il existe une constante $\alpha >0$ telle que
+  $a(u,u) \ge \alpha \, \|u\|^2, \; \forall u \in V$.
+  \label{def:21}
+\end{definition}
+
+%
+%
+\begin{theorem}
+  \label{thr:12}
+  {\bf (Lax-Milgram) } Soit $V$ un espace de Hilbert. Soit $a$ une forme
+  bilinéaire continue coercive sur $V$. Soit $l$ une forme linéaire
+  continue sur $V$. Alors il existe un unique $u\in V$ tel que $a(u,v)=l(v),\;
+  \forall v\in V$.
+
+  De plus, l'application linéaire $l \rightarrow u$ est continue.
+
+  \begin{proof}
+    La démonstration générale de ce théorème peut être trouvée par exemple dans cite:[raviart-thomas-1983].
+  \end{proof}
+\end{theorem}
+
+
+
+%
+%
+\begin{theorem}
+  On prend les mêmes hypothèses que pour le théorème de Lax-Milgram,
+  et on suppose de plus que $a$ est symétrique, c'est \`a dire que
+  $a(u,v)=a(v,u)\quad\forall u,v$. On définit alors la fonctionnelle $
+  J(v)=\frac{1}{2}\, a(v,v)-l(v)$, et on considère le problème de
+  minimisation :
+  $$
+  \hbox{Trouver } u\in V \hbox{ tel que } J(u) = \min_{v\in V} J(v)
+  $$
+  %
+  Alors ce problème admet une solution unique, qui est également la solution
+  du problème variationnel précédent.\label{thr:13}
+  \begin{proof}
+    La démonstration de ce théorème vient du fait que $J$ est une fonctionnelle quadratique, et que l'on a $\nabla J[u](v) = a(u,v) - l(v)$.
+  \end{proof}
+\end{theorem}
+
+\paragraph{Remarque}
+\label{sec:remarque}
+
+C'est de cette propriété que vient l'utilisation du terme ``variationnel", puisqu'elle montre le lien avec le ``calcul des variations".
+%
+%
+%
+%
+\subsection{Retour \`a l'exemple 1-D}
+\label{sec:modele-1D2}
+%
+\noindent
+%
+En reprenant l'exemple 1-D précédent, on peut  poser :
+\be
+a(u,v) = \int_a^b u'(x)v'(x)\; dx + \int_a^b c(x)u(x)v(x)\; dx
+\ee
+et
+\be
+l(v) = \int_a^b f(x)v(x)\; dx
+\ee
+%
+$a$ ainsi définie est une forme bilinéaire symétrique continue coercive
+sur $H^1_0(a,b) \times H^1_0(a,b)$, et $l$ est une forme linéaire continue
+sur $H^1_0(a,b)$. Donc le problème (\ref{eq:FV}) admet une solution unique
+d'après le théorème de Lax-Milgram.\saut
+%
+% %
+Cherchons maintenant \`a interpréter cette solution $u$ de
+(\ref{eq:FV}). Prenons $v=\varphi \in {\cal D}(]a,b[)$. Alors
+$$
+\int_a^b u'(x)\varphi'(x)\; dx + \int_a^b c(x)u(x)\varphi(x)\; dx = \int_a^b f(x)\varphi(x)\; dx
+$$
+soit, en intégrant par parties :
+$$
+- \int_a^b u"(x)\varphi(x)\; dx + \int_a^b c(x)u(x)\varphi(x)\; dx = \int_a^b f(x)\varphi(x)\; dx
+$$
+c'est \`a dire $(-u"+cu,\varphi)_0 = (f,\varphi)_0\; \forall \varphi \in {\cal
+D}(]a,b[)$.  ${\cal D}(]a,b[)$ étant dense dans $L^2(]a,b[)$, on a donc :
+$-u"+cu=f$ dans $L^2(]a,b[)$. $u$ étant dans $L^2(]a,b[)$, et $f$ et $c$
+étant dans ${\cal C}^0([a,b])$, donc également dans $L^2(]a,b[)$, on  en
+déduit que $u"=cu-f$ est aussi dans $L^2(]a,b[)$.
+
+Puisque $u$ est dans $H^1_0(]a,b[)$ et que $u"$ est dans $L^2(]a,b[)$, on en
+déduit que  $u$ est dans $H^2(]a,b[)$. Donc $u$ est dans ${\cal C}^1([a,b])$
+(\cf \S \ref{sec:sobolev}).
+
+De ce fait, $cu-f$, c'est \`a dire $u"$, est dans ${\cal C}^0([a,b])$. Donc
+$u'$ est dans ${\cal C}^1([a,b])$, donc $u$ est dans ${\cal C}^2([a,b])$.
+
+La solution faible $u$ est donc aussi solution forte du problème de
+départ.\saut
+%
+%
+En résumé :
+\begin{itemize}
+\item On est parti d'un problème $({\cal P})$ et on a introduit sa
+  formulation variationnelle $({\cal Q})$.
+\item On a montré l'existence et l'unicité d'une solution faible (en
+  utilisant le théorème de Lax-Milgram). Toute solution forte étant
+  aussi solution faible, ceci prouve qu'il y a au plus une solution forte pour
+  $({\cal P})$.
+\item On a prouvé que cette solution faible est bien une solution forte. Le
+  problème de départ $({\cal P})$ a donc une solution unique.  \saut
+\end{itemize}
+%
+L'intérêt de cette démarche est d'une part que la formulation
+variationnelle se prête bien \`a l'étude de l'existence et de l'unicité
+de solutions, et d'autre part que l'on travaille dans des espaces de Hilbert,
+ce qui va permettre de faire de l'approximation interne.
+%
+%
+\subsection{Équations elliptiques d'ordre 2}
+\label{sec:elliptique}
+%
+\noindent
+%
+Soit $\Omega$ un ouvert borné de $\RR^n$, de frontière $\partial\Omega$ assez régulière.
+Soient des fonctions $\alpha_{ij}$ ($1\le i,j \le n$) dans ${\cal C}^1(\bar{\Omega})$ et $\beta$ dans ${\cal C}^0(\bar{\Omega})$.
+On considère le problème :
+\be
+({\cal P})\qquad
+\left\{
+\begin{array}{rl}
+{\ds -\sum_{i,j=1}^n \partial_i (\alpha_{ij} \, \partial_j\, u) + \beta\, u = f } & \hbox{ dans }\Omega \\
+u= 0 & \hbox{ sur }\Gamma_0 \\
+{\ds \sum_{i,j=1}^n  \alpha_{ij} \, \partial_j  u\; n_i = g } & \hbox{ sur }\Gamma_1
+%
+\end{array}\right.
+\label{eq:edp-elliptique}
+\ee
+%
+où $\Gamma_0$ et $\Gamma_1$ forment une partition de $\partial\Omega$ (
+$\Gamma_0 \cap\Gamma_1 = \emptyset$ et $\Gamma_0 \cup\Gamma_1
+= \partial\Omega$).
+%
+Une solution classique de $({\cal P})$, sous l'hypothèse que $f\in{\cal C}^0(\bar{\Omega})$ et $g\in{\cal C}^0(\Gamma_1)$, sera une fonction de ${\cal C}^2(\bar{\Omega})$ vérifiant l'équation en chaque point de $\Omega$.\saut
+%
+%
+La formulation variationnelle de $({\cal P})$ est obtenue par intégration
+par parties. Elle s'écrit :
+%
+\be
+({\cal Q})\quad
+\left\{
+\begin{array}{l}
+\hbox{Trouver }u\in V \hbox{ tel que }\\
+\qquad \ds{ \int_\Omega  \left(  \sum_{i,j=1}^n \alpha_{ij} \, \partial_j u\;  \, \partial_i v + \beta\,   u v \right) = \int_\Omega f v +  \int_{\Gamma_1} gv \qquad\forall v\in V}
+\end{array}
+\right.
+\label{eq:FV3}
+\ee
+%
+avec $\ds{ V = \left\{ v \in H^1(\Omega) \; , \; v=0 \hbox{ sur }\Gamma_0
+\right\} }$. Cette formulation est en fait définie dès lors que $\beta$ et
+les $\alpha_{ij}$ sont dans $L^\infty(\Omega)$, $f$ dans $L^2(\Omega)$ et $g$ dans
+$L^2(\Gamma_1)$.
+%
+Posons
+$$\ds{a(u,v) =  \int_\Omega   \left( \sum_{i,j=1}^n \alpha_{ij} \, \partial_j
+  u\;   \partial_i v + \beta\,   u v \right) },
+\quad \ds{l(v) = \int_\Omega f v +  \int_{\Gamma_1} gv.\qquad}$$
+%
+Il est immédiat que $a$ est une forme bilinéaire continue et $l$ une forme
+linéaire continue sur $V$.
+
+
+%
+Si l'EDP de départ (\ref{eq:edp-elliptique}) vérifie les deux hypothèses d'ellipticité :
+\begin{itemize}
+\item il existe $\alpha >0$ tel que $\forall \xi=(\xi_1, \ldots , \xi_n)\in\RR^n$, $ {\ds \sum_{i,j=1}^n  \alpha_{ij}(x) \, \xi_i \, \xi_j  \ge \alpha \, \| \xi \|^2 }$ presque pour tout $x\in\Omega$
+%
+\item il existe $\beta_0$ tel que $\beta(x) \ge \beta_0$ presque pour tout $x\in\Omega$\\
+\end{itemize}
+%
+alors $a$ est coercive :
+\begin{itemize}
+\item sur $H^1_0(\Omega)$ dès que $\ds{\alpha_0 >
+  \frac{-\alpha}{C(\Omega)^2}}$ (et donc en particulier si $\beta\ge 0$) où
+  $C(\Omega)$ est la constante de l'inégalité de Poincaré, voir le
+  théorème~\ref{thr:11}.
+\item sur $H^1(\Omega)$ si $\beta > 0$\\
+\end{itemize}
+%
+%
+Par application du théorème de Lax-Milgram, on a donc existence et unicité
+d'une solution \`a la formulation variationnelle $({\cal Q})$ :
+\begin{itemize}
+\item  si $\Gamma_0 = \partial\Omega$ (c'est \`a dire $\Gamma_1=\emptyset$) et si  $\ds{\beta > \frac{-\alpha}{C(\Omega)^2}}$
+%
+\item si $\Gamma_1\ne \emptyset$ et si $\beta > 0$
+\end{itemize}
+%
+%
+%
+\section{Approximation interne}
+%
+\subsection{Principe général}
+%
+\noindent
+Soit $\Omega$ un domaine ouvert de $\RR^n$ ($n=1,2$ ou 3 en pratique), de
+frontière $\partial\Omega$, et sur lequel on cherche \`a résoudre une
+équation aux dérivées partielles, munie de conditions aux limites. En
+écrivant la formulation variationnelle, on obtient un problème de la forme
+%
+$$
+({\cal Q})\qquad \hbox{Trouver } u\in V \hbox{ tel que } a(u,v)=l(v), \quad\forall v\in V
+$$
+où $V$ est un espace de Hilbert. Sous réserve que l'équation de départ
+ait de bonnes propriétés, c'est \`a dire par exemple qu'on soit dans les
+hypothèses du théorème de Lax-Milgram, $({\cal Q})$ admet une solution
+unique $u$.  Pour obtenir une approximation numérique de $u$, on va
+maintenant remplacer l'espace $V$ qui est en général de dimension infinie
+par un sous-espace $V_h$ de dimension finie, et on va chercher \`a résoudre
+le problème approché
+%
+\begin{equation}
+  \label{eq:6}
+  ({\cal Q}_h)\qquad \hbox{Trouver } u_h\in V_h \hbox{ tel que } a(u_h,v_h)=l(v_h), \quad\forall v_h\in V_h
+\end{equation}
+
+%
+$V_h$ étant de dimension finie, c'est un fermé de $V$. $V$ étant un
+espace de Hilbert, $V_h$ l'est donc aussi. D'où l'existence et l'unicité
+de $u_h$, \`a nouveau par exemple d'après le théorème de
+Lax-Milgram.\saut
+%
+L'espace $V_h$ sera en pratique construit \`a partir d'un maillage du domaine
+$\Omega$, l'indice $h$ désignant la ``taille typique'' des mailles. Lorsque
+l'on construit des maillages de plus en plus fins, la suite de sous-espaces
+$(V_h)_h$ formera une {\bf approximation interne} de $V$, c'est \`a dire que,
+pour tout élément $\varphi$ de $V$, il existe une suite de $\varphi_h\in
+V_h$ telle que $\|\varphi-\varphi_h\|\longrightarrow 0$ quand
+$h\longrightarrow 0$. Cette méthode d'approximation interne est également
+appelée {\bf méthode de Galerkin}.
+%
+%
+\subsection{Interprétation de $u_h$}
+%
+\noindent
+%
+On a $a(u,v)=l(v), \forall v\in V$, donc en particulier $a(u,v_h)=l(v_h),
+\forall v_h\in V_h$, car $V_h\subset V$. Par ailleurs, $a(u_h,v_h)=l(v_h),
+\forall v_h\in V_h$. Par différence, on en déduit que
+\begin{equation}
+  a(u-u_h,v_h)=0,\quad \forall v_h\in V_h
+  \label{eq:ortho}
+\end{equation}
+%
+Dans le cas où $a(.,.)$ est symétrique, il s'agit d'un produit scalaire
+sur $V$. $u_h$ peut alors être interprétée comme la projection
+orthogonale de $u$ sur $V_h$ au sens de $a(.,.)$.
+%
+%
+\subsection{Estimation d'erreur}
+\label{sec:estim}
+%
+\noindent
+%
+On a :
+$$
+\begin{array}{ll}
+a(u-u_h,u-u_h) & = a(u-u_h,u-v_h+v_h-u_h) \quad\forall v_h\in V_h\\
+ & =a(u-u_h,u-v_h) + a(u-u_h,v_h-u_h)
+\end{array}
+$$
+%
+Or $v_h-u_h \in V_h$. Donc $a(u-u_h,v_h-u_h)=0$ d'après (\ref{eq:ortho}).
+On a donc :
+\begin{equation}
+  a(u-u_h,u-u_h) = a(u-u_h,u-v_h) \quad\forall v_h\in V_h
+ \label{eq:estim1}
+\end{equation}
+%
+$a$ étant coercive, il existe $\alpha > 0$ tel que $a(u-u_h,u-u_h) \ge
+\alpha \|u-u_h\|^2$, où $\|.\|$ est une norme sur $V$. Par ailleurs, $a$
+étant continue, il existe $M > 0$ tel que $a(u-u_h,u-v_h)\le M \|u-u_h\| \,
+\|u-v_h\|$. En réinjectant ces deux inégalités de part et d'autre de
+(\ref{eq:estim1}) et en simplifiant par $\|u-u_h\|$ on obtient
+
+\begin{equation}
+  \|u-u_h\|
+  \le \frac{M}{\alpha}\; \|u-v_h\| \quad \forall v_h\in V_h
+  \label{eq:cea}
+\end{equation}
+%
+c'est \`a dire
+
+\begin{equation}
+\|u-u_h\| \le \frac{M}{\alpha}\; d(u,V_h)
+\label{eq:4}
+\end{equation}
+
+
+%
+où $d$ est la distance induite par $\|.\|$.  Cette majoration est appelée
+{\bf lemme de Céa}. Elle ramène l'étude de l'erreur d'approximation
+$u-u_h$ \`a l'étude de l'erreur d'interpolation $d(u,V_h)$.
+%
+%
+\section{Principe  général de la méthode des éléments finis}
+\label{sec:general}
+\noindent
+%
+%
+La démarche générale de la méthode des éléments finis est la
+suivante. On a une EDP \`a résoudre sur un domaine $\Omega$. On écrit la
+formulation variationnelle de cette EDP, et on se ramène donc \`a un
+problème du type
+%
+$$
+({\cal Q})\qquad \hbox{Trouver } u\in V \hbox{ tel que } a(u,v)=l(v), \quad\forall v\in V
+$$
+%
+On va chercher une approximation de $u$ par approximation interne. Pour cela,
+on définit un maillage du domaine $\Omega$, gr\^ace auquel on va définir
+un espace d'approximation $V_h$, s.e.v. de $V$ de dimension finie $N_h$ (par
+exemple $V_h$ sera l'ensemble des fonctions continues sur $\Omega$ et affines
+sur chaque maille).  Le problème approché est alors
+$$
+({\cal Q}_h)\qquad \hbox{Trouver } u_h\in V_h \hbox{ tel que } a(u_h,v_h)=l(v_h), \quad\forall v_h\in V_h
+$$
+%
+Soit $(\varphi_1,\ldots,\varphi_{N_h})$ une base de $V_h$. En décomposant $u_h$ sur cette base sous la forme
+\be
+u_h = \sum_{i=1}^{N_h} \mu_i \; \varphi_i
+\ee
+le problème $({\cal Q}_h)$ devient
+\be
+\hbox{Trouver } \mu_1,\ldots,\mu_{N_h} \hbox{ tels que } \sum_{i=1}^{N_h} \mu_i \; a(\varphi_i,v_h)=l(v_h), \quad\forall v_h\in V_h
+\ee
+%
+ou encore par linéarité de $a$ et $l$ :
+\be
+\hbox{Trouver } \mu_1,\ldots,\mu_{N_h} \hbox{ tels que } \sum_{i=1}^{N_h} \mu_i \; a(\varphi_i,\varphi_j)=l(\varphi_j), \quad\forall j=1,\ldots,N_h
+\ee
+%
+c'est \`a dire résoudre le système linéaire
+\be
+\left(
+\begin{array}{ccc}
+a(\varphi_1,\varphi_1) & \cdots & a(\varphi_{N_h},\varphi_1)\\
+\vdots & & \vdots\\
+a(\varphi_1,\varphi_{N_h}) & \cdots & a(\varphi_{N_h},\varphi_{N_h})\\
+\end{array}\right)
+\left(
+\begin{array}{c}
+\mu_1\\
+\vdots\\
+\mu_{N_h}\\
+\end{array}\right)
+=
+\left(
+\begin{array}{c}
+l(\varphi_1)\\
+\vdots\\
+l(\varphi_{N_h})\\
+\end{array}\right)
+\ee
+%
+soit
+\be
+A\mu = b
+\label{eq:lin}
+\ee
+%
+La matrice $A$ est a priori pleine. Toutefois, pour limiter le volume de
+calculs, on va définir des fonctions de base $\varphi_i$ dont le support
+sera petit, c'est \`a dire que chaque fonction $\varphi_i$ sera nulle partout
+sauf sur quelques mailles. Ainsi les termes $a(\varphi_i,\varphi_j)$ seront le
+plus souvent nuls, car correspondant \`a des fonctions $\varphi_i$ et
+$\varphi_j$ de supports disjoints. La matrice $A$ sera donc une matrice
+creuse, et on ordonnera les $\varphi_i$ de telle sorte que $A$ soit \`a
+structure bande, avec une largeur de bande la plus faible possible.
+%
+A ce niveau, les difficultés majeures en pratique sont de trouver les
+$\varphi_i$ et de les manipuler pour les calculs d'intégrales nécessaires
+\`a la construction de $A$. Sans rentrer pour le moment dans les détails, on
+peut toutefois indiquer que la plupart de ces difficultés seront levées
+gr\^ace \`a trois idées principales :
+\begin{itemize}
+\item {\bf Le principe d'unisolvance} --- On s'attachera \`a trouver des
+  degrés de liberté (ou ddl) tels que la donnée de ces ddl détermine
+  de fa\c{c}on univoque toute fonction de $V_h$. Il pourra s'agir par exemple
+  des valeurs de la fonction en quelques points. Déterminer une fonction
+  reviendra alors \`a déterminer ses valeurs sur ces ddl.
+%
+\item {\bf Définition des $\varphi_i$} --- On définira les fonctions de
+  base par $\varphi_i=1$ sur le $i^{\hbox{\tiny ème}}$ ddl, et $\varphi_i=0$
+  sur les autres ddl. La manipulation des $\varphi_i$ sera alors très
+  simplifiée, et les $\varphi_i$ auront par ailleurs un support réduit \`a
+  quelques mailles.
+%
+\item {\bf La notion de ``famille affine d'éléments''} --- Le maillage
+  sera tel que toutes les mailles soient identiques \`a une transformation
+  affine près. De ce fait, tous les calculs d'intégrales pourront se
+  ramener \`a des calculs sur une seule maille ``de référence'', par un
+  simple changement de variable.
+%
+\end{itemize}
+%
+\section{Retour \`a l'exemple 1-D}
+\label{sec:retour-a-lexemple}
+
+%
+\noindent
+%
+On reprend le problème 1-D (\ref{eq:modele-1D}).  On a écrit sa formulation
+variationnelle (\cf \S\ref{sec:modele-1D}) et montré (\cf \S
+\ref{sec:modele-1D2}) qu'elle admet une solution unique. On s'intéresse à
+présent à la construction de l'espace d'approximation $V_h$.
+
+\subsection{Construction du maillage}
+\label{sec:constr-du-maill}
+
+
+La première étape consiste à construire un maillage de $\Omega = ]a,b[$ en définissant une
+subdivision (pas nécessairement régulière) $a=x_0 < x_1 < \ldots < x_N <
+x_{N+1}=b$. Le maillage est donc une collection indexée de \Nma ($=N$) intervalles
+$$\{I_i=[x_{i,1},x_{i,2}]\}_{i=1,...\Nma}$$ et on a
+\begin{equation}
+  \label{eq:1}
+  [a,b]=\cup_{i=1}^\Nma [x_{1,i},x_{2,i}] \quad \mbox{et} \quad
+  ]x_{1,i},x_{2,i}[ \cap ]x_{1,j},x_{2,j}[ = \emptyset \quad \mbox{ pour } i
+  \neq j
+\end{equation}
+
+\begin{definition}
+  Les intervalles $I_i$ sont appelées de \emph{mailles} ou \emph{éléments} ou
+  \emph{cellules} du maillage, on a noté $\Nma$ le nombre de maillage
+\end{definition}
+\begin{definition}
+  \label{def:23}
+  Les points $x_i$ sont appelés les \emph{sommets} du maillage, on
+  note $\Nso=N+1$ le nombre de sommets
+\end{definition}
+
+On note $h_i = x_{i+1}-x_i$ et $h = \max_{1\leq i \leq \Nma} h_i$. le maillage
+est dit \emph{uniforme} si $h_i=h$ pour tout $i=\{1,...,\Nma\}$. Enfin on note
+$\calTh=\{I_i\}_{i=\{1,...,\Nma\}}$, $h$ représentant la finesse globale du
+maillage.
+
+\begin{remark}
+  \label{rem:1}
+  En 1D on a $\Nso = \Nma+1$, en dimension supérieure des relations existent
+  entre le nombre de sommets et de mailles en fonction du type de maille, ce
+  sont les \emph{relations d'Euler}.
+\end{remark}
+
+
+\subsection{Construction de l'espace d'approximation}
+\label{sec:constr-de-lesp}
+
+L'étape suivante est de choisir les \emph{fonctions de forme} ou
+\emph{fonctions de base} sur chaque maillage. On choisit les fonctions de
+$V_h$ telle que leur restriction sur chaque maillage soit un \emph{espace
+polynomial}.
+
+\begin{definition}{\textbf{Espaces \Pk}}
+  \label{def:24}
+  Soit un entier $k \leq 1$. En dimension 1, on appelle \Pk l'espace vectoriel
+  des polynômes à coefficients réels de degré inférieur ou égal à $k$
+\end{definition}
+
+On pose alors
+\begin{equation}
+  \label{eq:2}
+  W_h = \{w_h \in L^2(\Omega); \forall i \in \{ 1,...,\Nma\}, {w_h}_{|I_i} \in \Pk\}
+\end{equation}
+$W_h$ est un espace de dimension finie égale à $(k+1)*\Nma$ mais il n'est pas
+inclus dans $H^1_0(\Omega)$ et ne peut donc pas être utilisé pour
+l'approximation du problème~(\ref{eq:FV}). En effet les fonctions de $w_h \in W_h$
+peuvent être discontinues aux interfaces entre les maillages et un résultat
+d'analyse fonctionnelle montre que dans ces conditions $w_h \ni
+H^1(\Omega)$. Par ailleurs les fonctions de $W_h$ ne sont pas nécessairement
+nulles au bord de $\Omega$. On pose donc
+\begin{equation}
+  \label{eq:3}
+  V_h = W_h \cap H^1_0(\Omega).
+\end{equation}
+en d'autres termes, en dimension, on a
+\begin{equation}
+  \label{eq:5}
+  V_h = \left\{ v_h \in {\cal C}^0 (a,b) \; ; \; {v_h}_{|I_i} \in \Pk \hbox{ et } v_h(a)=v_h(b)=0 \right\}
+\end{equation}
+%
+Le problème approché sur $V_h$ est :
+\begin{equation}
+  \label{eq:11}
+  ({\cal Q}_h)\qquad \hbox{Trouver } u_h\in V_h \hbox{ tel que } a(u_h,v_h)=l(v_h), \quad\forall v_h\in V_h
+\end{equation}
+
+On s'intéresse à présent à des exemples concrets d'espaces d'approximations
+dans les deux sections suivantes \ref{sec:element-fini-de} et
+\ref{sec:element-fini-de-1}.
+
+\subsection{Element fini de Lagrange \Pk[1]}
+\label{sec:element-fini-de}
+
+On introduit les espaces vectoriels suivants:
+\begin{equation}
+  \label{eq:7}
+  \Pch[1] = \{ v_h \in C^0(\Omega);\; \forall i \in \{ 1,...,\Nma\} {v_h}_{|I_i} \in \Pk[1]  \}
+\end{equation}
+et
+\begin{equation}
+  \label{eq:8}
+  \Pcho[1] = \{ v_h \in \Pch[1];\; v_h(a)=v_h(b)=0 \}
+\end{equation}
+
+Les éléments de ces espaces sont des fonctions \emph{continues} et affines par
+morceaux. Ils sont dérivables par morceaux sur chaque maille et ils sont
+continus aux interfaces entre les mailles.
+On a le résultat d'analyse fonctionnelle suivant:
+\begin{theorem}
+  \label{thr:3}
+  $\Pch[1] \subset H^1(\Omega)$ et $\Pcho[1] \subset H^1_0(\Omega)$.
+\end{theorem}
+
+On introduit la famille de fonctions $\{\varphi_1,...,\varphi_\Nso\}$ que l'on
+définit sur chaque maille de la manière suivante, pour tout $i  \in
+\{2,...,\Nso-1\}$,
+\begin{equation}
+  \label{eq:18}
+  \varphi_i(x) = \left\{
+    \begin{split}
+      \ds{\frac{1}{h_{i-1}} (x-x_{i-1})} & \mbox{ si } x \in I_{i-1}\\
+      \ds{\frac{1}{h_{i}} (x_{i+1}-x)} & \mbox{ si } x \in I_{i}\\
+      0 & \mbox{ sinon},
+    \end{split}
+  \right.
+\end{equation}
+et
+\begin{equation}
+  \label{eq:19}
+  \begin{split}
+  \varphi_1(x) &= \left\{
+    \begin{split}
+      \ds{\frac{1}{h_{1}} (x_2-x)} & \mbox{ si } x \in I_{1}\\
+      0 & \mbox{ sinon},
+    \end{split}
+  \right.\\
+  \varphi_\Nso(x) &= \left\{
+    \begin{split}
+      \ds{\frac{1}{h_{\Nso-1}} (x-x_{\Nso-1})} & \mbox{ si } x \in I_{\Nso-1}\\
+      0 & \mbox{ sinon},
+    \end{split}
+  \right.
+  \end{split}
+\end{equation}
+
+\begin{remark}
+  \label{rem:6}
+  Les fonctions $(\varphi_i)_{i=1,...,\Nso}$ sont dans $\Pch[1]$ et
+  $(\varphi_i)_{i=2,...,\Nso-1}$ sont dans $\Pcho[1]$.
+\end{remark}
+\begin{remark}
+  \label{rem:7}
+  Les fonctions $(\varphi_i)_{i=1,...,\Nso}$ satisfont les relations
+  \begin{equation}
+    \label{eq:20}
+    \varphi_i(x_j) = \delta_{ij},\quad i,j \in \{1,...,\Nso\},
+  \end{equation}
+  où $\delta_{ij}$ désigne le symbole de Kronecker tel que $\delta_{ij} = 1$
+  si $i=j$ et $\delta_{ij}=0$ si $i \neq j$.
+\end{remark}
+
+Les fonctions $\varphi_i$ sont appelées \emph{fonctions chapeau} du fait de
+leur graphe, voir figure~\ref{fig:chapeau}.
+%
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.48\linewidth]{FIG/chapeau.jpg}
+%\vspace*{4 cm}
+\caption{Fonction de base $\varphi_i$}
+\label{fig:chapeau}
+\end{center}
+\end{figure}
+
+
+\begin{proposition}
+  \label{prop:4}
+  \begin{enumerate}
+  \item   La famille $\{\varphi_1,...,\varphi_\Nso\}$ est une base de $\Pch[1]$.
+  \item   La famille $\{\varphi_2,...,\varphi_{\Nso-1}\}$ est une base de $\Pcho[1]$.
+  \end{enumerate}
+\end{proposition}
+\begin{corollary}
+  $\dim \Pch[1] = \Nso = \Nma+1$ et $\dim \Pcho[1] = \Nso-2 = \Nma-1$.
+\end{corollary}
+
+On introduit l'\emph{opérateur d'interpolation} suivant:
+\begin{equation}
+  \label{eq:21}
+  \Ich[1] : \Ck[0](\bar{\Omega}) \ni v \mapsto \sum_{i=1}^\Nso v(x_i)
+  \varphi_i \in \Pch[1].
+\end{equation}
+Pour toute fonction $v \in \Ck[0](\bar{\Omega})$, $\Ich[1] v$ est la seule
+fonction continue affine par morceaux prenant les mêmes valeurs que $v$ aux
+sommets $x_i, i=1,...,\Nso$.  $\Ich[1] v$ est appelée l'\emph{interpolé de
+Lagrange} de $v$ de degré $1$.
+
+\begin{remark}
+  \label{rem:8}
+  En dimension 1, les fonctions de $H^1(\Omega)$ sont \emph{continues}, on
+  peut donc voir \Ich[1] comme un opérateur de $H^1(\Omega)$ dans
+  $H^1(\Omega)$. On montre qu'il est continu et que sa norme
+  $\|\Ich[1]\|_{\mathcal{L}(H^1(\Omega),H^1(\Omega))}$ est uniformément bornée en
+  $h$, c'est à dire qu'il existe une constante $c$, indépendante de $h$, telle
+  que pour tout $v \in H^1(\Omega)$
+  \begin{equation}
+    \label{eq:22}
+    \|\Ich[1] v \|_{1,\Omega} \leq c \|v\|_{1,\Omega}
+  \end{equation}
+\end{remark}
+
+\subsubsection{Estimation de l'erreur d'interpolation}
+\label{sec:estim-de-lerr}
+
+\begin{proposition}
+  \label{prop:5}
+  Pour tout $h$, et tout $v \in H^2(\Omega)$, on a
+  \begin{equation}
+    \label{eq:23}
+    \|v - \Ich[1] v\|_{0,\Omega} \leq h^2 |v|_{2,\Omega}\quad \mbox{ et }\quad |v - \Ich[1] v|_{1,\Omega} \leq h |v|_{2,\Omega}
+  \end{equation}
+\end{proposition}
+
+On dit que l'erreur d'interpolation est d'ordre 2 en norme $L^2$ et d'ordre 1
+en semi-norme $H^1$ et donc en norme $H^1$.
+
+
+\subsection{Element fini de Lagrange \Pk}
+\label{sec:element-fini-de-1}
+
+On introduit les espaces vectoriels suivants:
+\begin{equation}
+  \label{eq:9}
+  \Pch = \{ v_h \in C^0(\Omega);\; \forall i \in \{ 1,...,\Nma\}, {v_h}_{|I_i} \in \Pk\}
+\end{equation}
+et
+\begin{equation}
+  \label{eq:10}
+  \Pcho = \{ v_h \in \Pch;\; v_h(a)=v_h(b)=0 \}
+\end{equation}
+
+\subsubsection{Operateur d'interpolation}
+\label{sec:oper-dint}
+
+On introduit l'\emph{opérateur d'interpolation} suivant:
+\begin{equation}
+  \label{eq:24}
+    \Ich : \Ck[0](\bar{\Omega}) \ni v \mapsto \sum_{i=1}^\Nno v(x_i)  \varphi_i \in \Pch.
+\end{equation}
+Pour toute fonction $v \in \Ck[0](\bar{\Omega})$, $\Ich v$ est la seule
+fonction continue polynomial de degré $k$ par morceaux prenant les mêmes
+valeurs que $v$ aux sommets $x_i, i=1,...,\Nso$. $\Ich v$ est appelée
+l'\emph{interpolé de Lagrange} de $v$ de degré $k$.
+
+\begin{remark}
+  \label{rem:9}
+  En dimension 1, les fonctions de $H^1(\Omega)$ sont \emph{continues}, on
+  peut donc voir \Ich comme un opérateur de $H^1(\Omega)$ dans
+  $H^1(\Omega)$. On montre qu'il est continu et que sa norme
+  $\|\Ich\|_{\mathcal{L}(H^1(\Omega),H^1(\Omega))}$ est uniformément bornée en
+  $h$, c'est à dire qu'il existe une constante $c$, indépendante de $h$ mais
+  dépendante de $k$, telle
+  que pour tout $v \in H^1(\Omega)$
+  \begin{equation}
+    \label{eq:25}
+    \|\Ich v \|_{1,\Omega} \leq c \|v\|_{1,\Omega}
+  \end{equation}
+\end{remark}
+
+
+Le résultat suivant permet d'estimer la précision de l'opérateur
+d'interpolation \Ich,
+\begin{proposition}
+  \label{prop:2}
+  Il existe une constante $c$, indépendante de $h$ mais dépendante de $k$,
+  telle que pour tout $h$ et pour tout $v \in H^{k+1}(\Omega)$, on a
+  \begin{equation}
+    \label{eq:14}
+    \|v - \Ich{v}\|_{0,\Omega} + h |v - \Ich{v}|_{1,\Omega}  \leq c\; h^{k+1}\; |v|_{k+1,\Omega}
+  \end{equation}
+  et
+  \begin{equation}
+    \label{eq:15}
+    \sum_{m=2}^{k+1} h^m \left( \sum_{i=0}^N |v - \Ich{v}|^2_{m,I_i}\right)^{1/2}  \leq c\; h^{k+1}\; |v|_{k+1,\Omega}
+  \end{equation}
+\end{proposition}
+\begin{remark}
+  \label{rem:4}
+  L'estimation~(\ref{eq:14}) montre que l'erreur d'interpolation est d'ordre
+  $k+1$ en norme $\|\cdot\|_{0,\Omega}$ et qu'elle est d'ordre $k$ en norme
+  $|\cdot|_{1,\Omega}$. Elle est donc d'ordre $k$ en norme
+  $\|\cdot\|_{1,\Omega}$.
+\end{remark}
+
+\subsection{Analyse de convergence}
+\label{sec:analyse-de-conv}
+
+Nous nous intéressons à présent à l'analyse de la convergence de $u_h$ du
+problème approché de~(\ref{eq:11}) vers la solution $u$ du problème
+exact~(\ref{eq:FV}) lorsque $V_h=\Pcho[1]$ ou plus généralement $V_h=\Pcho,\;
+k\geq 1$.
+
+\subsubsection{Estimation en norme $H^1$}
+\label{sec:estimation-en-norm}
+
+Il s'agit dans un premier temps d'estimer l'erreur $u-u_h$ en norme
+$H^1$. Pour cela on part de l'estimation~(\ref{eq:cea}), on a
+\begin{equation}
+  \label{eq:12}
+  \begin{split}
+    \|u-u_h\|_{1,\Omega} &\leq c\; \inf_{v_h \in \Pcho} \|u-v_h\|_{1,\Omega}\\
+    & \leq c\;  \|u-\Ich{u}\|_{1,\Omega}\\
+    & \leq c\; h^k |u|_{k+1,\Omega}
+  \end{split}
+\end{equation}
+pourvu que la solution exacte soit suffisamment régulière, c'est à dire $u \in
+H^{k+1}(\Omega)$.
+
+\begin{remark}
+  \label{rem:2}
+  On notera que $\Ich{u} \in \Pcho$ puisque $u \in H^1_0(\Omega)$ et donc que
+  $\Ich{u}(a)=\Ich{u}(b)=0$.
+\end{remark}
+
+On a donc le résultat suivant
+\begin{proposition}
+  \label{prop:1}
+  Soit un entier $k\geq 1$. On suppose que la solution du
+  problème~(\ref{eq:FV}) est dans $H^{k+1}(\Omega)$. On note $u_h$ la solution
+  du problème approché~(\ref{eq:11}) avec l'espace d'approximation $V_h =
+  \Pcho$. \textbf{Alors}, il existe une constante $c$, indépendante de $h$,
+  telle que
+  \begin{equation}
+    \label{eq:13}
+        \|u-u_h\|_{1,\Omega} \leq c\; h^k |u|_{k+1,\Omega}
+  \end{equation}
+\end{proposition}
+
+\begin{remark}
+  \label{rem:3}
+  On dit que l'estimation d'erreur~(\ref{eq:13}) est \emph{optimale} car elle
+  est du même ordre que l'erreur d'interpolation en norme $H^1$, voir la
+  proposition~\ref{prop:2}.
+\end{remark}
+
+
+\subsubsection{Estimation en norme $L^2$}
+\label{sec:estimation-en-norme}
+
+\begin{proposition}
+  \label{prop:3}
+  Avec les hypothèses de la proposition~\ref{prop:1} et en supposant que
+  $\alpha \in \Ck[1](\bar{\Omega})$, \textbf{Alors}, il existe une constante
+  $c$, indépendante de $h$, telle que
+  \begin{equation}
+    \label{eq:16}
+    \|u-u_h\|_{0,\Omega} \leq c\; h^{k+1} |u|_{k+1,\Omega}
+  \end{equation}
+\end{proposition}
+
+\begin{remark}
+  \label{rem:5}
+  On dit que l'estimation d'erreur~(\ref{eq:16}) est \emph{optimale} car elle
+  est du même ordre que l'erreur d'interpolation en norme $L^2$, voir la
+  proposition~\ref{prop:2}.
+\end{remark}
+
+\subsection{Formulation algébrique $V_h=\Pch[1]$}
+\label{sec:form-algebr}
+
+En décomposant la solution approchée $u_h$ sur cette base sous la forme
+$\ds{u_h = \sum_{i=1}^N \mu_i \; \varphi_i}$, on obtient, comme au paragraphe
+\ref{sec:general}, le système linéaire $A\mu=b$, avec : \be
+\begin{array}{rcl}
+A_{ji}=a(\varphi_i,\varphi_j) & = & \ds{\int_a^b \left[ \varphi_i'(x) \varphi_j'(x)  + c(x) \varphi_i(x) \varphi_j(x)\right]\; dx }\\
+ & = & \ds{ \sum_{k=0}^N \int_{x_k}^{x_{k+1}} \left[\varphi_i'(x) \varphi_j'(x)  + c(x) \varphi_i(x) \varphi_j(x)\right]\; dx }
+\end{array}
+\ee
+%
+Le support de $\varphi_i$ étant réduit \`a $[x_{i-1},x_{i+1}]$, on en
+déduit que \be \left\{
+\begin{array}{lll}
+a(\varphi_i,\varphi_j) & = & 0 \qquad \hbox{si }|i-j|\ge 2\\
+& & \\
+a(\varphi_i,\varphi_{i+1}) & = & \ds{ \int_{x_i}^{x_{i+1}} \left[ \varphi_i'(x) \varphi_{i+1}'(x)  + c(x) \varphi_i(x) \varphi_{i+1}(x)\right] \; dx}\\
+& & \\
+a(\varphi_i,\varphi_{i-1}) & = & \ds{ \int_{x_{i-1}}^{x_i} \left[ \varphi_i'(x) \varphi_{i-1}'(x)  + c(x) \varphi_i(x) \varphi_{i-1}(x)\right] \; dx}\\
+& & \\
+a(\varphi_i,\varphi_{i}) & = & \ds{ \int_{x_{i-1}}^{x_{i+1}} \left[ \varphi_i'^2(x) + c(x) \varphi_i^2(x)\right] \; dx}\\
+\end{array}\right.
+\ee
+%
+$A$ est donc tridiagonale.
+
+\section{Exercices}
+\label{sec:exercices}
+%
+\begin{enumerate}
+\item Dans le \S\ref{sec:lax-milgram}, montrer que, dans le cas où $a$ est
+  symétrique, si $u$ est solution du problème variationnel, alors elle est
+  solution du problème de minimisation.
+\item Montrer que $\nabla J[u](v) = a(u,v) - l(v)$.
+\item Montrer que, si $a$ est coercive, la matrice $A$ de (\ref{eq:lin}) est
+  inversible. (C'est donc la démonstration du théorème de Lax-Milgram en
+  dimension finie.)
+\item Pour l'exemple 1-D traité dans ce chapitre, démontrer qu'on est bien
+  dans les hypothèses du théorème de Lax-milgram
+\item Calculer explicitement la matrice $A$ pour cet exemple.
+\item Pour le problème 2-D du \S \ref{sec:modele-2D}, montrer que la
+  formulation variationelle (\ref{eq:FV2}) admet une solution unique, qui est
+  aussi solution classique si $f \in H^2(\Omega)$.
+\item Démontrer les résultats du \S\ref{sec:elliptique}
+\end{enumerate}
+
+\section{TP1}
+\label{sec:tp1}
+\input{exercices/exo1}
+
+%%% Local Variables:
+%%% coding: utf-8
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% TeX-parse-self: t
+%%% TeX-auto-save: t
+%%% x-symbol-8bits: nil
+%%% TeX-auto-regexp-list: TeX-auto-full-regexp-list
+%%% TeX-master: "mef-intro"
+%%% ispell-local-dictionary: "american"
+%%% End:
