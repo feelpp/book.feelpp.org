@@ -64,5 +64,5 @@ function loadFile( url, timeout, callback) {
 // see modcover for details
 var cover = function( kv={} ) {
     svgfile="/images/book_cover_simple.svg"
-    loadFile(svgfile, 2000, modcover, kv);
+    loadFile(svgfile, 10000, modcover, kv);
 }
