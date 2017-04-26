@@ -1,0 +1,752 @@
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage{subfigure}
+\newcommand{\goodgap}{%
+  \hspace{\subfigtopskip}%
+  \hspace{\subfigbottomskip}}
+\usepackage{url}
+
+
+
+\usepackage[frenchb]{babel}
+\usepackage[]{exercise}
+%
+\usepackage[exerciseonly]{exercise}
+\usepackage{graphicx}
+
+\input{../../../mymacros}
+
+%%\usepackage[colorlinks=true]{hyperref}
+
+\parindent=0pt
+
+\begin{document}
+
+%\vspace*{-25mm}
+\centerline{
+Nom: \rule{5cm}{1pt} \quad
+Pr\'enom: \rule{5cm}{1pt}  \quad
+Salle: \rule{2cm}{1pt}
+}
+
+{\Large{
+\centerline{\bf Examen \footnote{
+\begin{flushright}
+{\small{\bf TOURNEZ LA PAGE, S.V.P.} - 5 Exercices}
+\end{flushright}}
+\quad - \quad  Calcul Scientifique \quad - \quad 13 Janvier 2014}}
+\centerline{\bf Pr. C. Prud'homme - CSMI}}
+
+
+\selectlanguage{francais}
+
+Il y a 5 exercices. Vous avez droit à une feuille de notes de cours
+recto-verso manuscripte. Les résolutions d'exercice sont
+\textbf{strictement} interdites sur cette feuille. Vous avez également
+droit à la calculatrice.
+
+\begin{Exercise}[label={ex:1}]
+
+On consid\`ere le syst\`eme d'equations diff\'erentielles suivant:
+\[
+  \left\{
+  \begin{array}{l}
+  y_1'(t) = - 3 y_1(t) - 4y_2(t) \qquad t>0\\
+  y_2'(t) = - y_1(t) - 2 y_2(t) \qquad t>0\\
+  y_1(0) = 1\\
+  y_2(0) = 1\\
+  \end{array}
+  \right.
+\]
+
+\Question
+Soit $h$ le pas de temps. Ecrire le sch\'ema d'Euler progressif
+pour r\'esoudre le syst\`eme donn\'e. On mettra ce syst\`eme sous
+une forme vectorielle du type :
+\begin{equation*}
+\begin{cases}
+      \mathbf{y}^\prime(t)=A\mathbf{y}(t)\\
+      \mathbf{y}(0) = \mathbf{y}_0
+\end{cases} \qquad
+\mathbf{y}(t) = \begin{pmatrix} y_1(t)\\y_2(t) \end{pmatrix}
+\end{equation*}
+o\`u $A$ est une matrice de taille $2 \times 2$.  \Question Afin
+d'\'etudier la stabilit\'e du sch\'ema d'Euler progressif, on
+consid\`ere la diagonalisation de la matrice $A=VDV^{-1}$, o\`u $D$
+est la matrice diagonale des valeurs propres de $A$ et $V$ est la
+matrice dont les colonnes sont les vecteurs propres correspondants. On
+introduit donc la transformation $\mathbf{x}^n=V^{-1}\mathbf{y}^n$.
+\subQuestion R\'e\'ecrire le sch\'ema d'Euler progressif en fonction de
+l'inconnue~$\mathbf{x}^n$, de $h$ et de la matrice diagonale $D$.
+\subQuestion D\'eterminer les \'el\'ements de la matrice diagonale $D$.
+
+\Question Etudier
+les propri\'et\'es de stabilit\'e absolue du sch\'ema d'Euler
+progressif.
+
+\Question
+On consid\`ere maintenant le syst\`eme d'\'equations
+diff\'erentielles
+\[
+  \left\{
+  \begin{array}{l}
+  y_1'(t) = - 3 y_1(t) - 4y_1(t)y_2(t) \qquad t>0\\
+  y_2'(t) = - y_1(t) - 2 y_1(t)y_2(t) \qquad t>0\\
+  y_1(0) = 1\\
+  y_2(0) = 1\\
+  \end{array}
+  \right.
+\]
+Ecrire le sch\'ema de Crank-Nicolson pour r\'esoudre le syst\`eme
+donn\'e.
+\Question
+Pour calculer la solution approch\'ee du syst\`eme introduit au
+point précédent au temps $t_{n+1}$ par la m\'ethode de Crank-Nicolson, il
+faut r\'esoudre un syst\`eme. Ecrire en d\'etail le syst\`eme \`a
+r\'esoudre; est-ce qu'il s'agit d'un syst\`eme lin\'eaire?
+\Question (\emph{facultatif})
+Quelle m\'ethode suggéreriez-vous pour r\'esoudre le syst\`eme
+trouv\'e au point pr\'ecedent?
+% D\'etaillez toutes les \'etapes
+% n\'ecessaires pour en calculer la solution.
+\end{Exercise}
+\newpage
+\begin{Answer}[ref={ex:1}]
+  \Question
+Le sch\'ema de Euler progressif en forme matricielle est le suivant:
+$$
+\left\{
+\begin{array}{rcl}
+\vect{y}_{n+1} & = & \vect{y}_n + h A \vect{y}_n = (I + h A) \vect{y}_n, \\
+\vect{y}_0 & = & (1, 1)^T,
+\end{array}\right.
+$$
+o\`u
+$$
+A =
+\begin{pmatrix}
+-3 & -4 \\
+-1 & -2
+\end{pmatrix}
+,
+$$
+et $\vect{y}_n$ est la solution approch\'ee dans l'instant temporel $t_n = nh$, $h$ \'etant
+le pas de discretisation.
+
+\Question
+Si $A = V D V^{-1}$, on a
+$$
+\left\{
+\begin{array}{rcl}
+\vect{x}_{n+1} & = & \vect{x}_n + h D \vect{x}_n = (I + h D) \vect{x}_n, \\
+\vect{x}_0 & = & V^{-1} (1, 1)^T,
+\end{array}\right.
+$$
+o\`u $\vect{x}_n = V^{-1} \vect{y}_n$. Comme $D$ est une matrice diagonale
+ayant pour \'el\'ements les valeurs propres de $A$, si on pose $\vect{x}_n = (x^1_n, x^2_n)^T$ le sch\'ema
+devient le suivant:
+$$
+\left\{
+\begin{array}{rcl}
+x^1_{n+1} & = & (1 + h \lambda_1) x^1_n, \\
+x^2_{n+1} & = & (1 + h \lambda_2) x^2_n, \\
+x^1_0 &=& 1 , \\
+x^2_0 &=& 1 .
+\end{array}\right.
+$$
+
+
+\Question
+Le sch\'ema est absolument stable si et seulement si
+$$
+|1 + h\lambda_i| < 1, \quad i = 1,2.
+$$
+Calculons les valeurs propres $\lambda_i$: le polyn\^ome
+characteristique de la matrice $A$ est
+$$
+p_A(\lambda) = \lambda^2 + 5 \lambda + 2,
+$$
+dont les racines sont les suivantes:
+$$
+\lambda_{1,2} = \frac{-5 \pm \sqrt{17}}{2}.
+$$
+Elles sont n\'egatives; donc
+la condition de stabilit\'e absolue devient
+$$
+h < \frac{2}{\max_{i=1,2} | \lambda_i| } = \frac{1}{5 + \sqrt{17}}.
+$$
+
+
+\Question
+Le sch\'ema de Crank-Nicholson est le suivant:
+$$
+\left\{
+\begin{array}{rcl}
+\vect{y}_{n+1} & = & \displaystyle
+\vect{y}_n + \frac{h}{2} (\vect{F}_{n+1} + \vect{F}_n ), \\ \\
+\vect{y}_0 & = & (1, 1)^T,
+\end{array}\right.
+$$
+o\`u
+$$
+\vect{F}_n = \vect{F}(\vect{y}_n),
+ \quad \text{avec} \
+\vect{F}(\vect{y}) =
+\begin{pmatrix}
+-3 y^1 -4 y^1y^2 \\
+-y^1 -2 y^1y^2
+\end{pmatrix}
+.
+$$
+
+\Question
+A chaque pas du sch\'ema de Crank-Nicholson, il faut r\'esoudre un syst\`eme
+(en g\'en\'eral non-lin\'eaire) ayant $\vect{y}_{n+1}$ comme inconnue:
+$$
+\vect{y}_{n+1} - \frac{h}{2} \vect{F}(\vect{y}_{n+1})  =  \vect{b}_n,
+$$
+o\`u $\vect{b}_n = \vect{y}_n  + \frac{h}{2} \vect{F}_n $ est donn\'e au pas $n$.
+Dans notre cas, si on pose $\vect{y}_{n+1} = (\alpha, \beta)^T$, on a:
+$$
+\left\{
+\begin{array}{lcl}
+(1 + \frac{3}{2}h) \alpha  + 2 h \alpha \beta  & = & b^1_n, \\
+(1 + \frac{1}{2}h) \alpha  +   h \alpha \beta  & = & b^2_n. \\
+\end{array}\right.
+$$
+
+ \Question
+ En g\'en\'eral, la m\'ethode de Newton peut \^etre utilis\'ee
+ \`a chaque pas des sch\'emas implicites.
+ La m\'ethode de Newton pour le sch\'ema de Crank-Nicolson
+ permet de construire une suite $\vect{y}_{n,k}$ telle que
+ $\vect{y}_{n,k} \to \vect{y}_{n+1}$ lorsque $k \to \infty$
+ (g\'en\'eralement le nombre d'iterations n\'ecessaires pour
+ atteindre la pr\'ecision machine est petit), de la
+ fa\c con suivante:
+ $$
+ \left\{
+ \begin{array}{rcl}
+ \vect{y}_{n,k+1} & = & \vect{y}_{n,k} -  (I - \frac{h}{2}J(\vect{y}_{n,k}))^{-1}
+ (\vect{y}_{n,k} - \frac{h}{2} \vect{F}(\vect{y}_{n,k}) - \vect{b}_n), \\
+ \vect{y}_{n,0} & = & \vect{y}_n,
+ \end{array}\right.
+ $$
+ o\`u $J(\vect{y}) = \frac{\partial \vect{F}}{\partial \vect{y}}$ est le
+ Jacobien de $\vect{F}(\vect{y})$, qui dans notre cas est
+ $$
+ J(\vect{y}) =
+ \begin{pmatrix}
+ -3  -4 y^2 & - 4 y^1 \\
+ -1 -2 y^2 & -2 y^1
+ \end{pmatrix}.
+ $$
+ {\it Remarque:} dans le cas particulier de cet exercice, il est possible de
+trouver facilement la solution analytique
+ $$
+ \alpha = \frac{2b_n^2 - b_n^1}{1 - h/2}, \quad \beta = \frac{b_n^2 - ( 1 + h/2) \alpha}{h \alpha};
+ $$
+ cependant le but de l'exercice est de discuter l'utilisation de la m\'ethode
+ de Newton pour les sch\'emas implicites.
+
+
+
+\end{Answer}
+
+
+
+\begin{Exercise}[label={ex:2}]
+
+On consid\`ere la fonction \`a valeurs r\'eelles $f(x) = 4
+e^{x/4} - 6$ dans l'intervalle $(0,4)$.
+
+\Question
+Montrer qu'il existe un z\'ero $\alpha$ pour la fonction $f$ dans
+l'intervalle $(0,4)$ et trouver $\alpha$ de fa\c con analytique (\emph{i.e.} la valeur de  $\alpha$).
+\Question
+Peut-on appliquer la m\'ethode de la bissection pour calculer
+$\alpha$? Justifiez votre r\'eponse.
+\Question
+Pour approcher le z\'ero $\alpha$ on consid\'ere les m\'ethodes
+de point fixe $x^{(k+1)} = \phi_i (x^{(k)})$, $i=1,2,3$, avec
+\[
+  \phi_1(x) = x + 4 e^{\frac{x}{4}} - 6; \quad \phi_2(x) = x - 4 + 6
+  e^{-\frac{x}{4}}; \quad \phi_3(x) = x -
+  \frac{e^{\frac{x}{4}}}{16} + \frac{3}{32}.
+\]
+Etablir si les trois m\'ethodes sont convergentes et, en cas
+affirmatif, en \'etablir l'ordre de convergence.
+\Question
+Pour la m\'ethode de fonction $\phi_3$, montrer que dans $(0,4)$
+on a la relation suivante:
+\[
+  | x^{(k+1)} - \alpha | \leq C |x^{(k)} - \alpha|, \quad C<1
+\]
+et proposer une estimation pour la constante $C$.
+\Question
+Finalement, pour la m\'ethode de fonction $\phi_3$, d\'eterminer
+le nombre minimal d'it\'erations n\'ecessaires pour avoir une
+erreur inf\'erieure \`a $10^{-6}$, lorsq'on a choisi $x^{(0)}$
+tel que $|x^{(0)} - \alpha|<2$.
+\end{Exercise}
+\newpage
+\begin{Answer}[ref={ex:2}]
+\Question
+On a $f(0) = -2 < 0$, $f(4) = 4 e - 6 > 0$; $f$ \'etant continue,
+$\exists \alpha \in (0,4): \ f(a) = 0$.
+Le z\'ero est unique (parce que $f$ est croissante), et son expression explicite est
+$$
+\alpha = 4 \ln \frac{3}{2}.
+$$
+
+\Question
+Vu que $f(0)f(4) <0$, on peut bien appliquer la m\'ethode de bissection pour calculer le
+z\'ero $\alpha$.
+
+\Question
+Il est facile de prouver que $\alpha$ est un point fixe de $\phi_i$, pour $i = 1,2,3$.
+La m\'ethode $i$ est (localement) convergente si
+$$
+| \phi_i'(\alpha) | < 1;
+$$
+donc, vu que
+$$
+\phi'_1(\alpha) = 5/2 > 1, \quad
+\phi'_2(\alpha) = 0, \quad
+\phi'_3(\alpha) = 125/128,
+$$
+on a que la m\'ethode 1 n'est pas convergente, tandis que les m\'ethodes 2 et 3
+le sont; la m\'ethode 2 est d'ordre 2 car $\phi'_2(\alpha) = 0$, et la m\'ethode 3 est d'ordre 1.
+
+{\it Remarque}: Gr\^ace \`a
+$$
+\phi_2'(x) = 1 - \frac{3}{2} e^{-x/4}, \quad \phi_3'(x) = 1 - \frac{e^{x/4}}{64},
+$$
+on peut v\'erifier que pour $i = 1,2$ on a $\max _{x\in [0,4]} | \phi_i'(x) | < 1$,
+donc le m\'ethodes 1 et 2 sont globalement convergentes sur $(0,4)$.
+
+\Question
+On a:
+$$
+| x^{(k+1)} - \alpha | = | \phi_3(x^{(k)}) - \phi_3(\alpha) |
+ = | \phi'_3(\xi) (x^{(k)} - \alpha) | \leq C |(x^{(k)} - \alpha) |,
+$$
+o\`u $\xi \in (0,4)$ et
+$$
+C = \max_{\xi \in[0,4]} | \phi_3'(\xi)| = 1 - \frac{1}{64}.
+$$
+
+\Question
+Comme $| x^{(k)} - \alpha | \leq | x^{(0)} - \alpha | C^n = 2 C^n$,
+on veut trouver le plus petit des $n$ tels que $2 C^n < 10^{-6}$.
+Donc
+$$
+n > \frac{\ln 2 + 6 \ln 10}{- \ln C} = \frac{\ln 2 + 6 \ln 10}{\ln(64/63)},
+$$
+d'o\`u $n \geq 921$.
+
+\end{Answer}
+
+\begin{Exercise}[label={ex:3}]
+\ExePart
+On consid\`ere le syst\`eme lin\'eaire $A\mathbf{x} = \mathbf{b}$
+avec
+\[
+  A = \begin{pmatrix} \frac{9}{4} & 0 & - \frac{1}{4}\\
+  0 & \frac{3}{2} & 0 \\
+  - \frac{1}{4} & 0 & \frac{9}{4}
+  \end{pmatrix}
+  \qquad \textrm{et} \qquad \mathbf{b} = \begin{pmatrix} 2 \\ 3 \\
+  2 \end{pmatrix}
+\]
+
+\Question
+Si l'on veut r\'esoudre ce syst\`eme par une m\'ethode directe,
+laquelle utiliseriez-vous? Justifiez votre r\'eponse et calculez
+la factorisation de la matrice $A$ corr\'espondante \`a la
+m\'ethode choisie.
+\Question
+On veut appliquer maintenant la m\'ethode de Richardson
+stationnaire
+\[
+  \mathbf{x}^{(k+1)} = \mathbf{x}^{(k)} + \alpha (\mathbf{b} - A
+  \mathbf{x}^{(k)}), \quad k \geq 0.
+\]
+Calculer le param\`etre optimal $\alpha_{opt}$ pour la m\'ethode.
+
+% \Question
+% Rappeler quel est le facteur $C$ de reduction de l'erreur tel que
+% \[
+%   \| \mathbf{x}^{(k)} - \mathbf{x} \|_A \leq 2 C^k \|
+%   \mathbf{x}^{(0)} - \mathbf{x} \|_A
+% \]
+% pour la m\'ethode du gradient conjugu\'e sans pr\'econditionneur
+% ($P=I$).
+% \Question
+% En supposant de choisir $\mathbf{x}^{(0)}$ tel que $\|
+% \mathbf{x}^{(0)} - \mathbf{x} \|_A =2$, estimer le nombre minimal
+% d'it\'erations pour avoir une erreur plus petite que $10^{-6}$ en
+% utilisant la m\'ethode du gradient conjugu\'e sans
+% pr\'econditionneur.
+
+\ExePart On consid\`ere à présent le syst\`eme lin\'eaire $A\mathbf{x} = \mathbf{b}$, o\`u
+\[
+  A =
+  \left[
+  \begin{array}{ccc}
+  1      & \alpha & 0 \\
+  -2\alpha & 2     & -2\alpha \\
+  0      & \alpha & 1
+  \end{array}
+  \right],
+  \qquad
+\mathbf{b} =
+\begin{bmatrix}
+1 + \alpha\\ 2 - 4\alpha \\ 1 + \alpha
+\end{bmatrix},
+\qquad \alpha \in \mathbb{R} \; .
+\]
+
+
+\Question
+Sans \'ecrire les matrices d'it\'erations $B_J$ et $B_{GS}$, donner
+un intervalle $I$ telle que les m\'ethodes de
+Jacobi et de Gauss--Seidel soient convergentes $\forall \alpha \in I$.
+\Question
+\'Ecrire les matrices d'it\'erations $B_J$ et $B_{GS}$ pour les m\'ethodes de
+Jacobi et de Gauss--Seidel.
+\Question
+D\'eterminer pour quelles valeurs du param\`etre $\alpha \in \mathbb{R}$ les
+deux m\'ethodes sont convergentes.
+Montrer que si les m\'ethodes convergent, celle de Gauss--Seidel est plus
+rapide de celle de Jacobi
+\Question
+Est-ce qu'on peut appliquer la m\'ethode du gradient (Richardson dynamique)
+pour r\'esoudre le syst\`eme donn\'e?
+
+
+
+\end{Exercise}
+
+\newpage
+
+\begin{Answer}[ref={ex:3}]
+\ExePart
+\Question
+La matrice $A$ est sym\'etrique, avec diagonale strictement dominante, ce qui implique qu'elle est aussi
+d\'efinie positive. Donc, la m\'ethode directe \`a utiliser est
+la factorisation de Cholesky, avec laquelle on trouve $A = H H^T$,
+o\`u $H$ est la matrice triangulaire inf\'erieure suivante:
+$$
+H =
+\begin{pmatrix}
+3/2   &     0      & 0 \\
+ 0    & \sqrt{3/2} & 0 \\
+- 1/6 &     0      & \sqrt{20/9}
+\end{pmatrix}
+$$
+
+\Question
+On a
+$$
+\alpha_{\text{opt}} = \frac{2}{\lambda_{\text{min}} + \lambda_{\text{max}}},
+$$
+o\`u $\lambda_{\text{min}}$ et $\lambda_{\text{max}}$ sont respectivement
+la plus petite et la plus grande valeur propre de $A$.
+Comme
+$$
+\det (A - \lambda I) = - \left( \frac{3}{2} - \lambda \right)
+\left( \frac{10}{4} - \lambda \right) \left( \frac{8}{4} - \lambda \right),
+$$
+on trouve
+$$
+\lambda_{\text{min}} = 3/2, \quad \lambda_{\text{max}} = 5/2,
+$$
+et donc $\alpha_{\text{opt}} = \frac{1}{2}$.
+
+% \Question
+% Pour la m\'ethode du gradient conjugu\'e,
+% $$
+% C = \frac{\sqrt{K_2(A)} - 1}{\sqrt{K_2(A)} + 1} =
+% \frac{\sqrt{\lambda_{\text{max}}} - \sqrt{\lambda_{\text{min}}} }{ \sqrt{\lambda_{\text{max}}} +
+% \sqrt{\lambda_{\text{min}}} } = 1 - \frac{\sqrt{15}}{4}.
+% $$
+
+% \Question
+% On cherche $n$ tel que $4 C^n < 10^{-6}$, d'o\`u
+% $$
+% n > \frac{\ln 4 + 6 \ln 10}{\ln \frac{4}{4 - \sqrt{15}}} \simeq 4.4,
+% $$
+% ce qui donne $n \geq 5$. En fait en arithm\'etique exacte  avec
+% $n=3$ it\'erations on obtient la solution.
+
+\ExePart
+
+\Question
+On impose que A soit une matrice \`a diagonale dominante stricte
+par ligne, et on trouve les conditions suivantes:
+$$
+|\alpha| <1, \qquad |2\alpha| + |2\alpha| < 2,
+$$
+c'est-\`a-dire
+$$
+|\alpha| < \frac{1}{2}.
+$$
+Donc on peut donner l'intervalle $I = (-1/2, 1/2)$.
+
+\Question
+Soit $A = D - (E+F)$, o\`u $D = \text{diag}(\text{diag}(A))$,
+$E = - \text{tril}(A,-1)$, et $F = - \text{triu}(A,1)$.
+La matrice d'it\'eration de la m\'ethode de Jacobi est
+\[
+  B_J = D^{-1} (E+F) =
+  \left[
+  \begin{array}{ccc}
+   0     & -\alpha & 0 \\
+   \alpha &      0 & \alpha \\
+   0     & -\alpha & 0
+  \end{array}
+  \right] \; ,
+\]
+tandis que celle de Gauss--Seidel est
+\begin{eqnarray*}
+  B_{GS} = (D-E)^{-1} F &=&
+  {\left[
+   \begin{array}{ccc}
+    1      &  0    & 0 \\
+    -2\alpha &  2    & 0 \\
+    0      & \alpha & 1
+  \end{array}
+  \right]}^{-1}
+  \left[
+  \begin{array}{ccc}
+   0 &  -\alpha & 0 \\
+   0 &       0 & 2\alpha \\
+   0 &       0 & 0
+  \end{array}
+  \right] \\
+  &=&
+  \left[
+   \begin{array}{ccc}
+    1     &  0    & 0 \\
+    \alpha &  1/2    & 0 \\
+    -\alpha^2 & -\alpha/2 & 1
+  \end{array}
+  \right]
+  \left[
+  \begin{array}{ccc}
+   0 &  -\alpha & 0 \\
+   0 &       0 & 2\alpha \\
+   0 &       0 & 0
+  \end{array}
+  \right] =
+  \left[
+  \begin{array}{ccc}
+   0 & -\alpha   & 0 \\
+   0 & -\alpha^2 & \alpha \\
+   0 &  \alpha^3 & -\alpha^2
+  \end{array}
+  \right] \; .
+\end{eqnarray*}
+
+\Question
+On calcule le rayon spectral de la matrice d'it\'eration de la m\'ethode de
+Jacobi $B_J$; les valeurs propres sont donn\'ees par:
+\[
+  \textrm{det} (B_{J} - \lambda I)
+  =\textrm{det} \left|
+                   \begin{array}{ccc}
+                   -\lambda & -\alpha   & 0 \\
+                     \alpha & -\lambda  & \alpha \\
+                         0 &  -\alpha & - \lambda
+                   \end{array}
+	      \right|
+  = -\lambda ( \lambda^2 + 2\alpha^2) = 0\; ,
+\]
+et donc on a $\lambda_1 = 0$, $\lambda_{2,3} = \pm i |\alpha| \sqrt{2}$.
+Le rayon spectral est $\rho_J (B_J) = |\alpha| \sqrt{2}$. La m\'ethode de Jacobi
+converge si et seulement si $\rho_J (B_J) < 1$ et donc si et seulement si
+$ - 1/ \sqrt{2} < \alpha < 1/ \sqrt{2} $.
+
+\vspace{2mm}
+
+On calcule maintenant le rayon spectral de la matrice $B_{GS}$.
+Les valeurs propres de cette matrice sont donn\'ees par:
+\[
+  \textrm{det} (B_{GS} - \lambda I)
+  =\textrm{det} \left|
+                   \begin{array}{ccc}
+                   -\lambda & -\alpha          & 0 \\
+                        0 & -\alpha^2 -\lambda & \alpha \\
+                        0 &  \alpha^3 & -\alpha^2 - \lambda
+                   \end{array}
+	      \right|
+  = -\lambda^2 ( \lambda + 2\alpha^2) = 0\; ,
+\]
+d'o\`u $\lambda_{1,2} = 0$ et $\lambda_3 = - 2\alpha^2$.
+Le rayon spectrale est donc $\rho_{GS} (B_{GS}) = 2\alpha^2$. On sait que la
+m\'ethode converge si et seulement si $\rho_{GS} (B_{GS}) < 1$ et donc si et
+seulement si $-(1/ \sqrt{2}) < \alpha < (1/ \sqrt{2}) \;$.
+On voit que $\rho_{GS} = \rho_J^2$ et donc la m\'ethode la plus rapide est celle
+de Gauss--Seidel.
+
+\Question
+La matrice $A$ n'est pas sym\'etrique, donc on ne peut pas utiliser
+la m\'ethode du gradient dynamique.
+
+\end{Answer}
+
+\begin{Exercise}[label={ex:4}]
+
+On consid\`ere la fonction continue $f(x) = x^2\sin(x)$ sur
+l'intervalle $[0,1]$.
+
+\Question
+Calculer le polyn\^ome de Lagrange $\Pi_2(x)$ de degr\'e 2
+interpolant la fonction $f$ aux n\oe uds \'equidistribu\'es
+$x_0=0$, $x_1=\frac{1}{2}$, $x_2=1$.
+\Question
+Estimer l'erreur $E_2(f)=\max_{x\in[0,1]} |f(x)-\Pi_2(x)|$
+commise.
+\Question
+On divise l'intervalle $[0,1]$ en $K$ sous-intervalles de
+longueur $h$ et on interpole la fonction $f$ par un polyn\^ome
+par morceaux $\Pi_h^1f(x)$ de degr\'e 1. Estimer le nombre $K$ de
+sous-intervalles qu'il faut consid\'erer pour que l'erreur
+commise $E_h^1(f)$ soit $\leq 10^{-4}$.
+\end{Exercise}
+
+\newpage
+\begin{Answer}[ref={ex:4}]
+  \Question
+On a
+$$
+x_0 = 0, \quad
+x_1 = 1/2, \quad
+x_2 = 1, \quad
+$$
+et
+$$
+f_0 = 0, \quad
+f_1 = \frac{1}{4} \sin(1/2), \quad
+f_2 = \sin(1). \quad
+$$
+Pour calculer $\Pi_2f(x)$, \'ecrivons
+$$
+\Pi_2 f(x) = f_0 \psi_0(x) + f_1 \psi_1(x) + f_2 \psi_2(x),
+$$
+o\`u $\{ \psi_i(x) \}_{i=1,2,3}$ est la base $\mathbb{P}_2$ de Lagrange
+associ\'ee aux points $x_0, x_1, x_2$:
+$$
+\psi_0(x) = 2x^2 - 3x +1, \quad
+\psi_1(x) = - 4x^2 + 4x, \quad
+\psi_2(x) = 2x^2 - x. \quad
+$$
+Donc on trouve:
+\begin{displaymath}
+\begin{split}
+\Pi_2 f(x) & = \frac{1}{4} \sin(1/2) (- 4x^2 + 4x) +
+\sin(1) (2x^2 - x) \\
+  & = (2 \sin(1) - \sin(1/2)) x^2 + (\sin(1/2) - \sin(1)) x.
+\end{split}
+\end{displaymath}
+
+\Question
+Les noeuds \'etant \'equir\'epartis, on a
+l'inegalit\'e suivante pour l'erreur d'interpolation:
+$$
+E_n(f) \leq \frac{1}{4(n+1)} h^{n+1} \max_{x \in [0,1]} \left|
+\frac{\de^{n+1} f(x)}{\de x^{n+1}} \right|
+$$
+o\`u $h$ est la longueur des sous-intervalles ($h= 1/n$
+pour l'intervalle $[0,1]$).
+Dans notre cas $n$ est \'egal \`a 2, et:
+\begin{align*}
+f'(x) & = 2 x \sin x + x^2 \cos x, \\
+f''(x) & = 2 \sin x + 4 x \cos x - x^2 \sin x, \\
+f'''(x) & = 6 \cos x - 6 x \sin x - x^2 \cos x;
+\end{align*}
+donc on a $|f'''(x)| \leq 13$ pour $x\in [0,1]$, ce qui donne
+$$
+E_2(f) \leq \frac{1}{4 \cdot 3} \frac{1}{2^3} 13 = \frac{13}{96} \simeq 0.1354.
+$$
+Une estimation plus pr\'ecise peut \^etre obtenue en observant que $f'''(x)$
+d\'ecro\^it pour $x\in[0,1]$ (il faut calculer $f^{(4)}$), donc
+$\max_{x \in [0,1]}|f'''(x)| = \max \{|f'''(0)|, |f'''(1)| \} = 6 $
+et $ E_2(f) \leq 1/16 = 0.0625$.
+
+\Question
+On exploite la formule de l'erreur d'interpolation lin\'eaire
+par intervalles:
+$$
+E^1_h(f) \leq \frac{h^2}{8} \max_{x \in[0,1]} | f''(x) |,
+$$
+o\`u $h = 1/n$.
+Il n'est pas \'evident de calculer le maximum de
+$|f''|$, mais comme pour $x\in [0,1]$ on a
+$$
+| f''(x) | = |2\sin x + 4x\cos x - x^2\sin x |
+= (2 - x^2)\sin x + 4x \cos x \leq 2 + 4 = 6,
+$$
+on trouve:
+$$
+E^1_h(f) \leq \frac{3}{4} n^{-2}.
+$$
+Pour obtenir $E^1_h(f) \leq 10^{-4}$,
+on peut choisir $n^2 \geq \frac{3}{4} 10^4$, d'o\`u
+$n \geq \frac{\sqrt{3}}{2} 100$ ($n = 87$ intervalles
+sont suffisantes).
+\end{Answer}
+
+
+\begin{Exercise}[label={ex:5}]
+
+  %%Soit $u(x,y,z)=\sin(\pi x) \cos( \pi y) \sin (\pi z)$ une fonction  $C^1$
+  %%à valeur reélle de $D = [-\frac{1}{2};\frac{1}{2}]^3 \subset\mathbb{R}^3$.
+
+  Soit $u(x,y,z)=\exp(x^2+y^2+z^2)$ une fonction  $C^1$  à valeur réelle
+  définie sur $D = \{ (z,y,z) \in \mathbb{R}^3,\ x^2+y^2+z^2 \leq 1,\ z \geq 0
+  \}.$ On note $\partial D$ le bord de $D$.
+
+  \begin{equation}
+    \label{eq:1}
+    \begin{array}{rl}
+      \displaystyle - \nabla \cdot ( k \nabla u ) + (\vec{c} \cdot \nabla ) u
+      + \beta u &= f, \quad \text{sur } D\\
+       \displaystyle  k \frac{\partial u}{\partial n} &= g, \quad \text{sur
+      } \Gamma_1 = \partial D \cap \{(x,y,z) \in \mathbb{R}^3, z\geq 0\} \\
+      \displaystyle  (\vec{c} \cdot \nabla ) u + k \frac{\partial u}{\partial
+      n} &= h, \quad \text{sur } \Gamma_2 = \partial D \backslash \{(x,y,z) \in \mathbb{R}^3,z\geq 0\}\  \\
+    \end{array}
+  \end{equation}
+  où $\Gamma_1 \cup \Gamma_2 = \partial D$. $f$, $g$ et $h$ sont des fonctions. $\beta, k$ sont deux constantes. $(\vec{c} \cdot
+  \nabla ) u$ est le champs scalaire $c_x \frac{\partial u}{\partial x} + c_y
+  \frac{\partial u}{\partial y} + c_z \frac{\partial u}{\partial z}$ et
+  $\vec{c} = (c_x,c_y, c_z) = (x^2+y^2+z^2)
+  (\overrightarrow{\imath}+\overrightarrow{\jmath} +\overrightarrow{k})$
+
+  \Question Esquisser la géométrie de $D$
+  \Question Est ce que $\overrightarrow{c}$ est un champs de vecteurs incompressible ?
+  \Question   Que doivent vérifier les fonctions $f$, $g$, $h$ en fonction de
+  $\overrightarrow{c}, k$, $x$, $y$ et $z$ pour que $u$ soit solution de \ref{eq:1}
+  \Question Démontrer que si $u$ satisfait l'équation \ref{eq:1}, alors, quelque soit le champ scalaire $v$ de classe $C^1$ ,
+on a :
+
+
+  % \begin{multline}
+  % \label{eq:4}
+  %   \iiint_D k \nabla u \cdot \nabla v\ + \big((\vec{c} \cdot \nabla) u\big)  v +\ \beta u\ v\ dV + \iint_{y\pm\frac{1}{2}}  \big((\vec{c} \cdot \nabla) u\big)  v dS  = \\
+  %   \iiint_D fv dV + \iint_{x\pm\frac{1}{2}}  g v dS + \iint_{z\pm\frac{1}{2}}  l v dS + \iint_{y\pm\frac{1}{2}}  h v dS
+  % \end{multline}
+
+  \begin{multline}
+  \label{eq:4}
+    \iiint_D k \nabla u \cdot \nabla v\ + \big((\vec{c} \cdot \nabla) u\big)  v +\ \beta u\ v\ dV + \iint_{\Gamma_2}  \big((\vec{c} \cdot \nabla) u\big)  v dS  = \\
+    \iiint_D fv dV + \iint_{\Gamma_1}  g v dS + \iint_{\Gamma_2}  h v dS
+  \end{multline}
+
+
+
+\end{Exercise}
+
+\end{document}

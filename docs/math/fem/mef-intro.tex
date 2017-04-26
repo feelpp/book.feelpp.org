@@ -1,0 +1,165 @@
+\documentclass[a4paper,final,12pt]{report}
+
+\usepackage{a4wide}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage{stmaryrd}
+\usepackage{femmacros}
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage{multido}
+\newtheorem{definition}{Définition}[chapter]
+%\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{vocabulary}{Vocabulaire}[chapter]
+%\newtheorem{theorem}{Théorème}[chapter]
+\newtheorem{example}{Exemple}[chapter]
+\newtheorem{corollary}{Corollaire}[chapter]
+\newtheorem{remark}{Remarque}[chapter]
+\newtheorem{problem}{Problème}[chapter]
+\newtheorem{lemma}{Lemme}[chapter]
+
+\newcounter{theorem}[chapter]
+\newenvironment{theorem}
+  {\par\noindent\theoremhang\par\nobreak\noindent
+   \refstepcounter{theorem}\postdisplaypenalty=10000 %
+   {\sffamily\bfseries\upshape Théorème \thetheorem}\ \ignorespaces}
+  {\par\nobreak\noindent\theoremhung\par\addvspace{\topsep}}
+
+\newcounter{proposition}[chapter]
+\newenvironment{proposition}
+  {\par\noindent\theoremhang\par\nobreak\noindent
+   \refstepcounter{proposition}\postdisplaypenalty=10000 %
+   {\sffamily\bfseries\upshape Proposition \theproposition}\ \ignorespaces}
+  {\par\nobreak\noindent\theoremhung\par\addvspace{\topsep}}
+
+\newenvironment{proof}
+  {\par\addvspace{\topsep}\noindent{\sffamily\bfseries\upshape Preuve}\ \ignorespaces}
+  {\par\nobreak}% no spacing here so that supposes you will always use {proof} inside {theorem} or else there might be some problems.
+
+\newcommand{\theoremhang}{% top theorem decoration
+  \begingroup%
+    \setlength{\unitlength}{.005\linewidth}% \linewidth/200
+    \begin{picture}(0,0)(1.5,0)%
+      \linethickness{0.45pt} \color{black!50}%
+      \put(-3,2){\line(1,0){206}}% Top line
+      \multido{\iA=2+-1,\iB=50+-10}{5}{% Top hangs
+        \color{black!\iB}%
+        \put(-3,\iA){\line(0,-1){1}}% Top left hang
+        \put(203,\iA){\line(0,-1){1}}% Top right hang
+      }%
+    \end{picture}%
+  \endgroup%
+}%
+
+\newcommand{\theoremhung}{% bottom theorem decoration
+  \begingroup%
+    \setlength{\unitlength}{.005\linewidth}% \linewidth/200
+    \begin{picture}(0,0)(1.5,0)%
+      \linethickness{0.45pt} \color{black!50}%
+      \put(-3,0){\line(1,0){206}}% Bottom line
+      \multido{\iA=0+1,\iB=50+-10}{5}{% Bottom hangs
+        \color{black!\iB}%
+        \put(-3,\iA){\line(0,1){1}}% Bottom left hang
+        \put(203,\iA){\line(0,1){1}}% Bottom right hang
+      }%
+    \end{picture}%
+  \endgroup%
+}%
+
+
+\usepackage{filecontents}
+
+\usepackage{indentfirst,graphicx,subfigure}
+\usepackage{colortbl,xcolor}
+\usepackage{url}
+\usepackage[colorlinks,linkcolor=blue,urlcolor=blue]{hyperref}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows,backgrounds,mindmap,positioning,shadows,shapes}
+\usepackage{pgfplots,pgfplotstable}
+\definecolor{lbcolor}{rgb}{0.95,0.95,0.95}
+\definecolor{cblue}{rgb}{0.,0.0,0.6}
+\definecolor{lblue}{rgb}{0.1,0.1,0.4}
+\definecolor{ljk}{rgb}{0.50, 0.625, 0.70}
+
+
+% Pretty-print listings
+\lstset{
+  language        = C++,
+  texcl           = true,
+  mathescape      = true,
+  basicstyle      = \tt,
+  keywordstyle    = \bf\color{red!50},
+  commentstyle    = \it\tt\color{black!70},
+  stringstyle     = \color{black!50},
+  morekeywords    = {grad, gradt, dot, ddot, id, idt, avg, avg, jump, oplus, divt,
+  elements,boundaryfaces,markedelements,markedfaces,
+  ominus, normal, h, integrate, form1, form2, abs, on, unknown, comp, diff,
+  div, mult, poly, gradient, span, submesh, trace_interpolator, dof_space,
+  N, H},
+  frame={top,bottom},
+  backgroundcolor=\color{lbcolor},
+}
+
+\lstset{escapeinside={(*@}{@*)}}
+\pgfqkeys{/pgfplots}{
+%  cycle list name = black white,
+  legend style = { at={(0.95,0.3)} },
+  log basis x = 10
+}
+
+% Image path
+\graphicspath{{../../Figures/}}
+
+%
+\newcommand{\setR}[1]{{\ensuremath{\mathbb{R}^{#1}}}\xspace}
+\newcommand{\R}[1]{\mathbb R^{#1}}
+
+%
+% \newcommand{\definition}{{\bf D\'efinition : }}
+% \newcommand{\theoreme}{{\bf Th\'eor\`eme : }}
+% \newcommand{\exemple}{{\bf Exemple : }}
+% \newcommand{\propriete}{{\bf Propri\'et\'e : }}
+% \renewcommand{\labelitemi}{$\bullet$}
+%
+%
+%
+%
+%
+%\includeonly{ch-problemes-coercifs}
+%
+\begin{document}
+
+\pagenumbering{roman}
+\include{titre}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+\include{ch-introduction-mef}
+\include{ch-ef-lagrange}
+\include{ch-problemes-coercifs}
+\include{ch-problemes-mixtes}
+%\include{ch4}
+%\include{ch5}
+%\include{ch6}
+\appendix
+\include{ann-analyse-fonctionnelle}
+\include{ann-coord-bary}
+\include{ann-calcul-integrale}
+\include{ann-feelpp}
+\include{biblio}
+%
+%
+\end{document}
+%%% Local Variables:
+%%% coding: utf-8
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% TeX-parse-self: t
+%%% TeX-auto-save: t
+%%% x-symbol-8bits: nil
+%%% TeX-auto-regexp-list: TeX-auto-full-regexp-list
+%%% TeX-master: t
+%%% ispell-local-dictionary: "francais"
+%%% End:

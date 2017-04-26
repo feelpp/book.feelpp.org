@@ -1,0 +1,873 @@
+[[eléments-finis-de-lagrange]]
+= Eléments finis de Lagrange
+
+On va présenter dans ce chapitre le type le plus simple et le plus classique d’éléments finis.
+
+[[unisolvance]]
+== Unisolvance
+
+[[def:22]]
+[env.definition]
+--
+Soit stem:[\Sigma=\{ a_1,\ldots,a_N\}] un ensemble de stem:[N] points distincts de stem:[\RR^n].
+Soit stem:[P] un espace vectoriel de dimension finie de fonctions de stem:[\RR^n] à valeurs dans stem:[\RR].On dit que stem:[\Sigma] est stem:[P]-unisolvant ssi pour tous réels stem:[\alpha_1,\ldots,\alpha_N], il existe un unique élément stem:[p] de stem:[P] tel que stem:[p(a_i)=\alpha_i,\; i=1,\ldots,N].
+--
+
+Ceci revient à dire que la fonction :
+[[eq:26]]
+[env.equation]
+--
+\begin{array}{rcl}
+{\cal L} : P & \longrightarrow & \RR^N\\
+p & \longrightarrow & (p(a_1),\ldots,p(a_N))
+\end{array}
+--
+est bijective.
+
+[env.proof]
+--
+En pratique, on montrera que stem:[\Sigma] est stem:[P]-unisolvant en vérifiant que stem:[\opdim P= Card \Sigma], puis en montrant l’injectivité ou la surjectivité de stem:[{\cal L}].
+
+L’injectivité de stem:[{\cal L}] se démontre en établissant que
+la seule fonction de stem:[P] s’annulant sur tous les points de
+stem:[\Sigma] est la fonction nulle.
+
+La surjectivité de stem:[{\cal L}] se démontre en exhibant une famille
+stem:[p_1,\ldots,p_N] d’éléments de stem:[P] tels que
+stem:[p_i(a_j)=\delta_{ij}], c’est à dire un antécédent pour
+stem:[{\cal L}] de la base canonique de stem:[\RR^N].
+
+En effet, étant donnés des réels stem:[\alpha_1,\ldots,\alpha_N], la fonction stem:[{p=\sum_{i=1}^N \alpha_i p_i}] vérifie alors stem:[p(a_j)=\alpha_j,\;
+j=1,\ldots,N].
+--
+
+[[sec:lagrange]]
+== Elément fini de Lagrange
+
+[[def:25]]
+[env.definition]
+.Élément fini de Lagange
+--
+Un *élément fini de Lagrange* est un triplet stem:[(K,\Sigma,P)]
+tel que
+
+* stem:[K] est un élément géométrique de stem:[\RR^n] (stem:[n=] 1, 2 ou 3), compact, connexe, et d’intérieur non vide.
+
+* stem:[\Sigma=\{a_1,\ldots,a_N\}] est un ensemble fini de stem:[N] points distincts de stem:[K].
+
+* stem:[P] est un espace vectoriel de dimension finie de fonctions réelles définies sur stem:[K], et tel que stem:[\Sigma] soit stem:[P]-unisolvant (donc dim stem:[P = N]).
+--
+
+[[def:26]]
+[env.definition]
+.Fonctions de base locales
+--
+Soit stem:[(K,\Sigma,P)] un élément fini de Lagrange. On appelle *fonctions de base locales* de l’élément les stem:[N] fonctions stem:[p_i] (stem:[i=1,\ldots,N]) de stem:[P] telles que
+[[eq:27]]
+\[
+    p_i(a_j)=\delta_{ij}\qquad 1\le i,j \le N.
+\]
+--
+
+On vérifie aisément que stem:[(p_1,\ldots,p_N)] ainsi définie forme bien une base de stem:[P].
+
+[[def:27]]
+[env.definition]
+--
+On appelle *opérateur de interpolation* (ou encore stem:[P-]interpolation) sur stem:[\Sigma] l’opérateur stem:[\pi_K] qui, à toute fonction stem:[v] définie sur stem:[K], associe la fonction stem:[\pi_K v] de
+stem:[P] définie par stem:[{\pi_K v =   \sum_{i=1}^N v(a_i)\, p_i}].
+
+stem:[\pi_K v] est donc l’unique élément de stem:[P] qui prend les mêmes valeurs que stem:[v] sur les points de stem:[\Sigma].
+--
+
+[[exemples-déléments-finis-de-lagrange]]
+== Exemples d’éléments finis de Lagrange
+
+[[espaces-de-polynômes]]
+=== Espaces de polynômes
+
+On notera stem:[\Pk] l’espace vectoriel des polynômes de degré total inférieur ou égal à stem:[k].
+
+* Sur , stem:[\Pk=\hbox{Vect} \{ 1,X,\ldots, X^k\}\quad] et dim stem:[\Pk=k+1].
+
+* Sur stem:[^2], stem:[\Pk=\hbox{Vect} \{ X^i Y^j ; 0\le i+j \le k\}\quad] et dim stem:[{ \Pk=\frac{(k+1)(k+2)}{2}}].
+
+* Sur stem:[^3], stem:[\Pk=\hbox{Vect} \{ X^i Y^j Z^l ; 0\le i+j+l \le k\}\quad] et dim stem:[{ \Pk=\frac{(k+1)(k+2)(k+3)}{6}}].
+
+On notera stem:[\Qk] l’espace vectoriel des polynômes de degré inférieur ou égal à stem:[k] par rapport à chaque variable.
+
+* Sur stem:[\RR], stem:[\Qk=\Pk].
+
+* Sur stem:[\RR^2], stem:[\Qk=\hbox{Vect} \{ X^i Y^j ; 0\le i,j \le k\}\quad] et dim stem:[{ \Qk=(k+1)^2}].
+
+* Sur stem:[\RR^3], stem:[\Qk=\hbox{Vect} \{ X^i Y^j Z^l ; 0\le i,j,l \le k\}\quad] et dim stem:[{ \Qk=(k+1)^3}].
+
+[[par:ex1d]]
+=== Exemples 1-D
+
+[[elément-p_1]]
+Elément stem:[P_1]::
+** stem:[K=[a,b]]
+** stem:[\Sigma=\{a,b\}]
+** stem:[P=\Pk[1]]
+
+[[elément-p_2]]
+Elément stem:[P_2]::
+** stem:[K=[a,b]]
+** stem:[{\Sigma=\{a,\frac{a+b}{2},b\}}]
+** stem:[P=\Pk[2]]
+
+[[elément-pk]]
+Elément stem:[\Pk]::
+** stem:[K=[a,b]]
+** stem:[{\Sigma=\{a+i\,\frac{b-a}{m},\quad i=0,\ldots,k\}}]
+** stem:[P=\Pk]
+
+[[exemples-2-d-triangulaires]]
+=== Exemples 2-D triangulaires
+
+[[elément-pk1]]
+Elément stem:[\Pk[1]]::
+** stem:[K]=triangle de sommets stem:[a_1, a_2, a_3]
+** stem:[\Sigma=\{a_1,a_2,a_3\}]
+** stem:[P=\Pk[1]]
+Les fonctions de base sont définies par
+stem:[p_i(a_j)=\delta_{ij}]. Ce sont donc les coordonnées
+barycentriques : stem:[p_i=\lambda_i] (cf annexe [ch:bary]).
+
+[[elément-pk2]]
+Elément stem:[\Pk[2]]::
+** stem:[K]=triangle de sommets stem:[a_1, a_2, a_3]
+** stem:[\Sigma=\{a_1,a_2,a_3, a_{12}, a_{13}, a_{23}\}], où stem:[{a_{ij}=\frac{a_i+a_j}{2}}].
+** stem:[P=\Pk[2]]
+
+Les fonctions de base sont stem:[p_i=\lambda_i (2\lambda_i -1)] et stem:[p_{ij}=4\lambda_i\lambda_j].
+Un exemple de calcul de ces fonctions de base est donné en annexe <<ch:bary>>.
+
+.Eléments finis triangulaire stem:[P_1], triangulaire stem:[P_2] et rectangulaire stem:[Q_1]
+image:fem/elements-2D.jpg[caption="Eléments finis triangulaire stem:[P_1], triangulaire stem:[P_2] et rectangulaire stem:[Q_1]"]
+
+[[exemples-2-d-rectangulaires]]
+=== Exemples 2-D rectangulaires
+
+[[elément-qk1]]
+Elément stem:[\Qk[1]]::
+* stem:[K]=rectangle de sommets stem:[a_1, a_2, a_3, a_4], de côtés parallèles aux axes
+* stem:[\Sigma=\{a_1,a_2,a_3,a_4\}]
+* stem:[P=\Qk[1]]
+Les fonctions de base sont stem:[{p_i(X,Y)=\frac{(X-x_j)(Y-y_j)}{(x_i-x_j)(y_i-y_j)}}], où stem:[(x_i,y_i)] sont les coordonnées de stem:[a_i], et où stem:[a_j], de coordonnées stem:[(x_j,y_j)] est le coin opposé à stem:[a_i].
+
+[[exemples-3-d]]
+=== Exemples 3-D
+
+[[elément-tétraèdrique-pk1]]
+Elément tétraèdrique stem:[\Pk[1]]::
+* stem:[K]=tétraèdre de sommets stem:[a_1, a_2, a_3, a_4]
+* stem:[\Sigma=\{a_1,a_2,a_3, a_4\}]
+* stem:[P=\Pk[1]]
+
+[[elément-tétraèdrique-pk2]]
+Elément tétraèdrique stem:[\Pk[2]]::
+* stem:[K]=tétraèdre de sommets stem:[a_1, a_2, a_3, a_4]
+* stem:[{ \Sigma=\{a_i\}_{1\le i\le 4} \cup \{a_{ij}\}_{1\le i < j \le 4} }]
+* stem:[P=\Pk[2]]
+
+Les fonctions de base sont stem:[p_i=\lambda_i (2\lambda_i -1)]
+et stem:[p_{ij}=4\lambda_i\lambda_j].
+
+[[elément-parallélépipèdique-q_1]]
+Elément parallélépipèdique stem:[Q_1]::
+
+* stem:[K]=parallélépipède de sommets stem:[a_1, \ldots , a_8] de côtés parallèles aux axes
+* stem:[\Sigma=\{a_i\}_{1\le i\le 8}]
+* stem:[P=\Qk[1]]
+
+[[elément-prismatique]]
+Elément prismatique::
+
+* stem:[K]=prisme droit de sommets stem:[a_1, \ldots , a_6]
+* stem:[\Sigma=\{a_i\}_{1\le i\le 6}]
+* stem:[P=\{p(X,Y,Z)=(a+bX+cY)+Z(d+eX+fY), \;\; a,b,c,d,e,f \in \RR\}]
+
+.Eléments finis tétraèdriques stem:[P_1] et stem:[P_2], parallélépipèdique stem:[Q_1], et prismatique
+image:fem/elements-3D.jpg[]
+
+[[famille-affine-déléments-finis]]
+== Famille affine d’éléments finis
+
+[[def:28]]
+[env.definition]
+.Équivalence affine
+--
+Deux éléments finis stem:[(\hat{K},\hat{\Sigma},\hat{P})] et stem:[(K,\Sigma,P)] sont *affine-équivalents* ssi il existe une fonction affine stem:[F] inversible (stem:[F: \hat{x} \longrightarrow B\hat{x}+b]) telle que _(i)_ stem:[K=F(\hat{K})] _(ii)_ stem:[a_i=F(\hat{a}_i) \qquad i=1,\ldots,N] et _(iii)_ stem:[P=\{ \hat{p}\circ F^{-1} , \quad \hat{p}\in \hat{P} \}]
+--
+
+[[rem:10]]
+NOTE: Si l’on est dans stem:[\RR^n], stem:[B] est donc une matrice stem:[n\times n] inversible, et stem:[b] est un vecteur de stem:[\RR^n].
+
+[env.property]
+--
+Soient stem:[(\hat{K},\hat{\Sigma},\hat{P})] et stem:[(K,\Sigma,P)] deux éléments finis affine-équivalents, via une transformation stem:[F].
+
+On note stem:[\hat{p}_i \; (i=1,\ldots,N)] les fonctions de base locales de stem:[\hat{K}].
+
+*Alors* les fonctions de base locales de stem:[K] sont les stem:[p_i=\hat{p}_i\circ F^{-1}].
+--
+
+[[def:29]]
+[env.definition]
+--
+On appelle *famille affine d’éléments finis* une famille d’éléments finis tous affine-équivalents à un même élément fini stem:[(\hat{K},\hat{\Sigma},\hat{P})], appelé *élément de référence*.
+--
+
+D’un point de vue pratique, le fait de travailler avec une famille affine d’éléments finis permet de ramener tous les calculs d’intégrales à des calculs sur l’élément de référence.
+
+Les éléments de référence sont :
+
+* En 1-D : le segment stem:[[0,1\]]
+* En 2-D triangulaire : le triangle unité, de sommets stem:[(0,0)], stem:[(0,1)] et stem:[(1,0)].
+* En 2-D rectangulaire : le carré unité stem:[[0,1\]\times[0,1\]].
+* En 3-D tétraèdrique : le tétraèdre unité, de sommets stem:[(0,0,0)], stem:[(1,0,0)], stem:[(0,1,0)] et stem:[(0,0,1)].
+* En 3-D parallélépipèdique : le cube unité stem:[[0,1\]\times[0,1\]\times[0,1\]].
+* En 3-D prismatique : le prisme unité de sommets stem:[(0,0,0)],
+stem:[(0,1,0)], stem:[(1,0,0)], et stem:[(0,0,1)],
+stem:[(0,1,1)], stem:[(1,0,1)].
+
+[[sec:maillages]]
+== Maillages
+
+Nous étendons ici aux dimension 2 et 3 les notions élémentaires de maillage vues en 1D, voir la figure <<fig:2>>.
+
+[[fig:2]]
+.Maillage {feelpp}
+image:fem/feelpp-mesh.svg[align=center,float=left,width=400]
+
+[[def:31]]
+[env.definition]
+--
+Un maillage est constituée d’une famille d’éléments(ou mailles
+ou cellules) stem:[\{K_e\}_{e=1,...,N_e}] où stem:[N_e]
+est le nombre d’éléments, nous noterons
+[[eq:32]]
+\[
+\calTh = \{K_m\}_{m=1,...,N_e}
+\]
+avec
+[[eq:33]]
+\[
+h=\max_{1\le e\le N_e} h_{K_e}
+\]
+et
+[[eq:34]]
+\[
+h_{K_e}     = \diam(K_e) = \max_{x_1,x_2 \in K_e} \|x_1-x_2\|,\, e \in \{1,...,\Ne\}
+\]
+--
+
+On travaille par la suite avec des familles de maillage et on les note
+stem:[\set{\mathcal{T}_h}_{h > 0}].
+
+[env.definition]
+.Famille de maillage quasi-uniforme
+--
+On dira qu’une famille de maillage
+stem:[\set{\mathcal{T}_h}_{h > 0}] est *quasi-uniforme* s’il existe une constante
+stem:[c] telle que
+[[eq:35]]
+\[
+ \forall h,\ \forall K \in \calTh,\ h_K \geq c h
+\]
+--
+
+[[rem:12]]
+NOTE: Cela veut dire que les élements sont tous de la même taille pour
+stem:[h] donné.
+
+[[sec:transf-geom]]
+=== Transformation géométrique
+
+Un maillage est généré par
+
+ . un _élément de reference_ noté stem:[\hat{K}]
+ . une famille de _transformations géométriques_ mappant stem:[\hat{K}] vers les éléments stem:[K_e, e=1,\ldots,\Ne] dans le maillage
+
+Nous supposerons que les transformations sont des stem:[\mathcal{C}^1-] diffeomorphismes footnote:[la transformation et son inverse sont stem:[\mathcal{C}^1] et bijectives].
+
+[[def:32]]
+[env.definition]
+--
+Pour une cellule stem:[K \in \mathcal{T}_h], on note stem:[T_K] la transformation géométrique
+[[eq:36]]
+\[
+T_K: \hat{K} \mapsto K
+\]
+--
+
+Afin de spécifier la transformation géométrique, on considère l’élément fini de Lagrange, noté stem:[(\hat{K},\hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\mathrm{geo}})], tel que
+
+ * stem:[\ngeo = \card{\hat{\Sigma}_{\mathrm{geo}}}]
+ * stem:[\set{\hat{g}_1,\ldots,\hat{g}_{\ngeo}}] les noeuds de stem:[\hat{K}]
+ * stem:[\set{\hat{\psi}_1,\ldots,\hat{\psi}_{\ngeo}}] les fonctions de forme
+
+
+[env.definition]
+.Élément fini géométrique
+--
+On dit que stem:[(\hat{K},\hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\geo})] est l’_élément fini géométrique_, stem:[\set{\hat{g}_1,\ldots,\hat{g}_{\ngeo}}] sont les _noeuds géométriques_ et stem:[\set{\hat{\psi}_1,\ldots,\hat{\psi}_{\ngeo}}] sont les _fonctions de formes géométriques_
+--
+
+.Transformation géométrique associée à un triangle
+image:fem/geomap_triangle.png[width=400,float=left]
+
+Pour chaque stem:[K \in \mathcal{T}_h], on a un stem:[\ngeo]-uplet stem:[\set{g^K_1,\ldots,g^K_\ngeo}].
+
+La transformation géométrique est définie comme suit
+[[eq:37]]
+[env.equation]
+--
+  T_K: \hat{x} \in \hat{K} \mapsto \sum_{i=1}^\ngeo\ g^K_i \hat{\psi}_i(\hat{x})
+--
+
+et en particulier on a
+
+[[eq:38]]
+[env.equation]
+--
+  T_K(\hat{g}_i) = g^K_i, \quad \forall i \in \set{1,\ldots,\ngeo}
+--
+
+[[rem:13]]
+NOTE: On a stem:[T_K \in [\hat{P}_\geo(\hat{K})]^d] et que stem:[\set{g^K_1,\ldots,g^K_\ngeo}] sont les _noeuds géométriques_ de stem:[K].
+
+stem:[T_K] est un stem:[\mathcal{C}^1]-diffeomorphism donc la _numérotation_ des noeuds stem:[\set{g^K_1,\ldots,g^K_\ngeo}] doit être _compatible_ avec les noeuds de l’élément finit géométrique.
+
+[[rem:15]]
+NOTE: La numérotation locale des entités géométriques dans *doit* être consistente avec la numérotation locale des générateurs de maillage.
+voir link:http://www.geuz.org/gmsh/doc/texinfo/gmsh.html#Node-ordering[stem:[\triangleright] format de fichier Gmsh] pour une numérotation locale.
+
+Un cas particulier est la *transformation géométrique affine*.
+
+[[def:33]]
+[env.definition]
+.Maillage affine
+--
+Quand toutes les _transformations géométriques_
+stem:[\set{T_K}_{K \in \mathcal{T}_h}] sont _affines_, cela veut dire que pour tout
+stem:[K \in \mathcal{T}_h], il existe un vecteur stem:[b_K \in \RR^d] et une matrice stem:[J_K \in \RR^{d\times d}] tels que
+[[eq:39]]
+\[
+    T_K : \hat{x} \in \hat{K} \mapsto b_K + J_K \hat{x}  \in K
+\]
+On dit que le maillage est _affine_.
+--
+
+[[rem:16]]
+NOTE: Si l’élément fini géométrique est stem:[(\hat{K},\poly{P}_1,\Sigma_\ngeo)] alors les éléments stem:[K] sont soit des triangles soit des tétrahèdres.
+
+[[rem:17]]
+NOTE: `Mesh<Simplex<d,1> >` ou `Mesh<Simplex<d> >` est le type pour les maillages affines formés de simplexes dans stem:[\RR^d]. `1` indique l’ordre de l’_élément fini géométrique_ et est la valeur par défaut.
+
+[[sec:quelq-calc-avec]]
+=== Quelques calculs avec la transformation géométrique
+
+[[sec:gradient-inverse-et]]
+==== Gradient, Inverse et Jacobien
+
+On note stem:[\xi] un ensemble de stem:[n] points dans stem:[\hat{K}] et on note stem:[\nabla T_K(\xi)] le gradient de stem:[T_K] aux points stem:[\xi]
+
+[env.equation#eq:40]
+--
+  \nabla T_K( \xi )\ =\ \sum_{i=0}^{\ngeo}\ g^K_i\ \nabla \psi_i (\xi)
+--
+et stem:[B_K(\xi) = \nabla T_K^{-1}(\xi)] l’inverse stem:[\xi] et finalement stem:[J_K(\xi)] le jacobien de stem:[T_K] en stem:[\xi]
+
+[env.equation#eq:41]
+--
+J_K(\xi)\ =\ |\det( \nabla T_K(\xi) )|
+--
+
+[[sec:deriv-dans-lelem]]
+==== Dérivation dans l’élément de référence
+
+Afin de dériver un polynome dans l’élément réel stem:[K], grâce à la transformation géométrique et la règle de différentiation des fonctions composées, nous dérivons seulement dans l’élément de référence stem:[\hat{K}].
+
+Soit stem:[f: K \mapsto \RR] et stem:[\hat{f}: \hat{K} \mapsto \RR] telle que
+stem:[\hat{f} = f \circ T_K]
+
+[env.equation#eq:42]
+--
+  \nabla f\ =\  \hat{\nabla} \underbrace{\hat{f}(\xi)}_{f \circ T_K(\xi)} B_K(\xi)
+--
+
+en 2D, on a, en notant stem:[x=T_K(\xi)],
+[env.equation#eq:43]
+--
+  \nabla f(x) =
+  \begin{pmatrix}
+    \frac{\hat{\partial} \hat{f} (\xi)}{\partial \xi_1} & \frac{\hat{\partial} \hat{f} (\xi)}{\partial \xi_2}
+  \end{pmatrix}
+  \begin{pmatrix}
+    B_{K_{11}}(\xi) & B_{K_{12}}(\xi)\\
+    B_{K_{21}}(\xi) & B_{K_{22}}(\xi)\\
+  \end{pmatrix}
+--
+
+[[sec:integr-dans-lelem]]
+==== Intégration dans l’élément de référence
+
+De manière similaire, au lieu de calculer les intégrales sur l’élément réel stem:[K], nous appliquons un changement de variables et calculons les intégrales sur l’élément de réference stem:[\hat{K}].
+
+Soit stem:[f: K \mapsto \RR] et stem:[\hat{f}: \hat{K} \mapsto \RR] telle que stem:[\hat{f} = f \circ T_K], et stem:[{\mathbf{F}}: K \mapsto \RR^d] et stem:[{\hat{\mathbf{F}}}: \hat{K} \mapsto \RR^d] telle que stem:[\hat{{\mathbf{F}}} = {\mathbf{F}} \circ T_K],
+
+On a alors les relations suivantes:
+
+[env.equation#eq:44]
+--
+  \int_{K} \ f\ dx\ =\ \int_{\hat{K}} f(T_K(\xi) ) J_K( \xi )\ d \xi \ =\ \int_{\hat{K}} \hat{f}(\xi) J_K( \xi )\ d \xi]
+--
+
+[env.equation#eq:45]
+--
+\int_{K}\ \nabla f\ dx\ =\ \int_{\hat{K}} \Big(\hat{\nabla} \underbrace{\hat{f}(\xi)}_{f \circ T_K(\xi)} B_K(\xi)\Big) J_K( \xi )\ d \xi
+--
+
+[env.equation#eq:46]
+--
+\int_{\partial K} f( x ) dx = \int_{\partial \hat{K}} \hat{f}(\xi)  \| B_K(\xi) {\hat{\mathbf{n}}}(\xi) \| J_K( \xi ) d \xi
+--
+
+[env.equation#eq:47]
+--
+\int_{\partial K}\ {\mathbf{F}}( x )\ \cdot\ {\mathbf{n}}(x) dx = \int_{\partial \hat{K}} {\hat{\mathbf{F}}}( \xi )\ \cdot \Big(B_K(\xi)  {\hat{\mathbf{n}}}(\xi) \Big)  J_K( \xi )\ d \xi
+--
+
+où stem:[{\mathbf{n}}(x)] est la _normale extérieure unitaire_ à stem:[\partial K] évaluée en stem:[x \in \partial K], et stem:[{\hat{\mathbf{n}}}(\xi)] la normale unitaire extérieure à stem:[\hat{K}] évaluée en stem:[\xi \in \partial \hat{K}].
+
+[[rem:18]]
+NOTE: {feelpp} effectue automatiquement pour vous les changements de variables
+dans les intégrales.
+
+[[def:34]]
+[env.definition]
+.Maillage conforme
+--
+Un maillage est dit _conforme_ si l’intersection de deux
+éléments est soit vide, un sommet, une arête ou une face.
+--
+
+[[rem:19]]
+NOTE: On ne manipule que des maillages conformes dans le cours mais {feelpp} peut traiter des maillages non-conformes par exemple dans le contexte de méthode de décomposition de domaines.
+
+[[génération-des-éléments-finis-de-lagrange]]
+== Espaces élément fini de Lagrange
+
+Soit stem:[\mathcal{T}_h] un maillage généré par stem:[(\hat{K},   \hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\mathrm{geo}})], une cellule stem:[K \in \mathcal{T}_h] est alors l’image de stem:[\hat{K}] par la transformation géométrique stem:[T_K] défini par <<eq:23>>.
+
+L’objectif à présent est de générer la famille d’éléments finis de Lagrange grâce à l’élément fini de référence stem:[(\hat{K},\hat{P}, \hat{\Sigma})]
+
+[[eq:28]]
+[env.equation]
+--
+  \{(K,P_K,\Sigma_K)\}_{K \in \mathcal{T}_h}
+--
+
+[env.notation]
+--
+On note stem:[\{\hat{x}_1,...,\hat{x}_{\nf}\}] les noeuds de l’élément fini.
+
+On note stem:[\{\hat{\Psi}_1,...,\hat{\Psi}_{\nf}\}] les fonctions de forme élément fini.
+--
+
+[[prop:6]]
+[env.proposition]
+--
+Soit stem:[K \in \mathcal{T}_h] et stem:[P_K=\{\hat{p} \circ T_K^{-1}; \hat{p} \in \hat{P}\}].
+
+Pour tout stem:[i \in \{1,...,\nf\}], on pose stem:[x_{K,i} = T_K(\hat{x}_i)]
+
+On note stem:[\Sigma_K] l’ensemble des _degrés de liberté_ associé à stem:[\{x_{K,1},...,x_{K,\nf}\}]
+
+Alors stem:[(K,P_K,\Sigma_K)] est un _élément fini de Lagrange_.
+
+Les _fonctions de forme_ sont définies de la façon suivante
+[[eq:49]]
+\[
+    \Psi_{K,i} = \hat{\Psi}_i \circ T_K^{-1}, \quad i=1,...,\nf
+\]
+et
+l’_opérateur d’interpolation local_ comme
+[[eq:50]]
+\[
+      \Ilag{K}: v \in \mathcal{C}^0(K) \mapsto \sum_{i=1}^\nf\ v(x_{K,i})\ \Psi_{K,i}\
+      \in P_K
+\]
+Une propriété importante de stem:[\Ilag{K}] est que
+[[eq:51]]
+\[
+      \forall v \in \mathcal{C}^0(K),\quad \Ilag{K}( v \circ T_K ) =
+      \Ilag{K}( v ) \circ T_K.
+\]
+--
+
+[env.theorem#thr:14]
+--
+Soit stem:[T_K] une transformation affine.
+
+Soit stem:[\mathbb{P}_k \subset \hat{P}] et stem:[k+1 > \frac{d}{2}].
+
+Soit stem:[h_K] le diamètre de stem:[K] et stem:[\rho_K] le diamètre de la plus grande boule inscrite dans stem:[K] et stem:[\omega_K = \frac{h_K}{\rho_K}].
+
+Alors il existe une constante stem:[c] independente de stem:[K] telle que stem:[\forall v \in H^{k+1}(K)] et pour tout stem:[m \in \{0,...,k+1\}],
+
+[[eq:32]]
+\[
+  |v - \Ilag{K}(v)|_{m,K} \leq  c h^{k+1-m} \omega_K^m |v|_{k+1,K}
+\]
+--
+
+[[rem:20]]
+[IMPORTANT]
+====
+ * stem:[\omega_K] devrait être aussi proche de stem:[1] que possible
+ * La deuxième hypothèse technique permet d’assurer que stem:[H^{k+1}(K) \subset
+      C^0(K)].
+ * on obtient des résultats similaires si stem:[v] n’est pas suffisamment régulière
+====
+
+[[def:35]]
+[env.definition]
+.Espace stem:[H^1]-conforme
+--
+Un espace vectoriel stem:[V_h] de fonctions définies sur un domaine stem:[\Omega_h] est dit être stem:[H^1]-conforme si stem:[V_h \subset H^1(\Omega_h)].
+--
+
+Afin de construire un tel espace on introduit tout d’abord
+[[eq:52]]
+[env.equation]
+--
+W_h = \{v_h \in L^2(\Omega_h); \forall K \in \mathcal{T}_h, v_h|_K \in P_K\}
+--
+
+mais ce n’est pas suffisant: _les fonctions stem:[W_h] peuvent avoir des sauts entre les éléments du maillage_. Nous avons donc besoin d’assurer la _continuité_ de ces fonctions
+
+[[eq:53]]
+[env.equation]
+--
+V_h = W_h \cap C^0(\Omega_h) = \{ v_h \in W_h; \forall F \in  \mathcal{F}^i_h. \jump{v_h}_F = 0\}
+--
+
+Concernant l’implémentation, nous avons besoin de d’indentifier les _degrés de liberté communs entre les éléments_ quand nous construisons la tables des degrés de liberté.
+
+Voici deux exemples d’espace stem:[H^1]-conforme
+[[eq:54]]
+[env.equation]
+.Espace stem:[H^1]-conforme sur des simplexes (e.g. triangle)
+--
+  P^k_{c,h} = \{ v_h \in C^0(\Omega_h); \forall K \in \mathcal{T}_h, v_h
+      \circ T_K \in \mathbb{P}_k\}
+--
+[[eq:55]]
+[env.equation]
+.Espace stem:[H^1]-conforme sur des hypercubes (e.g quadrilatère)
+--
+      Q^k_{c,h} = \{ v_h \in C^0(\Omega_h); \forall K \in \mathcal{T}_h, v_h
+      \circ T_K \in \mathbb{Q}_k\}
+--
+
+[[sec:proj-orth]]
+=== Projections orthogonales
+
+On note
+[[eq:56]]
+[env.equation]
+--
+\begin{aligned}
+    \Pi^{0,k}_{c,h} : Lˆ2(\Omega) \rightarrow P^k_{c,h}\\
+    \Pi^{1,k}_{c,h} : H^1(\Omega) \rightarrow P^k_{c,h}
+\end{aligned}
+--
+les projections orthogonales associées respectivement aux produits scalaires
+stem:[(u,v)_{0,\Omega} = \int_\Omega u v] and stem:[(u,v)_{1,\Omega} = \int_\Omega u     v + \int_\Omega \nabla u \cdot \nabla v]
+
+On a pour stem:[l=1,...,k] et si stem:[v \in H^{l+1}(\Omega)]
+
+[env.equation#eq:57]
+--
+\begin{array}{rl}
+\|v - \Pi^{0,k}_{c,h}(v)\|_{0,\Omega} & \leq c h^{l+1} |v|_{k+1,\Omega} \\
+\|v - \Pi^{1,k}_{c,h}(v)\|_{1,\Omega} & \leq c h^{l} |v|_{k+1,\Omega}
+\end{array}
+--
+
+Pour calculer stem:[\Pi^{0,k}_{c,h}] et stem:[\Pi^{1,k}_{c,h}] on a besoin de résoudre les problèmes
+
+[[prob:3]]
+[env.problem]
+.Projection stem:[l^2]
+--
+Soit stem:[v] une fonction de stem:[L^2], calculer stem:[\Pi^{0,k}_{c,h}(v) \in
+      P^k_{c,h}] tel que stem:[\forall v_h \in P^k_{c,h}] on a
+[[eq:58]]
+\[
+  (\Pi^{0,k}_{c,h}(v), v_h)_{0,\Omega} = (v, v_h)_{0,\Omega}
+\]
+--
+
+[[prob:4]]
+[env.problem]
+.Projection stem:[H^1]
+--
+Soit stem:[v] une fonction de stem:[H^1], calculer stem:[\Pi^{1,k}_{c,h}(v) \in
+  P^k_{c,h}] tel que stem:[\forall v_h \in P^k_{c,h}] on a
+[[eq:59]]
+\[
+  (\Pi^{1,k}_{c,h}(v), v_h)_{1,\Omega} = (v, v_h)_{1,\Omega}
+\]
+--
+
+[[sec:lagr-interp-mesh]]
+=== Interpolant de Lagrange
+
+
+
+[[def:37]]
+[env.definition]
+--
+Notons stem:[V_h] un espace stem:[H^1] conforme, stem:[\{\Psi_i\}_{1,...,N}] une base nodale de stem:[V_h] et stem:[\{x_1,...,x_N\}] les noeuds associés alors l’*interpolant de Lagrange* est défini par
+[[eq:60]]
+\[
+  \Ilag{h}: v \in C^0(\Omega_h) \mapsto \sum_{i=1}^N v(x_{i}) \Psi_i \in V_h
+\]
+--
+
+[[rem:21]]
+IMPORTANT: La restriction de l’interpolant de Lagrange à une cellule stem:[K] coincide avec l’interpolant de Lagrange appliqué à la fonction dans la cellule stem:[K]:
+[[eq:61]]
+\[
+  \Ilag{h}(v)|_K = \Ilag{h}(v|_K)
+\]
+
+[[thr:15]]
+[env.theorem]
+--
+Supposons stem:[\{\mathcal{T}_h\}_{h>0}] une famille de maillage quasi-uniforme et conformes, stem:[\mathbb{P}_k \subset \hat{P}] et stem:[k+1 > \frac{d}{2}].
+
+Alors il existe une constante stem:[c] telle que pour tout
+stem:[h] et stem:[v \in H^{k+1}(\Omega_h)]
+[[eq:62]]
+\[
+ \|v - \Ilag{h}(v)\|_{0,\Omega_h} + h |v - \Ilag{h}(v)|_{1,\Omega_h} \leq  c h^{k+1} |v|_{k+1,\Omega_h}
+\]
+--
+
+Nous allons vérifier sur un exemple ce théorème.
+
+Nous considérons pour cela stem:[\alpha] un réel et stem:[\mathbf{x}=(x_1,...,x_d) \in \mathbb{R}^d] un point de stem:[\Omega   = [0,1\]^d, d=1,2,3] et stem:[v] la fonction définie par
+
+[env.equation#eq:97]
+--
+\begin{array}{rl}
+v : \Omega &\rightarrow \mathbb{R}\\
+\mathbf{x} &\rightarrow ( \mathbf{x} \cdot \mathbf{x} )^{\alpha/2}\ \Pi_{i=1}^d(     1-x_i^2)
+\end{array}
+--
+
+Nous construisons l’interpolant de Lagrange de stem:[v] dans stem:[P^k_{c,h}] avec
+stem:[k=1,...,5] et stem:[d=1,2,3] et étudions l’erreur d’interpolation stem:[L^2] et stem:[H^1] du théorème <<eq:62>> en échelle log-log.
+
+Nous devons obtenir des droites de pentes stem:[k] (resp. stem:[k+1]) pour la norme stem:[L^2] (resp. stem:[H^1].)
+
+[[sec:interp-iso-param]]
+== Approximation iso-paramétrique
+
+Quand le domaine est courbe, si nous désirons obtenir des propriétés de convergence optimale nous avons besoin de discretiser le bord du domaine avec suffisamment de précision
+
+Notons stem:[(\hat{K},\hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\geo})] l’élément fini géométrique et stem:[(\hat{K},\hat{P}, \hat{\Sigma})] l’élément fini de référence pour stem:[V_h].
+
+[[def:38]]
+[env.definition]
+--
+Si stem:[\hat{P}_{\mathrm{geo}} = \hat{P}] l’approximation est dite _iso-parametrique_.
+--
+[[def:38.1]]
+[env.definition]
+--
+Si stem:[\hat{P}_{\mathrm{geo}} \subset \hat{P}] l’approximation est dite _sub-parametrique_.
+--
+[[def:38.2]]
+[env.definition]
+--
+Si stem:[\hat{P} \subset\hat{P}_{\mathrm{geo}}] l’approximation est dite _sur-parametrique_.
+--
+
+[[rem:22]]
+TIP: Gmsh cite:[gmsh] un mailleur libre permet de générer des maillage d’ordre élevé jusqu’à l’ordre 5 en 2D et 4 en 3D
+
+[[thr:16]]
+[env.theorem]
+--
+Supposons que stem:[\{\mathcal{T}_h\}_{h>0}] une famille de maillage quasi-uniformes et conformes, stem:[\mathbb{P}_k \subset \hat{P}] et stem:[k+1 > \frac{d}{2}] et stem:[k_{\mathrm{geo}} = k].
+
+Alors il existe une constante stem:[c] telle que pour tout
+stem:[h] et stem:[v \in  H^{k+1}(\Omega_h)]
+
+[[eq:63]]
+\[
+    \|v - \Ilag{h}(v)\|_{0,\Omega_h} + h |v - \Ilag{h}(v)|_{1,\Omega_h} \leq
+    c h^{k+1} |v|_{k+1,\Omega_h}
+\]
+--
+
+[[rem:23]]
+NOTE: Les résultats sont identiques à ceux du theorème <<thr:15>>.
+
+Nous allons vérifier sur un exemple à l’erreur d’approximation de l’élément géométrique. Considérons les cercles unité généré par une transformation affine, noté stem:[\Omega^1_h], et d’ordre 2, noté stem:[\Omega^2_h], et calculons leur aire respective.
+
+Construisons une famille de maillage stem:[\{\calTh\}_{h >0}], par exemple stem:[h\in \{0.4, 0.2, 0.1, 0.05\}] et calculons l’erreur entre le calcul exact de l’aire stem:[\pi] et le calcul numérique stem:[\int_{\Omega^1_h} 1] et stem:[\int_{\Omega^2_h} 1] respectivement.
+
+Le listing suivant présente le code C++ pour effectuer cela
+[source,cpp]
+.Calcul de l'aire d'un cercle
+----
+include::../../../codes/isoparam/circle.cpp[tag=isoparam,indent=0]
+----
+
+La table <<tab:circle>> présente les erreurs d’approximation et la figure <<fig:circle>> présente les courbes de convergence en échelle log-log ainsi que les pentes associées à ces courbes.
+
+On s’attend d’après le théorème <<eq:62>> appliqué à des pentes à l’élément fini géométrique.
+
+[[tab:circle]]
+[format="csv", options="header"]
+.Convergence de l'approximation stem:[P_1] et stem:[P_2]
+|===
+include::../../../codes/isoparam/circle.csv[]
+|===
+
+La table <<tab:circle,toto>> présente les résultats de convergence.
+
+On observe un phénomène de super-convergence pour le cas stem:[\Omega^2_h], on obtient un ordre de convergence stem:[4] et nous devrions obtenir stem:[3].
+
+
+[[sec:feel]]
+== {feelpp}
+
+En {feelpp}, un maillage `Mesh` est décomposé en un ensemble d’éléments décomposés en sous entités (volume,face,arête,point):
+
+ * faces(decomposés en sous entités),
+ * arêtes(decomposés en sous entités) et
+ * points.
+
+et à chaque élément stem:[K] est associé une transformation géométrique stem:[T_K].
+
+L’ordre polynomial de la transformation géométrique est donné par le second argument template
+
+[source,cpp]
+.Type d'un object maillage en {feelpp}
+----
+Mesh<Simplex<d, k_geo>> <1>
+Mesh<Hypercube<d, k_geo>> <2>
+----
+<1> Un maillage de simplexes en dimension stem:[d] avec transformation géométrique d'ordre stem:[k_{\mathrm{geo}}].
+<2> Un maillage d'hypercubes en dimension stem:[d] avec transformation géométrique d'ordre stem:[k_{\mathrm{geo}}].
+
+
+Ain de parcourir les éléments et faces du maillage, {feelpp} fournit des fonctions renvoyant des _itérateurs_ (début et fin) sur ces ensembles
+
+`elements(mesh)`:: retourne 2 itérateurs sur l’ensemble des éléments du maillage
+
+`markedelements(mesh,<int>)`:: et `markedelements(mesh,<string>)` retourne 2 itérateurs sur les éléments marqués par l’entier `<int>` et la chaîne des caractères `<string>` respectivement, cela correspondra typiquement à des propriétés de matériau
+
+`boundaryfaces(mesh)`:: retourne 2 itérateurs sur les faces au bord du maillage
+
+`markedfaces(mesh,<int>)` et `markedelements(mesh,<string>)`:: retourne 2 itérateurs sur les faces marquées par l’entier `<int>` et la chaîne des caractères `<string>` respectivement, ca correspondra typiquement aux conditions aux limites
+
+NOTE: link pending to {feelpp} user manual mesh iterators section.
+
+L’espace d’approximation stem:[V_h] stem:[H^1] conforme (espaces de functions continues sur stem:[\Omega] polynomiales par morceaux de degré stem:[\leq k]) est défini comme suit
+
+[source,cpp]
+----
+FunctionSpace<Mesh<Simplex<d, k_geo> >, bases<Lagrange<k> > > V_h; <1>
+FunctionSpace<Mesh<Hypercube<d, k_geo> >, bases<Lagrange<k> > > V_h; <2>
+----
+<1> stem:[\Pch{k}]
+<2> stem:[\Qch{k}]
+
+[[sec:glob]]
+== Du problème global aux éléments locaux
+
+On va maintenant faire le lien entre la résolution d’un problème par méthode d’éléments finis et les notions qui viennent d’être introduites.
+
+Soit une EDP à résoudre sur un domaine stem:[\Omega], et stem:[V] l’espace de Hilbert dans lequel on cherche une solution de la formulation variationnelle du problème.
+
+On réalise un maillage de stem:[\Omega] par une famille affine de stem:[N_e] éléments finis stem:[(K_i,\Sigma_i,P_i)_{i=1,\ldots,N_e}].
+
+Par unisolvance, la solution approchée stem:[u_h] sera entièrement définie sur chaque élément stem:[(K_i,\Sigma_i,P_i)] par ses valeurs sur les points de stem:[\Sigma_i], qu’on appellera les *noeuds du maillage*.
+
+Il est à noter qu’un noeud sera en général commun à plusieurs éléments adjacents.
+
+Le nombre total de noeuds stem:[N_h] est donc inférieur à stem:[N_e\times\hbox{Card} \Sigma_i], et on a dim stem:[V_h = N_h].
+
+Notons stem:[a_1,\ldots,a_{N_h}] les noeuds du maillage.
+
+Le problème approché se ramène donc à la détermination des valeurs de stem:[u_h] aux points stem:[a_i]: ce sont les degrés de liberté du problème approché.
+
+On va construire une base de stem:[V_h] en associant à chaque ddl stem:[a_i] un vecteur de la base. On définit ainsi les *fonctions de base globales* stem:[\varphi_i] (stem:[i=1,\ldots,N_h]) par
+
+[env.equation#eq:28]
+.Fonctions de base globales
+--
+{\varphi_i}_{|K_j} \in P_j, \quad j=1,\ldots,N_e  \mbox{ et } \varphi_i(a_j)=\delta_{ij},  1\le i,j \le N_h
+--
+
+L’espace d’approximation interne est donc alors :
+
+[[eq:29]]
+[env.equation]
+--
+V_h = \hbox{Vect }\left\{\varphi_1,\ldots,\varphi_{N_h}\right\}
+--
+
+--
+[[fig:fnglob]]
+.Exemple de fonction de base globale (élément triangulaire stem:[P_1])
+image:fem/fonction-globale.jpg[float=left,width=400]
+--
+
+Il est facile de remarquer qu’une telle fonction stem:[\varphi_i] est nulle partout, sauf sur les éléments dont stem:[a_i] est un noeud.
+
+En effet, si stem:[a_i] n’appartient pas à un élément stem:[K], stem:[\varphi_i] est nulle sur tous les noeuds de stem:[K], et donc sur stem:[K] tout entier par *unisolvance*.
+
+De plus, sur un élément stem:[K] dont stem:[a_i] est un noeud, stem:[\varphi_i] vaut 1 sur stem:[a_i] et 0 sur les autres noeuds de stem:[K].
+
+Donc stem:[\varphi_i\, _{|K}]est une fonction de base locale de stem:[K].
+
+IMPORTANT: la fonction de base globale stem:[\varphi_i] est donc construite comme la réunion des fonctions de base locales sur les éléments du maillage dont stem:[a_i] est un noeud.
+
+
+
+C’est à ce niveau que se situe le lien entre les définitions locales introduites au <<sec:lagrange>> et le problème global approché à résoudre.
+
+Par ailleurs, ceci implique que tous les calculs à effectuer sur les fonctions de base globales peuvent se ramener à des calculs sur les fonctions de base locales, et donc simplement à des calculs sur l’élément de référence (car on a maillé le domaine avec une famille d’éléments finis affine-équivalents).
+
+[[rem:11]]
+[WARNING]
+====
+[[fig:nonconf]]
+.Maillage non conforme
+image:fem/conforme.jpg[caption="Exemples de maillage non conforme",width=400,float=left]
+
+Ce type de définition des fonctions de base n’est possible que si le
+maillage est *conforme*, c’est à dire si l’intersection entre deux
+éléments est soit vide, soit réduite à un sommet ou une arête en
+dimension 2 (ou à un sommet, une arête ou une face en dimension 3).
+
+On interdit ainsi les situations du type de celle de la figure.
+====
+
+[[exercices]]
+== Exercices
+
+ .  Calculer les fonctions de base locales des éléments finis de Lagrange introduits dans ce chapitre.
+ .  Donner l’allure des fonctions de base globales correspondantes. Sont-elles continues ? dérivables ?
+ .  Pour les éléments finis de Lagrange introduits dans ce chapitre, écrire le changement de variable affine entre élément quelconque et élément de référence.

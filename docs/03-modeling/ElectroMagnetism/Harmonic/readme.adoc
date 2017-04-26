@@ -1,0 +1,39 @@
+# Harmonic Content & Multipoles magnets
+
+The magnetic field can be expressed on specific basis functions.
+We have identified two famillies of such basis:
+
+- cylindrical, 
+- spherical.
+
+Decomposing a field on a basis allows to express the field with only the coefficient in the basis.
+Moreover, the knowledge of few fields measurements - actually the order of precision we want to achieve on the basis function - provide us the _full_ knwoledge of the field.
+
+To achieve dimensionless unit for the coefficient of the basis function, the field is conveniently scaled with a reference field and radius *that have to be specified* to fully understand the decomposition.
+
+## Cylindrical.
+
+Considering a two dimensional multipole fields, one can show we have - writting $$\mathbf{B} = \left(B_x, B_y, B_z\right)$$ with $$B_z$$ constant - the relation:
+$$
+B_y + i B_x = \sum\limits_{n=0}^{\infty} C_n \left(x + i y\right)^{n-1}
+$$
+in the vacuum.
+
+It can be very convenient to write this in the polar coordinates :
+$$
+B_{\theta} + i B_r = \sum\limits_{n=1}^{\infty} C_n r^{n-1} e^{i n \theta}
+$$
+
+At least, if the field is measured at $$P$$ equally-spaced points around a circle of radius $$R_{meas}$$, we can use the Fast Fourrier Transform to evaluate the $$C_n$$ parameters.
+
+We have to provide the various $$C_n$$ coefficient (real and imaginary parts) at various altitude to fully present the field.
+
+The method is decribed in _Determination of magnetic multipoles using a hall probe_ and _Maxwell's equations for magnets_.
+
+**Remark**
+
+A pure multipole magnet of order $$n$$ has only $$C_n \neq 0$$ ($$C_2 \neq 0$$ for a dipole, $$C_3$$ for a sextupole and so on).
+
+## Spherical.
+
+To do.

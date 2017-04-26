@@ -1,0 +1,238 @@
+\chapter{Quelques aspects pratiques de la m\'ethode des \'el\'ements finis}
+%
+\noindent
+%
+On va donner dans ce chapitre quelques indications pratiques concernant la
+programmation d'une m\'ethode d'\'el\'ements finis. On  pourra trouver beaucoup
+plus de d\'etails par exemple dans les ouvrages de Joly (1990) et de Lucquin et
+Pironneau (1996).\saut
+%
+On exposera ici quelques principes g\'en\'eraux dans le cas classique d'une m\'ethode d'\'el\'ements finis $P_1$ de Lagrange sur un maillage triangulaire d'un domaine de $\RR^2$. Des modifications devront donc \^etre apport\'ees pour d'autres types d'\'el\'ements finis.
+%
+%
+\section{Maillage}
+\noindent
+%
+%
+On va se placer ici dans le cas fr\'equent de la r\'esolution d'un probl\`eme sur un ouvert born\'e de $\RR^2$, not\'e $\Omega$. Ce probl\`eme comporte des conditions aux limites sur $\partial \Omega$, qui peuvent \^etre de type Dirichlet ou Neumann. On notera $\Gamma_0$ la partie de $\partial \Omega$ o\`u ces conditions sont de type Dirichlet, et $\Gamma_1$ la partie o\`u elles sont de type Neumann. On aura $\Gamma_0 \cap \Gamma_1=\emptyset$ et $\partial \Omega=\Gamma_0 \cup \Gamma_1$.\saut
+%
+%
+Comme dans les chapitres pr\'ec\'edents, on va noter $N_e$ le nombre d'\'el\'ements du maillage, et $N_h$ le nombre de noeuds (qui sont ici simplement les sommets des triangles).\saut
+%
+Le rep\'erage des noeuds est fait par l'interm\'ediaire d'un tableau COOR$(2,N_h)$ :
+\begin{center}
+\begin{tabular}{ll}
+ COOR$(1,k)=$ & abscisse du noeud $k$\\
+ COOR$(2,k)=$ & ordonn\'ee du noeud $k$
+\end{tabular}
+\end{center}
+%
+C'est le seul tableau travaillant avec les coordonn\'ees ``physiques'' dans le domaine. Tous les autres seront des tableaux d'adressage relatif.\saut
+%
+La d\'efinition des \'el\'ements du maillage est faite par un tableau CONEC$(3,N_e)$, qui fait le lien noeuds-\'el\'ements. Chaque \'el\'ement contient 3 noeuds ``locaux'' (car on travaille dans cet exemple sur des triangles). Ces noeuds correspondent chacun \`a un indice du tableau $COOR$, qu'on appellera leur ``num\'ero global''.\\
+%
+\hspace*{2 cm} CONEC$(i,l)=$ num\'ero global du $i^{\hbox{\tiny \`eme}}$ noeud local de l'\'el\'ement $l$ ($i=1,2,3$)\vspace*{5 mm}\\
+%
+Le rep\'erage des conditions de Dirichlet est r\'ealis\'e directement par un tableau DIRI$(N_0)$ balayant les $N_0$ noeuds de $\Gamma_0$ :\\
+%
+\hspace*{2 cm} DIRI$(i)=$ num\'ero global du $i^{\hbox{\tiny \`eme}}$ noeud de $\Gamma_0$.\saut
+%
+Le rep\'erage des conditions de Neumann est r\'ealis\'e  par un premier tableau NEUM$_0(N_1)$ balayant les $N_1$ \'el\'ements ayant un c\^ot\'e sur $\Gamma_1$, et par un second tableau NEUM$(3,N_1)$ indiquant quels c\^ot\'es des \'el\'ements sont sur $\Gamma_1$ :
+%
+\begin{center}
+\begin{tabular}{lp{10 cm}}
+ NEUM$_0(j)=$ & num\'ero du $j^{\hbox{\tiny \`eme}}$ \'el\'ement ayant un c\^ot\'e sur $\Gamma_1$.\\
+%
+NEUM$(i,j)=$ & 1 si le c\^ot\'e oppos\'e au $i^{\hbox{\tiny \`eme}}$ noeud local du $j^{\hbox{\tiny \`eme}}$ \'el\'ement de la liste NEUM$_0$ est sur $\Gamma_1$, 0 sinon.
+%
+\end{tabular}
+\end{center}
+%
+%
+\section{Assemblage de la matrice du syst\`eme}
+\noindent
+%
+%
+Le syst\`eme lin\'eaire auquel aboutit la d\'emarche des \'el\'ements finis est 
+$A\mu=b$, avec
+\begin{eqnarray*}
+A_{ij} & = & a(\varphi_i,\varphi_j) = \int_\Omega \cdots \; + \int_{\Gamma_1} \cdots\\
+b_{j} & = & l(\varphi_j) = \int_\Omega \cdots \; + \int_{\Gamma_1} \cdots\\
+\end{eqnarray*}
+%
+Les \'etapes de la programmation sont alors :
+\begin{enumerate}
+\item Calcul de $A_{ij}=\int_\Omega \cdots$ , pour $i=1,\ldots,N_h$, $j=1,\ldots,N_h$.
+%
+\item Calcul de $b_j=\int_\Omega \cdots$ , pour $j=1,\ldots,N_h$.
+%
+\item Conditions de Neumann : \\
+Pour tous les noeuds $j$ des \'el\'ements ayant un c\^ot\'e sur $\Gamma_1$ faire:
+\begin{itemize}
+\item $\ds{A_{ij}=A_{ij} + \int_{\Gamma_1} \cdots}\;$ pour les noeuds $i$ des \'el\'ements ayant un c\^ot\'e sur $\Gamma_1$
+\item $\ds{b_j=b_j + \int_{\Gamma_1} \cdots }$
+\end{itemize}
+%
+\item Conditions de Dirichlet : on modifie les composantes de $A$ et $b$ o\`u les noeuds de $\Gamma_0$ interviennent.\\
+Pour tous les noeuds $j$ de $\Gamma_0$ faire:
+\begin{itemize}
+\item $b_i=b_i-u_j A_{ij}$ pour tous les noeuds $i$ de $\Omega \setminus \Gamma_0$ ($u_j$ d\'esigne la valeur impos\'ee sur le noeud $j$ par les conditions de Dirichlet)
+\item $A_{ij}=A_{ji}=0$ pour tous les noeuds $i$ de $\Omega \setminus \Gamma_0$
+\item $A_{ij}=0$ pour tous les noeuds $i$ de $\Gamma_0$
+\item $A_{jj}=1$
+\item $b_j=u_j$
+\end{itemize}
+%
+\vspace*{10 mm}
+\end{enumerate}
+%
+%
+L'\'etape la plus co\^uteuse est la premi\`ere, c'est \`a dire le calcul de $\ds{A_{ij}=\int_\Omega H(\varphi_i,\varphi_j)}$, o\`u $H$ est un op\'erateur d\'ependant du probl\`eme que l'on traite. $A_{ij}$ peut \'evidemment \^etre d\'ecompos\'e sur les \'el\'ements du maillage :
+$$
+A_{ij} = \sum_{l=1}^{N_l} A_{ij}^{(l)} \qquad\hbox{ avec } A_{ij}^{(l)}= \int_{K_l} H(\varphi_i,\varphi_j)
+$$
+%
+Une m\'ethode na\"{\i}ve de calcul serait :
+\begin{center}
+\begin{minipage}{10 cm}
+{\tt 
+Pour $i=1$ \`a $N_h$\\
+Pour $j=1$ \`a $N_h$\\
+\hspace*{5 mm}Pour $l=1$ \`a $N_l$\\
+\hspace*{10 mm}Calcul de $A_{ij}^{(l)}$\\
+\hspace*{10 mm}$A_{ij}=A_{ij}+A_{ij}^{(l)}$\\
+\hspace*{5 mm}Fin pour\\
+Fin pour\\
+Fin pour
+}\\
+\end{minipage}
+\end{center}
+%
+%
+Toutefois, on calcule ainsi une grande majorit\'e de contributions $A_{ij}^{(l)}$ nulles. En effet, $A_{ij}^{(l)}\ne 0$ ssi les noeuds $i$ et $j$ appartiennent \`a l'\'el\'ement $l$. On peut donc reprendre l'assemblage de $A$
+en bouclant cette fois sur les \'el\'ements, pour ne calculer que les termes utiles:
+%
+\begin{center}
+\begin{minipage}{10 cm}
+{\tt 
+Pour $l=1$ \`a $N_l$\\
+\hspace*{5 mm}Pour $i_0=1$ \`a $3$\\
+\hspace*{5 mm}Pour $j_0=1$ \`a $3$\\
+\hspace*{10 mm}$i=$ CONEC$(i_0,l)$\\
+\hspace*{10 mm}$j=$ CONEC$(j_0,l)$\\
+\hspace*{10 mm}Calcul de $A_{ij}^{(l)}$\\
+\hspace*{10 mm}$A_{ij}=A_{ij}+A_{ij}^{(l)}$\\
+\hspace*{5 mm}Fin pour\\
+\hspace*{5 mm}Fin pour\\
+Fin pour
+}\\
+\end{minipage}
+\end{center}
+%
+%
+On voit que la m\'ethode d'assemblage na\"{\i}ve conduit \`a $N_h^2\times N_l$ calculs \'el\'ementaires, contre $9 N_l$ pour la seconde m\'ethode. Dans le cas r\'eel d'un maillage \`a $N_l=10^6$ \'el\'ements, on aura environ $N_h=5\, 10^5$ noeuds, ce qui m\`ene \`a $2.5\, 10^{17}$ calculs \'el\'ementaires pour la m\'ethode na\"{\i}ve, contre $9\, 10^6$ pour la seconde m\'ethode !!
+%
+%
+\section{Formules de quadrature}
+%
+%
+\subsection{D\'efinitions}
+\noindent
+%
+%
+Le calcul des int\'egrales sur les \'el\'ements du maillage a souvent lieu par int\'egration num\'erique. On utilise pour cela une formule de quadrature, c'est \`a dire une formule du type 
+\be
+\int_K f(x) \; dx \simeq \sum_{m=1}^M \omega_m f(\xi_m)
+\label{eq:quadra}
+\ee
+o\`u les  $\xi_m$  sont des points de $K$ (appel\'es points de quadrature) et les $\omega_m$ des coefficients de pond\'eration (ou encore des poids). On choisit en g\'en\'eral ces formules de telle sorte qu'elles soient exactes pour les polyn\^omes jusqu'\`a un certain degr\'e. On a d'ailleurs le r\'esultat suivant :\vspace*{3 mm}\\
+%
+{\bf Th\'eor\`eme :} Si la formule (\ref{eq:quadra}) est exacte pour les polyn\^omes de degr\'e inf\'erieur ou \'egal \`a $r$, alors il existe une constante $C>0$ telle que, pour toute fonction $f\in {\cal C}^{r+1}(K)$ :
+\be
+\left| \int_K f(x)\; dx - \sum_{m=1}^M \omega_m f(\xi_m) \right| \le C \; |K| \; h^{r+1}
+\label{eq:quadrature}
+\ee
+o\`u $|K|$ est la mesure de $K$ et $h$ son diam\`etre.
+%
+%
+\subsection{Quadrature en 1-D}
+\noindent
+%
+%
+On cherche \`a estimer $\ds{\int_a^b f(x)\; dx}$. Les formules les plus courantes sont :\vspace*{3 mm}\\
+\begin{description}
+\item[formule des rectangles]
+\be
+\int_a^b f(x)\; dx \simeq (b-a) \, f(a)
+\ee
+Elle est exacte pour les polyn\^omes constants.\\
+%
+\item[formule du point milieu]
+\be
+\int_a^b f(x)\; dx \simeq (b-a) \, f\left( \frac{a+b}{2} \right)
+\ee
+Elle est exacte pour les polyn\^omes de degr\'e inf\'erieur ou \'egal \`a 1.\\
+%
+\item[formule des trap\`ezes]
+\be
+\int_a^b f(x)\; dx \simeq (b-a) \, \frac{f(a)+f(b)}{2}
+\ee
+Elle est exacte pour les polyn\^omes de degr\'e inf\'erieur ou \'egal \`a 1.\\
+%
+\item[formule \`a deux points internes]
+\be
+\int_a^b f(x)\; dx \simeq (b-a) \,  \frac{f(\xi_1)+f(\xi_2)}{2}
+\ee
+avec $\xi_1=a+\lambda (b-a)$, $\xi_2=b-\lambda (b-a)$ et $\ds{\lambda=\frac{\sqrt{3}-1}{2\, \sqrt{3}} }$.
+Elle est exacte pour les polyn\^omes de degr\'e inf\'erieur ou \'egal \`a 2.\\
+%
+\item[formule de Simpson]
+\be
+\int_a^b f(x)\; dx \simeq (b-a) \, \frac{f(a)+4f(\frac{a+b}{2})+f(b)}{6}
+\ee
+Elle est exacte pour les polyn\^omes de degr\'e inf\'erieur ou \'egal \`a 3.
+%
+\end{description}
+%
+%
+%
+\subsection{Quadrature en 2-D triangulaire}
+\noindent
+%
+%
+$K$ est cette fois un triangle, de sommets $a_1,a_2,a_3$, de milieux des ar\^etes $a_{12}, a_{13}, a_{23}$, de centre de gravit\'e $a_0$, et de surface $|K|$.
+%
+\begin{description}
+\item[formule centr\'ee]
+\be
+\int_K f(x)\; dx \simeq |K| \, f(a_0)
+\ee
+Elle est exacte pour les polyn\^omes de degr\'e inf\'erieur ou \'egal \`a 1.\\
+%
+\item[formule sur les sommets]
+\be
+\int_K f(x)\; dx \simeq \frac{|K|}{3} \, \left( f(a_1)+f(a_2)+f(a_3) \right)
+\ee
+Elle est exacte pour les polyn\^omes de degr\'e inf\'erieur ou \'egal \`a 1.\\
+%
+\item[formule sur les milieux]
+\be
+\int_K f(x)\; dx \simeq \frac{|K|}{3} \, \left( f(a_{12})+f(a_{23})+f(a_{13}) \right)
+\ee
+Elle est exacte pour les polyn\^omes de degr\'e inf\'erieur ou \'egal \`a 2.
+\end{description}
+%
+%
+\small
+~\vspace*{3cm}\\
+\subsection*{Compl\'ements}
+%
+\begin{enumerate}
+\item D\'emontrer la formule (\ref{eq:quadrature})
+\item Pour chaque formule de quadrature 1-D et 2-D pr\'esent\'ee dans ce chapitre, d\'emontrer qu'elle est exacte pour les polyn\^omes jusqu'\`a un certain degr\'e.
+\end{enumerate}
+
+%
+\normalsize
+
+

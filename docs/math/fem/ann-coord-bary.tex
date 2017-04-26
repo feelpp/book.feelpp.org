@@ -1,0 +1,98 @@
+\chapter{Coordonn\'ees barycentriques}
+\label{ch:bary}
+%
+\noindent
+%
+Soit $K$ un triangle de $\RR^2$ de sommets $a_1, a_2, a_3$. On appelle coordonn\'ees barycentriques de $K$ les fonctions affines $\lambda_1, \lambda_2, \lambda_3$ de $K$ dans \RR \/ d\'efinies par 
+\be
+\lambda_j(a_i) = \delta_{ij}, \qquad 1\le i,j \le 3
+\label{eq:bary}
+\ee
+%
+On voit que la somme $\lambda_1+\lambda_2+\lambda_3$ est une fonction affine qui vaut 1 sur chacun des 3 sommets. C'est donc la fonction constante \'egale \`a 1.\vspace*{5 mm}\\
+%
+Si l'on note $(x_i,y_i)$ les coordonn\'ees d'un sommet $a_i$ et $\lambda_j(x,y)=\alpha_j \, x + \beta_j \, y + \gamma_j$, la relation (\ref{eq:bary}) est \'equivalente au syst\`eme lin\'eaire :
+\be
+\left\{
+\begin{array}{l}
+\alpha_j x_i + \beta_j y_i + \gamma_j = 0 \\
+\alpha_j x_k + \beta_j y_k + \gamma_j = 0 \\
+\alpha_j x_j + \beta_j y_j + \gamma_j = 1 \\
+\end{array}
+\right.
+\ee
+o\`u $\{i,j,k\}$ est une permutation de $\{1,2,3\}$. La r\'esolution de ce syst\`eme m\`ene \`a :
+\begin{eqnarray*}
+\alpha_j & = & \ds{ \frac{y_k-y_i}{(x_j-x_k)(y_j-y_i) - (x_j-x_i)(y_j-y_k)} }\\
+\beta_j & = & \ds{ \frac{x_i-x_k}{(x_j-x_k)(y_j-y_i) - (x_j-x_i)(y_j-y_k)} }\\
+\gamma_j & = & \ds{ \frac{x_k y_i - x_i y_k}{(x_j-x_k)(y_j-y_i) - (x_j-x_i)(y_j-y_k)} }
+\end{eqnarray*}
+%
+Si l'on note $|K|$ l'aire du triangle et $\varepsilon$ le signe de ($\stackrel{\longrightarrow}{a_ka_j},\stackrel{\longrightarrow}{a_ia_j}$), on peut aussi r\'e\'ecrire ces \'egalit\'es sous la forme :
+\begin{eqnarray*}
+\alpha_j & = & \ds{ \frac{y_k-y_i}{2\varepsilon \; |K|} }\\
+\beta_j & = & \ds{ \frac{x_i-x_k}{2\varepsilon \; |K|} }\\
+\gamma_j & = & \ds{ \frac{x_k y_i - x_i y_k}{2\varepsilon \; |K|} }
+\end{eqnarray*}
+%
+%
+{\bf Propri\'et\'e :} $(\lambda_1,\lambda_2,\lambda_3)$ est une base de $P_1$.
+\vspace*{5 mm}\\
+%
+{\bf Propri\'et\'e :} $(\lambda_1\lambda_2,\lambda_1\lambda_3,\lambda_2\lambda_3,\lambda_1^2,\lambda_2^2,\lambda_3^2)$ est une base de $P_2$.
+\vspace*{5 mm}\\
+%
+{\bf Propri\'et\'e :} On note $\{i,j,k\}$ une permutation de $\{1,2,3\}$ et $m,n,p$ des entiers. On a alors~:
+\be
+\int_K \lambda_i^m \lambda_j^n \lambda_k^p \; dx = \frac{2\, |K| \, m!\, n! \, p!}{(2+m+n+p)!}
+\ee
+%
+\vspace*{10 mm}\\
+%
+La notion de coordonn\'ees barycentriques s'\'etend naturellement au cas d'un t\'etra\`edre dans $\RR^3$. On travaille dans ce cas avec 4 coordonn\'ees barycentriques.
+
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.85\linewidth]{FIG/coord-barycentriques.jpg}
+%\vspace*{6 cm}
+\caption{Coordonn\'ees barycentriques sur un triangle}
+\label{fig:coord-bar}
+\end{center}
+\end{figure}
+%
+%
+\noindent
+{\bf Propri\'et\'e :} Soit $p$ un polyn\^ome de degr\'e quelconque \`a
+deux variables qui s'annule sur une droite d'\'equation $\lambda(x,y)=
+0$. Alors il  existe un polyn\^ome $q$ tel que $p=\lambda q$.\\
+Soit $\overrightarrow n$  un vecteur orthogonal \`a la droite 
+d'\'equation $\lambda(x,y)=0$. Si de plus
+$\displaystyle{\dpa{p}{n}(x,y)}$
+s'annule sur cette droite, alors il existe un polyn\^ome $r$
+tel que $p= \lambda^2 r$.
+\vspace*{5mm}\\
+%
+%
+%
+\noindent
+{\bf Exemples de calcul de fonctions de base :} 
+\begin{itemize}
+\item {\bf Fonctions de base $\bf{P_1}$} Soit $p_i$ la fonction de base $P_1$ associ\'ee au sommet $a_i$. Elle est d\'efinie par : $p_i(a_i) = 1$, $p_i(a_j)=0$ pour $i\ne j$, et $p_i \in P_1$. C'est donc exactement la d\'efinition des coordonn\'ees barycentriques : $p_i = \lambda_i$
+%
+\item {\bf Fonctions de base $\bf{P_2}$} Soit $p_1$ la fonction de base $P_2$ associ\'ee au sommet $a_1$. Elle est d\'efinie par : $p_1(a_1) = 1$, $p_1(a_2)=p_1(a_3)=p_1(a_{12})=p_1(a_{13})=p_1(a_{23})=0$ , et $p_1 \in P_2$.\\
+La restriction de $p_1$ \`a la droite $[a_2, a_3]$ est un polyn\^ome \`a {\bf une} variable, de degr\'e 2, qui s'annule en trois points distincts $a_2$, $a_{23}$ et $a_3$. Elle est donc identiquement nulle sur la droite $[a_2, a_3]$, dont l'\'equation est $\lambda_1=0$. Donc il existe un polyn\^ome $q_1$ de degr\'e inf\'erieur ou \'egal \`a 1 tel que $p_1=\lambda_1 q_1$. \\
+Les  relations $p_1(a_{12})=p_1(a_{13})=0$ deviennent donc $q_1(a_{12})=q_1(a_{13})=0$ (car $\lambda_1(a_{12}) \ne 0$ et $\lambda_1(a_{13}) \ne 0$). Donc la restriction de $q_1$ \`a la droite $[a_{12}, a_{13}]$ est un polyn\^ome \`a {\bf une} variable, de degr\'e 1, qui s'annule en deux points distincts $a_{12}$ et $a_{13}$. Elle est donc identiquement nulle sur la droite $[a_{12}, a_{13}]$, dont l'\'equation est $\lambda_1-1/2=0$. Donc il existe une constante $\alpha$  telle que $q_1=\alpha (\lambda_1-1/2)$, soit $p_1= \alpha \lambda_1 (\lambda_1-1/2)$.\\
+La relation $p_1(a_1) = 1$ fournit finalement $\alpha = 2$. D'o\`u $p_1= \lambda_1 (2\lambda_1-1)$.
+%
+%
+\end{itemize}
+
+
+
+
+
+
+
+
+

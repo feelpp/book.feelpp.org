@@ -1,0 +1,33 @@
+== Fitting 
+
+Keywords  `fit` and `fitDiff` provide the
+interpolated data and the derivative of the interpolated data respectively.
+This is usefull when material laws, properties or some terms in variational formulation
+are given as a data file.
+
+
+[source,cpp]
+----
+auto Xh = Pch<2>(mesh);
+auto K = Xh->element();
+K.on(_range=elements(mesh), _expr=fit(idv(T)[,dataFile(string),[type(string)]]));
+Kd.on(_range=elements(mesh), _expr=fitDiff(idv(T)[,dataFile(string),[type(string)]]));
+----
+
+=== Options
+
+|===
+| `--fit.datafile` | the data file to interpolate (two columns)
+| `--fit.type` | P0, P1, Spline, Akima
+| `--fit.P0`| left = 0, right = 1, center = 2
+| `--fit.P1_right`| Kind of extention : zero = 0, constant = 1, extrapol = 2
+| `--fit.P1_left`| Kind of extention : zero = 0, constant = 1, extrapol = 2
+| `--fit.Spline_right`| natural = 0, clamped = 1
+| `--fit.Spline_left`| natural = 0, clamped = 1
+|===
+
+[source,cpp]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/testsuite/feelfit/test_fit.cpp[tag=fit]
+----
+

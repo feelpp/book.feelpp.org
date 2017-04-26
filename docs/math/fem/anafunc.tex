@@ -1,0 +1,736 @@
+%% Preamble %%
+%% A minimal LaTeX preamble
+%% Some packates are needed to implement
+%% Asciidoc features
+
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}               % ... or a4paper or a5paper or ...
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}       % Activate to begin paragraphs with an empty line rather than an indent
+
+\usepackage{tcolorbox}
+\usepackage{lipsum}
+
+\usepackage{epstopdf}
+\usepackage{color}
+% \usepackage[usenames, dvipsnames]{color}
+% \usepackage{alltt}
+
+
+\usepackage{amssymb}
+% \usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[version=3]{mhchem}
+
+
+% Needed to properly typeset
+% standard unicode characters:
+%
+\RequirePackage{fix-cm}
+\usepackage{fontspec}
+\usepackage[Latin,Greek]{ucharclasses}
+%
+% NOTE: you must also use xelatex
+% as the typesetting engine
+
+
+% \usepackage{fontspec}
+% \usepackage{polyglossia}
+% \setmainlanguage{en}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\graphicspath{ {images/} }
+\DeclareGraphicsExtensions{.png, .jpg, jpeg, .pdf}
+
+%% \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+%% Asciidoc TeX Macros %%
+
+
+% \pagecolor{black}
+%%%%%%%%%%%%
+
+
+% Needed for Asciidoc
+
+\newcommand{\admonition}[2]{\textbf{#1}: {#2}}
+\newcommand{\rolered}[1]{ \textcolor{red}{#1} }
+\newcommand{\roleblue}[1]{ \textcolor{blue}{#1} }
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{problem}{Problem}
+\newtheorem{exercise}{Exercise}
+\newtheorem{example}{Example}
+\newtheorem{note}{Note}
+\newtheorem{joke}{Joke}
+\newtheorem{objection}{Objection}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%  Extended quote environment with author
+
+\renewenvironment{quotation}
+{   \leftskip 4em \begin{em} }
+{\end{em}\par }
+
+\def\signed#1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
+  \hbox{}\nobreak\hfil\raise-3pt\hbox{(#1)}%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+
+
+\newsavebox\mybox
+
+\newenvironment{aquote}[1]
+  {\savebox\mybox{#1}\begin{quotation}}
+  {\signed{\usebox\mybox}\end{quotation}}
+
+\newenvironment{tquote}[1]
+  {  {\bf #1} \begin{quotation} \\ }
+  { \end{quotation} }
+
+%% BOXES: http://tex.stackexchange.com/questions/83930/what-are-the-different-kinds-of-boxes-in-latex
+%% ENVIRONMENTS: https://www.sharelatex.com/learn/Environments
+
+\newenvironment{asciidocbox}
+  {\leftskip6em\rightskip6em\par}
+  {\par}
+
+\newenvironment{titledasciidocbox}[1]
+  {\leftskip6em\rightskip6em\par{\bf #1}\vskip-0.6em\par}
+  {\par}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% http://texblog.org/tag/rightskip/
+
+
+\newenvironment{preamble}
+  {}
+  {}
+
+%% http://tex.stackexchange.com/questions/99809/box-or-sidebar-for-additional-text
+%%
+\newenvironment{sidebar}[1][r]
+  {\wrapfigure{#1}{0.5\textwidth}\tcolorbox}
+  {\endtcolorbox\endwrapfigure}
+
+
+%%%%%%%%%%
+
+\newenvironment{comment*}
+  {\leftskip6em\rightskip6em\par}
+  {\par}
+
+  \newenvironment{remark*}
+  {\leftskip6em\rightskip6em\par}
+  {\par}
+
+
+%% Dummy environment for testing:
+
+\newenvironment{foo}
+  {\bf Foo.\ }
+  {}
+
+
+\newenvironment{foo*}
+  {\bf Foo.\ }
+  {}
+
+
+\newenvironment{click}
+  {\bf Click.\ }
+  {}
+
+\newenvironment{click*}
+  {\bf Click.\ }
+  {}
+
+
+\newenvironment{remark}
+  {\bf Remark.\ }
+  {}
+
+\newenvironment{capsule}
+  {\leftskip10em\par}
+  {\par}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Style
+
+\parindent0pt
+\parskip8pt
+%% User Macros %%
+%% Front Matter %%
+
+\title{Outils d’analyse fonctionnelle}
+\author{}
+\date{}
+
+
+%% Begin Document %%
+
+\begin{document}
+\maketitle
+\hypertarget{x-outils-d’analyse-fonctionnelle}{\section*{Outils d’analyse fonctionnelle}}
+\hypertarget{x-quelques-rappels}{\subsection*{Quelques rappels}}
+\hypertarget{x-normes-et-produits-scalaires}{\subsubsection*{Normes et produits scalaires}}
+Soit $E$ un espace vectoriel. \\
+
+
+[def:7] $\|.\|$ : $E \rightarrow \RR$ est une
+\textbf{norme} sur $E$ ssi elle vérifie :
+
+
+\begin{description}
+
+\item[$\qquad$(N1)]$\left( \| x \| = 0 \right)  \Longrightarrow (x=0)$
+
+\item[$\qquad$(N2)]$\forall\, \lambda\in\RR,\; \forall x\in E, \quad \| \lambda x \|  = |\lambda| \; \| x \| $
+
+\item[$\qquad$(N3)]$\forall\,  x,y \in E, \quad \| x+ y \| \le \|x \| + \|y\|\qquad$
+(inégalité triangulaire) \\
+
+\end{description}
+
+
+Pour $E=\RR^n$ et $x=(x_1,\ldots,x_n) \in\RR^n$,
+on définit les normes \| x \|_1 = \sum_{i=1}^n |x_i|
+\qquad
+\| x \|_2 = \left( \sum_{i=1}^n x_i^2 \right)^{1/2}
+\qquad
+\| x \|_\infty = \sup_{i} |x_i|]
+
+
+On appelle \textbf{produit scalaire} sur $E$ toute forme bilinéaire
+symétrique définie positive. \
+$\quad<.,.>$ : $E\times E \rightarrow \RR$ est
+donc un produit scalaire sur $E$ ssi il vérifie :
+
+
+\begin{description}
+
+\item[$\qquad$(S1)]$\forall\; x,y \in E, \quad <x,y> = <y,x>$
+
+\item[$\qquad$(S2)]$\forall\; x_1,x_2,y \in E, \quad <x_1+x_2,y> = <x_1,y>
+    + <x_2,y> $
+
+\item[$\qquad$(S3)]$\forall\; x,y \in E, \, \forall\, \lambda\in\RR,\quad
+    <\lambda x,y> = \lambda <x,y> $
+
+\item[$\qquad$(S4)]$\forall\;  x \in E, x\ne 0, \quad  <x,x>\; > 0 $ \
+
+\end{description}
+
+
+A partir d’un produit scalaire, on peut définir une \textbf{norme induite} :
+$ \| x \| = \sqrt{<x,x>} $ \
+On a alors, d’après (N3), l’\textbf{inégalité de Cauchy-Schwarz} :
+$\ds{ | <x,y> | \le \| x \| \; \| y \| }$
+
+
+\textbf{Exemple :} Pour $E=\RR^n$, on définit le produit scalaire
+$\ds{<x,y> = \sum_{i=1}^n x_i \, y_i}$. Sa norme induite est
+$\| . \|_2$ définie précédemment.
+
+
+Un espace vectoriel muni d’une norme est appelé \textbf{espace normé}. \
+Un espace vectoriel muni d’un produit scalaire est appelé \textbf{espace
+préhilbertien}. En particulier, c’est donc un espace normé pour la norme
+induite.
+
+
+\hypertarget{x-suites-de-cauchy---espaces-complets}{\subsubsection*{Suites de Cauchy - espaces complets}}
+[def:1] Soit $E$ un espace vectoriel et
+$(x_n)_n$ une suite de $E$.
+$(x_n)_n$ est une \textbf{suite de Cauchy} ssi
+$\forall \varepsilon > 0,\;\; \exists N / \forall p>N, \forall q>N, \quad \|x_p - x_q \| < \varepsilon$
+
+
+Toute suite convergente est de Cauchy. La réciproque est fausse.
+
+
+[def:2] Un espace vectoriel est \textbf{complet} ssi toute suite de Cauchy y
+est convergente.
+
+
+[def:3] Un espace normé complet est un \textbf{espace de Banach}.
+
+
+[def:4] Un espace préhilbertien complet est un \textbf{espace de Hilbert}. \
+
+
+[def:5] Un espace de Hilbert de dimension finie est appelé \textbf{espace
+euclidien}.
+
+
+\hypertarget{x-espaces-fonctionnels}{\subsection*{Espaces fonctionnels}}
+[def:6] Un \textbf{espace fonctionnel} est un espace vectoriel dont les
+éléments sont des fonctions.
+
+
+${\cal C}^p([a;b)$] désigne l’espace des fonctions définies
+sur l’intervalle $[a,b$], dont toutes les dérivées jusqu’à
+l’ordre $p$ existent et sont continues sur
+$[a,b$].
+
+
+Dans la suite, les fonctions seront définies sur un sous-ensemble de
+$\RR^n$ (le plus souvent un ouvert noté
+$\Omega$), à valeurs dans $\RR$ ou
+$\RR^p$.
+
+
+La température $T(x,y,z,t)$ en tout point d’un objet
+$\bar{\Omega}\subset \RR^3$ est une fonction de
+$ \bar{\Omega} \times \RR \longrightarrow \RR$.
+
+
+Les normes usuelles les plus simples sur les espaces fonctionnels sont
+les \textbf{normes} $\bf L^p$ définies par :
+\[\| u \|_{L^p} = \left ( \int_{\Omega } |u|^p \right) ^{1/p} \quad ,\; p\in [1,+ \infty[ ,
+\qquad
+\hbox{et}\qquad
+\| u \|_{L^\infty} = {\hbox{Sup}}_{\Omega } |u|] Comme on va le voir,
+ces formes $L^p$ ne sont pas nécessairement des normes. Et
+lorsqu’elles le sont, les espaces fonctionnels munis de ces normes ne
+sont pas nécessairement des espaces de Banach. Par exemple, les formes
+$L^\infty$ et $L^1$ sont bien des normes sur
+l’espace ${\cal C}^0([a;b)$], et cet espace est complet si
+on le munit de la norme $L^\infty$, mais ne l’est pas si on
+le munit de la norme $L^1$. Pour cette raison, on va définir
+les espaces ${\cal L}^p(\Omega)$
+($p\in [1,+ \infty[$) par
+\[{\cal L}^p(\Omega) = \left\{  u : \Omega \rightarrow \RR, \hbox{ mesurable, et telle que } \int_\Omega |u|^p<\infty  \right\}]
+( on rappelle qu’une fonction $u$ est mesurable ssi
+$\{ x /  |u(x)|<r \}$ est mesurable
+$\forall r>0$. ) Sur ces espaces
+${\cal L}^p(\Omega)$, les formes $L^p$ ne sont
+pas des normes. En effet, $\| u \|_{L^p} = 0$ implique que
+$u$ est nulle presque partout dans
+${\cal L}^p(\Omega)$, et non pas $u=0$. C’est
+pourquoi on va définir les \textbf{espaces} $\bf L^p(\Omega)$ :
+
+
+$L^p(\Omega)$ est la classe d’équivalence des fonctions de
+${\cal
+  L}^p(\Omega)$ pour la relation d’équivalence ``égalité presque
+partout''. Autrement dit, on confondra deux fonctions dès lors qu’elles
+sont égales presque partout, c’est à dire qu’elles ne diffèrent que sur
+un ensemble de mesure nulle.[def:9]
+
+
+La forme $L^p$ est une norme sur $L^p(\Omega)$,
+et $L^p(\Omega)$ muni de la norme $L^p$ est un
+espace de Banach (c.a.d. est complet).[thr:1]
+
+
+Un cas particulier très important est $p=2$. On obtient
+alors l’\textbf{espace fonctionnel $L^2(\Omega)$}, c’est à dire
+l’espace des fonctions de carré sommable sur $\Omega$ (à la
+relation d’équivalence ``égalité presque partout'' près). A la norme
+$L^2$ :
+$\| u \|_{L^2} = \left( \int_\Omega u^2 \right)^{1/2} $, on
+peut associer la forme bilinéaire
+$(u,v)_{L^2} = \int_\Omega u\, v$. Il s’agit d’un produit
+scalaire, dont dérive la norme $L^2$. D’où :
+
+
+$L^2(\Omega)$ est un espace de Hilbert.[thr:2]
+
+
+\hypertarget{x-notion-de-dérivée-généralisée}{\subsection*{Notion de dérivée généralisée}}
+Nous venons de définir des espaces fonctionnels complets, ce qui sera un
+bon cadre pour démontrer l’existence et l’unicité de solutions
+d’équations aux dérivées partielles, comme on le verra plus loin
+notamment avec le théorème de Lax-Milgram. Toutefois, on a vu que les
+éléments de ces espaces $L^p$ ne sont pas nécessairement des
+fonctions très régulières. Dès lors, les dérivées partielles de telles
+fonctions ne sont pas forcément définies partout. Pour s’affranchir de
+ce problème, on va étendre la notion de dérivation. Le véritable outil à
+introduire pour cela est la notion de \textbf{distribution}, due à L. Schwartz
+(1950). Par manque de temps dans ce cours, on se contentera ici d’en
+donner une idée très simplifiée, avec la notion de \textbf{dérivée
+généralisée}. Cette dernière a des propriétés beaucoup plus limitées que
+les distributions, mais permet de “sentir" les aspects nécessaires pour
+mener à la formulation variationnelle. Dans la suite,
+$\Omega$ sera un ouvert (pas nécessairement borné) de
+$\RR^n$.
+
+
+\hypertarget{x-fonctions-tests}{\subsubsection*{Fonctions tests}}
+Soit $\varphi : \Omega \rightarrow \RR$. On appelle \textbf{support
+de $\bf
+  \varphi$} l’adhérence de
+$\{ x \in \Omega / \varphi(x) \ne 0 \}$.[def:10]
+
+
+Pour $\Omega = -1,1[$], et $\varphi$ la fonction
+constante égale à 1, $\hbox{Supp}\, \varphi = [-1,1$].
+
+
+On note ${\cal D}(\Omega)$ l’espace des fonctions de
+$\Omega$ vers $\RR$, de classe
+${\cal C}^\infty$, et à support compact inclus dans
+$\Omega$. ${\cal D}(\Omega)$ est parfois appelé
+\textbf{espace des fonctions-tests}.[def:11]
+
+
+L’exemple le plus classique dans le cas 1-D est la fonction (x) = \{
+
+
+ll & |x|<1 \
+0 & |x|1 \
+
+
+\begin{enumerate}
+
+\item{[eq:fonction-test1] $\varphi$ est une fonction de
+${\cal D}(a,b[)$] pour tous $a < -1 < 1 < b$.}
+
+\end{enumerate}
+
+
+Cet exemple s’étend aisément au cas multi-dimensionnel
+($n>1$). Soit $a\in\Omega$ et $r>0$
+tel que la boule fermée de centre $a$ et de rayon
+$r$ soit incluse dans $\Omega$. On pose alors :
+(x) = \{
+
+
+ll & |x-a|<r \
+0 & \
+
+
+\begin{enumerate}
+
+\item{[eq:fonction-test2] $\varphi$ ainsi définie est élément de
+${\cal D}(\Omega)$.}
+
+\end{enumerate}
+
+
+$\overline{{\cal D}(\Omega) } = L^2(\Omega)$[thr:4]
+
+
+\hypertarget{x-dérivée-généralisée}{\subsubsection*{Dérivée généralisée}}
+Soit $u\in {\cal C}^1(\Omega)$ et
+$\varphi \in {\cal D}(\Omega)$. Par intégration par parties
+(annexe [sec:green]), on a :
+\[\int_\Omega \partial_i u\;  \varphi = - \int_\Omega u \; \partial_i\varphi + \int_{\partial \Omega} u \; \varphi \; {\bf e}_i.{\bf n}]
+Ce dernier terme (intégrale sur le bord de $\Omega$) est nul
+car $\varphi$ est à support compact (donc nul sur
+$\partial \Omega$). Or $\int_\Omega u
+\; \partial_i\varphi$ a un sens par exemple dès que
+$u\in L^2(\Omega)$. Donc le terme
+$\int_\Omega \partial_i u\; \varphi$ a aussi du sens, sans
+que $u$ ne soit nécessairement de classe
+${\cal C}^1$. Ceci permet de définir
+$\partial_i u$ même dans ce cas.
+
+
+cas 1-D $\quad$ Soit $I$ un intervalle de , pas
+forcément borné. On dit que $u\in L^2(I)$ admet une \textbf{dérivée
+généralisée} dans $L^2(I)$ ssi
+$\exists u_1\in L^2(I)$ telle que
+$\forall \varphi\in {\cal
+  D}(I), \quad \int_I u_1\;\varphi = - \int_I u \varphi'$[def:12]
+
+
+Soit $I=a,b[$] un intervalle borné, et $c$ un
+point de $I$. On considère une fonction $u$
+formée de deux branches de classe ${\cal C}^1$, l’une sur
+$a,c[$], l’autre sur $c,b[$], et se raccordant
+de façon continue mais non dérivable en $c$. Alors
+$u$ admet une dérivée généralisée définie par
+$u_1(x)=u'(x)\quad \forall x\ne c$. En effet :
+\[\forall \varphi\in {\cal D}(a,b[)\qquad \int_a^b u \varphi' = \int_a^c \
+\int_c^b = - \int_a^c u' \varphi - \int_c^b u'\varphi \
+\underbrace{(u(c${}^{-)-u(c}$+))}_{=0} \, \varphi(c)] par intégration par
+parties. La valeur $u_1(c)$ n’a pas d’importance: on a de
+toute façon au final la même fonction de $L^2(I)$,
+puisqu’elle est définie comme classe d’équivalence de la relation
+d’équivalence “égalité presque partout".
+
+
+En itérant, on dit que $u$ admet une \textbf{dérivée généralisée
+d’ordre $\bf k$} dans $L^2(I)$, notée
+$u_k$, ssi $\ds{\forall \varphi\in
+  {\cal D}(I), \quad \int_I u_k\;\varphi = (- 1)^k \; \int_I u \varphi^{(k)}
+  }$[def:13]
+
+
+Ces définitions s’étendent naturellement pour la définition de dérivées
+partielles généralisées, dans le cas $n>1$.
+
+
+Quand elle existe, la dérivée généralisée est unique.[thr:5]
+
+
+Quand $u$ est de classe
+${\cal C}^1(\bar{\Omega})$, la dérivée généralisée est égale
+à la dérivée classique.[thr:6]
+
+
+\hypertarget{x-espaces-de-sobolev}{\subsection*{Espaces de Sobolev}}
+Les espaces $H^m$
+${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$^^
+
+
+$\ds{ H^1(\Omega) = \left\{ u \in L^2(\Omega)\; / \; \partial_i u \; \in
+    L^2(\Omega), \quad 1 \le i \le n \right\} }$ où
+$\partial_i u$ est définie au sens de la dérivée
+généralisée.[def:14]
+
+
+$H^1(\Omega)$ est appelé \textbf{espace de Sobolev d’ordre 1}.
+
+
+Pour tout entier $m\ge 1$,
+H^m(\Omega) = \left\{ u \in L^2(\Omega) \; / \; \partial^\alpha u \; \in
+  L^2(\Omega) \quad \forall \alpha =(\alpha_1,\ldots,\alpha_n) \in \NN^n\hbox{
+  tel que}\; |\alpha|= \alpha_1+\cdots+\alpha_n \le m \right\}][def:15]
+
+
+$H^m(\Omega)$ est appelé \textbf{espace de Sobolev d’ordre
+$\bf m$}. Par extension, on voit aussi que
+$H^0(\Omega)=L^2(\Omega)$. Dans le cas de la dimension 1, on
+écrit plus simplement pour $I$ ouvert de $\RR$ :
+\[H^m(I) =  \left\{ u \in L^2(I)  \; / \;   u', \ldots, u^{(m)} \in L^2(I) \right\}]
+
+
+$H^1(\Omega)$ est un espace de Hilbert pour le produit
+scalaire
+\[(u,v)_1 = \int_\Omega u \, v\, + \sum_{i=1}^n \; \int_\Omega \partial_i u
+\; \partial_i v = (u,v)_0 + \sum_{i=1}^n (\partial_i u, \partial_i v )_0]
+en notant $(.,.)_0$ le produit scalaire $L^2$.
+On notera $\|.\|_1$ la norme associée à
+$(.,.)_1$.[thr:7]
+
+
+On définit de même un produit scalaire et une norme sur
+$H^m(\Omega)$ par
+\[(u,v)_m =   \sum_{|\alpha| \le m} ( \partial^\alpha u , \partial^\alpha v )_0 \qquad
+\hbox{ et }\qquad
+\| u \|_m = (u,u)_m^{1/2}]
+
+
+$H^m(\Omega)$ muni du produit scalaire $(.,.)_m$
+est un espace de Hilbert.[thr:8]
+
+
+Si $\Omega$ est un ouvert de $\RR^n$ de
+frontière $\partial\Omega$ “suffisamment régulière" (par
+exemple ${\cal C}^1$), on a l’inclusion :
+$H^m(\Omega) \subset {\cal C}^k(\bar{\Omega})$ pour
+$\ds{ k < m-\frac{n}{2}
+  }$[thr:9]
+
+
+En particulier, on voit que pour un intervalle $I$ de
+$\RR$, on a $H^1(I)
+  \subset {\cal C}^0(\bar{I})$, c’est à dire que, en 1-D, toute
+fonction $H^1$ est continue.
+
+
+L’exemple de $u(x) = x\, \sin\frac{1}{x}$ pour
+$x\in0,1$]] et $u(0)=0$ montre que la réciproque
+est fausse.
+
+
+L’exemple de $u(x,y) = | \ln (x^2+y^2) |^k$ pour
+$0<k<1/2$ montre qu’en dimension supérieure à 1 il existe
+des fonctions $H^1$ discontinues.
+
+
+\hypertarget{x-trace-d’une-fonction}{\subsubsection*{Trace d’une fonction}}
+Pour pouvoir faire les intégrations par parties qui seront utiles par
+exemple pour la formulation variationnelle, il faut pouvoir définir le
+prolongement (\emph{la trace}) d’une fonction sur le bord de l’ouvert
+$\Omega$. : on considère un intervalle ouvert
+$I=a,b[$] borné. On a vu que
+$H^1(I) \subset {\cal C}^0(\bar{I})$. Donc, pour
+$u\in H^1(I)$, $u$ est continue sur
+$[a,b$], et $u(a)$ et $u(b)$ sont
+bien définies. : on n’a plus
+$H^1(\Omega) \subset {\cal C}^0(\bar{\Omega})$. Comment
+alors définir la trace ? La démarche est la suivante :
+
+
+\begin{itemize}
+
+\item On définit l’espace
+\[{\cal C}^1(\bar{\Omega}) = \left\{  \varphi : \Omega \rightarrow \RR \;/\;  \exists O \hbox{ ouvert contenant } \bar{\Omega},\; \exists \psi \in {\cal C}^1(O),\; \psi_{|\Omega} = \varphi \right\}]
+Autrement dit, ${\cal C}^1(\bar{\Omega})$ est l’espace des
+fonctions ${\cal C}^1$ sur $\Omega$,
+prolongeables par continuité sur $\partial\Omega$ et dont le
+gradient est lui-aussi prolongeable par continuité. Il n’y a donc pas de
+problème pour définir la trace de telles fonctions.
+
+\item On montre que, si $\Omega$ est un ouvert borné de
+frontière $\partial\Omega$ “assez régulière", alors
+${\cal C}^1(\bar{\Omega})$ est dense dans
+$H^1(\Omega)$.
+
+\item L’application linéaire continue, qui à toute fonction $u$
+de ${\cal C}^1(\bar{\Omega})$ associe sa trace sur
+$\partial\Omega$, se prolonge alors en une application
+linéaire continue de $H^1(\Omega)$ dans
+$L^2(\partial\Omega)$, notée $\gamma_0$, qu’on
+appelle \textbf{application trace}. On dit que $\gamma_0(u)$ \textbf{est
+la trace de $u$ sur} $\partial\Omega$.
+
+\end{itemize}
+
+
+Pour une fonction $u$ de $H^1(\Omega)$ qui soit
+en même temps continue sur $\bar{\Omega}$, on a évidemment
+$\gamma_0(u) = u_{|\partial\Omega}$. C’est pourquoi on note
+souvent par abus simplement $u_{|\partial\Omega}$ plutôt que
+$\gamma_0(u)$.
+
+
+On peut de façon analogue définir $\gamma_1$, application
+trace qui permet de prolonger la définition usuelle de la dérivée
+normale sur $\partial\Omega$. Pour
+$u\in H^2(\Omega)$, on a
+$\partial_i u \in H^1(\Omega)$,
+$\forall i=1,\ldots,n$, et on peut donc définir
+$\gamma_0(\partial_i u)$. La frontière
+$\partial\Omega$ étant “assez régulière" (par exemple,
+idéalement, de classe ${\cal C}^1$), on peut définir la
+normale
+$n=\left(   \begin{array}{l}  n_1 \ \vdots \ n_n \end{array} \right)$
+en tout point de $\partial\Omega$. On pose alors
+$\ds{\gamma_1(u) = \sum_{i=1}^n \gamma_0(\partial_i u) n_i}$.
+Cette application continue $\gamma_1$ de
+$H^2(\Omega)$ dans $L^2(\partial\Omega)$ permet
+donc bien de prolonger la définition usuelle de la dérivée normale. Dans
+le cas où $u$ est une fonction de $H^2(\Omega)$
+qui soit en même temps dans ${\cal C}^1(\bar{\Omega})$, la
+dérivée normale au sens usuel de $u$ existe, et
+$\gamma_1(u)$ lui est évidemment égal. C’est pourquoi on
+note souvent, par abus, $\partial_n u$ plutôt que
+$\gamma_1(u)$.
+
+
+Espace $\bf H^1_0(\Omega)$
+${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$${}^{^}$^^
+
+
+Soit $\Omega$ ouvert de $\RR^n$. L’espace
+$H^1_0(\Omega)$ est défini comme l’adhérence de
+${\cal D}(\Omega)$ pour la norme $\|.\|_1$ de
+$H^1(\Omega)$. (on rappelle que
+${\cal D}(\Omega)$ est l’espace des fonctions
+${\cal C}^\infty$ sur $\Omega$ à support
+compact, encore appelé espace des fonctions tests)[def:16]
+
+
+Par construction $H^1_0(\Omega)$ est un espace complet.
+C’est un espace de Hilbert pour la norme $\|.\|_1$[thr:10]
+
+
+: on considère un intervalle ouvert $I=a,b[$] borné. Alors
+\[H^1_0(a,b[) = \left\{ u \in H^1(]a,b[),\; u(a)=u(b)=0 \right\}]
+: Si $\Omega$ est un ouvert borné de frontière“assez
+régulière" (par exemple ${\cal C}^1$ par morceaux), alors
+$H^1_0(\Omega) = \ker \gamma_0$. $H^1_0(\Omega)$
+est donc le sous-espace des fonctions de $H^1(\Omega)$ de
+trace nulle sur la frontière $\partial\Omega$.
+
+
+Pour toute fonction $u$ de $H^1(\Omega)$, on
+peut définir :
+\[\ds{ |u|_1 = \left( \sum_{i=1}^n \| \partial_i u \|_0^2 \right)^{1/2}
+= \left( \int_\Omega \sum_{i=1}^n \left( \partial_i u \right)^2 dx
+\right)^{1/2} } \vspace*{5 mm}][def:17]
+
+
+[thr:11] Si $\Omega$ est borné dans au moins une direction,
+alors il existe une constante $C(\Omega)$ telle que
+$\forall u \in H^1_0(\Omega), \; \|u\|_0 \le
+  C(\Omega)\; |u|_1$.
+
+
+On en déduit que $|.|_1$ est une norme sur
+$H^1_0(\Omega)$, équivalente à la norme
+$\|.\|_1$.
+
+
+Le résultat précédent s’étend au cas où l’on a une condition de
+Dirichlet nulle seulement sur une partie de
+$\partial\Omega$, si $\Omega$ est connexe.
+
+
+On suppose que $\Omega$ est un ouvert borné connexe, de
+frontière ${\cal
+C}^1$ par morceaux. Soit
+$V=\left\{ v\in H^1(\Omega),\, v=0 \hbox{ sur
+  }\Gamma_0 \right\}$ où latexmath:[$\Gamma_0$] est une partie de
+$\partial\Omega$ de mesure non-nulle. Alors il existe une
+constante $C(\Omega)$ telle que $\forall
+u \in V, \; \|u\|_{0,V} \le C(\Omega)\; |u|_{1,V}$, où
+$\|.\|_{0,V}$ et $|.|_{1,V}$ désignent les norme
+et semi-norme induites sur $V$. On en déduit que
+$|.|_{1,V}$ est une norme sur $V$, équivalente à
+la norme $\|.\|_{1,V}$.   \\
+
+
+\hypertarget{x-exercices}{\subsubsection*{Exercices}}
+\begin{enumerate}
+
+\item{Montrer que les fonctions définies par ([eq:fonction-test1]) et
+([eq:fonction-test2]) sont bien ${\cal C}^\infty$ à support
+compact.}
+
+\item{Montrer que ${\cal C}^0([a,b)$] est un espace complet
+pour la norme $L^\infty$.}
+
+\item{Montrer que ce n’est pas le cas pour la norme $L^1$
+(exhiber une suite de Cauchy non convergente dans
+${\cal C}^0([a,b)$]).}
+
+\item{Démontrer que, lorsqu’elle existe, la dérivée généralisée est
+unique.}
+
+\item{Démontrer que, pour une fonction de classe ${\cal C}^1$,
+la dérivée généralisée est égale à la dérivée classique.}
+
+\item{Soit une fonction de $[a,b$] vers $\RR$,
+formée de deux branches de classe ${\cal C}^1$ sur
+$[a,c[$ et $c,b$]], et discontinue en
+$c$. Montrer qu’elle n’admet pas de dérivée généralisée. (il
+faudrait alors avoir recours à la notion de distribution pour dériver
+cette fonction).}
+
+\item{Montrer que $|.|_1$ est une norme sur
+$H^1_0(\Omega)$, équivalente à la norme
+$\|.\|_1$}
+
+\end{enumerate}
+
+
+\end{document}
+

@@ -1,0 +1,160 @@
+\section{Feel++}
+\label{sec:feel++}
+
+\subsection{Machines et sites web}
+\label{sec:machines-et-sites}
+
+Vous devez avoir un compte sur la machine \texttt{irma-hpc2.u-strasbg.fr} pour
+pouvoir utiliser Feel++. Pour vous loguer sur cette machine, vous utilisez
+\texttt{ssh} (Secure Shell)
+\begin{lstlisting}[language=sh]
+  ssh -X -Y irma-hpc2.u-strasbg.fr -l <votre login sur irma-hpc2>
+  ou
+  ssh -X -Y <votre login sur irma-hpc2>@irma-hpc2.u-strasbg.fr
+\end{lstlisting}
+Les options \texttt{-X} \texttt{-Y} vous permettent de passer les
+autorisations à \texttt{irma-hpc2} d'envoyer des fenêtres graphiques via le
+protocole X11 (vous devez avoir Linux ou MacOsX pour cela).
+
+\subsection{Utilisation de Feel++}
+\label{sec:util-de-feel++}
+
+Dans cette section, nous supposons que Feel++ est installée ce qui est le cas
+sur la machine \texttt{irma-hpc2}. Il vous suffit de définir la variable
+d'environnement \verb+FEELPP_DIR+}
+\begin{lstlisting}[language=sh]
+  export FEELPP_DIR=/opt/feelpp/0.92.1
+\end{lstlisting}
+ensuite créez un répertoire dans \texttt{/scratch/<votre login>/} qui s'appelle
+\texttt{tutoriel}  par exemple.
+\begin{lstlisting}[language=sh]
+  mkdir -p /scratch/<votre login>/tutoriel
+  cmake /opt/feelpp/0.92.1/share/doc/feel/examples
+  # compilez la première application de Feel++
+  make feelpp_qs_laplacian
+\end{lstlisting}
+
+À présent vous pouvez récupérer le manuel de Feel++ soit sur le site de ce
+cours soit \url{https://feelpp.googlecode.com/files/feelpp-manual.pdf} et
+étudier le tutoriel et les exemples proposés.
+
+\subsection{Installation à partir des sources de Feel++}
+\label{sec:les-sources-de}
+
+\subsubsection{Cloner Feel++}
+\label{sec:cloner-feel++}
+
+
+À présent vous devez récupérer les sources de Feel++. Elles sont gérées par le
+système de gestion de version \texttt{Git}\footnote{\htmladdnormallink{http://git-scm.com/}}
+sur Google code\footnote{\htmladdnormallink{http://code.google.com/p/feelpp}}. Des explications
+complètes sont disponibles dans le livre \texttt{Pro Git}\footnote{\htmladdnormallink{http://git-scm.com/book}}. Sur
+\texttt{irma-hpc2} vous effectuez les commandes suivantes:
+\begin{lstlisting}[language=sh]
+  # creation d'un repertoire de stockage des sources
+  mkdir Devel
+  cd Devel
+  # recuperation des sources de Feel++
+  git clone https://code.google.com/p/feelpp/
+\end{lstlisting}
+À la suite de la dernière commande qui prend un peu de temps un repertoire
+\texttt{feelpp} a été crée dans \texttt{Devel}.
+
+\subsubsection{Mettre a jour Feel++}
+\label{sec:mettre-jour-feel++}
+
+Feel++ est un logiciel qui évolue constamment. Pendant le cours j'apporte des
+modifications et corrections qui, je l'espère, simplifie l'utilisation du
+logiciel. Afin de mettre à jour le logiciel, vous effectuez la commande
+suivante:
+\begin{lstlisting}
+  git pull origin master
+\end{lstlisting}
+Cette commande va d'abord synchoniser la branche locale
+\lstinline!origin/master! (voir le résultat de \lstinline!git branch -a!) avec
+celui de Google Code puis dans un deuxième fusionner la branche locale
+\lstinline!master! avec \lstinline!origin/master!.
+
+
+\subsection{Compilation de Feel++}
+\label{sec:comp-de-feel++}
+
+Il vous faut à présent compiler Feel++. Feel++ utilise
+\texttt{cmake}\footnote{\htmladdnormallink{http://www.cmake.org}}. \texttt{cmake} permet, à
+partir de fichier \texttt{CMakeLists.txt} de générer des fichiers
+\texttt{Makefile}.
+\begin{lstlisting}[language=sh]
+  # nous sommes dans le repertoire Devel
+  mkdir compile
+  cd compile
+  cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-4.6 ../feelpp
+\end{lstlisting}
+Par défaut Feel++ est compilé avec les options \texttt{-g -O2} et avec
+l'option \lstinline!-DCMAKE_CXX_COMPILER=/usr/bin/g++-4.6! Feel++ sera compilé
+avec le compilation Gcc version 4.6.
+À la fin de l'execution de la commande \texttt{cmake} vous devez voir un
+message de ce type (sans erreur)
+\begin{lstlisting}
+...
+...
+-- =====================================================================
+
+-- Some things you can do now with Feel++:
+-- =====================================================================
+-- Command        |   Description
+-- ===============|=====================================================
+-- make install   | Install to /usr/local. To change that:
+--                |     cmake . -DCMAKE_INSTALL_PREFIX=yourpath
+--                |   Feel++ headers will then be installed to:
+--                |     /usr/local/include/feel
+-- make doc       | Generate the manual applications, manual and the API
+--                | documentation, requires Doxygen & LaTeX
+-- make benchmarks| Generate the benchmarks(Warning: takes a long time!)
+-- make check     | Build and run the unit-tests.
+-- =====================================================================
+--
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/prudhomm/Devel/compile
+\end{lstlisting}
+
+Feel++ contient de nombreux exemples et applications, nous n'allons travailler
+qu'avec un petit nombre:
+\begin{lstlisting}[language=sh]
+  # une premiere application
+  feelpp_doc_myapp
+  # generer un maillage
+  feelpp_doc_mymesh
+  # calculer des integrales
+  feelpp_doc_myintegrals
+  # manipuler les espaces de fonctions
+  # polynomiales par morceaux
+  feelpp_doc_myfunctionspace
+  # resoudre $-\Delta u=f$ en 1D
+  feelpp_m1cssi_laplacian
+\end{lstlisting}
+Afin de compiler ces exemples rendez vous dans le répertoire
+\texttt{doc/manual/tutorial/}, puis compilez-les de la fa\c {c}on suivante:
+\begin{lstlisting}[language=sh]
+  cd doc/manual/tutorial
+  make -j3 feelpp_doc_myapp feelpp_doc_mymesh \
+           feelpp_doc_myintegrals feelpp_doc_myfunctionspace\
+           feelpp_m1cssi_laplacian
+\end{lstlisting}
+
+L'option \lstinline{-j3} permet de compiler les fichiers C++ 3 par 3. Dans un
+premier temps \lstinline{make} compile la librairie Feel++ qui est nécessaire
+aux programmes ci-dessus, puis la commande \lstinline{make} compile les
+applications.
+
+
+%%% Local Variables:
+%%% coding: utf-8
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% TeX-parse-self: t
+%%% x-symbol-8bits: nil
+%%% TeX-auto-regexp-list: TeX-auto-full-regexp-list
+%%% TeX-master: "mef-intro"
+%%% ispell-local-dictionary: "french"
+%%% End:
