@@ -1,25 +1,20 @@
 = Finis Terrae
-Guillaume Dollé <https://github.com/gdolle[@gdolle]>
-v1.0, 2017/04/19
-:page-root: ../
+:page-root: ../../
 :page-layout: manual
 :page-permalink: /clusters/ft2
-include::../includes/header-uri.adoc[]
-include::../includes/header-generic.adoc[]
-include::../includes/header-macros.adoc[]
 :doctype: book
 :docinfo: shared
 :toc: left
 :toclevels: 1
 :sectnums:
 :imagesdir: ../images/
+include::../../docs/includes/header.adoc[]
 
-include::../includes/topnote.adoc[]
+include::../../docs/includes/topnote.adoc[]
 
 image::clusters/ft2.jpg[float="right",align="center"]
 
 CESGA Computing Center
-
 
 == Preriquisites
 
@@ -41,16 +36,51 @@ We provide some scripts to [install dependencies](https://github.com/feelpp/feel
 
 You have to load the required environment
 
-[source,bash]
-----
-include::https://github.com/feelpp/feelpp/https://github.com/feelpp/feelpp/tree/develop/ports/cesga
-----
+include::{uri-source}/ports/cesga/environment[]
 
 === Singularity
 
 See [[singularity]] section for more details about this container solution.
 
 WARNING: Work in progress
+
+How to launch Feel++ with singularity at FinisTerrae II
+
+==== Slurm (job scripts)
+
+===== Script 1
+Launch `feelpp_qs_laplacian_2d` in two task in different nodes.
+[source,bash]
+----
+#!/bin/bash
+#SBATCH -p cola-corta
+#SBATCH -N 2
+#SBATCH -n 2
+#SBATCH -t 00:10:00
+#SBATCH --ntasks-per-node=1
+
+module purge
+module load gcc/5.3.0 openmpi/1.10.2 singularity/2.2.1 feelpp-toolboxes/0.102.00
+
+mpirun feelpp-toolboxes  feelpp_qs_laplacian_2d
+----
+
+===== Script 2
+Change Feel++ output directory and launch `feelpp_toolbox_fluid_2d` in two task in different nodes.
+[source,bash]
+----
+#!/bin/bash
+#SBATCH -p cola-corta
+#SBATCH -N 2
+#SBATCH -n 2
+#SBATCH -t 00:10:00
+#SBATCH --ntasks-per-node=1
+
+module purge
+module load gcc/5.3.0 openmpi/1.10.2 singularity/2.2.1 feelpp-toolboxes/0.102.00
+
+mpirun feelpp-toolboxes  "export FEELPP_REPOSITORY=$PWD && feelpp_toolbox_fluid_2d --config-file=PATH-TO/TurekHron/cfd1.cfg"
+----
 
 == Acknowledgments
 
