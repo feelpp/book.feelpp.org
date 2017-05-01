@@ -3,7 +3,7 @@
 Defining a Model
 ----------------
 
-=== Introduction 
+=== Introduction
 
 It is well known an equation can describe a huge range of physical
 problems. Each of theses problems will have a particular environment,
@@ -36,26 +36,26 @@ A parameter is a non physical property for a model.
 
 ==== Materials
 
-To retrieve the materials properties, we use :   
+To retrieve the materials properties, we use :
 
 [source,c++]
-----  
-ModelMaterials materials = model.materials(); 
-----  
+----
+ModelMaterials materials = model.materials();
+----
 
 ==== BoundaryConditions
 
-Thanks to GiNaC, we handle boundary conditions (Dirichlet, Neumann, Robin) as expression. You have to indicate in the json file the quantity to handle (velocity, pressure...) and the associated expression.   
+Thanks to GiNaC, we handle boundary conditions (Dirichlet, Neumann, Robin) as expression. You have to indicate in the json file the quantity to handle (velocity, pressure...) and the associated expression.
 
 [source,c++]
-----  
+----
 map_scalar_field<2> bc_u { model.boundaryConditions().getScalarFields<2>("heat","dirichlet") };
----- 
+----
 
 We can apply theses boundary condition this way
 
 [source,c++]
-----  
+----
   for(auto it : bc_u){
     if(boption("myVerbose") && Environment::isMasterRank() )
       std::cout << "[BC] - Applying " << it.second << " on " << it.first << std::endl;
@@ -67,20 +67,18 @@ We can apply theses boundary condition this way
 
 [source,cpp]
 ----
-include::../../codes/10-model1.cpp[]
+include::../../../codes/10-model1.cpp[]
 ----
 
-==== PostProcessing 
+==== PostProcessing
 
-TODO: explanation pending.
+NOTE: explanation pending.
 
-==== Example 
+==== Example
 
-We have set up an example : an anisotropic laplacian. 
+We have set up an example : an anisotropic laplacian.
 
 [source,cpp]
 ----
-include::../../codes/10-model2.cpp[]
+include::../../../codes/10-model2.cpp[]
 ----
-
-

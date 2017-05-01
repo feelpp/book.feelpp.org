@@ -42,16 +42,6 @@ exclude:
   - Gemfile.lock
   - "0*"
   - vendor
-  - docs/00-preface
-  - docs/01-installation
-  - docs/02-docker
-  - docs/03-modeling
-  - docs/04-learning
-  - docs/05-applications
-  - docs/06-programming
-  - docs/07-quickref
-  - docs/08-faq
-  - docs/09-annexes
   - "math/*.tex"
   - math/fem/auto/
   - "math/*.adoc"
@@ -60,6 +50,7 @@ exclude:
   - book.html
   - book.pdf
   - /auto/
+  - docs/man
 
 asciidoctor:
   base_dir: :docdir
@@ -69,5 +60,7 @@ asciidoctor:
     - idseparator=_
     - source-highlighter=pygments
     - pygments-style=manni
+    - pygments-css=class
+    - pygments-linenums-mode=inline
     - icons=font
     - imagesdir=/images
