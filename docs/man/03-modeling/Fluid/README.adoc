@@ -46,69 +46,6 @@ A `Materials` section is introduced in json file in order to configure the fluid
 
 === Generalised Newtonian fluid
 
-A non newtonian fluid is characterized by a non constant viscosity, which is a function of strain rate stem:[\boldsymbol{D}\left(\boldsymbol{u}_{f}\right)].
-
-We start by introducing a metric of the rate of deformation, denoted by stem:[\dot{\gamma}]:
-
-[env.equation]
-.Rate of deformation
---
-\dot{\gamma} \equiv \sqrt{2 \ tr \left( \boldsymbol{D}\left(\boldsymbol{u}_{f}\right)^{2} \right)  }
---
-
-We represent the viscosity stem:[\mu_f] as a function of stem:[\dot{\gamma}].  The deviatoric stress tensor stem:[\boldsymbol{\tau}] is obtained thanks to generalised Newtonian model, which takes the following form:
-
-[env.equation]
-.Deviatoric stress tensor
---
-  \boldsymbol{\tau} = 2 \mu_f \left(\dot{\gamma} \right) \boldsymbol{D}\left(\boldsymbol{u}_{f}\right)
---
-
-The simplest example of a generalised Newtonian model is the power-law fluid, which has a viscosity given by:
-
-[env.equation]
-.Power law
---
-\mu_f \left(\dot{\gamma} \right) = k \dot{\gamma}^{n-1}
---
-
-where stem:[k] and stem:[n < 1] are two parameters related to fluid properties.
-
-[NOTE]
-.Blood flow viscosity
-====
-In the context of blood flow modeling, an extension of the power model was proposed by Walburn and Schneck.
-
-The parameters stem:[k] and stem:[n] are related to the hematocrit stem:[Ht] and Total Proteins Minus Albumin (TPMA) as follows
-
-[env.equation]
---
-k = C_1 e^{C_2 Ht} e^{C_4 \text{TPMA} / Ht }, \quad\quad    n = 1- C_3 H t
---
-====
-
-and stem:[C_i, i=1,..,4] are parameters to fit with experimental data.
-
-
-Another family of generalised Newtonian model can be defined from a function stem:[\Phi] express by:
-
-[env.equation]
---
-  \Phi\left( \dot{\gamma}, \mu_{\infty},\mu_{0} \right)
-  = \frac{\mu\left(\dot{\gamma}\right) - \mu_{\infty}}{\mu_{0}-\mu_{\infty}}
---
-
-where stem:[\mu_0] and stem:[\mu_{\infty}] are the asymptotic viscosities at zero and infinite shear rate.
-
-
-[cols="1,1", options="header"]
-|===
-| Viscosity law | stem:[\Phi\left( \dot{\gamma}, \mu_{\infty},\mu_{0} \right) ]
-| Carreau | stem:[\left(1+\left(\lambda\dot{\gamma}\right)^{2}\right)^{(n-1)/2}]
-| Carreau-Yasuda | stem:[\left(1+\left(\lambda\dot{\gamma}\right)^{a}\right)^{(n-1)/a}]
-|===
-
-
 The non Newtonian properties are defined in cfg file in fluid section.
 
 The viscosity law is activated by:
