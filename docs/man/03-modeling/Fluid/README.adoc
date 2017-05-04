@@ -653,6 +653,24 @@ This function can be exported.
 }
 ----
 
+== Stabilzation methods
+
+=== GLS family
+This kind of stabilization can be activated from the cfg file by adding `stabilization-gls=1` in the `fluid` prefix.
+Others options available are enumerated in the next table and must be given with the prefix `fluid.stabilization-gls`.
+
+[cols="1,1,1,1", options="header"]
+.GLS stabilzation options in CFG 
+|===
+| Option | Value | Default value |Description
+| type | `gls`,`supg`,`gls-no-pspg`, `supg-pspg`, `pspg` | `gls` | type of stabilization
+| parameter.method | `eigenvalue`,`doubly-asymptotic-approximation` | `eigenvalue` | method used to compute the stabilization parameter 
+| parameter.hsize.method | `hmin`,`h`,`meas` | `hmin` | method used for evalute an element mesh size
+| parameter.eigenvalue.penal-lambdaK | real | 0. | add a mass matrix scaled by this factor in the eigen value problem for the stabilization parameter
+| convection-diffusion.location.expressions | string | | if given, the stabilization is apply only on mesh location which verify ```expr>0```
+|===
+
+=== CIP family
 
 == Run simulation
 
