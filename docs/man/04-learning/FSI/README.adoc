@@ -5,7 +5,7 @@
 
 :icons: font
 :stem: latexmath
-:imagesdir: .
+ifndef::imagesdir[:imagesdir: ../../../../images]
 
 We will interest now to the different interactions a fluid and a structure can have together with specific conditions. 
 
@@ -16,7 +16,7 @@ To describe and solve our fluid-structure interaction problem, we need to define
 We have then in one hand link:../CFD/README.adoc[the fluid equations], and in the other hand link:../CSM/README.adoc[the structure equations].
 
 [[img-geometry1]]
-image::FSIModel.png[caption="Figure 1 : ", title="FSI case example", alt="FSI", width="500", align="center"] 
+image::toolbox/fsi/FSIModel.png[caption="Figure 1 : ", title="FSI case example", alt="FSI", width="500", align="center"] 
 
 The solution of this model are stem:[(\mathcal{A}^t, \boldsymbol{u}_f, p_f, \boldsymbol{\eta}_s)].
 
@@ -31,7 +31,7 @@ Let denote stem:[\Omega^{t_0}] the calculation domain, and stem:[\Omega^t] the d
 This map give us the position of stem:[x], a point in the deformed domain at time stem:[t] from the position of stem:[x^*] in the initial configuration stem:[\Omega^*].
 
 [[img-geometry2]]
-image::ALE.png[caption="Figure 2 : ", title="ALE map", alt="ALE", width="500", align="center"]  
+image::toolbox/fsi/ALE.png[caption="Figure 2 : ", title="ALE map", alt="ALE", width="500", align="center"]  
 
 stem:[\mathcal{A}^t] is a homeomorphism, i.e. a continuous and bijective application we can define as 
 

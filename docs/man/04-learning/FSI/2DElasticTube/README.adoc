@@ -6,7 +6,7 @@
 
 :icons: font
 :stem: latexmath
-:imagesdir: .
+ifndef::imagesdir[:imagesdir: ../../../../../images]
 
 This test case has originally been realised by <<Pena>>, <<Nobile>> and <<GerbeauVidrascu>> only with the free outlet condition.
 
@@ -19,7 +19,7 @@ to reproduce and observe pressure wave spread into a canal with a
 link:../README.adoc[fluid-structure interaction model].
 
 [[img-geometry1]]
-image::ElasticTube.png[caption="Figure 1 : ", title="Geometry of two-dimension elastic tube.", alt="Elastic Tube Geometry", width="600", align="center"]  
+image::toolbox/fsi/2DElasticTube/ElasticTube.png[caption="Figure 1 : ", title="Geometry of two-dimension elastic tube.", alt="Elastic Tube Geometry", width="600", align="center"]  
 
 The figure above shows us the initial geometry we will work on. The canal is
 represent by a rectangle with width and height, respectively  equal to 6 and 1
@@ -243,29 +243,29 @@ The result files are then stored by default in
 The two following pictures have their pressure and velocity magnitude amplify by 5.
 
 [[img-geometry2]]
-image::SimuFree.png[caption="Figure 2 : ", title="Results with free outlet conditon", alt="Elastic Tube Free outlet", width="900", align="center"]  
+image::toolbox/fsi/2DElasticTube/SimuFree.png[caption="Figure 2 : ", title="Results with free outlet conditon", alt="Elastic Tube Free outlet", width="900", align="center"]  
 
 [[img-geometry3]]
-image::SimuWindkessel.png[caption="Figure 3 : ", title="Results with the Windkessel model", alt="Elastic Tube Windkessel", width="900", align="center"] 
+image::toolbox/fsi/2DElasticTube/SimuWindkessel.png[caption="Figure 3 : ", title="Results with the Windkessel model", alt="Elastic Tube Windkessel", width="900", align="center"] 
 
 [[img-geometry4]]
-image::FlowEvolution.png[caption="Figure 4 : ", title="Evolution of the inflow and the outflow", alt="Inflow Outflow", width="400", align="center"]  
+image::toolbox/fsi/2DElasticTube/FlowEvolution.png[caption="Figure 4 : ", title="Evolution of the inflow and the outflow", alt="Inflow Outflow", width="400", align="center"]  
 
 [[img-geometry5]]
-image::DispMagni.png[caption="Figure 5 : ", title="Maximum displacement magnitude", alt="Displacement Magnitude", width="400", align="center"]  
+image::toolbox/fsi/2DElasticTube/DispMagni.png[caption="Figure 5 : ", title="Maximum displacement magnitude", alt="Displacement Magnitude", width="400", align="center"]  
 
 To draw the next two figures, we define 60 sections stem:[\{x_i\}_{i=0}^{60}] with stem:[x_i=0.1i].
 [[img-geometry6]]
-image::AverPressure.png[caption="Figure 5 : ", title="Average pressure with the free outlet and the Windkessel model", alt="Average Pressure", width="700", align="center"]  
+image::toolbox/fsi/2DElasticTube/AverPressure.png[caption="Figure 5 : ", title="Average pressure with the free outlet and the Windkessel model", alt="Average Pressure", width="700", align="center"]  
 
 [[img-geometry7]]
-image::FlowRate.png[caption="Figure 7 : ", title="Flow rate with the free outlet and the Windkessel model", alt="Flow Rate", width="710", align="center"]  
+image::toolbox/fsi/2DElasticTube/FlowRate.png[caption="Figure 7 : ", title="Flow rate with the free outlet and the Windkessel model", alt="Flow Rate", width="710", align="center"]  
 
 [[img-geometry8]]
-image::ImplicitSemi_Implicit.png[caption="Figure 8 : ", title="Implicit and semi-implicit FSI coupling comparison", alt="FSI 1", width="700", align="center"]  
+image::toolbox/fsi/2DElasticTube/ImplicitSemi_Implicit.png[caption="Figure 8 : ", title="Implicit and semi-implicit FSI coupling comparison", alt="FSI 1", width="700", align="center"]  
 
 [[img-geometry9]]
-image::FSICoupling.png[caption="Figure 9 : ", title="Implicit and semi-implicit FSI coupling comparison", alt="FSI 2", width="700", align="center"]  
+image::toolbox/fsi/2DElasticTube/FSICoupling.png[caption="Figure 9 : ", title="Implicit and semi-implicit FSI coupling comparison", alt="FSI 2", width="700", align="center"]  
 
 All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/applications/models/solid/TurekHron[rep] [https://github.com/feelpp/feelpp/blob/develop/applications/models/fsi/wavepressure2d/wavepressure2d_fluid.geo[geo file],  https://github.com/feelpp/feelpp/blob/develop/applications/models/fsi/wavepressure2d/wavepressure2d.cfg[config file], https://github.com/feelpp/feelpp/blob/develop/applications/models/fsi/wavepressure2d/wavepressure2d_fluid.json[fluid json file], https://github.com/feelpp/feelpp/blob/develop/applications/models/fsi/wavepressure2d/wavepressure2d_solid.json[solid json file]].
 
