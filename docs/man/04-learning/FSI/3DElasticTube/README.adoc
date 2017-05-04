@@ -6,7 +6,7 @@
 
 :icons: font
 :stem: latexmath
-:imagesdir: .
+ifndef::imagesdir[:imagesdir: ../../../../../images]
 
 Computer codes, used for the acquisition of results, are from Vincent <<Chabannes>>.
 
@@ -16,13 +16,13 @@ As in the link:../2DElasticTube/README.adoc[2D case], the blood flow modelisatio
 But this time, instead of a two-dimensional model, we use a three-dimensional model, with a cylinder
 
 [[img-geometry1]]
-image::3DElasticTube.png[caption="Figure 1 : ", title="Geometry of three-dimensional elastic tube.", alt="Elastic Tube Geometry", width="600", align="center"]  
+image::toolbox/fsi/3DElasticTube/3DElasticTube.png[caption="Figure 1 : ", title="Geometry of three-dimensional elastic tube.", alt="Elastic Tube Geometry", width="600", align="center"]  
 
 This represents the domains into the initial condition, with stem:[\Omega_f] and stem:[\Omega_s] respectively the fluid and the solid domain.
 The cylinder radius equals to stem:[r+\epsilon], where stem:[r] is the radius of the fluid domain and stem:[\epsilon] the part of the solid domain.
 
 [[img-geometry2]]
-image::3DElasticTubeSection.png[caption="Figure 2 : ", title="Sections of the three-dimensional elastic tube.", alt="Elastic Tube Geometry", width="400", align="center"]  
+image::toolbox/fsi/3DElasticTube/3DElasticTubeSection.png[caption="Figure 2 : ", title="Sections of the three-dimensional elastic tube.", alt="Elastic Tube Geometry", width="400", align="center"]  
 
 stem:[\Gamma^*_{fsi}] is the interface between the fluid and solid domains, whereas stem:[\Gamma^{e,*}_s] is the interface between the solid domain and the exterior.
 stem:[\Gamma_f^{i,*}] and stem:[\Gamma_f^{o,*}] are respectively the inflow and the outflow of the fluid domain.
