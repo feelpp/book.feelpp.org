@@ -6,7 +6,7 @@
 
 :icons: font
 :stem: latexmath
-:imagesdir: .
+ifndef::imagesdir[:imagesdir: ../../../../../images]
 
 This test case has originally been proposed by <<MokWall>>.
 
@@ -19,7 +19,7 @@ This benchmark has aso been realized by <<Gerbeau>>, <<Vàzquez>>, <<Kuttler>> a
 We study here an incompressible fluid flowing into a cavity, where its walls are elastic. We use the following geometry to represent it.
 
 [[img-geometry1]]
-image::LidDriven.png[caption="Figure 1 : ", title="Geometry of lid-driven cavity flow.", alt="LidDriven Geometry", width="600", align="center"]  
+image::toolbox/fsi/Lid-DrivenCavity/LidDriven.png[caption="Figure 1 : ", title="Geometry of lid-driven cavity flow.", alt="LidDriven Geometry", width="600", align="center"]  
 
 The domain stem:[\Omega_f^*] is define by a square stem:[ [0,1\]^2 ], stem:[\Gamma^{i,*}_f] and stem:[\Gamma^{o,*}_f] are respectively the flow entrance and the flow outlet.
 A constant flow velocity, following the stem:[x] axis, will be imposed on stem:[\Gamma_f^{h,*}] border, while a null flow velocity will be imposed on stem:[\Gamma_f^{f,*}]. This last point represent also a non-slip condition for the fluid.
