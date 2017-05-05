@@ -1,13 +1,13 @@
 // -*- mode: adoc -*-
 
-Computing integrals over mesh 
+Computing integrals over mesh
 -----------------------------
 
 The next step is to compute integrals over the mesh ( See link:../07-quickref/integrals.adoc[this] for detailed methods ).
 
 === Step by step explanations
 
-- We start by loading a Mesh in 2D   
+- We start by loading a Mesh in 2D
 
 - then we define the Feel\++ expression that we are going to integrate
   using the soption function that retrieves the command line option
@@ -20,7 +20,7 @@ The next step is to compute integrals over the mesh ( See link:../07-quickref/in
 
  * stem:[\int_{\partial \Omega} g]
 
-- and we print the results to the screen.   
+- and we print the results to the screen.
 
 Only the rank 0 process (thanks to `Environment`) `isMasterRank()`
 prints to the screen as the result is the same over all mpi processes
@@ -111,10 +111,9 @@ The complete code reads as follows :
 
 [source,cpp]
 ----
-include::../../codes/08-myintegrals.cpp[]
+include::../../../codes/08-myintegrals.cpp[]
 ----
 [source,cfg]
 ----
-include::../../codes/08-myintegrals.cfg[]
+include::../../../codes/08-myintegrals.cfg[]
 ----
-
