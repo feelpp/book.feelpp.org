@@ -105,7 +105,7 @@ where stem:[\boldsymbol{n}_f] the outer unit normal vector from stem:[\partial \
 
 == Discretization
 
-To realize these tests, we made the choice to used stem:[P_N]-stem:[P_{N-1}] Taylor-Hood finite elements, described by link:{biblio}#bloodflowChabannes[Chabannes], to discretize space. With the time discretization, we use BDF, for Backward Differentation Formulation, schemes at different orders $$q$$.
+To realize these tests, we made the choice to used stem:[P_N]-stem:[P_{N-1}] Taylor-Hood finite elements, described by link:{biblio}#bloodflowChabannes[Chabannes], to discretize space. With the time discretization, we use BDF, for Backward Differentation Formulation, schemes at different orders stem:[q].
 
 === Solvers
 
@@ -168,7 +168,7 @@ The result files are then stored by default in
 feel/applications/models/fluid/TurekHron/"case_name"/"velocity_space""pression_space""Geometric_order"/"processor_used"
 ----
 
-For example, for CFD2 case executed on $$12$$ processors, with a $$P_2$$ velocity approximation space, a $$P_1$$ pressure approximation space and a geometric order of $$1$$, the path is
+For example, for CFD2 case executed on stem:[12] processors, with a stem:[P_2] velocity approximation space, a stem:[P_1] pressure approximation space and a geometric order of stem:[1], the path is
 
 [source,sh]
 ----
@@ -264,7 +264,7 @@ frequency=\frac{1}{T}
 
 
 |===
-.6+|0.005|1|3509|39843$$(P_3/P_2)$$|2|438.24 ± 5.5375[4.3945]|-11.024 ± 433.90[4.3945]
+.6+|0.005|1|3509|39843stem:[(P_3/P_2)]|2|438.24 ± 5.5375[4.3945]|-11.024 ± 433.90[4.3945]
 |1|8042|90582 (stem:[P_3/P_2])|2|439.25 ± 5.6130[4.3945]|-10.988 ± 437.70[4.3945]
 |2|2334|26706 (stem:[P_3/P_2])|2|439.49 ± 5.5985[4.3945]|-10.534 ± 441.02[4.3945]
 |2|7970|89790 (stem:[P_3/P_2])|2|439.71 ± 5.6410[4.3945]|-11.375 ± 438.37[4.3945]
@@ -273,7 +273,7 @@ frequency=\frac{1}{T}
 |===
 
 |===
-.3+|0.002|2|7942|89482 (stem:[P_3/P_2)$$|2|439.81 ± 5.7370[4.3945]|-13.730 ± 439.30[4.3945]
+.3+|0.002|2|7942|89482 (stem:[P_3/P_2)]|2|439.81 ± 5.7370[4.3945]|-13.730 ± 439.30[4.3945]
 |3|2340|49389 (stem:[P_4/P_3])|2|440.03 ± 5.7321[4.3945]|-13.250 ± 439.64[4.3945]
 |3|2334|49266 (stem:[P_4/P_3])|3|440.06 ± 5.7773[4.3945]|-14.092 ± 440.07[4.3945]
 |===
@@ -293,7 +293,7 @@ NOTE: Add a section on geometrical order.
 
 The reference results, link:{biblio}#turek2006proposal[Turek and Hron], have been obtained with a time step stem:[\Delta t=0.05]. When we compare our results, with the same step and stem:[\mathrm{BDF}_2], we observe that they are in accordance with the reference results.
 
-With a larger stem:[\Delta t], a discrepancy is observed, in particular for the drag force. It can also be seen at the same time step, with a higher order stem:[\mathrm{BDF}_n] ( _e.g._ stem:[\mathrm{BDF}_3] ). This suggests that the couple $$\Delta t=0.05$$ and stem:[\mathrm{BDF}_2] isn't enough accurate.
+With a larger stem:[\Delta t], a discrepancy is observed, in particular for the drag force. It can also be seen at the same time step, with a higher order stem:[\mathrm{BDF}_n] ( _e.g._ stem:[\mathrm{BDF}_3] ). This suggests that the couple stem:[\Delta t=0.05] and stem:[\mathrm{BDF}_2] isn't enough accurate.
 
 
 == Bibliography

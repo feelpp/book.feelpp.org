@@ -8,7 +8,8 @@ Feel++ environment.
 
 === Initialize Feel++
 
-Environment class is necessary to initialize your application, as seen in FirstApp. Interface is as follows:
+Environment class is necessary to initialize your application, as seen in FirstApp.
+The interface is as follows:
 
 [source,cpp]
 ----
@@ -19,9 +20,9 @@ None of those parameters are required but it is highly recommended to use the mi
 
 [source,cpp]
 ----
-Environment env( _argc=argc, _argv=argv, 
-                 _desc=feel_option(),  
-                 _about=about(_name="name_of_your_app", 
+Environment env( _argc=argc, _argv=argv,
+                 _desc=feel_option(),
+                 _about=about(_name="name_of_your_app",
                               _author="your_name",
                               _email="your_email_adress"));
 ----
@@ -32,9 +33,9 @@ Environment env( _argc=argc, _argv=argv,
 
 * `_about` is a brief description of your application.
 
-=== Options Description 
+=== Options Description
 
-==== Adding Options 
+==== Adding Options
 
 `feel_options()` returns a list of default options used in Feel++.
 
@@ -54,7 +55,7 @@ makeOptions()
       ( "option3", po::value<type3>()->default_value( value3 ), "description3" )
       ;
      // Add the default feel options to your list
-    return myappOptions.add( feel_options() ); 
+    return myappOptions.add( feel_options() );
 }
 ----
 
@@ -62,10 +63,10 @@ makeOptions()
 
 |===
 | *Parameter* | *Description*
-| `option`|  the name of parameter 
-| `type` | the type parameter 
-| `value` | the default value of parameter 
-| `description` | the description of parameter 
+| `option`|  the name of parameter
+| `type` | the type parameter
+| `value` | the default value of parameter
+| `description` | the description of parameter
 |===
 
 You can then use `makeOptions()` to initialize the Feel++ Environment as follows
@@ -77,7 +78,7 @@ Environment env( _argc=argc, _argv=argv,
                  _about=about(_name="myapp",
                               _author="myname",
                               _email="my@email.com") );
-----                            
+----
 
 Then, at runtime,  you can change the parameter as follows
 
@@ -136,7 +137,7 @@ void changeRepository( _directory, _subdir, _filename );
 
 |===
 | *Parameter* | *Description* | *Status* | *Default value*
-| `_directory`| directory name | Required | 
+| `_directory`| directory name | Required |
 | `_subdir`| | | `true`
 | `_filename`| || `logfile`
 |===
@@ -193,7 +194,7 @@ We denote by `c` a Feel++ data structure associated to a `WorldComm`.
 |===
 | *Feel++ Keyword* | *Description*
 | rank(c)| returns the local MPI rank of the data structure `c`
-| globalRank(c)| returns the global MPI rank of the data 
+| globalRank(c)| returns the global MPI rank of the data
 |===
 
 For example to print the rank of a mesh data structure
@@ -204,5 +205,3 @@ For example to print the rank of a mesh data structure
 auto mesh = makeMesh<Simplex<2,1>>();
 std::cout << "local rank : " << rank(mesh) << "\n";
 ----
-
-

@@ -15,7 +15,11 @@ example that shows how to generate a mesh for a square geometry
 include::../../../../codes/03-mymesh.cpp[tag=mesh]
 ----
 
-As always, we initialize the Feel\++ environment (see section  link:[FirstApp] ). The `unitSquare()` will generate a mesh for a square geometry. Feel++ provides several functions to automate the GMSH mesh generation for different topologies. These functions will create a geometry file `.geo` and a mesh file `.msh`. We can visualize them in GMSH.
+As always, we initialize the {feelpp} environment (see section <<FirstApp>> ).
+The `unitSquare()` will generate a mesh for a square geometry.
+Feel++ provides several functions to automate the GMSH mesh generation for different topologies.
+These functions will create a geometry file `.geo` and a mesh file `.msh`.
+We can visualize them in {uri-gmsh-www}[Gmsh].
 
 [source,bash]
 ----
@@ -29,7 +33,8 @@ Finally we use the `exporter()` (see \ref Exporter) function to export the mesh 
 $ paraview <app_name>.case
 ----
 
-In this section, we present some of the mesh definition and manipulation tools provided by Feel++. For more information you can also see \ref Gmsh.
+In this section, we present some of the mesh definition and manipulation tools provided by Feel++.
+For more information you can also read {uri-gmsh-manual}[the Gmsh manual].
 
 
 === Basic Meshes
@@ -39,35 +44,28 @@ There is a list of basic geometries you can automatically generate with Feel++ l
 .Table of function generation  basic primitive mesh
 |===
 |Feel++ function  | Dim | Description
-|`unitSegment()`  | 1   | Build a mesh of the unit segment $$[0,1]$$
-|`unitSquare()`   | 2   | Build a mesh of the unit square $$[0,1]^2$$ using triangles
+|`unitSegment()`  | 1   | Build a mesh of the unit segment stem:[[0,1]]
+|`unitSquare()`   | 2   | Build a mesh of the unit square stem:[[0,1]^2] using triangles
 |`unitCircle()`   | 2   | Build a mesh of the unit circle using triangles
-|`unitHypercube()`| 3   | Build a mesh of the unit hypercube $$[0,1]^3$$ using tetrahedrons
+|`unitHypercube()`| 3   | Build a mesh of the unit hypercube stem:[[0,1]^3] using tetrahedrons
 |`unitSphere()`   | 3   | Build a mesh of the unit sphere using tetrahedrons
 |===
 
-
-
-**Examples:**
-
-From `doc/manual/tutorial/myfunctionspace.cpp`
-
 [source,cpp]
+.Example
 ----
 auto mesh = unitSquare();
 ----
 
-===  Load Meshes
+===  Loading Meshes
 
-====  loadMesh
+====  `loadMesh`
 
-You can use this function to:
+You can use this function to load mesh from different formats
 
-* load a `.msh` file and use the mesh data structure
+NOTE: in the case of a `.geo` file, {feelpp} automatically generate a mesh data structure on this geometrical structure.
 
-* load a `.geo` file and automatically generate a mesh data structure on this geometrical structure
-
-**Interface:**
+===== Interface
 
 [source,cpp]
 ----
@@ -80,73 +78,36 @@ Required Parameters:
 
 Optional Parameters:
 
-* `_hsize`  (double): characteristic size of the mesh. This option will edit the `.geo` file and change the variable `h` if defined
+|===
+| Name | Type | Description | Default Value | Option
 
-   - Default: `0.1`
+| `_hsize`  |double | characteristic size of the mesh. This option will edit the `.geo` file and change the variable `h` if defined | 0.1 | `gmsh.hsize`
+| `_geo_variables_list` | string | Set a list of variable that may be defined in a `.geo` file| "" | `gmsh.geo`-variables-list
+| `_filename` |string | filename with extension | `feel.geo`| `gmsh.filename`
+| `_depends`  |string | list of files (separated by , or ;) on which `gmsh.filename` depends| ""|`gmsh.depends`
+| `_refine` | boolean| optionally refine with \p refine levels the mesh.| `0.`| `gmsh.refine`
+| `_update` | integer | update the mesh data structure (build internal faces and edges)| `true`
+| `_physical_are_elementary_regions` | boolean | to load specific meshes formats.| `false.`| gmsh.physical_are_elementary_regions
+|`_straighten` | boolean | in case of curvilinear elements, straighten the elements which are not touching with a face the boundary of the domain| `true`| `gmsh.straighten`
+| `_partitioner` | integer | define the mesh partitioner to use | `1` (if Metis is available) `0` if not (CHACO) | gmsh.partitioner
 
-   - Option: `gmsh.hsize`
-
-* `_geo_variables_list`  (string): Set a list of variable that may be defined in a `.geo` file
-
-   - Default: ""
-
-   - Option: `gmsh.geo`-variables-list
-
-* `_filename`  (string): filename with extension.
-
-   - Default: `feel.geo`
-
-   - Option: `gmsh.filename`
-
-* `_depends`  (string): list of files (separated by , or ;) on which `gmsh.filename` depends
-
-   - Default: ""
-
-   - Option: `gmsh.depends`
-
-* `_refine`  (boolean): optionally refine with \p refine levels the mesh.
-
-   - Default: `0.`
-
-   - Option: `gmsh.refine`
-
-* `_update`  (integer): update the mesh data structure (build internal faces and edges).
-
-   - Default: `true`
-
-* `_physical_are_elementary_regions`  (boolean): to load specific meshes formats.
-
-   - Default: `false.`
-
-   - Option: gmsh.physical_are_elementary_regions
-
-* `_straighten`  (boolean): in case of curvilinear elements, straighten the elements which are not touching with a face the boundary of the domain
-
-   - Default: `true`
-
-   - Option: `gmsh.straighten`
-
-* `_partitioner`  (integer): define the mesh partitioner to use:
-
-   - Default: `1` (if Metis is available) `0` if not (CHACO)
-
-   - Option: gmsh.partitioner
+|===
 
 The file you want to load has to be in an appropriate repository.
-Feel++ looks for `.geo` and `.msh` files in the following directories (in this order):
+{feelpp} looks for the files in the following directories (in this order):
 
 * current path
 
 * paths that went through `changeRepository()`, it means that we look for example into the path from which the executable was run
 
-* `localGeoRepository()` which is usually "$HOME/feel/geo"  (cf link:environment.adoc[Environment] )
+* `localGeoRepository()` which is usually "$HOME/feel/geo"  (<<environment.adoc,Environment>> )
 
-* `systemGeoRepository()` which is usually "$FEELPP_DIR/share/feel/geo" (cf link:environment.adoc[Environment])
+* `systemGeoRepository()` which is usually "$FEELPP_DIR/share/feel/geo" (<<environment.adoc,Environment>>)
 
 
-**Examples:**
+===== Examples
 
-Load a mesh data structure from the file "$HOME/feel/mymesh.msh".
+Load a mesh data structure from the file `$HOME/feel/mymesh.msh`.
 
 [source,cpp]
 ----
@@ -169,7 +130,7 @@ Create a mesh data structure from the file `./feel.geo`.
 auto mesh = loadMesh(_mesh=new Mesh<Simplex< 2 > > );
 ----
 
-###  loadGMSHMesh
+====  loadGMSHMesh
 
 In order to load only `.msh` file, you can also use the loadGMSHMesh.
 
@@ -198,7 +159,7 @@ Optional Parameters:
 
 The file you want to load has to be in an appropriate repository. See link:Tutorial/03-LoadingMesh.adoc[LoadMesh].
 
-**Examples:**
+==== Examples
 
 From `doc/manual/heatns.cpp`
 
@@ -220,11 +181,11 @@ mesh = loadGMSHMesh( _mesh=new mesh_type,
 ----
 
 
-=== Create Meshes
+=== Creating Meshes
 
 ====  createGMSHMesh
 
-**Interface:**
+===== Interface
 
 [source,cpp]
 ----
@@ -266,7 +227,7 @@ To generate your mesh you need a description parameter. This one can be create b
 
 Use this function to create a description from a `.geo` file.
 
-**Interface:**
+===== Interface
 
 [source,cpp]
 ----
@@ -293,7 +254,7 @@ Optional Parameters:
 
 The file you want to load has to be in an appropriate repository. See link:Tutorial/03-LoadingMesh.adoc[LoadMesh].
 
-*Example:*
+===== Example
 
 From `doc/manual/heat/ground.cpp`
 
@@ -306,14 +267,14 @@ mesh = createGMSHMesh( _mesh=new mesh_type,
                                   _h=meshSize ) );
 ----
 
-From `doc/manual/fd/penalisation.cpp`
 
 [source,cpp]
+.Excerpt from `doc/manual/fd/penalisation.cpp`
 ----
 mesh = createGMSHMesh( _mesh=new mesh_type,
                        _desc=geo( _filename=File_Mesh,
                                   _dim=Dim,
-                                  _h=Environment::vm(_name="hsize").template as<double>() ),
+                                  _h=doption(_name="gmsh.hsize"),
                                   _update=MESH_CHECK|MESH_UPDATE_FACES|MESH_UPDATE_EDGES|MESH_RENUMBER );
 ----
 
@@ -322,7 +283,7 @@ mesh = createGMSHMesh( _mesh=new mesh_type,
 
 Use this function to generate a simple geometrical domain from parameters.
 
-**Interface:**
+===== Interface
 
 [source,cpp]
 ----
@@ -371,7 +332,7 @@ Optional Parameters:
 * `_zmax`  maximum z coordinate.
    - Default = `1`
 
-*Example:*
+===== Example
 
 From `doc/manual/laplacian/laplacian.ccp`
 
@@ -411,7 +372,45 @@ mesh_ptrtype mesh = createGMSHMesh( _mesh=new mesh_type,
                                                   _h=meshSize ) );
 ----
 
-
-NOTE: Explanation pending on `straightenMesh`
-
 include::iterators.adoc[]
+
+=== Mesh Operations
+
+====  `straightenMesh`
+
+One of the optimisations that allows to have a huge gain in computational effort is to straighten all the high order elements except for the boundary faces of the computational mesh.
+This is achieved by moving all the nodes associated to the high order transformation to the position these nodes would have if a first order geometrical transformation were applied.
+This procedure can be formalized in the following operator
+[[mesh:straighten]]
+[stem]
+++++
+\mathbf{\eta}^{\mathrm{straightening}}_K(\mathbf{\varphi}^N_{K}(\mathbf{x}^*)) = \left(\mathbf{\varphi}^1_{K}(\mathbf{x}^*)-\mathbf{\varphi}^N_{K}(\mathbf{x}^*)\right) - {\left( \mathbf{\varphi}^1_{K \cap \Gamma}(\mathbf{x}^*)-\mathbf{\varphi}^N_{K \cap \Gamma}(\mathbf{x}^*)\right)}
+++++
+
+where stem:[\mathbf{x}^*] is any point in stem:[K^*] and stem:[\mathbf{\varphi}^1_{K}(\mathbf{x}^*)] and stem:[\mathbf{\varphi}^N_{K}(\mathbf{x}^*)] its images by the geometrical transformation of order one and order stem:[N], respectively.
+On one hand, the first two terms ensure that for all stem:[K] not intersecting stem:[\Gamma], the order one and stem:[N] transformations produce the same image.
+On the other hand, the last two terms are 0 unless the image of stem:[\mathbf{x}^*] in on stem:[\Gamma] and, in this case, we don’t move the high order image of stem:[\mathbf{x}^*].
+This allows to have straight internal elements and elements touching the boundary to remain high order.
+When applying numerical integration, specific quadratures are considered when dealing with internal elements or elements sharing a face with the boundary.
+The performances, thanks to this transformation, are similar to the ones obtained with first order meshes.
+However, it needs to be used with care as it can generate folded meshes.
+
+
+====  `createSubmesh`
+
+In multiphysics applications or using advanced numerical methods _e.g._ involving Lagrange multipliers, it is often required to define <<Spaces/README.adoc,Function Spaces>> on different meshes.
+Theses meshes are often related.
+Consider for example a heat transfer problem on a domain stem:[\Omega] coupled with fluid flow problem on a domain stem:[\Omega_f \subset \Omega] as in the {uri-benchmarks}heat[Heat Transfer benchmarks].
+`createSubmesh` allows to extract stem:[\Omega_f] out of stem:[\Omega] while keeping information on the relation between the two meshes to be able to transfer data between these meshes very efficiently.
+
+
+
+[source,cpp]
+----
+// create a mesh of dimension d
+auto mesh=...
+// extract a mesh made of a subregion marked eg. Air
+auto fluid_mesh = createSubmesh( mesh, markedelements(mesh,"Air") );
+// extract a d-1 mesh made of all the faces of the mesh
+auto face_mesh = createSubmesh( mesh, faces(mesh) );
+----
