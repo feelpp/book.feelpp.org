@@ -1,14 +1,19 @@
 = Atlas cluster
+// Don't put authors here! (see CONTRIBUTING)
+//*******************************************
 :page-root: ../../
 :page-layout: manual
 :page-permalink: /clusters/atlas/
 :doctype: book
 :docinfo: shared
 :toc: left
-:toclevels: 1
+:toclevels: 4
 :sectnums:
 :imagesdir: ../images/
-include::../../docs/includes/header.adoc[]
+// Keep this include header at the end! (see CONTRIBUTING)
+include::../includes/header.adoc[]
+//*******************************************
+
 
 include::../includes/topnote.adoc[]
 
@@ -34,7 +39,40 @@ TIP: We provide on the cluster Feel++ profile modules which loads all Feel++ dep
 and that are guaranty to works!
 you can type `module avail 2>&1 | grep profile` to list all profiles.
 
-== Feel++ usage
+== Atlas {feelpp} configuration
+
+The cluster mount points with different filesystems with more or less fast read/write
+operations.
+
+.Atlas main mount points
+[width="100%",frame="topbot",options="header,footer"]
+|===
+| Mountpoint | Description | Usage
+
+| /data/, 
+| Normal I/O operations (Hard Drive),
+| Store your computed data
+
+| /ssd/,
+| Fast I/O operations (Solid state drives),
+| Compute
+
+| /home/,
+| Slow I/O operations (NFS file system),
+| Network stored data (documents)
+|===
+
+Set the *FEELPP_WORKDIR* environment variable to the working directory path.
+By default, this variable point to
+
+[source,bash]
+----
+export FEELPP_WORKDIR=/ssd/${USER}/feel
+----
+
+If your application generate an high amount of data, you should use `/data/${USER}/feel` instead.
+
+== {feelpp} usage
 
 WARNING: Work in progress
 
@@ -43,27 +81,161 @@ distinguish two cases, the first one uses the existing Feel++ module. You might
 want to modify the Feel++ library itself, the second case will explain how to
 proceed.
 
-=== Feel++ configuration
+There are three main methods to use Feel++ from the simplest to the hardest:
 
-The cluster mount points with different filesystems with more or less fast read/write
-operations.
+1. Using containers: singularity (recommended), docker.
+2. Compiling a {feelpp} application using {feelpp} library installed on the
+   system ({feelpp} atlas module).
+3. Compiling Feel++ from scratch (library + applications).
 
-=== Feel++ atlas quickstart
+But first, we have to configure the cluster
 
-==== Use Feel++ module
+=== {feelpp} containers
+
+==== Singularity (recommended)
+
+INFO: Difficulty : easy
+
+Singularity is the recommended method for {feelpp} containers.
+Please read singularity section before going further.
+
+To use singularity on the cluster, load the specific module:
+
+[source,bash]
+----
+module load singularity/2.2.1
+----
+
+We provide currently one singularity image container in the directory `/data/images`.
+
+TIP: Contrary to docker, singularity does not allow to modify a container 
+for security purposes, root priviledges are required.
+
+First of all, copy the image in your `${HOME}` directory
+
+[source,bash]
+----
+cp /data/images/feelpp-toolboxes.img \${HOME}
+----
+
+:INFO: {feelpp} singularity images will be available online soon!
+
+To run the container, run the following command
+
+[source,bash]
+----
+singularity shell -c -B \${FEELPP_WORKDIR}/feel:/feel \${HOME}/feelpp-toolboxes.img
+----
+
+Now you are in the container, you should have the bash prompt looking like this:
+
+image::shell/singularity/singularity-prompt1.png[align=center]
+
+
+IMPORTANT: Always use the `-c` option (equivalent to `-B /home/user:/home/user`) ?
+to avoid sharing your home directory within the container!
+Security reason, a container can perform some operation on home directory. Configurations
+files on the host `/home/user` directory can create conflicts and produce unwanted behaviour.
+
+===== Modify the Feel++ singularity image
+
+Root priviledge are required to modify an image. To proceed, you should first
+install singularity on your machine. 
+On your machine, copy a {feelpp} image locally
+[source,bash]
+----
+scp user@irma-atlas:/data/images/feelpp-toolboxes.img ${HOME}
+----
+Now you can modify the image in root enabling write access `-w`
+
+[source,bash]
+----
+sudo singularity shell -c -w \${HOME}/feelpp-toolboxes.img
+----
+
+See singularity documentation for more details.
+
+===== Job slurm
+
+An example of slurm batch script using singularity.
+
+.myjob.slurm
+[source,bash]
+----
+#! /bin/bash
+#SBATCH -p public
+#SBATCH --export=ALL
+#SBATCH -n 8
+#SBATCH -N 1
+#SBATCH -t 00:30:00
+#SBATCH -D /data/scratch/${USER}/slurm
+#SBATCH -o slurm.%j.%N.out
+#SBATCH -e slurm.%j.%N.err
+#SBATCH -v
+
+export FEELPP_SINGULARITY_IMAGE=${HOME}/feelpp-toolboxes.img
+export FEELPP_WORKDIR_HOST=/ssd/${USER}/feel
+
+source /etc/profile.d/modules.sh
+
+module load singularity/2.2.1
+
+mpirun --bind-to core \
+    singularity exec \
+    -B ${FEELPP_WORKDIR_HOST}:/feel \
+    -c \
+    ${FEELPP_SINGULARITY_IMAGE} \
+    /usr/local/bin/feelpp_qs_laplacian_2d \
+    --config-file=/opt/feelpp/Testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg
+----
+
+To send the job, just run the command
+
+[source,bash]
+----
+sbatch myjob.slurm
+----
+
+To view your job
+[source,bash]
+----
+squeue -u ${USER}
+----
+
+For more info about slurm, consult link:https://gitlab.math.unistra.fr/atlas/cluster-doc/wikis/slurm[atlas wiki slurm]
+or link:https://slurm.schedmd.com/quickstart.html[official slurm documentation].
+
+==== Docker
+
+:INFO: *Difficulty : easy*
+
+Due to security issues, only whitelisted users can have access to it.
+Please contact atlas admins if docker is required.
+
+Refer to {feelpp} docker section to see how to use docker.
+
+=== Feel++ via modules
+
+:INFO: *Difficulty : intermediate*
 
 This way is recommended if you only need to use the {feelpp} library
 without any modification.
 Currently, a {feelpp} module is provided for a nightly build version.
 
-1. Load the feel++ library module.
+- Load the {feelpp} library via the module.
 
 [source,sh]
 ----
-module load science/feelpp/nightly
+module load feelpp/nightly
 ----
 
-2. Load a feel++ profile to have access to all {feelpp} requirements for compiling
+{feel++} is now available in the system 
+
+
+TIP: the module set the environement variable *FEELPP_DIR* for the path to the {feelpp} installation
+`echo ${FEELPP_DIR}`.
+
+- Load a feel++ profile to have access to all {feelpp} requirements for compiling
 your application.
 
 [source,sh]
@@ -76,10 +248,10 @@ mismatch setup for the compilation
 
 TIP: From here you can go to Quickstart section.
 
-3. Place yourself in a directory and create a cmake file named
+- Place yourself in a directory and create a cmake file named
 `CMakeLists.txt` containing the following code.
 
-[source,cmake,linenums]
+[source,cmake]
 ----
 cmake_minimum_required(VERSION 2.8)
 
@@ -108,7 +280,9 @@ By default, cmake will search in the system default path.
 6. Compile you {feelpp} application `make`
 
 
-==== Recompile Feel++ 
+=== Recompile Feel++ from scratch
+
+:INFO: *Difficulty : Hard*
 
 '''
 
