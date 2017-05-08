@@ -1,0 +1,319 @@
+= CFD Benchmarks
+// Don't put authors here! (see CONTRIBUTING)
+//*******************************************
+:page-layout: manual 
+:page-permalink: /benchmarks/cfd/toolbox/bm-1/
+:page-root: ../../../../
+:title: Turek-Hron CFD Benchmark
+:doctype: book
+:docinfo: shared
+:imagesdir: /images/
+:sources: ../../../
+// Keep this include header at the end! (see CONTRIBUTING)
+include::../../../includes/header.adoc[]
+//*******************************************
+
+TIP: Toolbox is available at link:/toolbox/cfd[CFD Toolbox].
+
+== Introduction
+
+We implement the benchmark proposed by link:{biblio}#turek2006proposal[Turek and Hron], on the behavior of drag and lift forces of a flow around an object composed by a pole and a bar, see Figure <<img-geometry1>>.
+
+The software and the numerical results were initially obtained from  link:{biblio}#bloodflowChabannes[Vincent Chabannes].
+
+NOTE: This benchmark is linked to the link:../../CSM/Turek-Hron/readme.adoc[Turek Hron CSM] and link:../../FSI/Turek-Hron/readme.adoc[Turek Hron FSI ] benchmarks.
+
+== Problem Description
+
+We consider a 2D model representative of a laminar incompressible flow around an obstacle. The flow domain, named stem:[\Omega_f], is contained into
+the rectangle stem:[ \lbrack 0,2.5 \rbrack \times \lbrack 0,0.41 \rbrack ]. It is characterised, in particular, by its dynamic viscosity stem:[\mu_f] and by its density stem:[\rho_f]. In this case, the fluid material we used is glycerine.
+
+[[ImageModelingCFDTurekHronGeometry]]
+.Geometry of the Turek & Hron CFD Benchmark
+image::modeling/cfd/TurekHronCFDGeometry.png[alt="TurekHron Geometry",align="center"]
+
+
+In order to describe the flow, the link:../readme.adoc#_Incompressible_Navier-Stokes_model[ incompressible Navier-Stokes model] is chosen for this case, define by the conservation of momentum equation and the conservation of mass equation. At them, we add the material constitutive equation, that help us to define stem:[\boldsymbol{\sigma}_f]
+
+
+The goal of this benchmark is to study the behavior of lift forces stem:[F_L] and drag forces stem:[F_D], with three different fluid dynamics applied on the obstacle, i.e on stem:[\Gamma_{obst}], we made rigid by setting specific structure parameters. To simulate these cases, different mean inflow velocities, and thus different Reynolds numbers, will be used.
+
+=== Boundary conditions
+
+We set
+
+* on stem:[\Gamma_{in}], an inflow Dirichlet condition :
+ stem:[ \boldsymbol{u}_f=(v_{in},0) ]
+
+* on stem:[\Gamma_{wall}] and stem:[\Gamma_{obst}], a homogeneous Dirichlet condition :
+stem:[ \boldsymbol{u}_f=\boldsymbol{0} ]
+
+* on stem:[\Gamma_{out}], a Neumann condition :
+stem:[ \boldsymbol{\sigma}_f\boldsymbol{ n }_f=\boldsymbol{0} ]
+
+
+=== Initial conditions
+We use a parabolic velocity profile, in order to describe the flow inlet by stem:[ \Gamma_{in} ], which can be express by
+
+[env.equation]
+--
+  v_{cst} = 1.5 \bar{U} \frac{4}{0.1681} y \left(0.41-y\right)
+--
+where stem:[\bar{U}] is the mean inflow velocity.
+
+However, we want to impose a progressive increase of this velocity profile. That's why we define
+
+[env.equation]
+--
+  v_{in} =
+  \left\{
+  \begin{aligned}
+   & v_{cst} \frac{1-\cos\left( \frac{\pi}{2} t \right) }{2}  \quad & \text{ if } t < 2 \\
+   & v_{cst}  \quad & \text{ otherwise }
+  \end{aligned}
+  \right.
+--
+
+With t the time.
+
+Moreover, in this case, there is no source term, so stem:[f_f\equiv 0].
+
+== Inputs
+
+The following table displays the various fixed and variables
+parameters of this test-case.
+
+[cols="1,1,^1a,1"]
+.Fixed and Variable Input Parameters
+|===
+| Name |Description | Nominal Value | Units
+
+
+|stem:[l] | elastic structure length | stem:[0.35] |stem:[m]
+|stem:[h] | elastic structure height | stem:[0.02] | stem:[m]
+|stem:[r] | cylinder radius | stem:[0.05] | stem:[m]
+|stem:[C] | cylinder center coordinates | stem:[(0.2,0.2)]|stem:[m]
+|stem:[\nu_f] | kinematic viscosity | stem:[1\times 10^{-3}]  |stem:[m^2/s]
+|stem:[\mu_f] | dynamic viscosity | stem:[1]  | stem:[kg/(m \times s)]
+|stem:[\rho_f] | density | stem:[1000]  | stem:[kg/m^3]
+|stem:[f_f]| source term | 0  | stem:[kg/(m^3 \times s)]
+|stem:[\bar{U}]| characteristic inflow velocity |
+
+!====
+!CFD1!CFD2!CFD3
+
+!stem:[0.2]!stem:[1]!stem:[2]
+!===
+|stem:[m/s]
+|===
+
+== Outputs
+
+As defined above, the goal of this benchmark is to measure the drag and lift forces, stem:[F_D] and stem:[F_L], to control the fluid solver behavior. They can be obtain from
+
+[env.equation]
+--
+(F_D,F_L)=\int_{\Gamma_{obst}}\boldsymbol{\sigma}_f \boldsymbol{ n }_f
+--
+where stem:[\boldsymbol{n}_f] the outer unit normal vector from stem:[\partial \Omega_f].
+
+== Discretization
+
+To realize these tests, we made the choice to used stem:[P_N]-stem:[P_{N-1}] Taylor-Hood finite elements, described by link:{biblio}#bloodflowChabannes[Chabannes], to discretize space. With the time discretization, we use BDF, for Backward Differentation Formulation, schemes at different orders stem:[q].
+
+=== Solvers
+
+Here are the different solvers ( linear and non-linear ) used during results acquisition.
+
+[cols="1,1"]
+.KSP configuration
+|===
+|type|gmres
+|relative tolerance|1e-13
+|max iteration|1000
+|reuse preconditioner| false
+|===
+
+[cols="1,1"]
+.SNES configuration
+|===
+|relative tolerance|1e-8
+|steps tolerance|1e-8
+|max iteration|CFD1/CFD2 : 100 \| CFD3 : 50
+|max iteration with reuse|CFD1/CFD2 : 100 \| CFD3 : 50
+|reuse jacobian|false
+|reuse jacobian rebuild at first Newton step|true
+|===
+
+[cols="1,1"]
+.KSP in SNES configuration
+|===
+|relative tolerance|1e-5
+|max iteration|1000
+|max iteration with reuse|CFD1/CFD2 : 100 \| CFD3 : 1000
+|reuse preconditioner| false
+|reuse preconditioner rebuild at first Newton step|false
+|===
+
+[cols="1,1"]
+.Preconditioner configuration
+|===
+|type|lu
+|package|mumps
+|===
+
+== Running the model
+
+The configuration files are in `toolboxes/fluid/TurekHron`. The different cases are implemented in the corresponding `.cfg` files e.g. `cfd1.cfg`, `cfd2.cfg` and `cfd3.cfg`.
+
+The command line in feelpp-toolboxes docker reads
+
+.Command line to execute CFD1 testcase
+[source,sh]
+----
+$ mpirun -np 4 /usr/local/bin/feelpp_toolbox_fluid_2d --config-file cfd1.cfg
+----
+
+The result files are then stored by default in
+
+.Results Directory
+[source,sh]
+----
+feel/applications/models/fluid/TurekHron/"case_name"/"velocity_space""pression_space""Geometric_order"/"processor_used"
+----
+
+For example, for CFD2 case executed on stem:[12] processors, with a stem:[P_2] velocity approximation space, a stem:[P_1] pressure approximation space and a geometric order of stem:[1], the path is
+
+[source,sh]
+----
+feel/toolboxes/fluid/TurekHron/cfd2/P2P1G1/np_12
+----
+
+
+== Results
+
+Here are results from the different cases studied in this benchmark.
+
+=== CFD1
+
+[cols="1,1,1,1,1", options="header"]
+.Results for CFD1
+|===
+|stem:[\mathbf{N_{geo}}]|stem:[\mathbf{N_{elt}}] |stem:[\mathbf{N_{dof}}]|Drag|Lift
+3+^.^|Reference link:{biblio}#turek2006proposal[Turek and Hron]|14.29|1.119
+|1|9874|45533 (stem:[P_2/P_1])|14.217|1.116
+|1|38094|173608 (stem:[P_2/P_1])|14.253|1.120
+|1|59586|270867 (stem:[P_2/P_1])|14.262|1.119
+|2|7026|78758 (stem:[P_3/P_2])|14.263|1.121
+|2|59650|660518 (stem:[P_3/P_2])|14.278|1.119
+|3|7026|146057 (stem:[P_4/P_3])|14.270|1.120
+|3|59650|1228831 (stem:[P_4/P_3])|14.280|1.119
+|===
+
+All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/toolboxes/solid/TurekHron[rep] [https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd.geo[geo file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd1.cfg[config file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd1.json[json file]]
+
+=== CFD2
+
+[cols="1,1,1,1,1", options="header"]
+.Results for CFD2
+|===
+|stem:[\mathbf{N_{geo}}]|stem:[\mathbf{N_{elt}}] |stem:[\mathbf{N_{dof}}]|Drag|Lift
+3+^.^|Reference link:{biblio}#turek2006proposal[Turek and Hron]|136.7|10.53
+|1|7020|32510 (stem:[P_2/P_1])|135.33|10.364
+|1|38094|173608 (stem:[P_2/P_1])|136.39|10.537
+|1|59586|270867 (stem:[P_2/P_1])|136.49|10.531
+|2|7026|78758 (stem:[P_3/P_2])|136.67|10.548
+|2|59650|660518 (stem:[P_3/P_2])|136.66|10.532
+|3|7026|146057 (stem:[P_4/P_3])|136.65|10.539
+|3|59650|1228831 (stem:[P_4/P_3])|136.66|10.533
+|===
+
+All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/toolboxes/solid/TurekHron[rep] [https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd.geo[geo file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd2.cfg[config file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd2.json[json file]]
+
+=== CFD3
+
+As CFD3 is time-dependent ( from BDF use ), results will be expressed as
+
+[env.equation]
+--
+mean ± amplitude [frequency]
+--
+
+where
+
+* mean is the average of the min and max values at the last period of oscillations.
+
+[env.equation]
+--
+mean=\frac{1}{2}(max+min)
+--
+
+* amplitude is the difference of the max and the min at the last oscillation.
+
+[env.equation]
+--
+amplitude=\frac{1}{2}(max-min)
+--
+
+* frequency can be obtain by Fourier analysis on periodic data and retrieve the lowest frequency or by the following formula, if we know the period time T.
+
+[env.equation]
+--
+frequency=\frac{1}{T}
+--
+
+[cols="1,1,1,1,1,1,1", options="header"]
+.Results for CFD3
+|===
+|stem:[\mathbf{\Delta t}]|stem:[\mathbf{N_{geo}}]|stem:[\mathbf{N_{elt}}]|stem:[\mathbf{N_{dof}}]|stem:[\mathbf{N_{bdf}}]|Drag|Lift
+|0.005 4+^.^|Reference link:{biblio}#turek2006proposal[Turek and Hron]|439.45 ± 5.6183[4.3956]|−11.893 ± 437.81[4.3956]
+|===
+
+
+|===
+.3+|0.01|1|8042|37514 (stem:[P_2/P_1])|2|437.47 ± 5.3750[4.3457]|-9.786 ± 437.54[4.3457]
+|2|2334|26706 (stem:[P_3/P_2])|2|439.27 ± 5.1620[4.3457]|-8.887 ± 429.06[4.3457]
+|2|7970|89790 (stem:[P_2/P_2])|2|439.56 ± 5.2335[4.3457]|-11.719 ± 425.81[4.3457]
+|===
+
+
+|===
+.6+|0.005|1|3509|39843stem:[(P_3/P_2)]|2|438.24 ± 5.5375[4.3945]|-11.024 ± 433.90[4.3945]
+|1|8042|90582 (stem:[P_3/P_2])|2|439.25 ± 5.6130[4.3945]|-10.988 ± 437.70[4.3945]
+|2|2334|26706 (stem:[P_3/P_2])|2|439.49 ± 5.5985[4.3945]|-10.534 ± 441.02[4.3945]
+|2|7970|89790 (stem:[P_3/P_2])|2|439.71 ± 5.6410[4.3945]|-11.375 ± 438.37[4.3945]
+|3|3499|73440 (stem:[P_4/P_3])|3|439.93 ± 5.8072[4.3945]|-14.511 ± 440.96[4.3945]
+|4|2314|78168 (stem:[P_5/P_4])|2|439.66 ± 5.6412[4.3945]|-11.329 ± 438.93[4.3945]
+|===
+
+|===
+.3+|0.002|2|7942|89482 (stem:[P_3/P_2)]|2|439.81 ± 5.7370[4.3945]|-13.730 ± 439.30[4.3945]
+|3|2340|49389 (stem:[P_4/P_3])|2|440.03 ± 5.7321[4.3945]|-13.250 ± 439.64[4.3945]
+|3|2334|49266 (stem:[P_4/P_3])|3|440.06 ± 5.7773[4.3945]|-14.092 ± 440.07[4.3945]
+|===
+
+All the files used  for this case can be found in this https://github.com/feelpp/feelpp/tree/develop/toolboxes/solid/TurekHron[rep] [https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd.geo[geo file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd3.cfg[config file], https://github.com/feelpp/feelpp/tree/develop/toolboxes/fluid/TurekHron/cfd3.json[json file]].
+
+[[ImageModelingCFDTurekHronResultsCFD3]]
+.Lift and drag forces
+image::modeling/cfd/TurekHronCFD3resultsLiftDrag.png[alt="TurekHron CFD3 results",align="center"]
+
+
+== Geometrical Order
+
+NOTE: Add a section on geometrical order.
+
+== Conclusion
+
+The reference results, link:{biblio}#turek2006proposal[Turek and Hron], have been obtained with a time step stem:[\Delta t=0.05]. When we compare our results, with the same step and stem:[\mathrm{BDF}_2], we observe that they are in accordance with the reference results.
+
+With a larger stem:[\Delta t], a discrepancy is observed, in particular for the drag force. It can also be seen at the same time step, with a higher order stem:[\mathrm{BDF}_n] ( _e.g._ stem:[\mathrm{BDF}_3] ). This suggests that the couple stem:[\Delta t=0.05] and stem:[\mathrm{BDF}_2] isn't enough accurate.
+
+
+== Bibliography
+
+[bibliography]
+.References for this benchmark
+- [[[TurekHron]]] S. Turek and J. Hron, _Proposal for numerical benchmarking of fluid-structure interaction between an elastic object and laminar incompressible flow_, Lecture Notes in Computational Science and Engineering, 2006.
+
+- [[[Chabannes]]] Vincent Chabannes, _Vers la simulation numérique des écoulements sanguins_, Équations aux dérivées partielles [math.AP], Universitée de Grenoble, 2013.
