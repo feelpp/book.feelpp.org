@@ -7,7 +7,7 @@
 :doctype: book
 :docinfo: shared
 :toc: left
-:toclevels: 4
+:toclevels: 5
 :sectnums:
 :imagesdir: ../images/
 // Keep this include header at the end! (see CONTRIBUTING)
@@ -282,12 +282,124 @@ By default, cmake will search in the system default path.
 6. Compile you {feelpp} application `make`
 
 
-=== Recompile Feel++ from scratch
+=== Feel++ from scratch
 
 :INFO: *Difficulty : Hard*
 
-'''
 
+
+
+== Post-processing
+
+=== Paraview
+
+==== Downloading the data
+
+You can retrieve your data on you local machine using rsync.
+
+[source,bash]
+----
+paraview
+----
+
+and open the `.case` file
+
+
+[[pvserver]]
+==== Distant connection (pvserver)
+
+Open a terminal and connect to atlas server. The paraview
+Run the paraview server
+[source,bash]
+----
+module load paraview/5.1.0
+pvserver
+----
+
+TIP: use `pvserver --multi-clients` to connect with several users at the same
+time! See `pvserver --help` for all options.
+
+On you machine, run paraview and connect to the server
+`[file]->[connect]`.
+A should pop out. Configure the server
+with the given address displayed in the terminal
+where you run `pvserver`. It should looks like `cs://irma-atlas:11111`.
+
+IMPORTANT: Paraview and pvserver must be the same version!
+
+
+
+
+
+
+=== Containers
+
+
+
+[[postprocessdocker]]
+==== Docker containers
+
+{feelpp} provides paraview directly in the docker image.
+First, you have to run a new container on atlas. 
+Don't forget to mount the volume `/feel` for {feelpp} applications.
+We have to add an option to use the same network than irma-atlas
+`--network=host`
+
+[source,bash]
+----
+docker run --rm -it --network=host -v ${HOME}/feel:/feel feelpp/feelpp-toolboxes:develop-ubuntu-16.10
+----
+
+Then you can proceed with paraview server `pvserver` like in <<pvserver>>
+section.
+
+[[insitudocker]]
+===== Distant connection (In-situ)
+
+{feelpp} is compatible with insitu thanks to link:http://www.paraview.org/in-situ/[kitware catalyst].
+First be sure to follow previous steps <<postprocessdocker>> to run a docker container.
+
+In the container, start a paraview server in the background.
+[source,bash]
+----
+pvserver &
+----
+Keep in mind the printed address.
+
+On you machine, run paraview and connect to this server like explained in section
+<<pvserver>>.
+Connect to catalyst via paraview menu `[catalyst]->[connect]`. A prompt message
+should inform you that paraview accept catalyst connections.
+Set catalyst to pause `[catalyst]->[pause]` in the menu before launching a {feelpp}
+application.
+
+Now in the container, chose an application you wish to execute. For example,
+let's take `~/Testcases/FSI/wavepressure2d` Run your application with insitu
+options.
+
+[source,bash]
+----
+mpirun -np 8 feelpp_toolbox_fsi_2d --config-file wavepressure2d.cfg --exporter.format=vtk --exporter.vtk.insitu.enable=1
+----
+
+:INFO: You have to use the VTK exporter to do insitu post-processing!
+
+The simulation will stop after the initialisation step waiting for you to
+resume catalyst.
+
+:TIP: In Paraview, a new object should have appeared in the "pipeline browser" window.
+Click on the icon to expand the object, then click on the "eye" icon to make the
+object visible.
+
+At this time, you can add all filters as usual for post-processing.
+
+Once you're ready, resume catalyst `[catalyst]->[continue]`
+
+
+Enjoy!
+
+
+'''
 image::logos/svg/logoIRMA.svg[cemosis,80,float="left"]
 image::logos/logo_cemosis.png[cemosis,80,float="left"]
 image::logos/svg/logoUDS.svg[cemosis,80,float="left"]

@@ -32,25 +32,78 @@ You should be familiar with job creation and job submission before going further
 
 == Feel++ usage
 
-=== Compilation
+[[cesgamodules]]
+=== Feel++ toolboxes
 
-WARNING: Work in progress
+[source,bash]
+----
+module load gcc/5.3.0
+module load openmpi/1.10.2 
+module load singularity/2.2.1
+module load feelpp-toolboxes/0.102.00
+----
 
-We provide some scripts to [install dependencies](https://github.com/feelpp/feelpp/tree/develop/ports/cesga).
+Now you should be able to access via the terminal to default feel++ 
+applications.
 
-You have to load the required environment
+To run an application,
 
-include::{uri-source}/ports/cesga/environment[]
+[source,bash]
+----
+mpirun feelpp-toolboxes  feelpp_qs_laplacian_2d
+----
+
+TIP: We provide some scripts to link:https://github.com/feelpp/feelpp/tree/develop/ports/cesga[install dependencies], if
+one of the dependencies need to be recompiled, or updated.
+
+=== Compilation from scratch
+
+First of all, load the module for the {feelpp} library
+
+[source,bash]
+----
+module load gcc/6.3.0
+module load openmpi/2.0.2
+module load feelpp
+----
+
+:INFO: For the compilation procedure, refer the link:http://book.feelpp.org/user-manual/#building_feel[{feelpp} book].
+
+To compile {feelpp++}, download clone the sources in `${LUSTRE}` directory.
+
+[source,bash]
+----
+cd ${LUSTRE}
+git clone https://github.com/feelpp/feelpp.git
+----
+
+For the cmake step, we recommend you to use `clang` compiler. You have to
+export some environment variables for the compilation.
+
+Here is an example of script for the cmake procedure.
+[source,bash]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/ports/cesga/configure_feelpp.sh[]
+----
+
+TIP: Remember you can download the scripts to link:https://github.com/feelpp/feelpp/tree/develop/ports/cesga[install {feelpp}]
 
 === Singularity
 
 See [[singularity]] section for more details about this container solution.
 
-WARNING: Work in progress
+First you need to load the specific module
 
-How to launch Feel++ with singularity at FinisTerrae II
+[source,bash]
+----
+module load singularity/2.2.1
+----
 
-==== Slurm (job scripts)
+Then you can download an image from one the official Feel++ singularity images.
+
+=== Slurm (job scripts)
+
+==== Feel++ toolboxes (module)
 
 ===== Script 1
 Launch `feelpp_qs_laplacian_2d` in two task in different nodes.
