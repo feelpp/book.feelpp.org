@@ -407,10 +407,10 @@ Consider for example a heat transfer problem on a domain stem:[\Omega] coupled w
 
 [source,cpp]
 ----
-// create a mesh of dimension d
-auto mesh=...
-// extract a mesh made of a subregion marked eg. Air
-auto fluid_mesh = createSubmesh( mesh, markedelements(mesh,"Air") );
-// extract a d-1 mesh made of all the faces of the mesh
-auto face_mesh = createSubmesh( mesh, faces(mesh) );
+auto mesh=loadMesh(_mesh=new Mesh<Simplex<d>>); <1>
+auto fluid_mesh = createSubmesh( mesh, markedelements(mesh,"Air") ); <2>
+auto face_mesh = createSubmesh( mesh, faces(mesh) ); <3>
 ----
+<1> create a mesh of simplices of dimension stem:[d]
+<2> extract  a mesh subregion stem:[\Omega_f] marked Air from a mesh stem:[\Omega]
+<3> extract a stem:[d-1] mesh made of all the faces of the stem:[d] mesh
