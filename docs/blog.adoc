@@ -1,8 +1,16 @@
 = The Feel++ Blog
-:page-permalink: /blog
+:page-permalink: /blog/
 :page-root: /
 :page-layout: default
 :docinfo: shared
 include::includes/header.adoc[]
 
-toto is rigolo
+++++
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
+++++
