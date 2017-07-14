@@ -6,4 +6,4 @@ set -x
 BRANCH=${BRANCH:-${BUILDKITE_BRANCH:master}}
 
 echo "--- Deploying $PROJECT..."
-rsync -avz _site/ es15.siteground.eu:~/public_html/book.feelpp.org
+rsync -avz _site/ $WEBSERVER:~/public_html/${PROJECT}
