@@ -9,7 +9,7 @@ ruby RUBY_VERSION
 #
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
-gem "jekyll", "3.4.0"
+gem "jekyll"
 
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 gem "minima", "~> 2.0"
@@ -28,7 +28,7 @@ group :jekyll_plugins do
   gem 'asciidoctor-diagram', '~> 1.4.0' # (1)
   gem 'asciidoctor-latex'
   gem 'asciidoctor-bibtex'
-  gem 'jekyll-asciidoc', "~> 2.1.0.dev"
+  gem 'jekyll-asciidoc'
   gem 'jekyll-theme-primer', '~> 0.1.7'
   gem 'jekyll-theme-cayman', '~> 0.0.3'
 end
