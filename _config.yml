@@ -37,6 +37,9 @@ gems:
   - jekyll-feed
   - jekyll-asciidoc
 
+include:
+  - doc/man/README.adoc
+
 exclude:
   - Gemfile
   - Gemfile.lock
@@ -50,7 +53,8 @@ exclude:
   - book.html
   - book.pdf
   - /auto/
-  - docs/man
+  - docs/man/0*
+  - docs/man/l*
 
 asciidoctor:
   base_dir: :docdir
