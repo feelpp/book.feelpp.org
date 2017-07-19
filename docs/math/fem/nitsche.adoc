@@ -9,7 +9,7 @@ Dirichlet BC (e.g. latexmath:[u=g]) weakly.
 Initial Idea add the penalisation term
 [stem]
 ++++
-\int_{\partial {{\ensuremath{\Omega^{}}}\xspace}} \mu( u - g)
+\int_{\partial \Omega} \mu( u - g)
 ++++
 where latexmath:[\mu] is a constant. But this is not enough: this is not consistent with the initial formulation.
 
@@ -65,12 +65,11 @@ We look for stem:[u] such that
 ++++
 \begin{gathered}
     \label{eq:51}
-    \int_\Omega k \nabla u \cdot \nabla v + \int_{\partial {{\ensuremath{\Omega^{}}}\xspace}}
-    \underbrace{-k \frac{\partial u}{\partial n}v}_{\text{integration by
-    part}} \underbrace{-k \frac{\partial v}{\partial n} u}_{\text{adjoint
-    consistency: symetrisation}}  \\
+    \int_\Omega k \nabla u \cdot \nabla v + \int_{\partial \Omega}
+    \underbrace{-k \frac{\partial u}{\partial n}v}_{\text{integration by part}}
+    \underbrace{-k \frac{\partial v}{\partial n} u}_{\text{adjoint  consistency: symetrisation}}  \\
     + \underbrace{\frac{\gamma}{h} u v}_{\text{penalisation: enforce Dirichlet    condition}} =\\
-    \int_\Omega f v + \int_{\partial {{\ensuremath{\Omega^{}}}\xspace}} (\underbrace{-k \frac{\partial v}{\partial n} }_{\text{adjoint consistency}} + \underbrace{\frac{\gamma}{h} v) g}_{\text{penalisation: enforce Dirichlet condition}}
+    \int_\Omega f v + \int_{\partial \Omega} (\underbrace{-k \frac{\partial v}{\partial n} }_{\text{adjoint consistency}} + \underbrace{\frac{\gamma}{h} v) g}_{\text{penalisation: enforce Dirichlet condition}}
   \end{gathered}
 ++++
 
@@ -79,7 +78,7 @@ We look for stem:[u] such that
 [source,cpp]
 ----
 // contribution to bilinear form (left hand side)
-form2( _test=Xh, _trial=Xh, _matrix=D ) +=
+form2( _test=Xh, _trial=Xh ) +=
 integrate( boundaryfaces(mesh),
            // integration by part
            -(gradt(u)*N())*id(v)
@@ -88,7 +87,7 @@ integrate( boundaryfaces(mesh),
            // penalisation
            +gamma*id(v)*idt(u)/hFace());
 // contribution to linear form (right hand side)
-form1( _test=Xh, _vector=F ) +=
+form1( _test=Xh ) +=
 integrate( boundaryfaces(mesh),
            // adjoint consistency
            -(grad(v)*N())*g
@@ -105,8 +104,7 @@ latexmath:[u] such that
 
 [stem]
 ++++
-\label{eq:45}
- \nabla \cdot ( -\epsilon\nabla u + \mathbf{c} u ) = f,\quad u = g|_{\partial {{\ensuremath{\Omega^{}}}\xspace}},\quad \nabla \cdot \mathbf{c} = 0
+\nabla \cdot ( -\epsilon\nabla u + \mathbf{c} u ) = f,\quad u = g|_{\partial \Omega},\quad \nabla \cdot \mathbf{c} = 0
 ++++
 
 the flux vector field is latexmath:[\mathbf{F}=-\nabla u + \mathbf{c} u].
@@ -115,15 +113,13 @@ Note that here the condition, latexmath:[\nabla \cdot \mathbf{c} = 0] was crucia
 latexmath:[\mathbf{c} \cdot \nabla u] since
 [stem]
 ++++
-\label{eq:3}
-      \nabla \cdot (\mathbf{c} u ) = \mathbf{c} \cdot \nabla u + \underbrace{u \nabla \cdot \mathbf{c}}_{=0}
+\nabla \cdot (\mathbf{c} u ) = \mathbf{c} \cdot \nabla u + \underbrace{u \nabla \cdot \mathbf{c}}_{=0}
 ++++
 
 Weak formulation for convection diffusion Multiplying by any test function latexmath:[v] and integration by part of ([eq:2]) gives
 [stem]
 ++++
-\label{eq:4}
-    \int_\Omega \epsilon \nabla u \cdot \nabla v - (\mathbf{c} \cdot \nabla v)u + \int_{\partial \Omega} (\mathbf{F}\cdot \mathbf{n}) v = \int_\Omega f v
+\int_\Omega \epsilon \nabla u \cdot \nabla v - (\mathbf{c} \cdot \nabla v)u + \int_{\partial \Omega} (\mathbf{F}\cdot \mathbf{n}) v = \int_\Omega f v
 ++++
 where latexmath:[\mathbf{n}] is the outward unit normal to latexmath:[\partial  \Omega].
 
@@ -138,14 +134,13 @@ Finally we can incorporate the symetrisation
 
 [stem]
 ++++
-\label{eq:6}
-    \begin{split}
+\begin{gathered}
       \int_\Omega \epsilon \nabla u \cdot \nabla v - (\mathbf{c} \cdot \nabla v)u +
       \int_{\partial \Omega} ((-\epsilon \nabla u + \mathbf{c} u)\cdot
       \mathbf{n}) v+ \alert{(-\epsilon\nabla v\cdot \mathbf{n} + {\bm c}\cdot \mathbf{n} v ) u} + \frac{\gamma}{h} u v  = \\
       \int_\Omega f v + \int_{\partial \Omega} \alert{(-\epsilon\nabla v\cdot
       \mathbf{n} + {\bm c}\cdot \mathbf{n} v) g}+ \frac{\gamma}{h} g v
-    \end{split}
+\end{gathered}
 ++++    
 
 === Implementation
@@ -153,7 +148,7 @@ Finally we can incorporate the symetrisation
 [source,cpp]
 ----
 // bilinear form (left hand side)
-form2( Xh, Xh, D ) +=
+form2( _trial=Xh, _test=Xh ) +=
 integrate( boundaryfaces(mesh),
   // integration by part
   -($\epsilon$ gradt(u)*N())*id(v) + (idt(u)*trans(idv(c))*N())*id(v)
@@ -162,7 +157,7 @@ integrate( boundaryfaces(mesh),
   // penalisation
   +gamma*id(v)*idt(u)/hFace());
 // linear form (right hand side)
-form1( Xh, F ) +=
+form1( _test=Xh ) +=
 integrate( boundaryfaces(mesh),
   // adjoint consistency
   -($\epsilon$ grad(v)*N())*g
