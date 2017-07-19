@@ -107,7 +107,7 @@ latexmath:[u] such that
 \nabla \cdot ( -\epsilon\nabla u + \mathbf{c} u ) = f,\quad u = g|_{\partial \Omega},\quad \nabla \cdot \mathbf{c} = 0
 ++++
 
-the flux vector field is latexmath:[\mathbf{F}=-\nabla u + \mathbf{c} u].
+the flux vector field is latexmath:[\mathbf{F}=-\nabla u].
 
 Note that here the condition, latexmath:[\nabla \cdot \mathbf{c} = 0] was crucial to expand latexmath:[\nabla \cdot (\mathbf{c} u )] into
 latexmath:[\mathbf{c} \cdot \nabla u] since
@@ -119,15 +119,16 @@ latexmath:[\mathbf{c} \cdot \nabla u] since
 Weak formulation for convection diffusion Multiplying by any test function latexmath:[v] and integration by part of ([eq:2]) gives
 [stem]
 ++++
-\int_\Omega \epsilon \nabla u \cdot \nabla v - (\mathbf{c} \cdot \nabla v)u + \int_{\partial \Omega} (\mathbf{F}\cdot \mathbf{n}) v = \int_\Omega f v
+\int_\Omega \epsilon \nabla u \cdot \nabla v + (\mathbf{c} \cdot \nabla u)v + \int_{\partial \Omega} (\mathbf{F}\cdot \mathbf{n}) v = \int_\Omega f v
 ++++
 where latexmath:[\mathbf{n}] is the outward unit normal to latexmath:[\partial  \Omega].
 
 We now introduce the penalisation term that will ensure that latexmath:[u \rightarrow g] as latexmath:[h \rightarrow 0] on latexmath:[\partial \Omega]. ([eq:4]) reads now
+
+//\label{eq:5}
 [stem]
 ++++
-\label{eq:5}
-    \int_\Omega \epsilon \nabla u \cdot \nabla v - (\mathbf{c} \cdot \nabla v)u + \int_{\partial \Omega} (\mathbf{F}\cdot \mathbf{n}) v + \alert{\frac{\gamma}{h} u v}  = \int_\Omega f v + \alert{\int_{\partial \Omega} \frac{\gamma}{h} g v}
+\int_\Omega \epsilon \nabla u \cdot \nabla v + (\mathbf{c} \cdot \nabla u)v + \int_{\partial \Omega} (\mathbf{F}\cdot \mathbf{n}) v + {\frac{\gamma}{h} u v}  = \int_\Omega f v + {\int_{\partial \Omega} \frac{\gamma}{h} g v}
 ++++
 
 Finally we can incorporate the symetrisation
@@ -135,11 +136,10 @@ Finally we can incorporate the symetrisation
 [stem]
 ++++
 \begin{gathered}
-      \int_\Omega \epsilon \nabla u \cdot \nabla v - (\mathbf{c} \cdot \nabla v)u +
-      \int_{\partial \Omega} ((-\epsilon \nabla u + \mathbf{c} u)\cdot
-      \mathbf{n}) v+ \alert{(-\epsilon\nabla v\cdot \mathbf{n} + {\bm c}\cdot \mathbf{n} v ) u} + \frac{\gamma}{h} u v  = \\
-      \int_\Omega f v + \int_{\partial \Omega} \alert{(-\epsilon\nabla v\cdot
-      \mathbf{n} + {\bm c}\cdot \mathbf{n} v) g}+ \frac{\gamma}{h} g v
+      \int_\Omega \epsilon \nabla u \cdot \nabla v + (\mathbf{c} \cdot \nabla u)v +
+        \int_{\partial \Omega} ((-\epsilon \nabla u)\cdot \mathbf{n}) v+
+      {(-\epsilon\nabla v\cdot \mathbf{n} + {\bm c}\cdot \mathbf{n} v ) u} + \frac{\gamma}{h} u v  = \\
+      \int_\Omega f v + \int_{\partial \Omega} {(-\epsilon\nabla v\cdot \mathbf{n} + {\mathbf{c}}\cdot \mathbf{n} v) g}+ \frac{\gamma}{h} g v
 \end{gathered}
 ++++    
 
