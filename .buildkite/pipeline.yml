@@ -1,14 +1,14 @@
 steps:
  - name: ':jekyll: :book:'
    command: .buildkite/steps/build.sh
-   agent:
+   agents:
      asciidoc: true
    env:
      PROJECT: book.feelpp.org
  - name: ':rocket: :book:'
    command: .buildkite/steps/deploy.sh
    branches: master
-   agent:
+   agents:
      asciidoc: true
    env:
      PROJECT: book.feelpp.org
