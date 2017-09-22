@@ -1,0 +1,27 @@
+= {feelpp} and Python
+
+NOTE: The recommended version of Python is Python3. Python2 should work but it is no more tested.
+
+== Sympy
+
+Sympy (at least 1.1) is used the computer algebra system for symbolic calculus.
+
+If Sympy 1.1 is not available on your system, install `pip` (a python package manager) and then `sympy`.
+It will install `sympy` locally (in `$HOME/.local`) in your `$HOME`.
+
+[source,sh]
+.Install commands for sympy on Ubuntu/Debian
+----
+$ sudo apt-get install python3-pip
+$ sudo pip3 install sympy
+----
+
+[source,sh]
+.Install commands for sympy on MACOSX/Homebrew
+----
+$ brew install python3
+$ python3 -m pip install --upgrade sympy
+----
+INFO: The {feelpp} Homebrew formula takes care of installing `python3` and `sympy`.
+
+== Configuring {feelpp}
