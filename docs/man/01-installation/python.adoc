@@ -43,3 +43,12 @@ $ <path to toplevel feelpp dir>/configure --enable-python=/usr/bin/python3
 # or
 $ <path to toplevel feelpp dir>/configure --cmakeflags=-DPYTHON_EXECUTABLE=/usr/bin/python3
 ----
+
+=== `PYTHONPATH`
+
+you may have to update the `PYTHONPATH` environment variable to point to some {feelpp} directories.
+
+[source,sh]
+----
+export PYTHONPATH=$PYTHONPATH:<top level feelpp source directory>/feel/feelpython
+----
