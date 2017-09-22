@@ -7,7 +7,7 @@ NOTE: The recommended version of Python is Python3. Python2 should work but it i
 Sympy (at least 1.1) is used the computer algebra system for symbolic calculus.
 
 If Sympy 1.1 is not available on your system, install `pip` (a python package manager) and then `sympy`.
-It will install `sympy` locally (in `$HOME/.local`) in your `$HOME`.
+It will install `sympy` locally (in `\$HOME/.local`) in your `\$HOME`.
 
 [source,sh]
 .Install commands for sympy on Ubuntu/Debian
@@ -31,13 +31,15 @@ NOTE: The {feelpp} Homebrew formula takes care of installing `python3` and `symp
 To help finding Python, you may have to pass some information to `cmake` or the helper script `configure`.
 
 [source,sh]
-.Pass `-DPYTHON_EXECUTABLE` to `cmake`
+.With `cmake`
 ----
 cmake ... -DPYTHON_EXECUTABLE=/usr/bin/python3 ...
 ----
 
 [source,sh]
-.Pass `--enable-python=<python path>` to  `configure`
+.With  `configure`
 ----
 $ <path to toplevel feelpp dir>/configure --enable-python=/usr/bin/python3
+# or
+$ <path to toplevel feelpp dir>/configure --cmakeflags=-DPYTHON_EXECUTABLE=/usr/bin/python3
 ----
