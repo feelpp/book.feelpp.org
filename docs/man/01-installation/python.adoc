@@ -22,6 +22,22 @@ $ sudo pip3 install sympy
 $ brew install python3
 $ python3 -m pip install --upgrade sympy
 ----
-INFO: The {feelpp} Homebrew formula takes care of installing `python3` and `sympy`.
+
+NOTE: The {feelpp} Homebrew formula takes care of installing `python3` and `sympy`.
 
 == Configuring {feelpp}
+
+{feelpp} requires to find a Python 3 interpreter and the associated Python 3 libraries.
+To help finding Python, you may have to pass some information to `cmake` or the helper script `configure`.
+
+[source,sh]
+.Pass `-DPYTHON_EXECUTABLE` to `cmake`
+----
+cmake ... -DPYTHON_EXECUTABLE=/usr/bin/python3 ...
+----
+
+[source,sh]
+.Pass `--enable-python=<python path>` to  `configure`
+----
+$ <path to toplevel feelpp dir>/configure --enable-python=/usr/bin/python3
+----
