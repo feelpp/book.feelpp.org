@@ -1,0 +1,16 @@
+= The Feel++ Blog
+:page-permalink: /news/
+:page-root: /
+:page-layout: news
+:docinfo: shared
+include::includes/header.adoc[]
+
+++++
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
+++++

@@ -1,0 +1,167 @@
+= Weakly imposed Dirichlet boundary conditions: Nitsche method
+:stem: latexmath
+:toc: left
+== Weak treatment
+
+In order to treat the boundary conditions uniformly (i.e. the same way as Neumann and Robin Conditions), we wish to treat the
+Dirichlet BC (e.g. latexmath:[u=g]) weakly.
+
+Initial Idea add the penalisation term
+[stem]
+++++
+\int_{\partial \Omega} \mu( u - g)
+++++
+where latexmath:[\mu] is a constant. But this is not enough: this is not consistent with the initial formulation.
+
+One can use the Nitsche method to implement weak Dirichlet
+conditions and follows the next steps:
+
+* write the equations in conservative form (i.e. identify the flux);
+* add the terms to ensure consistency (i.e the flux on the boundary);
+* symmetrize to ensure adjoint consistency;
+* add a penalisation term with factor latexmath:[\gamma (u-g)/h] that
+ensures that the solution will be set to the proper value at the
+boundary;
+
+== Penalisation parameter
+
+=== Choosing latexmath:[\gamma]
+latexmath:[\gamma] must be chosen such that the coercivity(or inf-sup) property is satisfied.
+It is difficult to do in general.
+We increase latexmath:[\gamma] until the weak Dirichlet boundary conditions are properly satisfied, e.g. start with latexmath:[\gamma=1], typical values are
+between 1 and 10.
+
+The choice of latexmath:[\gamma] is a problem specially when latexmath:[h] is small.
+
+=== Advantages, disadvantages
+
+We compare the advantages and disadvantages of strong and weak Dirichlet boundary conditions treatment.
+
+We start with the weak conditions
+
+* **advantage** uniform(weak) treatment of all boundary conditions type
+* **advantage** if boundary condition is independant of time, the terms are assembled
+once for all
+* **disadvantage** Introduction of the penalisation parameter latexmath:[\gamma] that
+needs to be tweaked
+
+Strong treatment: Advantages
+
+* **advantage** Enforce exactely the boundary conditions
+* **disadvantage** Need to modify the matrix once assembled to reflect that the Dirichlet degree of freedom are actually known. Then even if the boundary condition is independant of time, at every time step if there are terms depending on time that need reassembly (e.g. convection) the strong treatment needs to be reapplied.
+* **disadvantage** it can be expensive to apply depending on the type of sparse matrix used, for example using CSR format setting rows to 0 except on the diagonal to 1 is not expensive but one must do that also for the columns associated with each Dirichlet degree of freedom and that is expensive.
+
+[[laplacian]]
+== Example: Laplacian 
+
+We look for stem:[u] such that
+//\label{eq:44}
+[stem]
++++
+    -\nabla\cdot( k \nabla u )= f\ \mbox{in} \Omega,\quad u=g|_{\partial \Omega}
++++
+
+[stem]
+++++
+\begin{gathered}
+    \label{eq:51}
+    \int_\Omega k \nabla u \cdot \nabla v + \int_{\partial \Omega}
+    \underbrace{-k \frac{\partial u}{\partial n}v}_{\text{integration by part}}
+    \underbrace{-k \frac{\partial v}{\partial n} u}_{\text{adjoint  consistency: symetrisation}}  \\
+    + \underbrace{\frac{\gamma}{h} u v}_{\text{penalisation: enforce Dirichlet    condition}} =\\
+    \int_\Omega f v + \int_{\partial \Omega} (\underbrace{-k \frac{\partial v}{\partial n} }_{\text{adjoint consistency}} + \underbrace{\frac{\gamma}{h} v) g}_{\text{penalisation: enforce Dirichlet condition}}
+  \end{gathered}
+++++
+
+=== Implementation
+
+[source,cpp]
+----
+// contribution to bilinear form (left hand side)
+form2( _test=Xh, _trial=Xh ) +=
+integrate( boundaryfaces(mesh),
+           // integration by part
+           -(gradt(u)*N())*id(v)
+           // adjoint consistency
+           -(grad(v)*N())*idt(u)
+           // penalisation
+           +gamma*id(v)*idt(u)/hFace());
+// contribution to linear form (right hand side)
+form1( _test=Xh ) +=
+integrate( boundaryfaces(mesh),
+           // adjoint consistency
+           -(grad(v)*N())*g
+           // penalisation
+           +gamma*id(v)*g/hFace());
+----  
+
+[[convection-diffusion]]
+== Example: Convection-Diffusion
+
+
+Convection Diffusion Consider now the following problem, find
+latexmath:[u] such that
+
+[stem]
+++++
+\nabla \cdot ( -\epsilon\nabla u + \mathbf{c} u ) = f,\quad u = g|_{\partial \Omega},\quad \nabla \cdot \mathbf{c} = 0
+++++
+
+the flux vector field is latexmath:[\mathbf{F}=-\nabla u].
+
+Note that here the condition, latexmath:[\nabla \cdot \mathbf{c} = 0] was crucial to expand latexmath:[\nabla \cdot (\mathbf{c} u )] into
+latexmath:[\mathbf{c} \cdot \nabla u] since
+[stem]
+++++
+\nabla \cdot (\mathbf{c} u ) = \mathbf{c} \cdot \nabla u + \underbrace{u \nabla \cdot \mathbf{c}}_{=0}
+++++
+
+Weak formulation for convection diffusion Multiplying by any test function latexmath:[v] and integration by part of ([eq:2]) gives
+[stem]
+++++
+\int_\Omega \epsilon \nabla u \cdot \nabla v + (\mathbf{c} \cdot \nabla u)v + \int_{\partial \Omega} (\mathbf{F}\cdot \mathbf{n}) v = \int_\Omega f v
+++++
+where latexmath:[\mathbf{n}] is the outward unit normal to latexmath:[\partial  \Omega].
+
+We now introduce the penalisation term that will ensure that latexmath:[u \rightarrow g] as latexmath:[h \rightarrow 0] on latexmath:[\partial \Omega]. ([eq:4]) reads now
+
+//\label{eq:5}
+[stem]
+++++
+\int_\Omega \epsilon \nabla u \cdot \nabla v + (\mathbf{c} \cdot \nabla u)v + \int_{\partial \Omega} (\mathbf{F}\cdot \mathbf{n}) v + {\frac{\gamma}{h} u v}  = \int_\Omega f v + {\int_{\partial \Omega} \frac{\gamma}{h} g v}
+++++
+
+Finally we can incorporate the symetrisation
+
+[stem]
+++++
+\begin{gathered}
+      \int_\Omega \epsilon \nabla u \cdot \nabla v + (\mathbf{c} \cdot \nabla u)v +
+        \int_{\partial \Omega} ((-\epsilon \nabla u)\cdot \mathbf{n}) v+
+      {(-\epsilon\nabla v\cdot \mathbf{n} + {\mathbf{c}}\cdot \mathbf{n} v ) u} + \frac{\gamma}{h} u v  = \\
+      \int_\Omega f v + \int_{\partial \Omega} {(-\epsilon\nabla v\cdot \mathbf{n} + {\mathbf{c}}\cdot \mathbf{n} v) g}+ \frac{\gamma}{h} g v
+\end{gathered}
+++++    
+
+=== Implementation
+
+[source,cpp]
+----
+// bilinear form (left hand side)
+form2( _trial=Xh, _test=Xh ) +=
+integrate( boundaryfaces(mesh),
+  // integration by part
+  -($\epsilon$ gradt(u)*N())*id(v) + (idt(u)*trans(idv(c))*N())*id(v)
+  // adjoint consistency
+  -($\epsilon$ grad(v)*N())*idt(u) + (idt(u)*trans(idv(c))*N())*id(v)
+  // penalisation
+  +gamma*id(v)*idt(u)/hFace());
+// linear form (right hand side)
+form1( _test=Xh ) +=
+integrate( boundaryfaces(mesh),
+  // adjoint consistency
+  -($\epsilon$ grad(v)*N())*g
+  + g*trans(idv(c))*N())*id(v)
+  // penalisation
+  +gamma*id(v)*g/hFace());
+----

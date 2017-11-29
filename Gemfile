@@ -27,8 +27,8 @@ group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.6"
   gem 'asciidoctor-diagram', '~> 1.4.0' # (1)
   gem 'asciidoctor-latex'
-  #gem 'asciidoctor-bibtex'
-  gem 'jekyll-asciidoc', "~> 2.1.0"
+#  gem 'asciidoctor-bibtex'
+  gem 'jekyll-asciidoc'
   gem 'jekyll-theme-primer', '~> 0.1.7'
   gem 'jekyll-theme-cayman', '~> 0.0.3'
 end
