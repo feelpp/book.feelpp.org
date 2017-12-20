@@ -33,31 +33,31 @@ There exists
 Let stem:[A] be a stem:[\mathbb{R}^{n\times n}] matrix, stem:[x] and stem:[b] be stem:[\mathbb{R}^n] vectors, we wish to solve
 stem:[A x = b].
 
-**Definition**:: A preconditioner stem:[\mathcal{P}] is a method for constructing a matrix (just a linear function, not assembled!)  $$P^{-1} = \mathcal{P}(A,A_p)$$ using a matrix stem:[A] and extra information stem:[A_p], such that the spectrum of $$P^{-1}A$$ (left preconditioning) or $$A P^{-1}$$ (right preconditioning) is well-behaved. The action of preconditioning improves the conditioning of the previous linear system.
+**Definition**:: A preconditioner stem:[\mathcal{P}] is a method for constructing a matrix (just a linear function, not assembled!)  stem:[P^{-1} = \mathcal{P}(A,A_p)] using a matrix stem:[A] and extra information stem:[A_p], such that the spectrum of stem:[P^{-1}A] (left preconditioning) or stem:[A P^{-1}] (right preconditioning) is well-behaved. The action of preconditioning improves the conditioning of the previous linear system.
 
 **Left preconditioning**:  We solve for
-$$  (P^{-1} A) x = P^{-1} b $$
+stem:[  (P^{-1} A) x = P^{-1} b ]
 and we build the Krylov space
-$$\{ P^{-1} b, (P^{-1}A) P^{-1} b, (P^{-1}A)^2 P^{-1} b, \dots\}$$
+stem:[\{ P^{-1} b, (P^{-1}A) P^{-1} b, (P^{-1}A)^2 P^{-1} b, \dots\}]
 
 **Right preconditioning**: We solve for
-$$  (A P^{-1}) P x = b $$
+stem:[  (A P^{-1}) P x = b ]
 and we build the Krylov space
-$$\{ b, (P^{-1}A)b, (P^{-1}A)^2b, \dotsc \}$$
+stem:[\{ b, (P^{-1}A)b, (P^{-1}A)^2b, \dotsc \}]
 
-Note that the product $$P^{-1}A$$ or $$A P^{-1}$$ is never assembled.
+Note that the product stem:[P^{-1}A] or stem:[A P^{-1}] is never assembled.
 
 ===== Properties
 
 Let us now describe some  properties of preconditioners
 
-  - $$P^{-1}$$ is dense, $$P$$ is often not available and is not needed
+  - stem:[P^{-1}] is dense, stem:[P] is often not available and is not needed
 
-  - $$A$$ is rarely used by $$\mathcal{P}$$, but $$A_p = A$$ is common
+  - stem:[A] is rarely used by stem:[\mathcal{P}], but stem:[A_p = A] is common
 
-  - $$A_p$$ is often a sparse matrix, the \e preconditioning  \e matrix
+  - stem:[A_p] is often a sparse matrix, the \e preconditioning  \e matrix
 
-Here are some numerical methods to solve the system $$A x = b$$
+Here are some numerical methods to solve the system stem:[A x = b]
 
   - **Matrix-based**: Jacobi, Gauss-Seidel, SOR, ILU(k), LU
 
@@ -136,7 +136,7 @@ Domain size stem:[L], subdomain size stem:[H], element size stem:[h]
 
     - No overlap: stem:[\textit{its} \in \mathcal{O}\big( \frac{L}{\sqrt{Hh}} \big)].
 
-    - Overlap $$\delta$$: $$\textit{its} \in \big( \frac L {\sqrt{H\delta}} \big)$$.
+    - Overlap stem:[\delta]: stem:[\textit{its} \in \big( \frac L {\sqrt{H\delta}} \big)].
 
 [source,shell]
 ----
@@ -148,26 +148,26 @@ pc-type=asm
 
     - Solve Neumann problems on non-overlapping subdomains.
 
-    - $$\textit{its} \in \mathcal{O}\big( \frac{L}{H}(1+\log\frac H h) \big)$$.
+    - stem:[\textit{its} \in \mathcal{O}\big( \frac{L}{H}(1+\log\frac H h) \big)].
 
     - Tricky null space issues (floating subdomains).
 
     - Need subdomain matrices, not globally assembled matrix.
 
-> **Notes:** Multilevel variants knock off the leading $$\frac L H$$. +
+> **Notes:** Multilevel variants knock off the leading stem:[\frac L H]. +
 Both overlapping and nonoverlapping with this bound.
 
  * BDDC and FETI-DP
 
      - Neumann problems on subdomains with coarse grid correction.
 
-     - $$\textit{its} \in \mathcal{O}\big(1 + \log\frac H h \big)$$.
+     - stem:[\textit{its} \in \mathcal{O}\big(1 + \log\frac H h \big)].
 
 
 ===== Multigrid
 
 
-Hierarchy: Interpolation and restriction operators $$ \Pi^\uparrow : X_{\text{coarse}} \to X_{\text{fine}} \qquad \Pi^\downarrow :  X_{\text{fine}} \to X_{\text{coarse}} $$
+Hierarchy: Interpolation and restriction operators stem:[ \Pi^\uparrow : X_{\text{coarse}} \to X_{\text{fine}} \qquad \Pi^\downarrow :  X_{\text{fine}} \to X_{\text{coarse}} ]
 
    - Geometric: define problem on multiple levels, use grid to compute hierarchy.
 
@@ -175,24 +175,24 @@ Hierarchy: Interpolation and restriction operators $$ \Pi^\uparrow : X_{\text{co
 
 Galerkin approximation
 
-Assemble this matrix: $$A_{\text{coarse}} = \Pi^\downarrow A_{\text{fine}} \Pi^\uparrow$$
+Assemble this matrix: stem:[A_{\text{coarse}} = \Pi^\downarrow A_{\text{fine}} \Pi^\uparrow]
 
-Application of multigrid preconditioner ($$ V $$-cycle)
+Application of multigrid preconditioner (stem:[ V ]-cycle)
 
 - Apply pre-smoother on fine level (any preconditioner).
 
-- Restrict residual to coarse level with $$\Pi^\downarrow$$.
+- Restrict residual to coarse level with stem:[\Pi^\downarrow].
 
-- Solve on coarse level $$A_{\text{coarse}} x = r$$.
+- Solve on coarse level stem:[A_{\text{coarse}} x = r].
 
-- Interpolate result back to fine level with $$\Pi^\uparrow$$.
+- Interpolate result back to fine level with stem:[\Pi^\uparrow].
 
 - Apply post-smoother on fine level (any preconditioner).
 
 
 ====== Multigrid convergence properties
 
-- Textbook: $$P^{-1}A$$ is spectrally equivalent to identity
+- Textbook: stem:[P^{-1}A] is spectrally equivalent to identity
 
     * Constant number of iterations to converge up to discretization error.
 
@@ -389,12 +389,13 @@ eps-monitor=1
 
 === Solving the Laplace problem
 
-We start with the quickstart Laplacian example, recall that we wish to, given a domain $$\Omega$$, find $$u$$ such that
+We start with the quickstart Laplacian example, recall that we wish to, given a domain stem:[\Omega], find stem:[u] such that
 
-$$
+[stem]
+++++
 -\nabla \cdot (k \nabla u) = f \mbox{ in } \Omega \subset \mathbb{R}^{2},\\
 u = g \mbox{ on } \partial \Omega
-$$
+++++
 
 ===== Monitoring KSP solvers
 
@@ -457,7 +458,7 @@ For example,
 ==== Stokes
 
 We now turn to the quickstart Stokes example, recall that we wish to,
-given a domain $$\Omega$$, find $$(\mathbf{u},p) $$ such that
+given a domain stem:[\Omega], find stem:[(\mathbf{u},p) ] such that
 
 [stem]
 ++++
@@ -478,7 +479,7 @@ This problem is indefinite. Possible solution strategies are
 
 ### General approach for saddle point problems
 
-The Krylov subspace solvers for indefinite problems are MINRES, GMRES. As to preconditioning, we look first at the saddle point matrix $$M$$ and its block factorization $$M = LDL^T$$, indeed we have :
+The Krylov subspace solvers for indefinite problems are MINRES, GMRES. As to preconditioning, we look first at the saddle point matrix stem:[M] and its block factorization stem:[M = LDL^T], indeed we have :
 
 [stem]
 ++++
