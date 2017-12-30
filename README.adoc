@@ -75,7 +75,7 @@ docker run --rm -it feelpp/feelpp-env
 
 ==== Installing the toolchain
 
-install `ruby` and  `bundle`
+. install `ruby` and  `bundle`
 
 ----
 # On MacOSX
@@ -86,9 +86,12 @@ gem install rake bundle
 apt-get install ruby-bundler
 ----
 
-then run `bundle` in the top level directory of the book
+. Install the gems into the project
+
+[source,sh]
 ----
-bundle
+$ bundle config --local github.https true
+$ bundle --path=.bundle/gems --binstubs=.bundle/.bin
 ----
 
 NOTE: it installs all the requirements

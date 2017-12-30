@@ -1,0 +1,54 @@
+= {feelpp} and Python
+
+NOTE: The recommended version of Python is Python3. Python2 should work but it is no more tested.
+
+== Sympy
+
+Sympy (at least 1.1) is used the computer algebra system for symbolic calculus.
+
+If Sympy 1.1 is not available on your system, install `pip` (a python package manager) and then `sympy`.
+It will install `sympy` locally (in `\$HOME/.local`) in your `\$HOME`.
+
+[source,sh]
+.Install commands for sympy on Ubuntu/Debian
+----
+$ sudo apt-get install python3-pip
+$ sudo pip3 install sympy
+----
+
+[source,sh]
+.Install commands for sympy on MACOSX/Homebrew
+----
+$ brew install python3
+$ python3 -m pip install --upgrade sympy
+----
+
+NOTE: The {feelpp} Homebrew formula takes care of installing `python3` and `sympy`.
+
+== Configuring {feelpp}
+
+{feelpp} requires to find a Python 3 interpreter and the associated Python 3 libraries.
+To help finding Python, you may have to pass some information to `cmake` or the helper script `configure`.
+
+[source,sh]
+.With `cmake`
+----
+cmake ... -DPYTHON_EXECUTABLE=/usr/bin/python3 ...
+----
+
+[source,sh]
+.With  `configure`
+----
+$ <path to toplevel feelpp dir>/configure --enable-python=/usr/bin/python3
+# or
+$ <path to toplevel feelpp dir>/configure --cmakeflags=-DPYTHON_EXECUTABLE=/usr/bin/python3
+----
+
+=== `PYTHONPATH`
+
+If you want to use Sympy, you have to setup the `PYTHONPATH` environment variable to point to some {feelpp} directories.
+
+[source,sh]
+----
+export PYTHONPATH=$PYTHONPATH:<top level feelpp source directory>/feel/feelpython
+----
