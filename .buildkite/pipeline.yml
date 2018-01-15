@@ -5,6 +5,7 @@ steps:
      asciidoctor: true
    env:
      PROJECT: book.feelpp.org
+ - wait
  - name: ':rocket: :book:'
    command: .buildkite/steps/deploy.sh
    branches: master
