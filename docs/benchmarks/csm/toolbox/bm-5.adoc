@@ -59,9 +59,10 @@ include::https://raw.githubusercontent.com/feelpp/feelpp/develop/toolboxes/solid
 
 We compute the followig fields:
 
+* the process id (domain partitioning)
 * the displacement of the beam,
 * the Von-Mises criterium
-* the pressure field.
+
 
 We monitor also the output `VolumeVariation`.
 
@@ -70,7 +71,19 @@ We monitor also the output `VolumeVariation`.
 include::https://raw.githubusercontent.com/feelpp/feelpp/develop/toolboxes/solid/torsionbar/torsionbar.json[lines=64..72]
 ----
 
+== Running the model
+
+The configuration file is in `/usr/local/share/feelpp/testcases/CSM/torsionbar/torsionbar.cfg`.
+The command line in feelpp-toolboxes docker or singularity reads 
+
+.Command line to execute the torsionbar testcase
+[source,sh]
+----
+$ mpirun -np 4 /usr/local/bin/feelpp_toolbox_solid_3d --config-file torsionbar.cfg
+----
+
 == Results
+
 === 3D model
 
 In the window below, you can manipulate the 3D model at the final time step.
