@@ -1,7 +1,7 @@
 = Torsion Bar Benchmarks
 // Don't put authors here! (see CONTRIBUTING)
 //*******************************************
-:page-layout: manual 
+:page-layout: manual
 :page-permalink: /benchmarks/csm/toolbox/bm-5/
 :page-root: ../../../../
 :title: Torsion Bar CSM Benchmark
@@ -19,35 +19,60 @@ TIP: Toolbox is available at link:/toolbox/csm[CSM Toolbox].
 
 == Introduction
 
-We simulate the torsion of a beam. The material is considered NeoHookean.
+We simulate the torsion of a beam. The material is considered NeoHookean (quasi-incompressible).
 
 
 == Inputs
 
 We consider an hyper-elastic material
 
+[source,json]
+----
 include::https://raw.githubusercontent.com/feelpp/feelpp/develop/toolboxes/solid/torsionbar/torsionbar.json[lines=5]
+----
 
 === Parameters
 
+[source,json]
+----
 include::https://raw.githubusercontent.com/feelpp/feelpp/develop/toolboxes/solid/torsionbar/torsionbar.json[lines=16..23]
+----
 
 === Materials
 
+[source,json]
+----
 include::https://raw.githubusercontent.com/feelpp/feelpp/develop/toolboxes/solid/torsionbar/torsionbar.json[lines=6..15]
+----
 
 === Boundary Conditions
 
+[source,json]
+----
 include::https://raw.githubusercontent.com/feelpp/feelpp/develop/toolboxes/solid/torsionbar/torsionbar.json[lines=24..63]
+----
+
 == Outputs
 
+We compute the followig fields:
+
+* the displacement of the beam,
+* the Von-Mises criterium
+* the pressure field.
+
+We monitor also the output `VolumeVariation`.
+
+[source,json]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/toolboxes/solid/torsionbar/torsionbar.json[lines=64..72]
+----
 
 == Results
 === 3D model
 
 In the window below, you can manipulate the 3D model at the final time step.
 
-.3D Model of the torsion of a NeoHookean Beam. 
+.3D Model of the torsion of a NeoHookean Beam.
 ++++
 
 <div class="sectionbody" id="vtkVisuSection1" style="margin: auto;    width: 1262px; height: 720px;      padding: 10px;"></div>
