@@ -91,10 +91,15 @@ In the window below, you can manipulate the 3D model at the final time step.
 .3D Model of the torsion of a NeoHookean Beam.
 ++++
 
-<div class="sectionbody" id="vtkVisuSection1" style="margin: auto;    width: 1262px; height: 720px;      padding: 10px;"></div>
+<div class="stretchy-wrapper-16_9">
+<div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
+</div>
 <script type="text/javascript" src="/js/visu-vtk.js"></script>
 <script type="text/javascript">
-feelppVtkJs.createSceneImporter( vtkVisuSection1, { fileURL: "https://girder.math.unistra.fr/api/v1/file/5a687a58b0e9570150cb252d/download", onlyOneObjectVisible: true } );
+feelppVtkJs.createSceneImporter( vtkVisuSection1, {
+                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5a687a58b0e9570150cb252d/download",
+                                 onlyOneObjectVisible: true,
+                                 defaultSceneObject: "displacement" } );
 </script>
 
 ++++
@@ -105,8 +110,19 @@ NOTE: Click top left button on opengl window to change basic visualisation featu
 
 The video below shows the torsion of the beam at different steps.
 
-.Torsion of a NeoHookean beam
-video::nfi_xwR-H1k[youtube,width=1262, height=720, opts="autoplay,loop",theme=light]
+++++
+<div class="videoblock">
+<div class="title">Torsion of a NeoHookean beam</div>
+<div class="stretchy-wrapper-16_9">
+<div class="content" style="margin: auto; width: 100%; height: 100%">
+<iframe width="100%" height="100%" src="https://www.youtube.com/embed/nfi_xwR-H1k?rel=0&amp;autoplay=1&amp;loop=1&amp;playlist=nfi_xwR-H1k&amp;theme=light" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+++++
+
+//.Torsion of a NeoHookean beam
+//video::nfi_xwR-H1k[youtube,width=1262, height=720, opts="autoplay,loop",theme=light]
 
 === Volume variation
 
