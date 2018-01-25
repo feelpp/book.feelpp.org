@@ -96,22 +96,29 @@ The fixed point iteration algorithm reads
 
 We start with arbitrary stem:[\mathbf{I}^{(0)}] and then for stem:[n > 0]
 
-... solve
+* solve
+
 [stem]
 ++++
 \nabla \times (\nu_{\mathrm{o}} \nabla \times \mathbf{A}^{(n)} ) = \mathbf{J} - \nabla \times \mathbf{I}^{(n-1)}\quad \text{ in } \Omega
 ++++
-... compute
+
+* compute
+
 [stem]
 ++++
 \mathbf{B}^{(n)}=\nabla \times \mathbf{A}^{(n)}
 ++++
-... compute the residual
+
+*compute the residual
+
 [stem]
 ++++
 \mathbf{I}^{(n)} = \mathcal{B}^{−1}({\mathbf{B}^{(n)}}) − \nu_{\mathrm{o}} \mathbf{B}^{(n)}
 ++++
-... repeat steps i-iii until convergence, e.g.
+
+* repeat steps i-iii until convergence, e.g.
+
 [stem]
 ++++
 ||\mathbf{I}^{(n)}-\mathbf{I}^{(n-1)}|| < \varepsilon
@@ -137,6 +144,7 @@ B &= \mu(H) H, \\
   &= \mu_r \mu_0 H,
 \end{aligned}
 ++++
+
 where stem:[\mu_r] is the relative magnetic permeability.
 
 We denote with stem:[\mu(H)] the interpolation of the data.
@@ -146,27 +154,36 @@ The Picard algorithm reads:
 
 Given an initial stem:[\mu_r^{(0)}] chosen arbitrarily:
 
-... solve
+* solve
+
 [stem]
 ++++
 \nabla \times \left(\frac{1}{\mu_r^{(n)}} \nabla \times \mathbf{A}^{(n)} \right) = \mu_0 \mathbf{J}\quad \text{ in } \Omega
 ++++
-... compute
+
+* compute
+
 [stem]
 ++++
 B^{(n)}=\|\nabla \times \mathbf{A}^{(n)}\|
 ++++
-... compute
+
+* compute
+
 [stem]
 ++++
 H^{(n)} = \frac{B^{(n)}}{\mu_0 \mu_r^{(n)}}
 ++++
-... compute
+
+* compute
+
 [stem]
 ++++
 \mu_r^{(n+1)} = \frac{\mu(H^{(n)})}{\mu_0}
 ++++
-... repeat steps i-iii until convergence, e.g.
+
+* repeat steps i-iii until convergence, e.g.
+
 [stem]
 ++++
 ||\mathbf{B}^{(n)}-\mathbf{B}^{(n-1)}|| < \varepsilon
