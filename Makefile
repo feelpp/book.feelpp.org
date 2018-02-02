@@ -1,24 +1,28 @@
-#all: quickref.html quickref-cards.html install.html programming.html book.html
+HELP="Usage: make <option> \n\
+\nOptions:\n\
+\n\
+\tinstall - install gem files (first time, bundler required) \n\
+\tbuild   - build the book \n\
+\tserve   - run a local web server (open localhost:4000 in the webbrowser) \n\
+\tclean   - clean gem lock file (redo install after) \n\
+\thelp    - print this help\n\n"
 
-%.html: %.adoc
-	asciidoctor -a reproducible -b html -r asciidoctor-bibtex  -a allow-uri-read $<
 
-# asciidoctor-latex -a reproducible -a linkcss -a stylesheet=colony.css -a stylesdir=astylesheets/stylesheets -b html -r asciidoctor-bibtex  -a allow-uri-read $<
+all: help
 
+install:
+	bundle install --path .bundle/gems
 
-index.html: index.adoc
-	asciidoctor-latex -b html -a reproducible -a linkcss -a stylesheet! $<
-
-book.html: book.adoc $(shell find . -type f)
-math.html: math.adoc $(shell find . -type f)
-install.html: install.adoc $(shell find 01-installation/ 02-docker -type f)
-programming.html: programming.adoc $(shell find 06-programming 07-quickref -type f)
-quickref-cards.html: quickref-cards.adoc $(shell find 07-quickref -type f)
-quickref.html: quickref.adoc $(shell find 07-quickref -type f)
-modeling.html: modeling.adoc $(shell find 03-modeling 04-learning 05-applications -type f)
+build:
+	#asciidoctor -a reproducible -S unsafe -a allow-uri-read README.adoc
+	bundle exec jekyll build
 
 serve:
 	bundle exec jekyll serve
 
 clean:
-	rm book.html math.html install.html programming.html quickref.html quickref-cards.html modeling.html
+	rm -rf Gemfile.lock
+	rm -rf .bundle/gems
+
+help:
+	@printf ${HELP}

@@ -1,27 +1,36 @@
-Mac OS X
---------
+= MacOS
+:page-permalink: /user-manual/installation/macos
+:page-layout: manual
+:page-root: ../../
+:imagesdir: ../../../images/
+:sourcedir: ../../../codes/
+include::../../../includes/header.adoc[]
+
+NOTE: {lvl_average}
+
+TIP: For beginners, you can skip this section and go directly to <<containers,containers>> section.
 
 Feel++ is  supported on Mac OSX, starting from OS X 10.9 Mavericks to OS X 10.12 Sierra using <<Homebrew>> or <<MacPorts>>.
 
-=== First step
+== First step
 
 Xcode is required on Mac OSX to install Feel{plus}{plus}.
 
 The easiest way to do so is to go through the Apple Store application and to search for Xcode. Xcode will provide the programming environment, _e.g_ clang, for the next steps.
 
 [[Homebrew]]
-=== Homebrew
+== Homebrew
 
-==== Introduction to HomeBrew
+=== Introduction to HomeBrew
 Homebrew is a free/open source software introduced to simplify the installation of other free/open source software on MacOS X. Homebrew is distributed under the link:https://github.com/mxcl/homebrew/blob/master/Library/Homebrew/LICENSE[BSD] 2 Clause (NetBSD) license. For more information, visit their link:http://brew.sh[website].
 
-===== Installation
+==== Installation
 
 To install the latest version of Homebrew, simply
 visit their link:http://brew.sh[website] and follow the instructions. Each new package Homebrew installs is built into an intermediate place called the Cellar (usually /usr/local/Cellar) and
 then the packages are symlinked into /usr/local (default).
 
-===== Key commands 
+==== Key commands
 
 Homebrew base command is `brew`. Here is a list of base available commands:
 
@@ -33,11 +42,11 @@ Homebrew base command is `brew`. Here is a list of base available commands:
 
 * `brew uninstall mypackage`: This command allows to uninstall the package mypackage.
 
-===== Formulas 
+==== Formulas
 
 A Formula is a link:https://www.ruby-lang.org[Ruby] script format specific to Homebrew. It allows to describe the installation process of a package. Feel\++ uses specific Formulae that you can get in the Feel++ github repository: link:https://github.com/feelpp/homebrew-feelpp[feelpp/homebrew-feelpp].
 
-====  Installation
+===  Installation
 
 This section is aimed at users that do not have Homebrew already installed. +
 In order to build Feel++ from Homebrew, you have to do the following steps:
@@ -102,11 +111,11 @@ $ brew install --only-dependencies feelpp
 
 > **Note** If you encounter problems, you can fix them using `brew doctor`. A frequent issue is to force `open-mpi` with `brew link --overwrite open-mpi`
 
-====  Advanced usage
+===  Advanced usage
 
 If Homebrew is already installed on your system, you might want to customize your installation for the correct dependencies to be met for Feel++.
 
-===== Feel++ Dependencies
+==== Feel++ Dependencies
 You can browse Feel++ dependencies using the following command:
 
 [source,sh]
@@ -127,7 +136,7 @@ cmake		hwloc		petsc		tbb
 eigen		hypre		scalapack	veclibfort
 ----
 
-===== Customizing builds
+==== Customizing builds
 If you want to customize the compilation process for a dependency (Set debug mode, Remove checking steps, Remove the link with certain libraries, etc.), you can access to the building options with the `info` flag. For exemple, with open-mpi:
 
 [source,sh]
@@ -171,13 +180,13 @@ Then, you then just have to pass the needed flags, when installing the dependenc
 
 
 [[MacPorts]]
-=== MacPorts
+== MacPorts
 
-==== Introduction
+=== Introduction
 
 MacPorts is an open-source community projet which aims to design an easy-to-use system for compiling, installing and upgrading open-source software on Mac OS X operating system. It is distributed under link:http://opensource.org/licenses/bsd-license.php[BSD License] and facilitate the access to thousands of ports (software) without installing or compiling open-source software. MacPorts provides a single software tree which includes the latest stable releases of approximately 17700 ports targeting the current Mac OS X release (10.9). If you want more information, please visit their link:http://www.macports.org/[website].
 
-===== MacPorts Installation
+==== MacPorts Installation
 
 To install the latest version of MacPorts, please go
 to http://www.macports.org/install.php[Installing
@@ -191,7 +200,7 @@ location. Note that from now on, all tools installed by MacPorts will be install
 for example (that's here you'll find gcc4.7 or later e.g
 `/opt/local/bin/g++-mp-4.7` once being installed).
 
-===== Key commands
+==== Key commands
 
 In your command-line, the software MacPorts is called by the command `port`. Here is a list of key commands for using MacPorts, if you want more informations please go to http://guide.macports.org/#using.port[MacPorts Commands].
 
@@ -207,7 +216,7 @@ In your command-line, the software MacPorts is called by the command `port`. Her
  
  * `sudo port upgrade mypackage`: This action updgrades installed ports and their dependencies when a `Portfile` in the repository has been updated. To avoid the upgrade of a port's dependencies, use the option `-n`.
 
-===== Portfile 
+==== Portfile 
 
 A Portfile is a TCL script which usually contains simple
 keyword values and TCL expressions. Each package/port has a
@@ -215,7 +224,7 @@ corresponding Portfile but it's only a part of a port description.
 Feel\++ provides some mandatory Portfiles for its compilation which are either not available in MacPorts or are buggy but Feel++ also provides some Portfiles which are already available in MacPorts such as gmsh or petsc. They usually provide either some fixes to ensure Feel++ works properly or new version not yet available in MacPorts. These Portfiles are installed in `ports/macosx/macports`.
 
 
-==== Installation
+=== Installation
 
 To be able to install Feel++, add the following line in
 `/opt/local/etc/macports/source.conf` at the top of the file

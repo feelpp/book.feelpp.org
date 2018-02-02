@@ -11,7 +11,6 @@
 :docinfo: shared
 include::../includes/header.adoc[]
 
-
 [NOTE]
 .This document is under active development and discussion!
 ====
@@ -22,55 +21,44 @@ aspects of the project on the link:http://gitter.im/feelpp/feelpp[{feelpp}
 Gitter forum]. New contributors are always welcome!
 ====
 
-include::preface.adoc[]
+:leveloffset: +1
 
-= Introduction to {feelpp}
+include::preface/README.adoc[]
 
-.Discuss and Contribute
-TIP: Use {uri-feelpp-issues}/858[Issue 858] to drive development of this
-section. Your contributions make a difference. No contribution is too small.
+:leveloffset: -1
+:leveloffset: +1
 
+include::introduction/README.adoc[]
 
-== What is {feelpp}?
+:leveloffset: -1
+:leveloffset: +1
 
-{feelpp} is a unified {cpp} implementation of Galerkin methods (finite and
-spectral element methods) in 1D, 2D and 3D to solve partial differential
-equations.
+include::installation/README.adoc[]
 
-{feelpp} is
+:leveloffset: -1
+:leveloffset: +1
 
- . a **versatile mathematical kernel** solving easily problems using
-   different techniques thus allowing testing and comparing methods, e.g. cG versus dG.
+include::quickstart/README.adoc[]
 
- . a *small* and *manageable* library which nevertheless encompasses a wide
-   range of numerical methods and techniques and in particular reduced order
-   methods such as the reduced basis method.
+:leveloffset: -1
 
- . a software that follows closely the mathematical abstractions
-   associated with partial differential equations (PDE) and in
-   particular the finite element mathematical framework and
-   variational formulations.
+== Learning {feelpp}
 
- . a library that offers solving strategies that scales up to
-   thousands and even tens of thousands of cores.
+include::04-learning/Generic/laplacian.adoc[leveloffset=+1]
 
- . a library entirely in {cpp} allowing to create {cpp} complex and typically
-   non-linear multi-physics applications currently in industry, physics and
-   health-care.
+== Quick Starts
 
-= Quick Starts
-
-== Installation Quick Start
+=== Installation Quick Start
 
 
-Using {feelpp} inside <<02-docker/what-is-docker.adoc#what-is-docker,Docker>> is the recommended and fastest way to use {feelpp}.
-The <<02-docker/README.adoc#docker,Docker>> chapter is dedicated to Docker and using {feelpp} in Docker.
+Using {feelpp} inside <<using/what-is-docker.adoc#what-is-docker,Docker>> is the recommended and fastest way to use {feelpp}.
+The <<using/README.adoc#docker,Docker>> chapter is dedicated to Docker and using {feelpp} in Docker.
 
 We strongly encourage you to follow these steps if you begin with {feelpp} in particular as an end-user.
 
 People who would like to develop with and in {feelpp} should read through the remaining sections of this chapter.
 
-== Usage Start
+=== Usage Start
 
 Start the Docker container `feelpp/feelpp-base` or `feelpp/feelpp-toolboxes` as follows
 
@@ -122,7 +110,7 @@ The results are stored in a simular place as above: just replace `np_1` by `np_4
 |======
 
 
-== Syntax Start
+=== Syntax Start
 
 Here are some  excerpts from {uri-rel-file-base}/quickstart/qs_laplacian.cpp[Quickstart Laplacian] that solves the Laplacian problem. It shows some of the features of {feelpp} and in particular the domain specific language for Galerkin methods.
 
@@ -143,21 +131,6 @@ include::https://raw.githubusercontent.com/feelpp/feelpp/develop/quickstart/qs_l
 
 More explanations are available in <<learning.adoc#Laplacian,Learning by examples>>.
 
-= Installing Feel++
-
-include::01-installation/README.adoc[leveloffset=+1]
-
-include::02-docker/README.adoc[leveloffset=+1]
-
-
-= Using {feelpp}
-
-include::04-learning/RBM/README.adoc[leveloffset=+1]
-
-= Learning {feelpp}
-
-include::04-learning/Generic/laplacian.adoc[leveloffset=+1]
-
 // = Programming {feelpp}
 
 // include::06-programming/README.adoc[leveloffset=+1]
@@ -170,5 +143,5 @@ include::04-learning/Generic/laplacian.adoc[leveloffset=+1]
 include::resources.adoc[leveloffset=+1]
 
 [glossary]
-= Glossary
+== Glossary
 include::GLOSSARY.adoc[]

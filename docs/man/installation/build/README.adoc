@@ -1,9 +1,18 @@
-Building Feel{plus}{plus}
--------------------------
+= Building from source
+:page-permalink: /user-manual/installation/build
+:page-layout: manual
+:page-root: ../../
+:imagesdir: ../../../images/
+:sourcedir: ../../../codes/
+include::../../../includes/header.adoc[]
+
+NOTE: {lvl_advanced}
+
+TIP: For beginners, you can skip this section and go directly to <<containers,containers>> section.
 
 Once the steps to install on Linux or MacOS X has been followed, we explain, in this section, how to download and build Feel++ from source.
 
-=== For the impatient
+== For the impatient
 
 First retrieve the source
 [source,bash]
@@ -55,10 +64,10 @@ $ mpirun -np 4 feelpp_qs_laplacian_2d --config-file qs_laplacian_2d.cfg
 ----
 
 
-=== Downloading sources
+== Downloading sources
 
 [[tarballs]]
-==== Using Tarballs
+=== Using Tarballs
 
 Feel++ is distributed as tarballs following each major release. The tarballs are available on the  link:https://github.com/feelpp/feelpp/releases[Feel++ Releases] web page.
 
@@ -73,7 +82,7 @@ $ cd feelpp-X.YY.0
 You can now move to the section <<cmake>>.
 
 [[git]]
-==== Using Git
+=== Using Git
 
 Alternatively, you can download the sources of Feel++ directly from link:https://github.com/feelpp/feelpp[the Git repository].
 
@@ -111,7 +120,7 @@ $ tree -L 1 -d | column
 ├── data		├── quickstart
 ----
 
-=== Configuring Feel++ 
+== Configuring Feel++
 
 
 
@@ -134,7 +143,7 @@ feel.opt/ # Build directory
 ====
 
 [[cmake]]
-==== Using cmake 
+=== Using cmake
 
 The configuration step with `cmake` is as follows
 
@@ -154,7 +163,7 @@ CMake supports different build type that you can set with `-DCMAKE_BUILD_TYPE` (
  * RelWithDebInfo :  typically `-g -O2 -DNDEBUG`
 ====
 
-==== Using configure 
+=== Using configure
 
 Alternatively you can use the `configure` script which calls `cmake`. `configure --help` will provide the following help.
 [source,sh]
@@ -201,7 +210,7 @@ Compile using Debug build type, clang++ compiler and libc++
 CXX=clang++ ../feelpp/configure -d -stdlib=c++
 ----
 
-=== Compiling Feel++
+== Compiling Feel++
 
 Once `cmake` or `configure` have done their work successfully, you are ready to compile Feel++
 
@@ -220,7 +229,7 @@ $ make -j4 feelpp
 
 NOTE: From now on, all commands should be typed in build directory (e.g `feel.opt`) or its subdirectories.
 
-=== Running the Feel++ Testsuite
+== Running the Feel++ Testsuite
 
 If you encounter issues with Feel++, you can run the testsuite and send the resulting report. Feel{plus}{plus} has more than 300 tests running daily on our servers. Most of the tests are run both in sequential and in parallel.
 

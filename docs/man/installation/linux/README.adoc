@@ -1,14 +1,24 @@
-Feel{plus}{plus} on Linux
--------------------------
+= Linux
+:page-permalink: /user-manual/installation/linux
+:page-layout: manual
+:page-root: ../../
+:imagesdir: ../../../images/
+:sourcedir: ../../../codes/
+include::../../../includes/header.adoc[]
+
+NOTE: {lvl_average}
+
+TIP: For beginners, you can skip this section and go directly to <<containers,containers>> section.
+
 
 We now turn to the installation of the Feel{plus}{plus} dependencies
 on Linux. Feel{plus}{plus} is currently support on Ubuntu (16.04,
 16.10) and Debian (Sid, Testing).
 
 
-=== Ubuntu
+== Ubuntu
 
-==== Ubuntu 16.10 Yaketti Yak
+=== Ubuntu 16.10 Yaketti Yak
 
 Here is the suggested installation of the Feel++ dependencies on Ubuntu 16.10
 [source,sh]
@@ -26,7 +36,7 @@ $ sudo apt-get install automake autoconf libtool libboost-all-dev\
   clang++-3.9 git ipython openmpi-bin pkg-config
 ----
 
-==== Ubuntu 16.04 
+=== Ubuntu 16.04 
 
 Here is the suggested installation of the Feel++ dependencies on Ubuntu LTS 16.04
 
@@ -46,9 +56,9 @@ $ sudo apt-get install autoconf automake bash-completion bison\
 
 IMPORTANT: We are unfortunately stung by the ABI change in GCC 6 when using clang. You need to recompile the Boost C++ libraries to be able to use clang, see the section in the Annexes on link:../09-annexes/compiling-external-projects.adoc[Compiling Boost].
 
-=== Debian
+== Debian
 
-==== Debian Sid and Testing
+=== Debian Sid and Testing
 
 At the time of writing there is little difference between Sid and Testing, here is the recommend dependencies installation command line:
 [source,sh]
@@ -64,9 +74,9 @@ $ apt-get -y install \
     openmpi-bin paraview petsc-dev pkg-config python-dev \
     python-h5py python-numpy python-ply python-six \
     python-urllib3 python-vtk6 screen slepc-dev sudo \
-    tmux wget xauth xterm zsh 
-----    
+    tmux wget xauth xterm zsh
+----
 
-==== Older distributions
+=== Older distributions
 
 Unfortunately the older distributions have the ABI GCC issue with clang, _e.g._ Debian/jessie, or they are too old to support a simple installation procedure.

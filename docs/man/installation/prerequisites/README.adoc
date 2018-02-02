@@ -1,7 +1,16 @@
-System requirements
--------------------
+= System requirements
+:page-permalink: /user-manual/installation/requirements
+:page-layout: manual
+:page-root: ../../
+:imagesdir: ../../../images/
+:sourcedir: ../../../codes/
+include::../../../includes/header.adoc[]
 
-=== Compilers
+NOTE: {lvl_advanced}
+
+TIP: For beginners, you can skip this section and go directly to <<containers,containers>> section.
+
+== Compilers
 
 {feelpp} uses {cpp}14 compilers such as GCC6 and Clang. Currently it is not mandatory to have a C++14 stantard library but it will be soon.
 
@@ -27,7 +36,7 @@ time. Please see the following table to understand the working {cpp} compiler /
 
 CAUTION: GCC 6.2.1 seems to be problematic on debian/testing -- the tests in the testsuite fail. -- GCC 6.3.1 or GCC 6.2.0 don't have any problems.
 
-=== Required tools and libraries
+== Required tools and libraries
 
 Other than {cpp}14 compilers, {feelpp} requires only a few tools and libraries, namely CMake, Boost C++ libraries and an MPI implementation such as open-mpi or mpich. The table below provides information regarding the minimum and maximum version supported. A -- means it has not necessarily been tested with the latest version but we do not expect any issues. Note that for MPI, an implementation with MPI-IO support would be best.
 
@@ -41,7 +50,7 @@ Other than {cpp}14 compilers, {feelpp} requires only a few tools and libraries, 
 
 |===
 
-=== Recommended libraries
+== Recommended libraries
 
 Here is a list of libraries that we recommend to use jointly with Feel++.
 
@@ -61,7 +70,7 @@ Here is a list of libraries that we recommend to use jointly with Feel++.
 | Python Sympy |  1.1 || Python 3 module sympy
 |===
 
-=== Recommended tools
+== Recommended tools
 
 Here is a list of tools that we recommend to use jointly with Feel++.
 
@@ -90,7 +99,7 @@ Here is a list of tools that we recommend to use jointly with Feel++.
 
 Note that all these packages are available under Debian GNU/Linux and Ubuntu. Once you have installed those dependencies, you can go to link:#Compiling[Compiling].
 
-=== Suggested tools
+== Suggested tools
 
 Here is a list of tools that we suggest to use jointly with Feel++.
 
