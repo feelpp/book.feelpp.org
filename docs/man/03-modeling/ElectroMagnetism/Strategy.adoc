@@ -5,15 +5,15 @@ NOTE: Resolution strategy for Maxwell equations
 
 == Polarisation method
 
-Design and simulation of electrical engineering applications containing ferromagnetic parts require the accurate modeling of hysteresis characteristics and the implementation of the models and solve the nonlinear partial differential equations derived from Maxwell’s equations. 
+Design and simulation of electrical engineering applications containing ferromagnetic parts require the accurate modeling of hysteresis characteristics and the implementation of the models and solve the nonlinear partial differential equations derived from Maxwell’s equations.
 
 The partial differential equations are generally nonlinear because of the nonlinear characteristics of ferromagnetic materials.
 
 The numerical analysis of electromagnetic fields can be characterized by the electric and magnetic field intensities and flux densities formulated by Maxwell’s equations, which are the collection of partial differential equations of the electric field intensity stem:[\mathbf{E}], the magnetic field intensity stem:[\mathbf{H}], the electric flux density stem:[\mathbf{D}] and the magnetic flux density stem:[\mathbf{B}].
 
-Constitutive relations between the above quantities are defined to take into account the macroscopic properties of the medium. 
+Constitutive relations between the above quantities are defined to take into account the macroscopic properties of the medium.
 
-We consider a constitutive relation between the magnetic field intensity and the magnetic flux density which is nonlinear , given by the operator stem:[\mathbf{B} = \mathcal{B}(\mathbf{H})] or equivalently stem:[\mathbf{H} = \mathcal{B}^{−1}(\mathbf{B})]. These nonlinear characteristics can be reformulated by introducing the *polarization method* and the resulting system of nonlinear equations can be solved using *fixed point iterations*. 
+We consider a constitutive relation between the magnetic field intensity and the magnetic flux density which is nonlinear , given by the operator stem:[\mathbf{B} = \mathcal{B}(\mathbf{H})] or equivalently stem:[\mathbf{H} = \mathcal{B}^{−1}(\mathbf{B})]. These nonlinear characteristics can be reformulated by introducing the *polarization method* and the resulting system of nonlinear equations can be solved using *fixed point iterations*.
 
 
 According to the polarization method, the magnetic flux density can be split in two parts as
@@ -37,7 +37,7 @@ By using the various formula in the constitutive relations defined in Maxwell’
 ++++
 \mathbf{B}^{(n)} = \mathcal{M}(\mathbf{R}^{(n-1)})
 ++++
-where the operator stem:[\mathcal{M}] represents the set of Maxwell’s equations and the boundary conditions. The starting stem:[\mathbf{R}^{(0)}] is arbitrary. The value of electromagnetic field quantities in the stem:[n]-th step are depending on the value of stem:[\mathbf{R}] in the stem:[(n − 1)]-th step and they represent source like quantities. 
+where the operator stem:[\mathcal{M}] represents the set of Maxwell’s equations and the boundary conditions. The starting stem:[\mathbf{R}^{(0)}] is arbitrary. The value of electromagnetic field quantities in the stem:[n]-th step are depending on the value of stem:[\mathbf{R}] in the stem:[(n − 1)]-th step and they represent source like quantities.
 
 NOTE: The source of electromagnetic fields (e.g. the electric current density stem:[\mathbf{J}]) is not changing during fixed point iteration, i.e. the fixed point iteration has no particular physical meaning.
 
@@ -58,31 +58,35 @@ where stem:[\mathbf{I}= -\nu_{\mathrm{o}}\mathbf{R}], stem:[\nu_{\mathrm{o}}=\fr
 We have  stem:[\nu_{\mathrm{min}} = 1/\mu_{\mathrm{max}}]  and stem:[\nu_{\mathrm{max}}=1/\mu_{\mathrm{min}}].
 
 
-The nonlinear fixed point iteration can be summarized as follows. 
-The iteration can be started by an arbitrary value of stem:[\mathbf{I}^{(0)}], then for stem:[n > 0] we do, 
+The nonlinear fixed point iteration can be summarized as follows.
+The iteration can be started by an arbitrary value of stem:[\mathbf{I}^{(0)}], then for stem:[n > 0] we do,
 
-... the magnetic flux density stem:[\mathbf{B}^{(n)}] can be calculated by solving the partial differential equations obtained from Maxwell’s equations and using stem:[\mathbf{I}^{(n−1)}], in other words,
+* the magnetic flux density stem:[\mathbf{B}^{(n)}] can be calculated by solving the partial differential equations obtained from Maxwell’s equations and using stem:[\mathbf{I}^{(n−1)}], in other words,
+
 [stem]
 ++++
 \mathbf{B}^{(n)} =\mathcal{M}({\mathbf{I}^{(n−1)}}),
 ++++
-... the magnetic field intensity stem:[\mathbf{H}^{(n)}] can be calculated by applying the inverse type
+
+* the magnetic field intensity stem:[\mathbf{H}^{(n)}] can be calculated by applying the inverse type
 hysteresis model, stem:[\mathbf{H}^{(n)} = \mathcal{B}^{−1}(\mathbf{B}^{(n)}),]
 
-... the nonlinear residual term can be updated by using the magnetic flux density and
+* the nonlinear residual term can be updated by using the magnetic flux density and
 magnetic field intensity,
+
 [stem]
 ++++
 \mathbf{I}^{(n)} = \mathbf{H}^{(n)} − \nu_{\mathrm{o}} \mathbf{B}^{(n)} = \mathcal{B}^{−1}({\mathbf{B}^{(n)}}) − \nu_{\mathrm{o}} \mathbf{B}^{(n)}
 ++++
-... and the sequence defined by steps (i)–(iii) must be repeated until convergence. 
 
-Convergence criterion can be stem:[||\mathbf{I}^{(n)} − \mathbf{I}^{(n−1)}|| < \varepsilonstem:], where stem:[\varepsilon] is the tolerance.
+* and the sequence defined by steps (i)–(iii) must be repeated until convergence.
+
+Convergence criterion can be stem:[||\mathbf{I}^{(n)} − \mathbf{I}^{(n−1)}|| < \varepsilon], where stem:[\varepsilon] is the tolerance.
 Convergence criterion can be also defined by using the magnetic field intensity or the magnetic flux density.
 
 === Fixed point iteration for the stem:[A] formulation
 
-Recall that we have 
+Recall that we have
 [stem]
 ++++
 \nabla \times (\nu_{\mathrm{o}} \nabla \times \mathbf{A} ) = \mathbf{J} - \nabla \times \mathbf{I}\quad \text{ in } \Omega
@@ -92,22 +96,29 @@ The fixed point iteration algorithm reads
 
 We start with arbitrary stem:[\mathbf{I}^{(0)}] and then for stem:[n > 0]
 
-... solve 
+* solve
+
 [stem]
 ++++
 \nabla \times (\nu_{\mathrm{o}} \nabla \times \mathbf{A}^{(n)} ) = \mathbf{J} - \nabla \times \mathbf{I}^{(n-1)}\quad \text{ in } \Omega
 ++++
-... compute 
+
+* compute
+
 [stem]
 ++++
 \mathbf{B}^{(n)}=\nabla \times \mathbf{A}^{(n)}
 ++++
-... compute the residual 
+
+*compute the residual
+
 [stem]
 ++++
 \mathbf{I}^{(n)} = \mathcal{B}^{−1}({\mathbf{B}^{(n)}}) − \nu_{\mathrm{o}} \mathbf{B}^{(n)}
 ++++
-... repeat steps i-iii until convergence, e.g. 
+
+* repeat steps i-iii until convergence, e.g.
+
 [stem]
 ++++
 ||\mathbf{I}^{(n)}-\mathbf{I}^{(n-1)}|| < \varepsilon
@@ -133,6 +144,7 @@ B &= \mu(H) H, \\
   &= \mu_r \mu_0 H,
 \end{aligned}
 ++++
+
 where stem:[\mu_r] is the relative magnetic permeability.
 
 We denote with stem:[\mu(H)] the interpolation of the data.
@@ -142,27 +154,36 @@ The Picard algorithm reads:
 
 Given an initial stem:[\mu_r^{(0)}] chosen arbitrarily:
 
-... solve
+* solve
+
 [stem]
 ++++
 \nabla \times \left(\frac{1}{\mu_r^{(n)}} \nabla \times \mathbf{A}^{(n)} \right) = \mu_0 \mathbf{J}\quad \text{ in } \Omega
 ++++
-... compute
+
+* compute
+
 [stem]
 ++++
 B^{(n)}=\|\nabla \times \mathbf{A}^{(n)}\|
 ++++
-... compute
+
+* compute
+
 [stem]
 ++++
 H^{(n)} = \frac{B^{(n)}}{\mu_0 \mu_r^{(n)}}
 ++++
-... compute
+
+* compute
+
 [stem]
 ++++
 \mu_r^{(n+1)} = \frac{\mu(H^{(n)})}{\mu_0}
 ++++
-... repeat steps i-iii until convergence, e.g. 
+
+* repeat steps i-iii until convergence, e.g.
+
 [stem]
 ++++
 ||\mathbf{B}^{(n)}-\mathbf{B}^{(n-1)}|| < \varepsilon
@@ -237,7 +258,7 @@ We can also impose the Dirichlet boundary conditions on weak form, adding symetr
   - \int_{\Omega} (\nabla \times \mathbf{I})\cdot \mathbf{v}\\
   &+ \int_{\delta \Omega}\nu (\nabla \times \mathbf{v}) \cdot \mathbf{A}_D
   + \int_{\delta \Omega} \frac{\gamma}{h_s} \nu (\mathbf{v} \times \mathbf{n}) \cdot \mathbf{A}_D\\
-  \int_{\Omega} \mathbf{A} \cdot \nabla q &= 0 
+  \int_{\Omega} \mathbf{A} \cdot \nabla q &= 0
   \end{align}
 ++++
 
@@ -267,7 +288,7 @@ Find stem:[(\mathbf{A}_h,p_h)\in (H_{h}(\mathrm{curl},\Omega)\times P_{c,h}^1(\O
   - \int_{\Omega} (\nabla \times \mathbf{I})\cdot \mathbf{v}_h\\
   &+ \int_{\delta \Omega}\nu (\nabla \times \mathbf{v}_h) \cdot \mathbf{A}_D
   + \int_{\delta \Omega} \frac{\gamma}{h_s} \nu (\mathbf{v}_h \times \mathbf{n}) \cdot \mathbf{A}_D\\
-  \int_{\Omega} \mathbf{A}_h \cdot \nabla q_h &= 0 
+  \int_{\Omega} \mathbf{A}_h \cdot \nabla q_h &= 0
   \end{align}
 ++++
 
@@ -348,7 +369,7 @@ On weak form, the discrete problem is : find stem:[\mathbf{A}_h\in H(\mathrm{cur
 There are many methods available to solve the saddle-point formulation, using iterative solvers.
 Considering the number of non zero entries in the matrix to inverse due to the use of edge based finite elements, this method proves to be inefficient for this problem.
 
-A block diagonal preconditioning approach for the time-harmonic Maxwell equations is introduced in link:{biblio}#Greif07[Greif-Schötzau]. 
+A block diagonal preconditioning approach for the time-harmonic Maxwell equations is introduced in link:{biblio}#Greif07[Greif-Schötzau].
 Combined with a nodal auxiliary space preconditioning technique proposed in link:{biblio}#Xu07[Hiptmair-Xu] specifically designed for stem:[H(\mathrm{curl})]-conforming finite element, this method gives attractive performance results detailed in link:{biblio}#Li2010[Li].
 
 This section describes the main ingredients of preconditioning method introduced in link:{biblio}#Li2010[Li].
@@ -361,7 +382,7 @@ Based on the saddle point formulation, the magnetostatic problem reads on the fo
       \mathcal{B} & 0
     \end{pmatrix}
   }_{\mathcal{K}}
-  \underbrace{ 
+  \underbrace{
     \begin{pmatrix}
       \mathbf{A} \\
       p
@@ -380,7 +401,7 @@ The solving of this system is performed at two solver "levels". An outer solver 
 
 === Outer solver
 
-The block diagonal preconditioner proposed in link:{biblio}#Greif07[Greif-Schötzau] consists in 
+The block diagonal preconditioner proposed in link:{biblio}#Greif07[Greif-Schötzau] consists in
 [stem]
 ++++
   \mathcal{P}_{\mathcal{M},\mathcal{L}} =
@@ -410,14 +431,14 @@ The linear system to solve then reads stem:[\mathcal{P}_{\mathcal{M},\mathcal{L}
       0 & \mathcal{L}
     \end{pmatrix}
   }_{\mathcal{P}_{\mathcal{M},\mathcal{L}}}
-  \underbrace{ 
+  \underbrace{
     \begin{pmatrix}
       \mathbf{v} \\
       q
     \end{pmatrix}
   }_{x_{out}}
   =
-  \underbrace{ 
+  \underbrace{
     \begin{pmatrix}
       \mathbf{c} \\
       d
