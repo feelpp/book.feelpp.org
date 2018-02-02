@@ -25,23 +25,18 @@ of these previous solutions. The next sub-sections describe how to obtain
 Using {feelpp} inside <<what-is-docker,Docker>> is the recommended and fastest
 way to use {feelpp}. The <<Docker,Docker chapter>> is dedicated to Docker and
 <<feelpp-containers,{feelpp} containers chapter>> is dedicated to {feelpp} in
-Docker.
-
-We strongly encourage you to follow these steps if you begin with
-{feelpp} in particular as an end-user.
-
-People who would like to develop with and in {feelpp} should
-read through the remaining sections of this chapter.
+Docker. We strongly encourage you to follow these steps if you begin with
+{feelpp} in particular as an end-user. People who would like to develop with
+and in {feelpp} should read through the remaining sections of this chapter.
 
 To begin with {feelpp} using docker, you need first to
 link:https://docs.docker.com/install/linux/docker-ce/ubuntu/[install docker] to
 have a working docker environment on your machine following the official
-documentation with respect to your operating system. 
-
-Then choose one of the {feelpp} images available on the official repository 
+documentation with respect to your operating system.  Then choose one of the
+{feelpp} images available on the official repository
 link:https://hub.docker.com/search/?isAutomated=0&isOfficial=0&page=1&pullCount=0&q=feelpp&starCount=0[dockerhub].
-For example, via the commandline and using the {feelpp} toolboxes.
-We get the image and create a new container.
+For example, via the commandline and using the {feelpp} toolboxes.  We get the
+image and create a new container.
 
 [source, bash]
 ----
@@ -79,7 +74,7 @@ link:https://singularity-hub.org/[singularity hub] website.
 Singularity works in a similar way as for docker.  For example, you can
 download one of the image available on
 link:https://girder.math.unistra.fr/#collections[girder] under the collection
-"feelpp" -> "singularity_images" -> "ci" -> "feelpp_feelpp-toolboxes-latest.simg"
+`feelpp` -> `singularity_images` -> `ci` -> `feelpp_feelpp-toolboxes-latest.simg`
 click on download button.
 
 
@@ -92,5 +87,6 @@ singularity shell -B ${HOME}/feel:/feel feelpp_feelpp-toolboxes-latest.simg
 ----
 
 TIP: You can retrieve an image from singularity hub directly
-`singularity pull shub://feelpp/singularity:feelpp-toolboxes-latest` instead of girder.
+`singularity pull shub://feelpp/singularity:feelpp-toolboxes-latest` instead of girder
+and as for docker.
 Be aware that current images are currently older than the ones on girder!
