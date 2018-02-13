@@ -20,6 +20,8 @@ Depending on your usage and your operating system, you might prefere using one
 of these previous solutions. The next sub-sections describe how to obtain
 {feelpp} images to begin with {feelpp} programming.
 
+TIP: {feelpp} images provide either a compiling environment with all dependencies,
+executables or both.
 
 IMPORTANT: Before going further you might want to install one of the previous
 solution.
@@ -43,7 +45,29 @@ have a working docker environment on your machine following the official
 documentation with respect to your operating system.  Then choose one of the
 {feelpp} images available on the official repository
 link:https://hub.docker.com/search/?isAutomated=0&isOfficial=0&page=1&pullCount=0&q=feelpp&starCount=0[dockerhub].
-For example, via the commandline and using the {feelpp} toolboxes.  We get the
+
+We provide currently four main images:
+
+.Table of the current components of the FCS
+|===
+| Component | Description | Built From
+
+| `feelpp-env` | Execution and Programming environment | <OS>
+| `feelpp-libs`  | Feel++ libraries and tools | `feelpp-env`
+| `feelpp-base` | Feel++ base applications | `feelpp-libs`
+| `feelpp-toolboxes` | Feel++ toolboxes   | `feelpp-toolboxes`
+
+|===
+
+Each image is available with several tags depending on the {feelpp} version,
+but also other dependencies.
+(link:https://hub.docker.com/r/feelpp/feelpp-toolboxes/tags/[e.g 
+toolbox images tag list] )
+In most case, you desire to use the `latest` tag.
+
+=== Usage example
+
+Via the commandline and using the {feelpp} toolboxes.  We get the
 image and create a new container.
 
 [source, bash]
@@ -77,7 +101,9 @@ Latest link:https://girder.math.unistra.fr/#collections[{feelpp} singularity
 images] can be found on link:https://girder.math.unistra.fr/#collections[our
 data management server] (recommended) in the {feelpp} collection.  Future
 public {feelpp} images will also be available on the official
-link:https://singularity-hub.org/[singularity hub] website.
+link:https://singularity-hub.org/[singularity hub] website.  We provide
+currently the same main images as for docker, but the suffix naming might vary
+depending on the image version.
 
 Singularity works in a similar way as for docker.  For example, you can
 download one of the image available on
