@@ -1,7 +1,7 @@
 HELP="Usage: make <option> \n\
 \nOptions:\n\
 \n\
-\tinstall - install gem files (first time, bundler required) \n\
+\tinstall - install gem/npm required packages (bundler, npm required) \n\
 \tbuild   - build the book \n\
 \tserve   - run a local web server (open localhost:4000 in the webbrowser) \n\
 \tantora  - compile the antora documentation (experimental) \n\
@@ -11,7 +11,7 @@ HELP="Usage: make <option> \n\
 
 all: help
 
-install:
+install: install-antora
 	bundle install --path .bundle/gems
 
 build:
@@ -28,15 +28,16 @@ install-antora:
 	npm init -y; \
 	npm install --save . @antora/cli; \
 	npm install --save . @antora/site-generator-default
-	cp antora/* build
+	cp antora-* build/
 
 antora:
-	cd build_antora
-	antora feelpp-doc.yml
+	cd build && antora antora-local-feelpp-doc.yml
+	@echo "INFO: File generated in 'build/build/site/feelpp-doc/'"
 
 clean:
 	rm -rf Gemfile.lock
 	rm -rf .bundle/gems
+	rm -rf build
 
 help:
 	@printf ${HELP}
