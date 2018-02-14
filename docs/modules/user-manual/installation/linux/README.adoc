@@ -1,0 +1,82 @@
+= Linux
+:page-permalink: /user-manual/installation/linux
+:page-layout: manual
+:page-root: ../../
+:imagesdir: ../../../images/
+:sourcedir: ../../../codes/
+include::../../../includes/header.adoc[]
+
+NOTE: {lvl_average}
+
+TIP: For beginners, you can skip this section and go directly to <<containers,containers>> section.
+
+
+We now turn to the installation of the Feel{plus}{plus} dependencies
+on Linux. Feel{plus}{plus} is currently support on Ubuntu (16.04,
+16.10) and Debian (Sid, Testing).
+
+
+== Ubuntu
+
+=== Ubuntu 16.10 Yaketti Yak
+
+Here is the suggested installation of the Feel++ dependencies on Ubuntu 16.10
+[source,sh]
+----
+$ sudo apt-get -qq update 
+$ sudo apt-get install automake autoconf libtool libboost-all-dev\
+  bash-completion emacs24 gmsh libgmsh-dev libopenturns-dev \
+  libbz2-dev libhdf5-openmpi-dev libeigen3-dev libcgal-dev \
+  libopenblas-dev libcln-dev libcppunit-dev libopenmpi-dev \
+  libann-dev libglpk-dev libpetsc3.7-dev libslepc3.7-dev \
+  liblapack-dev libmpfr-dev paraview python-dev libhwloc-dev \
+  libvtk6-dev libpcre3-dev python-h5py python-urllib3 xterm tmux \
+  screen python-numpy python-vtk6 python-six python-ply wget \
+  bison sudo xauth cmake flex gcc-6 g++-6 clang-3.9 \
+  clang++-3.9 git ipython openmpi-bin pkg-config
+----
+
+=== Ubuntu 16.04 
+
+Here is the suggested installation of the Feel++ dependencies on Ubuntu LTS 16.04
+
+[source,sh]
+----
+$ sudo apt-get install autoconf automake bash-completion bison\
+ clang++-3.8 clang-3.8 cmake emacs24 flex g++-6 gcc-6 git gmsh\
+  ipython libann-dev libbz2-dev libcgal-dev libcln-dev \
+  libcppunit-dev libeigen3-dev libglpk-dev libgmsh-dev \
+  libhdf5-openmpi-dev libhwloc-dev liblapack-dev libmpfr-dev\
+   libopenblas-dev libopenmpi-dev libopenturns-dev libpcre3-dev \
+   libpetsc3.6.2-dev libproj-dev libslepc3.6.1-dev libtool \
+   libvtk6-dev openmpi-bin paraview pkg-config python-dev \
+   python-h5py python-numpy python-ply python-six \
+   python-urllib3 python-vtk6 screen sudo tmux wget xauth xterm
+----
+
+IMPORTANT: We are unfortunately stung by the ABI change in GCC 6 when using clang. You need to recompile the Boost C++ libraries to be able to use clang, see the section in the Annexes on link:../09-annexes/compiling-external-projects.adoc[Compiling Boost].
+
+== Debian
+
+=== Debian Sid and Testing
+
+At the time of writing there is little difference between Sid and Testing, here is the recommend dependencies installation command line:
+[source,sh]
+----
+$ apt-get -y install \
+    autoconf automake bash-completion bison cmake emacs24 \
+    flex git gmsh ipython libann-dev libboost-all-dev \
+    libbz2-dev libcgal-dev libcln-dev libcppunit-dev \
+    libeigen3-dev libglpk-dev libgmsh-dev \
+    libhdf5-openmpi-dev libhwloc-dev liblapack-dev \
+    libmpfr-dev libopenblas-dev libopenmpi-dev \
+    libopenturns-dev libpcre3-dev libtool libvtk6-dev \
+    openmpi-bin paraview petsc-dev pkg-config python-dev \
+    python-h5py python-numpy python-ply python-six \
+    python-urllib3 python-vtk6 screen slepc-dev sudo \
+    tmux wget xauth xterm zsh
+----
+
+=== Older distributions
+
+Unfortunately the older distributions have the ABI GCC issue with clang, _e.g._ Debian/jessie, or they are too old to support a simple installation procedure.

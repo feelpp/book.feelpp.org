@@ -1,0 +1,31 @@
+[[what-is-docker]]
+== Introduction
+
+Container based technologies are revolutionizing development,
+deployment and execution of softwares.  Containers encapsulate a
+software and allow to run seamlessly on different platforms --
+clusters, workstations, laptops -- The developer doesn't have to worry
+about specific environments and users spend less time in configuring
+and installing the software.  Containers appear to be lightweight
+virtual machines (VMs) -- they are started in a fraction of a second
+-- but they, in fact, have important differences.
+
+One of the differences is the _isolation process_. The VMs share only
+the hypervisor, the OS and hardware whereas containers may share,
+between each other, large parts of filesystems rather than having
+copies. Another difference is that, unlike in VMs, processes in a
+container are similar to native processes and they do not incur the
+overhead due to the VM hypervisor. The figure below illustrates these
+fundamental differences. We see in particular that the applications 2
+and 3 are sharing lib 2 without redundancy.
+
+[[VMsVsContaitainers]]
+.Figure : VMs vs Containers
+image::docker/VMsvsContainers.png[alt=""]
+
+
+Docker is a container technology providing:
+
+ . an engine to start and stop containers,
+ . a user friendly interface from the creation to the distribution of containers and
+ . a hub  -- cloud service for container distribution -- that provides publicly a huge number of containers to download and avoid duplicating work.

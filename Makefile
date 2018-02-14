@@ -4,6 +4,7 @@ HELP="Usage: make <option> \n\
 \tinstall - install gem files (first time, bundler required) \n\
 \tbuild   - build the book \n\
 \tserve   - run a local web server (open localhost:4000 in the webbrowser) \n\
+\tantora  - compile the antora documentation (experimental) \n\
 \tclean   - clean gem lock file (redo install after) \n\
 \thelp    - print this help\n\n"
 
@@ -19,6 +20,19 @@ build:
 
 serve:
 	bundle exec jekyll serve
+
+
+install-antora:
+	mkdir -p build
+	cd build; \
+	npm init -y; \
+	npm install --save . @antora/cli; \
+	npm install --save . @antora/site-generator-default
+	cp antora/* build
+
+antora:
+	cd build_antora
+	antora feelpp-doc.yml
 
 clean:
 	rm -rf Gemfile.lock
