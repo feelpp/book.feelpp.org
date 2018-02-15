@@ -4,7 +4,7 @@ HELP="Usage: make <option> \n\
 \tinstall - install gem/npm required packages (bundler, npm required) \n\
 \tbuild   - build the book \n\
 \tserve   - run a local web server (open localhost:4000 in the webbrowser) \n\
-\tantora  - compile the antora documentation (experimental) \n\
+\tantora-build  - compile the antora documentation (experimental) \n\
 \tclean   - clean gem lock file (redo install after) \n\
 \thelp    - print this help\n\n"
 
