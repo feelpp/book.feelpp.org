@@ -28,9 +28,9 @@ install-antora:
 	npm init -y; \
 	npm install --save . @antora/cli; \
 	npm install --save . @antora/site-generator-default
-	cp antora-* build/
+	cp -r antora/* build/
 
-antora:
+build-antora:
 	cd build && antora antora-local-feelpp-doc.yml
 	@echo "INFO: File generated in 'build/build/site/feelpp-doc/'"
 
