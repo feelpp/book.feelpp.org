@@ -1,0 +1,241 @@
+= Learn By Example
+
+== Problem statement: Laplacian
+
+We are interested in this section in the _conforming finite element approximation_ of the following problem:
+
+[[laplacian]]
+.Laplacian problem
+****
+Look for stem:[u] such that
+
+[stem]
+++++
+\left\{\begin{split}                                                                                                                                              -\Delta u &= f \text{ in } \Omega\\                                                                                                                           u &= g \text{ on } \partial \Omega_D\\
+\frac{\partial u}{\partial n} &=h \text{ on } \partial \Omega_N\\
+\frac{\partial u}{\partial n} + u &=l \text{ on } \partial \Omega_R
+ \end{split}\right.
+++++
+****
+
+CAUTION: stem:[\partial \Omega_D], stem:[\partial \Omega_N] and stem:[\partial \Omega_R] can be empty sets. In the case stem:[\partial \Omega_D =\partial \Omega_R = \emptyset], then the solution is known up to a constant.
+
+[NOTE]
+======
+In the implementation presented later, stem:[\partial \Omega_D =\partial \Omega_N = \partial \Omega_R = \emptyset], then we set Dirichlet boundary conditions all over the boundary. The problem then reads like a standard laplacian with inhomogeneous Dirichlet boundary conditions:
+
+.Laplacian Problem with inhomogeneous Dirichlet conditions
+****
+Look for stem:[u] such that
+
+[stem]
+.Inhomogeneous Dirichlet Laplacian problem
+++++
+-\Delta u = f\ \text{ in } \Omega,\quad u = g \text{ on } \partial \Omega
+++++
+****
+======
+
+
+== Variational formulation
+
+We assume that stem:[f, h, l \in L^2(\Omega)]. The weak formulation of the problem then reads:
+
+.Laplacian problem variational formulation
+****
+Look for stem:[u \in H^1_{g,\Gamma_D}(\Omega)] such that
+
+[stem]
+.Variational formulation
+++++
+\displaystyle\int_\Omega \nabla u \cdot \nabla v +\int_{\Gamma_R} u v = \displaystyle \int_\Omega f\ v+ \int_{\Gamma_N} g\ v + \int_{\Gamma_R} l\ v,\quad \forall v \in H^1_{0,\Gamma_D}(\Omega)
+++++
+****
+
+== Conforming Approximation
+
+We now turn to the finite element approximation using Lagrange finite
+element. We assume stem:[\Omega] to be a segment in 1D, a polygon in
+2D or a polyhedron in 3D.  We denote stem:[V_\delta \subset
+H^1(\Omega)] an approximation space such that stem:[V_{g,\delta}
+\equiv P^k_{c,\delta}\cap H^1_{g,\Gamma_D}(\Omega)].
+
+The weak formulation reads:
+
+.Laplacian problem weak formulation
+****
+Look for stem:[u_\delta \in V_\delta  ] such that
+
+[stem]
+++++
+\displaystyle\int_{\Omega_\delta} \nabla u_{\delta} \cdot \nabla v_\delta +\int_{\Gamma_{R,\delta}} u_\delta\ v_\delta = \displaystyle \int_{\Omega_\delta} f\ v_\delta+ \int_{\Gamma_{N,\delta}} g\ v_\delta + \int_{\Gamma_{R,\delta}} l\ v_\delta,\quad \forall v_\delta \in V_{0,\delta}
+++++
+****
+
+NOTE: from now on, we omit stem:[\delta] to lighten the notations. Be
+careful that it appears both the geometrical and approximation level.
+
+
+
+[[implementation]]
+== Feel++ Implementation
+
+In Feel{plus}{plus},  stem:[V_{g,\delta}] is not built but rather
+stem:[P^k_{c,\delta}].
+
+NOTE: The Dirichlet boundary conditions can be treated using different techniques and we use from now on the elimination technique.
+
+We start with the mesh
+
+[source,cpp]
+----
+include::qs_laplacian.cpp[tag=mesh]
+----
+
+
+NOTE: the keyword `auto` enables type inference, for more details see link:https://en.wikipedia.org/wiki/C%2B%2B11#Type_inference[Wikipedia C{plus}{plus}11 page].
+
+
+Next the discretization setting by first defining `Vh=Pch<k>(mesh)` stem:[\equiv P^k_{c,h}], then elements of `Vh` and expressions `f`, `n` and `g` given by command line options or configuration file.
+
+[source,cpp]
+----
+include::qs_laplacian.cpp[tag=discr]
+----
+
+[NOTE]
+======
+at the following line
+
+[source,cpp]
+----
+include::qs_laplacian.cpp[tag=v]
+----
+
+`v` is set to the expression `g`, which means more precisely that `v` is the interpolant of `g` in `Vh`.
+======
+
+the variational formulation is implemented below, we define the
+bilinear form `a` and linear form `l` and we set _strongly_ the
+Dirichlet boundary conditions with the keyword `on` using
+elimination. If we don't find `Dirichlet`, `Neumann` or `Robin` in the
+list of physical markers in the mesh data structure then we impose
+Dirichlet boundary conditions all over the boundary.
+
+[source,cpp]
+----
+include::qs_laplacian.cpp[tag=vf]
+----
+
+[NOTE]
+======
+We have the following correspondance:
+
+|===
+| Element sets  | Domain
+
+| `elements(mesh)` | stem:[\Omega]
+| `boundaryfaces(mesh)` | stem:[\partial \Omega]
+
+| `markedfaces(mesh,"Dirichlet")`  |  stem:[\Gamma_D]
+| `markedfaces(mesh,"Neumann")`  |  stem:[\Gamma_R]
+| `markedfaces(mesh,"Robin")`  |  stem:[\Gamma_R]
+
+|===
+
+======
+
+next we solve the algebraic problem
+
+
+.Listing: solve algebraic system
+[source,cpp]
+----
+include::qs_laplacian.cpp[tag=solve]
+----
+
+next we compute the stem:[L^2] norm of stem:[u_\delta-g], it could
+serve as an stem:[L^2] error if stem:[g] was manufactured to be the
+exact solution of the <<laplacian>>.
+
+[source,cpp]
+----
+include::qs_laplacian.cpp[tag=ug]
+----
+
+and finally we export the results, by default it is in the ensight
+gold format and the files can be read with Paraview and Ensight. We
+save both stem:[u] and stem:[g].
+
+.Listing: export Laplacian results
+[source,cpp]
+----
+include::qs_laplacian.cpp[tag=export]
+----
+
+== Testcases
+
+The <<implementation>> comes with testcases in 2D and 3D.
+
+=== circle
+
+`circle` is a 2D testcase where stem:[\Omega] is a disk whose boundary
+has been split such that stem:[\partial \Omega=\partial \Omega_D \cup
+\partial \Omega_N \cup \partial \Omega_R].
+
+Here are some results we can observe after use the following command
+
+[source,bash]
+----
+cd Testcases/quickstart/circle
+mpirun -np 4 /usr/local/bin/feelpp_qs_laplacian_2d --config-file circle.cfg
+----
+
+This give us some data such as solution of our problem or the mesh used in the application.
+
+[cols="^,^"]
+|========
+|image:{imagesdir}/Laplacian/TestCases/Circle/ucircle.png[]|image:{imagesdir}/Laplacian/TestCases/Circle/meshCircle.png[]
+|Solution stem:[u_\delta]| Mesh
+|========
+
+
+=== feelpp2d and feelpp3d
+
+This testcase solves the <<laplacian>> in stem:[\Omega] an quadrangle or hexadra containing the letters of Feel{plus}{plus}
+
+==== feelpp2d
+
+After running the following command
+
+[source,bash]
+----
+cd Testcases/quickstart/feelpp2d
+mpirun -np 4 /usr/local/bin/feelpp_qs_laplacian_2d --config-file feelpp2d.cfg
+----
+
+we obtain the result stem:[u_\delta] and also the mesh
+
+[cols="^,^"]
+|======
+|image:Laplacian/TestCases/Feelpp2d/ufeelpp2d.png[]|{imagesdir}/Laplacian/TestCases/Feelpp2d/meshfeelpp2d.png[]
+|Solution stem:[u_\delta]| Mesh
+|======
+
+==== feelpp3d
+
+We can launch this application with the current line
+
+[source,bash]
+----
+cd Testcases/quickstart/feelpp3d
+mpirun -np 4 /usr/local/bin/feelpp_qs_laplacian_3d --config-file feelpp3d.cfg
+----
+
+When it's finish, we can extract some informations
+
+[cols="^,^"]
+|======
+|image:Laplacian/TestCases/Feelpp3d/ufeelpp3d.png[]|image:Laplacian/TestCases/Feelpp3d/meshfeelpp3d.png[]
+|Solution stem:[u_\delta]| Mesh
+|======

@@ -24,6 +24,14 @@ function modcover( kv ) {
         elt = svg.getElementById("svg_book_text_subtitle");
         elt.childNodes[0].childNodes[0].textContent = kv.subtitle;
     }
+    if( kv.title0_x != null ) {
+        elt = svg.getElementById("svg_book_text_title");
+        elt.childNodes[0].childNodes[0].setAttribute("x",kv.title0_x);
+    }
+    if( kv.title1_x != null ) {
+        elt = svg.getElementById("svg_book_text_title");
+        elt.childNodes[1].childNodes[0].setAttribute("x",kv.title1_x);
+    }
     // We set the value.
     if( kv.id != null ) {
         var el = document.getElementById(kv.id)
