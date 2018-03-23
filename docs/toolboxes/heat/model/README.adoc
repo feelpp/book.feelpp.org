@@ -33,9 +33,8 @@ include::../../../includes/header.adoc[]
 \rho C_p \frac{\partial T}{\partial t} - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega
 ++++
 
-which is completed with initial value and boundary conditions.
+which is completed with boundary conditions and initial value
 
-.Initial value
 [stem]
 ++++
 \text{at } t=0, \quad T(x,0) = T_0(x)
@@ -49,7 +48,29 @@ which is completed with initial value and boundary conditions.
 \rho C_p \left( \frac{\partial T}{\partial t} + \boldsymbol{u} \cdot \nabla T \right) - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega
 ++++
 
+=== Steady case
+
+[stem]
+.steady heat equation
+++++
+ - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega
+++++
+
+[stem]
+.steady convective heat equation
+++++
+\rho C_p  \boldsymbol{u} \cdot \nabla T - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega
+++++
+
 === Multi-materials
 
-Given a domain stem:[\Omega \subset \mathbb{R}^d, d=1,2,3], stem:[\Omega] is partitioned into stem:[N_r] regions stem:[\Omega_i,i=1,\ldots,N_r] corresponding to different materials (solid or fluid).
+Given a domain stem:[\Omega \subset \mathbb{R}^d, d=1,2,3], stem:[\Omega] is partitioned into stem:[N_r] regions stem:[\Omega_i,i=1,\ldots,N_r] corresponding to different materials (solid or fluid). We consider stem:[\rho_i], stem:[C_{p,i}] and stem:[k_i] the material properties defined in each regions stem:[\Omega_i]. We define also  stem:[\boldsymbol{n}_i] the outward unit normal vector associated to the boundary stem:[\partial \Omega_i].
 
+[stem]
+++++
+\begin{eqnarray}
+\rho_i C_{p,i} \frac{\partial T}{\partial t} - \nabla \cdot \left( k_i \nabla T \right) &=& Q, \quad &\text{ in }& \Omega_i,i=1,\ldots,N_r \\
+T_{|_{\Omega_i}} &=& T_{|_{\Omega_j}}, \quad &\text{ on }& \partial \Omega_i \cap \Omega_j, \forall i \neq j \\
+-k_i \nabla T  \cdot \boldsymbol{n}_i &=& k_j \nabla T \cdot \boldsymbol{n}_j, \quad &\text{ on }& \partial \Omega_i \cap \Omega_j, \forall i \neq j \\
+\end{eqnarray}
+++++
