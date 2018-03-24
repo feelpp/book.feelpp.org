@@ -1,2 +1,28 @@
     <link rel="icon" href="{{uiRootPath}}/img/favicon.ico" type="image/x-icon">
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+                messageStyle: "none",
+                tex2jax: {
+                         inlineMath: [["\\(", "\\)"]],
+                         displayMath: [["\\[", "\\]"]],
+                         ignoreClass: "nostem|nolatexmath"
+               },
+               asciimath2jax: {
+                              delimiters: [["\\$", "\\$"]],
+                              ignoreClass: "nostem|noasciimath"
+                              },
+               TeX: {
+                    equationNumbers: { autoNumber: "none" },
+                    Macros: {
+                            RR: "{\\mathbb{R}}",
+                            bold: ["{\\bf #1}",1],
+                            bf: ["{\\bf #1}",1]
+                            }
+                }
+               
+          });
+        </script>
+        
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/config/TeX-AMS_CHTML-full.js"></script>
     <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>

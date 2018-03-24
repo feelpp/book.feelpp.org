@@ -1,0 +1,400 @@
+[[convection-dominated-flows]]
+= Convection dominated flows
+
+
+Let stem:[\Omega \subset \mathbb{R}^d, d=1,2,3], consider this
+equation defined in stem:[\Omega], find stem:[u] a scalar
+field (_e.g._ temperature or concentration) such that
+[[eq:stab1]]
+[stem]
+++++
+    \underbrace{\frac{\partial u}{\partial t}}_{time} \underbrace{- \nabla \cdot ( \epsilon \nabla u
+    )}_{diffusion} + \underbrace{\mathbf{ \beta} \cdot \nabla
+    u}_{advection/convection} + \underbrace{\mu u}_{reaction} =
+  \underbrace{f}_{source},\quad \nabla \cdot \mathbf{ \beta} = 0
+++++
+with the given data
+
+* stem:[\epsilon] is the diffusion coefficient (matrix stem:[d \times d]), stem:[\epsilon(\mathbf{x}) > 0]
+
+* stem:[\mathbf{\beta}] velocity and stem:[\nabla \cdot \mathbf{ \beta} \in L^2(\Omega)]
+
+* stem:[\mu > 0] reaction (or absorption) coefficient.
+
+From now on we consider only steady problems (stem:[\frac{\partial u}{\partial t}=0])
+
+== Applications
+
+* Transport of temperature
+* Transport of pollutants
+* Transport of chemical species (stem:[O_2, CO_2,...])
+
+These equations are often coupled with fluid flow equations such as
+incompressible Navier-Stokes equations (air, blood, water...) or darcy
+equations (porous media) to obtain the velocity field
+stem:[\mathbf{ \beta}]. In this lesson we consider
+stem:[\mathbf{ \beta}] given.
+
+== Boundary conditions
+
+Boundary conditions can be of 2 types on parts of the boundary or the
+whole boundary of the domain stem:[\Omega]:
+
+* Dirichlet conditions : stem:[\label{eq:2}
+      u|_{{\partial \Omega}_D} = g]
+* Neumann conditions :
+** Outflow stem:[\label{eq:4}
+        ( - \epsilon \nabla u + \mathbf{ \beta} u ) \cdot \mathbf{ n}|_{{\partial \Omega}_N} = (\mathbf{ \beta} u) \cdot
+        \mathbf{ n}]
+** (Heat) Flux stem:[\label{eq:5}
+        ( - \epsilon \nabla u   ) \cdot \mathbf{ n}|_{{\partial \Omega}_N} = Q \quad
+        (e.g. \mathbf{\beta} = \mathbf{0})]
+
+[[variational-formulation]]
+== Variational Formulation
+
+The variational problem reads, Find stem:[u \in V] such that for
+all stem:[v\ in V]
+[[eq:stab6]]
+[stem]
+++++
+    a(u,v) \equiv  \int_\Omega \epsilon \nabla u \cdot \nabla v + (\mathbf{ \beta} \cdot \nabla u ) v
+    + \underbrace{\int_{\partial \Omega} (- \epsilon \nabla u ) \cdot
+    \mathbf{ n}\ v}_{\mbox{apply boundary conditions}}  =
+  \int_\Omega f v \equiv \ell (v)
+++++
+where
+
+* stem:[V] is an Hilbert space
+* we used the identity below for the integration by part
+
+[[eq:stab7]]
+[stem]
+++++
+\nabla \cdot (\mathbf{ c} w ) = \mathbf{ c} \cdot \nabla w +        \underbrace{w \nabla \cdot \mathbf{ c}}_{=0}
+++++
+
+* Suppose that stem:[-\frac{1}{2} \nabla \cdot ( \mathbf{ \beta} ) + \mu \geq 0] almost everywhere in stem:[\Omega] then we can show that stem:[a] is coercive provide stem:[\epsilon \geq \epsilon_0 > 0]
+
+[[eq:10]]
+[stem]
+++++
+a(v,v) \geq \alpha ||v||_{1,\Omega}, \quad \alpha = \frac{\epsilon_0}{1+C_\Omega^2}
+++++
+
+* stem:[a] is continuous, there exists stem:[M] a constant such that
+
+[[eq:stab9]]
+[stem]
+++++
+|a(u,v)| \leq < M ||u||_{H^1{(\Omega)}} ||v||_{H^1{(\Omega)}}, \quad M =
+      ||\mu||_{0,\Omega} + ||\epsilon||_{\infty,\Omega} + ||\mathbf{\beta}||_{\infty,\Omega}
+++++
+
+[[discrete-formulation]]
+== Discrete formulation
+
+Let stem:[V_h \subset V \equiv H^1(\Omega)] a discrete space,
+consider the standard Galerkin approximation on stem:[V_h] for .
+The problem reads
+
+
+[env.problem#prob:stab1]
+--
+Find stem:[u_h \in V_h] such that for all
+stem:[v_h \in V_h] we have:
+
+[[eq:stab8]]
+\[
+      \int_\Omega \epsilon \nabla u_h \cdot \nabla v_h + (\mathbf{ \beta} \cdot \nabla u_h ) v_h
+    + \underbrace{\int_{\partial \Omega} (- \epsilon \nabla u_h ) \cdot
+    \mathbf{ n}\ v_h}_{\mbox{apply boundary conditions}}  =
+  \int_\Omega f v_h
+\]
+--
+
+[NOTE]
+====
+We can show that
+[[eq:stab11]]
+[stem]
+++++
+||u_h||_{1,\Omega} \leq \frac{1}{\alpha} ||f||_{0,\Omega}, \quad ||\nabla u_h||_{1,\Omega} \leq \frac{C_\Omega}{\epsilon_0} ||f||_{0,\Omega},
+++++
+which means that the Galerkin error inequality (best approximation) gives
+[[eq:stab12]]
+[stem]
+++++
+||u-u_h||_V \leq \frac{M}{\alpha} \mathrm{inf}_{v_h \in V_h} ||u-v_h||_V
+++++
+which means that given stem:[M] and stem:[\alpha], the estimate
+stem:[\epsilon_0 \rightarrow 0] In such case, the standard
+Galerkin method can yield to inaccurate solutions unless:
+
+* we use a very small stem:[h] (cost!!)
+
+* we use a stabilisation method (loss of stem:[\frac{1}{2}] in convergence rate)
+====
+
+[[stabilisation-methods]]
+== Stabilisation methods for convection dominated flows
+
+We now introduce
+
+* stem:[\mathrm{Pe}=\frac{|\mathbf{ \beta}|L}{2 \epsilon}] the global number. stem:[L] is the characteristic size of the domain.
+* the local Péclet number stem:[\mathrm{Pe}_h=\frac{|\mathbf{\beta}|h}{2 \epsilon}]
+
+The dominating convection and inacurrate behavior occurs when, on at least some cells, stem:[\mathrm{Pe} > 1] or stem:[\mathrm{Pe}_h > 1].
+
+TIP: A remedy is to use a sufficiently small stem:[h] same to ensure stem:[\mathrm{Pe}_h < 1].
+For example if stem:[|\mathbf{beta}| = 1] and stem:[\epsilon=5e-4], we should take stem:[h=1e-4].
+
+TIP: Another remedy is to use a different approximation space for the unknown stem:[u_h] and the test functions stem:[v_h].
+We talk about *Petrov-Galerkin approximation*.
+
+[env.problem#prob:2]
+--
+Find stem:[u_h \in V_h] such that
+[[eq:stab13]]
+\[
+a_h(u_h,v_h) = \ell_h(v_h),\quad \forall v_h \in V_h
+\]
+with
+[[eq:stab14]]
+\[
+a_h(u_h,v_h) = a(u_h,v_h) + b_h(u_h,v_h),\quad \ell_h(v_h) = \ell(v_h) + g_h(v_h),\quad
+\].
+--
+
+NOTE: The purpose of stem:[b_h] and stem:[g_h] is to eliminate(or reduce) the numerical oscillations produced by the standard Galerkin method: they are called _stabilisation methods_ and depend on stem:[h].
+The term _stabilisation method_ is not _exact_.
+Indeed the Galerkin method is already stable (_i.e._ continuity).
+Here it is to be understood as the aim of reducing (or elimination) numerical oscillations when stem:[\mathrm{Pe} > 1].
+
+Without doing anything wiggles occur.
+
+There are remedies so called _stabilisation techniques_, here some some examples:
+
+* Artificial diffusion (streamline diffusion) (SDFEM)
+* Galerkin Least Squares method (GaLS)
+* Streamline Upwind Petrov Galerkin (SUPG)
+* Continuous Interior Penalty methods (CIP)
+
+[[artificial-diffusion-or-streamline-diffusion-sdfem]]
+=== Artificial diffusion (or streamline diffusion) (SDFEM)
+
+Method The method consists in adding an
+
+[stem]
+++++
+\epsilon_h =\epsilon(1+\phi(\mathrm{Pe}))
+++++
+with
+stem:[\phi(\mathrm{Pe}) \rightarrow 0] as stem:[h \rightarrow 0], _e.g._ stem:[\phi(\mathrm{Pe}) = \mathrm{Pe}-1+B(2*\mathrm{Pe})]
+where stem:[B] is the so-called _Bernoulli function_
+stem:[B(t) =    \frac{t}{e^t-1}] if stem:[t > 0] and stem:[B(0) = 1] (also exponential fitting scheme)
+[[eq:15]]
+[stem]
+++++
+      b_h(u_h,v_h) = \int_\Omega \epsilon \Phi(\mathrm{Pe}) \nabla u_h \cdot \nabla
+      v_h, \quad g_h(v_h) = 0
+++++
+
+[env.theorem#thr:stab1]
+--
+for a given stem:[\epsilon] and for stem:[h] tending to stem:[0], we have for stem:[u \in H^{r+1}(\Omega)]
+[[eq:16]]
+\[
+||u-u_h||_{1,\Omega} \leq C_1  \Big[ h^r||u||_{r+1,\Omega} + \phi(\mathrm{Pe})||u||_{1,\Omega}\Big]
+\]
+and for a given stem:[h] and stem:[\epsilon] tending to 0,
+[[eq:17]]
+\[
+||u-u_h||_{1,\Omega} \leq C_1  \Big[ h^{r-1}||u||_{r+1,\Omega} + ||u||_{1,\Omega}\Big]
+\]
+If stem:[\phi(\mathrm{Pe})=\frac{|\mathbf{ \beta}|h}{2 \epsilon}], the convergence is linear, with the exponential fitting scheme it is quadratic if stem:[r \geq 2].
+--
+
+[[gals-and-supg]]
+=== GaLS and SUPG
+
+First we decompose our operators into a symmetric (stem:[<Lu,v> = <u,Lv>] and skew symmetric (stem:[<L u, v> = -<u,L v>]) contributions, we start with
+[[eq:stab18]]
+[stem]
+++++
+    L u = -\epsilon \Delta u + \nabla \cdot (\mathbf{ \beta} u ) + \mu u
+++++
+[[eq:stab19]]
+[stem]
+++++
+L u = \underbrace{-\epsilon \Delta u + \Big[ \mu + \frac{1}{2} \nabla \cdot \mathbf{
+    \beta} \Big] u}_{L_S u} + \underbrace{\frac{1}{2}\Big[ \nabla \cdot ( \mathbf{
+    \beta} u) + \mathbf{ \beta} \cdot \nabla u \Big]}_{L_{SS} u}
+++++
+
+.Consistent schemes
+[NOTE]
+====
+We say that a method is consistent when adding a term
+to a problem such as:
+[env.problem]
+--
+Find stem:[u_h \in V_h] such that
+[[eq:stab20]]
+\[
+a(u_h,v_h) + \mathcal{L}_h(u_h,f;v_h) = (f,v_h), \quad \forall v_h \in V_h\]
+the term added statisfies
+
+[[eq:stab21]]
+\[
+\mathcal{L}_h(u,f;v_h) = 0, \forall v_h \in V_h
+\]
+--
+
+====
+
+[[choice-for-consistent-methods]]
+==== Choice for consistent methods
+
+A possible choice for stem:[\mathcal{L}_h] is the following
+[[eq:22]]
+[stem]
+++++
+      \mathcal{L}_h(u_h,f;v_h) = \mathcal{L}^{(\rho)}_h(u_h,f;v_h) = \sum_{K
+      \in \mathcal{T}_h} \delta (L u_h - f, \mathcal{S}^{(\rho)}_K(v_h))_{0,\Omega}
+++++
+where
+
+* stem:[(\cdot,\cdot)_{0,\Omega}] is the stem:[L^2] scalar product
+
+* stem:[\rho] and stem:[\delta] are parameters
+
+and we have set
+[[eq:stab23]]
+[stem]
+++++
+\mathcal{S}^{(\rho)}_K(v_h) = \frac{h_K}{|\mathbf{\beta}|}\Big[ L_{SS}
+          v_h + \rho L_S v_h\Big]
+++++
+
+Galerkin Least-Square:: if stem:[\rho = 1] we have the Galerkin Least Square method (GaLS)
+[[eq:stab24]]
+[stem]
+++++
+\mathcal{S}^{(\rho)}_K(v_h) = \frac{h_K}{|\mathbf{ \beta}|}\Big[ L v_h\Big]
+++++
+
+Streamline Upwind Petrov-Galerkin:: if stem:[\rho = 0] we have the _Streamline Upwind Petrov-Galerkin_ (SUPG)
+[[eq:stab25]]
+[stem]
+++++
+\mathcal{S}^{(0)}_K(v_h) = \frac{h_K}{|\mathbf{ \beta}|}\Big[ L_{SS} v_h\Big]
+++++
+
+Douglas and Wang:: if stem:[\rho = -1] we have the _Douglas and Wang_ (DW)
+[[eq:stab25]]
+[stem]
+++++
+\mathcal{S}^{(-1)}_K(v_h) = \frac{h_K}{|\mathbf{ \beta}|}\Big[ (L_{SS} -L_S
+        )v_h\Big]
+++++
+
+We define the stem:[\rho] Norm
+[[eq:stab26]]
+[stem]
+++++
+||v||_{(\rho)} = \Big\{\epsilon ||\nabla u||^2_{0,\Omega} + ||\sqrt{\gamma}      v||^2_{0,\Omega} + \sum_{K \in \mathcal{T_h}} \delta \Big(       (L_{SS}+\rho L_S )v, \mathcal{S}^{(\rho)}_K(v) \Big)_{0,\Omega}       \Big\}^{1/2}
+++++
+
+where stem:[\gamma] is a positive constant such that stem:[-\frac{1}{2} \nabla \cdot    \mathbf{\beta} + \mu \geq \gamma > 0]
+
+We have the following result
+
+[env.theorem#thr:stab3]
+--
+if stem:[u \in H^{k+1}(\Omega)], then the following error estimates hold:
+[[eq:stab27]]
+\[
+{\|u-u_h\|_{(\rho)}} \leq C {h^{k+1/2}} |u|_{k+1,\Omega}
+\]
+--
+
+.GaLS
+[NOTE]
+====
+In practice for GaLS (stem:[\rho = 1]) we take
+stem:[\delta] such that
+[[eq:stab28]]
+[stem]
+++++
+\delta(h_K,\epsilon) \frac{h_K}{|\mathbf{ \beta}|} = \Big( \frac{1}{h_K} + \frac{\epsilon}{h^2_K} \Big)^{-1}
+++++
+and we can prove the following estimates
+if stem:[u\in H^{k+1}(\Omega)],
+
+[[eq:stab29]]
+[stem]
+++++
+\forall \epsilon \quad {\|u-u_h\|_{0,\Omega}} \leq c {h^{k+1/2}} \|u\|_{k+1,\Omega}
+++++
+
+[[eq:stab30]]
+[stem]
+++++
+\forall \epsilon \geq c h \quad {\|u-u_h\|_{1,\Omega}} \leq c {h^{k}} \|u\|_{k+1,\Omega}
+++++
+
+and finally if the family stem:[\{\mathcal{T}_h\}_{h > 0}] is quasi-uniform and stem:[\epsilon \leq c h ], then
+[stem]
+++++
+\| \beta \cdot \nabla (u -u_h) \|_{0,\Omega} \leq c h^k \|u \|_{k+1,\Omega}
+++++
+====
+
+[[continuous-interior-penalty]]
+Continuous Interior Penalty
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the continuous interior penalty we add the following term
+
+[[eq:47]]
+[stem]
+++++
+\sum_{F \in \Gamma_\mathrm{int} } \int_{F} \eta\ h_F^2\ |\mathbf{ \beta} \cdot \mathbf{n}|\  \jump{\nabla u}  \jump{\nabla v}
+++++
+where
+
+* stem:[\Gamma_\mathrm{int}] is the set of internal faces
+* the stem:[\mathrm{Pe}>>1] (typically it is applied to all
+  internal faces)
+* we have
+[[eq:50]]
+[stem]
+++++
+\jump{\nabla u} = \nabla u \cdot \mathbf{n}|_1 + \nabla u \cdot \mathbf{n}|_2
+++++
+is the so called jump of stem:[\nabla u](scalar valued) across the face.
+
+In the case of scalar valued functions
+[[eq:53]]
+[stem]
+++++
+    \jump{u} = u \mathbf{n}|_1 + u \mathbf{n}|_2
+++++
+
+Choice for stem:[\eta] stem:[\eta] can be taken in the range stem:[[1e-2;1e-1]].
+A typical value is stem:[\eta=2.5e-2].
+A similar error estimate stem:[O(h^{r+1/2})] holds for CIP.
+
+Example CIP
+
+[source,cpp]
+----
+// define the stabilisation coefficient expression
+auto stab_coeff = (eta*abs(idv(beta))*abs(trans(N())*idv(beta)))*vf::pow(hFace(),2.0));
+
+// assemble the stabilisation operator
+form2( Xh, Xh, M ) +=
+ integrate( internalfaces(Xh->mesh()), // faces of the mesh
+            stab_coeff*(trans(jumpt(gradt(u)))*jump(grad(v))));
+----
