@@ -13,3 +13,17 @@ steps:
      asciidoctor: true
    env:
      PROJECT: book.feelpp.org
+ - wait
+ - name: ':antora: :book:'
+   command: .buildkite/steps/antora-build.sh
+   agents:
+       docker: true
+   env:
+      PROJECT: docs.feelpp.org
+      BUILDKITE_DOCKER_COMPOSE_CONTAINER: "antora"
+ - wait
+ - name: ':rocket: :book:'
+   command: .buildkite/steps/docs-deploy.sh
+   branches: master
+   env:
+       PROJECT: 4fastsim.docs.feelpp.org
