@@ -1,79 +1,8 @@
-= Computational Fluid Dynamics
-// Don't put authors here! (see CONTRIBUTING)
-//*******************************************
-:page-layout: manual 
-:page-permalink: /toolbox/cfd/model
-:page-root: ../../../../
-:title: Computational Fluid Dynamics
-:doctype: book
-:docinfo: shared
-:imagesdir: /images/
-:sources: ../../../
-// Keep this include header at the end! (see CONTRIBUTING)
-include::../../../includes/header.adoc[]
-//*******************************************
-
-TIP: Benchmarks are available at link:/benchmarks/cfd[CFD Benchmarks].
-
-== Notations and units
-
-|===
-| Notation | Quantity | Unit
-
-|stem:[\rho_f]|fluid density|stem:[kg \cdot m^{-3}]
-|stem:[\boldsymbol{u}_f]|fluid velocity|stem:[m \cdot s^{-1}]
-|stem:[\boldsymbol{\sigma}_f]|fluid stress tensor|stem:[N \cdot m^{-2}]
-|stem:[\boldsymbol{f}^t_f]| source term | stem:[kg \cdot m^{-3} \cdot s^{-1}]
-|stem:[p_f]|pressure fields|stem:[kg \cdot m^{-1} \cdot s^{-2}]
-|stem:[\mu_f]| dynamic viscosity|stem:[kg \cdot m^{-1} \cdot s^{-1}]
-|stem:[\bar{U}]|characteristic inflow velocity|stem:[m \cdot s^{-1}]
-|stem:[\nu]|kinematic viscosity|stem:[m^2 \cdot s^{-1}]
-|stem:[L]| characteristic length|stem:[m]
-|===
-
-
-== Equations
-
-Navier-Stokes model is used to model incompressible Newtonian fluid.
-It can be described by these conservative laws :
-
-[stem]
-.Momentum conservation equation
-++++
-\rho_{f} \left. \frac{\partial\mathbf{u}_f}{\partial t} \right|_\mathrm{x}
-+ \rho_{f} \left( \boldsymbol{u}_{f} \cdot \nabla_{\mathrm{x}} \right) \boldsymbol{u}_{f}
-- \nabla_{\mathrm{x}} \cdot \boldsymbol{\sigma}_{f} = \boldsymbol{f}^t_f , \quad \text{ in } \Omega^t_f \times \left[t_i,t_f \right]
-++++
-
-[env.equation]
-[stem]
-.Mass conservation equation
-++++
-\nabla_{\mathrm{x}} \cdot \boldsymbol{u}_{f} = 0, \quad \text{ in } \Omega^t_f \times \left[t_i,t_f \right]
-++++
-
-we complete this set of equations with the fluid constitutive law
-
-[env.equation]
-.Material constitutive equation
---
-\boldsymbol{\sigma}_{f} = -p_f \boldsymbol{I} + 2\mu_f D(\boldsymbol{u}_{f})
---
-
-with strain tensor stem:[D(\boldsymbol{u}_{f})] defined by :
-
-[env.equation]
-.Strain tensor
---
-D(\boldsymbol{u}_{f}) = \frac{1}{2} (\nabla_\mathrm{x} \boldsymbol{u}_f + (\nabla_\mathrm{x} \boldsymbol{u}_f)^T)
---
-
-An alternative model is the Stokes model. It is valid in the case of small Reynolds number. It corresponds to the same formulation than Navier-Stokes equations but without the convective term stem:[\left( \boldsymbol{u}_{f} \cdot \nabla_{\mathrm{x}} \right) \boldsymbol{u}_{f}] .
-
 = Multifluid flows
 
 We introduce here the methodology associated to multifluid flows.
 
+[intro]
 == Introduction
 
 Let's define a bounded domain stem:[\Omega \subset \mathbb{R}^p] (stem:[p=2,3]) decomposed
@@ -111,7 +40,7 @@ we introduce the smoothed Heaviside and delta functions:
       \displaystyle\frac{1}{2} \left(1+\frac{\phi}{\varepsilon}+\frac{\sin(\frac{\pi \phi}{\varepsilon})}{\pi}\right),  & -\varepsilon \leq \phi \leq \varepsilon, \\
       1, & \phi \geq \varepsilon. \end{array} \right.
 ++++
-      
+
 [stem]
 ++++
     \delta_{\varepsilon}(\phi) = \left\{ \begin{array}{cc}
@@ -169,25 +98,20 @@ where stem:[S(\cdot, \cdot)] stands for the stabilization bilinear form (see sec
 In our case, we use a BDF2 scheme which needs the solution at the two previous time step to compute the one at present time. For the first time step computation or after a reinitialization we use an Euler scheme.
 
 == Two-fluid flow
-The two-fluid flow problem can be expressed by 
+The two-fluid flow problem can be expressed by
 
 [stem]
 ++++
 \begin{align}
-    \frac{D( \rho_\phi \boldsymbol{u} )}{Dt} - \boldsymbol{\nabla} \cdot ( 2 \mu_\phi \boldsymbol{D}({\boldsymbol{u}}) ) + \boldsymbol{\nabla} p  = \boldsymbol{f}_\phi \\
-    \nabla \cdot \boldsymbol{u} = 0 \\
-    \partial_t \phi + \boldsymbol{u} \cdot \boldsymbol{\nabla} \phi =0
+    \frac{D( \rho_\phi \mathbf{u} )}{Dt} - \mathbf{\nabla} \cdot ( 2 \mu_\phi \mathbf{D}({\mathbf{u}}) ) + \mathbf{\nabla} p  = \mathbf{f}_\phi \\
+    \nabla \cdot \mathbf{u} = 0 \\
+    \partial_t \phi + \mathbf{u} \cdot \mathbf{\nabla} \phi =0
 \end{align}
 ++++
 
-Where stem:[\boldsymbol{f}_\phi] is the force obtain by projection of the density of interfacial forces on the domain stem:[\Omega]
+Where stem:[\mathbf{f}_\phi] is the force obtain by projection of the density of interfacial forces on the domain stem:[\Omega]
 
 [stem]
 ++++
-\boldsymbol{f}_{\phi} = \boldsymbol{g}(\phi, \boldsymbol{ n }, \kappa) \delta_\varepsilon(\phi)
+\mathbf{f}_{\phi} = \mathbf{g}(\phi, \mathbf{n}, \kappa) \delta_\varepsilon(\phi)
 ++++
-
-
-
-include::../../../man/03-modeling/Fluid/README.adoc[]
-

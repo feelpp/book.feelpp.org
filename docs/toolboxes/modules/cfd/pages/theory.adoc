@@ -1,0 +1,58 @@
+= Theory of Laminar Flows
+
+
+[notations]
+== Notations and units
+
+|===
+| Notation | Quantity | Unit
+
+|stem:[\rho_f]|fluid density|stem:[kg \cdot m^{-3}]
+|stem:[\mathbf{u}_f]|fluid velocity|stem:[m \cdot s^{-1}]
+|stem:[\mathbf{\sigma}_f]|fluid stress tensor|stem:[N \cdot m^{-2}]
+|stem:[\mathbf{f}^t_f]| source term | stem:[kg \cdot m^{-3} \cdot s^{-1}]
+|stem:[p_f]|pressure fields|stem:[kg \cdot m^{-1} \cdot s^{-2}]
+|stem:[\mu_f]| dynamic viscosity|stem:[kg \cdot m^{-1} \cdot s^{-1}]
+|stem:[\bar{U}]|characteristic inflow velocity|stem:[m \cdot s^{-1}]
+|stem:[\nu]|kinematic viscosity|stem:[m^2 \cdot s^{-1}]
+|stem:[L]| characteristic length|stem:[m]
+|===
+
+
+[equations]
+== Equations
+
+Navier-Stokes model is used to model incompressible Newtonian fluid.
+It can be described by these conservative laws :
+
+.Momentum conservation equation
+[stem]
+++++
+\rho_{f} \left. \frac{\partial\mathbf{u}_f}{\partial t} \right|_\mathrm{x}
++ \rho_{f} \left( \mathbf{u}_{f} \cdot \nabla_{\mathrm{x}} \right) \mathbf{u}_{f}
+- \nabla_{\mathrm{x}} \cdot \mathbf{\sigma}_{f} = \mathbf{f}^t_f , \quad \text{ in } \Omega^t_f \times \left[t_i,t_f \right]
+++++
+
+[stem]
+.Mass conservation equation
+++++
+\nabla_{\mathrm{x}} \cdot \mathbf{u}_{f} = 0, \quad \text{ in } \Omega^t_f \times \left[t_i,t_f \right]
+++++
+
+we complete this set of equations with the fluid constitutive law
+
+[stem]
+.Material constitutive equation
+++++
+\mathbf{\sigma}_{f} = -p_f \mathbf{I} + 2\mu_f D(\mathbf{u}_{f})
+++++
+
+with strain tensor stem:[D(\mathbf{u}_{f})] defined by :
+
+[stem]
+.Strain tensor
+++++
+D(\mathbf{u}_{f}) = \frac{1}{2} (\nabla_\mathrm{x} \mathbf{u}_f + (\nabla_\mathrm{x} \mathbf{u}_f)^T)
+++++
+
+An alternative model is the Stokes model. It is valid in the case of small Reynolds number. It corresponds to the same formulation than Navier-Stokes equations but without the convective term stem:[\left( \mathbf{u}_{f} \cdot \nabla_{\mathrm{x}} \right) \mathbf{u}_{f}] .
