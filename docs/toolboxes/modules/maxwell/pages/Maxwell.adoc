@@ -1,0 +1,270 @@
+= Maxwell's equations
+
+NOTE: We present here the Maxwell equations
+
+== Differential form of Maxwell equations
+
+The differential form of Maxwell’s equations reads:
+[stem]
+++++
+\begin{aligned}
+\nabla \times \mathbf{H}(\mathbf{x},t) &= \mathbf{J}(\mathbf{x},t) + \frac{\partial \mathbf{D}(\mathbf{x},t)}{\partial t}\\
+
+\nabla \times \mathbf{E}(\mathbf{x},t) & = - \frac{\partial \mathbf{B}(\mathbf{x},t)}{\partial t}\\
+
+\nabla \cdot \mathbf{B}(\mathbf{x},t) & = 0\\
+
+\nabla \cdot \mathbf{D}(\mathbf{x},t) & = \rho(\mathbf{x},t)\\
+
+\mathbf{B}(\mathbf{x},t) &= \mu_0[\mathbf{H}(\mathbf{x}, t) + \mathbf{M}(\mathbf{x}, t)],\\
+
+\mathbf{J}(\mathbf{x},t) &= \sigma[\mathbf{E}(\mathbf{x}, t) + \mathbf{E}_i(\mathbf{x}, t)] = \sigma \mathbf{E}(\mathbf{x}, t) + \mathbf{J}_i(\mathbf{x}, t)\\
+
+\mathbf{D}(\mathbf{x},t) & = \epsilon_0 \mathbf{E}(\mathbf{x}, t) + \mathbf{P}(\mathbf{x}, t)
+\end{aligned}
+++++
+
+=== Variables, symbols and units
+
+The following table provides the names and units (in SI) of the symbols and variables above.
+
+.Name and units of symbols and variables of the Maxwell's equations
+|===
+| Notation | Quantity | Unit | SI
+
+| stem:[\mathbf{H}(\mathbf{x},t)] | magnetic field intensity | stem:[A\cdot m^{-1}] | stem:[A\cdot m^{-1}]
+
+| stem:[\mathbf{E}(\mathbf{x},t)] | electric field intensity | stem:[V\cdot m^{-1}] | stem:[kg\cdot m \cdot s^{-3}\cdot A^{-1}]
+
+| stem:[\mathbf{B}(\mathbf{x},t)] | magnetic flux density | stem:[T] | stem:[kg\cdot s^{-2}\cdot A^{-1}]
+
+| stem:[\mathbf{D}(\mathbf{x},t)] | electric flux density | stem:[C\cdot m^{-2}] | stem:[A\cdot s\cdot m^{-2}]
+
+| stem:[\mathbf{A}(\mathbf{x},t)] | magnetic potential vector | stem:[V\cdot s\cdot m^{-1}] |
+stem:[kg\cdot m \cdot s^{-2}\cdot A^{-1}]
+
+| stem:[\mathbf{J}(\mathbf{x},t)] | electric current density | stem:[A\cdot m^{-2}] | stem:[A\cdot m^{-2}]
+
+| stem:[\rho(\mathbf{x},t)] | electric charge density | stem:[C\cdot m^{-3}] |stem:[A\cdot s\cdot m^{-3}]
+
+| stem:[\mathbf{M}(\mathbf{x},t)] | magnetisation | stem:[A\cdot m^{-1}] | stem:[A\cdot m^{-1}]
+
+| stem:[\mathbf{E}_i(\mathbf{x},t)] | impressed electric  field  | stem:[V\cdot m^{-1}] | stem:[kg\cdot m \cdot s^{-3}\cdot A^{-1}]
+
+| stem:[\mathbf{J}_i(\mathbf{x},t)] | impressed electric  current  | stem:[A\cdot m^{-2}] | stem:[A\cdot m^{-2}]
+
+| stem:[\mathbf{P}(\mathbf{x},t)] | polarization | stem:[C\cdot m^{-2}] | stem:[A\cdot s\cdot m^{-2}]
+
+| stem:[\mu_0(\mathbf{x},t)] | permeability of vacuum | stem:[H\cdot m^{-1}] | stem:[kg\cdot m\cdot s^{-2}\cdot A^{-2}]
+
+| stem:[\sigma(\mathbf{x},t)] | conductivity | stem:[S\cdot m^{-1}] | stem:[kg^{-1}\cdot m^{-3}\cdot s^3\cdot A^2]
+
+| stem:[\epsilon_0(\mathbf{x},t)] | permittivity of vacuum | stem:[F\cdot m^{-1}] | stem:[kg^{-1}\cdot m^{-3}\cdot s^4\cdot A^2]
+|===
+
+The field quantities are depending on space stem:[\mathbf{x}] and on time stem:[t], we will omit later both in the notation and use e.g. stem:[\mathbf{H}, \mathbf{E}, \ldots]
+
+The sources of the electromagnetic fields are the electric current density stem:[\mathbf{J}] and the electric charge density stem:[\rho].
+
+=== Constitutive relations
+
+The last three equations in Maxwell's equations above collect the constitutive relations, which – depending on the properties of the examined material – describe the relationship between field quantities.
+
+In the simplest case these relations are linear, i.e.
+[stem]
+++++
+\mathbf{M} = \chi\mathbf{H},\quad \mathbf{E}_i=0,\quad \mathbf{P}=\epsilon_0\chi_d\mathbf{E}
+++++
+
+where stem:[\chi] and $$\chi_d$$ are the *magnetic* and the *dielectric susceptibility* respectively and
+[stem]
+++++
+\mathbf{B} = \mu \mathbf{H},\quad
+\mathbf{J} = \sigma \mathbf{E}, \quad
+\mathbf{D} = \epsilon_0 \mathbf{E}
+++++
+where
+[stem]
+++++
+\mu = \mu_0(1 + \chi) = \mu_0\mu_r,\quad \epsilon = \epsilon_0(1 + \chi_d) = \epsilon_0\epsilon_r.
+++++
+Here stem:[\mu_r = 1 + \chi] is the relative permeability, stem:[\epsilon_r = 1 + \chi_d] is the relative permittivity of the material and the conductivity stem:[\sigma] is constant. The equation stem:[\mathbf{J} = \sigma \mathbf{E}] is the differential form of Ohm’s law.
+
+The constitutive relations are  nonlinear in general, that is the permeability,  conductivity and  permittivity depend on the associated field quantities, i.e.
+[stem]
+++++
+\mu = \mu(\mathbf{H},\mathbf{B}),\quad \sigma = \sigma(\mathbf{E}, \mathbf{J}),\quad \epsilon = \epsilon(\mathbf{E}, \mathbf{D})
+++++
+or equivalently
+[stem]
+++++
+\mathbf{B} = \mathcal{B}(\mathbf{H}),\quad \mathbf{J} = \mathcal{J}(\mathbf{E}),\quad \mathbf{D} = \mathcal{D}(\mathbf{E})
+++++
+where $$\mathcal{B}(·), \mathcal{J}(·) \text{ and } \mathcal{D}(·)$$ are operators. We would actually need also the inverse operator, e.g.
+[stem]
+++++
+\mathbf{H} = \mathcal{B}^{-1}(\mathbf{B})
+++++
+
+=== Classification of Maxwell's Equations
+
+We now turn to the classification of the Maxwell’s equations.
+
+Steady case::
+The simplest case corresponds to the steady case:  the time variation of the field quantities can be neglected, i.e. $$\partial/\partial t = 0$$. The corresponding fields are called *static field*. In this case the magnetic, the electric and the current fields can be treated independently because there are no interactions between them.
+
+Time varying case::
+When stem:[\partial/\partial t = 0], the magnetic and electric fields are coupled, we are then in the presence of eddy current fields and wave propagation of electrodynamics.
+
+==== Static magnetic field
+
+The time independent current density stem:[\mathbf{J} = \mathbf{J}(\mathbf{x})] generates the time independent magnetic field intensity stem:[\mathbf{H} = \mathbf{H}(\mathbf{x})] and the time independent magnetic flux density stem:[\mathbf{B} = \mathbf{B}(\mathbf{x})].
+
+the magnetostatic Maxwell's equations read
+[stem]
+++++
+\begin{aligned}
+\nabla \times \mathbf{H}(\mathbf{x}) &= \mathbf{J}(\mathbf{x}) \\
+
+\nabla \cdot \mathbf{B}(\mathbf{x}) & = 0\\
+
+\mathbf{B}(\mathbf{x}) &=
+\begin{cases}
+\mu_0 \mathbf{H}\,& \text{ in air}\\
+\mu_0\mu_r \mathbf{H}\,& \text{ in magnetically linear media}\\
+\mu_0[\mathbf{H} + \mathbf{M}]\,& \text{ in magnetically nonlinear media}
+\end{cases}
+\end{aligned}
+++++
+
+In a nonlinear medium, the magnetization vector stem:[\mathbf{M} = \mathbf{M}(\mathbf{x})] is depending on the magnetic field intensity vector, i.e. stem:[\mathbf{M} = \mathcal{H}(\mathbf{H})].
+
+The operator stem:[\mathcal{H}] can be described by so-called *hysteresis* models denoted by stem:[\mathbf{B} = \mathcal{B}(\mathbf{H})].
+
+This constitutive relation has an inverse form which read
+[stem]
+++++
+\mathbf{H} =
+\begin{cases}
+\nu_0 \mathbf{B}\,& \text{ in air}\\
+\nu_0\nu_r \mathbf{B}\,& \text{ in magnetically linear media}\\
+\mathcal{B}^{-1}(\mathbf{B})\,& \text{ in magnetically nonlinear media}
+\end{cases}
+++++
+
+where stem:[\nu_0 = 1/\mu_0,\, \nu_r = 1/\mu_r] are the *reluctivity of vacuum* and the *relative reluctivity*.
+
+In magnetically nonlinear media, it can be represented by an inverse hysteresis operator, stem:[\mathbf{H} = \mathcal{B}^{-1}(\mathbf{B}).]
+
+NOTE: The source current distribution is *solenoidal*, which reads stem:[\nabla \cdot \mathbf{J} = 0] (take the divergence of the first Maxwell's equation).
+This means that all current lines either close upon themselves, or start and terminate at infinity.
+
+NOTE: This case corresponds to magnetic fields generated by *(i)* coils carrying currents or *(ii)* the static behavior of electrical machines. When stem:[\mathbf{J}=0], then a boundary value problem  to simulate e.g. the field of magnetic poles.
+
+== Magnetostatic problem formulation
+
+Denote stem:[\Omega_0] the non-magnetic (e.g. air) part of stem:[\Omega] (hence 0) and stem:[\Omega_m] the magnetic part.
+
+In the case of static magnetic field, the Maxwell's equations read
+
+[stem]
+++++
+\begin{aligned}
+\nabla \times \mathbf{H}(\mathbf{x}) &= \mathbf{J}(\mathbf{x}) \text{ in } \Omega_0 \cup \Omega_m\\
+
+\nabla \cdot \mathbf{B}(\mathbf{x}) & = 0 \text{ in } \Omega_0 \cup \Omega_m\\
+
+\mathbf{B}(\mathbf{x}) &=
+\begin{cases}
+\mu_0 \mathbf{H}\,& \text{ in air}\\
+\mu_0\mu_r \mathbf{H}\,& \text{ in magnetically linear media}\\
+\mathcal{B}(\mathbf{H}) = \mu_{\mathrm{o}} \mathbf{H}+\mathbf{R}\,& \text{ in magnetically nonlinear media}
+\end{cases}
+\end{aligned}
+++++
+The constitutive relation has an inverse form
+[stem]
+++++
+\begin{aligned}
+\mathbf{H}(\mathbf{x}) &=
+\begin{cases}
+\nu_0 \mathbf{B}\,& \text{ in air}\\
+\nu_0\nu_r \mathbf{B}\,& \text{ in magnetically linear media}\\
+\mathcal{B}^{-1}(\mathbf{B}) = \nu_{\mathrm{o}} \mathbf{B}+\mathbf{I}\,& \text{ in magnetically nonlinear media}
+\end{cases}
+\end{aligned}
+++++
+
+where stem:[\mu_{\mathrm{o}}] and stem:[\nu_{\mathrm{o}}] are the optimal permeability and reluctivity respectively obtained using the polarisation method described xref:polar[below].
+
+NOTE: Only the tangential components of stem:[\mathbf{H}] is continuous across the interface stem:[\Gamma_{0m}] between stem:[\Omega_0] and stem:[\Omega_m]. As to stem:[\mathbf{B}], it is its normal component which is continuous across stem:[\Gamma_{0m}].
+
+== Vector Potential formulation for magnetostatic
+
+The magnetic vector potential stem:[\mathbf{A}] is defined by
+[stem]
+++++
+\mathbf{B} = \nabla \times \mathbf{A}
+++++
+which satisfies stem:[\nabla \cdot \mathbf{B} = 0] exactly, because of the identity stem:[\nabla \cdot \nabla \times \mathbf{v} = 0] for any vector function stem:[\mathbf{v}].
+
+WARNING: To ensure the uniqueness of the magnetic vector potential, its divergence  can be selected according to Coulomb gauge,
+[stem]
+++++
+\nabla \cdot \mathbf{A} = 0
+++++
+This is useful, because the vector potential stem:[\mathbf{A}' = \mathbf{A} + \nabla \phi] also satisfies the equations above, because of the identity stem:[\nabla \times \nabla \phi = \mathbf{0}] where stem:[\phi] is a scalar field. This is the reason why the magnetic vector potential is not unique.
+
+Substituting the definition of stem:[\mathbf{A}]  into the first Maxwell’s equation and using the linearized constitutive relation, we get
+[stem]
+++++
+\nabla \times (\nu_{\mathrm{o}} \nabla \times \mathbf{A} ) = \mathbf{J} - \nabla \times \mathbf{I}\quad \text{ in } \Omega
+++++
+where stem:[\mathbf{J}] is the source current density.
+
+NOTE: In case where the media is linear, the term stem:[-\nabla\times\mathbf{I}] disappears.
+
+The strategy to solve this equation is discussed in the <<Strategy,Strategy Chapter>>.
+
+=== Benchmark
+
+We benchmark here our implementation.
+
+We set - for convenience - stem:[\mu_{\mathrm{o}}] to one in that convergence test.
+
+Given a sinusoïdal solution, we compute - with no regularization terms (we are not interested in the potential vector but its curl) - the appropriate right hand side and use the exact solution a boundary condition.
+
+[stem]
+++++
+\begin{aligned}
+\mathbf{J}&= \begin{pmatrix} 3 \pi^3 \cos(\pi x) \sin(\pi y)\sin(\pi z) \\ -6\pi^3 \sin(\pi x) \cos(\pi y) \sin(\pi z) \\ 3\pi^3 \sin(\pi x) \sin(\pi y) \cos(\pi z) \end{pmatrix} \\
+\mathbf{A}_{exact}&=\begin{pmatrix} \pi \cos(\pi  x) \sin(\pi y) \sin(\pi z)\\ -2\pi \sin(\pi x) \cos(\pi y) \sin(\pi z) \\ \pi \sin(\pi x) \sin(\pi y) \cos(\pi z)\end{pmatrix} \\
+\mathbf{c}&=\begin{pmatrix}3 \pi^2 \cos(\pi z) \cos(\pi y)\sin(\pi x)\\0 \\-(3\pi^2) \sin(\pi z) \cos(\pi y)\cos(\pi x )\end{pmatrix}
+\end{aligned}
+++++
+
+=== Regularized point system
+
+[stem]
+++++
+\begin{aligned}
+\nabla \times \left(\frac{1}{\mu_{\mathrm{o}}} \nabla \times \mathbf{A} \right) + \epsilon \mathbf{A} &= \mathbf{J} \quad \text{ in } \Omega \\
+\left.\mathbf{A}\right|_{\partial \Omega} &= \mathbf{A}_{exact} \\
+\end{aligned}
+++++
+
+=== Saddle point system
+
+[stem]
+++++
+\begin{aligned}
+\nabla \times \left(\frac{1}{\mu_{\mathrm{o}}} \nabla \times \mathbf{A} \right) + \nabla p &= \mathbf{J} \quad \text{ in } \Omega \\
+\nabla \cdot \mathbf{A} &= 0 \quad\text{ in } \Omega \\
+\left.\mathbf{A}\right|_{\partial \Omega} &= \mathbf{A}_{exact} \\
+\left.p\right|_{\partial \Omega} &= 0
+\end{aligned}
+++++
+
+The boundary condition can apply with penalization or elimination.
+We compare both results:
+image:convergence_saddle.png[alt="Saddle Point system convergence"]
