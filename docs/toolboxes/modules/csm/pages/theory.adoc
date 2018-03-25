@@ -1,0 +1,267 @@
+= Equations
+
+The second Newton's law allows us to define the fundamental equation of the solid mechanic, as follows 
+[stem]
+++++
+  \rho^*_{s} \frac{\partial^2 \boldsymbol{\eta}_s}{\partial t^2}
+  - \nabla \cdot \left(\boldsymbol{F}_s \boldsymbol{\Sigma}_s\right)
+  =    \boldsymbol{f}^t_s
+++++
+
+== Linear elasticity
+
+[stem]
+++++
+\begin{align}
+\boldsymbol{F}_s &= \text{Identity} \\
+\boldsymbol{\Sigma}_s &=\lambda_s tr( \boldsymbol{\epsilon}_s)\boldsymbol{I} +
+2\mu_s\boldsymbol{\epsilon}_s
+\end{align}
+++++
+
+== Hyper-elasticity
+
+
+=== Saint-Venant-Kirchhoff
+[stem]
+++++
+\boldsymbol{\Sigma}_s=\lambda_s tr( \boldsymbol{E}_s)\boldsymbol{I} +
+2\mu_s\boldsymbol{E}_s
+++++
+
+=== Neo-Hookean
+[stem]
+++++
+\boldsymbol{\Sigma}_s= \mu_s J^{-2/3}(\boldsymbol{I} - \frac{1}{3}
+\text{tr}(\boldsymbol{C}) \ \boldsymbol{C}^{-1})
+++++
+
+[stem]
+++++
+\boldsymbol{\Sigma}_s^ = \boldsymbol{\Sigma}_s^\text{iso} +
+\boldsymbol{\Sigma}_s^\text{vol}
+++++
+
+==== Isochoric part : stem:[\boldsymbol{\Sigma}_s^\text{iso}]
+
+[cols="1,1,1", options="header"]
+.Isochoric law
+|===
+| Name | stem:[\mathcal{W}_S(J_s)] | stem:[\boldsymbol{\Sigma}_s^{\text{iso}}]
+| Neo-Hookean | | stem:[\mu_s J^{-2/3}(\boldsymbol{I} - \frac{1}{3} \text{tr}(\boldsymbol{C}) \ \boldsymbol{C}^{-1}) ]
+|===
+
+==== Volumetric part : stem:[\boldsymbol{\Sigma}_s^\text{vol}]
+
+[cols="1,1,1", options="header"]
+.Volumetric law
+|===
+| Name | stem:[\mathcal{W}_S(J_s)] | stem:[\boldsymbol{\Sigma}_s^\text{vol}]
+| classic | stem:[\frac{\kappa}{2} \left( J_s - 1 \right)^2] |
+| simo1985 | stem:[\frac{\kappa}{2} \left( ln(J_s) \right)] |
+|===
+
+
+== Axisymmetric reduced model
+
+We interest us here to a 1D reduced model, named _generalized string_.
+
+The axisymmetric form, which will interest us here, is a tube of length stem:[L] and radius stem:[R_0]. It is oriented following the axis stem:[z] and stem:[r] represent the radial axis. The reduced domain, named stem:[\Omega_s^*] is represented by the dotted line. So the domain, where radial displacement stem:[\eta_s] is calculated, is stem:[\Omega_s^*=\lbrack0,L\rbrack].
+
+We introduce then stem:[\Omega_s^{'*}], where we also need to estimate a radial displacement as before. The unique variance is this displacement direction.
+
+[[img-geometry1]]
+image::{imagesdir}/toolbox/csm/ReduceModel.png[caption="Figure 1 : ", title="Geometry of the reduce model", alt="Reduced Model Geometry", width="500", align="center"]  
+
+The mathematical problem associated to this reduce model can be describe as 
+[stem]
+++++
+ \rho^*_s h \frac{\partial^2 \eta_s}{\partial t^2} - k G_s h \frac{\partial^2 \eta_s}{\partial x^2} + \frac{E_s h}{1-\nu_s^2} \frac{\eta_s}{R_0^2} - \gamma_v \frac{\partial^3 \eta}{\partial x^2 \partial t} = f_s.
+++++
+ 
+where stem:[\eta_s], the radial displacement that satisfy this equation, stem:[k] is the Timoshenko's correction factor, and stem:[\gamma_v] is a viscoelasticity parameter. The material is defined by its density stem:[\rho_s^*], its Young's modulus stem:[E_s], its Poisson's ratio stem:[\nu_s] and its shear modulus stem:[G_s]
+
+At the end, we take stem:[ \eta_s=0\text{ on }\partial\Omega_s^*] as a boundary condition, which will fixed the wall to its extremities.
+
+
+= CSM Toolbox
+
+== Models
+
+The solid mechanics model can be selected in json file :
+[source,json]
+.Listing : select solid model
+-----
+"Model":"Hyper-Elasticity"
+-----
+.Table of Models for `model` option
+|===
+| Model | Name in json
+
+| Linear Elasticity
+| `Elasticity`
+
+| Hyper Elasticity
+| `Hyper-Elasticity`
+
+|===
+
+
+
+When materials are closed to incompressibility formulation in
+displacement/pressure are available.
+
+
+.Table of Models for `material_law` with hyper elasticity model
+|===
+| Model | Name   | Volumic law
+
+| Saint-Venant-Kirchhoff
+| `SaintVenantKirchhoff`
+| classic, simo1985
+
+| NeoHookean
+| `NeoHookean`
+| classic, simo1985
+
+|===
+
+option: `mechanicalproperties.compressible.volumic_law`
+
+== Materials
+
+The Lamé coefficients are deducing from the Young's modulus stem:[E_s] and the Poisson's ratio stem:[\nu_s] of the material we work on and can be express 
+
+[stem]
+++++
+\lambda_s = \frac{E_s\nu_s}{(1+\nu_s)(1-2\nu_s)}
+\hspace{0.5 cm} 
+,
+\hspace{0.5 cm} 
+\mu_s = \frac{E_s}{2(1+\nu_s)}
+++++
+
+[source,json]
+.Materials section
+----
+"Materials":
+{
+    "<marker>":
+    {
+        "name":"solid",
+        "E":"1.4e6",
+        "nu":"0.4",
+        "rho":"1e3"
+    }
+}
+----
+
+where `E` stands for the Young's modulus in Pa, `nu` the Poisson's ratio (
+dimensionless ) and `rho` the density in stem:[kg\cdot m^{-3}].
+
+== Boundary Conditions
+
+.Boundary conditions
+|===
+| Name | Options | Type
+
+| Dirichlet
+| faces, edges and component-wise
+| "Dirichlet"
+
+| Neumann
+| scalar, vectorial
+| "Neumann_scalar" or "Neumann_vectorial"
+
+| Pressure follower ,
+| Nonlinear boundary condition set in deformed domain
+| TODO
+
+| Robin
+| TODO
+| TODO
+
+|===
+
+== Body forces
+
+.Volumic forces
+|===
+| Name | Options | Type
+
+| Expression
+| Vectorial
+| "VolumicForces"
+
+|===
+
+== Post Process
+
+=== Exports for visualisation
+The fields allowed to be exported in the `Fields` section are:
+
+- displacement
+- velocity
+- acceleration
+- stress or normal-stress
+- pressure
+- material-properties
+- pid
+- fsi
+- Von-Mises
+- Tresca
+- principal-stresses
+- all
+
+=== Measures
+
+ - Points
+ - Maximum
+ - Minimum
+ - VolumeVariation
+
+==== Points
+Same syntax as FluidMechanics with available Fields :
+
+- displacement
+- velocity
+- acceleration
+- pressure
+- principal-stress-0
+- principal-stress-1
+- principal-stress-2
+- sigma_xx, sigma_xy, ...
+
+==== Maximum/Minimum
+The Maximum and minimum can be evaluated and save on .csv file. User need to define (i) <Type> ("Maximum" or "Minimum"), 
+(ii) "<tag>" representing this data in the .csv file, (iii) "<marker>" representing the name of marked entities and (iv) the field where extremum is computed.
+
+[source,json]
+----
+"<Type>":
+{
+    "<tag>":
+    {
+        "markers":"marker>",
+        "fields":["displacement","velocity"]
+    }
+}
+----
+
+==== VolumeVariation
+[source,json]
+----
+"VolumeVariation":<marker>
+----
+
+== Run simulations
+
+programme avalaible :
+
+* `feelpp_toolbox_solid_2d`
+
+* `feelpp_toolbox_solid_3d`
+
+----
+mpirun -np 4 feelpp_toolbox_solid_2d --config-file=<myfile.cfg>
+----
