@@ -6,3 +6,5 @@ RUN mkdir /antora
 WORKDIR /antora
 
 ADD . /antora
+RUN useradd -r -u 999 -g buildkite-agent buildkite-agent
+USER buildkite-agent
