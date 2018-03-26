@@ -1,4 +1,49 @@
-= Equations
+= Computational Solid Mechanics
+// Don't put authors here! (see CONTRIBUTING)
+//*******************************************
+:page-layout: manual 
+:page-permalink: /toolbox/csm/model
+:page-root: ../../../../
+:title: Computational Solid Mechanics
+:imagesdir: /images/
+:sources: ../../../
+// Keep this include header at the end! (see CONTRIBUTING)
+include::../../../includes/header.adoc[]
+//*******************************************
+
+TIP: Benchmarks are available at link:/benchmarks/csm[CSM Benchmarks].
+
+== Notations and units
+
+|===
+| Notation | Quantity | Unit
+|stem:[\boldsymbol{\eta}_s]|displacement|stem:[m]
+|stem:[\rho_s]|density|stem:[kg.m^{-3}]
+|stem:[\lambda_s]|first Lamé coefficients|stem:[N.m^{-2}]
+|stem:[\mu_s]|second Lamé coefficients|stem:[N.m^{-2}]
+|stem:[E_s]|Young modulus|stem:[kg.m^{-1}.s^{-2}]
+|stem:[\nu_s]|Poisson's ratio|dimensionless
+|stem:[\boldsymbol{F}_s]|deformation gradient|
+|stem:[\boldsymbol{\Sigma}_s]| second Piola-Kirchhoff tensor |
+|stem:[f_s^t]|body force|
+|===
+
+* strain tensor stem:[\boldsymbol{F}_s = \boldsymbol{I} + \nabla \boldsymbol{\eta}_s]
+* Cauchy-Green tensor stem:[\boldsymbol{C}_s = \boldsymbol{F}_s^{T} \boldsymbol{F}_s]
+* Green-Lagrange tensor
+[stem]
+++++
+\begin{align}
+  \boldsymbol{E}_s &= \frac{1}{2} \left( \boldsymbol{C}_s - \boldsymbol{I} \right)  \\
+   &= \underbrace{\frac{1}{2} \left( \nabla \boldsymbol{\eta}_s + \left(\nabla
+   \boldsymbol{\eta}_s\right)^{T} \right)}_{\boldsymbol{\epsilon}_s}
+  + \underbrace{\frac{1}{2} \left(\left(\nabla \boldsymbol{\eta}_s\right)^{T}
+  \nabla \boldsymbol{\eta}_s \right)}_{\boldsymbol{\gamma}_s}
+\end{align}
+++++
+
+
+== Equations
 
 The second Newton's law allows us to define the fundamental equation of the solid mechanic, as follows 
 [stem]
@@ -8,7 +53,7 @@ The second Newton's law allows us to define the fundamental equation of the soli
   =    \boldsymbol{f}^t_s
 ++++
 
-== Linear elasticity
+=== Linear elasticity
 
 [stem]
 ++++
@@ -19,17 +64,17 @@ The second Newton's law allows us to define the fundamental equation of the soli
 \end{align}
 ++++
 
-== Hyper-elasticity
+=== Hyper-elasticity
 
 
-=== Saint-Venant-Kirchhoff
+==== Saint-Venant-Kirchhoff
 [stem]
 ++++
 \boldsymbol{\Sigma}_s=\lambda_s tr( \boldsymbol{E}_s)\boldsymbol{I} +
 2\mu_s\boldsymbol{E}_s
 ++++
 
-=== Neo-Hookean
+==== Neo-Hookean
 [stem]
 ++++
 \boldsymbol{\Sigma}_s= \mu_s J^{-2/3}(\boldsymbol{I} - \frac{1}{3}
@@ -42,7 +87,7 @@ The second Newton's law allows us to define the fundamental equation of the soli
 \boldsymbol{\Sigma}_s^\text{vol}
 ++++
 
-==== Isochoric part : stem:[\boldsymbol{\Sigma}_s^\text{iso}]
+===== Isochoric part : stem:[\boldsymbol{\Sigma}_s^\text{iso}]
 
 [cols="1,1,1", options="header"]
 .Isochoric law
@@ -51,7 +96,7 @@ The second Newton's law allows us to define the fundamental equation of the soli
 | Neo-Hookean | | stem:[\mu_s J^{-2/3}(\boldsymbol{I} - \frac{1}{3} \text{tr}(\boldsymbol{C}) \ \boldsymbol{C}^{-1}) ]
 |===
 
-==== Volumetric part : stem:[\boldsymbol{\Sigma}_s^\text{vol}]
+===== Volumetric part : stem:[\boldsymbol{\Sigma}_s^\text{vol}]
 
 [cols="1,1,1", options="header"]
 .Volumetric law
@@ -62,7 +107,7 @@ The second Newton's law allows us to define the fundamental equation of the soli
 |===
 
 
-== Axisymmetric reduced model
+=== Axisymmetric reduced model
 
 We interest us here to a 1D reduced model, named _generalized string_.
 
@@ -84,184 +129,3 @@ where stem:[\eta_s], the radial displacement that satisfy this equation, stem:[k
 At the end, we take stem:[ \eta_s=0\text{ on }\partial\Omega_s^*] as a boundary condition, which will fixed the wall to its extremities.
 
 
-= CSM Toolbox
-
-== Models
-
-The solid mechanics model can be selected in json file :
-[source,json]
-.Listing : select solid model
------
-"Model":"Hyper-Elasticity"
------
-.Table of Models for `model` option
-|===
-| Model | Name in json
-
-| Linear Elasticity
-| `Elasticity`
-
-| Hyper Elasticity
-| `Hyper-Elasticity`
-
-|===
-
-
-
-When materials are closed to incompressibility formulation in
-displacement/pressure are available.
-
-
-.Table of Models for `material_law` with hyper elasticity model
-|===
-| Model | Name   | Volumic law
-
-| Saint-Venant-Kirchhoff
-| `SaintVenantKirchhoff`
-| classic, simo1985
-
-| NeoHookean
-| `NeoHookean`
-| classic, simo1985
-
-|===
-
-option: `mechanicalproperties.compressible.volumic_law`
-
-== Materials
-
-The Lamé coefficients are deducing from the Young's modulus stem:[E_s] and the Poisson's ratio stem:[\nu_s] of the material we work on and can be express 
-
-[stem]
-++++
-\lambda_s = \frac{E_s\nu_s}{(1+\nu_s)(1-2\nu_s)}
-\hspace{0.5 cm} 
-,
-\hspace{0.5 cm} 
-\mu_s = \frac{E_s}{2(1+\nu_s)}
-++++
-
-[source,json]
-.Materials section
-----
-"Materials":
-{
-    "<marker>":
-    {
-        "name":"solid",
-        "E":"1.4e6",
-        "nu":"0.4",
-        "rho":"1e3"
-    }
-}
-----
-
-where `E` stands for the Young's modulus in Pa, `nu` the Poisson's ratio (
-dimensionless ) and `rho` the density in stem:[kg\cdot m^{-3}].
-
-== Boundary Conditions
-
-.Boundary conditions
-|===
-| Name | Options | Type
-
-| Dirichlet
-| faces, edges and component-wise
-| "Dirichlet"
-
-| Neumann
-| scalar, vectorial
-| "Neumann_scalar" or "Neumann_vectorial"
-
-| Pressure follower ,
-| Nonlinear boundary condition set in deformed domain
-| TODO
-
-| Robin
-| TODO
-| TODO
-
-|===
-
-== Body forces
-
-.Volumic forces
-|===
-| Name | Options | Type
-
-| Expression
-| Vectorial
-| "VolumicForces"
-
-|===
-
-== Post Process
-
-=== Exports for visualisation
-The fields allowed to be exported in the `Fields` section are:
-
-- displacement
-- velocity
-- acceleration
-- stress or normal-stress
-- pressure
-- material-properties
-- pid
-- fsi
-- Von-Mises
-- Tresca
-- principal-stresses
-- all
-
-=== Measures
-
- - Points
- - Maximum
- - Minimum
- - VolumeVariation
-
-==== Points
-Same syntax as FluidMechanics with available Fields :
-
-- displacement
-- velocity
-- acceleration
-- pressure
-- principal-stress-0
-- principal-stress-1
-- principal-stress-2
-- sigma_xx, sigma_xy, ...
-
-==== Maximum/Minimum
-The Maximum and minimum can be evaluated and save on .csv file. User need to define (i) <Type> ("Maximum" or "Minimum"), 
-(ii) "<tag>" representing this data in the .csv file, (iii) "<marker>" representing the name of marked entities and (iv) the field where extremum is computed.
-
-[source,json]
-----
-"<Type>":
-{
-    "<tag>":
-    {
-        "markers":"marker>",
-        "fields":["displacement","velocity"]
-    }
-}
-----
-
-==== VolumeVariation
-[source,json]
-----
-"VolumeVariation":<marker>
-----
-
-== Run simulations
-
-programme avalaible :
-
-* `feelpp_toolbox_solid_2d`
-
-* `feelpp_toolbox_solid_3d`
-
-----
-mpirun -np 4 feelpp_toolbox_solid_2d --config-file=<myfile.cfg>
-----
