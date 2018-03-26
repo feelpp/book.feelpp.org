@@ -15,8 +15,6 @@ install:
 	npm install --save . @antora/cli; \
 	npm install --save . @antora/site-generator-default \
 	npm install --save . serve
-	cp -r antora/* ${BUILD_DIR}
-	cp antora-* ${BUILD_DIR}
 
 
 build:
