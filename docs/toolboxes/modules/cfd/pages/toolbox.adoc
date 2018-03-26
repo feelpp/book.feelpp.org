@@ -1,21 +1,18 @@
 = CFD Toolbox
 
-[models]
 == Models
 
-The CFD Toolbox supports both the Stokes and the incompressible Navier-Stokes equations.
+The CFD Toolbox supports both the incompressible Navier-Stokes and the Stokes equations.
 
 The fluid mechanics model (`Navier-Stokes` or `Stokes`) can be selected in json file:
 
 [source,json]
 .Listing : select fluid model
 -----
-"Model": "Navier-Stokes"
+"Models": { "equations":"Navier-Stokes" }
 -----
 
-[materials]
 == Materials
-
 
 The next step is to define the fluid material by setting its properties namely the density stem:[\rho_f] and viscosity stem:[\mu_f].
 In next table, we find the correspondance between the mathematical names and the json names.
@@ -37,9 +34,9 @@ A `Materials` section is introduced in json file in order to configure the fluid
 ----
 "Materials":
 {
-    "<marker>"
+    "<name>"
     {
-        "name":"water",
+        "markers":"[marker1,marker2]",
         "rho":"1.0e3",
         "mu":"1.0"
     }
@@ -136,7 +133,7 @@ dimensionless
 
 
 
-[boundary_conditions]
+
 == Boundary Conditions
 We start by a listing of boundary conditions supported in fluid mechanics model.
 
@@ -145,18 +142,18 @@ We start by a listing of boundary conditions supported in fluid mechanics model.
 === Dirichlet on velocity
 
 A Dirichlet condition on velocity field reads:
-[stem]
+[env.equation]
 .Dirichlet condition
-++++
+--
 \boldsymbol{u}_f = \boldsymbol{g} \quad \text{ on } \Gamma
-++++
+--
 
 or only a component of vector stem:[\boldsymbol{u}_f =(u_f^1,u_f^2 ,u_f^3 )]
 
-[stem]
-++++
+[env.equation]
+--
 u_f^i = g \quad \text{ on } \Gamma
-++++
+--
 
 Several methods are available to enforce the boundary condition:
 
@@ -167,13 +164,11 @@ Several methods are available to enforce the boundary condition:
 === Dirichlet on pressure
 
 
-[stem]
-++++
-\begin{align}
+[env.equationalign]
+--
 p & = g \\
 \boldsymbol{u}_f \times {\boldsymbol{ n }} & = \boldsymbol{0}
-\end{align}
-++++
+--
 
 === Neumann
 
@@ -188,40 +183,40 @@ p & = g \\
 
 === Slip
 
-[stem]
-++++
+[env.equation]
+--
 \boldsymbol{u}_f \cdot \boldsymbol{ n } = 0
-++++
+--
 
 === Inlet
 
 The boundary condition at inlets allow to define a velocity profile on a set of marked faces stem:[\Gamma_{\mathrm{inlet}}] in fluid mesh:
-[stem]
-++++
+[env.equation]
+--
 \boldsymbol{u}_f = - g \ \boldsymbol{ n } \quad \text{ on } \Gamma_{\mathrm{inlet}}
-++++
+--
 
 The function stem:[g] is computed from flow velocity profiles:
 
 Constant profile::
-[stem]
-++++
+[env.equation]
+--
 \text{Find } g \in C^0(\Gamma) \text{ such that } \\
 \begin{eqnarray}
 g &=& \beta \quad &\text{ in } \Gamma \setminus \partial\Gamma
 \\
 g&=&0 \quad &\text{ on } \partial\Gamma
 \end{eqnarray}
-++++
+--
 Parabolic profile::
-[stem]
-++++
+[env.equation]
+--
 \text{Find } g \in H^2(\Gamma) \text{ such that : } \\
 \begin{eqnarray}
 \Delta g &=& \beta \quad &\text{ in } \Gamma \\
 g&=&0 \quad &\text{ on } \partial\Gamma
 \end{eqnarray}
-++++
+--
 
 where stem:[\beta] is a constant determined by adding a constraint to the inflow:
 
@@ -257,36 +252,36 @@ flow_rate:: stem:[\int_\Gamma ( g \ \boldsymbol{n} ) \cdot \boldsymbol{n} = \alp
 
 ==== Free outflow
 
-[stem]
-++++
+[env.equation]
+--
 \boldsymbol{\sigma}_{f} \boldsymbol{ n } = \boldsymbol{0}
-++++
+--
 
 ==== Windkessel model
 We use a 3-element Windkessel model for modeling an outflow boundary condition.
 We define stem:[P_l] a pressure and stem:[Q_l] the flow rate.
 The outflow model is discribed by the following system of differential equations:
-[stem]
-++++
+[env.equation]
+--
 \left\{
 \begin{aligned}
   C_{d,l} \frac{\partial \pi_l}{\partial t} + \frac{\pi_l}{R_{d,l}} = Q_l \\
   P_l = R_{p,l} Q_l + \pi_l
 \end{aligned}
 \right.
-++++
+--
 Coefficients stem:[R_{p,l}] and stem:[R_{d,l}] represent respectively the proximal and distal resistance.
 The constant stem:[C_{d,l}] is the capacitance of blood vessel.
 The unknowns stem:[P_l] and stem:[\pi_l] are called proximal pressure and distal pressure.
 Then we define the coupling between this outflow model and the fluid model by these two relationships:
 
-[stem]
-++++
+[env.equation]
+--
 \begin{align}
   Q_l &= \int_{\Gamma_l} \boldsymbol{u}_f \cdot \boldsymbol{ n }_f  \\
   \boldsymbol{\sigma}_f \boldsymbol{ n }_f &= -P_l \boldsymbol{ n }_f
 \end{align}
-++++
+--
 
 
 
@@ -453,7 +448,6 @@ alemesh_bc
 
 |===
 
-[body_forces]
 == Body forces
 
 Body forces are also defined in `BoundaryConditions` category in json file.
@@ -471,14 +465,17 @@ Body forces are also defined in `BoundaryConditions` category in json file.
 The marker corresponds to mesh elements marked with this tag.
 If the marker is an empty string, it corresponds to all elements of the mesh.
 
-[post_pro]
+
 == Post Processing
 
 [source,json]
 ----
 "PostProcess":
 {
-    "Fields":["field1","field2",...],
+    "Exports":
+    {
+        "fields":["field1","field2",...]
+    },
     "Measures":
     {
         "<measure type>":
@@ -494,7 +491,7 @@ If the marker is an empty string, it corresponds to all elements of the mesh.
 ----
 
 ==== Exports for vizualisation
-The fields allowed to be exported in the `Fields` section are:
+The fields allowed to be exported in the `fields` section are:
 
 - velocity
 - pressure
@@ -591,11 +588,13 @@ This function can be exported.
 },
 "PostProcess":
 {
-   "Fields":["velocity","pressure","pid","totoV","toto","toto2"],
+   "Exports":
+   {
+       "fields":["velocity","pressure","pid","totoV","toto","toto2"]
+   }
 }
 ----
 
-[stab]
 == Stabilization methods
 
 === GLS family
@@ -604,11 +603,11 @@ Galerkin leat-Square (GLS) stabilization methods can be activated from the cfg f
 Others options available are enumerated in the next table and must be given with the prefix `fluid.stabilization-gls`.
 
 [cols="1,1,1,1", options="header"]
-.GLS stabilzation options in CFG
+.GLS stabilzation options in CFG 
 |===
 | Option | Value | Default value |Description
 | type | `gls`,`supg`,`gls-no-pspg`, `supg-pspg`, `pspg` | `gls` | type of stabilization
-| parameter.method | `eigenvalue`,`doubly-asymptotic-approximation` | `eigenvalue` | method used to compute the stabilization parameter
+| parameter.method | `eigenvalue`,`doubly-asymptotic-approximation` | `eigenvalue` | method used to compute the stabilization parameter 
 | parameter.hsize.method | `hmin`,`h`,`meas` | `hmin` | method used for evalute an element mesh size
 | parameter.eigenvalue.penal-lambdaK | real | 0. | add a mass matrix scaled by this factor in the eigen value problem for the stabilization parameter
 | convection-diffusion.location.expressions | string | | if given, the stabilization is apply only on mesh location which verify ```expr>0```
@@ -618,234 +617,15 @@ Others options available are enumerated in the next table and must be given with
 
 NOTE: Documentation pending
 
-[run]
-== Running a CFD simulation
+== Run simulation
 
-There are two applications available, one for 2D and one for 3D CFD simulations
+programme avalaible :
 
 * `feelpp_toolbox_fluid_2d`
 
 * `feelpp_toolbox_fluid_3d`
 
-To run a CFD applications, use the following command
 ----
-mpirun <1> -np 4 <2> feelpp_toolbox_fluid_2d --config-file=<myfile.cfg><3>
+mpirun -np 4 feelpp_toolbox_fluid_2d --config-file=<myfile.cfg>
 ----
-<1>: run the application within the MPI environment
-<2>: run the application in parallel on 4 processors
 
-//== Action
-//
-//Let's finish with a simple example in order to show how this works.
-//We will interest us to a fluid flow into a cavity in 3D.
-//
-//==== Feel++ code
-//Here is the code
-//
-//First at all, we define our model type with
-//
-//----
-//typedef FeelModels::FluidMechanics< Simplex<FEELPP_DIM,1>,
-//                                    Lagrange<OrderVelocity,Vectorial,Continuous,PointSetFekete>,
-//                                    Lagrange<OrderPressure,Scalar,Continuous,PointSetFekete> > model_type;
-//----
-//
-//We choose here a stem:[\mathbb{P}_2] space for the velocity order and
-//stem:[\mathbb{P}_1] space for the pressure order. This definition allows us to
-//create our fluid model object FM like this
-//
-//----
-//auto FM = model_type::New("fluid");
-//----
-//
-//The method `New` retrieves all data from the configuration and json files and build a mesh if needed.
-//
-//With this object, we can initialize our model parameters, such as velocity or
-//boundaries conditions. Data on our model and on the numeric solver are then
-//save and print on the terminal. This is made by
-//
-//----
-//FM->init();
-//FM->printAndSaveInfo();
-//----
-//
-//Now that our model is completed, we can solve the associated problem. To begin the resolution
-//
-//----
-//FM->isStationary()
-//----
-//
-//determine if our model is stationary or not.
-//
-//If it is, then we need to solve our system only one time and export the obtained results.
-//
-//----
-//FM->solve();
-//FM->exportResults();
-//----
-//
-//If it's not, our model is time reliant, and a loop on time is necessary. Our model is then solve and the results are export at each time step.
-//
-//----
-// for ( ; !FM->timeStepBase()->isFinished(); FM->updateTimeStep() )
-//        {
-//            FM->solve();
-//            FM->exportResults();
-//        }
-//----
-//
-//===== Code
-//
-//[source,cpp]
-//----
-//{% include "../Examples/fluid_model.cpp" %}
-//----
-//
-//
-//==== Configuration file
-//
-//The config file is used to define options,  linked to our case, we would have the possibility to change at will. It can be, for example, files paths as follows
-//
-//----
-//[fluid]
-//geofile=$cfgdir/cavity3d.geo
-//filename=$cfgdir/cavity3d.json
-//
-//[exporter]
-//directory=applications/models/fluid/cavity3d/$fluid_tag
-//----
-//
-//It can also be resolution dependent parameters such as mesh elements size, methods used  to define our problem and solvers.
-//
-//----
-//[fluid]
-//solver=Oseen #Picard,Newton
-//
-//linearsystem-cst-update=false
-//jacobian-linear-update=false
-//
-//snes-monitor=true
-//snes-maxit=100
-//snes-maxit-reuse=100
-//snes-ksp-maxit=1000
-//snes-ksp-maxit-reuse=100
-//
-//pc-type=lu #gasm,lu,fieldsplit,ilu
-//----
-//In this case, we use Oseen to define our problem, we set the update of linear system constant and jacobian linear as "no update", we discretize values associated to SNES ( Scalable Nonlinear Equations Solvers ), and finally we choose LU as the preconditioner method.
-//
-//===== Code
-//
-//[source,cfg]
-//----
-//{% include "../Examples/cavity3d.cfg" %}
-//----
-//
-//==== Json file
-//
-//First at all, we define some general information like the name ( and short name ) and the model we would like to use
-//
-//[source,json]
-//----
-//"Name": "Fluid Mechanics",
-//"ShortName":"Fluid",
-//"Model":"Navier-Stokes",
-//----
-//
-//Then we define the link:#Material[material properties]. In our case, the fluid, define  by rho` its density in stem:[kg\cdot m^{-3}] and `mu` its dynamic viscosity in stem:[kg\cdot (m \cdot s)^{-1}], is the only material we have to define.
-//
-//[source,json]
-//----
-//"Materials":
-//    {
-//        "Fluid":{
-//            "name":"myFluidMat",
-//            "rho":"1.0",
-//            "mu":"0.01"
-//        }
-//    },
-//----
-//
-//The link:#Boundary_Conditions[boundary conditions] are the next aspect we define. Here, we impose on the velocity stem:[u_f] Dirichlet conditions at two specific places : `lid` and `wall`.
-//
-//[source,json]
-//----
-//"BoundaryConditions":
-//    {
-//        "velocity":
-//        {
-//            "Dirichlet":
-//            {
-//                "lid":
-//                {
-//                    "expr":"{ 1,0,0}:x:y:z"
-//                },
-//                "wall":
-//                {
-//                    "expr":"{0,0,0}"
-//                }
-//            }
-//        }
-//    }
-//----
-//
-//The link:#Post_Process[post process] aspect is the last one to define. We choose the fields we want to export ( velocity, pressure and pid ). Furthermore, we want to measure forces on `wall` and the pressure at point stem:[A].
-//
-//[source,json]
-//----
-//"PostProcess":
-//    {
-//        "Fields":["velocity","pressure","pid"],
-//        "Measures":
-//        {
-//            "Forces":"wall",
-//            "Points":
-//            {
-//                "pointA":
-//                {
-//                    "coord":"{0.5,0.5,0.5}",
-//                    "fields":"pressure"
-//                }
-//            }
-//        }
-//    }
-//}
-//----
-//
-//===== Code
-//
-//[source,json]
-//----
-//{% include "../Examples/cavity3d.json" %}
-//----
-//
-//==== Compilation/Execution
-//
-//Once you've a build dir, you just have to realise the command `make` at
-//
-//--------------------
-//{buildir}/applications/models/fluid
-//--------------------
-//
-//This will generate executables named `feelpp_application_fluid_*`. To execute it, you need to give the path of the cfg file associated to your case, with `--config-file`.
-//
-//For example
-//
-//----
-//./feelpp_application_fluid_3d --config-file={sourcedir}/applications/models/fluid/cavity/cavity3d.cfg
-//----
-//
-//is how to execute the case ahead.
-//
-//The result files are then stored by default in
-//
-//----
-// feel/applications/models/fluid/{case_name}/
-//   {velocity_space}{pression_space}{Geometric_order}/{processor_used}
-//----
-//
-//If we return once again at our example, the result files are in
-//
-//----
-// feel/applications/models/fluid/cavity3d/P2P1G1/np_1
-//----

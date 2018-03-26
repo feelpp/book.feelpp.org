@@ -1,16 +1,14 @@
 = Theory of Laminar Flows
 
-
-[notations]
 == Notations and units
 
 |===
 | Notation | Quantity | Unit
 
 |stem:[\rho_f]|fluid density|stem:[kg \cdot m^{-3}]
-|stem:[\mathbf{u}_f]|fluid velocity|stem:[m \cdot s^{-1}]
-|stem:[\mathbf{\sigma}_f]|fluid stress tensor|stem:[N \cdot m^{-2}]
-|stem:[\mathbf{f}^t_f]| source term | stem:[kg \cdot m^{-3} \cdot s^{-1}]
+|stem:[\boldsymbol{u}_f]|fluid velocity|stem:[m \cdot s^{-1}]
+|stem:[\boldsymbol{\sigma}_f]|fluid stress tensor|stem:[N \cdot m^{-2}]
+|stem:[\boldsymbol{f}^t_f]| source term | stem:[kg \cdot m^{-3} \cdot s^{-1}]
 |stem:[p_f]|pressure fields|stem:[kg \cdot m^{-1} \cdot s^{-2}]
 |stem:[\mu_f]| dynamic viscosity|stem:[kg \cdot m^{-1} \cdot s^{-1}]
 |stem:[\bar{U}]|characteristic inflow velocity|stem:[m \cdot s^{-1}]
@@ -19,24 +17,24 @@
 |===
 
 
-[equations]
 == Equations
 
 Navier-Stokes model is used to model incompressible Newtonian fluid.
 It can be described by these conservative laws :
 
-.Momentum conservation equation
 [stem]
+.Momentum conservation equation
 ++++
 \rho_{f} \left. \frac{\partial\mathbf{u}_f}{\partial t} \right|_\mathrm{x}
-+ \rho_{f} \left( \mathbf{u}_{f} \cdot \nabla_{\mathrm{x}} \right) \mathbf{u}_{f}
-- \nabla_{\mathrm{x}} \cdot \mathbf{\sigma}_{f} = \mathbf{f}^t_f , \quad \text{ in } \Omega^t_f \times \left[t_i,t_f \right]
++ \rho_{f} \left( \boldsymbol{u}_{f} \cdot \nabla_{\mathrm{x}} \right) \boldsymbol{u}_{f}
+- \nabla_{\mathrm{x}} \cdot \boldsymbol{\sigma}_{f} = \boldsymbol{f}^t_f , \quad \text{ in } \Omega^t_f \times \left[t_i,t_f \right]
 ++++
+
 
 [stem]
 .Mass conservation equation
 ++++
-\nabla_{\mathrm{x}} \cdot \mathbf{u}_{f} = 0, \quad \text{ in } \Omega^t_f \times \left[t_i,t_f \right]
+\nabla_{\mathrm{x}} \cdot \boldsymbol{u}_{f} = 0, \quad \text{ in } \Omega^t_f \times \left[t_i,t_f \right]
 ++++
 
 we complete this set of equations with the fluid constitutive law
@@ -44,15 +42,85 @@ we complete this set of equations with the fluid constitutive law
 [stem]
 .Material constitutive equation
 ++++
-\mathbf{\sigma}_{f} = -p_f \mathbf{I} + 2\mu_f D(\mathbf{u}_{f})
+\boldsymbol{\sigma}_{f} = -p_f \boldsymbol{I} + 2\mu_f D(\boldsymbol{u}_{f})
 ++++
 
-with strain tensor stem:[D(\mathbf{u}_{f})] defined by :
+with strain tensor stem:[D(\boldsymbol{u}_{f})] defined by :
 
 [stem]
 .Strain tensor
 ++++
-D(\mathbf{u}_{f}) = \frac{1}{2} (\nabla_\mathrm{x} \mathbf{u}_f + (\nabla_\mathrm{x} \mathbf{u}_f)^T)
+D(\boldsymbol{u}_{f}) = \frac{1}{2} (\nabla_\mathrm{x} \boldsymbol{u}_f + (\nabla_\mathrm{x} \boldsymbol{u}_f)^T)
 ++++
 
-An alternative model is the Stokes model. It is valid in the case of small Reynolds number. It corresponds to the same formulation than Navier-Stokes equations but without the convective term stem:[\left( \mathbf{u}_{f} \cdot \nabla_{\mathrm{x}} \right) \mathbf{u}_{f}] .
+An alternative model is the Stokes model. It is valid in the case of small Reynolds number. It corresponds to the same formulation than Navier-Stokes equations but without the convective term stem:[\left( \boldsymbol{u}_{f} \cdot \nabla_{\mathrm{x}} \right) \boldsymbol{u}_{f}] .
+
+=== Generalized Newtonian fluid
+
+A non newtonian fluid is characterized by a non constant viscosity, which is a function of strain rate stem:[\boldsymbol{D}\left(\boldsymbol{u}_{f}\right)].
+
+We start by introducing a metric of the rate of deformation, denoted by stem:[\dot{\gamma}]:
+
+[stem]
+.Rate of deformation
+++++
+\dot{\gamma} \equiv \sqrt{2 \ tr \left( \boldsymbol{D}\left(\boldsymbol{u}_{f}\right)^{2} \right)  }
+++++
+
+We represent the viscosity stem:[\mu_f] as a function of stem:[\dot{\gamma}].  The deviatoric stress tensor stem:[\boldsymbol{\tau}] is obtained thanks to generalised Newtonian model, which takes the following form:
+
+[stem]
+.Deviatoric stress tensor
+++++
+  \boldsymbol{\tau} = 2 \mu_f \left(\dot{\gamma} \right) \boldsymbol{D}\left(\boldsymbol{u}_{f}\right)
+++++
+
+The simplest example of a generalised Newtonian model is the power-law fluid, which has a viscosity given by:
+
+[stem]
+.Power law
+++++
+\mu_f \left(\dot{\gamma} \right) = k \dot{\gamma}^{n-1}
+++++
+
+where stem:[k] and stem:[n < 1] are two parameters related to fluid properties.
+
+[NOTE]
+.Blood flow viscosity
+====
+In the context of blood flow modeling, an extension of the power model was proposed by Walburn and Schneck.
+
+The parameters stem:[k] and stem:[n] are related to the hematocrit stem:[Ht] and Total Proteins Minus Albumin (TPMA) as follows
+
+[stem]
+++++
+k = C_1 e^{C_2 Ht} e^{C_4 \text{TPMA} / Ht }, \quad\quad    n = 1- C_3 H t
+++++
+====
+
+and stem:[C_i, i=1,..,4] are parameters to fit with experimental data.
+
+
+Another family of generalised Newtonian model can be defined from a function stem:[\Phi] express by:
+
+[stem]
+++++
+  \Phi\left( \dot{\gamma}, \mu_{\infty},\mu_{0} \right)
+  = \frac{\mu\left(\dot{\gamma}\right) - \mu_{\infty}}{\mu_{0}-\mu_{\infty}}
+++++
+
+where stem:[\mu_0] and stem:[\mu_{\infty}] are the asymptotic viscosities at zero and infinite shear rate.
+
+
+[cols="1,1", options="header"]
+|===
+| Viscosity law | stem:[\Phi\left( \dot{\gamma}, \mu_{\infty},\mu_{0} \right) ]
+| Carreau | stem:[\left(1+\left(\lambda\dot{\gamma}\right)^{2}\right)^{(n-1)/2}]
+| Carreau-Yasuda | stem:[\left(1+\left(\lambda\dot{\gamma}\right)^{a}\right)^{(n-1)/a}]
+|===
+
+
+
+
+
+// include::../../../man/03-modeling/Fluid/README.adoc[]
