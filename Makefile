@@ -14,15 +14,14 @@ install:
 	npm init -y; \
 	npm install --save . @antora/cli; \
 	npm install --save . @antora/site-generator-default \
-	npm install --save . serve
+	npm install --save . live-server
 
-
-build:
+build: clean
 	antora antora-local-feelpp-doc.yml
 	@echo "INFO: File generated in 'build/build/site/feelpp-doc/'"
 
 serve:
-	serve build/site
+	live-server --wait=1000 build/site
 
 clean:
 	rm -rf build
