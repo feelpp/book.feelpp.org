@@ -23,6 +23,9 @@ build: clean
 serve:
 	live-server --wait=1000 build/site
 
+sync: build
+	rsync -avz --delete build/site/ es15.siteground.eu:~/public_html/docs.feelpp.org/
+
 clean:
 	rm -rf build
 
