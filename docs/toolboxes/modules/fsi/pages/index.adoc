@@ -72,3 +72,50 @@ J_{\mathcal{A}_f^t} = det(\boldsymbol{F}_{\mathcal{A}_f^t})
 ++++
 
 
+
+
+== Fluid structure model 
+
+To describe and solve our fluid-structure interaction problem, we need to define a model, which regroup structure model and fluid model parts.
+
+We have then in one hand link:../CFD/README.adoc[the fluid equations], and in the other hand link:../CSM/README.adoc[the structure equations].
+
+[[img-geometry1]]
+image::FSIModel.png[caption="Figure 1 : ", title="FSI case example", alt="FSI", width="500", align="center"] 
+
+The solution of this model are stem:[(\mathcal{A}^t, \boldsymbol{u}_f, p_f, \boldsymbol{\eta}_s)].
+
+//{% include "git+https://github.com/feelpp/feelpp-book.git/en/03-modeling/FluidStructure/FSIModel.adoc" %}
+
+== ALE
+
+Generally, the solid mechanic equations are expressed in a Lagrangian frame, and the fluid part in Eulerian frame. To define and take in account the fluid domain displacement, we use a technique name ALE ( Arbitrary Lagrangian Eulerian ). This allow the flow to follow the fluid-structure interface movements and also permit us to have a different deformation velocity than the fluid one.
+
+Let denote stem:[\Omega^{t_0}] the calculation domain, and stem:[\Omega^t] the deformed domain at time stem:[t]. As explain before, we want to conserve the Lagrangian and Eulerian characteristics of each part, and to do this, we introduce stem:[\mathcal{A}^t] the ALE map.
+
+This map give us the position of stem:[x], a point in the deformed domain at time stem:[t] from the position of stem:[x^*] in the initial configuration stem:[\Omega^*].
+
+[[img-geometry2]]
+image::ALE.png[caption="Figure 2 : ", title="ALE map", alt="ALE", width="500", align="center"]  
+
+stem:[\mathcal{A}^t] is a homeomorphism, i.e. a continuous and bijective application we can define as 
+
+[stem]
+++++
+\begin{eqnarray*}
+  \mathcal{A}^t : \Omega^* &\longrightarrow & \Omega^{t} \\
+  \mathbf{x}^* &\longmapsto & \mathbf{x} \left(\mathbf{x}^*,t \right)  = \mathcal{A}^t \left(\mathbf{x}^*\right)
+\end{eqnarray*}
+++++
+
+We denote also  stem:[\forall \mathbf{x}^* \in \Omega^*], the application :
+
+[stem]
+++++
+\begin{eqnarray*}
+\mathbf{x} : \left[t_0,t_f \right] &\longrightarrow & \Omega^t \\
+t &\longmapsto & \mathbf{x} \left(\mathbf{x}^*,t \right)
+\end{eqnarray*}
+++++
+
+This ALE map can then be retrieve into the fluid-structure model. 
