@@ -18,14 +18,14 @@ First at all, we define the unit circle and its link:07-SpaceElements.adoc[funct
 
 [source,cpp]
 ----
-include::../../../codes/05-myexporter.cpp[tags=meshspace]
+include::{examplesdir}/05-myexporter.cpp[tags=meshspace]
 ----
 
 Then the expression we would like to evaluate :
 
 [source,cpp]
 ----
-include::../../../codes/05-myexporter.cpp[tags=expr]
+include::{examplesdir}/05-myexporter.cpp[tags=expr]
 ----
 
 `Px()` refers to the variable $$x$$ of our space.
@@ -34,7 +34,7 @@ With this,we can `project` it on our function space :
 
 [source,cpp]
 ----
-include::../../../codes/05-myexporter.cpp[tags=project]
+include::{examplesdir}/05-myexporter.cpp[tags=project]
 ----
 
 The expression will be evaluated on each point of our mesh.
@@ -43,14 +43,14 @@ In order to visualize the result, we create an exporter, named `exhi`, and add t
 
 [source,cpp]
 ----
-include::../../../codes/05-myexporter.cpp[tags=project]
+include::{examplesdir}/05-myexporter.cpp[tags=project]
 ----
 
 ==== Code
 
 [source,cpp]
 ----
-include::../../../codes/05-myexporter.cpp[tags=all]
+include::{examplesdir}/05-myexporter.cpp[tags=all]
 ----
 
 
@@ -62,14 +62,14 @@ In this second method, we will use Functor :
 
 [source,cpp]
 ----
-include::../../../codes/myfunctor.cpp[tags=functor]
+include::{examplesdir}/myfunctor.cpp[tags=functor]
 ----
 
 We create a unit square meshed by triangles and we define the associated function space :
 
 [source,cpp]
 ----
-include::../../../codes/myfunctor.cpp[tags=meshspace]
+include::{examplesdir}/myfunctor.cpp[tags=meshspace]
 ----
 
 
@@ -79,14 +79,14 @@ variable stem:[x] and the other to the variable stem:[y], obtain from
 
 [source,cpp]
 ----
-include::../../../codes/myfunctor.cpp[tags=elements]
+include::{examplesdir}/myfunctor.cpp[tags=elements]
 ----
 
 The data exportation is the final step to visualize our expression stem:[x] and stem:[y] on the defined mesh.
 
 [source,cpp]
 ----
-include::../../../codes/myfunctor.cpp[tags=exporter]
+include::{examplesdir}/myfunctor.cpp[tags=exporter]
 ----
 
 ==== Code
@@ -95,7 +95,7 @@ The complete code reads as follows
 
 [source,cpp]
 ----
-include::../../../codes/myfunctor.cpp[tags=all]
+include::{examplesdir}/myfunctor.cpp[tags=all]
 ----
 
 The list of the Feel++ Keyword is <<keywords.adoc,here>>.

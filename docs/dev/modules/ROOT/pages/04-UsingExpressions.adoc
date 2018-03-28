@@ -10,7 +10,7 @@ The next step is to construct a function space over the mesh.
 
 [source,cpp]
 ----
-include::../../../codes/04-myexpression.cpp[tag=mesh]
+include::{examplesdir}/04-myexpression.cpp[tag=mesh]
 ----
 
 - then we define some expression through the command line of config
@@ -31,7 +31,7 @@ library).
 
 [source,cpp]
 ----
-include::../../../codes/04-myexpression.cpp[tag=grad]
+include::{examplesdir}/04-myexpression.cpp[tag=grad]
 ----
 
 NOTE: template argument are given to `grad` to specify the
@@ -42,21 +42,21 @@ and stem:[2\times 2] for stem:[\nabla f] since we are in 2D.
 
 [source,cpp]
 ----
-include::../../../codes/04-myexpression.cpp[tag=laplacian]
+include::{examplesdir}/04-myexpression.cpp[tag=laplacian]
 ----
 
 - then we compute the divergence of `f`.
 
 [source,cpp]
 ----
-include::../../../codes/04-myexpression.cpp[tag=div]
+include::{examplesdir}/04-myexpression.cpp[tag=div]
 ----
 
 - and the curl of `f`
 
 [source,cpp]
 ----
-include::../../../codes/04-myexpression.cpp[tag=curl]
+include::{examplesdir}/04-myexpression.cpp[tag=curl]
 ----
 
 - Finally we evaluate these expressions at one point given by the option `x` and `y`.
@@ -66,13 +66,13 @@ include::../../../codes/04-myexpression.cpp[tag=curl]
 An implementation reads as follows:
 [source,cpp]
 ----
-include::../../../codes/04-myexpression.cpp[tag=all]
+include::{examplesdir}/04-myexpression.cpp[tag=all]
 ----
 and the associated config file
 
 [source,cpp]
 ----
-include::../../../codes/04-myexpression.cfg[]
+include::{examplesdir}/04-myexpression.cfg[]
 ----
 
 === Execution
