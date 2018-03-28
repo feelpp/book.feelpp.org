@@ -74,3 +74,10 @@ var cover = function( kv={} ) {
     svgfile="/_/js/book_cover_simple.svg"
     loadFile(svgfile, 10000, modcover, kv);
 }
+
+// Get the first link in childs element from id.
+function coverGetLink( id )
+{
+   var x = document.getElementById( id ).getElementsByTagName("a")[0].href;
+   window.location = x;
+}
