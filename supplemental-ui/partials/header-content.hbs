@@ -29,7 +29,7 @@
               <a class="navbar-item" href="{{{./url}}}"> {{{./title}}} </a>
             {{/if}} {{/each}} {{/if}} {{/each}}            
 
-            {{#each site.components}} {{#if (eq 'toolboxes-manual' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
+            {{#each site.components}} {{#if (eq 'toolboxes' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
               <a class="navbar-item" href="{{{./url}}}"> {{{./title}}} </a>
             {{/if}} {{/each}} {{/if}} {{/each}}
 
