@@ -1,8 +1,11 @@
 <header class="header" role="banner">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        <a href="https://book.feelpp.org">Feel++ documentation</a>
+    <div class="navbar-item">
+         <!--  <a href="https://book.feelpp.org">Feel++ documentation</a> -->
+         {{#each site.components}} {{#if (eq 'docs' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
+           <a href="{{{./url}}}">Feel++ documentation</a>
+         {{/if}} {{/each}} {{/if}} {{/each}}            
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -16,12 +19,20 @@
           <div class="navbar-link">Books</div>
           <div class="navbar-dropdown">
             <div class="navbar-item"><strong>Main</strong></div>
-            <a class="navbar-item" href="{{or site.url (or siteRootUrl siteRootPath)}}/user">User-Manual</a>
-            <a class="navbar-item" href="{{or site.url (or siteRootUrl siteRootPath)}}/feelpp-dev-manual">Dev-Manual</a>
-            <a class="navbar-item" href="{{or site.url (or siteRootUrl siteRootPath)}}/feelpp-toolboxes">Toolboxes</a>
-            <a class="navbar-item" href="{{or site.url (or siteRootUrl siteRootPath)}}/examples">Examples</a>
-            <a class="navbar-item" href="{{or site.url (or siteRootUrl siteRootPath)}}/benchmarks">Benchmarks</a>
-            <a class="navbar-item" href="{{ page.componentVersion.url }}">TEST</a>
+
+            <!-- this code allow to manage ordering of navbar item -->
+            {{#each site.components}} {{#if (eq 'user' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
+              <a class="navbar-item" href="{{{./url}}}"> {{{./title}}} </a>
+            {{/if}} {{/each}} {{/if}} {{/each}}            
+
+            {{#each site.components}} {{#if (eq 'dev' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
+              <a class="navbar-item" href="{{{./url}}}"> {{{./title}}} </a>
+            {{/if}} {{/each}} {{/if}} {{/each}}            
+
+            {{#each site.components}} {{#if (eq 'toolboxes-manual' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
+              <a class="navbar-item" href="{{{./url}}}"> {{{./title}}} </a>
+            {{/if}} {{/each}} {{/if}} {{/each}}
+
             <hr class="navbar-divider">
           </div>
         </div>
