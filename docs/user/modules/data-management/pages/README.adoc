@@ -17,6 +17,7 @@
 ** Ensight format :
 ** Ensight Gold format :
 ** VTK format :
+** VTK.js format :
 ** .csv : table of values
 * Feel++ database :
 ** .h5
@@ -72,9 +73,7 @@ The access to the github file can be done by :
 * using raw.githubusercontent.com
 * REST API
 
-== How to use the datas with Feel++ 
-
-=== Meshing/Partitioning
+== Data in Feel++ 
 
 === Simulations
 
@@ -101,21 +100,40 @@ If the data are not available locally, they can be retrieve remotely by specifyi
 
 The simulation will produce some datas like visualization files, simulation Journal files.
 
-=== Visualization
 
-==== Paraview
+=== Pre-Processing
+
+The mesh generation or the mesh partitioning can be a step expensive in time.
+We recommand to prepare these kind of data before to run the simulation.
+
+The mesh is built from a CAO file, the partitioning from the mesh file generated.
+
+The mesh (eventually the partitionning) is uploaded to the grider plateform
+
+=== Post-Processing
+
+After the simulation terminated, datas as vtk.js or screenshot of the visualisation can be produce through python scripts.
+This datas can be uploaded to the Girder plateform.
+
+
+== Visualization
+
+=== Paraview
 
 ParaView is an open-source, multi-platform data analysis and visualization application.
 
-==== Paraview-Web
+The data must be available locally.
+  
+=== Paraview-Web
 
 ParaViewWeb, the JavaScript library, is a Web framework to build applications with interactive scientific visualization inside the Web browser. Those applications can leverage a VTK and/or ParaView backend for large data processing and rendering, but can also be used on a static Web server like Apache or NGINX. You can even build local command line tools and use your browser to interact with your application.
 
-==== vtk.js
+The data must be available locally on the server side (where the ParaView server is launch).
+
+=== vtk.js
 
 vtk.js is a rendering library made for Scientific Visualization on the Web. It adapts the VTK structure and expertise to bring high performance rendering into your browser.
 
-=== Documentations
+The data can be available locally or on the web. We can directly give Girder url of ressource for example.
 
-
-
+== Documentations
