@@ -24,13 +24,35 @@
  ** .adoc :
  ** .png, .jpeg, ... :
 
-== Where the data are stored
+== Data storage
 
-=== Girder
+We use two kind of storage, it depends of the type of data.
+Mesh files, visualization files and simulation journal files are store in the Girder plateform, the others one in the Github repository.
+
+=== Girder plateform
 
 Girder is a free and open source web-based data management platform developed by Kitware as part of the Resonant data and analytics ecosystem.
+It is a complete back-end (server side) technology that can be used with other applications via its RESTful API, or it can be used via its own front-end (client side web pages and JavaScript).
 
-=== Github
+==== Data organisation
+
+Data can be stored for a particular user or in the concept of collections.
+This concept allow to share the data between one or several users (Groups concept).
+
+Data are organize in hierarchical structure with Folders and Files.
+When Folders or Files are defined, an unique ID is attributed at this entities.
+This id allow to access easily to the data.
+
+// A collection or a user have two repository, public adn private. The public repository
+
+==== Upload/Download data
+
+* Web interface
+* REST API
+* Girder CLI
+* Python Client
+
+=== Github repository
 
 
 == How to use the datas with Feel++ 
@@ -47,12 +69,11 @@ Girder is a free and open source web-based data management platform developed by
 
 ParaViewWeb, the JavaScript library, is a Web framework to build applications with interactive scientific visualization inside the Web browser. Those applications can leverage a VTK and/or ParaView backend for large data processing and rendering, but can also be used on a static Web server like Apache or NGINX. You can even build local command line tools and use your browser to interact with your application.
 
-=== Documentations
-
-==== Asciidoctor and Antora
-
 ==== vtk.js
 
 vtk.js is a rendering library made for Scientific Visualization on the Web. It adapts the VTK structure and expertise to bring high performance rendering into your browser.
+
+=== Documentations
+
 
 
