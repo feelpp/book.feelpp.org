@@ -1,8 +1,66 @@
 = Data Management
 
-== Types of data
+This document details how files are retrieved and produced within {feelpp}.
+The next sections will describes the required {feelpp} input data
+and the output data that {feelpp} generates.
+The type of files is detailed in section <<_type_of_data,Type Of Data>>.
 
-=== Input files :
+== Description
+
+=== Geometry and Mesh
+
+To run a simulation, {feelpp} needs to works with different input datasets.
+{feelpp} can use either a geometry file issued from CAD/CAD or directly
+a mesh file. A geometry/mesh file represents the domain of the study and is
+a requirement.
+
+NOTE: The mesh file can have potentially a big size!
+
+=== Configuration files
+
+Simulation configuration files are required to prepare the simulation (configure
+the mathematical model, the user environment, and different properties).
+
+NOTE: In particular, it indicates where the data are located.
+
+=== Visualization
+
+During the simulation, {feelpp} produces data outputs that can be visualize
+with post-processing software and exported in different formats.
+
+
+NOTE: Depending on the application, the outputs can have a big size!
+
+=== Database
+
+{feelpp} uses databases for different cases. They are used to store Certified
+Reduced Basis (CRB) basis. But also to store simulation journal metadata (See
+<<_benchmark,Benchmark>> section).
+information
+
+=== Benchmark
+
+Reproducibility is an important and difficult challenge. When all data are
+available (inputs/ouputs), reproducing existing simulation results for
+verification or validation purpose means to be able to place the simulation in
+the same original conditions (same user environment, parametrization,
+hardware). Often the only information available are the one described in
+papers. For example several tables, plots and parameters in the descriptions
+which may be incomplete. From the author point of view, the difficulty is to
+know what should or should not be presented in the paper to let the user be
+able to reproduce the main result.
+
+Feel++ introduces a benchmark system to help users first to better catch and
+store applications crucial information (problem size, hardware, ...). But
+also to be able to compare new simulation with known results.
+
+We distinguish currently to main parts in the full system: 
+
+1. The journal system
+2. The checker system
+3. The test system
+
+== Types of data
 
 * CAO files :
 ** .geo : interpreted by GMSH 
@@ -66,12 +124,22 @@ Collections and folder can defined with attributes :
 
 ==== Authentication
 
+=== MongoDB
+
+Several MongoDB database are used as storage. MongoDB storage
+can be seen in two ways:
+
+* static (stored local as a file, or local server)
+* server (stored on external mongodb server)
+
+
 === Github repository
 
 The access to the github file can be done by :
 
 * using raw.githubusercontent.com
 * REST API
+
 
 == Data in Feel++ 
 
@@ -98,7 +166,16 @@ If the data are not available locally, they can be retrieve remotely by specifyi
 
 ==== Output data
 
-The simulation will produce some datas like visualization files, simulation Journal files.
+The simulation will produce some datas:
+
+* Visualization file
+* Journal file
+
+:leveloffset: +4
+
+include::benchmark.adoc[]
+
+:leveloffset: -4
 
 
 === Pre-Processing
