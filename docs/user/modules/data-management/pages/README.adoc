@@ -1,7 +1,7 @@
 = Data Management
 
 This document details how files are retrieved and produced within {feelpp}.
-The section <<_description, Describtion>> will details the {feelpp} input
+The section <<_description, Description>> will details the {feelpp} input
 and output data generated.
 The different file formats are detailed in section <<_type_of_data,Type Of Data>>.
 The different data storage tools are detailed in section <<_data_in_feel, Data
@@ -36,9 +36,13 @@ NOTE: Depending on the application, the outputs can have a big size!
 === Database
 
 {feelpp} uses databases for different cases. They are used to store Certified
-Reduced Basis (CRB) basis. But also to store simulation journal metadata (See
-<<_benchmark,Benchmark>> section).
-information
+Reduced Basis (CRB) basis. But also to store simulation journal metadata 
+or checker database (See <<_benchmark,Benchmark>> section).
+
+=== Logging
+
+A logging system monitor the execution of the simulation. This logging system
+helps to determine the reason why the application might have failed.
 
 === Benchmark
 
@@ -47,44 +51,61 @@ available (inputs/ouputs), reproducing existing simulation results for
 verification or validation purpose means to be able to place the simulation in
 the same original conditions (same user environment, parametrization,
 hardware). Often the only information available are the one described in
-papers. For example several tables, plots and parameters in the descriptions
-which may be incomplete. From the author point of view, the difficulty is to
-know what should or should not be presented in the paper to let the user be
-able to reproduce the main result.
+papers. For example, reader have access to tables, plots and parameters 
+precised in results descriptions which may be incomplete. 
+From the author point of view, the difficulty is to know what should or should
+not be presented in the paper so that user may be able to reproduce the paper 
+main result.
 
-Feel++ introduces a benchmark system to help users first to better catch and
-store applications crucial information (problem size, hardware, ...). But
-also to be able to compare new simulation with known results.
+Feel++ introduces a benchmark system to help users first, to better catch and
+store crucial information of their applications (problem size, hardware, ...),
+but also to be able to compare new simulation results based on existing and
+validated one.
 
 We distinguish currently several parts that will interact with storage:
 
-1. The journal system
-2. The checker system
-3. The test system
+1. <<_journal, The journal system>>
+2. <<_checker_system, The checker system>>
+3. <<_testing_system, The testing system (ctest)>>
 
 ==== Journal
 
-This section details the {feelpp} "journal" system. The goal of this
-jour system is to retrieve simulation information in a metadata file.
+The principle of the {feelpp} journal is to retrieve the simulation information
+all gathered in a unique metadata file. 
+Two storage approach can be considered and are detailed hereafter.
 
-==== Static file (JSON)
+===== Static file (JSON)
 
-{feelpp} have a journal system to aggregates simulation information as metadata.
+A journal file is generated at the end of the simulation or at intermediate
+moments based on user event (step updates).
 
 NOTE: The journal is different from the main logging system and 
 serve two different purpose.
 
-A journal file is generated at the end of the simulation or at intermediate
-moments based on user event (step updates).
 By default, these metadata are stored in a unique JSON files (`journal.json`).
 This file is stored as part of the output and can be used to make queries.
 The journal file is versioned to guaranty comparison metadata compatibility
 between two simulation.
 
-==== Database (MongoDB)
+===== Database (MongoDB)
 
 {feelpp} can use link:https://www.mongodb.com/fr/[mongodb], a NOSQL database
-(weak dependency). Each generated journal file represent an entry.
+(weak dependency). Each generated journal file represent an entry of the mongodb
+database.
+
+==== Checker system
+
+The checker system permits to check some metrics to know whether the simulation
+has finished successfully or not. For example, different norms can be checked
+for a set of parameters. This system needs to access a known specific database
+(see <<database_mongodb, Database (MongoDB)>> section) to compute convergence
+curves or simply verify the result match a previous exact same simulation.
+
+==== Testing system
+
+{feelpp} deploys its applications as containers for different dedicated softwares
+(docker, singularity). These applications are tested to ensure they are working. 
+To be able to rerun tests
 
 == Types of data
 
