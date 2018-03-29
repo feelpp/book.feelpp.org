@@ -5,24 +5,26 @@
 === Input files :
 
 * CAO files :
- ** .geo :
- ** .step :
- * Mesh files :
- ** .msh :
- ** .h5+.json :
- * Configuration files
- ** .cfg :
- ** .json :
- * Visualization files (ParaView) :
- ** Ensight format :
- ** Ensight gold format :
- ** VTK format :
- ** .csv :
- * Simulation Journal files :
- ** .json :
- * Documentation files :
- ** .adoc :
- ** .png, .jpeg, ... :
+** .geo : interpreted by GMSH 
+** .step : interpreted by OpenCascade (and GMSH)
+* Mesh files :
+** .msh : the GMSH mesh format
+** .h5+.json : the Feel++ mesh format
+* Configuration files
+** .cfg : 
+** .json :
+* Visualization files (ParaView) :
+** Ensight format :
+** Ensight Gold format :
+** VTK format :
+** .csv : table of values
+* Feel++ database :
+** .h5
+* Simulation Journal files :
+** .json :
+* Documentation files :
+** .adoc :
+** .png, .jpeg, ... : images
 
 == Data storage
 
@@ -39,21 +41,36 @@ It is a complete back-end (server side) technology that can be used with other a
 Data can be stored for a particular user or in the concept of collections.
 This concept allow to share the data between one or several users (Groups concept).
 
-Data are organize in hierarchical structure with Folders and Files.
+Data are organized in hierarchical structure with Folders and Files.
 When Folders or Files are defined, an unique ID is attributed at this entities.
-This id allow to access easily to the data.
+These IDs allow to access easily to the data.
 
-// A collection or a user have two repository, public adn private. The public repository
+A levels of permission can be define for a ressource :
+
+* READ permission (can view and download resources)
+* WRITE permission (includes READ permission, can edit the properties of a resource)
+
+Collections and folder can defined with attributes :
+
+* Public (meaning viewable even by anonymous users)
+* Private (meaning viewable only by those with READ access).
 
 ==== Upload/Download data
 
-* Web interface
 * REST API
+* Web interface
 * Girder CLI
 * Python Client
+* JavaScript libraries
+
+==== Authentication
 
 === Github repository
 
+The access to the github file can be done by :
+
+* using raw.githubusercontent.com
+* REST API
 
 == How to use the datas with Feel++ 
 
@@ -64,6 +81,8 @@ This id allow to access easily to the data.
 === Visualization
 
 ==== Paraview
+
+ParaView is an open-source, multi-platform data analysis and visualization application.
 
 ==== Paraview-Web
 
