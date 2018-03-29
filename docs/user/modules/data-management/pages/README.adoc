@@ -36,13 +36,16 @@ NOTE: Depending on the application, the outputs can have a big size!
 === Database
 
 {feelpp} uses databases for different cases. They are used to store Certified
-Reduced Basis (CRB) basis. But also to store simulation journal metadata 
-or checker database (See <<_benchmark,Benchmark>> section).
+Reduced Basis (CRB) basis. But also in the benchmark system (See <<_benchmark,Benchmark>> 
+section for details).
+These database are stored on a distant server or can be saved statically 
+via DB dump.
 
 === Logging
 
 A logging system monitor the execution of the simulation. This logging system
 helps to determine the reason why the application might have failed.
+The logs are saved.
 
 === Benchmark
 
@@ -95,42 +98,98 @@ database.
 
 ==== Checker system
 
-The checker system permits to check some metrics to know whether the simulation
-has finished successfully or not. For example, different norms can be checked
-for a set of parameters. This system needs to access a known specific database
-(see <<database_mongodb, Database (MongoDB)>> section) to compute convergence
-curves or simply verify the result match a previous exact same simulation.
+The checker system permits to check some metrics in order to know whether the
+simulation has finished successfully or not. For example, different norms can
+be verified for a set of parameters. This system needs to access a
+specific and known database (see <<database_mongodb, Database (MongoDB)>> section).
+For example to compute convergence curves or simply verify the result match a
+previous exact same simulation.
+
+NOTE: This system works in conjonction with the journal system.
 
 ==== Testing system
 
 {feelpp} deploys its applications as containers for different dedicated softwares
-(docker, singularity). These applications are tested to ensure they are working. 
-To be able to rerun tests
+(docker, singularity). These applications are tested to ensure they are working.
+The testing system is based on CTest.
+Some test applications may be use checker, thus required (local/online) database
+access.
+
+=== Documentation
+
+Most {feelpp} documentation is generated using the asiidoc format.
+link:https://antora.org/[Antora] is used to generated the documention
+link:docs.feelpp.org[]. The man pages are automatically generated in the same
+format and details each application usage.
+The documentation is automatically generated and stored on an specific web server.
 
 == Types of data
 
-* CAO files :
-** .geo : interpreted by GMSH 
-** .step : interpreted by OpenCascade (and GMSH)
-* Mesh files :
-** .msh : the GMSH mesh format
-** .h5+.json : the Feel++ mesh format
-* Configuration files
-** .cfg : 
-** .json :
-* Visualization files (ParaView) :
-** Ensight format :
-** Ensight Gold format :
-** VTK format :
-** VTK.js format :
-** .csv : table of values
-* Feel++ database :
-** .h5
-* Simulation Journal files :
-** .json :
-* Documentation files :
-** .adoc :
-** .png, .jpeg, ... : images
+The following table summarize the type of data used and generated in {feelpp}:
+
+.{feelpp} type of file
+[options="header"]
+|===
+| Type | format(s) | description
+
+1.2+| <<_geometry_and_mesh,CAO files>>
+| .geo 
+| interpreted by GMSH 
+
+| .step 
+| interpreted by OpenCascade (and GMSH)
+
+1.2+| <<_geometry_and_mesh,Mesh files>>
+| .msh 
+| the GMSH mesh format
+
+|.h5+, .json
+| the Feel++ mesh format
+
+
+1.2+| <<_configuration_files,Configuration files>>
+|.cfg : 
+| {feelpp} configuration
+
+| .json :
+| {feelpp} model configuration
+
+1.5+| <<_visualization,Visualization files>> _(ParaView)_
+| Ensight format
+| 
+
+| Ensight Gold format
+|
+
+| VTK format
+|
+
+| VTK.js 
+| vtkjs export file (used in documentation)
+
+| .csv
+| table of values
+
+1.3+| <<_database,{feelpp} database>>
+| .h5
+| computation mesh, database, ...
+
+| json
+| journal files
+
+| mongodb dump
+| BSON/JSON based database dump file (journal, CRB,...)
+
+1.2+| <<_documentation, Documentation files>>
+| .adoc 
+| documentation, man
+
+| .png, .jpeg, ...
+| images
+
+
+|===
+
 
 == Data storage
 
