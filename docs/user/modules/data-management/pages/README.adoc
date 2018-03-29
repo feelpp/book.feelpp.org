@@ -1,9 +1,11 @@
 = Data Management
 
 This document details how files are retrieved and produced within {feelpp}.
-The next sections will describes the required {feelpp} input data
-and the output data that {feelpp} generates.
-The type of files is detailed in section <<_type_of_data,Type Of Data>>.
+The section <<_description, Describtion>> will details the {feelpp} input
+and output data generated.
+The different file formats are detailed in section <<_type_of_data,Type Of Data>>.
+The different data storage tools are detailed in section <<_data_in_feel, Data
+in {feelpp}>>.
 
 == Description
 
@@ -54,11 +56,35 @@ Feel++ introduces a benchmark system to help users first to better catch and
 store applications crucial information (problem size, hardware, ...). But
 also to be able to compare new simulation with known results.
 
-We distinguish currently to main parts in the full system: 
+We distinguish currently several parts that will interact with storage:
 
 1. The journal system
 2. The checker system
 3. The test system
+
+==== Journal
+
+This section details the {feelpp} "journal" system. The goal of this
+jour system is to retrieve simulation information in a metadata file.
+
+==== Static file (JSON)
+
+{feelpp} have a journal system to aggregates simulation information as metadata.
+
+NOTE: The journal is different from the main logging system and 
+serve two different purpose.
+
+A journal file is generated at the end of the simulation or at intermediate
+moments based on user event (step updates).
+By default, these metadata are stored in a unique JSON files (`journal.json`).
+This file is stored as part of the output and can be used to make queries.
+The journal file is versioned to guaranty comparison metadata compatibility
+between two simulation.
+
+==== Database (MongoDB)
+
+{feelpp} can use link:https://www.mongodb.com/fr/[mongodb], a NOSQL database
+(weak dependency). Each generated journal file represent an entry.
 
 == Types of data
 
