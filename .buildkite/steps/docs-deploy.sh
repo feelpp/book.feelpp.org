@@ -8,7 +8,9 @@ export WEBSERVER=es15.siteground.eu
 
 echo "--- Deploying $PROJECT..."
 
-buildkite-agent artifact download "build/*" build/
+
+buildkite-agent artifact download site.tar.gz . --build ${BUILDKITE_BUILD_ID}
+
 ls -l build
 cd build/
 export WEBSERVER=es15.siteground.eu
