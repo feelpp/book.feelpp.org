@@ -18,10 +18,14 @@ a requirement.
 
 NOTE: The mesh file can have potentially a big size!
 
+=== Fields
+
+A field file represent a function defined on a mesh, which is associated to FunctionSpace concept.
+This files can be used in many context : restart a simulation, defined an initial solution from another simulation, post-processing,
+
 === Configuration files
 
-Simulation configuration files are required to prepare the simulation (configure
-the mathematical model, the user environment, and different properties).
+Configuration files are required to setup the simulation : mesh files, physical model, solution strategy, post-processing, ...
 
 NOTE: In particular, it indicates where the data are located.
 
@@ -35,11 +39,11 @@ NOTE: Depending on the application, the outputs can have a big size!
 
 === Database
 
-{feelpp} uses databases for different cases. They are used to store Certified
-Reduced Basis (CRB) basis. But also in the benchmark system (See <<_benchmark,Benchmark>> 
-section for details).
-These database are stored on a distant server or can be saved statically 
-via DB dump.
+{feelpp} can produce several kind of databases, dependings of the context (e.g. Certified Reduced Basis, POD).
+Once generated, these database can be stored on a distant server or saved statically via DB dump.
+
+//But also in the benchmark system (See <<_benchmark,Benchmark>>  section for details).
+//These database are stored on a distant server or can be saved statically via DB dump.
 
 === Logging
 
@@ -130,62 +134,31 @@ The following table summarize the type of data used and generated in {feelpp}:
 .{feelpp} type of file
 [options="header"]
 |===
-| Type | format(s) | description
+| Type | format(s)
 
-1.2+| <<_geometry_and_mesh,CAO files>>
-| .geo 
-| interpreted by GMSH 
+| <<_geometry_and_mesh,CAO files>>
+| .geo , .step 
 
-| .step 
-| interpreted by OpenCascade (and GMSH)
+| <<_geometry_and_mesh,Mesh files>>
+| HDF5+JSON, all read by GMSH
 
-1.2+| <<_geometry_and_mesh,Mesh files>>
-| .msh 
-| the GMSH mesh format
+| <<_fields,Fields files>>
+| HDF5, Boost serialization
 
-|.h5+, .json
-| the Feel++ mesh format
+| <<_configuration_files,Configuration files>>
+| CFG, JSON 
 
+| <<_visualization,Visualization files>>
+| Ensight, Ensight Gold, VTK, VTK.js, CSV
 
-1.2+| <<_configuration_files,Configuration files>>
-|.cfg : 
-| {feelpp} configuration
+| <<_journal,Journal files>>
+| JSON
 
-| .json :
-| {feelpp} model configuration
+| <<_database,{feelpp} database>>
+| HDF5+JSON, Boost serialization, mongodb dump
 
-1.5+| <<_visualization,Visualization files>> _(ParaView)_
-| Ensight format
-| 
-
-| Ensight Gold format
-|
-
-| VTK format
-|
-
-| VTK.js 
-| vtkjs export file (used in documentation)
-
-| .csv
-| table of values
-
-1.3+| <<_database,{feelpp} database>>
-| .h5
-| computation mesh, database, ...
-
-| json
-| journal files
-
-| mongodb dump
-| BSON/JSON based database dump file (journal, CRB,...)
-
-1.2+| <<_documentation, Documentation files>>
-| .adoc 
-| documentation, man
-
-| .png, .jpeg, ...
-| images
+| <<_documentation, Documentation files>>
+| .adoc, .png, .jpeg, ...
 
 
 |===
