@@ -1,19 +1,4 @@
 steps:
- - name: ':jekyll: :book:'
-   command: .buildkite/steps/build.sh
-   agents:
-     asciidoctor: true
-   env:
-     PROJECT: book.feelpp.org
- - wait
- - name: ':rocket: :book:'
-   command: .buildkite/steps/deploy.sh
-   branches: master
-   agents:
-     asciidoctor: true
-   env:
-     PROJECT: book.feelpp.org
- - wait
  - name: ':antora: :book:'
    command: .buildkite/steps/antora-build.sh
    agents:
