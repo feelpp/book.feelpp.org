@@ -10,6 +10,7 @@ echo "--- Deploying $PROJECT..."
 
 
 buildkite-agent artifact download site.tar.gz . --build ${BUILDKITE_BUILD_ID}
+tar xzf site.tar.gz
 
 ls -l build
 cd build/
