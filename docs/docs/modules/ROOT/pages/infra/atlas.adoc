@@ -1,28 +1,10 @@
 = Atlas cluster
-// Don't put authors here! (see CONTRIBUTING)
-//*******************************************
-:page-root: ../../
-:page-layout: manual
-:page-permalink: /clusters/atlas/
-:doctype: book
-:docinfo: shared
-:toc: left
-:toclevels: 5
-:sectnums:
-:imagesdir: ../images/
-// Keep this include header at the end! (see CONTRIBUTING)
-include::../includes/header.adoc[]
-//*******************************************
-
 
 include::../includes/topnote.adoc[]
 
-'''
 image::clusters/atlas.jpg[role="related thumb right"]
-The proper ressources cluster of the 
+The proper ressources cluster of the
 link:http://irma.math.unistra.fr/[Research Institute Advanced Mathematics (IRMA - UMR7501)].
-
-<<<
 
 == Prerequisites
 
@@ -49,7 +31,7 @@ operations.
 |===
 | Mountpoint | Description | Usage
 
-| /data/, 
+| /data/,
 | Normal I/O operations (Hard Drive),
 | Store your computed data
 
@@ -108,7 +90,7 @@ module load singularity/2.2.1
 
 We provide currently one singularity image container in the directory `/data/images`.
 
-TIP: Contrary to docker, singularity does not allow to modify a container 
+TIP: Contrary to docker, singularity does not allow to modify a container
 for security purposes, root priviledges are required.
 
 First of all, copy the image in your `${HOME}` directory
@@ -140,7 +122,7 @@ files on the host `/home/user` directory can create conflicts and produce unwant
 ===== Modify the Feel++ singularity image
 
 Root priviledge are required to modify an image. To proceed, you should first
-install singularity on your machine. 
+install singularity on your machine.
 On your machine, copy a {feelpp} image locally
 [source,bash]
 ----
@@ -231,7 +213,7 @@ Currently, a {feelpp} module is provided for a nightly build version.
 module load feelpp/nightly
 ----
 
-{feel++} is now available in the system 
+{feel++} is now available in the system
 
 
 TIP: the module set the environement variable *FEELPP_DIR* for the path to the {feelpp} installation
@@ -340,7 +322,7 @@ IMPORTANT: Paraview and pvserver must be the same version!
 ==== Docker containers
 
 {feelpp} provides paraview directly in the docker image.
-First, you have to run a new container on atlas. 
+First, you have to run a new container on atlas.
 Don't forget to mount the volume `/feel` for {feelpp} applications.
 We have to add an option to use the same network than irma-atlas
 `--network=host`
@@ -394,12 +376,3 @@ object visible.
 At this time, you can add all filters as usual for post-processing.
 
 Once you're ready, resume catalyst `[catalyst]->[continue]`
-
-
-Enjoy!
-
-
-'''
-image::logos/svg/logoIRMA.svg[cemosis,80,float="left"]
-image::logos/logo_cemosis.png[cemosis,80,float="left"]
-image::logos/svg/logoUDS.svg[cemosis,80,float="left"]

@@ -1,20 +1,6 @@
 = Finis Terrae
-// Don't put authors here! (see CONTRIBUTING)
-//*******************************************
-:page-root: ../../
-:page-layout: manual
-:page-permalink: /clusters/ft2/
-:doctype: book
-:docinfo: shared
-:toc: left
-:toclevels: 1
-:sectnums:
-:imagesdir: ../images/
-// Keep this include header at the end! (see CONTRIBUTING)
-include::../includes/header.adoc[]
-//*******************************************
 
-include::../includes/topnote.adoc[]
+include::{partialsdir}/topnote.adoc[]
 
 image::clusters/ft2.jpg[float="right",align="center"]
 
@@ -22,7 +8,7 @@ CESGA Computing Center
 
 == Preriquisites
 
-* You have to own an account on the machine. See the 
+* You have to own an account on the machine. See the
 link:https://services-numeriques.unistra.fr/les-services-aux-usagers/hpc/acces-aux-ressources.html[cluster documentation]
 for the first step on the cluster.
 * To use differents libraries version that match your need, the cluster uses link:http://modules.sourceforge.net/[environment modules]
@@ -38,12 +24,12 @@ You should be familiar with job creation and job submission before going further
 [source,bash]
 ----
 module load gcc/5.3.0
-module load openmpi/1.10.2 
+module load openmpi/1.10.2
 module load singularity/2.2.1
 module load feelpp-toolboxes/0.102.00
 ----
 
-Now you should be able to access via the terminal to default feel++ 
+Now you should be able to access via the terminal to default feel++
 applications.
 
 To run an application,
