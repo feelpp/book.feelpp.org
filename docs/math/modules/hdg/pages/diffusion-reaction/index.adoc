@@ -1,34 +1,4 @@
 = HDG methods for diffusion-reaction
-:author: Daniele Prada
-:email: 
-:revnumber: 1.0
-:revdate: 2016/03/30
-:page-layout!: 
-:page-permalink: /hdg/
-:page-root: /
-:title: Hybrid Discontinuous Galerkin
-:description: 
-:keywords: Feel++, partial differential equations, finite element method, HDG
-:doctype: book
-:docinfo: shared
-:sectanchors:
-:sectlinks:
-:sectnums:
-:linkattrs:
-:icons: font
-:stem: latexmath
-:toc: left
-:toclevels: 3
-:y: icon:check[role="green"]
-:n: icon:times[role="red"]
-:c: icon:file-text-o[role="blue"]
-:source-highlighter: pygments
-:imagesdir: /images/
-:sources: ../../
-:uri-github: https://github.com/
-:uri-feelpp-issues: https://github.com/feelpp/feelpp/issues
-:feelpp: Feel++
-:cpp: C++
 
 Most of the material presented in this section can be found in link:{biblio}#cockburn2009}[(Cockburn 2009)].
 
@@ -49,9 +19,9 @@ Here stem:[\Omega\subset\mathbb R^n] is a polyhedral domain stem:[(n\geq 2)], st
 The Darcy problem presented in <<stabilized-formulations>> fits into this framework. Here, rather than using stabilized Galerkin formulations, the idea is to insert a Lagrange multiplier to handle the continuity of the normal components of the approximated flux stem:[\mathbf{u}_h]. In other words, the requirement stem:[\mathbf{u}_h\in H(\text{div},\Omega)] will be written in weak form initially, and then recovered in strong form later.
 The introduction of a Lagrange multipliers leads to a formulation with three fields link:{biblio}#boffi2013}[(Boffi 2013)]. We will show how the interior fields can be eliminated in order to build a discrete system that has lost the saddle point structure and only contains degrees of freedom on the faces.
 
-= The general structure of the methods
+== The general structure of the methods
 
-== Notation
+=== Notation
 
 Let stem:[\Omega_h] be a collection of disjoint elements that partition stem:[\Omega]. The shape of the elements is not important in this general framework. Moreover, stem:[\Omega_h] needs not to be conforming. An interior ''face'' of stem:[\Omega_h] is any set stem:[F] of positive stem:[(n-1)]-Lebesgue measure of the form stem:[F = \partial K^\+\cap\partial K^-] for some two elements stem:[K^+] and stem:[K^-] of stem:[\Omega_h]. We say that stem:[F] is a boundary face if there is an element stem:[K\in\Omega_h] such that stem:[F = \partial K\cap\Gamma] and the stem:[(n-1)]-Lebesgue measure of stem:[F] is not zero. Let stem:[\mathcal E^o_h] and stem:[\mathcal E^\partial_h] denote the set of interior and boundary faces of stem:[\Omega_h], respectively. We denote by stem:[\mathcal E_h] the union of all the faces in stem:[\mathcal E^o_h] and stem:[\mathcal E^\partial_h].
 
@@ -96,37 +66,41 @@ A similar notation will be used for scalar functions. For functions stem:[u] and
 ++++
 
 
-== Reaching the formulation
-=== A characterization of the exact solution
+=== Reaching the formulation
+==== A characterization of the exact solution
 Two functions stem:[\mathbf u, p] are exact solutions of stem:[(1)-(4)] if and only if they satisfy the _local_ problems
-$$
+[stem]
+++++
 \begin{align*}
 \Lambda\mathbf u + \nabla p &= \mathbf 0 & &\text{in }K,\\
 \nabla\cdot\mathbf u + d p &= f & &\text{in K},
 \end{align*}
-$$
+++++
 the _transmission_ conditions
-$$
+[stem]
+++++
 \begin{align*}
 [[ \hat p ]] &= 0 & &\text{if }F\in\mathcal E^o_h,\\
 [[ \hat{\mathbf u}]] &= 0 & &\text{if }F\in\mathcal E^o_h,
 \end{align*}
-$$
+++++
 and the boundary conditions
-$$
+[stem]
+++++
 \begin{align}
 \hat p &= h_D & &\text{if }F\in\Gamma_D,\\
 \hat{\mathbf u}\cdot\mathbf n &= h_N & &\text{if }F\in\Gamma_N,
 \end{align}
-$$
+++++
 where stem:[\hat p] and stem:[\hat{\mathbf u}] are the traces of stem:[p] and stem:[\mathbf u], respectively. The transmission conditions state that the normal component of stem:[\hat{\mathbf u}] across interelement boundary must be continuous. We can obtain stem:[(\mathbf u, p)] in stem:[K] in terms of stem:[\hat p] on stem:[\partial K] and stem:[f] by solving the following _local_ Dirichlet problem
-$$
+[stem]
+++++
 \begin{align*}
 \Lambda\mathbf u + \nabla p &= \mathbf 0 & &\text{in }K, & &(5)\\
 \nabla\cdot\mathbf u + d p &= f & &\text{in K}, & &(6)\\
 p &= \hat p & &\text{on }\partial K. & &(7)
 \end{align*}
-$$
+++++
 The function stem:[\hat p] can now be determined as the solution, on each stem:[F\in\mathcal E_h], of the _global_ equations
 $$
 \begin{align*}
@@ -139,7 +113,7 @@ $$
 Hybrid methods are obtained by constructing *discrete* versions of stem:[(5)-(10)]. In this way, the *globally coupled* degrees of freedom will be those of the corresponding global formulations.
 
 
-=== The local solvers: a weak formulation on each element
+==== The local solvers: a weak formulation on each element
 From stem:[(5)-(7)], on the element stem:[K\in\Omega_h], we define stem:[(\mathbf u_h, p_h)] in terms of stem:[(\hat p_h, f)] as the element of stem:[\mathbf V(K)\times W(K)] such that
 [stem]
 ++++
@@ -150,7 +124,7 @@ From stem:[(5)-(7)], on the element stem:[K\in\Omega_h], we define stem:[(\mathb
 ++++
 for all stem:[(\mathbf v, w) \in \mathbf V(K)\times W(K)], where stem:[\hat{\mathbf u}_h] is the numerical trace of the flux and depends, in general, on stem:[\mathbf u_h, p_h], and stem:[\hat p_h]. Different methods will correspond to different choices of stem:[\hat{\mathbf u}_h].
 
-=== The global problem
+==== The global problem
 From stem:[(8)-(10)], We determine stem:[\hat p_h\in M_h] by requiring that
 [stem]
 ++++
@@ -164,7 +138,7 @@ By solving stem:[(11), (12)] for stem:[(\mathbf u_h, p_h)] in terms of stem:[(\h
 
 If the (extension by zero to stem:[\mathcal E_h] of the) function stem:[[[ \hat{\mathbf u}_h \]\]_{|\mathcal E_h^o}] belongs to the space stem:[M_h], then condition stem:[(13)] is stating that stem:[[[ \hat{\mathbf u}_h \]\]_{|\mathcal E_h^o} = 0] pointwise, that is, the normal component of the numerical trace stem:[\hat{\mathbf u}_h] is single valued. This means that the function stem:[\hat{\mathbf u}_h] is a *conservative* numerical flux (stem:[\hat{\mathbf u}_h\in H(\text{div},\Omega)]).
 
-=== Summary
+==== Summary
 The approximate solution stem:[(\mathbf u_h, p_h, \hat p_h)] is the element of the space stem:[\mathbf V_h\times W_h\times M_h] satisfying the equations
 [stem]
 ++++
@@ -181,7 +155,7 @@ where the local spaces stem:[\mathbf V(K), W(K), M(F)], as well as the numerical
 
 
 
-= Examples of hybridizable methods
+== Examples of hybridizable methods
 In this section we give som examples of methods fitting the general structure described in the previous section. The first three methods use the *same* local solver in all the elements stem:[K] of the mesh stem:[\Omega_h] and assume that stem:[\Omega_h] is a *conforming simplicial mesh*. The fourth example is a class of methods employing *different* local solvers in different parts of the domain, which can easily deal with *nonconforming* meshes. To define each method, we have only to specify:
 
 - the numerical trace of the flux stem:[\hat{\mathbf u}_h];
@@ -189,7 +163,7 @@ In this section we give som examples of methods fitting the general structure de
 - the space of approximate traces stem:[M_h].
 
 
-== The RT-H method
+=== The RT-H method
 This method is obtained by using the Raviart-Thomas method to define the local solvers. The three ingredients of the RT-H method are:
 
 . stem:[\hat{\mathbf u}_h = \mathbf u_h] on stem:[\partial K], for each stem:[K\in\Omega_h].
@@ -204,7 +178,7 @@ The accuracy of the RT-H method is summarized in section <<accuracy>>. Note that
 so the normal component of the numerical trace stem:[\hat{\mathbf u}_h] is single-valued, and stem:[\mathbf u_h\in H(\text{div},\Omega)].
 
 
-== The BDM-H method
+=== The BDM-H method
 This method is obtained by using the Brezzi-Douglas-Marini method to define the local solvers. The three ingredients of the BDM-H method are:
 
 . stem:[\hat{\mathbf u}_h = \mathbf u_h] on stem:[\partial K], for each stem:[K\in\Omega_h].
@@ -214,7 +188,7 @@ This method is obtained by using the Brezzi-Douglas-Marini method to define the 
 Everything said about the RT-H method in the previous subsection applies to the BDM-H method.
 
 
-== The HDG method
+=== The HDG method
 The spaces of RT-H and BDM-H can be balanced to have equal polynomial degree. Stability is restored using a discrete stabilization (not penalization) function. The resulting method is known as the Hybridizable Discontinuous Galerkin (HDG) method. The HDG method is obtained by using the local DG method to define the local solvers. The three ingredients of the HDG method are:
 
 . For each stem:[K\in\Omega_h]: stem:[\hat{\mathbf u}_h = \mathbf u_h + \tau_K(p_h - \hat p_h)\mathbf n\quad\text{on }\partial K,] +
@@ -224,7 +198,7 @@ where stem:[\tau_K] is a *nonnegative* function that can vary on stem:[\partial 
 
 The function stem:[\tau] can be double valued on stem:[\mathcal E_h^o], with two branches stem:[\tau^-=\tau_{K^-}] and stem:[\tau^\+=\tau_{K^+}] defined on the face stem:[F] shared by the finite elements stem:[K^+] and stem:[K^-]. Note that the numerical trace of the flux stem:[\hat{\mathbf u}_h] (but not the flux itself, as stem:[\tau_K\ne 0]) is conservative. The accuracy of the HDG method is summarized in section <<accuracy>>.
 
-=== Enhanced accuracy by postprocessing
+==== Enhanced accuracy by postprocessing
 The approximate solution and flux of the HDG method can be *locally* postprocessed to enhance their accuracy link:{biblio}#cockburnGS2010}[(Cockburn 2010)].
 
 - *Postprocessing of the scalar variable*: +
@@ -249,7 +223,7 @@ we can obtain a postprocessed flux stem:[\mathbf u_h^*] with better conservation
 ++++
 
 
-== Hybridization in matrix form
+=== Hybridization in matrix form
 This section is mainly based on link:{biblio}#sayas-matlab}[(Fu 2013)]. As stated before, the goal of hybridization is the reduction (or static condensation) of the system stem:[(16)-(20)] to a linear system where only stem:[\hat p_h] shows up. The remaining two variables stem:[\mathbf u_h] and stem:[p_h] will be reconstructed after solving for stem:[\hat p_h], in an element-by-element fashion, easy to realize due to the fact that equations stem:[(16)] and stem:[(17)] are local or, in other words, the spaces stem:[\mathbf V_h] and stem:[W_h] are completely *discontinous*. In this section we will show how to perform static condensation on the linear system obtained by using the HDG method. This procedure can be easily adapted to other hybrid methods. Let us recall that the HDG method looks for an approximate solution stem:[(\mathbf u_h, p_h, \hat p_h)] in the space stem:[\mathbf V_h\times W_h\times M_h] satisfying the equations
 [stem]
 ++++
@@ -261,9 +235,9 @@ This section is mainly based on link:{biblio}#sayas-matlab}[(Fu 2013)]. As state
 & & & & &\langle\hat p_h,\mu_3\rangle_{\Gamma_D} & &= \langle h_D,\mu_3\rangle_{\Gamma_D}, & &(25)
 \end{align*}
 ++++
-for all stem:[(\mathbf v, w, \mu_1, \mu_2, \mu_3)\in\mathbf V_h\times W_h\times M_h^o\times M_h^N\times M_h^D]. 
+for all stem:[(\mathbf v, w, \mu_1, \mu_2, \mu_3)\in\mathbf V_h\times W_h\times M_h^o\times M_h^N\times M_h^D].
 
-=== Local solvers
+==== Local solvers
 Introduce the matrices related to the local bilinear forms
 [stem]
 ++++
@@ -278,7 +252,7 @@ If stem:[\hat p_h\in M_h] is known, equations stem:[(21), (22)] are uniquely sol
 [stem]
 ++++
 \begin{align*}
-A^K &= 
+A^K &=
 \begin{bmatrix}
 A_{11}^K & A_{12}^K\\
 A_{21}^K & A_{22}^K\\
@@ -344,7 +318,7 @@ D_f^K &=  C^K(A^K)^{-1}F^K, & D^K &= C^K(A^K)^{-1}B^K + A_{33}^K.
 \end{align*}
 ++++
 
-=== Boundary conditions and global solver
+==== Boundary conditions and global solver
 - *Dirichlet boundary conditions*. The discrete Dirichlet boundary conditions stem:[(25)] require finding the projection stem:[\mathbf{\hat p}_D] of the function stem:[h_D] on the space stem:[M_h|_{\Gamma_D}].
 - *Neumann boundary conditions*. Neumann boundary conditions will appear in the right hand side of the global system.
 - *Assemblying the global solver*. The local solvers produce matrices stem:[D^K] that need to be assembled to get a global matrix stem:[\mathbb H]. This matrix collects the fluxes stem:[(27)] from all the elements, with the result that opposing sign fluxes in internal faces (the normal vector points in different directions) are added. The matrices stem:[D^K_f] also have to be assembled to get a global vector stem:[\mathbf F]. At this point, the global system reads
@@ -356,7 +330,7 @@ D_f^K &=  C^K(A^K)^{-1}F^K, & D^K &= C^K(A^K)^{-1}B^K + A_{33}^K.
 ++++
 where stem:[\mathbf G_N] is the vector containing the elements of stem:[\langle h_N, \mu\rangle_{\Gamma_N}, \mu\in M_h|_{\Gamma_N}] in the degrees of freedom corresponding to Neumann faces and zeros everywhere else. What is left is the elimination of Dirichlet degrees of freedom from stem:[(28)], namely, values of Dirichlet faces are taken from stem:[\mathbf{\hat p}_D] and sent to the right hand side of the system, and rows corresponding to Dirichlet degrees of freedom are ignored.
 
-== Orders of accuracy for RT-H, BDM-H, HDG
+=== Orders of accuracy for RT-H, BDM-H, HDG
 [[accuracy]]
 The following table summarizes the effect of the local spaces and the stabilization parameter stem:[\tau] on the accuracy of the method on simplexes. We denote by stem:[\overline p_h|_K] the integral average of stem:[p_h] on stem:[K\in\Omega_h]. For the HDG method, the superconvergence of stem:[\overline p_h] is what allows to get a solution of enhanced accuracy by postprocessing.
 
@@ -371,7 +345,7 @@ The following table summarizes the effect of the local spaces and the stabilizat
 |===
 
 
-== A class of hybridizable methods well suited for adaptivity
+=== A class of hybridizable methods well suited for adaptivity
 We introduce here a class of hybridizable methods able to use different local solvers in different elements and to easily handle nonconforming meshes. To define these methods, we need to specify the numerical fluxes, the local finite element spaces, and the space of approximate traces:
 
 . For any simplex stem:[K\in\Omega_h], we take
