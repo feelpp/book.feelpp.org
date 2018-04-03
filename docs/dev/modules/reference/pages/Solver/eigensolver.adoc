@@ -1,6 +1,5 @@
 // -*- mode: adoc -*-
-
-=== Eigen Problem
+= Eigen Problem
 
 To solve standard and generalized eigenvalue problems, Feel++
 interfaces http://slepc.upv.es[SLEPc]. SLEPc is a library which
@@ -23,7 +22,7 @@ problem are obtained as: stem:[\lambda_i=\theta_i] and stem:[x_i=V_j s_i].
 
 The eigensolvers differ from each other in the way the subspace is built.
 
-==== Code
+== Code
 
 In Feel++, there is two functions that can be used to solve this type
 of problems, `eigs` and `veigs`.
@@ -87,7 +86,7 @@ greater than `nev`. SLEPc recommends to set it to `max(nev+15,
 2*nev)`. This can be set from the command line option
 `--solvereigen.ncv`.
 
-==== Problem type
+== Problem type
 
 The standard formulation reads :
 
@@ -122,7 +121,7 @@ and the following value :
 |Positive definite Generalized non-Hermitian | PGNHEP | "pgnhep"
 |===
 
-==== Position of spectrum
+== Position of spectrum
 
 You can choose which eigenpairs will be computed. The user can set it
 programmatically with `PositionOfSpectrum` or at run time with the
@@ -140,7 +139,7 @@ command line option `--solvereigen.spectrum` and the following value :
 |Smallest imaginary | SMALLEST_IMAGINARY | "smallest_imaginary"
 |===
 
-==== Spectral transformation
+== Spectral transformation
 
 It is observed that the algorithms used to solve the eigenvalue
 problems find solutions at the extremities of the spectrum. To improve
@@ -166,7 +165,7 @@ By default, shift and invert is used. You can change it with
 | Cayley | CAYLEY | cayley
 |===
 
-==== Eigensolvers
+== Eigensolvers
 
 The details of the implementation of the different solvers can be
 found in the link:http://slepc.upv.es/documentation/manual.htm[SLEPc
@@ -205,9 +204,9 @@ following table.
 | Arpack | any | any
 |===
 
-==== Special cases of spectrum
+== Special cases of spectrum
 
-===== Computing a large portion of the spectrum
+=== Computing a large portion of the spectrum
 
 In the case where you want compute a large number of eigenpairs, the
 rule for `ncv` implies a huge amount of memory to be used. To improve
@@ -216,7 +215,7 @@ dimension of the projected problem.
 
 You can set it via the command line with `--solvereigen.mpd <mpd>`.
 
-===== Computing all the eigenpairs in an interval
+=== Computing all the eigenpairs in an interval
 
 If you want to compute all the eigenpairs in a given interval, you
 need to use the option `--solvereigen.interval-a` to set the beginning

@@ -1,6 +1,8 @@
-===  Definitions
+= notations
 
-====  Matrices
+==  Definitions
+
+===  Matrices
 
 **Matrix Definition** A  matrix is a linear transformation between finite dimensional vector spaces.
 
@@ -26,9 +28,9 @@ There exists
  1. positive and negative eigenvalue (Stokes, Helmholtz) or
  2. there exists stem:[x,y] such that stem:[x^TAx > 0 > y^T A y]
 
-==== Preconditioners
+=== Preconditioners
 
-===== Definition
+==== Definition
 
 Let stem:[A] be a stem:[\mathbb{R}^{n\times n}] matrix, stem:[x] and stem:[b] be stem:[\mathbb{R}^n] vectors, we wish to solve
 stem:[A x = b].
@@ -47,7 +49,7 @@ stem:[\{ b, (P^{-1}A)b, (P^{-1}A)^2b, \dotsc \}]
 
 Note that the product stem:[P^{-1}A] or stem:[A P^{-1}] is never assembled.
 
-===== Properties
+==== Properties
 
 Let us now describe some  properties of preconditioners
 
@@ -65,7 +67,7 @@ Here are some numerical methods to solve the system stem:[A x = b]
 
   - **Indefinite**: Schur-complement, Domain Decomposition, Multigrid
 
-==== Preconditioner strategies
+=== Preconditioner strategies
 
 Relaxation::
 Split into lower, diagonal, upper parts: stem:[A = L + D + U].
@@ -101,7 +103,7 @@ P^{-1} = \text{$k$ iterations starting with $x_0=0$}\\
 pc-type=sor
 ----
 
-===== Factorization
+==== Factorization
 
 Two phases
 
@@ -116,7 +118,7 @@ LU decomposition::
 *** Optimal in 3D: stem:[\mathcal{O}(m^{4/3})] space, stem:[\mathcal{O}(m^2)] time.
 - Symbolic factorization is problematic in parallel.
 
-====== Incomplete LU
+===== Incomplete LU
 
 - Allow a limited number of levels of fill: ILU(stem:[k]).
 
@@ -126,7 +128,7 @@ LU decomposition::
 
 - No guarantees.
 
-===== 1-level Domain decomposition
+==== 1-level Domain decomposition
 
 Domain size stem:[L], subdomain size stem:[H], element size stem:[h]
 
@@ -164,7 +166,7 @@ Both overlapping and nonoverlapping with this bound.
      - stem:[\textit{its} \in \mathcal{O}\big(1 + \log\frac H h \big)].
 
 
-===== Multigrid
+==== Multigrid
 
 
 Hierarchy: Interpolation and restriction operators stem:[ \Pi^\uparrow : X_{\text{coarse}} \to X_{\text{fine}} \qquad \Pi^\downarrow :  X_{\text{fine}} \to X_{\text{coarse}} ]
@@ -190,7 +192,7 @@ Application of multigrid preconditioner (stem:[ V ]-cycle)
 - Apply post-smoother on fine level (any preconditioner).
 
 
-====== Multigrid convergence properties
+===== Multigrid convergence properties
 
 - Textbook: stem:[P^{-1}A] is spectrally equivalent to identity
 
@@ -222,35 +224,8 @@ Application of multigrid preconditioner (stem:[ V ]-cycle)
 
     * assume strong smoothers, emphasize aggressive coarsening.
 
-===== List of PETSc Preconditioners
 
-See this link:http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/PC/PCType.html[PETSc page] for a complete list.
-
-.Table of Preconditioners as of PETSc 3.7
-|===
-| PETSc | Description |  Parallel
-| none |No preconditioner| yes
-| jacobi | diagonal preconditioner | yes
-| bjacobi | block diagonal preconditioner | yes
-| sor | SOR preconditioner | yes
-| lu | Direct solver as preconditioner | depends on the factorization package (e.g.mumps,pastix: OK)
-| shell | User defined preconditioner | depends on the user preconditioner
-| mg | multigrid prec| yes
-| ilu |incomplete lu|
-| icc |incomplete cholesky|
-| cholesky |Cholesky factorisation| yes
-| asm | Additive Schwarz Method| yes
-| gasm | Scalable Additive Schwarz Method | yes
-| ksp | Krylov subspace preconditioner | yes
-| fieldsplit | block preconditioner framework |  yes
-| lsc | Least Square Commutator | yes
-| gamg | Scalable Algebraic Multigrid | yes
-| hypre | Hypre framework (multigrid...)|
-| bddc |balancing domain decomposition by constraints preconditioner| yes
-|===
-
-
-=== Principles
+== Principles
 
 Feel++ abstracts the PETSc library and provides a subset (sufficient in most cases) to the PETSc features. It interfaces with the following PETSc libraries: `Mat` , `Vec` , `KSP` , `PC` , `SNES.`
 
@@ -275,7 +250,7 @@ All linear algebra are encapsulated within backends using the command line optio
 
 The default `backend` is `petsc.`
 
-=== Somes generic examples
+== Somes generic examples
 
 The configuration files `.cfg` allow for a wide range of options to solve a linear or non-linear system.
 
@@ -294,7 +269,7 @@ mpirun -np 4 ./feelpp_tut_laplacian
 
 As described in section
 
-==== Direct solver
+=== Direct solver
 
 `cholesky` and `lu` factorisation are available. However the parallel implementation depends on the availability of MUMPS. The configuration is very simple.
 
@@ -337,9 +312,9 @@ auto A = backend->newMatrix(_test=...,_trial=...,_properties=SPD);
 auto a = form2( _test=..., _trial=..., _properties=SPD );
 ----
 
-==== Using iterative solvers
+=== Using iterative solvers
 
-===== Using CG and ICC(3)
+==== Using CG and ICC(3)
 
 with a relative tolerance of 1e-12:
 [source,ini]
@@ -350,7 +325,7 @@ pc-type=icc
 pc-factor-levels=3
 --
 
-===== Using GMRES and ILU(3)
+==== Using GMRES and ILU(3)
 
 with a relative tolerance of 1e-12 and a restart of 300:
 
@@ -363,7 +338,7 @@ pc-type=ilu
 pc-factor-levels=3
 ----
 
-===== Using GMRES and Jacobi
+==== Using GMRES and Jacobi
 
 With a relative tolerance of 1e-12 and a restart of 100:
 
@@ -375,7 +350,7 @@ ksp-gmres-restart 100
 pc-type=jacobi
 ----
 
-==== Monitoring  linear non-linear and eigen problem solver residuals
+=== Monitoring  linear non-linear and eigen problem solver residuals
 
 [source,ini]
 ----
@@ -387,7 +362,7 @@ snes-monitor=1
 eps-monitor=1
 ----
 
-=== Solving the Laplace problem
+== Solving the Laplace problem
 
 We start with the quickstart Laplacian example, recall that we wish to, given a domain stem:[\Omega], find stem:[u] such that
 
@@ -404,7 +379,7 @@ u = g \mbox{ on } \partial \Omega
 feelpp_qs_laplacian --ksp-monitor=true
 ----
 
-===== Viewing KSP solvers
+==== Viewing KSP solvers
 
 [source,sh]
 ----
@@ -433,7 +408,7 @@ PC Object: 2 MPI processes
       not using I-node (on process 0) routines
 ----
 
-===== Solvers and preconditioners
+==== Solvers and preconditioners
 
 You can now change the Krylov subspace solver using the `--ksp-type` option and the preconditioner using `--pc-ptype` option.
 
@@ -453,9 +428,9 @@ For example,
 
 
 
-=== Block factorisation
+== Block factorisation
 
-==== Stokes
+=== Stokes
 
 We now turn to the quickstart Stokes example, recall that we wish to,
 given a domain stem:[\Omega], find stem:[(\mathbf{u},p) ] such that
@@ -475,9 +450,9 @@ This problem is indefinite. Possible solution strategies are
 
  - augmented lagrangian approach (Glowinski,Le Tallec)
 
-**Note** that The Inf-sup condition must be satisfied. In particular for a multigrid strategy, the smoother needs to preserve it.
+NOTE: that The Inf-sup condition must be satisfied. In particular for a multigrid strategy, the smoother needs to preserve it.
 
-### General approach for saddle point problems
+==== General approach for saddle point problems
 
 The Krylov subspace solvers for indefinite problems are MINRES, GMRES. As to preconditioning, we look first at the saddle point matrix stem:[M] and its block factorization stem:[M = LDL^T], indeed we have :
 

@@ -1,13 +1,11 @@
-=== Algebra Backends
+= Algebra Backends
 
-Non-Linear algebra backends are crucial components of
-Feel{plus}{plus}. They provide a uniform interface between
-Feel{plus}{plus} data structures and underlying the linear algebra
-libraries used by Feel++.
+The linear and non-linear algebra backends are crucial components of {feelpp}.
+They provide a uniform interface between {feelpp} data structures and underlying the linear algebra libraries used by {feelpp}.
 
-==== Libraries
+== Libraries
 
-Feel++ interfaces the following libraries:
+{feelpp} interfaces the following libraries:
 
  - PETSc : Portable, Extensible Toolkit for Scientific Computation
 
@@ -15,7 +13,7 @@ Feel++ interfaces the following libraries:
 
  - Eigen3
 
-==== Backend
+== Backend
 
 Backend is a template class parametrized by the numerical type providing access to
 
@@ -56,7 +54,7 @@ They take default values as described in the following table:
 |`_worldcomm` | WorldComm | Environment::worldComm()
 |===
 
-===== _name
+=== _name
 
 Backends are store in a Backend factory and handled by a manager that
 allows to keep track of allocated backends. They a registered with
@@ -86,9 +84,9 @@ Environment env( _argc=argc, _argv=argv,
                  _desc=backend_options("projection") );
 ----
 
-===== _kind
+=== _kind
 
-Feel++ supports three kind of Backends:
+{feelpp} supports three kind of Backends:
 
  - petsc : PETSC Backend
 
@@ -116,7 +114,7 @@ backend=petsc
 backend=eigen_sparse
 ----
 
-===== _rebuild
+=== _rebuild
 
 If you want to reuse a Backend and not allocate a new one plus add the
 corresponding option to the command line/configuration file, you can
@@ -145,9 +143,9 @@ able to customize the solver/preconditioner for each problem. If you
 have different problems to solve and need to have custom
 solver/preconditioner it would be best to have different Backends.
 
-===== _worldComm
+=== _worldComm
 
-One of the strength of Feel{plus}+ is to be able to change the communicator and in the case of Feel++ the WorldComm. This allows for example to
+One of the strength of {feelpp} is to be able to change the communicator and in the case of {feelpp} the WorldComm. This allows for example to
 
  - solve sequential problems
 
@@ -164,4 +162,4 @@ auto A = b->newMatrix(); // sequential Matrix
 auto f = b->newVector(); // sequential Vector
 ----
 
-> **Info** The default WorldComm is provided by `Environment::worldComm()` and it conresponds to the default MPI communicator `MPI_COMM_WORLD`.
+TIP: The default `WorldComm` is provided by `Environment::worldComm()` and it corresponds to the default MPI communicator `MPI_COMM_WORLD`.

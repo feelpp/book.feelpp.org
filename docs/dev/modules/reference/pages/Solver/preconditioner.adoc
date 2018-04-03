@@ -1,12 +1,12 @@
 // -*- mode: adoc -*-
 
-=== Preconditioner strategies
+= Preconditioner strategies
 
-==== Relaxation
+== Relaxation
 
 Split into lower, diagonal, upper parts: stem:[A = L + D + U].
 
-===== Jacobi
+=== Jacobi
 
 Cheapest preconditioner: stem:[P^{-1}=D^{-1}].
 
@@ -18,7 +18,7 @@ pc-type=jacobi
 pc-type=block_jacobi
 ----
 
-===== Successive over-relaxation (SOR)
+=== Successive over-relaxation (SOR)
 
 [stem]
 ++++
@@ -38,7 +38,7 @@ P^{-1} = \text{$k$ iterations starting with $x_0=0$}
 pc-type=sor
 ----
 
-==== Factorization
+== Factorization
 
 Two phases
 
@@ -47,7 +47,7 @@ Two phases
 
    - numeric factorization: compute factors.
 
-===== LU decomposition
+=== LU decomposition
 
    - preconditioner.
 
@@ -63,7 +63,7 @@ Two phases
 
    - Symbolic factorization is problematic in parallel.
 
-===== Incomplete LU
+=== Incomplete LU
 
    - Allow a limited number of levels of fill: ILU(stem:[k]).
 
@@ -73,7 +73,7 @@ Two phases
 
    - No guarantees.
 
-==== 1-level Domain decomposition
+== 1-level Domain decomposition
 
    Domain size $$L$$, subdomain size $$H$$, element size $$h$$
 
@@ -105,9 +105,9 @@ Both overlapping and nonoverlapping with this bound.
      - stem:[\textit{its} \in \mathcal{O}\big(1 + \log\frac H h \big)].
 
 
-==== Multigrid
+== Multigrid
 
-===== Introduction
+=== Introduction
 
 Hierarchy: Interpolation and restriction operators stem:[\Pi^\uparrow :
 X_{\text{coarse}} \to X_{\text{fine}} \qquad \Pi^\downarrow :
@@ -134,7 +134,7 @@ Application of multigrid preconditioner (stem:[V]-cycle)
 - Apply post-smoother on fine level (any preconditioner).
 
 
-===== Multigrid convergence properties
+=== Multigrid convergence properties
 
 - Textbook: stem:[P^{-1}A] is spectrally equivalent to identity
 
@@ -165,30 +165,3 @@ Application of multigrid preconditioner (stem:[V]-cycle)
 - Multilevel Schwarz is essentially the same with different language
 
     * assume strong smoothers, emphasize aggressive coarsening.
-
-==== List of PETSc Preconditioners
-
-See this link:http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/PC/PCType.html[PETSc page] for a complete list.
-
-.Table of Preconditioners as of PETSc 3.7
-|===
-| PETSc | Description |  Parallel
-| none |No preconditioner| yes
-| jacobi | diagonal preconditioner | yes
-| bjacobi | block diagonal preconditioner | yes
-| sor | SOR preconditioner | yes
-| lu | Direct solver as preconditioner | depends on the factorization package (e.g.mumps,pastix: OK)
-| shell | User defined preconditioner | depends on the user preconditioner
-| mg | multigrid prec| yes
-| ilu |incomplete lu|
-| icc |incomplete cholesky|
-| cholesky |Cholesky factorisation| yes
-| asm | Additive Schwarz Method| yes
-| gasm | Scalable Additive Schwarz Method | yes
-| ksp | Krylov subspace preconditioner | yes
-| fieldsplit | block preconditioner framework |  yes
-| lsc | Least Square Commutator | yes
-| gamg | Scalable Algebraic Multigrid | yes
-| hypre | Hypre framework (multigrid...)|
-| bddc |balancing domain decomposition by constraints preconditioner| yes
-|===
