@@ -1,7 +1,7 @@
 = Data Management
 
 This document details how files are retrieved and produced within {feelpp}.
-The section <<_description, Description>> will details the {feelpp} input
+The section <<_description, Description>> will detail the {feelpp} input
 and output data generated.
 The different file formats are detailed in section <<_types_of_data,Types Of Data>>.
 The different data storage tools are detailed in section <<_data_in_feel, Data
@@ -11,17 +11,18 @@ in {feelpp}>>.
 
 === Geometry and Mesh
 
-To run a simulation, {feelpp} needs to works with different input datasets.
-{feelpp} can use either a geometry file issued from CAD/CAD or directly
+To run a simulation, {feelpp} needs to works with different input dataets.
+{feelpp} can use either a geometry file issued from CAD/CAO or directly
 a mesh file. A geometry/mesh file represents the domain of the study and is
 a requirement.
 
-NOTE: The mesh file can have potentially a big size!
+NOTE: The mesh file can potentially have a consequential size.
 
 === Fields
 
-A field file represent a function defined on a mesh, which is associated to FunctionSpace concept.
-This files can be used in many context : restart a simulation, defined an initial solution from another simulation, post-processing,
+A field file represents a function defined on a mesh, which is associated to the FunctionSpace concept.
+This files can be used in many context : restart a simulation, define an initial solution from another simulation, or in post-processing,
+// link to the class definition in the adequat part of the user book
 
 === Configuration files
 
@@ -31,24 +32,24 @@ NOTE: In particular, it indicates where the data are located.
 
 === Visualization
 
-During the simulation, {feelpp} produces data outputs that can be visualize
-with post-processing software and exported in different formats.
+During the simulation, {feelpp} produces data outputs that can be visualized
+with post-processing softwares and exported in different formats.
 
 
-NOTE: Depending on the application, the outputs can have a big size!
+NOTE: Depending on the application, the outputs can have a consequential size!
 
 === Database
 
-{feelpp} can produce several kind of databases, dependings of the context (e.g. Certified Reduced Basis, POD).
-Once generated, these database can be stored on a distant server or saved statically via DB dump.
+{feelpp} can produce several kinds of databases, depending on the context (e.g. Certified Reduced Basis, POD).
+Once generated, these databases can be stored on a distant server or saved statically via DB dump.
 
 //But also in the benchmark system (See <<_benchmark,Benchmark>>  section for details).
 //These database are stored on a distant server or can be saved statically via DB dump.
 
 === Logging
 
-A logging system monitor the execution of the simulation. This logging system
-helps to determine the reason why the application might have failed.
+A logging system monitors the execution of the simulation. This logging system
+helps the user determining the reason why the application might have failed.
 The logs are saved.
 
 === Benchmark
@@ -56,18 +57,18 @@ The logs are saved.
 Reproducibility is an important and difficult challenge. When all data are
 available (inputs/ouputs), reproducing existing simulation results for
 verification or validation purpose means to be able to place the simulation in
-the same original conditions (same user environment, parametrization,
+the same original setting (same user environment, parametrization,
 hardware). Often the only information available are the one described in
-papers. For example, reader have access to tables, plots and parameters 
-precised in results descriptions which may be incomplete. 
+papers. For example, readers have access to tables, plots and parameters
+precised in the results descriptions which may be incomplete.
 From the author point of view, the difficulty is to know what should or should
-not be presented in the paper so that user may be able to reproduce the paper 
+not be presented in the paper so that user may be able to reproduce the paper
 main result.
 
-Feel++ introduces a benchmark system to help users first, to better catch and
-store crucial information of their applications (problem size, hardware, ...),
-but also to be able to compare new simulation results based on existing and
-validated one.
+Feel++ introduces a benchmark system to help users first. It allows for better catching and
+storing of crucial information on their applications (problem size, hardware, ...),
+but also enable users to compare new simulation results based on existing and
+validated ones.
 
 We distinguish currently several parts that will interact with storage:
 
@@ -78,21 +79,21 @@ We distinguish currently several parts that will interact with storage:
 ==== Journal
 
 The principle of the {feelpp} journal is to retrieve the simulation information
-all gathered in a unique metadata file. 
-Two storage approach can be considered and are detailed hereafter.
+in order to gather it all in a unique metadata file.
+Two storage approaches can be considered and are detailed hereafter.
 
 ===== Static file (JSON)
 
 A journal file is generated at the end of the simulation or at intermediate
 moments based on user event (step updates).
 
-NOTE: The journal is different from the main logging system and 
-serve two different purpose.
+NOTE: The journal is different from the main logging system, they
+serve two different purposes.
 
 By default, these metadata are stored in a unique JSON files (`journal.json`).
 This file is stored as part of the output and can be used to make queries.
-The journal file is versioned to guaranty comparison metadata compatibility
-between two simulation.
+The journal file is versioned to ensure comparison metadata compatibility
+between two simulations.
 
 ===== Database (MongoDB)
 
@@ -102,12 +103,12 @@ database.
 
 ==== Checker system
 
-The checker system permits to check some metrics in order to know whether the
-simulation has finished successfully or not. For example, different norms can
+The checker system allows users to check some metrics in order to know whether the
+simulation has finished successfully or not. Hence, different norms can
 be verified for a set of parameters. This system needs to access a
 specific and known database (see <<database_mongodb, Database (MongoDB)>> section).
-For example to compute convergence curves or simply verify the result match a
-previous exact same simulation.
+This can be used for example to compute convergence curves or simply verify that the result matches a
+previous simulation run in the exact same settings.
 
 NOTE: This system works in conjonction with the journal system.
 
@@ -116,20 +117,20 @@ NOTE: This system works in conjonction with the journal system.
 {feelpp} deploys its applications as containers for different dedicated softwares
 (docker, singularity). These applications are tested to ensure they are working.
 The testing system is based on CTest.
-Some test applications may be use checker, thus required (local/online) database
+Some test applications may use checker, thus requiring (local/online) database
 access.
 
 === Documentation
 
 Most {feelpp} documentation is generated using the asiidoc format.
-link:https://antora.org/[Antora] is used to generated the documention
+link:https://antora.org/[Antora] is used to generate the documentation
 link:docs.feelpp.org[]. The man pages are automatically generated in the same
-format and details each application usage.
+format and detail each application usage.
 The documentation is automatically generated and stored on an specific web server.
 
 == Types of data
 
-The following table summarize the type of data used and generated in {feelpp}:
+The following table summarizes the type of data used and generated in {feelpp}:
 
 .{feelpp} type of file
 [options="header"]
@@ -137,7 +138,7 @@ The following table summarize the type of data used and generated in {feelpp}:
 | Type | format(s)
 
 | <<_geometry_and_mesh,CAO files>>
-| .geo , .step 
+| .geo , .step
 
 | <<_geometry_and_mesh,Mesh files>>
 | HDF5+JSON, all read by GMSH
@@ -146,7 +147,7 @@ The following table summarize the type of data used and generated in {feelpp}:
 | HDF5, Boost serialization
 
 | <<_configuration_files,Configuration files>>
-| CFG, JSON 
+| CFG, JSON
 
 | <<_visualization,Visualization files>>
 | Ensight, Ensight Gold, VTK, VTK.js, CSV
@@ -166,8 +167,8 @@ The following table summarize the type of data used and generated in {feelpp}:
 
 == Data storage
 
-We use two kind of storage, it depends of the type of data.
-Mesh files, visualization files and simulation journal files are store in the Girder plateform, the others one in the Github repository.
+We use two kind of storage, depending on the type of data.
+Mesh files, visualization files and simulation journal files are stored in the Girder plateform, the other ones in the Github repository.
 
 === Girder plateform
 
@@ -177,18 +178,18 @@ It is a complete back-end (server side) technology that can be used with other a
 ==== Data organisation
 
 Data can be stored for a particular user or in the concept of collections.
-This concept allow to share the data between one or several users (Groups concept).
+This concept allows for sharing of the data between one or several users (Groups concept).
 
-Data are organized in hierarchical structure with Folders and Files.
+Data are organized in a hierarchical structure with Folders and Files.
 When Folders or Files are defined, an unique ID is attributed at this entities.
-These IDs allow to access easily to the data.
+These IDs allow for easy access to the data.
 
-A levels of permission can be define for a ressource :
+A level of permission can be defined for a resource :
 
 * READ permission (can view and download resources)
 * WRITE permission (includes READ permission, can edit the properties of a resource)
 
-Collections and folder can defined with attributes :
+Collections and folders can defined with attributes :
 
 * Public (meaning viewable even by anonymous users)
 * Private (meaning viewable only by those with READ access).
@@ -205,7 +206,7 @@ Collections and folder can defined with attributes :
 
 === MongoDB
 
-Several MongoDB database are used as storage. MongoDB storage
+Several MongoDB databases are used as storage. MongoDB storage
 can be seen in two ways:
 
 * static (stored local as a file, or local server)
@@ -214,19 +215,19 @@ can be seen in two ways:
 
 === Github repository
 
-The access to the github file can be done by :
+Access to the github file can be achieved by :
 
 * using raw.githubusercontent.com
 * REST API
 
 
-== Data in Feel++ 
+== Data in Feel++
 
 === Simulations
 
 ==== Input data
 
-The inputs require for run a Feel++ simulation are :
+The inputs required to run a Feel++ simulation are :
 
 * the CAO or the mesh files
 * one or several cfg files
@@ -234,18 +235,18 @@ The inputs require for run a Feel++ simulation are :
 
 These files are given to the application by specifying :
 
-* each file separately 
+* each file separately
 * a directory containing each file
 * a zip file containing each file
 
-If the data are not available locally, they can be retrieve remotely by specifying :
+If the data are not available locally, they can be retrieved remotely by specifying :
 
 ** Girder : file or folder ID
 ** Github : relative path in the github repository
 
 ==== Output data
 
-The simulation will produce some datas:
+The simulation will produce some data:
 
 * Visualization file
 * Journal file
@@ -259,17 +260,17 @@ include::benchmark.adoc[]
 
 === Pre-Processing
 
-The mesh generation or the mesh partitioning can be a step expensive in time.
-We recommand to prepare these kind of data before to run the simulation.
+The mesh generation or the mesh partitioning can be expensive steps in time.
+We recommand to prepare these kinds of data before to run the simulation.
 
-The mesh is built from a CAO file, the partitioning from the mesh file generated.
+The mesh is built from a CAO file. The partitioning is generated from the mesh file.
 
-The mesh (eventually the partitionning) is uploaded to the grider plateform
+The mesh (eventually the partitioning) is uploaded to the grider plateform.
 
 === Post-Processing
 
-After the simulation terminated, datas as vtk.js or screenshot of the visualisation can be produce through python scripts.
-This datas can be uploaded to the Girder plateform.
+After the simulation is terminated, data as vtk.js or screenshot of the visualisation can be produced through python scripts.
+This data can be uploaded to the Girder plateform.
 
 
 == Visualization
@@ -279,7 +280,7 @@ This datas can be uploaded to the Girder plateform.
 ParaView is an open-source, multi-platform data analysis and visualization application.
 
 The data must be available locally.
-  
+
 === Paraview-Web
 
 ParaViewWeb, the JavaScript library, is a Web framework to build applications with interactive scientific visualization inside the Web browser. Those applications can leverage a VTK and/or ParaView backend for large data processing and rendering, but can also be used on a static Web server like Apache or NGINX. You can even build local command line tools and use your browser to interact with your application.
