@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', function() {
         title1_x:"45",
     });
     cover({
-        id:"toolscover",
+        id:"datacover",
         bgcolor:"#0080FF",
         title0:"THE FEEL++",
-        title1:"TOOLS",
+        title1:"DATA MANUAL",
         title0_x:"55",
-        title1_x:"70",
+        title1_x:"45",
     });
     cover({
         id:"femcover",

@@ -17,7 +17,7 @@ install:
 	npm install --save . live-server
 
 build: clean
-	antora antora-local-feelpp-doc.yml
+	antora --pull antora-local-feelpp-doc.yml
 	@echo "INFO: File generated in 'build/build/site/feelpp-doc/'"
 
 serve:
