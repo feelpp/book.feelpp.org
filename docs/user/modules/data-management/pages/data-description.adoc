@@ -2,17 +2,17 @@
 
 == Geometry and Mesh
 
-To run a simulation, {feelpp} needs to works with different input datasets.
-{feelpp} can use either a geometry file issued from CAD/CAD or directly
-a mesh file. A geometry/mesh file represents the domain of the study and is
-a requirement.
+To run a simulation, {feelpp} needs to work with different input datasets.
+{feelpp} can use either a geometry file issued from CAD/CAO or directly a mesh file.
+A geometry/mesh file represents the domain of the study and is a requirement.
 
-NOTE: The mesh file can have potentially a big size!
+NOTE: The mesh file can potentially have a consequential size.
 
 == Fields
 
-A field file represent a function defined on a mesh, which is associated to FunctionSpace concept.
-This files can be used in many context : restart a simulation, defined an initial solution from another simulation, post-processing,
+A field file represents a function defined on a mesh, which is associated to the FunctionSpace concept.
+This files can be used in many context : restart a simulation, define an initial solution from another simulation, or in post-processing,
+// link to the class definition in the adequat part of the user book
 
 == Configuration files
 
@@ -22,24 +22,24 @@ NOTE: In particular, it indicates where the data are located.
 
 == Visualization
 
-During the simulation, {feelpp} produces data outputs that can be visualize
-with post-processing software and exported in different formats.
+During the simulation, {feelpp} produces data outputs that can be visualized
+with post-processing softwares and exported in different formats.
 
 
-NOTE: Depending on the application, the outputs can have a big size!
+NOTE: Depending on the application, the outputs can have a consequential size!
 
 == Database
 
-{feelpp} can produce several kind of databases, dependings of the context (e.g. Certified Reduced Basis, POD).
-Once generated, these database can be stored on a distant server or saved statically via DB dump.
+{feelpp} can produce several kinds of databases, depending on the context (e.g. Certified Reduced Basis, POD).
+Once generated, these databases can be stored on a distant server or saved statically via DB dump.
 
 //But also in the benchmark system (See <<_benchmark,Benchmark>>  section for details).
 //These database are stored on a distant server or can be saved statically via DB dump.
 
 == Logging
 
-A logging system monitor the execution of the simulation. This logging system
-helps to determine the reason why the application might have failed.
+A logging system monitors the execution of the simulation. This logging system
+helps the user determining the reason why the application might have failed.
 The logs are saved.
 
 == Benchmark
@@ -47,18 +47,18 @@ The logs are saved.
 Reproducibility is an important and difficult challenge. When all data are
 available (inputs/ouputs), reproducing existing simulation results for
 verification or validation purpose means to be able to place the simulation in
-the same original conditions (same user environment, parametrization,
+the same original setting (same user environment, parametrization,
 hardware). Often the only information available are the one described in
-papers. For example, reader have access to tables, plots and parameters
-precised in results descriptions which may be incomplete.
+papers. For example, readers have access to tables, plots and parameters
+precised in the results descriptions which may be incomplete.
 From the author point of view, the difficulty is to know what should or should
 not be presented in the paper so that user may be able to reproduce the paper
 main result.
 
-Feel++ introduces a benchmark system to help users first, to better catch and
-store crucial information of their applications (problem size, hardware, ...),
-but also to be able to compare new simulation results based on existing and
-validated one.
+Feel++ introduces a benchmark system to help users first. It allows for better catching and
+storing of crucial information on their applications (problem size, hardware, ...),
+but also enable users to compare new simulation results based on existing and
+validated ones.
 
 We distinguish currently several parts that will interact with storage:
 
@@ -69,21 +69,21 @@ We distinguish currently several parts that will interact with storage:
 == Journal
 
 The principle of the {feelpp} journal is to retrieve the simulation information
-all gathered in a unique metadata file.
-Two storage approach can be considered and are detailed hereafter.
+in order to gather it all in a unique metadata file.
+Two storage approaches can be considered and are detailed hereafter.
 
 === Static file (JSON)
 
 A journal file is generated at the end of the simulation or at intermediate
 moments based on user event (step updates).
 
-NOTE: The journal is different from the main logging system and
-serve two different purpose.
+NOTE: The journal is different from the main logging system, they
+serve two different purposes.
 
 By default, these metadata are stored in a unique JSON files (`journal.json`).
 This file is stored as part of the output and can be used to make queries.
-The journal file is versioned to guaranty comparison metadata compatibility
-between two simulation.
+The journal file is versioned to ensure comparison metadata compatibility
+between two simulations.
 
 === Database (MongoDB)
 
@@ -93,12 +93,12 @@ database.
 
 == Checker system
 
-The checker system permits to check some metrics in order to know whether the
-simulation has finished successfully or not. For example, different norms can
+The checker system allows users to check some metrics in order to know whether the
+simulation has finished successfully or not. Hence, different norms can
 be verified for a set of parameters. This system needs to access a
 specific and known database (see <<database_mongodb, Database (MongoDB)>> section).
-For example to compute convergence curves or simply verify the result match a
-previous exact same simulation.
+This can be used for example to compute convergence curves or simply verify that the result matches a
+previous simulation run in the exact same settings.
 
 NOTE: This system works in conjonction with the journal system.
 
@@ -107,13 +107,13 @@ NOTE: This system works in conjonction with the journal system.
 {feelpp} deploys its applications as containers for different dedicated softwares
 (docker, singularity). These applications are tested to ensure they are working.
 The testing system is based on CTest.
-Some test applications may be use checker, thus required (local/online) database
+Some test applications may use checker, thus requiring (local/online) database
 access.
 
 == Documentation
 
 Most {feelpp} documentation is generated using the asiidoc format.
-link:https://antora.org/[Antora] is used to generated the documention
+link:https://antora.org/[Antora] is used to generate the documentation
 link:docs.feelpp.org[]. The man pages are automatically generated in the same
-format and details each application usage.
-The documentation is automatically generated and stored on an specific web server.
+format and detail each application usage.
+The documentation is automatically generated and deployed on an web server.
