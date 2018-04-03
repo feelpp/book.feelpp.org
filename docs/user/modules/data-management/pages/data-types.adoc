@@ -1,0 +1,79 @@
+= Data types
+
+The following table summarizes the type of data used and generated in {feelpp}:
+
+.{feelpp} data types
+[options="header"]
+|===
+| Type | format(s)
+
+| <<_geometry_and_mesh,CAO files>>
+| .geo , .step
+
+| <<_geometry_and_mesh,Mesh files>>
+| HDF5+JSON, all read by GMSH
+
+| <<_fields,Fields files>>
+| HDF5, Boost serialization
+
+| <<_configuration_files,Configuration files>>
+| CFG, JSON
+
+| <<_visualization,Visualization files>>
+| Ensight, Ensight Gold, VTK, VTK.js, CSV
+
+| <<_journal,Journal files>>
+| JSON
+
+| <<_database,{feelpp} database>>
+| HDF5+JSON, Boost serialization, mongodb dump
+
+| <<_documentation, Documentation files>>
+| .adoc, .png, .jpeg, ...
+
+
+|===
+
+
+== Simulations
+
+=== Input data
+
+The inputs require for run a Feel++ simulation are :
+
+* the CAO or the mesh files
+* one or several cfg files
+* one or several json files
+
+These files are given to the application by specifying :
+
+* each file separately
+* a directory containing each file
+* a zip file containing each file
+
+If the data are not available locally, they can be retrieve remotely by specifying :
+
+** Girder : file or folder ID
+** Github : relative path in the github repository
+
+=== Output data
+
+The simulation will produce some datas:
+
+* Visualization file
+* Journal file
+
+
+== Pre-Processing
+
+The mesh generation or the mesh partitioning can be a step expensive in time.
+We recommand to prepare these kind of data before to run the simulation.
+
+The mesh is built from a CAO file, the partitioning from the mesh file generated.
+
+The mesh (eventually the partitionning) is uploaded to the grider plateform
+
+== Post-Processing
+
+After the simulation terminated, datas as vtk.js or screenshot of the visualisation can be produce through python scripts.
+This datas can be uploaded to the Girder plateform.
