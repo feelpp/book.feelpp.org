@@ -1,24 +1,23 @@
-[appendix]
-Feel++ File Formats 
--------------------
+= {feelpp} File Formats
 
-==== Feel++ Formats
+
+== Feel++ Formats
 
 For performance reasons and allow fast checkpoint restart of simulations, we have develop our own mesh and data file format in parallel.
 
 |===
-| Format  | Description | Mode | Type 
+| Format  | Description | Mode | Type
 | `json+hdf5` | Feel++ parallel file format | Read/Write | Metadata & Binary
 |===
 
 The format is decomposed into two files : _(i)_ a json file (`.json` file extension) which contain some metadata information on the mesh and _(ii)_ a hdf5 file (`.h5` file extension) which contains the mesh data structure.
 
-==== Pre-Processing formats
+== Pre-Processing formats
 
 Feel++ supports various file formats that can be used as input mesh file formats.
 
 |===
-| Format  | Description | Mode | Type 
+| Format  | Description | Mode | Type
 | `acumesh` | Acusim(ALTAIR) mesh file format | Read | Ascii
 | `gmsh`  |  Gmsh mesh file format | Read/Write | Ascii/Binary
 | `json+hdf5` | Feel++ parallel file format | Read/Write | Metadata & Binary
@@ -26,15 +25,15 @@ Feel++ supports various file formats that can be used as input mesh file formats
 | `mesh`  |  MEDIT(INRIA) mesh file format | Read/Write | Ascii
 |===
 
-==== Post Processing formats
+== Post Processing formats
 
 Feel++ supports various file formats that can be used as output mesh and data file formats for post-processing.
 
 |===
-| Format  | Description | Mode | Type 
+| Format  | Description | Mode | Type
 | `gmsh`  |  Gmsh mesh file format | Read/Write | Ascii/Binary
 | `ensightgold` | Ensight  Gold case format | Write | Binary
-| `h3d`  |  H3D  file format | Read | Database 
+| `h3d`  |  H3D  file format | Read | Database
 | `xdmf` | XML/HDF5 file format | Write
 | `VTK`   | VTK file format | Write
 |===
