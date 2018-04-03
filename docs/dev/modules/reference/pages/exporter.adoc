@@ -1,8 +1,7 @@
 // -*- mode: adoc -*-
-Post-Processing and Visualization
----------------------------------
+= Post-Processing and Visualization
 
-=== Introduction
+== Introduction
 
 Once the PDE is solved we usually would like to
 visualize the solution and possibly other data or fields associated with the problem. Feel++ provides a very powerful framework for  post-processing allowing to:
@@ -17,7 +16,7 @@ visualize the solution and possibly other data or fields associated with the pro
 
 To achieve this, Feel++ defines a so-called `Exporter`  object.
 
-===  General principles
+==  General principles
 
 The library Feel itself does not have any visualization
 capabilities. However, it provides tools to export both scalar and
@@ -83,7 +82,7 @@ To further illustrate the capabilities of the Feel's exporter to Gmsh, we plot i
 |===
 
 
-=== Visualization
+== Visualization
 
 We would like to visualize the function $$u=\sin(\pi x)$$ over
 $$\Omega= \{ (x,y) \in \mathbb{R}^2 | x^2 + y^2 < 1 \} $$
@@ -98,9 +97,9 @@ include::../../../../codes/05-myexporter.cpp[tag=exporter]
 
 We start with an `Exporter`  object that allows to visualize the $$P_1$$ interpolant of $$u$$ over $$\Omega$$.
 
-=== ExporterReference Reference
+== ExporterReference Reference
 
-==== Options
+=== Options
 
 `exporter.format`
 
@@ -155,7 +154,7 @@ We start with an `Exporter`  object that allows to visualize the $$P_1$$ interpo
 
   * Action: `exporter.directory` tells where to export the results
 
-===== Ensight Gold specific options
+==== Ensight Gold specific options
 
 `exporter.ensightgold.use` -sos
 
