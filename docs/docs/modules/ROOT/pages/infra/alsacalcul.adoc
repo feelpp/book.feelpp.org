@@ -9,42 +9,47 @@ Alsacalcul is the supercomputer of Université de Strasbourg.
 
 NOTE: For more information see the official web page of link:https://hpc.unistra.fr/[Alsacalcul].
 
-== Preriquisites
+== Prerequisites
 
-You have to own an account on the machine. See the
+* You have to own an account on the machine. See the
 link:https://services-numeriques.unistra.fr/les-services-aux-usagers/hpc/acces-aux-ressources.html[cluster documentation]
 for the first step on the cluster.
-
+* To learn how to use the cluster, we recommend reading the
+link:https://services-numeriques.unistra.fr/les-services-aux-usagers/hpc/acces-aux-ressources.html[cluster documentation]
+* To use differents libraries version that match your need, the cluster uses link:http://modules.sourceforge.net/[environment modules]
+You should familiarize first to know how to load specific softwares.
+* The cluster use link:https://slurm.schedmd.com/quickstart.html[slurm] job supervisor.
+You should be familiar with job creation and job submission before going further.
 
 == Feel++ usage
 
+=== Using singularity container
 
-IMPORTANT: Documentation deprecated
+=== From source
 
 WARNING: Work in progress
 
+To compile Feel++ on the cluster, you have to load the following required modules:
 
-=== Latest working configuration on hpc-login with develop version of feelpp/config:
+module purge
+module load batch/slurm
+module load cmake/cmake-3.4.1
+module load libs/boost-1.63.gnu63
+module load libs/hdf5-1.8.16.gnu63
+module load petsc/petsc-3.7.6.g63                                                                                                                                                                                                            
+module load mesh/gmsh-3.0.1.g63
+module load compilers/intel17                                                                                                                                                                                                               
+module load compilers/clang5
+module load mpi/openmpi-2.0.2.gcc63
+module unload compilers/gnu63
+module load compilers/gnu62                                                                                                                                                                                                          
+module load languages/python-2.7.6
 
-You have to use the configuration provided for the cluster in the feelpp/config
-repository.  It is currently cloned in `/usr/local/feelpp/config`.
+NOTE: If Feel++ does not compile using these modules, please post an 
+link:https://github.com/feelpp/book.feelpp.org/issues[issue on github].
 
-To be able to use the configuration, you have to add the following commands in
-your .bashrc file:
 
-[source,bash]
-----
-# The cd commands are important, because we rely on the current working directory to find
-# the correct files to source
-cd /usr/local/feelpp/config/etc
-source feelpprc.sh
-cd -
-----
-
-To ensure a working configuration, please use the profiles provided in the
-config repository.  Current working profiles on Strasbourg mesecenter:
-- compilers/gnu481.profile
-- compilers/clang35.profile
+=== Feel++ slurm job
 
 Sample slurm submission script: (Needs to be filled with user data, when <> is present)
 
