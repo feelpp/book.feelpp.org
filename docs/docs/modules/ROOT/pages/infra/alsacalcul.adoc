@@ -16,22 +16,22 @@ link:https://services-numeriques.unistra.fr/les-services-aux-usagers/hpc/acces-a
 for the first step on the cluster.
 * To learn how to use the cluster, we recommend reading the
 link:https://services-numeriques.unistra.fr/les-services-aux-usagers/hpc/acces-aux-ressources.html[cluster documentation]
-* To use differents libraries version that match your need, the cluster uses link:http://modules.sourceforge.net/[environment modules]
-You should familiarize first to know how to load specific softwares.
-* The cluster use link:https://slurm.schedmd.com/quickstart.html[slurm] job supervisor.
+* To use different libraries version that match your need, the cluster uses link:http://modules.sourceforge.net/[environment modules]
+Learning the basics of environment modules is recommanded in order to know how to load specific softwares.
+* The cluster uses link:https://slurm.schedmd.com/quickstart.html[slurm] job supervisor.
 You should be familiar with job creation and job submission before going further.
 
 == Feel++ usage
 
 === Using singularity container
 
-WARNING: singularity is not yet officially ready on the cluster. A module should be available
+WARNING: singularity is not yet officially ready on the cluster. A module should be soon be available.
 `module av 2>&1 | grep singularity`
 
-Get a xref:ROOT:user:install/containers.adoc[Feel++ singularity container].
+Get a xref:user:ROOT:install/containers.adoc[Feel++ singularity container].
 
-NOTE: To use the container on multi-nodes, be aware performances depends on networks interfaces.
-In particular, `infiniband` and `omnipath` (the drivers are already packaged in our containers).
+NOTE: To use the container on multi-nodes, be aware that performance may depend on network interfaces.
+In particular, pay attention to `infiniband` and `omnipath` (the drivers are already packaged in our containers).
 
 
 A center-specific container is under preparation for easy-to-use access.
@@ -65,8 +65,8 @@ module load languages/python-2.7.6
 NOTE: If Feel++ does not compile using these modules, please post an 
 link:https://github.com/feelpp/book.feelpp.org/issues[issue on github].
 
-NOTE: Then see an example of slurm job based on source and singularity container.
+NOTE: Then see an example of a slurm job based on source and singularity container.
 
 == Visualization
 
-To visualize you results, you can use a visualiztion node, see link:https://services-numeriques.unistra.fr/les-services-aux-usagers/hpc/applications-disponibles/visualisation-a-distance-avec-x2go.html[X2GO documentation].
+To visualize your results, you can use a visualiztion node, see link:https://services-numeriques.unistra.fr/les-services-aux-usagers/hpc/applications-disponibles/visualisation-a-distance-avec-x2go.html[X2GO documentation].
