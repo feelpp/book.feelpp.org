@@ -2,8 +2,9 @@
 
 == Installation Quick Start
 
-Using {feelpp} inside <<using/what-is-docker.adoc#what-is-docker,Docker>> is the recommended and fastest way to use {feelpp}.
-The <<using/README.adoc#docker,Docker>> chapter is dedicated to Docker and using {feelpp} in Docker.
+Using {feelpp} inside Docker is the recommended and fastest way to use {feelpp}.
+
+NOTE: Explanations about Docker will be integrated into the manual.
 
 We strongly encourage you to follow these steps if you begin with {feelpp} in particular as an end-user.
 
@@ -13,12 +14,18 @@ People who would like to develop with and in {feelpp} should read through the re
 
 Start the Docker container `feelpp/feelpp-base` or `feelpp/feelpp-toolboxes` as follows
 
+.Command line to start the docker container
 [source,sh]
 ----
-> docker run -it -v $HOME/feel:/feel feelpp/feelpp-toolboxes
+> docker run -it<1>
+  -e LOCAL_USER_ID=`id -u`<2>
+  -v $HOME/feel:/feel <3>
+  feelpp/feelpp-toolboxes <4>
 ----
-
-NOTE: these steps are explained in the chapter on <<02-docker/feelpp-containers.adoc#feelpp-containers,{feelpp} containers>>.
+<1> the option `-it` runs Docker in interactive mode;
+<2> we need to pass your user id to Docker so that the data you generate from Docker belongs to you;
+<3> maps the directory `$HOME/feel` on your host to `/feel` in Docker, {feelpp} write in `/feel` the results of the simulations. Passing your id, _i.e_ `LOCAL_USER_ID`, allows to ensure that the generated data on {feelpp} belongs to you on your host system;
+<4> use the container `feelpp/feelpp-toolboxes`.
 
 Then run _e.g._ the {uri-rel-file-base}/quickstart/qs_laplacian.cpp[Quickstart Laplacian] that solves the Laplacian problem in <<lap-seq>> or in <<lap-par>>.
 
@@ -26,8 +33,11 @@ Then run _e.g._ the {uri-rel-file-base}/quickstart/qs_laplacian.cpp[Quickstart L
 [source,sh]
 .Quickstart Laplacian sequential
 ----
-> feelpp_qs_laplacian_2d --config-file Testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg
+> feelpp_qs_laplacian_2d <1>
+--config-file Testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg<2>
 ----
+<1> executable to run
+<2> configuration file (text) to setup the problem : mesh, material properties and boundary conditions
 
 The results are stored in Docker in
 ----
