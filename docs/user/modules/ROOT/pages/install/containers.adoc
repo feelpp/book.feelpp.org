@@ -1,10 +1,5 @@
 = Containers (recommended)
-:page-permalink: /user-manual/installation/containers
-:page-layout: manual
-:page-root: ../../
-:imagesdir: ../../../images/
-:sourcedir: ../../../codes/
-include::../../../includes/header.adoc[]
+include::{partialsdir}/header-macros.adoc[]
 
 TIP: Difficulty {easy}
 
@@ -61,7 +56,7 @@ We provide currently four main images:
 
 Each image is available with several tags depending on the {feelpp} version,
 but also other dependencies.
-(link:https://hub.docker.com/r/feelpp/feelpp-toolboxes/tags/[e.g 
+(link:https://hub.docker.com/r/feelpp/feelpp-toolboxes/tags/[e.g
 toolbox images tag list] )
 In most case, you desire to use the `latest` tag.
 
@@ -80,7 +75,7 @@ The `-it` option is used to place yourself inside the container in an interactiv
 You can start using {feelpp} commands directly.
 Note that the `-v` option is used to share a folder between the host and the container.
 
-TIP: Each container can be seen as an instance for the choosen image. 
+TIP: Each container can be seen as an instance for the choosen image.
 You can create as many instance as you desire!
 
 It is also possible to execute a {feelpp} application or a command embedded in the container

@@ -1,6 +1,27 @@
-= Introduction
+= User Manual
+:toc: macro
 include::{partialsdir}/header-macros.adoc[]
 
+= Authors
+The {feelpp} user manual is actively developed by
+link:{uri-github}prudhomm[Christophe Prud'homme],
+link:{uri-github}vincentchabannes[Vincent Chabannes],
+link:{uri-github}dolle[Guillaume Dollé].
+
+There are many link:https://github.com/feelpp/feelpp/graphs/contributors[other and past contributors] to this manual.
+
+The {feelpp} project is currently managed by
+mailto:christophe.prudhomme@feelpp.org[Christophe Prud'homme], Professor in
+applied mathematic and scientific computing at the
+link:www.en.unistra.fr[University of Strasbourg], France.
+
+
+toc::[]
+
+= Preface
+
+
+== What is {feelpp}?
 {feelpp} is a unified {cpp} implementation of Galerkin methods (finite and
 spectral element methods) in 1D, 2D and 3D to solve partial differential
 equations.
@@ -22,32 +43,51 @@ equations.
   non-linear multi-physics applications currently in industry, physics and
   health-care.
 
-== Discussion Forums
+== What is the purpose of this manual ?
 
-Slack (recommended) and Gitter are used to announce and discuss
-book modifications. Don't hesitate to participate to the
-discussions
 
-Recommened::
-link:https://feelpp.slack.com/messages/C6AQL4405[
+The purpose of this manual is to allow user
+
+* [x] get started with {feelpp} using xref:quickstart/docker.adoc[Docker] or xref:quickstart/singularity.adoc[Singularity].
+* [x] learn using {feelpp} by example
+
+== What is the scope of this manual?
+
+We need to define first what is a {feelpp} user to define the scope.
+{feelpp} User::
+A {feelpp} user can be either
+* an application-user who runs the applications provided by {feelpp} either via Docker or via an installation on a system or infrastructure.
+* a dsel-user  who implements {cpp} code using {feelpp} Galerkin domain specific embdedded language, see _e.g._ xref:user::laplacian.adoc[Laplacian].
+
+This book discusses the {feelpp} user perspective.
+This book does not discuss {feelpp} API or programming.
+
+== Who is this book for?
+
+This book is for students, engineers, scientists and researchers who want to use {feelpp}:
+
+* [x] solve PDEs using {feelpp} xref:toolbox::index.adoc[toolboxes]
+* [x] solve PDEs using the embedded language for Galerkin methods
+
+== Where to discuss about this manual?
+
+To discuss this manual, we provide Slack channel (recommended)  to announce, support and discuss book modifications.
+Don't hesitate to participate to the discussions!
+
+Click the button to join the channel link:https://feelpp.slack.com/messages/C6AQL4405[
 image:tools/joinslack.svg[]]
 
-Deprecated::
-link:https://gitter.im/feelpp/feelpp-book[
-image:tools/joingitter.svg[]]
+NOTE: Joining Slack channels works by invitation, to receive an invitation send an email to support@feelpp.org.
 
-== How to Contribute
+== How to contribute to this manual
 
 We're always happy to help out with {feelpp} or any other questions you might
-have. You can ask a question or signal an issue at the Slack support salon
-or previously used Gitter {feelpp} salon.
+have. You can ask a question or signal an issue at the Slack support salon.
 
 .Join the {feelpp} chat
 
 link:https://feelpp.slack.com/messages/C6L6B4RE2[
 image:tools/joinslack.svg[]]
-link:https://gitter.im/feelpp/feelpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge[
-image:tools/joingitter.svg[]]
 
 If you find an bug or have a feature proposal, please check first the issue
 does not already exist in the
@@ -61,6 +101,8 @@ For more information about PR, see link:https://help.github.com/articles/about-p
 
 == Licenses
 
+{feelpp} and its documentation is copyrighted
+
 Copyright (C) 2010-2018 by {feelpp} Consortium +
 Copyright (C) 2005-2015 by Université Joseph Fourier (Grenoble, France) +
 Copyright (C) 2005-2015 by University of Coimbra (Portugal) +
@@ -68,128 +110,15 @@ Copyright (C) 2011-2018 by Université de Strasbourg (France) +
 Copyright (C) 2011-2018 by CNRS (France) +
 Copyright (C) 2005-2006 by Ecole Polytechnique Fédérale de Lausanne (EPFL, Switzerland) +
 
-Free use of this software is granted under the terms of the L License.
+Free use of this software is granted under the terms of the LGPL License.
 
 See the LICENSE file for details
 
-This book is  part of {feelpp} and is licensed under image:http://creativecommons.org/images/public/cc-LGPL-a.png[link="http://creativecommons.org/licenses/LGPL/2.1/", align="center"].
+This book is  part of {feelpp} and is licensed under the LGPL license.
 
-== Authors
-
-{feelpp} is currently actively developed by
-link:{uri-github}prudhomm[Christophe Prud'homme],
-link:{uri-github}vincentchabannes[Vincent Chabannes],
-link:{uri-github}trophime[Christophe Trophime],
-link:{uri-github}metivett[Thibaut Métivet],
-link:{uri-github}dolle[Guillaume Dollé],
-link:{uri-github}jbwahl[Jean-Baptiste  Wahl],
-link:{uri-github}romainhild[Romain Hild],
-and link:{uri-github}lsala[Lorenzo Sala].
+image:http://creativecommons.org/images/public/cc-LGPL-a.png[link="http://creativecommons.org/licenses/LGPL/2.1/", align="center"].
 
 
-There are many link:https://github.com/feelpp/feelpp/graphs/contributors[other and past contributors].
-
-{feelpp} is currently managed by
-mailto:christophe.prudhomme@feelpp.org[Christophe Prud'homme], Professor in
-applied mathematic and scientific computing at the
-link:www.en.unistra.fr[University of Strasbourg], France.
-
-== Funding
-
-{feelpp} has been funded by various sources and especially
-
-image:logos/logo_anr.png[caption="ANR",width=100]
-image:logos/logo_amies.png[caption="AMIES",width=100]
-image:logos/logo_irmia.png[width=100,caption="IRMIA"]
-image:logos/logo_prace.png[width="100",link="http://www.prace-ri.eu"]
-
-===  Current funding
-
-EU E-INFRA H2020::
- - link:http://www.cemosis.fr/projects/mso4sc[MSO4SC] (2016-2018)
-
-ANR projects::
- - None currently
-
-AMIES::
- - 4FastSim-IBat
-
-CNRS::
- - Defi Mecanobiologie 2018
-
-IRMIA::
- - {Hemotumpp} (2017-2020)
- - Hifimagnet (2012-2018)
-
-MESR::
-  - Ph.D.
-
-=== Past funding
-
-AMIES::
- - PEPS Holo3
- - PEPS Solodem
- - PEPS NS2++
-
-ANR::
- - http://www.vivabrain.fr[VIVABRAIN]   (MN call - 2013-2017)
- - CHORUS (MN call - 2013-2017)
- - link:http://www.hamm-project.fr[HAMM] - (Cosinus call - 2010-2014)
- - link:http://www.opus-project.fr[OPUS] - (TLOG call - 2008-2011)
- - Funding for http://www.cemosis.fr[Cemosis]
-
-Contract::
-  - PlasticOmnium: (2016-2017)
-  - Holo3 (2016-2017)
-
-FRAE::
- - RB4FASTSIM - 2010-2014
-
-IRMIA(Labex)::
-  - 4fastsim (2016-2017)
-
-PRACE projects::
- - HP-FEEL++ 2015-2016
- - HP-FEEL++ 2013-2014
- - HP-PDE{1,2} 2012-2014
-
-Regional::
-  - Rhônes-Alpes region, cluster ISLE <<fn:2>> and the project CHPID (2009-2011)
-
-== Contributors
-
-
-{feelpp} benefits from the many discussions and close research collaborations with
-the following persons:
-link:http://www-liphy.ujf-grenoble.fr/pagesperso/ismail/[Mourad Ismail],
-link:http://www.math.uha.fr/belhachmi/[Zakaria Belhachmi],
-link:http://arturo.imati.cnr.it/aivlis/[Silvia Bertoluzza],
-link:http://arturo.imati.cnr.it/micol/Welcome.html[Micol Pennacchio],
-link:http://www.math.iupui.edu/~gguidobo/[Marcela Szopos],
-link:http://www.math.iupui.edu/~gguidobo/[Giovanna Guidoboni],
-link:http://www1.mate.polimi.it/~ricsac/[Riccardo Sacco],
-link:https://apps.uc.pt/mypage/faculty/uc26502/en[Gonçalo Pena].
-
-Finally {feelpp} also benefits from discussions within collaborative projects with
-many people (in no particular order):
-
-Yannick Hoarau, Philippe Gilotte, Benjamin Surowiec, Yoann Eulalie, Stephie
-Edwige, Marion Spreng, Benjamin Vanthong, Thomas Lantz, Mamadou Camara, Camille
-Boulard, Pierre Gerhard, Frédéric Hecht, Michel Fouquembergh, Denis Barbier,
-Jean-Marc Gratien, Daniele Di Pietro.
-
-== Consortium
-
-{feelpp} was initially developed at École Polytechnique Fédérale de
-Lausanne(Suisse) and is now a joint effort between Université de Strasbourg,
-Université Grenoble-Alpes, CNRS, LNCMI and http://www.cemosis.fr[Cemosis].
-
-
-image:logos/logo_cemosis.png[width="100",link="http://www.cemosis.fr/",align="center"]
-image:logos/logo-uga.png[width="100"nlink="http://www.univ-grenoble-alpes.fr/",align="center"]
-image:logos/logo_cnrs.png[width="100",link="http://www.cnrs.fr",align="center"]
-image:logos/logo_imati.jpg[width="100",link="http://www.imati.cnr.it/",align="center"]
-image:logos/logo_uds.png[width="100",link="http://www.unistra.fr/",align="center"]
 
 == Conventions
 
@@ -210,8 +139,7 @@ WARNING: this is a general warning.
 
 CAUTION: be cautious
 
-Sometimes difficulty is precised for a tutorial or a specific process.
-Four difficulty levels can be distinguished:
+Hereafter, in the context of tutorial or the documentation of a specific process, four difficulty levels can be displayed:
 
 . {lvl_easy}
 . {lvl_average}

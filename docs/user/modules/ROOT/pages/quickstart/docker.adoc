@@ -17,21 +17,39 @@ Start the Docker container `feelpp/feelpp-base` or `feelpp/feelpp-toolboxes` as 
 .Command line to start the docker container
 [source,sh]
 ----
-> docker run -it<1>
-  -e LOCAL_USER_ID=`id -u`<2>
-  -v $HOME/feel:/feel <3>
-  feelpp/feelpp-toolboxes <4>
+$ docker run -it  -e LOCAL_USER_ID=`id -u`  -v $HOME/feel:/feel feelpp/feelpp-toolboxes
 ----
-<1> the option `-it` runs Docker in interactive mode;
-<2> we need to pass your user id to Docker so that the data you generate from Docker belongs to you;
-<3> maps the directory `$HOME/feel` on your host to `/feel` in Docker, {feelpp} write in `/feel` the results of the simulations. Passing your id, _i.e_ `LOCAL_USER_ID`, allows to ensure that the generated data on {feelpp} belongs to you on your host system;
-<4> use the container `feelpp/feelpp-toolboxes`.
+TIP: simply copy-paste the command line in your terminal to start the `feelpp/feelpp-toolboxes` container.
+
+Here are some explanations about the different parts in the command line
+[source,sh]
+----
+$ docker <1>
+  run <2>
+  -it <3>
+  -e LOCAL_USER_ID=`id -u`<4>
+  -v $HOME/feel:/feel <5>
+  feelpp/feelpp-toolboxes <6>
+----
+<1> `docker` is the application that allows to create and execute Containers
+<2> `run` allows to execute the image `feelpp/feelpp-toolboxes`
+<3> the option `-it` runs Docker in interactive mode;
+<4> we need to pass your user id to Docker so that the data you generate from Docker belongs to you;
+<5> maps the directory `$HOME/feel` on your host to `/feel` in Docker, {feelpp} write in `/feel` the results of the simulations. Passing your id, _i.e_ `LOCAL_USER_ID`, allows to ensure that the generated data on {feelpp} belongs to you on your host system;
+<6> execute the image `feelpp/feelpp-toolboxes` and create the associated container .
 
 Then run _e.g._ the {uri-rel-file-base}/quickstart/qs_laplacian.cpp[Quickstart Laplacian] that solves the Laplacian problem in <<lap-seq>> or in <<lap-par>>.
 
 [[lap-seq]]
 [source,sh]
-.Quickstart Laplacian sequential
+.Running the quickstart Laplacian in sequential
+----
+$ feelpp_qs_laplacian_2d --config-file Testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg
+----
+
+[[lap-seq-explanations]]
+[source,sh]
+.Explanations about running the quickstart Laplacian in sequential
 ----
 > feelpp_qs_laplacian_2d <1>
 --config-file Testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg<2>
