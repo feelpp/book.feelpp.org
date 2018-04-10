@@ -12,8 +12,11 @@ steps:
    branches: feature/antora
    env:
        PROJECT: docs.feelpp.org
+ - wait
  - name: ':rocket: :book: fix :image:'
    command: .buildkite/steps/build.sh
+   agents:
+     antora: true
    branches: feature/antora
    env:
        PROJECT: docs.feelpp.org
