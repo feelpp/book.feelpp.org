@@ -29,12 +29,12 @@ int main(int argc, char**argv )
     // tag::env[]
     using namespace Feel;
     using Feel::cout;
-	po::options_description laplacianoptions( "Laplacian options" );
-	laplacianoptions.add_options()
+    po::options_description laplacianoptions( "Laplacian options" );
+    laplacianoptions.add_options()
         ( "no-solve", po::value<bool>()->default_value( false ), "No solve" )
-		;
+        ;
 
-	Environment env( _argc=argc, _argv=argv,
+    Environment env( _argc=argc, _argv=argv,
                    _desc=laplacianoptions,
                    _about=about(_name="qs_laplacian",
                                 _author="Feel++ Consortium",
@@ -43,22 +43,26 @@ int main(int argc, char**argv )
 
     // tag::mesh_space[]
     tic();
+    // tag::mesh[]
     auto mesh = loadMesh(_mesh=new Mesh<Simplex<FEELPP_DIM,1>>);
+    // end::mesh[]
     toc("loadMesh");
 
     tic();
-    auto Vh = Pch<2>( mesh );
-    auto u = Vh->element("u");
-    auto mu = expr(soption(_name="functions.mu")); // diffusion term
-    auto f = expr( soption(_name="functions.f"), "f" );
-    auto r_1 = expr( soption(_name="functions.a"), "a" ); // Robin left hand side expression
-    auto r_2 = expr( soption(_name="functions.b"), "b" ); // Robin right hand side expression
-    auto n = expr( soption(_name="functions.c"), "c" ); // Neumann expression
-    auto solution = expr( checker().solution(), "solution" );
-    auto g = checker().check()?solution:expr( soption(_name="functions.g"), "g" );
+    // tag::discr[]
+    auto Vh = Pch<2>( mesh ); // <1>
+    auto u = Vh->element("u"); // <2>
+    auto mu = expr(soption(_name="functions.mu")); // diffusion term <3>
+    auto f = expr( soption(_name="functions.f"), "f" ); // <4>
+    auto r_1 = expr( soption(_name="functions.a"), "a" ); // Robin left hand side expression <5>
+    auto r_2 = expr( soption(_name="functions.b"), "b" ); // Robin right hand side expression <6>
+    auto n = expr( soption(_name="functions.c"), "c" ); // Neumann expression <7>
+    auto solution = expr( checker().solution(), "solution" ); // <8>
+    auto g = checker().check()?solution:expr( soption(_name="functions.g"), "g" ); // <9>
     // tag::v[]
-    auto v = Vh->element( g, "g" );
+    auto v = Vh->element( g, "g" ); // <3>
     // end::v[]
+    // end::discr[]
     toc("Vh");
     // end::mesh_space[]
 

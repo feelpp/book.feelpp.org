@@ -95,13 +95,21 @@ include::{examplesdir}/qs_laplacian.cpp[tag=mesh]
 
 NOTE: the keyword `auto` enables type inference, for more details see link:https://en.wikipedia.org/wiki/C%2B%2B11#Type_inference[Wikipedia C{plus}{plus}11 page].
 
-
-Next the discretization setting by first defining `Vh=Pch<k>(mesh)` stem:[\equiv P^k_{c,h}], then elements of `Vh` and expressions `f`, `n` and `g` given by command line options or configuration file.
-
 [source,cpp]
 ----
 include::{examplesdir}/qs_laplacian.cpp[tag=discr]
 ----
+Next we define
+
+<1> the discrete space `Vh=Pch<k>(mesh)` stem:[\equiv P^k_{c,h}],
+<2> an element `u` of `Vh`
+<3> an expression `mu` that is used as the diffusion coefficient
+<4> an expression `f` that is used for the right hand-side term in the equation
+<5> an expression `r_1` that is used for the first term in the Robin boundary condition
+<6> an expression `r_2` that is used for the first term in the Robin boundary condition
+<7> an expression `n` that is used to define the Neumann boundary condition
+<8> an expression `solution` that is used to define the exact solution if there is one
+<9> an expression `g` that is used to define the Dirichlet boundary condition.
 
 [NOTE]
 ======
@@ -112,7 +120,7 @@ at the following line
 include::{examplesdir}/qs_laplacian.cpp[tag=v]
 ----
 
-`v` is set to the expression `g`, which means more precisely that `v` is the interpolant of `g` in `Vh`.
+`v` is set to the expression `g`, which means more precisely that `v` is the interpolant of `g` in `Vh`, _i.e_ we write stem:[v=\Pi^k_{c,\delta} g] with stem:[v \in P^k_{c,\delta}].
 ======
 
 the variational formulation is implemented below, we define the
@@ -142,7 +150,7 @@ We have the following correspondance:
 | `markedfaces(mesh,"Robin")`  |  stem:[\Gamma_R]
 
 |===
-
+More details can be found in xref:dev:reference:Keywords/keywords.adoc[Mathematical keywords] of {feelpp} and the xref:dev:referrence:Mesh/README.adoc[Mesh] reference.
 ======
 
 next we solve the algebraic problem
