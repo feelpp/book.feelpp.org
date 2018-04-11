@@ -89,9 +89,9 @@ We start with the mesh
 
 [source,cpp]
 ----
-include::{uri-github-feelpp}/quickstart/qs_laplacian.cpp[tag=mesh]
+include::{examplesdir}/qs_laplacian.cpp[tag=mesh]
 ----
-
+//include::{uri-github-feelpp}/quickstart/qs_laplacian.cpp[tag=mesh]
 
 NOTE: the keyword `auto` enables type inference, for more details see link:https://en.wikipedia.org/wiki/C%2B%2B11#Type_inference[Wikipedia C{plus}{plus}11 page].
 
@@ -100,7 +100,7 @@ Next the discretization setting by first defining `Vh=Pch<k>(mesh)` stem:[\equiv
 
 [source,cpp]
 ----
-include::qs_laplacian.cpp[tag=discr]
+include::{examplesdir}/qs_laplacian.cpp[tag=discr]
 ----
 
 [NOTE]
@@ -109,7 +109,7 @@ at the following line
 
 [source,cpp]
 ----
-include::qs_laplacian.cpp[tag=v]
+include::{examplesdir}/qs_laplacian.cpp[tag=v]
 ----
 
 `v` is set to the expression `g`, which means more precisely that `v` is the interpolant of `g` in `Vh`.
@@ -124,7 +124,7 @@ Dirichlet boundary conditions all over the boundary.
 
 [source,cpp]
 ----
-include::qs_laplacian.cpp[tag=vf]
+include::{examplesdir}/qs_laplacian.cpp[tag=vf]
 ----
 
 [NOTE]
@@ -151,7 +151,7 @@ next we solve the algebraic problem
 .Listing: solve algebraic system
 [source,cpp]
 ----
-include::qs_laplacian.cpp[tag=solve]
+include::{examplesdir}/qs_laplacian.cpp[tag=solve]
 ----
 
 next we compute the stem:[L^2] norm of stem:[u_\delta-g], it could
@@ -160,7 +160,7 @@ exact solution of the <<laplacian>>.
 
 [source,cpp]
 ----
-include::qs_laplacian.cpp[tag=ug]
+include::{examplesdir}/qs_laplacian.cpp[tag=ug]
 ----
 
 and finally we export the results, by default it is in the ensight
@@ -170,7 +170,7 @@ save both stem:[u] and stem:[g].
 .Listing: export Laplacian results
 [source,cpp]
 ----
-include::qs_laplacian.cpp[tag=export]
+include::{examplesdir}/qs_laplacian.cpp[tag=export]
 ----
 
 == Testcases
