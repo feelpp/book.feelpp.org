@@ -3,8 +3,7 @@
 
 The Fluid Structure models are formed from the combination of a xref:csm:index.adoc[Solid model] and a xref:cfd:index.adoc[Fluid model].
 
-[[sec:defin-notat]]
-== Definitions and Notations
+== Definitions
 
 Let latexmath:[I=[t_i,t_f[] be the time interval, and latexmath:[t\in I] denotes the time.
 latexmath:[\Omega^t_f] is the fluid domain, the exponent latexmath:[\phantom{}^t] indicates that the domain changes over time, we work in an Eulerian setting.
@@ -88,7 +87,7 @@ J_{\mathcal{A}_f^t} = det(\boldsymbol{F}_{\mathcal{A}_f^t})
 
 
 
-
+[[fsi_model]]
 == Example of fluid and structure models
 
 [[img-geometry1]]
@@ -149,7 +148,7 @@ The solution of this model are stem:[(\mathcal{A}^t, \boldsymbol{u}_f, p_f, \bol
 //{% include "git+https://github.com/feelpp/feelpp-book.git/en/03-modeling/FluidStructure/FSIModel.adoc" %}
 
 
-== Fluid structure coupling conditions
+== Coupling conditions
 
 In order to have a complete fluid-structure model, we need to add to the solid model and the fluid model equations some coupling conditions :
 
@@ -192,7 +191,7 @@ f_s  + \left(J_{\mathcal{A}_f^t} \boldsymbol{F}_{\mathcal{A}_f^t}^{-T} \hat{\bol
 \boldsymbol{\varphi}_s^t  - \mathcal{A}_f^t = \boldsymbol{0} \quad \boldsymbol{(3.2)}
 ++++
 
-== Numerical Methods
+== Discretization
 
 Regarding the space discretization, we use the finite element method to
 discretize the model described above.
@@ -223,7 +222,8 @@ Different coupling strategies (semi-implicit and semi-explicit) can be set betwe
 
 NOTE: The list needs to be updated
 
-=== Robin-Robin coupling conditions
+== Coupling strategies
+=== Robin-Robin
 
 The conditions read
 [stem]
