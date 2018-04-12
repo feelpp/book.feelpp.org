@@ -1,13 +1,157 @@
-= Fluid Structure Interaction 
+= Fluid Structure Interaction
 
 
-The Fluid Structure models are formed from the combination of a link:../Solid/README.adoc[Solid model] and a link:../Fluid/README.adoc[Fluid model].
+The Fluid Structure models are formed from the combination of a xref:csm:index.adoc[Solid model] and a xref:cfd:index.adoc[Fluid model].
 
-== Models
+[[sec:defin-notat]]
+== Definitions and Notations
+
+Let latexmath:[I=[t_i,t_f[] be the time interval, and latexmath:[t\in I] denotes the time.
+latexmath:[\Omega^t_f] is the fluid domain, the exponent latexmath:[\phantom{}^t] indicates that the domain changes over time, we work in an Eulerian setting.
+We denote latexmath:[\Omega^*_s] the solid wall which is set in a Lagrangian setting.
+We also introduce latexmath:[\Omega_f^*] the reference fluid domain, which can
+be chosen as latexmath:[\Omega_f^* \equiv \Omega_f^{t_i}] where
+latexmath:[t_i] is the initial time.
+
+=== Variables, symbols and units
+|===
+| Notation | Quantity | Unit
+|stem:[\boldsymbol{u}_f]|fluid velocity|stem:[m.s^{-1}]
+|stem:[\boldsymbol{\sigma}_f]|fluid stress tensor|stem:[N.m^{-2}]
+|stem:[\boldsymbol{\eta}_s]|displacement| stem:[m]
+|stem:[\boldsymbol{F}_s]|deformation gradient|dimensionless
+|stem:[\boldsymbol{\Sigma}_s]| second Piola-Kirchhoff tensor | stem:[N.m^{-2}]
+|stem:[\mathcal{A}_f^t]|Arbitrary Lagrangian Eulerian ( ALE ) map|dimensionless
+|===
+
+== ALE Map
+
+To couple the fluid and the solid dynamics, we need to formulate the
+fluid equations in Lagrangian coordinates.
+To this end, we introduce the Arbitrary Lagrangian Eulerian (ALE) framework which allows to go from the Eulerian to the Lagrangian frame and vice versa, and more specifically we define the ALE map.
+
+This map give us the position of stem:[x], a point in the deformed domain at time stem:[t] from the position of stem:[x^*] in the initial configuration stem:[\Omega^*]. Figure <<img-geometry2,1>> displays a schematic of the fluid structure interaction (FSI) and the action of the ALE map latexmath:[\mathcal{A}_{}^t].
+
+
+[[img-geometry2]]
+image::ALE.png[caption="Figure 2 : ", title="ALE map", alt="ALE", width="500", align="center"]
+
+stem:[\mathcal{A}^t] is a homeomorphism, i.e. a continuous and bijective application we can define as
+[stem]
+++++
+\begin{aligned}
+    \mathcal{A}_{}^t:\: & \Omega_f^* & \rightarrow && \Omega_f^t \\
+    & \mathbf{x}^* & \mapsto && \mathbf{x} = \mathcal{A}^t \left(\mathbf{x}^*\right)
+  \end{aligned}
+++++
+where latexmath:[\mathbf{x}] is the position in
+latexmath:[\Omega_f^t] of the point which was at
+latexmath:[\mathbf{x}^*] in latexmath:[\Omega_f^*].
+
+We denote also  stem:[\forall \mathbf{x}^* \in \Omega^*], the application :
+
+[stem]
+++++
+\begin{eqnarray*}
+\mathbf{x} : \left[t_i,t_f \right] &\longrightarrow & \Omega^t \\
+t &\longmapsto & \mathbf{x} \left(\mathbf{x}^*,t \right)
+\end{eqnarray*}
+++++
+
+We can then define the Lagrangian derivative
+[stem]
+++++
+{\left. \frac{\partial \boldsymbol{u}}{\partial t} \right |_{\mathbf{x}^*}} = {\left. \frac{\partial \boldsymbol{u}}{\partial t} \right |_{\mathbf{x}}} +   \left( \boldsymbol{w} \cdot \nabla_{\mathbf{x}} \right) \boldsymbol{u}
+++++
+
+where latexmath:[\boldsymbol{u}] is a vector field and
+latexmath:[\boldsymbol{w}] is the velocity of the mesh displacement
+defined as follows
+[stem]
+++++
+\boldsymbol{w} \left(\mathbf{x},t\right) %=    \aleTimeDer{\coord{x}} \left(\coord{x},t\right)
+  = \frac{\partial \mathbf{x} }{\partial t} \left( \left(\mathcal{A}_{}^t\right)^{-1} \left(\mathbf{x}\right),t\right)     %  \aleTimeDer{\ale{}^{t}}  % \frac{\partial \ale{}^{t}}{\partial t}
+++++
+Variables defined in the reference frame are denoted as follows
+latexmath:[\hat{\boldsymbol{u}} = \boldsymbol{u} \circ \mathcal{A}_{}^t]
+
+And finally we denote
+[stem]
+++++
+\boldsymbol{F}_{\mathcal{A}_f^t} = \boldsymbol{\mathrm{x}}^* + \nabla \mathcal{A}_f^t
+++++
+and
+[stem]
+++++
+J_{\mathcal{A}_f^t} = det(\boldsymbol{F}_{\mathcal{A}_f^t})
+++++
+
+
+
+
+== Example of fluid and structure models
+
+[[img-geometry1]]
+image::FSIModel.png[caption="Figure 1 : ", title="Illustration of a FSI coupling", alt="FSI", width="500", align="center"]
+
+Consider a laminar incompressible flow, the velocity and pressure latexmath:[(\boldsymbol{u}_f,p_f)] are
+then given by the equations
+[stem]
+++++
+\begin{aligned}
+    \begin{aligned}
+        \rho_{f} {\left. \frac{\partial \boldsymbol{u}_f}{\partial t} \right |_{\mathbf{x}}}
+        + \rho_{f} \left( \left(\boldsymbol{u}_{f}- \boldsymbol{w}_f\right) \cdot \nabla_{\mathbf{x}} \right) \boldsymbol{u}_{f}
+        - \nabla_{\mathbf{x}} \cdot \boldsymbol{\sigma}_{f} &= \boldsymbol{f}^t_f , \quad \text{ in } \Omega^t_f\\ % \times \left[t_i,t_f \right] \\
+        \nabla_{\mathbf{x}} \cdot \boldsymbol{u}_{f} &= 0 , \quad \text{ in } \Omega^t_f % \times \left[t_i,t_f \right]
+    \end{aligned}\end{aligned}
+++++
+with
+[stem]
+++++
+\boldsymbol{\sigma}_{f} = -p_f \boldsymbol{I} + 2 \mu_f \boldsymbol{D}\left(\boldsymbol{u}_{f}\right)
+++++
+and
+[stem]
+++++
+\boldsymbol{D}\left(\boldsymbol{u}_{f}\right) = \frac{1}{2}\left( \nabla_{\mathbf{x}} \boldsymbol{u}_{f} + \left( \nabla_{\mathbf{x}} \boldsymbol{u}_{f} \right)^{T} \right)
+++++
+and where latexmath:[$\boldsymbol{f}_t$] is the volumic force density, latexmath:[\rho_f] the blood density and latexmath:[\mu_f] the blood viscosity.
+
+Consider now a nearly incompressible hyperelastic structure.
+We use, in this case, a displacement-pressure formulation following a Saint Venant-Kirchhoff material law.
+The displacement and pressure latexmath:[(\boldsymbol{\eta}_s, p_s)] equations read:
+[stem]
+++++
+\begin{aligned}
+    \rho^*_{s} \frac{\partial^2 \boldsymbol{\eta}_s}{\partial t^2}
+    - \nabla \cdot \left(\boldsymbol{F}_s \boldsymbol{\Sigma}_s\right)
+    &=&    \boldsymbol{f}^t_s \quad \text{ in } \Omega^*_s \\
+    tr\left(\boldsymbol{E}_s\right) &=& \frac{1}{\lambda} p_s \quad \text{ in } \Omega^*_s
+  \end{aligned}\]] with latexmath:[\[\begin{aligned}
+    \boldsymbol{\Sigma}_s&=& -p_s \mathbb{I} + 2 \mu_s \boldsymbol{E}_s \\
+    \boldsymbol{E}_s &=&
+    \frac{1}{2} \left( \nabla \boldsymbol{\eta}_s + \left(\nabla \boldsymbol{\eta}_s\right)^{T} \right)
+  + \frac{1}{2} \left(\left(\nabla \boldsymbol{\eta}_s\right)^{T} \nabla \boldsymbol{\eta}_s \right)
+  \end{aligned}
+++++
+where latexmath:[\lambda_s], latexmath:[\mu_s] are the Lamé coefficients
+defined as
+latexmath:[\lambda_s = \frac{E_s \nu_s}{ (1+\nu_s)(1-2\nu_s)} \quad , \quad \mu_s = \frac{E_s}{2(1+\nu_s)},]
+latexmath:[\rho_s (\textrm{ kg}\,\textrm{mm}^3)] is
+the structure density, latexmath:[E_s (\textrm{ kg}\,\textrm{mm}^{-1}\,\textrm{s}^{-2})] is the Young modulus and latexmath:[nu_s] is the Poisson coefficient.
+
+More information are available in the theoretical description  of the xref:cfd:theory.adoc[fluid equations], and the xref:csm:theory.adoc[structure equations].
+
+
+The solution of this model are stem:[(\mathcal{A}^t, \boldsymbol{u}_f, p_f, \boldsymbol{\eta}_s)].
+
+//{% include "git+https://github.com/feelpp/feelpp-book.git/en/03-modeling/FluidStructure/FSIModel.adoc" %}
+
 
 == Fluid structure coupling conditions
 
-In order to have a correct fluid-structure model, we need to add to the solid model and the fluid model equations some coupling conditions :
+In order to have a complete fluid-structure model, we need to add to the solid model and the fluid model equations some coupling conditions :
 
 [stem]
 ++++
@@ -26,11 +170,11 @@ In order to have a correct fluid-structure model, we need to add to the solid mo
   \boldsymbol{\varphi}_s^t  - \mathcal{A}_{f}^t = \boldsymbol{0} , \quad \text{ on } \Gamma_{fsi}^* \times \left[t_i,t_f \right] \quad \boldsymbol{(3)}
 ++++
 
-stem:[\boldsymbol{(1)}, \boldsymbol{(2)}, \boldsymbol{(3)}] are the fluid-struture coupling conditions, respectively velocities continuity, constraint continuity and geometric continuity. 
+stem:[\boldsymbol{(1)}, \boldsymbol{(2)}, \boldsymbol{(3)}] are the fluid-struture coupling conditions, respectively velocities continuity, constraint continuity and geometric continuity.
 
 === Fluid structure coupling conditions with 1D reduced model
 
-For the link:FSIModel.adoc#_fluid_structure_coupling_conditions[coupling conditions], between the 2D fluid and 1D structure, we need to modify the original ones stem:[\boldsymbol{(1)},\boldsymbol{(2)}, \boldsymbol{(3)}] by
+In the case of a 2D fluid and 1D structure, we need to modify the original ones stem:[\boldsymbol{(1)},\boldsymbol{(2)}, \boldsymbol{(3)}] by
 
 [stem]
 ++++
@@ -40,82 +184,69 @@ For the link:FSIModel.adoc#_fluid_structure_coupling_conditions[coupling conditi
 [stem]
 ++++
 f_s  + \left(J_{\mathcal{A}_f^t} \boldsymbol{F}_{\mathcal{A}_f^t}^{-T} \hat{\boldsymbol{\sigma}}_f \boldsymbol{n}^*_f\right) \cdot \boldsymbol{e}_r
-=  0 \quad \boldsymbol{(2.2)} 
+=  0 \quad \boldsymbol{(2.2)}
 ++++
 
 [stem]
 ++++
-\boldsymbol{\varphi}_s^t  - \mathcal{A}_f^t = \boldsymbol{0} \quad \boldsymbol{(3.2)} 
+\boldsymbol{\varphi}_s^t  - \mathcal{A}_f^t = \boldsymbol{0} \quad \boldsymbol{(3.2)}
 ++++
 
-=== Variables, symbols and units
-|===
-| Notation | Quantity | Unit 
-|stem:[\boldsymbol{u}_f]|fluid velocity|stem:[m.s^{-1}]
-|stem:[\boldsymbol{\sigma}_f]|fluid stress tensor|stem:[N.m^{-2}]
-|stem:[\boldsymbol{\eta}_s]|displacement| stem:[m]
-|stem:[\boldsymbol{F}_s]|deformation gradient|dimensionless
-|stem:[\boldsymbol{\Sigma}_s]| second Piola-Kirchhoff tensor | stem:[N.m^{-2}]
-|stem:[\mathcal{A}_f^t]|Arbitrary Lagrangian Eulerian ( ALE ) map|dimensionless
-|===
+== Numerical Methods
 
-and 
+Regarding the space discretization, we use the finite element method to
+discretize the model described above.
+We use continuous piecewise polynomials of order stem:[k+1] for the velocity and order stem:[k] for the pressure in the fluid and we use continuous piecewise polynomials of order stem:[k] for the displacement.
 
+NOTE: The ALE map would be descretized with the same polynomial order as the displacement.
+
+Regarding the time discretization, we can use for the fluid a stem:[BDF_2] scheme
+and for the solid we use the Newmark scheme, both are second order in
+time.
+
+The algebraic representation of the fluid and solid model are solved
+using iterative methods preconditioned with algebraic-factorization type
+preconditioners enabling fast solves. The fluid-structure interaction
+coupling is handled with a Picard method that iterates between the fluid
+and the solid models until the relative increment between two non-linear
+iterations reaches a given tolerance.
+
+The FSI solution strategy follows a partitioned method solving at time
+latexmath:[$t^n$] alternatively for the solid displacement
+latexmath:[$\boldsymbol{\eta}_s^n$] and then the fluid velocity and
+pressure latexmath:[$\boldsymbol{u}_f^{n}, p_f^n$] until convergence.
+
+Different coupling strategies (semi-implicit and semi-explicit) can be set between  fluid and the structure:
+
+* using a Dirichlet-Neumann scheme
+* using a Robin-Robin coupling scheme between the fluid and the structure.
+
+NOTE: The list needs to be updated
+
+=== Robin-Robin coupling conditions
+
+The conditions read
 [stem]
 ++++
-\boldsymbol{F}_{\mathcal{A}_f^t} = \boldsymbol{\mathrm{x}}^* + \nabla \mathcal{A}_f^t
-++++ 
-
+\begin{aligned}
+      \boldsymbol{\sigma}_{s}^{n} \boldsymbol{n}_s^n + \frac{\gamma
+      \mu_f }{h} \boldsymbol{u}_{s}^n  &=&  \frac{\gamma \mu_f }{h}
+                                           \boldsymbol{u}_{f}^{n-1} -
+                                           \boldsymbol{\sigma}_{f}^{n-1}
+                                           \boldsymbol{n}_f  \quad
+                                           \quad \text{in}\ \Omega^*_s \\
+      \boldsymbol{\sigma}_{f}^{n} \boldsymbol{n}_f + \frac{\gamma
+      \mu_f }{h} \boldsymbol{u}_{f}  &=& \frac{\gamma \mu_f }{h}
+                                         \boldsymbol{u}_{s}^n +
+                                         \boldsymbol{\sigma}_{f}^{n-1}
+                                         \boldsymbol{n}_f \quad \quad
+                                         \text{in}\ \Omega^t_f
+    \end{aligned}
+++++
+with
 [stem]
 ++++
-J_{\mathcal{A}_f^t} = det(\boldsymbol{F}_{\mathcal{A}_f^t})
+\boldsymbol{u}_{s}^n = \frac{\partial
+      \boldsymbol{\eta}_{s}^n }{\partial t}
 ++++
-
-
-
-
-== Fluid structure model 
-
-To describe and solve our fluid-structure interaction problem, we need to define a model, which regroup structure model and fluid model parts.
-
-We have then in one hand link:../CFD/README.adoc[the fluid equations], and in the other hand link:../CSM/README.adoc[the structure equations].
-
-[[img-geometry1]]
-image::FSIModel.png[caption="Figure 1 : ", title="FSI case example", alt="FSI", width="500", align="center"] 
-
-The solution of this model are stem:[(\mathcal{A}^t, \boldsymbol{u}_f, p_f, \boldsymbol{\eta}_s)].
-
-//{% include "git+https://github.com/feelpp/feelpp-book.git/en/03-modeling/FluidStructure/FSIModel.adoc" %}
-
-== ALE
-
-Generally, the solid mechanic equations are expressed in a Lagrangian frame, and the fluid part in Eulerian frame. To define and take in account the fluid domain displacement, we use a technique name ALE ( Arbitrary Lagrangian Eulerian ). This allow the flow to follow the fluid-structure interface movements and also permit us to have a different deformation velocity than the fluid one.
-
-Let denote stem:[\Omega^{t_0}] the calculation domain, and stem:[\Omega^t] the deformed domain at time stem:[t]. As explain before, we want to conserve the Lagrangian and Eulerian characteristics of each part, and to do this, we introduce stem:[\mathcal{A}^t] the ALE map.
-
-This map give us the position of stem:[x], a point in the deformed domain at time stem:[t] from the position of stem:[x^*] in the initial configuration stem:[\Omega^*].
-
-[[img-geometry2]]
-image::ALE.png[caption="Figure 2 : ", title="ALE map", alt="ALE", width="500", align="center"]  
-
-stem:[\mathcal{A}^t] is a homeomorphism, i.e. a continuous and bijective application we can define as 
-
-[stem]
-++++
-\begin{eqnarray*}
-  \mathcal{A}^t : \Omega^* &\longrightarrow & \Omega^{t} \\
-  \mathbf{x}^* &\longmapsto & \mathbf{x} \left(\mathbf{x}^*,t \right)  = \mathcal{A}^t \left(\mathbf{x}^*\right)
-\end{eqnarray*}
-++++
-
-We denote also  stem:[\forall \mathbf{x}^* \in \Omega^*], the application :
-
-[stem]
-++++
-\begin{eqnarray*}
-\mathbf{x} : \left[t_0,t_f \right] &\longrightarrow & \Omega^t \\
-t &\longmapsto & \mathbf{x} \left(\mathbf{x}^*,t \right)
-\end{eqnarray*}
-++++
-
-This ALE map can then be retrieve into the fluid-structure model. 
+and latexmath:[\gamma] a parameter to choose.
