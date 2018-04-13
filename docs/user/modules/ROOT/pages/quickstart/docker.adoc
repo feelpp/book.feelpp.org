@@ -17,7 +17,7 @@ Start the Docker container `feelpp/feelpp-base` or `feelpp/feelpp-toolboxes` as 
 .Command line to start the docker container
 [source,sh]
 ----
-$ docker run -it  -e LOCAL_USER_ID=`id -u`  -v $HOME/feel:/feel feelpp/feelpp-toolboxes
+$ docker run -it  -e LOCAL_USER_ID=`id -u $USER`  -v $HOME/feel:/feel feelpp/feelpp-toolboxes
 ----
 TIP: simply copy-paste the command line in your terminal to start the `feelpp/feelpp-toolboxes` container.
 
