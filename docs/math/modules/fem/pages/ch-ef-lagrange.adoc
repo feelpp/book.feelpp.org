@@ -7,25 +7,25 @@ On va présenter dans ce chapitre le type le plus simple et le plus classique d�
 == Unisolvance
 
 [[def:22]]
-[env.definition]
---
+.Définition
+****
 Soit stem:[\Sigma=\{ a_1,\ldots,a_N\}] un ensemble de stem:[N] points distincts de stem:[\RR^n].
 Soit stem:[P] un espace vectoriel de dimension finie de fonctions de stem:[\RR^n] à valeurs dans stem:[\RR].On dit que stem:[\Sigma] est stem:[P]-unisolvant ssi pour tous réels stem:[\alpha_1,\ldots,\alpha_N], il existe un unique élément stem:[p] de stem:[P] tel que stem:[p(a_i)=\alpha_i,\; i=1,\ldots,N].
---
+****
 
 Ceci revient à dire que la fonction :
 [[eq:26]]
-[env.equation]
---
+[stem]
+++++
 \begin{array}{rcl}
 {\cal L} : P & \longrightarrow & \RR^N\\
 p & \longrightarrow & (p(a_1),\ldots,p(a_N))
 \end{array}
---
+++++
 est bijective.
 
-[env.proof]
---
+.Preuve:
+****
 En pratique, on montrera que stem:[\Sigma] est stem:[P]-unisolvant en vérifiant que stem:[\opdim P= Card \Sigma], puis en montrant l’injectivité ou la surjectivité de stem:[{\cal L}].
 
 L’injectivité de stem:[{\cal L}] se démontre en établissant que
@@ -39,7 +39,7 @@ stem:[{\cal L}] de la base canonique de stem:[\RR^N].
 
 En effet, étant donnés des réels stem:[\alpha_1,\ldots,\alpha_N], la fonction stem:[{p=\sum_{i=1}^N \alpha_i p_i}] vérifie alors stem:[p(a_j)=\alpha_j,\;
 j=1,\ldots,N].
---
+****
 
 [[sec:lagrange]]
 == Elément fini de Lagrange
@@ -47,7 +47,7 @@ j=1,\ldots,N].
 [[def:25]]
 [env.definition]
 .Élément fini de Lagange
---
+****
 Un *élément fini de Lagrange* est un triplet stem:[(K,\Sigma,P)]
 tel que
 
@@ -56,29 +56,30 @@ tel que
 * stem:[\Sigma=\{a_1,\ldots,a_N\}] est un ensemble fini de stem:[N] points distincts de stem:[K].
 
 * stem:[P] est un espace vectoriel de dimension finie de fonctions réelles définies sur stem:[K], et tel que stem:[\Sigma] soit stem:[P]-unisolvant (donc dim stem:[P = N]).
---
+****
 
 [[def:26]]
 [env.definition]
 .Fonctions de base locales
---
+****
 Soit stem:[(K,\Sigma,P)] un élément fini de Lagrange. On appelle *fonctions de base locales* de l’élément les stem:[N] fonctions stem:[p_i] (stem:[i=1,\ldots,N]) de stem:[P] telles que
 [[eq:27]]
-\[
+[stem]
+++++
     p_i(a_j)=\delta_{ij}\qquad 1\le i,j \le N.
-\]
---
+++++
+****
 
 On vérifie aisément que stem:[(p_1,\ldots,p_N)] ainsi définie forme bien une base de stem:[P].
 
 [[def:27]]
-[env.definition]
---
+.Définition
+****
 On appelle *opérateur de interpolation* (ou encore stem:[P-]interpolation) sur stem:[\Sigma] l’opérateur stem:[\pi_K] qui, à toute fonction stem:[v] définie sur stem:[K], associe la fonction stem:[\pi_K v] de
 stem:[P] définie par stem:[{\pi_K v =   \sum_{i=1}^N v(a_i)\, p_i}].
 
 stem:[\pi_K v] est donc l’unique élément de stem:[P] qui prend les mêmes valeurs que stem:[v] sur les points de stem:[\Sigma].
---
+****
 
 [[exemples-déléments-finis-de-lagrange]]
 == Exemples d’éléments finis de Lagrange
@@ -198,27 +199,27 @@ image:fem/elements-3D.jpg[]
 [[def:28]]
 [env.definition]
 .Équivalence affine
---
+****
 Deux éléments finis stem:[(\hat{K},\hat{\Sigma},\hat{P})] et stem:[(K,\Sigma,P)] sont *affine-équivalents* ssi il existe une fonction affine stem:[F] inversible (stem:[F: \hat{x} \longrightarrow B\hat{x}+b]) telle que _(i)_ stem:[K=F(\hat{K})] _(ii)_ stem:[a_i=F(\hat{a}_i) \qquad i=1,\ldots,N] et _(iii)_ stem:[P=\{ \hat{p}\circ F^{-1} , \quad \hat{p}\in \hat{P} \}]
---
+****
 
 [[rem:10]]
 NOTE: Si l’on est dans stem:[\RR^n], stem:[B] est donc une matrice stem:[n\times n] inversible, et stem:[b] est un vecteur de stem:[\RR^n].
 
 [env.property]
---
+****
 Soient stem:[(\hat{K},\hat{\Sigma},\hat{P})] et stem:[(K,\Sigma,P)] deux éléments finis affine-équivalents, via une transformation stem:[F].
 
 On note stem:[\hat{p}_i \; (i=1,\ldots,N)] les fonctions de base locales de stem:[\hat{K}].
 
 *Alors* les fonctions de base locales de stem:[K] sont les stem:[p_i=\hat{p}_i\circ F^{-1}].
---
+****
 
 [[def:29]]
-[env.definition]
---
+.Définition
+****
 On appelle *famille affine d’éléments finis* une famille d’éléments finis tous affine-équivalents à un même élément fini stem:[(\hat{K},\hat{\Sigma},\hat{P})], appelé *élément de référence*.
---
+****
 
 D’un point de vue pratique, le fait de travailler avec une famille affine d’éléments finis permet de ramener tous les calculs d’intégrales à des calculs sur l’élément de référence.
 
@@ -243,41 +244,45 @@ Nous étendons ici aux dimension 2 et 3 les notions élémentaires de maillage v
 image:fem/feelpp-mesh.svg[align=center,float=left,width=400]
 
 [[def:31]]
-[env.definition]
---
+.Définition
+****
 Un maillage est constituée d’une famille d’éléments(ou mailles
 ou cellules) stem:[\{K_e\}_{e=1,...,N_e}] où stem:[N_e]
 est le nombre d’éléments, nous noterons
 [[eq:32]]
-\[
+[stem]
+++++
 \calTh = \{K_m\}_{m=1,...,N_e}
-\]
+++++
 avec
 [[eq:33]]
-\[
+[stem]
+++++
 h=\max_{1\le e\le N_e} h_{K_e}
-\]
+++++
 et
 [[eq:34]]
-\[
+[stem]
+++++
 h_{K_e}     = \diam(K_e) = \max_{x_1,x_2 \in K_e} \|x_1-x_2\|,\, e \in \{1,...,\Ne\}
-\]
---
+++++
+****
 
 On travaille par la suite avec des familles de maillage et on les note
 stem:[\set{\mathcal{T}_h}_{h > 0}].
 
 [env.definition]
 .Famille de maillage quasi-uniforme
---
+****
 On dira qu’une famille de maillage
 stem:[\set{\mathcal{T}_h}_{h > 0}] est *quasi-uniforme* s’il existe une constante
 stem:[c] telle que
 [[eq:35]]
-\[
+[stem]
+++++
  \forall h,\ \forall K \in \calTh,\ h_K \geq c h
-\]
---
+++++
+****
 
 [[rem:12]]
 NOTE: Cela veut dire que les élements sont tous de la même taille pour
@@ -294,14 +299,15 @@ Un maillage est généré par
 Nous supposerons que les transformations sont des stem:[\mathcal{C}^1-] diffeomorphismes footnote:[la transformation et son inverse sont stem:[\mathcal{C}^1] et bijectives].
 
 [[def:32]]
-[env.definition]
---
+.Définition
+****
 Pour une cellule stem:[K \in \mathcal{T}_h], on note stem:[T_K] la transformation géométrique
 [[eq:36]]
-\[
+[stem]
+++++
 T_K: \hat{K} \mapsto K
-\]
---
+++++
+****
 
 Afin de spécifier la transformation géométrique, on considère l’élément fini de Lagrange, noté stem:[(\hat{K},\hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\mathrm{geo}})], tel que
 
@@ -312,9 +318,9 @@ Afin de spécifier la transformation géométrique, on considère l’élément 
 
 [env.definition]
 .Élément fini géométrique
---
+****
 On dit que stem:[(\hat{K},\hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\geo})] est l’_élément fini géométrique_, stem:[\set{\hat{g}_1,\ldots,\hat{g}_{\ngeo}}] sont les _noeuds géométriques_ et stem:[\set{\hat{\psi}_1,\ldots,\hat{\psi}_{\ngeo}}] sont les _fonctions de formes géométriques_
---
+****
 
 .Transformation géométrique associée à un triangle
 image:fem/geomap_triangle.png[width=400,float=left]
@@ -323,18 +329,18 @@ Pour chaque stem:[K \in \mathcal{T}_h], on a un stem:[\ngeo]-uplet stem:[\set{g^
 
 La transformation géométrique est définie comme suit
 [[eq:37]]
-[env.equation]
---
+[stem]
+++++
   T_K: \hat{x} \in \hat{K} \mapsto \sum_{i=1}^\ngeo\ g^K_i \hat{\psi}_i(\hat{x})
---
+++++
 
 et en particulier on a
 
 [[eq:38]]
-[env.equation]
---
+[stem]
+++++
   T_K(\hat{g}_i) = g^K_i, \quad \forall i \in \set{1,\ldots,\ngeo}
---
+++++
 
 [[rem:13]]
 NOTE: On a stem:[T_K \in [\hat{P}_\geo(\hat{K})]^d] et que stem:[\set{g^K_1,\ldots,g^K_\ngeo}] sont les _noeuds géométriques_ de stem:[K].
@@ -348,18 +354,18 @@ voir link:http://www.geuz.org/gmsh/doc/texinfo/gmsh.html#Node-ordering[stem:[\tr
 Un cas particulier est la *transformation géométrique affine*.
 
 [[def:33]]
-[env.definition]
-.Maillage affine
---
+.Définition: Maillage affine
+****
 Quand toutes les _transformations géométriques_
 stem:[\set{T_K}_{K \in \mathcal{T}_h}] sont _affines_, cela veut dire que pour tout
 stem:[K \in \mathcal{T}_h], il existe un vecteur stem:[b_K \in \RR^d] et une matrice stem:[J_K \in \RR^{d\times d}] tels que
 [[eq:39]]
-\[
+[stem]
+++++
     T_K : \hat{x} \in \hat{K} \mapsto b_K + J_K \hat{x}  \in K
-\]
+++++
 On dit que le maillage est _affine_.
---
+****
 
 [[rem:16]]
 NOTE: Si l’élément fini géométrique est stem:[(\hat{K},\poly{P}_1,\Sigma_\ngeo)] alors les éléments stem:[K] sont soit des triangles soit des tétrahèdres.
@@ -375,16 +381,18 @@ NOTE: `Mesh<Simplex<d,1> >` ou `Mesh<Simplex<d> >` est le type pour les maillage
 
 On note stem:[\xi] un ensemble de stem:[n] points dans stem:[\hat{K}] et on note stem:[\nabla T_K(\xi)] le gradient de stem:[T_K] aux points stem:[\xi]
 
-[env.equation#eq:40]
---
+[[eq:40]]
+[stem]
+++++
   \nabla T_K( \xi )\ =\ \sum_{i=0}^{\ngeo}\ g^K_i\ \nabla \psi_i (\xi)
---
+++++
 et stem:[B_K(\xi) = \nabla T_K^{-1}(\xi)] l’inverse stem:[\xi] et finalement stem:[J_K(\xi)] le jacobien de stem:[T_K] en stem:[\xi]
 
-[env.equation#eq:41]
---
+[[eq:41]]
+[stem]
+++++
 J_K(\xi)\ =\ |\det( \nabla T_K(\xi) )|
---
+++++
 
 [[sec:deriv-dans-lelem]]
 ==== Dérivation dans l’élément de référence
@@ -394,14 +402,16 @@ Afin de dériver un polynome dans l’élément réel stem:[K], grâce à la tra
 Soit stem:[f: K \mapsto \RR] et stem:[\hat{f}: \hat{K} \mapsto \RR] telle que
 stem:[\hat{f} = f \circ T_K]
 
-[env.equation#eq:42]
---
+[[eq:42]]
+[stem]
+++++
   \nabla f\ =\  \hat{\nabla} \underbrace{\hat{f}(\xi)}_{f \circ T_K(\xi)} B_K(\xi)
---
+++++
 
 en 2D, on a, en notant stem:[x=T_K(\xi)],
-[env.equation#eq:43]
---
+[[eq:43]]
+[stem]
+++++
   \nabla f(x) =
   \begin{pmatrix}
     \frac{\hat{\partial} \hat{f} (\xi)}{\partial \xi_1} & \frac{\hat{\partial} \hat{f} (\xi)}{\partial \xi_2}
@@ -410,7 +420,7 @@ en 2D, on a, en notant stem:[x=T_K(\xi)],
     B_{K_{11}}(\xi) & B_{K_{12}}(\xi)\\
     B_{K_{21}}(\xi) & B_{K_{22}}(\xi)\\
   \end{pmatrix}
---
+++++
 
 [[sec:integr-dans-lelem]]
 ==== Intégration dans l’élément de référence
@@ -421,25 +431,26 @@ Soit stem:[f: K \mapsto \RR] et stem:[\hat{f}: \hat{K} \mapsto \RR] telle que st
 
 On a alors les relations suivantes:
 
-[env.equation#eq:44]
---
+[[eq:44]]
+++++
   \int_{K} \ f\ dx\ =\ \int_{\hat{K}} f(T_K(\xi) ) J_K( \xi )\ d \xi \ =\ \int_{\hat{K}} \hat{f}(\xi) J_K( \xi )\ d \xi]
---
+++++
 
-[env.equation#eq:45]
---
+[[eq:45]]
+++++
 \int_{K}\ \nabla f\ dx\ =\ \int_{\hat{K}} \Big(\hat{\nabla} \underbrace{\hat{f}(\xi)}_{f \circ T_K(\xi)} B_K(\xi)\Big) J_K( \xi )\ d \xi
---
+++++
 
-[env.equation#eq:46]
---
+[[eq:46]]
+++++
 \int_{\partial K} f( x ) dx = \int_{\partial \hat{K}} \hat{f}(\xi)  \| B_K(\xi) {\hat{\mathbf{n}}}(\xi) \| J_K( \xi ) d \xi
---
+++++
 
-[env.equation#eq:47]
---
+[[eq:47]]
+[stem]
+++++
 \int_{\partial K}\ {\mathbf{F}}( x )\ \cdot\ {\mathbf{n}}(x) dx = \int_{\partial \hat{K}} {\hat{\mathbf{F}}}( \xi )\ \cdot \Big(B_K(\xi)  {\hat{\mathbf{n}}}(\xi) \Big)  J_K( \xi )\ d \xi
---
+++++
 
 où stem:[{\mathbf{n}}(x)] est la _normale extérieure unitaire_ à stem:[\partial K] évaluée en stem:[x \in \partial K], et stem:[{\hat{\mathbf{n}}}(\xi)] la normale unitaire extérieure à stem:[\hat{K}] évaluée en stem:[\xi \in \partial \hat{K}].
 
@@ -448,12 +459,11 @@ NOTE: {feelpp} effectue automatiquement pour vous les changements de variables
 dans les intégrales.
 
 [[def:34]]
-[env.definition]
-.Maillage conforme
---
+.Définition: Maillage conforme
+****
 Un maillage est dit _conforme_ si l’intersection de deux
 éléments est soit vide, un sommet, une arête ou une face.
---
+****
 
 [[rem:19]]
 NOTE: On ne manipule que des maillages conformes dans le cours mais {feelpp} peut traiter des maillages non-conformes par exemple dans le contexte de méthode de décomposition de domaines.
@@ -466,21 +476,21 @@ Soit stem:[\mathcal{T}_h] un maillage généré par stem:[(\hat{K},   \hat{P}_{\
 L’objectif à présent est de générer la famille d’éléments finis de Lagrange grâce à l’élément fini de référence stem:[(\hat{K},\hat{P}, \hat{\Sigma})]
 
 [[eq:28]]
-[env.equation]
---
+[stem]
+++++
   \{(K,P_K,\Sigma_K)\}_{K \in \mathcal{T}_h}
---
+++++
 
-[env.notation]
---
+.Notations
+****
 On note stem:[\{\hat{x}_1,...,\hat{x}_{\nf}\}] les noeuds de l’élément fini.
 
 On note stem:[\{\hat{\Psi}_1,...,\hat{\Psi}_{\nf}\}] les fonctions de forme élément fini.
---
+****
 
 [[prop:6]]
-[env.proposition]
---
+.Proposition
+****
 Soit stem:[K \in \mathcal{T}_h] et stem:[P_K=\{\hat{p} \circ T_K^{-1}; \hat{p} \in \hat{P}\}].
 
 Pour tout stem:[i \in \{1,...,\nf\}], on pose stem:[x_{K,i} = T_K(\hat{x}_i)]
@@ -491,26 +501,30 @@ Alors stem:[(K,P_K,\Sigma_K)] est un _élément fini de Lagrange_.
 
 Les _fonctions de forme_ sont définies de la façon suivante
 [[eq:49]]
-\[
+[stem]
+++++
     \Psi_{K,i} = \hat{\Psi}_i \circ T_K^{-1}, \quad i=1,...,\nf
-\]
+++++
 et
 l’_opérateur d’interpolation local_ comme
 [[eq:50]]
-\[
+[stem]
+++++
       \Ilag{K}: v \in \mathcal{C}^0(K) \mapsto \sum_{i=1}^\nf\ v(x_{K,i})\ \Psi_{K,i}\
       \in P_K
-\]
+++++
 Une propriété importante de stem:[\Ilag{K}] est que
 [[eq:51]]
-\[
+[stem]
+++++
       \forall v \in \mathcal{C}^0(K),\quad \Ilag{K}( v \circ T_K ) =
       \Ilag{K}( v ) \circ T_K.
-\]
---
+++++
+****
 
-[env.theorem#thr:14]
---
+[[thr:14]]
+.Théorème
+****
 Soit stem:[T_K] une transformation affine.
 
 Soit stem:[\mathbb{P}_k \subset \hat{P}] et stem:[k+1 > \frac{d}{2}].
@@ -520,10 +534,11 @@ Soit stem:[h_K] le diamètre de stem:[K] et stem:[\rho_K] le diamètre de la plu
 Alors il existe une constante stem:[c] independente de stem:[K] telle que stem:[\forall v \in H^{k+1}(K)] et pour tout stem:[m \in \{0,...,k+1\}],
 
 [[eq:32]]
-\[
+[stem]
+++++
   |v - \Ilag{K}(v)|_{m,K} \leq  c h^{k+1-m} \omega_K^m |v|_{k+1,K}
-\]
---
+++++
+****
 
 [[rem:20]]
 [IMPORTANT]
@@ -535,95 +550,95 @@ Alors il existe une constante stem:[c] independente de stem:[K] telle que stem:[
 ====
 
 [[def:35]]
-[env.definition]
-.Espace stem:[H^1]-conforme
---
+.Définition: Espace stem:[H^1]-conforme
+****
 Un espace vectoriel stem:[V_h] de fonctions définies sur un domaine stem:[\Omega_h] est dit être stem:[H^1]-conforme si stem:[V_h \subset H^1(\Omega_h)].
---
+****
 
 Afin de construire un tel espace on introduit tout d’abord
 [[eq:52]]
-[env.equation]
---
+[stem]
+++++
 W_h = \{v_h \in L^2(\Omega_h); \forall K \in \mathcal{T}_h, v_h|_K \in P_K\}
---
+++++
 
 mais ce n’est pas suffisant: _les fonctions stem:[W_h] peuvent avoir des sauts entre les éléments du maillage_. Nous avons donc besoin d’assurer la _continuité_ de ces fonctions
 
 [[eq:53]]
-[env.equation]
---
+[stem]
+++++
 V_h = W_h \cap C^0(\Omega_h) = \{ v_h \in W_h; \forall F \in  \mathcal{F}^i_h. \jump{v_h}_F = 0\}
---
+++++
 
 Concernant l’implémentation, nous avons besoin de d’indentifier les _degrés de liberté communs entre les éléments_ quand nous construisons la tables des degrés de liberté.
 
 Voici deux exemples d’espace stem:[H^1]-conforme
 [[eq:54]]
-[env.equation]
+[stem]
 .Espace stem:[H^1]-conforme sur des simplexes (e.g. triangle)
---
+++++
   P^k_{c,h} = \{ v_h \in C^0(\Omega_h); \forall K \in \mathcal{T}_h, v_h
       \circ T_K \in \mathbb{P}_k\}
---
+++++
 [[eq:55]]
-[env.equation]
+[stem]
 .Espace stem:[H^1]-conforme sur des hypercubes (e.g quadrilatère)
---
+++++
       Q^k_{c,h} = \{ v_h \in C^0(\Omega_h); \forall K \in \mathcal{T}_h, v_h
       \circ T_K \in \mathbb{Q}_k\}
---
+++++
 
 [[sec:proj-orth]]
 === Projections orthogonales
 
 On note
 [[eq:56]]
-[env.equation]
---
+[stem]
+++++
 \begin{aligned}
     \Pi^{0,k}_{c,h} : Lˆ2(\Omega) \rightarrow P^k_{c,h}\\
     \Pi^{1,k}_{c,h} : H^1(\Omega) \rightarrow P^k_{c,h}
 \end{aligned}
---
+++++
 les projections orthogonales associées respectivement aux produits scalaires
 stem:[(u,v)_{0,\Omega} = \int_\Omega u v] and stem:[(u,v)_{1,\Omega} = \int_\Omega u     v + \int_\Omega \nabla u \cdot \nabla v]
 
 On a pour stem:[l=1,...,k] et si stem:[v \in H^{l+1}(\Omega)]
 
-[env.equation#eq:57]
---
+[[eq:57]]
+++++
 \begin{array}{rl}
 \|v - \Pi^{0,k}_{c,h}(v)\|_{0,\Omega} & \leq c h^{l+1} |v|_{k+1,\Omega} \\
 \|v - \Pi^{1,k}_{c,h}(v)\|_{1,\Omega} & \leq c h^{l} |v|_{k+1,\Omega}
 \end{array}
---
+++++
 
 Pour calculer stem:[\Pi^{0,k}_{c,h}] et stem:[\Pi^{1,k}_{c,h}] on a besoin de résoudre les problèmes
 
 [[prob:3]]
-[env.problem]
-.Projection stem:[l^2]
---
+.Problème: Projection stem:[l^2]
+****
 Soit stem:[v] une fonction de stem:[L^2], calculer stem:[\Pi^{0,k}_{c,h}(v) \in
       P^k_{c,h}] tel que stem:[\forall v_h \in P^k_{c,h}] on a
 [[eq:58]]
-\[
+[stem]
+++++
   (\Pi^{0,k}_{c,h}(v), v_h)_{0,\Omega} = (v, v_h)_{0,\Omega}
-\]
---
+++++
+****
 
 [[prob:4]]
 [env.problem]
 .Projection stem:[H^1]
---
+****
 Soit stem:[v] une fonction de stem:[H^1], calculer stem:[\Pi^{1,k}_{c,h}(v) \in
   P^k_{c,h}] tel que stem:[\forall v_h \in P^k_{c,h}] on a
 [[eq:59]]
-\[
+[stem]
+++++
   (\Pi^{1,k}_{c,h}(v), v_h)_{1,\Omega} = (v, v_h)_{1,\Omega}
-\]
---
+++++
+****
 
 [[sec:lagr-interp-mesh]]
 === Interpolant de Lagrange
@@ -631,46 +646,50 @@ Soit stem:[v] une fonction de stem:[H^1], calculer stem:[\Pi^{1,k}_{c,h}(v) \in
 
 
 [[def:37]]
-[env.definition]
---
+.Définition
+****
 Notons stem:[V_h] un espace stem:[H^1] conforme, stem:[\{\Psi_i\}_{1,...,N}] une base nodale de stem:[V_h] et stem:[\{x_1,...,x_N\}] les noeuds associés alors l’*interpolant de Lagrange* est défini par
 [[eq:60]]
-\[
+[stem]
+++++
   \Ilag{h}: v \in C^0(\Omega_h) \mapsto \sum_{i=1}^N v(x_{i}) \Psi_i \in V_h
-\]
---
+++++
+****
 
 [[rem:21]]
 IMPORTANT: La restriction de l’interpolant de Lagrange à une cellule stem:[K] coincide avec l’interpolant de Lagrange appliqué à la fonction dans la cellule stem:[K]:
 [[eq:61]]
-\[
+[stem]
+++++
   \Ilag{h}(v)|_K = \Ilag{h}(v|_K)
-\]
+++++
 
 [[thr:15]]
-[env.theorem]
---
+.Théorème
+****
 Supposons stem:[\{\mathcal{T}_h\}_{h>0}] une famille de maillage quasi-uniforme et conformes, stem:[\mathbb{P}_k \subset \hat{P}] et stem:[k+1 > \frac{d}{2}].
 
 Alors il existe une constante stem:[c] telle que pour tout
 stem:[h] et stem:[v \in H^{k+1}(\Omega_h)]
 [[eq:62]]
-\[
+[stem]
+++++
  \|v - \Ilag{h}(v)\|_{0,\Omega_h} + h |v - \Ilag{h}(v)|_{1,\Omega_h} \leq  c h^{k+1} |v|_{k+1,\Omega_h}
-\]
---
+++++
+****
 
 Nous allons vérifier sur un exemple ce théorème.
 
 Nous considérons pour cela stem:[\alpha] un réel et stem:[\mathbf{x}=(x_1,...,x_d) \in \mathbb{R}^d] un point de stem:[\Omega   = [0,1\]^d, d=1,2,3] et stem:[v] la fonction définie par
 
-[env.equation#eq:97]
---
+[[eq:97]]
+[stem]
+++++
 \begin{array}{rl}
 v : \Omega &\rightarrow \mathbb{R}\\
 \mathbf{x} &\rightarrow ( \mathbf{x} \cdot \mathbf{x} )^{\alpha/2}\ \Pi_{i=1}^d(     1-x_i^2)
 \end{array}
---
+++++
 
 Nous construisons l’interpolant de Lagrange de stem:[v] dans stem:[P^k_{c,h}] avec
 stem:[k=1,...,5] et stem:[d=1,2,3] et étudions l’erreur d’interpolation stem:[L^2] et stem:[H^1] du théorème <<eq:62>> en échelle log-log.
@@ -685,38 +704,31 @@ Quand le domaine est courbe, si nous désirons obtenir des propriétés de conve
 Notons stem:[(\hat{K},\hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\geo})] l’élément fini géométrique et stem:[(\hat{K},\hat{P}, \hat{\Sigma})] l’élément fini de référence pour stem:[V_h].
 
 [[def:38]]
-[env.definition]
---
-Si stem:[\hat{P}_{\mathrm{geo}} = \hat{P}] l’approximation est dite _iso-parametrique_.
---
-[[def:38.1]]
-[env.definition]
---
-Si stem:[\hat{P}_{\mathrm{geo}} \subset \hat{P}] l’approximation est dite _sub-parametrique_.
---
-[[def:38.2]]
-[env.definition]
---
-Si stem:[\hat{P} \subset\hat{P}_{\mathrm{geo}}] l’approximation est dite _sur-parametrique_.
---
+.Définition
+****
+* Si stem:[\hat{P}_{\mathrm{geo}} = \hat{P}] l’approximation est dite _iso-parametrique_.
+* Si stem:[\hat{P}_{\mathrm{geo}} \subset \hat{P}] l’approximation est dite _sub-parametrique_.
+* Si stem:[\hat{P} \subset\hat{P}_{\mathrm{geo}}] l’approximation est dite _sur-parametrique_.
+****
 
 [[rem:22]]
 TIP: Gmsh cite:[gmsh] un mailleur libre permet de générer des maillage d’ordre élevé jusqu’à l’ordre 5 en 2D et 4 en 3D
 
 [[thr:16]]
-[env.theorem]
---
+.Théorème
+****
 Supposons que stem:[\{\mathcal{T}_h\}_{h>0}] une famille de maillage quasi-uniformes et conformes, stem:[\mathbb{P}_k \subset \hat{P}] et stem:[k+1 > \frac{d}{2}] et stem:[k_{\mathrm{geo}} = k].
 
 Alors il existe une constante stem:[c] telle que pour tout
 stem:[h] et stem:[v \in  H^{k+1}(\Omega_h)]
 
 [[eq:63]]
-\[
+[stem]
+++++
     \|v - \Ilag{h}(v)\|_{0,\Omega_h} + h |v - \Ilag{h}(v)|_{1,\Omega_h} \leq
     c h^{k+1} |v|_{k+1,\Omega_h}
-\]
---
+++++
+****
 
 [[rem:23]]
 NOTE: Les résultats sont identiques à ceux du theorème <<thr:15>>.
@@ -728,8 +740,8 @@ Construisons une famille de maillage stem:[\{\calTh\}_{h >0}], par exemple stem:
 Le listing suivant présente le code C++ pour effectuer cela
 [source,cpp]
 .Calcul de l'aire d'un cercle
-----
-include::../../../codes/isoparam/circle.cpp[tag=isoparam,indent=0]
+-----
+include::{examplesdir}/isoparam/circle.cpp[tag=isoparam,indent=0]
 ----
 
 La table <<tab:circle>> présente les erreurs d’approximation et la figure <<fig:circle>> présente les courbes de convergence en échelle log-log ainsi que les pentes associées à ces courbes.
@@ -814,27 +826,28 @@ Le problème approché se ramène donc à la détermination des valeurs de stem:
 
 On va construire une base de stem:[V_h] en associant à chaque ddl stem:[a_i] un vecteur de la base. On définit ainsi les *fonctions de base globales* stem:[\varphi_i] (stem:[i=1,\ldots,N_h]) par
 
-[env.equation#eq:28]
+[[eq:28]]
+[stem]
 .Fonctions de base globales
---
+++++
 {\varphi_i}_{|K_j} \in P_j, \quad j=1,\ldots,N_e  \mbox{ et } \varphi_i(a_j)=\delta_{ij},  1\le i,j \le N_h
---
+++++
 
 L’espace d’approximation interne est donc alors :
 
 [[eq:29]]
-[env.equation]
---
+[stem]
+++++
 V_h = \hbox{Vect }\left\{\varphi_1,\ldots,\varphi_{N_h}\right\}
---
+++++
 
---
+****
 [[fig:fnglob]]
 .Exemple de fonction de base globale (élément triangulaire stem:[P_1])
-image:fem/fonction-globale.jpg[float=left,width=400]
---
+image:fem/fonction-globale.jpg[width=400]
+****
 
-Il est facile de remarquer qu’une telle fonction stem:[\varphi_i] est nulle partout, sauf sur les éléments dont stem:[a_i] est un noeud.
+NOTE: On remarque qu’une telle fonction stem:[\varphi_i] est nulle partout, sauf sur les éléments dont stem:[a_i] est un noeud.
 
 En effet, si stem:[a_i] n’appartient pas à un élément stem:[K], stem:[\varphi_i] est nulle sur tous les noeuds de stem:[K], et donc sur stem:[K] tout entier par *unisolvance*.
 
