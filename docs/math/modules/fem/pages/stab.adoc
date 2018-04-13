@@ -1,6 +1,7 @@
 [[convection-dominated-flows]]
 = Convection dominated flows
 
+NOTE: Cette partie est en anglais et nécessite d'être traduite.
 
 Let stem:[\Omega \subset \mathbb{R}^d, d=1,2,3], consider this
 equation defined in stem:[\Omega], find stem:[u] a scalar
@@ -105,12 +106,13 @@ Find stem:[u_h \in V_h] such that for all
 stem:[v_h \in V_h] we have:
 
 [[eq:stab8]]
-\[
+[stem]
+++++
       \int_\Omega \epsilon \nabla u_h \cdot \nabla v_h + (\mathbf{ \beta} \cdot \nabla u_h ) v_h
     + \underbrace{\int_{\partial \Omega} (- \epsilon \nabla u_h ) \cdot
     \mathbf{ n}\ v_h}_{\mbox{apply boundary conditions}}  =
   \int_\Omega f v_h
-\]
+++++
 --
 
 [NOTE]
@@ -156,14 +158,16 @@ We talk about *Petrov-Galerkin approximation*.
 --
 Find stem:[u_h \in V_h] such that
 [[eq:stab13]]
-\[
+[stem]
+++++
 a_h(u_h,v_h) = \ell_h(v_h),\quad \forall v_h \in V_h
-\]
+++++
 with
 [[eq:stab14]]
-\[
+[stem]
+++++
 a_h(u_h,v_h) = a(u_h,v_h) + b_h(u_h,v_h),\quad \ell_h(v_h) = \ell(v_h) + g_h(v_h),\quad
-\].
+++++.
 --
 
 NOTE: The purpose of stem:[b_h] and stem:[g_h] is to eliminate(or reduce) the numerical oscillations produced by the standard Galerkin method: they are called _stabilisation methods_ and depend on stem:[h].
@@ -204,14 +208,16 @@ stem:[B(t) =    \frac{t}{e^t-1}] if stem:[t > 0] and stem:[B(0) = 1] (also expon
 --
 for a given stem:[\epsilon] and for stem:[h] tending to stem:[0], we have for stem:[u \in H^{r+1}(\Omega)]
 [[eq:16]]
-\[
+[stem]
+++++
 ||u-u_h||_{1,\Omega} \leq C_1  \Big[ h^r||u||_{r+1,\Omega} + \phi(\mathrm{Pe})||u||_{1,\Omega}\Big]
-\]
+++++
 and for a given stem:[h] and stem:[\epsilon] tending to 0,
 [[eq:17]]
-\[
+[stem]
+++++
 ||u-u_h||_{1,\Omega} \leq C_1  \Big[ h^{r-1}||u||_{r+1,\Omega} + ||u||_{1,\Omega}\Big]
-\]
+++++
 If stem:[\phi(\mathrm{Pe})=\frac{|\mathbf{ \beta}|h}{2 \epsilon}], the convergence is linear, with the exponential fitting scheme it is quadratic if stem:[r \geq 2].
 --
 
@@ -241,14 +247,16 @@ to a problem such as:
 --
 Find stem:[u_h \in V_h] such that
 [[eq:stab20]]
-\[
-a(u_h,v_h) + \mathcal{L}_h(u_h,f;v_h) = (f,v_h), \quad \forall v_h \in V_h\]
+[stem]
+++++
+a(u_h,v_h) + \mathcal{L}_h(u_h,f;v_h) = (f,v_h), \quad \forall v_h \in V_h++++
 the term added statisfies
 
 [[eq:stab21]]
-\[
+[stem]
+++++
 \mathcal{L}_h(u,f;v_h) = 0, \forall v_h \in V_h
-\]
+++++
 --
 
 ====
@@ -310,14 +318,16 @@ where stem:[\gamma] is a positive constant such that stem:[-\frac{1}{2} \nabla \
 
 We have the following result
 
-[env.theorem#thr:stab3]
---
+[thr:stab3]
+.Théorème
+****
 if stem:[u \in H^{k+1}(\Omega)], then the following error estimates hold:
 [[eq:stab27]]
-\[
+[stem]
+++++
 {\|u-u_h\|_{(\rho)}} \leq C {h^{k+1/2}} |u|_{k+1,\Omega}
-\]
---
+++++
+****
 
 .GaLS
 [NOTE]
