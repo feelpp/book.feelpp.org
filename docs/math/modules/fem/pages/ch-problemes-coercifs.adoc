@@ -54,10 +54,10 @@ Introduisons
 * stem:[V = H^1_0(\Omega)] doté de la norme
 stem:[\|\cdot\|_{1,\Omega}] telle que
 stem:[\|v\|_{1,\Omega} = (\|v\|^2_{0,\Omega} + \|\nabla v\|^2_{0,\Omega})^{1/2}]
-* la forme bilinéaire stem:[a \in \mathcal{L}(V \times V, \R)]
+* la forme bilinéaire stem:[a \in \mathcal{L}(V \times V, \RR)]
 telle que stem:[a(u,v) = \int_\Omega
   \nabla u \cdot \nabla v ]
-* la forme linéaire stem:[\ell \in \mathcal{L}(V, \R)] telle que
+* la forme linéaire stem:[\ell \in \mathcal{L}(V, \RR)] telle que
 stem:[l(v) = \int_\Omega   f \nabla v ]
 
 Le problème <<prob:2>> s’écrit sous forme abstraite
@@ -83,7 +83,7 @@ Ceci se fait grâce au lemme suivant:
 [[lem:1]]
 .Lemma
 ****
-Soit stem:[\Omega] un ouvert borné de stem:[\R].
+Soit stem:[\Omega] un ouvert borné de stem:[\R{d}].
 Il existe une constante stem:[c_\Omega] (dépendente de stem:[\Omega] telle que
 [stem]
 ++++
@@ -209,11 +209,11 @@ Commencons par le maillage, dans un premier temps nous définissons le type du m
 
 [source,cpp]
 ********
-  // un maillage de simplexe dans $\R$ telle que la transformation
+  // un maillage de simplexe dans $\R{d}$ telle que la transformation
   // géométrique $T_K,\ K \in \calTh$  soit affine
   typedef Mesh<Simplex<d,1> > mesh_type;
 
-  // un maillage d'hypercube dans $\R$ telle que la transformation
+  // un maillage d'hypercube dans $\R{d}$ telle que la transformation
   // géométrique $T_K,\ K \in \calTh$  soit affine en chacune des variables
   // typedef Mesh<Hypercube<d,1> > mesh\_type;
 
