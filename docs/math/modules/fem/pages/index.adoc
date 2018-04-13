@@ -1,4 +1,4 @@
-[[introduction-à-la-méthode-des-éléments-finis]]
+\Pk{k}[[introduction-à-la-méthode-des-éléments-finis]]
 = Introduction à la méthode des éléments finis
 
 [[formulation-variationnelle]]
@@ -10,14 +10,14 @@
 Soit à résoudre le problème (
 
 [[eq:modele-1D]]
-[env.equation]
---
+[stem]
+++++
 ({\cal P}) \left\{
 \begin{array}{l}
- -u"(x)+c(x)u(x) = f(x),\quad  a<x<b,\\
+ -u"(x)+c(x)u(x) = f(x),\quad  a < x < b,\\
  u(a)=u(b)=0
 \end{array}\right.
---
+++++
 
 où stem:[f] et stem:[c] sont des fonctions données continues sur stem:[[a,b]].
 
@@ -26,27 +26,27 @@ On supposera de plus que la fonction stem:[c] est strictement positive sur stem:
 Un tel problème est appelé _problème aux limites_.
 
 [[def:18]]
-[env.definition]
---
+.Définition
+****
 Une *solution classique* (ou *solution forte*) de stem:[({\cal P})] est une fonction de stem:[{\cal C}^2([a,b])] telle que stem:[u(a)=u(b)=0] et
 stem:[\forall x \in ]a,b[, \; -u"(x)+c(x)u(x) = f(x)].
---
+****
 
 En faisant le produit scalaire stem:[L^2(\]a,b[)] de l’équation différentielle avec une fonction-test stem:[v \in {\cal D}(\]a,b[)] (c’est à dire en intégrant sur
 stem:[[a,b]]), on a :
 
-[env.equation]
---
+[stem]
+++++
 - \int_a^b u"(x)v(x)\; dx + \int_a^b c(x)u(x)v(x)\; dx = \int_a^b f(x)v(x)\; dx
---
+++++
 
 soit, en intégrant par parties le premier terme :
 
-[env.equation]
+[stem]
 .Formulation faible
---
+++++
 \int_a^b u'(x)v'(x)\; dx + \int_a^b c(x)u(x)v(x)\; dx = \int_a^b f(x)v(x)\; dx
---
+++++
 
 car stem:[v(a)=v(b)=0] puisque stem:[v\in{\cal D}(\]a,b[)].
 
@@ -57,8 +57,8 @@ De plus, stem:[{\cal D}(\]a,b[)] étant dense dans stem:[H^1_0(\]a,b[)] (§[sec:
 On peut donc définir le nouveau problème :
 
 [[eq:FV]]
-[env.equation]
---
+[stem]
+++++
 ({\cal Q})\quad
 \left\{
 \begin{array}{l}
@@ -66,7 +66,7 @@ On peut donc définir le nouveau problème :
 \ds{ \int_a^b u'(x)v'(x)\; dx + \int_a^b c(x)u(x)v(x)\; dx = \int_a^b f(x)v(x)\; dx \quad\forall v\in H^1_0(]a,b[)}
 \end{array}
 \right.
---
+++++
 
 Ce problème est la *formulation variationnelle* (ou *formulation faible*) du problème stem:[({\cal P})]. Toute solution de stem:[({\cal Q})] est appelée *solution faible*.
 
@@ -80,15 +80,15 @@ Soit stem:[\Omega] ouvert borné de stem:[\RR^n].
 On veut résoudre le problème
 
 [[eq:modele-2D]]
-[env.equation]
---
+[stem]
+++++
 ({\cal P})\qquad
 \left\{
 \begin{array}{ll}
 -\Delta u+u = f & \hbox{ dans }\Omega\\
 \partial_n u=0& \hbox{ sur }\partial\Omega\\
 \end{array}\right.
---
+++++
 
 [Une solution classique de ce problème est une fonction de stem:[{\cal C}^2(\bar{\Omega})] vérifiant ([eq:modele-2D]) en tout point de stem:[\Omega].
 
@@ -96,17 +96,17 @@ NOTE: Au passage, on voit que ceci impose que stem:[f] soit stem:[{\cal C}^0(\ba
 
 Toute solution classique vérifie donc :
 
-[env.equation]
---
+[stem]
+++++
 \forall v\in {\cal C}^1(\bar{\Omega}) \quad \int_\Omega -\Delta u\; v + \int_\Omega uv = \int_\Omega fv
---
+++++
 
 soit par intégration par parties :
 
-[env.equation]
---
+[stem]
+++++
 \ds{  \int_\Omega \nabla u \cdot \nabla v + \int_\Omega uv = \int_\Omega fv }
---
+++++
 
 puisque stem:[\partial_n u = 0 ] sur stem:[\partial\Omega].
 
@@ -115,9 +115,9 @@ Or, stem:[\overline{{\cal C}^1(\bar{\Omega})} = H^1(\Omega)].
 On peut donc définir le nouveau problème :
 
 [[eq:FV2]]
-[env.equation]
+[stem]
 .Formulation variationnelle en 2D
---
+++++
 ({\cal Q})\quad
 \left\{
 \begin{array}{l}
@@ -125,7 +125,7 @@ On peut donc définir le nouveau problème :
  \qquad \ds{ \int_\Omega \nabla u \cdot \nabla v + \int_\Omega u v = \int_\Omega f v \quad\forall v\in H^1(\Omega)}
 \end{array}
 \right.
---
+++++
 
 C’est la formulation variationnelle de stem:[({\cal P})].
 
@@ -140,10 +140,10 @@ Les exemples précédents montre que, d’une façon générale, la formulation 
 
 On arrive alors à une formulation du type :
 
-[env.equation]
---
+[stem]
+++++
 \hbox{Trouver }u\in V \hbox{ tel que } a(u, v) =l(v) \quad\forall v\in V
---
+++++
 
 où stem:[a(.,.)] est une forme sur stem:[V\times V] (bilinéaire si l’EDP de départ est linéaire) et stem:[l(.)] est une forme sur stem:[V] (linéaire si les conditions aux limites de l’EDP de départ le sont).
 
@@ -162,43 +162,40 @@ limites de type elliptique.
 Soit stem:[V] un espace de Hilbert. +
 
 [[def:19]]
-[env.definition]
+.Définition:
 .Continuité d'une forme linéaire
---
+****
 Une *forme linéaire* stem:[l(u)] sur stem:[V] est *continue* ssi il existe une constante stem:[K] telle que
 \[
 |l(u)| \le K\, \|u\| \quad \forall u \in V
 \]
---
+****
 
 [[def:20]]
-[env.definition]
-.Continuité d'une forme bilinéaire
---
+.Définition: Continuité d'une forme bilinéaire
+****
 Une *forme bilinéaire* stem:[a(u,v)] sur stem:[V\times V]
 est *continue* ssi il existe une constante stem:[M] telle que
 
 \[
 |a(u,v)| \le M\, \|u\| \|v\| \quad  \forall (u,v) \in V\times V.
 \]
---
+****
 
 [[def:21]]
-[env.definition]
-.Coercivité d'une forme bilinéaire
---
+.Définition: Coercivité d'une forme bilinéaire
+****
 Une *forme bilinéaire* stem:[a(u,v)] sur stem:[V\times V]
 est *coercive* (ou *V-elliptique*) ssi il existe une constante
 stem:[\alpha >0] telle que
 \[
 a(u,u) \ge \alpha \, \|u\|^2, \; \forall u \in V.
 \]
---
+****
 
 [[thr:12]]
-[env.theorem]
-.Lax-Milgram
---
+.Théorème: Lax-Milgram
+****
 Soit stem:[V] un espace de Hilbert.
 Soit stem:[a] une forme bilinéaire continue coercive sur stem:[V].
 Soit stem:[l] une forme linéaire continue sur stem:[V].
@@ -209,18 +206,18 @@ a(u,v)=l(v),\;  \forall v\in V.
 
 De plus, l’application linéaire stem:[l \rightarrow u] est
 continue.
---
+****
 
-[env.proof]
+.Preuve:
 .Lax-Milgram
---
+****
 La démonstration générale de ce théorème peut être trouvée par exemple
 dans cite:[raviart-thomas-1983].
---
+****
 
 [[thr:13]]
-[env.theorem]
---
+.Théorème
+****
 On prend les mêmes hypothèses que pour le théorème de Lax-Milgram, et on
 suppose de plus que stem:[a] est symétrique, c’est à dire que
 stem:[a(u,v)=a(v,u)\quad\forall u,v].
@@ -233,14 +230,14 @@ On définit alors la fonctionnelle stem:[J(v)=\frac{1}{2}\, a(v,v)-l(v)], et on 
 
 Alors ce problème admet une solution unique, qui est également la
 solution du problème variationnel précédent.
---
+****
 
-[env.proof]
---
+.Preuve:
+****
 La démonstration de ce théorème vient du fait que stem:[J] est
 une fonctionnelle quadratique, et que l’on a
 stem:[\nabla J[u](v) = a(u,v) - l(v)].
---
+****
 
 NOTE: C’est de cette propriété que vient l’utilisation du terme “variationnel", puisqu’elle montre le lien avec le “calcul des variations".
 
@@ -250,37 +247,37 @@ NOTE: C’est de cette propriété que vient l’utilisation du terme “variati
 
 En reprenant l’exemple 1-D précédent, on peut poser :
 
-[env.equation]
---
+[stem]
+++++
 a(u,v) = \int_a^b u'(x)v'(x)\; dx + \int_a^b c(x)u(x)v(x)\; dx
---
+++++
 et
-[env.equation]
---
+[stem]
+++++
 l(v) = \int_a^b f(x)v(x)\; dx
---
+++++
 
 stem:[a] ainsi définie est une forme bilinéaire symétrique continue coercive sur stem:[H^1_0(a,b) \times H^1_0(a,b)], et stem:[l] est une forme linéaire continue sur stem:[H^1_0(a,b)].
 Donc le problème (<<eq:FV>>) admet une solution unique d’après le théorème de Lax-Milgram.
 Cherchons maintenant à interpréter cette solution stem:[u] de ([eq:FV]).
 Prenons stem:[v=\varphi \in {\cal D}(\]a,b[)].
 Alors
-[env.equation]
---
+[stem]
+++++
 \int_a^b u'(x)\varphi'(x)\; dx + \int_a^b c(x)u(x)\varphi(x)\; dx = \int_a^b f(x)\varphi(x)\; dx
---
+++++
 
 soit, en intégrant par parties :
-[env.equation]
---
+[stem]
+++++
 - \int_a^b u"(x)\varphi(x)\; dx + \int_a^b c(x)u(x)\varphi(x)\; dx = \int_a^b f(x)\varphi(x)\; dx
---
+++++
 
 c’est à dire
-[env.equation]
---
+[stem]
+++++
 (-u"+cu,\varphi)_0 = (f,\varphi)_0\; \forall \varphi \in {\cal D}(]a,b[).
---
+++++
 
 stem:[{\cal D}(\]a,b[)] étant dense dans stem:[L^2(\]a,b[)], on a donc : stem:[-u"+cu=f] dans stem:[L^2(\]a,b[)].
 
@@ -306,8 +303,9 @@ En résumé :
  * On a prouvé que cette solution faible est bien une solution forte. Le problème de départ stem:[({\cal P})] a donc une solution unique.
 
 L’intérêt de cette démarche est
- . la formulation variationnelle se prête bien à l’étude de l’existence et de l’unicité de solutions,
- . on travaille dans des espaces de Hilbert, ce qui va permettre de faire de l’approximation interne.
+
+* la formulation variationnelle se prête bien à l’étude de l’existence et de l’unicité de solutions,
+* on travaille dans des espaces de Hilbert, ce qui va permettre de faire de l’approximation interne.
 
 [[sec:elliptique]]
 === Équations elliptiques d’ordre 2
@@ -318,8 +316,8 @@ Soient des fonctions stem:[\alpha_{ij}] (stem:[1\le i,j \le n]) dans stem:[{\cal
 On considère le problème :
 
 [[eq:edp-elliptique]]
-[env.equation]
---
+[stem]
+++++
 ({\cal P})\qquad
 \left\{
 \begin{array}{rl}
@@ -328,7 +326,7 @@ u= 0 & \hbox{ sur }\Gamma_0 \\
 {\ds \sum_{i,j=1}^n  \alpha_{ij} \, \partial_j  u\; n_i = g } & \hbox{ sur }\Gamma_1
 %
 \end{array}\right.
---
+++++
 
 où stem:[\Gamma_0] et stem:[\Gamma_1] forment une partition de stem:[\partial\Omega] (stem:[\Gamma_0 \cap\Gamma_1 = \emptyset] et stem:[\Gamma_0 \cup\Gamma_1 = \partial\Omega]).
 
@@ -337,8 +335,8 @@ Une solution classique de stem:[({\cal P})], sous l’hypothèse que stem:[f\in{
 
 Elle s’écrit :
 [[eq:FV3]]
-[env.equation]
---
+[stem]
+++++
 ({\cal Q})\quad
 \left\{
 \begin{array}{l}
@@ -346,7 +344,7 @@ Elle s’écrit :
 \qquad \ds{ \int_\Omega  \left(  \sum_{i,j=1}^n \alpha_{ij} \, \partial_j u\;  \, \partial_i v + \beta\,   u v \right) = \int_\Omega f v +  \int_{\Gamma_1} gv \qquad\forall v\in V}
 \end{array}
 \right.
---
+++++
 
 avec stem:[\ds{ V = \left\{ v \in H^1(\Omega) \; , \; v=0 \hbox{ sur }\Gamma_0
 \right\} }].
@@ -354,12 +352,12 @@ Cette formulation est en fait définie dès lors que stem:[\beta] et les stem:[\
 stem:[L^2(\Gamma_1)].
 Posons
 
-[env.equation]
---
+[stem]
+++++
 \ds{a(u,v) =  \int_\Omega   \left( \sum_{i,j=1}^n \alpha_{ij} \, \partial_j
   u\;   \partial_i v + \beta\,   u v \right) },
 \quad \ds{l(v) = \int_\Omega f v +  \int_{\Gamma_1} gv. }
---
+++++
 
 Il est immédiat que stem:[a] est une forme bilinéaire continue et stem:[l] une forme linéaire continue sur stem:[V].
 
@@ -395,20 +393,20 @@ stem:[({\cal Q})] :
 Soit stem:[\Omega] un domaine ouvert de stem:[\RR^n] (stem:[n=1,2] ou 3 en pratique), de frontière stem:[\partial\Omega], et sur lequel on cherche à résoudre une équation aux dérivées partielles, munie de conditions aux limites.
 
 En écrivant la formulation variationnelle, on obtient un problème de la forme
-[env.equation]
---
+[stem]
+++++
 ({\cal Q})\qquad \hbox{Trouver } u\in V \hbox{ tel que } a(u,v)=l(v), \quad\forall v\in V
---
+++++
 
 où stem:[V] est un espace de Hilbert. Sous réserve que l’équation de départ ait de bonnes propriétés, c’est à dire par exemple qu’on soit dans les hypothèses du théorème de Lax-Milgram, stem:[({\cal Q})] admet une solution unique stem:[u].
 
 Pour obtenir une approximation numérique de stem:[u], on va maintenant remplacer l’espace stem:[V] qui est en général de dimension infinie par un sous-espace stem:[V_h] de dimension finie, et on va chercher à résoudre le problème approché
 
-[env.equation]
---
+[stem]
+++++
 \label{eq:6}
 ({\cal Q}_h)\qquad \hbox{Trouver } u_h\in V_h \hbox{ tel que } a(u_h,v_h)=l(v_h), \quad\forall v_h\in V_h
---
+++++
 
 stem:[V_h] étant de dimension finie, c’est un fermé de stem:[V].
 stem:[V] étant un espace de Hilbert, stem:[V_h] l’est donc aussi.
@@ -438,21 +436,21 @@ stem:[u_h] peut alors être interprétée comme la projection orthogonale de ste
 
 On a :
 
-[env.equation]
---
+[stem]
+++++
 \begin{array}{ll}
 a(u-u_h,u-u_h) & = a(u-u_h,u-v_h+v_h-u_h) \quad\forall v_h\in V_h\\
  & =a(u-u_h,u-v_h) + a(u-u_h,v_h-u_h)
 \end{array}
---
+++++
 Or stem:[v_h-u_h \in V_h]. Donc stem:[a(u-u_h,v_h-u_h)=0] d’après ([eq:ortho]).
 
 On a donc :
 [[eq:estim1]]
-[env.equation]
---
+[stem]
+++++
 a(u-u_h,u-u_h) = a(u-u_h,u-v_h) \quad\forall v_h\in V_h
---
+++++
 
 stem:[a] étant coercive, il existe stem:[\alpha > 0] tel que stem:[a(u-u_h,u-u_h) \ge \alpha \|u-u_h\|^2], où stem:[\|.\|] est une norme sur stem:[V].
 
@@ -461,24 +459,24 @@ Par ailleurs, stem:[a] étant continue, il existe stem:[M > 0] tel que stem:[a(u
 En réinjectant ces deux inégalités de part et d’autre de <<eq:estim1>> et en simplifiant par stem:[\|u-u_h\|] on obtient
 
 [[eq:cea]]
-[env.equation]
---
+[stem]
+++++
 \|u-u_h\| \le \frac{M}{\alpha}\; \|u-v_h\| \quad \forall v_h\in V_h
---
+++++
 
 c’est à dire
 
 [[eq:4]]
-[env.equation]
---
+[stem]
+++++
 \|u-u_h\| \le \frac{M}{\alpha}\; d(u,V_h)
---
+++++
 
 où stem:[d] est la distance induite par stem:[\|.\|].
 
 Cette majoration est appelée *lemme de Céa*. Elle ramène l’étude de l’erreur d’approximation stem:[u-u_h] à l’étude de l’erreur d’interpolation stem:[d(u,V_h)].
 
-[[sec:general]]
+[[sec:fem-overview]]
 == Principe général de la méthode des éléments finis
 
 La démarche générale de la méthode des éléments finis est la suivante.
@@ -486,10 +484,10 @@ La démarche générale de la méthode des éléments finis est la suivante.
 On a une EDP à résoudre sur un domaine stem:[\Omega].
 
 On écrit la formulation variationnelle de cette EDP, et on se ramène donc à un problème du type
-[env.equation]
---
+[stem]
+++++
 ({\cal Q})\qquad \hbox{Trouver } u\in V \hbox{ tel que } a(u,v)=l(v), \quad\forall v\in V
---
+++++
 
 On va chercher une approximation de stem:[u] par approximation interne.
 
@@ -497,39 +495,39 @@ Pour cela, on définit un maillage du domaine stem:[\Omega], grâce auquel on va
 sur chaque maille).
 
 Le problème approché est alors
-[env.equation]
---
+[stem]
+++++
 ({\cal Q}_h)\qquad \hbox{Trouver } u_h\in V_h \hbox{ tel que } a(u_h,v_h)=l(v_h), \quad\forall v_h\in V_h
---
+++++
 
 Soit stem:[(\varphi_1,\ldots,\varphi_{N_h})] une base de stem:[V_h].
 
 En décomposant stem:[u_h] sur cette base sous la forme
 
-[env.equation]
---
+[stem]
+++++
 u_h = \sum_{i=1}^{N_h} \mu_i \; \varphi_i
---
+++++
 
 le problème stem:[({\cal Q}_h)] devient
 
-[env.equation]
---
+[stem]
+++++
 \hbox{Trouver } \mu_1,\ldots,\mu_{N_h} \hbox{ tels que } \sum_{i=1}^{N_h} \mu_i \; a(\varphi_i,v_h)=l(v_h), \quad\forall v_h\in V_h
---
+++++
 
 ou encore par linéarité de stem:[a] et stem:[l] :
 
 
-[env.equation]
---
+[stem]
+++++
 \hbox{Trouver } \mu_1,\ldots,\mu_{N_h} \hbox{ tels que } \sum_{i=1}^{N_h} \mu_i \; a(\varphi_i,\varphi_j)=l(\varphi_j), \quad\forall j=1,\ldots,N_h
---
+++++
 
 c’est à dire résoudre le système linéaire
 
-[env.equation]
---
+[stem]
+++++
 \left(
 \begin{array}{ccc}
 a(\varphi_1,\varphi_1) & \cdots & a(\varphi_{N_h},\varphi_1)\\
@@ -549,14 +547,14 @@ l(\varphi_1)\\
 \vdots\\
 l(\varphi_{N_h})\\
 \end{array}\right)
---
+++++
 
 soit
 [[eq:lin]]
-[env.equation]
---
+[stem]
+++++
 A\mu = b
---
+++++
 
 NOTE: La matrice stem:[A] est a priori pleine.
 
@@ -601,25 +599,25 @@ La première étape consiste à construire un maillage de stem:[\Omega = \]a,b[]
 Le maillage est donc une collection indexée de (stem:[=N]) intervalles
 $$\{I_i=[x_{i,1},x_{i,2}]\}_{i=1,...\Nma}$$ et on a
 [[eq:1]]
-[env.equation]
---
+[stem]
+++++
 [a,b]=\cup_{i=1}^\Nma [x_{1,i},x_{2,i}] \quad \mbox{et} \quad
 ]x_{1,i},x_{2,i}[ \cap ]x_{1,j},x_{2,j}[ = \emptyset \quad \mbox{ pour } i\neq j
---
+++++
 
 [[def:23]]
-[env.definition]
---
+.Définition
+****
 Les intervalles stem:[I_i] sont appelées de _mailles_ ou
 _éléments_ ou _cellules_ du maillage, on a noté stem:[\Nma] le
 nombre de maillage
---
+****
 
-[env.definition]
---
+.Définition
+****
 Les points stem:[x_i] sont appelés les _sommets_ du
 maillage, on note stem:[\Nso=N+1] le nombre de sommets.
---
+****
 
 On note stem:[h_i = x_{i+1}-x_i] et stem:[h = \max_{1\leq i \leq \Nma} h_i].
 
@@ -638,45 +636,44 @@ L’étape suivante est de choisir les _fonctions de forme_ ou _fonctions de bas
 On choisit les fonctions de stem:[V_h] telle que leur restriction sur chaque maillage soit un _espace polynomial_.
 
 [[def:24]]
-[env.definition]
-.Espaces stem:[\Pk]
---
+.Définition: Espaces stem:[\Pk{k}]
+****
 Soit un entier stem:[k \leq 1].
 En dimension 1, on appelle l’espace vectoriel des polynômes à coefficients réels de degré inférieur ou égal à stem:[k].
---
+****
 
 On pose alors
 
 [[eq:2]]
-[env.equation]
---
-W_h = \{w_h \in L^2(\Omega); \forall i \in \{ 1,...,\Nma\}, {w_h}_{|I_i} \in \Pk\}
---
+[stem]
+++++
+W_h = \{w_h \in L^2(\Omega); \forall i \in \{ 1,...,\Nma\}, {w_h}_{|I_i} \in \Pk{k}\}
+++++
 stem:[W_h] est un espace de dimension finie égale à stem:[(k+1)*\Nma] mais il n’est pas inclus dans stem:[H^1_0(\Omega)] et ne peut donc pas être utilisé pour l’approximation du problème ([eq:FV]).
 En effet les fonctions de stem:[w_h \in W_h] peuvent être discontinues aux interfaces entre les maillages et un résultat d’analyse fonctionnelle montre que dans ces conditions stem:[w_h \ni H^1(\Omega)].
 Par ailleurs les fonctions de stem:[W_h] ne sont pas nécessairement nulles au bord de stem:[\Omega].
 
 On pose donc
 
-[env.equation]
---
+[stem]
+++++
 \label{eq:3}  V_h = W_h \cap H^1_0(\Omega).
---
+++++
 en d’autres termes, en dimension, on a
 
 [[eq:5]]
-[env.equation]
---
+[stem]
+++++
 \label{}
-  V_h = \left\{ v_h \in {\cal C}^0 (a,b) \; ; \; {v_h}_{|I_i} \in \Pk \hbox{ et } v_h(a)=v_h(b)=0 \right\}
---
+  V_h = \left\{ v_h \in {\cal C}^0 (a,b) \; ; \; {v_h}_{|I_i} \in \Pk{k} \hbox{ et } v_h(a)=v_h(b)=0 \right\}
+++++
 
 Le problème approché sur stem:[V_h] est :
 [[eq:11]]
-[env.equation]
---
+[stem]
+++++
   ({\cal Q}_h)\qquad \hbox{Trouver } u_h\in V_h \hbox{ tel que } a(u_h,v_h)=l(v_h), \quad\forall v_h\in V_h]
---
+++++
 
 On s’intéresse à présent à des exemples concrets d’espaces d’approximations dans les deux sections suivantes <<sec:element-fini-de>> et <<sec:element-fini-de-1>>.
 
@@ -687,16 +684,16 @@ On s’intéresse à présent à des exemples concrets d’espaces d’approxima
 On introduit les espaces vectoriels suivants:
 
 [[eq:7]]
-[env.equation]
---
-\Pch{1} = \{ v_h \in C^0(\Omega);\; \forall i \in \{ 1,...,\Nma\} {v_h}_{|I_i} \in \Pk[1]  \}
---
+[stem]
+++++
+\Pch{1} = \{ v_h \in C^0(\Omega);\; \forall i \in \{ 1,...,\Nma\} {v_h}_{|I_i} \in \Pk{1}  \}
+++++
 et
 [[eq:8]]
-[env.equation]
---
+[stem]
+++++
   \Pcho{1} = \{ v_h \in \Pch{1};\; v_h(a)=v_h(b)=0 \}
---
+++++
 
 Les éléments de ces espaces sont des fonctions _continues_ et affines par morceaux.
 Ils sont dérivables par morceaux sur chaque maille et ils sont continus aux interfaces entre les mailles.
@@ -704,10 +701,10 @@ Ils sont dérivables par morceaux sur chaque maille et ils sont continus aux int
 On a le résultat d’analyse fonctionnelle suivant:
 
 [[thr:3]]
-[env.theorem]
---
+.Théorème
+****
 stem:[\Pch{1} \subset H^1(\Omega)] et stem:[\Pcho{1} \subset H^1_0(\Omega)].
---
+****
 
 On introduit la famille de fonctions
 stem:[\{\varphi_1,...,\varphi_\Nso\}] que l’on définit sur chaque
@@ -715,8 +712,8 @@ maille de la manière suivante, pour tout stem:[i  \in
 \{2,...,\Nso-1\}],
 
 [[eq:18]]
-[env.equation]
---
+[stem]
+++++
 \varphi_i(x) = \left\{
     \begin{split}
       \ds{\frac{1}{h_{i-1}} (x-x_{i-1})} & \mbox{ si } x \in I_{i-1}\\
@@ -724,12 +721,12 @@ maille de la manière suivante, pour tout stem:[i  \in
       0 & \mbox{ sinon},
     \end{split}
   \right.
---
+++++
 et
 
 [[eq:19]]
-[env.equation]
---
+[stem]
+++++
   \begin{split}
   \varphi_1(x) &= \left\{
     \begin{split}
@@ -744,17 +741,17 @@ et
     \end{split}
   \right.
   \end{split}
---
+++++
 
 [[rem:6]]
 IMPORTANT: Les fonctions stem:[(\varphi_i)_{i=1,...,\Nso}] sont dans stem:[\Pch{1}] et stem:[(\varphi_i)_{i=2,...,\Nso-1}] sont dans stem:[\Pcho{1}].
 
 [[rem:7]]
 IMPORTANT: Les fonctions stem:[(\varphi_i)_{i=1,...,\Nso}] satisfont les relations
-[env.equation]
---
+[stem]
+++++
  \varphi_i(x_j) = \delta_{ij},\quad i,j \in \{1,...,\Nso\},
---
+++++
 où stem:[\delta_{ij}] désigne le symbole de Kronecker tel que stem:[\delta_{ij} = 1] si stem:[i=j] et stem:[\delta_{ij}=0] si stem:[i \neq j].
 
 Les fonctions stem:[\varphi_i] sont appelées _fonctions chapeau_ du fait de leur graphe, voir figure <<fig:chapeau>>.
@@ -762,25 +759,25 @@ Les fonctions stem:[\varphi_i] sont appelées _fonctions chapeau_ du fait de leu
 image:fem/chapeau.jpg[caption="Fonction de base stem:[\varphi_i]""]
 
 [prop:4]
-[env.proposition]
---
+.Proposition
+****
  .  La famille stem:[\{\varphi_1,...,\varphi_\Nso\}] est une base de stem:[\Pch{1}].
  .  La famille stem:[\{\varphi_2,...,\varphi_{\Nso-1}\}] est une base de stem:[\Pcho{1}].
---
+****
 
 [env.corollary]
---
+****
 stem:[\dim \Pch{1} = \Nso = \Nma+1] et stem:[\dim \Pcho{1} = \Nso-2 = \Nma-1].
---
+****
 
 On introduit l’_opérateur d’interpolation_ suivant:
 
 [[eq:21]]
-[env.equation]
---
+[stem]
+++++
   \Ich{1} : \Ck{0}(\bar{\Omega}) \ni v \mapsto \sum_{i=1}^\Nso v(x_i)
   \varphi_i \in \Pch{1}.
---
+++++
 
 Pour toute fonction stem:[v \in \Ck{0}(\bar{\Omega})], stem:[\Ich{1}{v}] est la seule fonction continue affine par morceaux prenant les mêmes valeurs que stem:[v] aux sommets stem:[x_i, i=1,...,\Nso].
 
@@ -789,23 +786,24 @@ stem:[\Ich{1}{v}] est appelée l’_interpolé de Lagrange_ de stem:[v] de degr�
 [[rem:8]]
 IMPORTANT:  En dimension 1, les fonctions de stem:[H^1(\Omega)] sont _continues_, on peut donc voir comme un opérateur de stem:[H^1(\Omega)] dans stem:[H^1(\Omega)]. On montre qu’il est continu et que sa norme stem:[\|\Ich{1}\|_{\mathcal{L}(H^1(\Omega),H^1(\Omega))}] est uniformément bornée en stem:[h], c’est à dire qu’il existe une constante stem:[c], indépendante de stem:[h], telle que pour tout stem:[v \in H^1(\Omega)]
 [[eq:22]]
-[env.equation]
---
+[stem]
+++++
     \|\Ich{1} v \|_{1,\Omega} \leq c \|v\|_{1,\Omega}]
---
+++++
 
 [[sec:estim-de-lerr]]
 === Estimation de l’erreur d’interpolation
 
 [[prop:5]]
-[env.proposition]
---
+.Proposition
+****
 Pour tout stem:[h], et tout stem:[v \in H^2(\Omega)], on a
 [[eq:23]]
-\[
+[stem]
+++++
     \|v - \Ich{1} v\|_{0,\Omega} \leq h^2 |v|_{2,\Omega}\quad \mbox{ et }\quad |v - \Ich{1} v|_{1,\Omega} \leq h |v|_{2,\Omega}
-\]
---
+++++
+****
 On dit que l’erreur d’interpolation est d’ordre 2 en norme stem:[L^2] et d’ordre 1 en semi-norme stem:[H^1] et donc en norme stem:[H^1].
 
 [[sec:element-fini-de-1]]
@@ -814,54 +812,59 @@ On dit que l’erreur d’interpolation est d’ordre 2 en norme stem:[L^2] et d
 On introduit les espaces vectoriels suivants: stem:[\label{eq:9}
 
 [[eq:9]]
-[env.equation]
---
-  \Pch{k} = \{ v_h \in C^0(\Omega);\; \forall i \in \{ 1,...,\Nma\}, {v_h}_{|I_i} \in \Pk\}
---
+[stem]
+++++
+  \Pch{k} = \{ v_h \in C^0(\Omega);\; \forall i \in \{ 1,...,\Nma\}, {v_h}_{|I_i} \in \Pk{k}\}
+++++
 et
 [[eq:10]]
-[env.equation]
---
-  \Pcho{k} = \{ v_h \in \Pch;\; v_h(a)=v_h(b)=0 \}
---
+[stem]
+++++
+  \Pcho{k} = \{ v_h \in \Pch{k};\; v_h(a)=v_h(b)=0 \}
+++++
 
 [[sec:oper-dint]]
 === Operateur d’interpolation
 
 On introduit l’_opérateur d’interpolation_ suivant:
-stem:[\label{eq:24}
-    \Ich : \Ck{0}(\bar{\Omega}) \ni v \mapsto \sum_{i=1}^\Nno v(x_i)  \varphi_i \in \Pch.]
+[stem]
+++++
+\label{eq:24}
+    \Ich : \Ck{0}(\bar{\Omega}) \ni v \mapsto \sum_{i=1}^\Nno v(x_i)  \varphi_i \in \Pch{k}.
+++++
 Pour toute fonction stem:[v \in \Ck{0}(\bar{\Omega})],
-stem:[\Ich v] est la seule fonction continue polynomial de degré
+stem:[\Ich{k}{v}] est la seule fonction continue polynomial de degré
 stem:[k] par morceaux prenant les mêmes valeurs que
 stem:[v] aux sommets stem:[x_i, i=1,...,\Nso].
-stem:[\Ich v] est appelée l’_interpolé de Lagrange_ de
+stem:[\Ich{k}{v}] est appelée l’_interpolé de Lagrange_ de
 stem:[v] de degré stem:[k].
 
 [[rem:9]]
 IMPORTANT: En dimension 1, les fonctions de stem:[H^1(\Omega)] sont _continues_, on peut donc voir comme un opérateur de stem:[H^1(\Omega)] dans stem:[H^1(\Omega)].
 On montre qu’il est continu et que sa norme stem:[\|\Ich\|_{\mathcal{L}(H^1(\Omega),H^1(\Omega))}] est uniformément bornée en stem:[h], c’est à dire qu’il existe une constante stem:[c], indépendante de stem:[h] mais dépendante de stem:[k], telle que pour tout
 [[eq:25]]
-[env.equation]
---
+[stem]
+++++
 v \in H^1(\Omega)   \|\Ich{k}{v} \|_{1,\Omega} \leq c \|v\|_{1,\Omega}
---
+++++
 
 Le résultat suivant permet d’estimer la précision de l’opérateur d’interpolation,
 [[prop:2]]
-[env.proposition]
---
+.Proposition
+****
 Il existe une constante stem:[c], indépendante de stem:[h] mais dépendante de stem:[k], telle que pour tout stem:[h] et pour tout stem:[v \in H^{k+1}(\Omega)], on a
 [[eq:14]]
-\[
+[stem]
+++++
     \|v - \Ich{k}{v}\|_{0,\Omega} + h |v - \Ich{k}{v}|_{1,\Omega}  \leq c\; h^{k+1}\; |v|_{k+1,\Omega}
-\]
+++++
 et
 [[eq:15]]
-\[
+[stem]
+++++
     \sum_{m=2}^{k+1} h^m \left( \sum_{i=0}^N |v - \Ich{k}{v}|^2_{m,I_i}\right)^{1/2}  \leq c\; h^{k+1}\; |v|_{k+1,\Omega}]
-\]
---
+++++
+****
 [[rem:4]]
 IMPORTANT: L’estimation <<eq:14>> montre que l’erreur d’interpolation est d’ordre stem:[k+1] en norme stem:[\|\cdot\|_{0,\Omega}] et qu’elle est d’ordre stem:[k] en norme stem:[|\cdot|_{1,\Omega}].
 Elle est donc d’ordre stem:[k] en norme stem:[\|\cdot\|_{1,\Omega}].
@@ -880,14 +883,14 @@ Il s’agit dans un premier temps d’estimer l’erreur stem:[u-u_h] en norme s
 
 Pour cela on part de l’estimation <<eq:cea>>, on a
 [[eq:12]]
-[env.equation]
---
+[stem]
+++++
 \begin{align}
-    \|u-u_h\|_{1,\Omega} &\leq c\; \inf_{v_h \in \Pcho} \|u-v_h\|_{1,\Omega}\\
+    \|u-u_h\|_{1,\Omega} &\leq c\; \inf_{v_h \in \Pcho{k}} \|u-v_h\|_{1,\Omega}\\
     & \leq c\;  \|u-\Ich{u}\|_{1,\Omega}\\
     & \leq c\; h^k |u|_{k+1,\Omega}
 \end{align}
---
+++++
 pourvu que la solution exacte soit suffisamment régulière, c’est à dire stem:[u \in H^{k+1}(\Omega)].
 
 [[rem:2]]
@@ -895,8 +898,8 @@ IMPORTANT: On notera que stem:[\Ich{k}{u} \in \Pcho{k}] puisque stem:[u \in H^1_
 
 On a donc le résultat suivant
 [prop:1]
-[env.proposition]
---
+.Proposition
+****
 Soit un entier stem:[k\geq 1].
 
 On suppose que la solution du problème <<eq:FV>> est dans stem:[H^{k+1}(\Omega)].
@@ -905,10 +908,11 @@ On note stem:[u_h] la solution du problème approché <<eq:11>> avec l’espace
 
 *Alors*, il existe une constante stem:[c], indépendante de stem:[h], telle que
 [[eq:13]]
-\[
+[stem]
+++++
         \|u-u_h\|_{1,\Omega} \leq c\; h^k |u|_{k+1,\Omega}
-\]
---
+++++
+****
 
 [[rem:3]]
 IMPORTANT: On dit que l’estimation d’erreur <<eq:13>> est _optimale_ car elle est du même ordre que l’erreur d’interpolation en norme stem:[H^1], voir la proposition <<prop:2>>.
@@ -917,16 +921,17 @@ IMPORTANT: On dit que l’estimation d’erreur <<eq:13>> est _optimale_ car el
 === Estimation en norme stem:[L^2]
 
 [prop:3]
-[env.proposition]
---
+.Proposition
+****
 Avec les hypothèses de la proposition <<prop:1>> et en supposant que stem:[\alpha \in \Ck{1}(\bar{\Omega})].
 
 *Alors*, il existe une constante stem:[c], indépendante de stem:[h], telle que
 [[eq:16]]
-\[
+[stem]
+++++
     \|u-u_h\|_{0,\Omega} \leq c\; h^{k+1} |u|_{k+1,\Omega}
-\]
---
+++++
+****
 
 [[rem:5]]
 IMPORTANT: On dit que l’estimation d’erreur <<eq:16>> est _optimale_ car elle est du même ordre que l’erreur d’interpolation en norme stem:[L^2], voir la proposition <<prop:2>>.
@@ -935,18 +940,18 @@ IMPORTANT: On dit que l’estimation d’erreur <<eq:16>> est _optimale_ car el
 == Formulation algébrique stem:[V_h=P_{c,h}^1]
 
 En décomposant la solution approchée stem:[u_h] sur cette base sous la forme stem:[{u_h = \sum_{i=1}^N \mu_i \; \varphi_i}], on obtient, comme au paragraphe <<sec:general>>, le système linéaire stem:[A\mu=b], avec :
-[env.equation]
---
+[stem]
+++++
 \begin{array}{rcl}
 A_{ji}=a(\varphi_i,\varphi_j) & = & \ds{\int_a^b \left[ \varphi_i'(x) \varphi_j'(x)  + c(x) \varphi_i(x) \varphi_j(x)\right]\; dx }\\
  & = & \ds{ \sum_{k=0}^N \int_{x_k}^{x_{k+1}} \left[\varphi_i'(x) \varphi_j'(x)  + c(x) \varphi_i(x) \varphi_j(x)\right]\; dx }
 \end{array}
---
+++++
 
 
 Le support de stem:[\varphi_i] étant réduit à stem:[[x_{i-1},x_{i+1}]], on en déduit que
-[env.equation]
---
+[stem]
+++++
 \left\{
 \begin{array}{lll}
 a(\varphi_i,\varphi_j) & = & 0 \qquad \hbox{si }|i-j|\ge 2\\
@@ -957,7 +962,7 @@ a(\varphi_i,\varphi_{i-1}) & = & \ds{ \int_{x_{i-1}}^{x_i} \left[ \varphi_i'(x) 
 & & \\
 a(\varphi_i,\varphi_{i}) & = & \ds{ \int_{x_{i-1}}^{x_{i+1}} \left[ \varphi_i'^2(x) + c(x) \varphi_i^2(x)\right] \; dx}\\
 \end{array}\right.
---
+++++
 
 stem:[A] est donc tridiagonale.
 
