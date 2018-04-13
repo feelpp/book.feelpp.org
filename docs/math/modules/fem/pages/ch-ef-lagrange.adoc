@@ -471,7 +471,7 @@ Un maillage est dit _conforme_ si l’intersection de deux
 [[rem:19]]
 NOTE: On ne manipule que des maillages conformes dans le cours mais {feelpp} peut traiter des maillages non-conformes par exemple dans le contexte de méthode de décomposition de domaines.
 
-[[génération-des-éléments-finis-de-lagrange]]
+[[sec:espace]]
 == Espaces élément fini de Lagrange
 
 Soit stem:[\mathcal{T}_h] un maillage généré par stem:[(\hat{K},   \hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\mathrm{geo}})], une cellule stem:[K \in \mathcal{T}_h] est alors l’image de stem:[\hat{K}] par la transformation géométrique stem:[T_K] défini par <<eq:23>>.
@@ -700,6 +700,7 @@ Nous construisons l’interpolant de Lagrange de stem:[v] dans stem:[P^k_{c,h}] 
 stem:[k=1,...,5] et stem:[d=1,2,3] et étudions l’erreur d’interpolation stem:[L^2] et stem:[H^1] du théorème <<eq:62>> en échelle log-log.
 
 Nous devons obtenir des droites de pentes stem:[k] (resp. stem:[k+1]) pour la norme stem:[L^2] (resp. stem:[H^1].)
+====
 
 [[sec:interp-iso-param]]
 == Approximation iso-paramétrique
@@ -858,7 +859,7 @@ En effet, si stem:[a_i] n’appartient pas à un élément stem:[K], stem:[\varp
 
 De plus, sur un élément stem:[K] dont stem:[a_i] est un noeud, stem:[\varphi_i] vaut 1 sur stem:[a_i] et 0 sur les autres noeuds de stem:[K].
 
-Donc stem:[\varphi_i\, _{|K}]est une fonction de base locale de stem:[K].
+Donc stem:[\varphi_i\, _{|K}] est une fonction de base locale de stem:[K].
 
 IMPORTANT: la fonction de base globale stem:[\varphi_i] est donc construite comme la réunion des fonctions de base locales sur les éléments du maillage dont stem:[a_i] est un noeud.
 
