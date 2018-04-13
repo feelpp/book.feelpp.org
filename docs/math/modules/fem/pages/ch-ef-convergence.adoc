@@ -2,6 +2,8 @@
 [[convergence-de-la-méthode-des-éléments-finis]]
 = Convergence de la méthode des éléments finis
 
+NOTE: cette page nécessite d'être revue
+
 [[introduction]]
 == Introduction
 
@@ -50,7 +52,8 @@ stem:[{\|u-\pi_h u\|_m \le C' h^{k+1-m} |u|_{k+1} }]
 === Etape 1: majoration par l’erreur d’interpolation
 
 L’équation (<<eq:cea>>) établie dans la section <<sec:estim>> indique que
-[env.equation]
+[stem]
+++++
 --
 \|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-v_h\|_m \quad \forall v_h\in V_h
 --
@@ -87,9 +90,10 @@ Soit stem:[K] un élément quelconque de stem:[{\cal T}_h], et stem:[\hat{K}] l�
 
 Soit stem:[F] la transformation affine de stem:[\hat{K}] vers stem:[K] :
 [[eq:majref]]
-\[
+[stem]
+++++
 \forall v\in H^l(K), \qquad |\hat{v}|_{l,\hat{K}} \le C(l,n)\; \|B\|^l_2 \; |\hbox{det} B|^{-1/2} \, |v|_{l,K}
-\]
+++++
 --
 
 Nous avons le corollaire suivant du théorème <<thr1>>
@@ -97,9 +101,10 @@ Nous avons le corollaire suivant du théorème <<thr1>>
 --
 On a de même :
 [[eq:majref2]]
-\[
+[stem]
+++++
 \forall v\in H^l(K), \qquad |v|_{l,K}  \le C(l,n)\; \|B^{-1}\|^l_2 \; |\mathrm{det} B|^{1/2} \; |\hat{v}|_{l,\hat{K}}
-\]
+++++
 --
 
 
@@ -145,14 +150,16 @@ on déduit qu’il existe des constantes stem:[\gamma_1] et stem:[\gamma_2] dép
 
 Par ailleurs, si l’on utilise le changement de variable stem:[x=F(\hat{x})=B\hat{x}+b] dans stem:[D^l v(x)], il vient :
 
-[env.equation]
+[stem]
+++++
 --
 \forall \xi_1,\ldots,\xi_l \in \RR^n,\qquad D^l \hat{v}(\hat{x}).(\xi_1,\ldots,\xi_l) = D^l v(x).(B\xi_1,\ldots,B\xi_l)
 --
 
 d'où
 
-[env.equation]
+[stem]
+++++
 --
 \|D^l \hat{v}(\hat{x})\| \le \|B\|^l\; \|D^l v(x)\|
 --
@@ -165,7 +172,8 @@ Or, stem:[D^l v(x) = D^l v(F(\hat{x}))]. Donc
 --
 
 En minorant et majorant (<<eq:maj2>>) grâce à la (<<eq:maj1,majoration>>), on obtient :
-[env.equation]
+[stem]
+++++
 --
 \gamma^2_1 \; |\hat{v}|^2_{l,\hat{K}} \le \|B\|^{2l}\; |\hbox{det }B|^{-1} \gamma^2_2 \; |v|^2_{l,K}
 --
@@ -180,7 +188,8 @@ Soit stem:[h_K] le diamètre de stem:[K], c’est à dire le maximum des distanc
 Soit stem:[\rho_K] la rondeur de stem:[K], c’est à dire le diamètre maximum des sphères incluses dans stem:[K].
 
 On a :
-[env.equation]
+[stem]
+++++
 --
 \|B\| = \sup_{x\ne 0} \frac{\|Bx\|}{\|x\|} = \sup_{\|x\|=\hat{\rho}} \frac{\|Bx\|}{\hat{\rho}}
 --
@@ -196,31 +205,35 @@ Par définition de stem:[h_K], stem:[\|y-z\| \le h_K].
 Donc stem:[\|Bx\| \le h_K].
 
 En reportant dans la définition de stem:[\|B\|], on obtient donc :
-[env.equation#eq:kk1]
---
+[eq:kk1]
+[stem]
+++++
 \|B\| \le \frac{h_K}{\hat{\rho}}
---
+++++
 
 Et on a évidemment de même :
-[env.equation#eq:kk2]
---
+[[eq:kk2]]
+[stem]
+++++
 \|B^{-1}\| \le \frac{\hat{h}}{\rho_K}
---
+++++
 
 [[etape-4-majoration-sur-lélément-de-référence]]
 === Etape 4: Majoration sur l’élément de référence
 
 Le résultat principal est le suivant :
-[env.theorem#thr2]
---
+[[thr2]]
+.Théorème
+****
 Soient stem:[l] et stem:[k] deux entiers tels que stem:[0\le l \le k+1].
 Si stem:[\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))] laisse stem:[P_k(\hat{K})] invariant (c’est à dire vérifie stem:[\forall \hat{p}\in P_k(\hat{K}), \hat{\pi}\hat{p}=\hat{p}]), alors
 
 [[eq:majref0]]
-\[
+[stem]
+++++
 \exists C(\hat{K},\hat{\pi}) ,\;  \forall \hat{v} \in H^{k+1}(\hat{K}), \; |\hat{v}-\hat{\pi}\hat{v}|_{l,\hat{K}} \le C |\hat{v}|_{k+1,\hat{K}}
-\]
---
+++++
+****
 
 ==== Preuve du théorème <<thr2>>
 
