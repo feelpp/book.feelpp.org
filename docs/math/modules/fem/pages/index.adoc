@@ -1,4 +1,4 @@
-\Pk{k}[[introduction-à-la-méthode-des-éléments-finis]]
+[[introduction-à-la-méthode-des-éléments-finis]]
 = Introduction à la méthode des éléments finis
 
 [[formulation-variationnelle]]
@@ -426,7 +426,13 @@ On a stem:[a(u,v)=l(v), \forall v\in V], donc en particulier stem:[a(u,v_h)=l(v_
 
 Par ailleurs, stem:[a(u_h,v_h)=l(v_h), \forall v_h\in V_h].
 
-Par différence, on en déduit que stem:[a(u-u_h,v_h)=0,\quad \forall v_h\in V_h   \label{eq:ortho}]
+Par différence, on en déduit que
+[[eq:ortho]]
+[stem]
+.Orthogonalité de Galerkin
+++++
+a(u-u_h,v_h)=0,\quad \forall v_h\in V_h   \label{eq:ortho}
+++++
 
 IMPORTANT: Dans le cas où stem:[a(.,.)] est symétrique, il s’agit d’un produit scalaire sur stem:[V].
 stem:[u_h] peut alors être interprétée comme la projection orthogonale de stem:[u] sur stem:[V_h] au sens de stem:[a(.,.)].
@@ -443,7 +449,7 @@ a(u-u_h,u-u_h) & = a(u-u_h,u-v_h+v_h-u_h) \quad\forall v_h\in V_h\\
  & =a(u-u_h,u-v_h) + a(u-u_h,v_h-u_h)
 \end{array}
 ++++
-Or stem:[v_h-u_h \in V_h]. Donc stem:[a(u-u_h,v_h-u_h)=0] d’après ([eq:ortho]).
+Or stem:[v_h-u_h \in V_h]. Donc stem:[a(u-u_h,v_h-u_h)=0] d’après (<<eq:ortho>>).
 
 On a donc :
 [[eq:estim1]]
