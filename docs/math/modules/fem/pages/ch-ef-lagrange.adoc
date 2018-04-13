@@ -1,4 +1,4 @@
-[[eléments-finis-de-lagrange]]
+\Qk{k}[[eléments-finis-de-lagrange]]
 = Eléments finis de Lagrange
 
 On va présenter dans ce chapitre le type le plus simple et le plus classique d’éléments finis.
@@ -87,21 +87,21 @@ stem:[\pi_K v] est donc l’unique élément de stem:[P] qui prend les mêmes va
 [[espaces-de-polynômes]]
 === Espaces de polynômes
 
-On notera stem:[\Pk] l’espace vectoriel des polynômes de degré total inférieur ou égal à stem:[k].
+On notera stem:[\Pk{k}] l’espace vectoriel des polynômes de degré total inférieur ou égal à stem:[k].
 
-* Sur , stem:[\Pk=\hbox{Vect} \{ 1,X,\ldots, X^k\}\quad] et dim stem:[\Pk=k+1].
+* Sur , stem:[\Pk{k}=\hbox{Vect} \{ 1,X,\ldots, X^k\}\quad] et dim stem:[\Pk{k}=k+1].
 
-* Sur stem:[^2], stem:[\Pk=\hbox{Vect} \{ X^i Y^j ; 0\le i+j \le k\}\quad] et dim stem:[{ \Pk=\frac{(k+1)(k+2)}{2}}].
+* Sur stem:[^2], stem:[\Pk{k}=\hbox{Vect} \{ X^i Y^j ; 0\le i+j \le k\}\quad] et dim stem:[{ \Pk{k}=\frac{(k+1)(k+2)}{2}}].
 
-* Sur stem:[^3], stem:[\Pk=\hbox{Vect} \{ X^i Y^j Z^l ; 0\le i+j+l \le k\}\quad] et dim stem:[{ \Pk=\frac{(k+1)(k+2)(k+3)}{6}}].
+* Sur stem:[^3], stem:[\Pk{k}=\hbox{Vect} \{ X^i Y^j Z^l ; 0\le i+j+l \le k\}\quad] et dim stem:[{ \Pk{k}=\frac{(k+1)(k+2)(k+3)}{6}}].
 
-On notera stem:[\Qk] l’espace vectoriel des polynômes de degré inférieur ou égal à stem:[k] par rapport à chaque variable.
+On notera stem:[\Qk{k}] l’espace vectoriel des polynômes de degré inférieur ou égal à stem:[k] par rapport à chaque variable.
 
-* Sur stem:[\RR], stem:[\Qk=\Pk].
+* Sur stem:[\RR], stem:[\Qk{k}=\Pk{k}].
 
-* Sur stem:[\RR^2], stem:[\Qk=\hbox{Vect} \{ X^i Y^j ; 0\le i,j \le k\}\quad] et dim stem:[{ \Qk=(k+1)^2}].
+* Sur stem:[\RR^2], stem:[\Qk{k}=\hbox{Vect} \{ X^i Y^j ; 0\le i,j \le k\}\quad] et dim stem:[{ \Qk{k}=(k+1)^2}].
 
-* Sur stem:[\RR^3], stem:[\Qk=\hbox{Vect} \{ X^i Y^j Z^l ; 0\le i,j,l \le k\}\quad] et dim stem:[{ \Qk=(k+1)^3}].
+* Sur stem:[\RR^3], stem:[\Qk{k}=\hbox{Vect} \{ X^i Y^j Z^l ; 0\le i,j,l \le k\}\quad] et dim stem:[{ \Qk{k}=(k+1)^3}].
 
 [[par:ex1d]]
 === Exemples 1-D
@@ -110,37 +110,37 @@ On notera stem:[\Qk] l’espace vectoriel des polynômes de degré inférieur ou
 Elément stem:[P_1]::
 ** stem:[K=[a,b]]
 ** stem:[\Sigma=\{a,b\}]
-** stem:[P=\Pk[1]]
+** stem:[P=\Pk{1}]
 
 [[elément-p_2]]
 Elément stem:[P_2]::
 ** stem:[K=[a,b]]
 ** stem:[{\Sigma=\{a,\frac{a+b}{2},b\}}]
-** stem:[P=\Pk[2]]
+** stem:[P=\Pk{2}]
 
 [[elément-pk]]
-Elément stem:[\Pk]::
+Elément stem:[\Pk{k}]::
 ** stem:[K=[a,b]]
 ** stem:[{\Sigma=\{a+i\,\frac{b-a}{m},\quad i=0,\ldots,k\}}]
-** stem:[P=\Pk]
+** stem:[P=\Pk{k}]
 
 [[exemples-2-d-triangulaires]]
 === Exemples 2-D triangulaires
 
 [[elément-pk1]]
-Elément stem:[\Pk[1]]::
+Elément stem:[\Pk{1}]::
 ** stem:[K]=triangle de sommets stem:[a_1, a_2, a_3]
 ** stem:[\Sigma=\{a_1,a_2,a_3\}]
-** stem:[P=\Pk[1]]
+** stem:[P=\Pk{1}]
 Les fonctions de base sont définies par
 stem:[p_i(a_j)=\delta_{ij}]. Ce sont donc les coordonnées
 barycentriques : stem:[p_i=\lambda_i] (cf annexe [ch:bary]).
 
 [[elément-pk2]]
-Elément stem:[\Pk[2]]::
+Elément stem:[\Pk{2}]::
 ** stem:[K]=triangle de sommets stem:[a_1, a_2, a_3]
 ** stem:[\Sigma=\{a_1,a_2,a_3, a_{12}, a_{13}, a_{23}\}], où stem:[{a_{ij}=\frac{a_i+a_j}{2}}].
-** stem:[P=\Pk[2]]
+** stem:[P=\Pk{2}]
 
 Les fonctions de base sont stem:[p_i=\lambda_i (2\lambda_i -1)] et stem:[p_{ij}=4\lambda_i\lambda_j].
 Un exemple de calcul de ces fonctions de base est donné en annexe <<ch:bary>>.
@@ -152,26 +152,26 @@ image:fem/elements-2D.jpg[caption="Eléments finis triangulaire stem:[P_1], tria
 === Exemples 2-D rectangulaires
 
 [[elément-qk1]]
-Elément stem:[\Qk[1]]::
+Elément stem:[\Qk{1}]::
 * stem:[K]=rectangle de sommets stem:[a_1, a_2, a_3, a_4], de côtés parallèles aux axes
 * stem:[\Sigma=\{a_1,a_2,a_3,a_4\}]
-* stem:[P=\Qk[1]]
+* stem:[P=\Qk{1}]
 Les fonctions de base sont stem:[{p_i(X,Y)=\frac{(X-x_j)(Y-y_j)}{(x_i-x_j)(y_i-y_j)}}], où stem:[(x_i,y_i)] sont les coordonnées de stem:[a_i], et où stem:[a_j], de coordonnées stem:[(x_j,y_j)] est le coin opposé à stem:[a_i].
 
 [[exemples-3-d]]
 === Exemples 3-D
 
 [[elément-tétraèdrique-pk1]]
-Elément tétraèdrique stem:[\Pk[1]]::
+Elément tétraèdrique stem:[\Pk{1}]::
 * stem:[K]=tétraèdre de sommets stem:[a_1, a_2, a_3, a_4]
 * stem:[\Sigma=\{a_1,a_2,a_3, a_4\}]
-* stem:[P=\Pk[1]]
+* stem:[P=\Pk{1}]
 
 [[elément-tétraèdrique-pk2]]
-Elément tétraèdrique stem:[\Pk[2]]::
+Elément tétraèdrique stem:[\Pk{2}]::
 * stem:[K]=tétraèdre de sommets stem:[a_1, a_2, a_3, a_4]
 * stem:[{ \Sigma=\{a_i\}_{1\le i\le 4} \cup \{a_{ij}\}_{1\le i < j \le 4} }]
-* stem:[P=\Pk[2]]
+* stem:[P=\Pk{2}]
 
 Les fonctions de base sont stem:[p_i=\lambda_i (2\lambda_i -1)]
 et stem:[p_{ij}=4\lambda_i\lambda_j].
@@ -181,7 +181,7 @@ Elément parallélépipèdique stem:[Q_1]::
 
 * stem:[K]=parallélépipède de sommets stem:[a_1, \ldots , a_8] de côtés parallèles aux axes
 * stem:[\Sigma=\{a_i\}_{1\le i\le 8}]
-* stem:[P=\Qk[1]]
+* stem:[P=\Qk{1}]
 
 [[elément-prismatique]]
 Elément prismatique::
@@ -432,16 +432,19 @@ Soit stem:[f: K \mapsto \RR] et stem:[\hat{f}: \hat{K} \mapsto \RR] telle que st
 On a alors les relations suivantes:
 
 [[eq:44]]
+[stem]
 ++++
-  \int_{K} \ f\ dx\ =\ \int_{\hat{K}} f(T_K(\xi) ) J_K( \xi )\ d \xi \ =\ \int_{\hat{K}} \hat{f}(\xi) J_K( \xi )\ d \xi]
+\int_{K} \ f\ dx\ =\ \int_{\hat{K}} f(T_K(\xi) ) J_K( \xi )\ d \xi \ =\ \int_{\hat{K}} \hat{f}(\xi) J_K( \xi )\ d \xi
 ++++
 
 [[eq:45]]
+[stem]
 ++++
 \int_{K}\ \nabla f\ dx\ =\ \int_{\hat{K}} \Big(\hat{\nabla} \underbrace{\hat{f}(\xi)}_{f \circ T_K(\xi)} B_K(\xi)\Big) J_K( \xi )\ d \xi
 ++++
 
 [[eq:46]]
+[stem]
 ++++
 \int_{\partial K} f( x ) dx = \int_{\partial \hat{K}} \hat{f}(\xi)  \| B_K(\xi) {\hat{\mathbf{n}}}(\xi) \| J_K( \xi ) d \xi
 ++++
@@ -596,7 +599,7 @@ On note
 [stem]
 ++++
 \begin{aligned}
-    \Pi^{0,k}_{c,h} : Lˆ2(\Omega) \rightarrow P^k_{c,h}\\
+    \Pi^{0,k}_{c,h} : L^2(\Omega) \rightarrow P^k_{c,h}\\
     \Pi^{1,k}_{c,h} : H^1(\Omega) \rightarrow P^k_{c,h}
 \end{aligned}
 ++++
@@ -740,9 +743,9 @@ Construisons une famille de maillage stem:[\{\calTh\}_{h >0}], par exemple stem:
 Le listing suivant présente le code C++ pour effectuer cela
 [source,cpp]
 .Calcul de l'aire d'un cercle
-----
+--
 include::{examplesdir}/isoparam/circle.cpp[tag=isoparam,indent=0]
-----
+--
 
 La table <<tab:circle>> présente les erreurs d’approximation et la figure <<fig:circle>> présente les courbes de convergence en échelle log-log ainsi que les pentes associées à ces courbes.
 
