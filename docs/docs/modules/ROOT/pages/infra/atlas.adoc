@@ -159,7 +159,7 @@ source /etc/profile.d/modules.sh
 
 mpirun --bind-to core \
     singularity exec \
-    -B ${HOME}/feel:/feel \
+    -B ${FEELPP_WORKDIR}/feel:/feel \
     feelpp-toolboxes \
     /usr/local/bin/feelpp_qs_laplacian_2d \
     --config-file=/usr/local/share/feelpp/testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg
