@@ -1,4 +1,5 @@
 = Atlas cluster
+include::{partialsdir}/header-levels.adoc[]
 
 include::{partialsdir}/topnote.adoc[]
 
@@ -44,6 +45,9 @@ operations.
 | Network stored data (documents)
 |===
 
+IMPORTANT: `/ssd`, `/scratch`, and `/data/scratch` and more generally
+"scratch" named directories are not backup!
+
 Set the *FEELPP_WORKDIR* environment variable to the working directory path.
 By default, this variable point to
 
@@ -52,92 +56,88 @@ By default, this variable point to
 export FEELPP_WORKDIR=/ssd/${USER}/feel
 ----
 
-If your application generate an high amount of data, you should use `/data/${USER}/feel` instead.
+If your application generate an high amount of data, you should use `/data/scratch/{USER}/feel` instead.
 
-== {feelpp} usage
+IMPORTANT: For heavy computations, please consider using one or several cluster computing nodes.
+See link:https://gitlab.math.unistra.fr/atlas/cluster-doc/wikis/slurm[the official documentation]
+for more information.
 
-WARNING: Work in progress
+== Atlas {feelpp} usage
 
-In this section, we will learn basic usage of Feel++ on the cluster. We
-distinguish two cases, the first one uses the existing Feel++ module. You might
-want to modify the Feel++ library itself, the second case will explain how to
-proceed.
+In this section, we will learn basic usage of Feel++ on the cluster.
 
-There are three main methods to use Feel++ from the simplest to the hardest:
+There are three main methods to use Feel++ on Atlas cluster.
+from the simplest to the hardest:
 
-1. Using containers: singularity (recommended), docker.
-2. Compiling a {feelpp} application using {feelpp} library installed on the
-   system ({feelpp} atlas module).
-3. Compiling Feel++ from scratch (library + applications).
+1. <<singularity, Using **{feelpp} containers**>>,            
+2. <<compile_app, Compiling a **{feelpp} application only**>>,
+3. <<compile_all, Compiling the **Feel++ library**>>.          
 
-But first, we have to configure the cluster
+For the second methods **2.**, a module is used for the {feelpp} library,
+you do not need to recompile {feelpp} from the sources.
+The next subsections details how to prepare the cluster environment to use
+these three methods.
 
-=== {feelpp} containers
+NOTE: You should also consult the
+xref:user:ROOT:install/index.adoc[Feel++ installation] documentation
+(xref:user:ROOT:install/containers.adoc[1.],
+xref:user:ROOT:install/sources.adoc[2.] and 
+xref:user:ROOT:install/sources.adoc[3.]) before going further.
 
+=== Using {feelpp} containers on Atlas
+
+[[singularity]]
 ==== Singularity (recommended)
 
-INFO: Difficulty : easy
-
 Singularity is the recommended method for {feelpp} containers.
-Please read singularity section before going further.
+Singularity is installed by default on the cluster.
+To retrieve the current version of the singularity software, just type
+`singularity --version`
 
-To use singularity on the cluster, load the specific module:
-
-[source,bash]
-----
-module load singularity/2.2.1
-----
-
-We provide currently one singularity image container in the directory `/data/images`.
-
-TIP: Contrary to docker, singularity does not allow to modify a container
-for security purposes, root priviledges are required.
-
-First of all, copy the image in your `${HOME}` directory
+[NOTE]
+====
+For singularity container compatibility reason, you might want to use
+an older or newer version of singularity. Different versions are available
+via modules. To retrieve all available modules
 
 [source,bash]
 ----
-cp /data/images/feelpp-toolboxes.img \${HOME}
+module av 2>&1 | grep singularity
 ----
+====
 
-:INFO: {feelpp} singularity images will be available online soon!
+[NOTE]
+====
+To get informations about a container (for example which singularity version
+was used to build the container), just type
+[source,bash]
+----
+singularity inspect <container_name>
+----
+====
 
-To run the container, run the following command
+First of all, download a {feelpp} singularity image from our official
+link:https://girder.math.unistra.fr/#collection/5a293e32b0e9571d65b9ec50/folder/5a4fa90ab0e9571f842931e5[data management tool]
+on the cluster. To download from the command line directly, you can use the link:https://girder.math.unistra.fr/api/v1#!/file/file_download[girder webAPI] using
+the file identifier (ID).
+
+Finally, run a shell inside the image
 
 [source,bash]
 ----
-singularity shell -c -B \${FEELPP_WORKDIR}/feel:/feel \${HOME}/feelpp-toolboxes.img
+singularity shell -B ${FEELPP_WORKDIR}:/feel feelpp-toolboxes.simg
 ----
 
-Now you are in the container, you should have the bash prompt looking like this:
+You are now in the container, you should have the bash prompt looking like this:
 
-image::shell/singularity/singularity-prompt1.png[align=center]
+image::shell/singularity/singularity-prompt2.png[align=center]
 
 
-IMPORTANT: Always use the `-c` option (equivalent to `-B /home/user:/home/user`) ?
-to avoid sharing your home directory within the container!
-Security reason, a container can perform some operation on home directory. Configurations
-files on the host `/home/user` directory can create conflicts and produce unwanted behaviour.
+IMPORTANT: Since singularity 2.4.0, images are immutables, thus can't be edited.
+The option **-B** is used to mount a directory from the host inside the container. By
+default, singularity shares home directory from the host.
 
-===== Modify the Feel++ singularity image
-
-Root priviledge are required to modify an image. To proceed, you should first
-install singularity on your machine.
-On your machine, copy a {feelpp} image locally
-[source,bash]
-----
-scp user@irma-atlas:/data/images/feelpp-toolboxes.img ${HOME}
-----
-Now you can modify the image in root enabling write access `-w`
-
-[source,bash]
-----
-sudo singularity shell -c -w \${HOME}/feelpp-toolboxes.img
-----
-
-See singularity documentation for more details.
-
-===== Job slurm
+===== Job slurm with {feelpp} singularity containers
 
 An example of slurm batch script using singularity.
 
@@ -155,20 +155,14 @@ An example of slurm batch script using singularity.
 #SBATCH -e slurm.%j.%N.err
 #SBATCH -v
 
-export FEELPP_SINGULARITY_IMAGE=${HOME}/feelpp-toolboxes.img
-export FEELPP_WORKDIR_HOST=/ssd/${USER}/feel
-
 source /etc/profile.d/modules.sh
-
-module load singularity/2.2.1
 
 mpirun --bind-to core \
     singularity exec \
-    -B ${FEELPP_WORKDIR_HOST}:/feel \
-    -c \
-    ${FEELPP_SINGULARITY_IMAGE} \
+    -B ${HOME}/feel:/feel \
+    feelpp-toolboxes \
     /usr/local/bin/feelpp_qs_laplacian_2d \
-    --config-file=/opt/feelpp/Testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg
+    --config-file=/usr/local/share/feelpp/testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg
 ----
 
 To send the job, just run the command
@@ -187,36 +181,40 @@ squeue -u ${USER}
 For more info about slurm, consult link:https://gitlab.math.unistra.fr/atlas/cluster-doc/wikis/slurm[atlas wiki slurm]
 or link:https://slurm.schedmd.com/quickstart.html[official slurm documentation].
 
-IMPORTANT: Multi-node is not supported yet!
-
+[[docker]]
 ==== Docker
 
-:INFO: *Difficulty : easy*
-
-Due to security issues, only whitelisted users can have access to it.
+IMPORTANT: Due to security issues, only whitelisted users can have access to it.
 Please contact atlas admins if docker is required.
 
-Refer to {feelpp} docker section to see how to use docker.
-
+[[compile_app]]
 === Feel++ via modules
 
-:INFO: *Difficulty : intermediate*
+This section details an easy way to try a native installed version of {feelpp}.
+Several modules are proposed for compiled version of the {feelpp} library
+, the toolboxes or the quickstart.
 
-This way is recommended if you only need to use the {feelpp} library
-without any modification.
-Currently, a {feelpp} module is provided for a nightly build version.
+.{feelpp} compiled component modules (2018/04)
+|===
+| feelpp-lib/develop_gcc640_openmpi1107
+| feelpp-quickstart/develop_gcc640_openmpi1107
+| feelpp-toolboxes/develop_gcc640_openmpi1107
+|===
+
+NOTE: Please find all current available modules using
+`module av 2>&1 | grep "feelpp-*"`
 
 - Load the {feelpp} library via the module.
 
 [source,sh]
 ----
-module load feelpp/nightly
+module load feelpp-lib/develop_gcc640_openmpi1107
 ----
 
-{feel++} is now available in the system
+{feelpp} is now available in the system
 
 
-TIP: the module set the environement variable *FEELPP_DIR* for the path to the {feelpp} installation
+TIP: the module set the environment variable *FEELPP_DIR* for the path to the {feelpp} installation
 `echo ${FEELPP_DIR}`.
 
 - Load a feel++ profile to have access to all {feelpp} requirements for compiling
@@ -224,7 +222,7 @@ your application.
 
 [source,sh]
 ----
-module load feelpp-clang_gcc610.profile
+module load feelpp.profile_gcc640_openmpi1107
 ----
 
 NOTE: The profile should be the same used for the feel++ module to avoid
@@ -264,10 +262,12 @@ By default, cmake will search in the system default path.
 6. Compile you {feelpp} application `make`
 
 
+[[compile_all]]
 === Feel++ from scratch
 
-:INFO: *Difficulty : Hard*
-
+To compile {feelpp} from scratch, just load a {feelpp} profile module
+and follow the user manual 
+xref:user:ROOT:install/sources.adoc[install {feelpp} from sources].
 
 
 
