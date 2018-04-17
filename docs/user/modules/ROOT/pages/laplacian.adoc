@@ -1,4 +1,5 @@
 = Laplacian
+:path-quickstart: /feel/testcases/quickstart
 
 We are interested in this section in the _conforming finite element approximation_ of the following problem:
 
@@ -89,7 +90,7 @@ We start with the mesh
 
 [source,cpp]
 ----
-include::{examplesdir}/qs_laplacian.cpp[tag=mesh]
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=mesh]
 ----
 //include::{uri-github-feelpp}/quickstart/qs_laplacian.cpp[tag=mesh]
 
@@ -97,7 +98,7 @@ NOTE: the keyword `auto` enables type inference, for more details see link:https
 
 [source,cpp]
 ----
-include::{examplesdir}/qs_laplacian.cpp[tag=discr]
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=discr]
 ----
 Next we define
 
@@ -117,7 +118,7 @@ at the following line
 
 [source,cpp]
 ----
-include::{examplesdir}/qs_laplacian.cpp[tag=v]
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=v]
 ----
 
 `v` is set to the expression `g`, which means more precisely that `v` is the interpolant of `g` in `Vh`, _i.e_ we write stem:[v=\Pi^k_{c,\delta} g] with stem:[v \in P^k_{c,\delta}].
@@ -132,12 +133,12 @@ Dirichlet boundary conditions all over the boundary.
 
 [source,cpp]
 ----
-include::{examplesdir}/qs_laplacian.cpp[tag=vf]
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=vf]
 ----
 
 [NOTE]
 ======
-We have the following correspondance:
+We have the following correspondence:
 
 |===
 | Element sets  | Domain
@@ -159,7 +160,7 @@ next we solve the algebraic problem
 .Listing: solve algebraic system
 [source,cpp]
 ----
-include::{examplesdir}/qs_laplacian.cpp[tag=solve]
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=solve]
 ----
 
 next we compute the stem:[L^2] norm of stem:[u_\delta-g], it could
@@ -168,7 +169,7 @@ exact solution of the <<laplacian>>.
 
 [source,cpp]
 ----
-include::{examplesdir}/qs_laplacian.cpp[tag=ug]
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=ug]
 ----
 
 and finally we export the results, by default it is in the ensight
@@ -178,36 +179,82 @@ save both stem:[u] and stem:[g].
 .Listing: export Laplacian results
 [source,cpp]
 ----
-include::{examplesdir}/qs_laplacian.cpp[tag=export]
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=export]
 ----
 
-== Testcases
+The full listing is available below
 
-The <<implementation>> comes with testcases in 2D and 3D.
+.Listing: `feelpp_qs_laplacian_2d` and `feelpp_qs_laplacian_3d`
+[source,cpp]
+----
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=global]
+----
 
-CAUTION: the test cases are available in Docker in the directory (`/usr/local/share/feelpp/testcases/quickstart/laplacian`).
+== Test Cases
 
-=== circle
+We are now ready to test this Laplacian <<implementation>> with 2D and 3D test cases.
 
-`circle` is a 2D testcase where stem:[\Omega] is a disk whose boundary
+IMPORTANT: The test cases are available in Docker in the directory (`{path-quickstart}/laplacian`).
+
+=== Circle
+
+`Circle` is a 2D testcase where stem:[\Omega \subset \RR^2] is a disk whose boundary
 has been split such that stem:[\partial \Omega=\partial \Omega_D \cup
 \partial \Omega_N \cup \partial \Omega_R].
 
-Here are some results we can observe after use the following command
+In the following, we consider a manufactured solution stem:[u=x^2+y^2] and we would like to verify the a priori convergence finite element property.
 
-[source,bash]
+CAUTION: This test case is tricky because the stem:[\partial \Omega] is curved and stem:[\partial \Omega \neq \partial \Omega_h]. Depending on the boundary condition type and in particular the definition of the normal, we may obtain the proper convergence rate or not.
+
+We provide here the basic geometry used in Gmsh to describe stem:[\Omega].
+
+.Description of the geometry in Gmsh
+[source,cpp]
 ----
-cd Testcases/quickstart/circle
-mpirun -np 4 /usr/local/bin/feelpp_qs_laplacian_2d --config-file circle.cfg
+include::{examplesdir}/laplacian/circle-dirichlet.geo[tag=cad]
 ----
 
-This give us some data such as solution of our problem or the mesh used in the application.
+NOTE: The `Circle` curve has several sections (`1,2,3,5`) that will be used to define the different boundary conditions, Dirichlet, Neumann and Robin.
+
+=== The case stem:[\partial \Omega=\partial \Omega_D]
+
+We start with Dirichlet conditions on stem:[\partial \Omega] which means that stem:[\partial \Omega_N = \partial \Omega_R = \emptyset]. To this end, we mark all boundary sections (`1,2,3,5`) as `Dirichlet` as shown in the Gmsh geo file below
+
+.Physical definition in Gmsh for stem:[\partial \Omega=\partial \Omega_D] in `circle-dirichlet.geo`
+[source,cpp]
+----
+include::{examplesdir}/laplacian/circle/circle-dirichlet.geo[tag=physical]
+----
+
+The next step is to provide the proper conditions or expressions to {feelpp} application `feelpp_qs_laplacian_2d`. They are described in the `.cfg` file.
+
+
+
+.Listing: expression section in the cfg file `circle-dirichlet.cfg`
+[source,ini]
+----
+include::{examplesdir}/laplacian/circle/circle-dirichlet.cfg[tag=functions]
+----
+
+NOTE: In the Dirichlet case, we do not have the issue mentioned above regarding the definition of the boundary and in particular the unit exterior normal to the boundary. We require only a point-wise evaluation of the condition on the boundary which are numerically exact.
+
+
+We are now ready to run the application.
+[source,bash,subs="verbatim,attributes"]
+----
+$ cd {path-quickstart}/laplacian/circle
+$ mpirun -np 4 feelpp_qs_laplacian_2d --config-file circle-dirichlet.cfg
+----
+
+This gives us some data such as solution of our problem or the mesh used in the application.
 
 [cols="^,^"]
 |========
 |image:laplacian/TestCases/Circle/ucircle.png[]|image:laplacian/TestCases/Circle/meshCircle.png[]
 |Solution stem:[u_\delta]| Mesh
 |========
+
+
 
 
 === feelpp2d and feelpp3d
