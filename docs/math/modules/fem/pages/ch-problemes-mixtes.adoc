@@ -19,7 +19,7 @@ Stokes::
           \nabla \cdot u & = 0\ \mbox{ in } \Omega
           \end{array}\right.
 ++++
-where latexmath:[u: \Omega \mapsto \RR^d] is a velocity and latexmath:[p: \Omega \mapsto \RR] is a pressure.
+where stem:[u: \Omega \mapsto \RR^d] is a velocity and stem:[p: \Omega \mapsto \RR] is a pressure.
 
 Darcy::
 [[eq:chmixte:99]]
@@ -30,7 +30,7 @@ Darcy::
           \nabla \cdot \sigma & = g\ \mbox{ in } \Omega
           \end{array}\right.
 ++++
-where latexmath:[\sigma: \Omega \mapsto \RR^d] is a velocity and latexmath:[u: \Omega \mapsto \RR] is a hydraulic charge(pressure).
+where stem:[\sigma: \Omega \mapsto \RR^d] is a velocity and stem:[u: \Omega \mapsto \RR] is a hydraulic charge(pressure).
 
 [[applications]]
 === Applications
@@ -60,9 +60,9 @@ In practice In order to ensure that the finite element approximation is well-pos
 
 Denote
 
-* latexmath:[X] and latexmath:[M] two Hilbert spaces.footnote:[An euclidian space which is complete for the norm induced by the scalar product]
-* two linear forms latexmath:[f \in X'=\mathcal{L}(X, \RR)] and latexmath:[g \in M'=\mathcal{L}(M, \RR)]
-* latexmath:[a \in \mathcal{L}(X\times X, \RR)] and latexmath:[b \in \mathcal{L}(X\times M, \RR)] two bilinear forms
+* stem:[X] and stem:[M] two Hilbert spaces.footnote:[An euclidian space which is complete for the norm induced by the scalar product]
+* two linear forms stem:[f \in X'=\mathcal{L}(X, \RR)] and stem:[g \in M'=\mathcal{L}(M, \RR)]
+* stem:[a \in \mathcal{L}(X\times X, \RR)] and stem:[b \in \mathcal{L}(X\times M, \RR)] two bilinear forms
 
 We are interested in the following abstract problem:
 
@@ -70,7 +70,7 @@ We are interested in the following abstract problem:
 [[prob:chmixte:1]]
 .Problem Mixed 1
 ****
-Look for latexmath:[(u,p) \in X \times M] such that
+Look for stem:[(u,p) \in X \times M] such that
 [[eq:chmixte:4]]
 [stem]
 ++++
@@ -88,14 +88,14 @@ Look for latexmath:[(u,p) \in X \times M] such that
 [[def:chmixte:1]]
 .Definition
 ****
-If the bilinear form latexmath:[a] is _symmetric_ and positive on latexmath:[X\times X], we say that <<prob:chmixte:1,the mixed problem 1>> is a _saddle point problem_.
+If the bilinear form stem:[a] is _symmetric_ and positive on stem:[X\times X], we say that <<prob:chmixte:1,the mixed problem 1>> is a _saddle point problem_.
 ****
 
 The structure of the problem is as follows
 
 * the space of solution is the same of the test space
-* the unknown latexmath:[p] does not appear in the second equation
-* the unknown functions latexmath:[u] and latexmath:[p] are coupled via the same bilinear form latexmath:[b] is the first and second equation.
+* the unknown stem:[p] does not appear in the second equation
+* the unknown functions stem:[u] and stem:[p] are coupled via the same bilinear form stem:[b] is the first and second equation.
 
 The next question is :
 
@@ -106,14 +106,14 @@ The next question is :
 
 Let’s rewrite <<prob:chmixte:1,the mixed problem 1>>.
 
-Denote latexmath:[V=X\times M] and introduce latexmath:[c \in \mathcal{L}(V\times V, \RR)] such that
+Denote stem:[V=X\times M] and introduce stem:[c \in \mathcal{L}(V\times V, \RR)] such that
 
 [[eq:chmixte:5]]
 [stem]
 ++++
 c((u,p),(v,q)) = a(u,v)+b(v,p)+b(u,q)
 ++++
-and latexmath:[h\in \mathcal{L}(V,\RR)] such that
+and stem:[h\in \mathcal{L}(V,\RR)] such that
 [[eq:chmixte:6]]
 [stem]
 ++++
@@ -124,7 +124,7 @@ then problem <<prob:chmixte:1>> reads
 [[prob:chmixte:2]]
 .Problem
 ****
-Look for latexmath:[(u,p) \in V] such that
+Look for stem:[(u,p) \in V] such that
 [[eq:chmixte:7]]
 [stem]
 ++++
@@ -137,10 +137,10 @@ Look for latexmath:[(u,p) \in V] such that
 [thr:chmixte:1]
 .Theorem
 ****
-We suppose that latexmath:[a] is coercive over latexmath:[X], the <<prob:chmixte:2>> is _well-posed_ if and only if the bilinear form latexmath:[b] satisfies the following
+We suppose that stem:[a] is coercive over stem:[X], the <<prob:chmixte:2>> is _well-posed_ if and only if the bilinear form stem:[b] satisfies the following
 inf-sup condition:
 
-there exists latexmath:[\beta > 0] such that
+there exists stem:[\beta > 0] such that
 [[eq:chmixte:8]]
 [stem]
 ++++
@@ -148,9 +148,9 @@ there exists latexmath:[\beta > 0] such that
 ++++
 ****
 
-IMPORTANT: Lax-Milgram provides only a **sufficient condition** for well-posedness. The form latexmath:[c] in <<prob:chmixte:2>> does not satisfy Lax-Milgram.
+IMPORTANT: Lax-Milgram provides only a **sufficient condition** for well-posedness. The form stem:[c] in <<prob:chmixte:2>> does not satisfy Lax-Milgram.
 
-Let’s introduce the so-called _Lagrangian_ latexmath:[l \in \mathcal{L}(X\times M, \RR)] defined by
+Let’s introduce the so-called _Lagrangian_ stem:[l \in \mathcal{L}(X\times M, \RR)] defined by
 [[eq:chmixte:9]]
 [stem]
 ++++
@@ -160,7 +160,7 @@ l(v,q) =  \frac{1}{2} a(v,v) + b(v,q) - f(v) - g(q)
 [[def:chmixte:2]]
 .Definition
 ****
-We say that the point latexmath:[(u,p)\in X\times M] is a saddle point of latexmath:[l] if
+We say that the point stem:[(u,p)\in X\times M] is a saddle point of stem:[l] if
 [[eq:chmixte:10]]
 [stem]
 ++++
@@ -171,7 +171,7 @@ We say that the point latexmath:[(u,p)\in X\times M] is a saddle point of latexm
 [[prop:chmixte:1]]
 .Proposition
 ****
-Under the hypothesys oF <<thr:chmixte:1>>, the Lagrangian latexmath:[l] defined by has a _unique_ saddle point.
+Under the hypothesys oF <<thr:chmixte:1>>, the Lagrangian stem:[l] defined by has a _unique_ saddle point.
 Moreover this saddle point is the _unique solution_ of problem <<prob:chmixte:1>>.
 ****
 
@@ -182,12 +182,12 @@ Moreover this saddle point is the _unique solution_ of problem <<prob:chmixte:1>
 
 We now turn to the approximation of the <<prob:chmixte:1>> by a _standard Galerkin method_ in a _conforming_ way.
 
-Denote the two spaces latexmath:[X_h \subset X] and latexmath:[M_h \subset M], we consider the following problem:
+Denote the two spaces stem:[X_h \subset X] and stem:[M_h \subset M], we consider the following problem:
 
 [[prob:chmixte:3]]
 .Formulation of the Abstract Discrete Problem
 ****
-Look for latexmath:[(u_h,p_h) \in X_h \times M_h] such that
+Look for stem:[(u_h,p_h) \in X_h \times M_h] such that
 [[eq:chmixte:11]]
 [stem]
 ++++
@@ -203,11 +203,11 @@ Look for latexmath:[(u_h,p_h) \in X_h \times M_h] such that
 [[thr:chmixte:2]]
 .Theorem
 ****
-We suppose that latexmath:[a] is coercive over latexmath:[X] and that latexmath:[X_h \subset X] and latexmath:[M_h \subset M].
+We suppose that stem:[a] is coercive over stem:[X] and that stem:[X_h \subset X] and stem:[M_h \subset M].
 
 Then the <<prob:chmixte:3>> is _well-posed_ if and only if the following _discrete inf-sup condition_ is satisfied:
 
-there exists latexmath:[\beta_h  > 0] such that
+there exists stem:[\beta_h  > 0] such that
 [[eq:chmixte:12]]
 [stem]
 ++++
@@ -215,7 +215,7 @@ there exists latexmath:[\beta_h  > 0] such that
 ++++
 ****
 
-The compatibility condition problem <<prob:chmixte:3>>, to be well posed, requires that the spaces latexmath:[X_h] and latexmath:[M_h] satisfy the condition.
+The compatibility condition problem <<prob:chmixte:3>>, to be well posed, requires that the spaces stem:[X_h] and stem:[M_h] satisfy the condition.
 
 This is known as the Babuska-Brezzi (BB) or Ladyhenskaya-Babuska-Brezzi (LBB).
 
@@ -224,7 +224,7 @@ Regarding error analysis, we have the following lemma
 [[lem:1]]
 .lemma
 ****
-Thanks to the Lemma of Céa applied to Saddle-Point Problems, the unique solution latexmath:[(u,p)] of problem <<prob:chmixte:3>> satisfies
+Thanks to the Lemma of Céa applied to Saddle-Point Problems, the unique solution stem:[(u,p)] of problem <<prob:chmixte:3>> satisfies
 [[eq:chmixte:13]]
 [stem]
 ++++
@@ -236,14 +236,14 @@ Thanks to the Lemma of Céa applied to Saddle-Point Problems, the unique solutio
 ++++
 where
 
-* latexmath:[c_{1h} = (1+\frac{||a||_{X,X}}{\alpha})(1+\frac{||b||_{X,M}}{\beta_h})] with latexmath:[\alpha]  the coercivity constant of latexmath:[a] over X.
+* stem:[c_{1h} = (1+\frac{||a||_{X,X}}{\alpha})(1+\frac{||b||_{X,M}}{\beta_h})] with stem:[\alpha]  the coercivity constant of stem:[a] over X.
 
-* latexmath:[c_{2} = \frac{||b||_{X,M}}{\alpha}]
+* stem:[c_{2} = \frac{||b||_{X,M}}{\alpha}]
 
-* latexmath:[c_{3h} = c_{1h} \frac{||a||_{X,X}}{\beta_h}], latexmath:[c_{4h} = 1+ \frac{||b||_{X,M}}{\beta_h}+\frac{||a||_{X,X}}{\beta_h}]
+* stem:[c_{3h} = c_{1h} \frac{||a||_{X,X}}{\beta_h}], stem:[c_{4h} = 1+ \frac{||b||_{X,M}}{\beta_h}+\frac{||a||_{X,X}}{\beta_h}]
 ****
 
-NOTE: The constants latexmath:[c_{1h}, c_{3h}, c_{4h}] are as large as latexmath:[\beta_h] is small.
+NOTE: The constants stem:[c_{1h}, c_{3h}, c_{4h}] are as large as stem:[\beta_h] is small.
 
 
 [[sec:linear-system]]
@@ -253,12 +253,12 @@ The discretisation process leads to a linear system.
 
 We denote
 
-* latexmath:[N_u = \dim {X_h}]
-* latexmath:[N_p = \dim {M_h}]
-* latexmath:[\{\phi_i\}_{i=1,...,N_u}] a basis of latexmath:[X_h]
-* latexmath:[\{\psi_k\}_{k=1,...,N_p}] a basis of latexmath:[M_h]
-* for all latexmath:[u_h = \sum_{i=1}^{N_u} u_i \phi_i], we associate latexmath:[U \in   \R{N_u}], latexmath:[U=(u_1,\ldots,u_{N_u})^T], the component vector of latexmath:[u_h] is latexmath:[\{\phi_i\}_{i=1,\ldots,N_u}]
-* for all latexmath:[p_h = \sum_{k=1}^{N_p} u_k \psi_k], we associate latexmath:[P \in     \R{N_p}], latexmath:[P=(p_1,\ldots,p_{N_p})^T], the component vector of latexmath:[p_h] is latexmath:[\{\psi_k\}_{k=1,\ldots,N_p}]
+* stem:[N_u = \dim {X_h}]
+* stem:[N_p = \dim {M_h}]
+* stem:[\{\phi_i\}_{i=1,...,N_u}] a basis of stem:[X_h]
+* stem:[\{\psi_k\}_{k=1,...,N_p}] a basis of stem:[M_h]
+* for all stem:[u_h = \sum_{i=1}^{N_u} u_i \phi_i], we associate stem:[U \in   \R{N_u}], stem:[U=(u_1,\ldots,u_{N_u})^T], the component vector of stem:[u_h] is stem:[\{\phi_i\}_{i=1,\ldots,N_u}]
+* for all stem:[p_h = \sum_{k=1}^{N_p} u_k \psi_k], we associate stem:[P \in     \R{N_p}], stem:[P=(p_1,\ldots,p_{N_p})^T], the component vector of stem:[p_h] is stem:[\{\psi_k\}_{k=1,\ldots,N_p}]
 
 The matricial form of problem <<prob:chmixte:3>> reads
 [[eq:chmixte:15]]
@@ -279,7 +279,7 @@ The matricial form of problem <<prob:chmixte:3>> reads
         \end{bmatrix}
 ++++
 
-where the matrix latexmath:[\mathcal{A} \in \R{N_u,N_u}] and latexmath:[\mathcal{B} \in     \R{N_p,N_u}] have the coefficients
+where the matrix stem:[\mathcal{A} \in \R{N_u,N_u}] and stem:[\mathcal{B} \in     \R{N_p,N_u}] have the coefficients
 
 [[eq:chmixte:16]]
 [stem]
@@ -287,20 +287,20 @@ where the matrix latexmath:[\mathcal{A} \in \R{N_u,N_u}] and latexmath:[\mathcal
 \mathcal{A}_{ij} = a(\phi_j,\phi_i), \quad \mathcal{B}_{ki} = b(\phi_i,\psi_k)
 ++++
 
-and the vectors latexmath:[\mathcal{F} \in \R{N_u}] and latexmath:[\mathcal{G} \in \R{N_p}] have the coefficients
+and the vectors stem:[\mathcal{F} \in \R{N_u}] and stem:[\mathcal{G} \in \R{N_p}] have the coefficients
 
-* latexmath:[F_i=f(\phi_i)]
-* latexmath:[G_k=g(\psi_k)]
+* stem:[F_i=f(\phi_i)]
+* stem:[G_k=g(\psi_k)]
 
 [[rem:2]]
 [NOTE]
 ====
-1.  Since latexmath:[a] is symmetric and coercive,
-latexmath:[\mathcal{A}] is _symmetric positive definite_
+1.  Since stem:[a] is symmetric and coercive,
+stem:[\mathcal{A}] is _symmetric positive definite_
 2.  The matrix of the system is symmetric but not positive
 3.  The inf-sup condition  is equivalent to the fact that
-latexmath:[\mathcal{B}] is of _maximum rank_, _i.e._
-latexmath:[\ker(\mathcal{B}^T)
+stem:[\mathcal{B}] is of _maximum rank_, _i.e._
+stem:[\ker(\mathcal{B}^T)
        = \{0 \}].
 4.  From theorem <<thr:chmixte:2>>, the matrix of the system  is
 invertible
@@ -309,16 +309,16 @@ invertible
 [WARNING]
 .When the inf-sup is not satisfied
 ====
-The counter examples when the inf-sup condition  is not satisfied(e.g. latexmath:[\mathcal{B}] is not maximum rank ) occur usually in two cases:
+The counter examples when the inf-sup condition  is not satisfied(e.g. stem:[\mathcal{B}] is not maximum rank ) occur usually in two cases:
 
 Locking::
-latexmath:[\dim {M_h} > \dim {X_h}]: the space of pressure is too large for the matrix latexmath:[\mathcal{B}] to be maximum rank.
-In that case latexmath:[\mathcal{B}] is injective (latexmath:[\ker(\mathcal{B}) = \{0\})]. We call this **locking**.
+stem:[\dim {M_h} > \dim {X_h}]: the space of pressure is too large for the matrix stem:[\mathcal{B}] to be maximum rank.
+In that case stem:[\mathcal{B}] is injective (stem:[\ker(\mathcal{B}) = \{0\})]. We call this **locking**.
 
 Spurious modes::
-there exists a vector latexmath:[Q^* \neq 0] in latexmath:[\ker(\mathcal{B}^T)].
-The discrete fieldlatexmath:[q^*_h] in latexmath:[M_h], latexmath:[q^*_h=\sum_{k=1}^{N_p} Q^*_k \psi_k], associated is called a **spurious mode**.
-latexmath:[q^*_H] is such that
+there exists a vector stem:[Q^* \neq 0] in stem:[\ker(\mathcal{B}^T)].
+The discrete fieldstem:[q^*_h] in stem:[M_h], stem:[q^*_h=\sum_{k=1}^{N_p} Q^*_k \psi_k], associated is called a **spurious mode**.
+stem:[q^*_H] is such that
 [[eq:chmixte:14]]
 [stem]
 ++++
@@ -338,10 +338,10 @@ The matrix
 \mathcal{U} = \mathcal{B} \mathcal{A}^{-1} \mathcal{B}^T
 ++++
 is called the _Uzawa matrix_. It is _symmetric positive definite_ from the
-properties of latexmath:[\mathcal{A}], latexmath:[\mathcal{B}]
+properties of stem:[\mathcal{A}], stem:[\mathcal{B}]
 ****
 
-Applications:: The Uzawa matrix occurs when eliminating the velocity in system  and get a linear system on latexmath:[P]:
+Applications:: The Uzawa matrix occurs when eliminating the velocity in system  and get a linear system on stem:[P]:
 [[eq:chmixte:18]]
 [stem]
 ++++
@@ -357,7 +357,7 @@ then one application is to solve by solving iteratively and compute the velocity
 
 We start with the Well-posedness at the continuous level
 
-* We consider the model problem  with homogeneous Dirichlet condition on velocity latexmath:[u = 0] on stem:[\partial \Omega]
+* We consider the model problem  with homogeneous Dirichlet condition on velocity stem:[u = 0] on stem:[\partial \Omega]
 * We suppose the stem:[f \in [L^2(\Omega)\]^d] and stem:[g \in L^2(\Omega)] with
 
 [[eq:chmixte:20]]
@@ -373,13 +373,13 @@ Introduce
 L^2_0(\Omega) = \Big\{ q \in L^2(\Omega): \int_\Omega q = 0 \Big\}
 ++++
 
-The condition comes from the divergence theorem applied to the divergence equation and the fact that latexmath:[u=0] on the boundary
+The condition comes from the divergence theorem applied to the divergence equation and the fact that stem:[u=0] on the boundary
 [[eq:chmixte:21]]
 [stem]
 ++++
 \int_\Omega g = \int_\Omega \nabla \cdot u = \int_{\partial \Omega} u \cdot n = 0
 ++++
-This is a _necessary_ condition for the existence of a solution latexmath:[(u,p)] for the Stokes equations with these boundary conditions.
+This is a _necessary_ condition for the existence of a solution stem:[(u,p)] for the Stokes equations with these boundary conditions.
 
 We turn now to the variational formulation.
 
@@ -388,7 +388,7 @@ The Stokes problem reads
 [[prob:chmixte:4]]
 .Problem
 ****
-Look for latexmath:[(u,p) \in [H^1_0(\Omega)]^d \times L^2_0(\Omega)] such that
+Look for stem:[(u,p) \in [H^1_0(\Omega)\]^d \times L^2_0(\Omega)] such that
 [[eq:chmixte:25]]
 [stem]
 ++++
@@ -402,7 +402,7 @@ Look for latexmath:[(u,p) \in [H^1_0(\Omega)]^d \times L^2_0(\Omega)] such that
 ++++
 ****
 
-We recover the formulation of <<prob:chmixte:1>> with latexmath:[X=[H^1_0(\Omega)\]^d] and latexmath:[M=L^2_0(\Omega)] and
+We recover the formulation of <<prob:chmixte:1>> with stem:[X=[H^1_0(\Omega)\]^d] and stem:[M=L^2_0(\Omega)] and
 [[eq:chmixte:22]]
 [stem]
 ++++
@@ -414,17 +414,17 @@ We recover the formulation of <<prob:chmixte:1>> with latexmath:[X=[H^1_0(\Omega
 ++++
 
 .Pressure up to a constant
-NOTE: The pressure is known up to a constant, that’s why we look for them in latexmath:[L^2_0(\Omega)] to ensure uniqueness.
+NOTE: The pressure is known up to a constant, that’s why we look for them in stem:[L^2_0(\Omega)] to ensure uniqueness.
 
 [[finite_element_approximation_for_stokes]]
 === Finite element approximation
 
-Denote latexmath:[X_h \subset [H^1_0(\Omega)\]^d] and latexmath:[M_h \subset L^2_0(\Omega)]
+Denote stem:[X_h \subset [H^1_0(\Omega)\]^d] and stem:[M_h \subset L^2_0(\Omega)]
 
 [[prob:chmixte:5]]
 .Problem
 ****
-Look for latexmath:[(u_h,p_h) \in X_h \times M_h] such that
+Look for stem:[(u_h,p_h) \in X_h \times M_h] such that
 [[eq:chmixte:24]]
 [stem]
 ++++
@@ -439,7 +439,7 @@ Look for latexmath:[(u_h,p_h) \in X_h \times M_h] such that
 ****
 
 [[rem:1]]
-NOTE: This problem, thanks to theorem <<thr:chmixte:2>> is well-posed if and only if latexmath:[X_h] and latexmath:[M_h] are such that there exists latexmath:[\beta_h > 0]
+NOTE: This problem, thanks to theorem <<thr:chmixte:2>> is well-posed if and only if stem:[X_h] and stem:[M_h] are such that there exists stem:[\beta_h > 0]
 [[eq:chmixte:26]]
 [stem]
 ++++
@@ -451,7 +451,7 @@ NOTE: This problem, thanks to theorem <<thr:chmixte:2>> is well-posed if and onl
 In this section, we present two classical bad finite element approximations.
 
 [[finite-element-polyp_1polyp_0-locking]]
-==== Finite element latexmath:[\poly{P}_1/\poly{P}_0]: locking
+==== Finite element stem:[\poly{P}_1/\poly{P}_0]: locking
 
 
 Thanks to the Euler relations, we have
@@ -464,64 +464,63 @@ Thanks to the Euler relations, we have
       \end{array}
 ++++
 
-where latexmath:[I] is the number of holes in latexmath:[\Omega].
+where stem:[I] is the number of holes in stem:[\Omega].
 
-We have that latexmath:[\dim {M_h} = N_{\mathrm{cells}}],latexmath:[\dim {X_h} = 2 N^i_{\mathrm{vertices}}] and so
+We have that stem:[\dim {M_h} = N_{\mathrm{cells}}],stem:[\dim {X_h} = 2 N^i_{\mathrm{vertices}}] and so
 [[eq:chmixte:29]]
 [stem]
 ++++
 \dim {M_h} - \dim {X_h} = N_{\mathrm{cells}} - 2 N^i_{\mathrm{vertices}} = N^\partial_{\mathrm{edges}} - 2 > 0
 ++++
 
-so latexmath:[M_h] is too rich for the condition and we have latexmath:[\ker(\mathcal{B}) = \{0\}] such that the _only_ discrete latexmath:[u_h^*], with components latexmath:[U^*], satisfying latexmath:[\mathcal{B} U^*] is the null field, latexmath:[U^*=0].
+so stem:[M_h] is too rich for the condition and we have stem:[\ker(\mathcal{B}) = \{0\}] such that the _only_ discrete stem:[u_h^*], with components stem:[U^*], satisfying stem:[\mathcal{B} U^*] is the null field, stem:[U^*=0].
 
 [[finite-element-polyq_1polyp_0-spurious-mode]]
-==== Finite element latexmath:[\poly{Q}_1/\poly{P}_0]: spurious mode
+==== Finite element stem:[\poly{Q}_1/\poly{P}_0]: spurious mode
 
-We can construct in that case a function latexmath:[q_h^*] on a uniform grid which is equal alternatively -1, +1 (chessboard) in the cells of the mesh, then
+We can construct in that case a function stem:[q_h^*] on a uniform grid which is equal alternatively -1, +1 (chessboard) in the cells of the mesh, then
 [[eq:chmixte:27]]
 [stem]
 ++++
 \forall v_h \in [Q^1_{c,h}]^d, \quad \int_\Omega q^*_h \nabla \cdot v_h = 0
 ++++
-and thus the associated latexmath:[X_h], latexmath:[M_h] do not satisfy the condition.
+and thus the associated stem:[X_h], stem:[M_h] do not satisfy the condition.
 
 [[finite-element-polyp_1polyp_1-spurious-mode]]
-==== Finite element latexmath:[\poly{P}_1/\poly{P}_1]: spurious mode
+==== Finite element stem:[\poly{P}_1/\poly{P}_1]: spurious mode
 
-We can construct in that case a function latexmath:[q_h^*] on a uniform grid which is equal alternatively -1, 0, +1 at the vertices of the mesh, then
+We can construct in that case a function stem:[q_h^*] on a uniform grid which is equal alternatively -1, 0, +1 at the vertices of the mesh, then
 [[eq:chmixte:27]]
 [stem]
 ++++
 \forall v_h \in [P^1_{c,h}]^d, \quad \int_\Omega q^*_h \nabla \cdot v_h = 0
 ++++
-and thus the associated latexmath:[X_h], latexmath:[M_h] do not satisfy the condition.
+and thus the associated stem:[X_h], stem:[M_h] do not satisfy the condition.
 
-[[mini_element]]
 === Mini-Element
 
-The problem with the latexmath:[\poly{P}_1/\poly{P}_1] mixed finite element is that the velocity is not _rich_ enough.
+The problem with the stem:[\poly{P}_1/\poly{P}_1] mixed finite element is that the velocity is not _rich_ enough.
 
-A cure is to add a function latexmath:[v_h^*] in the velocity approximation space to ensure that
+A cure is to add a function stem:[v_h^*] in the velocity approximation space to ensure that
 [[eq:chmixte:30]]
 [stem]
 ++++
 \int_\Omega q^*_h \nabla \cdot v_h^* \neq 0
 ++++
-where latexmath:[q_h^*] is the spurious mode.
+where stem:[q_h^*] is the spurious mode.
 
-To do that we add the bubble function to the latexmath:[\poly{P}_1] velocity space.
+To do that we add the bubble function to the stem:[\poly{P}_1] velocity space.
 
 [[def:chmixte:3]]
 .Definition: Mini-Element
 ****
-Recall the construction of finite elements on a reference convex latexmath:[\hat{K}].
-We say that latexmath:[\hat{b}: \hat{K} \mapsto \RR] is a bubble function if:
+Recall the construction of finite elements on a reference convex stem:[\hat{K}].
+We say that stem:[\hat{b}: \hat{K} \mapsto \RR] is a bubble function if:
 
-* latexmath:[\hat{b} \in H^1_0(\hat{K})]
-* latexmath:[0 \leq \hat{b}(\hat{x}) \leq 1, \quad \forall \hat{x} \in \hat{K}]
-* latexmath:[\hat{b}(\hat{C}) = 1, \quad \mbox{where} \hat{C}] is the
-barycenter of latexmath:[\hat{K}]
+* stem:[\hat{b} \in H^1_0(\hat{K})]
+* stem:[0 \leq \hat{b}(\hat{x}) \leq 1, \quad \forall \hat{x} \in \hat{K}]
+* stem:[\hat{b}(\hat{C}) = 1, \quad \mbox{where} \hat{C}] is the
+barycenter of stem:[\hat{K}]
 ****
 
 Example::
@@ -531,9 +530,9 @@ The function
 ++++
 \hat{b} = (d+1)^{d+1} \Pi_{i=0}^d\ \hat{\lambda}_i
 ++++
-where latexmath:[(\hat{\lambda}_0, \ldots, \hat{\lambda}_d)] denote the barycentric coordinates on latexmath:[\hat{K}]
+where stem:[(\hat{\lambda}_0, \ldots, \hat{\lambda}_d)] denote the barycentric coordinates on stem:[\hat{K}]
 
-Denote now latexmath:[\hat{b}] a bubble fonction on latexmath:[\hat{K}], we set
+Denote now stem:[\hat{b}] a bubble fonction on stem:[\hat{K}], we set
 [[eq:chmixte:32]]
 [stem]
 ++++
@@ -553,15 +552,15 @@ and introduce
 [[lem:3]]
 .lemma
 ****
-The spaces latexmath:[X_h] and latexmath:[M_h \cap L^2_0(\Omega)] satisfy the compatibility condition  uniformly in latexmath:[h].
+The spaces stem:[X_h] and stem:[M_h \cap L^2_0(\Omega)] satisfy the compatibility condition  uniformly in stem:[h].
 ****
 
 [[thr:chmixte:3]]
 .Theorem
 ****
-Suppose that latexmath:[(u,p)], solution of <<prob:chmixte:1>>, is smooth enough, ie. latexmath:[u \in [H^2(\Omega)]^d \cap [H^1_0(\Omega)]^d] and latexmath:[p\in H^1(\Omega)     \cap L^2_0(\Omega)].
+Suppose that stem:[(u,p)], solution of <<prob:chmixte:1>>, is smooth enough, ie. stem:[u \in [H^2(\Omega)]^d \cap [H^1_0(\Omega)]^d] and stem:[p\in H^1(\Omega)     \cap L^2_0(\Omega)].
 
-Then there exists a constant latexmath:[c] such that for all latexmath:[h >0]
+Then there exists a constant stem:[c] such that for all stem:[h >0]
 [[eq:chmixte:34]]
 [stem]
 ++++
@@ -578,27 +577,26 @@ and if the Stokes problem is stabilizing then
 [[def:chmixte:4]]
 .Definition: Stabilizing Stokes problem
 ****
-We say that the Stokes problem is stabilizing if there exists a constant latexmath:[c_S] such that for all latexmath:[f \in [L^2(\Omega)]^d], the unique solution latexmath:[(u,p)] of with latexmath:[g=0] is such that:
+We say that the Stokes problem is stabilizing if there exists a constant stem:[c_S] such that for all stem:[f \in [L^2(\Omega)]^d], the unique solution stem:[(u,p)] of with stem:[g=0] is such that:
 [[eq:chmixte:36]]
 [stem]
 ++++
 \|u\|_{2,\Omega} + \|p\|_{1,\Omega} \leq c_S \|f\|_{0,\Omega}
 ++++
-A sufficient condition for stabilizing Stokes problem is that the latexmath:[\Omega] is a polygonal convex in 2D or of class latexmath:[C^1] in latexmath:[\RR^d, d=2,3].
+A sufficient condition for stabilizing Stokes problem is that the stem:[\Omega] is a polygonal convex in 2D or of class stem:[C^1] in stem:[\RR^d, d=2,3].
 ****
 
-[[taylor_hood]]
 === Taylor-Hood Element
 
 
 The mini-element solved the compatibility condition problem, but the error estimation in equation is not optimal in the sense that
 
-. the pressure space is sufficiently rich to enable a latexmath:[h^2] convergence in the pressure error,
-. but the velocity space is not rich enough to ensure a latexmath:[h^2] convergence in the velocity error.
+. the pressure space is sufficiently rich to enable a stem:[h^2] convergence in the pressure error,
+. but the velocity space is not rich enough to ensure a stem:[h^2] convergence in the velocity error.
 
-The idea of the Taylor-Hood element is to enrich even more the velocity space to ensure optimal convergence in latexmath:[h].
+The idea of the Taylor-Hood element is to enrich even more the velocity space to ensure optimal convergence in stem:[h].
 
-Here we will take latexmath:[[\poly{P}_2]^d] for the velocity and latexmath:[\poly{P}_1] for the pressure.
+Here we will take stem:[[\poly{P}_2]^d] for the velocity and stem:[\poly{P}_1] for the pressure.
 
 Introduce
 [stem]
@@ -613,15 +611,15 @@ Introduce
 [[lem:3]]
 .lemma
 ****
-The spaces latexmath:[X_h] and latexmath:[M_h \cap L^2_0(\Omega)] satisfy the compatibility condition  uniformly in latexmath:[h].
+The spaces stem:[X_h] and stem:[M_h \cap L^2_0(\Omega)] satisfy the compatibility condition  uniformly in stem:[h].
 ****
 
 [[thr:chmixte:3]]
 .Theorem
 ****
-Suppose that latexmath:[(u,p)], solution of problem <<prob:chmixte:1>>, is smooth enough, ie. latexmath:[u \in [H^3(\Omega)]^d \cap [H^1_0(\Omega)]^d] and latexmath:[p\in H^2(\Omega)     \cap L^2_0(\Omega)].
+Suppose that stem:[(u,p)], solution of problem <<prob:chmixte:1>>, is smooth enough, ie. stem:[u \in [H^3(\Omega)]^d \cap [H^1_0(\Omega)]^d] and stem:[p\in H^2(\Omega)     \cap L^2_0(\Omega)].
 
-Then there exists a constant latexmath:[c] such that for all latexmath:[h >0]
+Then there exists a constant stem:[c] such that for all stem:[h >0]
 
 [[eq:chmixte:40]]
 [stem]
@@ -636,7 +634,7 @@ and if the Stokes problem is stabilizing then
 ++++
 ****
 
-Generalized Taylor-Hood element:: We consider the mixed finite elements latexmath:[\poly{P}_k/\poly{P}_{k-1}] and latexmath:[\poly{Q}_k/\poly{Q}_{k-1}] which allows to approximate the velocity and pressure respectively with, on Simplices
+Generalized Taylor-Hood element:: We consider the mixed finite elements stem:[\poly{P}_k/\poly{P}_{k-1}] and stem:[\poly{Q}_k/\poly{Q}_{k-1}] which allows to approximate the velocity and pressure respectively with, on Simplices
 [stem]
 ++++
 \begin{aligned}
@@ -665,13 +663,13 @@ There are other stable discretization spaces
 
 * Discrete inf-sup condition: dictates the choice of spaces
 * Inf-sup stables spaces:
-** latexmath:[\mathbb Q_k]-latexmath:[\mathbb Q_{k-2}],
-latexmath:[\mathbb Q_k]-latexmath:[\mathbb Q^{disc}_{k-2}]
-** latexmath:[\mathbb P_k]-latexmath:[\mathbb P_{k-1}],
-latexmath:[\mathbb P_k]-latexmath:[\mathbb P_{k-2}],
-latexmath:[\mathbb P_k]-latexmath:[\mathbb P^{disc}_{k-2}]
-** Discrete inf-sup constant independent of latexmath:[h], but
-dependent on latexmath:[k]
+** stem:[\mathbb Q_k]-stem:[\mathbb Q_{k-2}],
+stem:[\mathbb Q_k]-stem:[\mathbb Q^{disc}_{k-2}]
+** stem:[\mathbb P_k]-stem:[\mathbb P_{k-1}],
+stem:[\mathbb P_k]-stem:[\mathbb P_{k-2}],
+stem:[\mathbb P_k]-stem:[\mathbb P^{disc}_{k-2}]
+** Discrete inf-sup constant independent of stem:[h], but
+dependent on stem:[k]
 
 == Test Cases for Stokes
 
