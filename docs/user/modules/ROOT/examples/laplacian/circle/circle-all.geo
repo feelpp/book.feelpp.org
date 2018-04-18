@@ -12,8 +12,9 @@ Circle(3) = {3, 1, 5};
 Circle(5) = {5, 1, 2};
 Line Loop(6) = {1, 2, 3, 5};
 Plane Surface(7) = {6};
-
+// tag::physical[]
 Physical Line("Dirichlet") = {1, 2};
 Physical Line("Neumann") = {3};
 Physical Line("Robin") = {5};
 Physical Surface(8) = {7};
+// end::physical[]
