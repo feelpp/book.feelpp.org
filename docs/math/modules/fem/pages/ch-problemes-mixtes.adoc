@@ -302,7 +302,7 @@ latexmath:[\mathcal{A}] is _symmetric positive definite_
 latexmath:[\mathcal{B}] is of _maximum rank_, _i.e._
 latexmath:[\ker(\mathcal{B}^T)
        = \{0 \}].
-4.  From theorem [thr:chmixte:2], the matrix of the system  is
+4.  From theorem <<thr:chmixte:2>>, the matrix of the system  is
 invertible
 ====
 
@@ -352,7 +352,6 @@ then one application is to solve by solving iteratively and compute the velocity
 
 == Mixed finite element for Stokes
 
-[[sec:vari-form-]]
 === Variational formulation
 
 We start with the Well-posedness at the continuous level
@@ -400,7 +399,7 @@ Look for latexmath:[(u,p) \in [H^1_0(\Omega)]^d \times L^2_0(\Omega)] such that
 ++++
 ****
 
-We retrieve the problem <<prob:chmixte:1>> with latexmath:[X=[H^1_0(\Omega)]^d] and latexmath:[M=L^2_0(\Omega)] and
+We recover the formulation of <<prob:chmixte:1>> with latexmath:[X=[H^1_0(\Omega)]^d] and latexmath:[M=L^2_0(\Omega)] and
 [[eq:chmixte:22]]
 [stem]
 ++++
@@ -414,7 +413,6 @@ We retrieve the problem <<prob:chmixte:1>> with latexmath:[X=[H^1_0(\Omega)]^d] 
 .Pressure up to a constant
 NOTE: The pressure is known up to a constant, that’s why we look for them in latexmath:[L^2_0(\Omega)] to ensure uniqueness.
 
-[[sec:finite-elem-appr-1]]
 === Finite element approximation
 
 Denote latexmath:[X_h \subset [H^1_0(\Omega)]^d] and latexmath:[M_h \subset L^2_0(\Omega)]
@@ -444,8 +442,7 @@ NOTE: This problem, thanks to theorem <<thr:chmixte:2>> is well-posed if and onl
 \inf_{q_h \in M_h} \sup_{v_h \in X_h} \frac{\int_\Omega q_h \nabla \cdot v_h}{||v_h||_{X_h} ||q_h||_{M_h}} \geq \beta_h
 ++++
 
-[[sec:counter-examples]]
-=== Some counter examples: bad finite element for Stokes
+=== Bad finite elements for Stokes
 
 In this section, we present two classical bad finite element approximations.
 
