@@ -2,7 +2,8 @@
 [[cha:appr-de-probl-1]]
 = Approximation de problèmes mixtes
 
-[[sec:model-problems]]
+NOTE: Ce document est en anglais et doit être traduit.
+
 == Model Problems
 
 We consider now model problems as systems of PDEs where several
@@ -52,7 +53,6 @@ The well-posedness of these problems results from a so-called which is not autom
 
 In practice In order to ensure that the finite element approximation is well-posed, we will need to choose approximation spaces that satisfy a _compatibility condition_ that ensures that a _discrete inf-sup condition_ is satisfied.
 
-[[sec:saddle-point-probl]]
 == Saddle point problems
 
 [[abstract-continuous-setting]]
@@ -313,11 +313,11 @@ The counter examples when the inf-sup condition  is not satisfied(e.g. latexmat
 
 Locking::
 latexmath:[\dim {M_h} > \dim {X_h}]: the space of pressure is too large for the matrix latexmath:[\mathcal{B}] to be maximum rank.
-In that case latexmath:[\mathcal{B}] is injective (latexmath:[\ker(\mathcal{B}) = \{0\})]. We call this _*locking*_.
+In that case latexmath:[\mathcal{B}] is injective (latexmath:[\ker(\mathcal{B}) = \{0\})]. We call this **locking**.
 
 Spurious modes::
 there exists a vector latexmath:[Q^* \neq 0] in latexmath:[\ker(\mathcal{B}^T)].
-The discrete fieldlatexmath:[q^*_h] in latexmath:[M_h], latexmath:[q^*_h=\sum_{k=1}^{N_p} Q^*_k \psi_k], associated is called a _*spurious mode*_.
+The discrete fieldlatexmath:[q^*_h] in latexmath:[M_h], latexmath:[q^*_h=\sum_{k=1}^{N_p} Q^*_k \psi_k], associated is called a **spurious mode**.
 latexmath:[q^*_H] is such that
 [[eq:chmixte:14]]
 [stem]
@@ -352,6 +352,7 @@ then one application is to solve by solving iteratively and compute the velocity
 
 == Mixed finite element for Stokes
 
+[[variation_formulation_for_stokes]]
 === Variational formulation
 
 We start with the Well-posedness at the continuous level
@@ -413,6 +414,7 @@ We recover the formulation of <<prob:chmixte:1>> with latexmath:[X=[H^1_0(\Omega
 .Pressure up to a constant
 NOTE: The pressure is known up to a constant, that’s why we look for them in latexmath:[L^2_0(\Omega)] to ensure uniqueness.
 
+[[finite_element_approximation_for_stokes]]
 === Finite element approximation
 
 Denote latexmath:[X_h \subset [H^1_0(\Omega)]^d] and latexmath:[M_h \subset L^2_0(\Omega)]
@@ -493,7 +495,7 @@ We can construct in that case a function latexmath:[q_h^*] on a uniform grid whi
 ++++
 and thus the associated latexmath:[X_h], latexmath:[M_h] do not satisfy the condition.
 
-[[sec:finite-elem-stok]]
+[[mini_element]]
 === Mini-Element
 
 The problem with the latexmath:[\poly{P}_1/\poly{P}_1] mixed finite element is that the velocity is not _rich_ enough.
@@ -583,7 +585,7 @@ We say that the Stokes problem is stabilizing if there exists a constant latexma
 A sufficient condition for stabilizing Stokes problem is that the latexmath:[\Omega] is a polygonal convex in 2D or of class latexmath:[C^1] in latexmath:[\RR^d, d=2,3].
 ****
 
-[[sec:taylor-hood-element]]
+[[taylor_hood]]
 === Taylor-Hood Element
 
 
