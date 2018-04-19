@@ -1,0 +1,82 @@
+= Élasticité Linéaire
+
+On s’intéresse dans cette section à l’approximation par éléments finis de problèmes de mécanique des milieux continus et en particulier à l'élasticité qui décrit des matériaux qui reviennent à leur forme initiale après avoir été déformés. L'**élasticité**  est une **déformation réversible**.
+
+
+Soit stem:[\mathbf{f}: \Omega \rightarrow \mathbb{R}^3] la charge extérieur s’appliquant au domaine stem:[\Omega].
+
+On note stem:[\disp{d}: \Omega \rightarrow \mathbb{R}^3] le déplacement de la structure induit par cette charge stem:[\mathbf{f}] et qu'on cherche à déterminer.
+
+CAUTION: Dans ce qui suit, nous nous placons dans le cas où les déformations sont suffisamment petites pour être modélisées dans le cadre de l’elasticité linéaire.
+
+On a la relation suivante à l’équilibre des forces:
+
+[[eq:31]]
+[stem]
+++++
+\nabla \cdot \stresst{\disp{d}} + \mathbf{f} = \mathbf{0} \mbox{ dans } \Omega
+++++
+où stem:[\stresst{\disp{d}}: \Omega \rightarrow \RR^{d\times d}] est le _tenseur des contraintes_.
+
+Soit stem:[\deformt{\disp{d}} : \Omega \rightarrow \RR^{d\times d}] le _tenseur des déformations_ linéarisé défini par
+[[eq:94]]
+[stem]
+++++
+  \deformt{\disp{d}} = \frac{1}{2} \left( \nabla \disp{d} + \nabla \disp{d}^T \right),
+++++
+stem:[\lambda] et stem:[\mu] sont appelés **coefficients de Lamé** et stem:[\Id] est la matrice identité de stem:[\RR^{d\times d}].
+
+En élasticité linéaire, on a une relation linéaire entre le tenseur des contraintes et des déformations qui s'écrit
+[[eq:93]]
+[stem]
+++++
+\stresst{\disp{d}} = \lambda \tr(\deformt{\disp{d}}) \Id + 2 \mu \deformt{\disp{d}}
+++++
+
+On a alors
+[[eq:95]]
+[stem]
+++++
+  \stresst{\disp{d}} = \lambda( \nabla \cdot \disp{d} ) \Id + \mu( \nabla \disp{d} + \nabla \disp{d}^T)
+++++
+
+[NOTE]
+.Coefficients de Lamé, module d'Young et coefficient de Poisson
+====
+Les coefficients sont des coefficients phénoménologiques contraints par les relations suivants:
+
+* stem:[\mu >0]
+* stem:[\lambda + \frac{2}{3} \mu \ge 0]
+
+Dans ce qui suit, on supposera que stem:[\lambda \ge 0] et ces **coefficients constants**
+
+stem:[\lambda + \frac{2}{3} \mu] est directement relié au caractère compressible du matériau.
+
+Enfin il est souvent plus aisé, d'un point de vue pratique, de manipuler le _module d'Young_ stem:[E] et le _coefficient de Poisson_ stem:[\nu] qui sont liés aux coeffcients de Lamé comme suit:
+
+[[eq:96]]
+[stem]
+++++
+  \lambda =  \frac{E \nu}{( 1+\nu )*( 1-2 \nu )} , \quad \mu =\frac{E}{2 ( 1+\nu )}
+++++
+
+Module d'Young (stem:[E])::
+Il relie la contrainte de traction (ou de compression) et le début de la déformation d'un matériau élastique isotrope (https://fr.wikipedia.org/wiki/Module_de_Young[wikipedia]). Il est homogène à une _pression_ et son unité est le mega Pascal stem:[\mathrm{MPa}] ou le giga Pascal stem:[\mathrm{GPa}].
+
+Coefficient de Poisson (stem:[\nu])::
+Il est sans unité tel que stem:[0 \leq \nu \leq \frac{1}{2}]. Le cas limite stem:[\nu=\frac{1}{2}] correspond à un **matériau incompressible**.
+====
+
+
+== Et après ?
+
+On s'intéresse à présent à deux formulations du problème d'élasciticité
+
+* [x] xref:elasticity/mixed.adoc[un problème mélangeant condition de Dirichlet et condition de Neumann]
+* [x] xref:elasticity/pure-traction.adoc[un problème avec condition de Neumann] (ou encore appelée problème **traction pure**)
+
+
+Pour compléter l'étude de l'élasticité linéaire:
+
+* [x] xref:elasticity/numerical-experiments.adoc[Expériences numériques]
+* [x] xref:elasticity/incompressibility.adoc[La perte de coercivité pour l'advection-diffusion]

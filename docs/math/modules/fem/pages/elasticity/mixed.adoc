@@ -1,0 +1,32 @@
+= Formulation mixte
+
+On considère stem:[\Omega \subset \RR^3] tel que stem:[\partial \Omega = \partial \Omega_D \cap \partial \Omega_N].
+On se donne stem:[\mathbf{g}: \partial \Omega_N \rightarrow \mathbb{R}^3] la charge normale sur stem:[\partial \Omega_N].
+Le problème mélangeant condition de Dirichlet imposant le déplacement et de Neumann imposant les contraintes normales en élasticité linéaire s'exprime sous la forme suivante
+
+.Problème mixte
+****
+\begin{align}
+\nabla \cdot \stresst{\disp{d}} + \mathbf{f} = \mathbf{0} & \quad \mbox{ in } \Omega \\
+\stresst{\disp{d}} = \lambda (\nabla \cdot \disp{d}) \Id + \mu (\nabla \disp{d} + \nabla \disp{d}^T) & \quad \mbox{ in } \Omega\\
+\disp{d} = \mathbf{0} & \quad \mbox{ on } \partial \Omega_D\\
+\stresst{\disp{d}} \normal = \mathbf{g} & \quad \mbox{ on } \partial \Omega_N
+\end{align}
+****
+
+Le choix naturel d'espace fonctionel est stem:[X\equiv[H^1_{0,\partial \Omega_D}(\Omega)\]^3] pour la solution et les fonctions tests avec
+[stem]
+++++
+X\equiv [H^1_{0,\partial \Omega_D}(\Omega)\]^3=\left\{ \disp{v} \in [H^1(\Omega)\]^3 \mathrm{s.t.} \disp{v} \mbox{ on } \partial \Omega_D \right\}
+++++
+La formulation faible s'écrit alors
+
+.Formulation faible du problème mixte
+****
+On cherche stem:[\disp{d} \in [H^1(\Omega)\]^3] telle que
+[stem]
+++++
+a(\disp{d},\disp{v}) = \int_\Omega f \cdot \disp{v} + \int_{\partial \Omega} \disp{g} \cdot \normal \quad  \forall v \in [H^1(\Omega)]^3
+++++
+la forme stem:[a] a été définie dans  la xref:elasticity/mixed.adoc[formulation mixte].
+****
