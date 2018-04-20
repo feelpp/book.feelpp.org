@@ -36,6 +36,17 @@ In particular, pay attention to `infiniband` and `omnipath` (the drivers are alr
 
 A center-specific container is under preparation for easy-to-use access.
 
+[IMPORTANT]
+====
+The cluster use different network communication standard to interoperate between computing nodes. Two main high performance solution are used link:https://en.wikipedia.org/wiki/InfiniBand[Infiniband] (Mellanox) and link:https://en.wikipedia.org/wiki/Omni-Path[Omnipath] (intel).
+Due to proprietary reason, the current Feel++ images provide only infiniband driver, therefore the cluster provides constraints to only use computing nodes that are either infiniband or omnipath interconnected nodes to have high performances. To use {feelpp} singularity container in you slurm script, you should add
+[source]
+----
+# omnipath: opa ; infiniband: ib
+#SBATCH --constraint=ib
+----
+====
+
 
 NOTE: Then see an example of slurm job based on source and singularity container.
 
