@@ -2,7 +2,7 @@
 
 On considère stem:[\Omega \subset \RR^3] tel que stem:[\partial \Omega = \partial \Omega_D \cap \partial \Omega_N].
 On se donne stem:[\mathbf{g}: \partial \Omega_N \rightarrow \mathbb{R}^3] la charge normale sur stem:[\partial \Omega_N].
-Le problème mélangeant condition de Dirichlet imposant le déplacement et de Neumann imposant les contraintes normales en élasticité linéaire s'exprime sous la forme suivante
+Le problème mélangeant condition de Dirichlet, imposant le déplacement, et de Neumann, imposant les contraintes normales, en élasticité linéaire s'exprime sous la forme suivante
 
 .Problème mixte
 ****
@@ -17,16 +17,65 @@ Le problème mélangeant condition de Dirichlet imposant le déplacement et de N
 Le choix naturel d'espace fonctionel est stem:[X\equiv[H^1_{0,\partial \Omega_D}(\Omega)\]^3] pour la solution et les fonctions tests avec
 [stem]
 ++++
-X\equiv [H^1_{0,\partial \Omega_D}(\Omega)\]^3=\left\{ \disp{v} \in [H^1(\Omega)\]^3 \mathrm{s.t.} \disp{v} \mbox{ on } \partial \Omega_D \right\}
+X\equiv [H^1_{0,\partial \Omega_D}(\Omega)]^3=\left\{ \disp{v} \in [H^1(\Omega)]^3\ \mathrm{s.t.}\ \disp{v} = \mathbf{0}\ \mbox{ on } \partial \Omega_D \right\}
 ++++
+
+The variational formulation is obtained by doing the scalar product of the first equation by the test functions stem:[\mathbf{v}].
+Observe moreover that:
+
+[stem]
+.Integration by parts thanks to Divergence theorem
+++++
+\int_\Omega \nabla\cdot \stresst{\disp{d}}\ \cdot\ \mathbf{v} = \int_\Omega \stresst{\disp{d}}\ :\ \nabla \mathbf{v} - \int_{\partial \Omega} \mathbf{v} \cdot ( \stresst{\disp{d}} \normal)
+++++
+
+and
+
+[stem]
+.Symmetry of stem:[\stresst{\disp{d}}]
+++++
+\stresst{\disp{d}} : \nabla \mathbf{v} = \stresst{\disp{d}} : \deformt{\disp{v}}
+++++
+
+and we obtain
+
+[stem]
+++++
+\int_\Omega \stresst{\disp{d}}\ :\ \deformt{\disp{v}} - \int_{\partial \Omega} \mathbf{v} \cdot ( \stresst{\disp{d}} \normal) = \int_\Omega \mathbf{f}\cdot \disp{v}
+++++
+
 La formulation faible s'écrit alors
 
 .Formulation faible du problème mixte
 ****
-On cherche stem:[\disp{d} \in [H^1(\Omega)\]^3] telle que
+On cherche stem:[\disp{d} \in H^1_{0,\partial \Omega_D}(\Omega)\]^3] telle que
 [stem]
 ++++
-a(\disp{d},\disp{v}) = \int_\Omega f \cdot \disp{v} + \int_{\partial \Omega} \disp{g} \cdot \normal \quad  \forall v \in [H^1(\Omega)]^3
+a(\disp{d},\disp{v}) = \int_\Omega f \cdot \disp{v} + \int_{\partial \Omega_N} \disp{g} \cdot \normal \quad  \forall v \in [H^1_{0,\partial \Omega_D}(\Omega)]^3
 ++++
-la forme stem:[a] a été définie dans  la xref:elasticity/mixed.adoc[formulation mixte].
+Avec
+[stem]
+++++
+a(\disp{d},\disp{v}) = \int_\Omega \stresst{\disp{d}}\ :\ \deformt{\disp{v}} = \int_\Omega \lambda \nabla \cdot \disp{d} \nabla \cdot \disp{v} + \int_\Omega 2 \mu \deformt{\disp{d}} : \deformt{\disp{v}}
+++++
+****
+
+NOTE: En mécanique du continuum, la fonction de test v joue le rôle d'un _déplacement virtuel_ et la formulation faible précédente exprime le principe du _travail virtuel_.
+
+== Finite element approximation
+
+On considère une approximation du problème mixte par  élément fini stem:[H^1]-conforme à partir d'une famille de maillages affines, géométriquement conformes stem:[\{\calTh\}_{h>0}] et d'un élément fini de Lagrange de degré stem:[k\geq 1] décrit par stem:[\{\hat{K}, \hat{P}, \hat{\Sigma} \}].
+On introduit Ensuite
+[stem]
+++++
+X^k_h = \left\{  \disp{v}_h \in [C^0(\Omega)]^3 | \forall K \in \calTh, \disp{v}_h \circ \varphi_K^{\mathrm{geo}} \in [\hat{P}]^3;\ \disp{v}_h = \disp{0} \mbox{ on } \partial \Omega_N \right\}
+++++
+
+.Problème discret
+****
+Trouver stem:[\disp{d} \in X_h^k] telle que
+[stem]
+++++
+a(\disp{d}_h,\disp{v}_h) = \int_\Omega f \cdot \disp{v}_h + \int_{\partial \Omega_N} \disp{g} \cdot \normal \quad  \forall v_h \in X_h^k
+++++
 ****

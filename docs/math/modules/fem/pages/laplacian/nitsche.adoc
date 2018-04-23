@@ -1,20 +1,24 @@
-= Weakly imposed Dirichlet boundary conditions: Nitsche method
-:stem: latexmath
-:toc: left
-== Weak treatment
+= Nitsche method
+
+NOTE: this documentation is in english and needs to be translated.
+
+== Weak treatment of Dirichlet boundary conditions
 
 In order to treat the boundary conditions uniformly (i.e. the same way as Neumann and Robin Conditions), we wish to treat the
 Dirichlet BC (e.g. latexmath:[u=g]) weakly.
 
-Initial Idea add the penalisation term
+.Initial Idea
+****
+Add the penalisation term
 [stem]
 ++++
 \int_{\partial \Omega} \mu( u - g)
 ++++
-where latexmath:[\mu] is a constant. But this is not enough: this is not consistent with the initial formulation.
+where latexmath:[\mu] is a constant.
+But this is not enough: this is not consistent with the initial formulation.
+****
 
-One can use the Nitsche method to implement weak Dirichlet
-conditions and follows the next steps:
+One can use the Nitsche method to implement weak Dirichlet conditions and follows the next steps:
 
 * write the equations in conservative form (i.e. identify the flux);
 * add the terms to ensure consistency (i.e the flux on the boundary);
@@ -52,7 +56,7 @@ Strong treatment: Advantages
 * **disadvantage** it can be expensive to apply depending on the type of sparse matrix used, for example using CSR format setting rows to 0 except on the diagonal to 1 is not expensive but one must do that also for the columns associated with each Dirichlet degree of freedom and that is expensive.
 
 [[laplacian]]
-== Example: Laplacian 
+== Example: Laplacian
 
 We look for stem:[u] such that
 //\label{eq:44}
@@ -93,7 +97,7 @@ integrate( boundaryfaces(mesh),
            -(grad(v)*N())*g
            // penalisation
            +gamma*id(v)*g/hFace());
-----  
+----
 
 [[convection-diffusion]]
 == Example: Convection-Diffusion
@@ -141,7 +145,7 @@ Finally we can incorporate the symetrisation
       {(-\epsilon\nabla v\cdot \mathbf{n} + {\mathbf{c}}\cdot \mathbf{n} v ) u} + \frac{\gamma}{h} u v  = \\
       \int_\Omega f v + \int_{\partial \Omega} {(-\epsilon\nabla v\cdot \mathbf{n} + {\mathbf{c}}\cdot \mathbf{n} v) g}+ \frac{\gamma}{h} g v
 \end{gathered}
-++++    
+++++
 
 === Implementation
 
