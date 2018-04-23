@@ -1,0 +1,699 @@
+// -*- mode: adoc -*-
+[[cha:appr-de-probl-1]]
+= Approximation de problèmes mixtes
+
+NOTE: Ce document est en anglais et doit être traduit.
+
+== Model Problems
+
+We consider now model problems as systems of PDEs where several
+functions are unknowns and which don’t play the same roles
+_mathematically_ and _physically_.
+
+Stokes::
+[[eq:chmixte:98]]
+[stem]
+++++
+      \left\{\begin{array}[c]{rl}
+          -\Delta u + \nabla p & = f\ \mbox{ in } \Omega\\
+          \nabla \cdot u & = 0\ \mbox{ in } \Omega
+          \end{array}\right.
+++++
+where stem:[u: \Omega \mapsto \RR^d] is a velocity and stem:[p: \Omega \mapsto \RR] is a pressure.
+
+Darcy::
+[[eq:chmixte:99]]
+[stem]
+++++
+      \left\{\begin{array}[c]{rl}
+          \sigma + \nabla u & = f\ \mbox{ in } \Omega\\
+          \nabla \cdot \sigma & = g\ \mbox{ in } \Omega
+          \end{array}\right.
+++++
+where stem:[\sigma: \Omega \mapsto \RR^d] is a velocity and stem:[u: \Omega \mapsto \RR] is a hydraulic charge(pressure).
+
+[[applications]]
+=== Applications
+
+We shall focus on Stokes, but the abstract setting of the next section is the same for Stokes and Darcy.
+
+Stokes and incompressible Navier-Stokes for Newtonian fluids::
+The Stokes model is the basis for fluid mechanics models and is a simplication of the Navier-Stokes equations where the viscous effects/terms are much bigger than the convective ones
+[[eq:chmixte:3]]
+[stem]
+++++
+    \left\{\begin{array}[c]{rl}
+           \rho( \frac{\partial u}{\partial t} + u \cdot \nabla u) - \nu \Delta u + \nabla p & = f\ \mbox{ in } \Omega\\
+           \nabla \cdot u & = 0\ \mbox{ in } \Omega
+           \end{array}\right.
+++++
+The first equation results from the conservation of momentum and the second from the conservation of mass.
+
+The well-posedness of these problems results from a so-called which is not automatically transfered at the _discrete level_.
+
+In practice In order to ensure that the finite element approximation is well-posed, we will need to choose approximation spaces that satisfy a _compatibility condition_ that ensures that a _discrete inf-sup condition_ is satisfied.
+
+== Saddle point problems
+
+[[abstract-continuous-setting]]
+=== Abstract Continuous Setting
+
+Denote
+
+* stem:[X] and stem:[M] two Hilbert spaces.footnote:[An euclidian space which is complete for the norm induced by the scalar product]
+* two linear forms stem:[f \in X'=\mathcal{L}(X, \RR)] and stem:[g \in M'=\mathcal{L}(M, \RR)]
+* stem:[a \in \mathcal{L}(X\times X, \RR)] and stem:[b \in \mathcal{L}(X\times M, \RR)] two bilinear forms
+
+We are interested in the following abstract problem:
+
+
+[[prob:chmixte:1]]
+.Problem Mixed 1
+****
+Look for stem:[(u,p) \in X \times M] such that
+[[eq:chmixte:4]]
+[stem]
+++++
+      \left\{
+        \begin{array}[c]{rl}
+          a(u,v) + b(v,p) & = f(v), \quad \forall v \in X\\
+          b(u,q) & = g(q), \quad \forall q \in M
+        \end{array}
+        \right.
+++++
+****
+
+==== Definition of a saddle point problem
+
+[[def:chmixte:1]]
+.Definition
+****
+If the bilinear form stem:[a] is _symmetric_ and positive on stem:[X\times X], we say that <<prob:chmixte:1,the mixed problem 1>> is a _saddle point problem_.
+****
+
+The structure of the problem is as follows
+
+* the space of solution is the same of the test space
+* the unknown stem:[p] does not appear in the second equation
+* the unknown functions stem:[u] and stem:[p] are coupled via the same bilinear form stem:[b] is the first and second equation.
+
+The next question is :
+
+=== Well posedness
+
+==== Reformulation
+
+
+Let’s rewrite <<prob:chmixte:1,the mixed problem 1>>.
+
+Denote stem:[V=X\times M] and introduce stem:[c \in \mathcal{L}(V\times V, \RR)] such that
+
+[[eq:chmixte:5]]
+[stem]
+++++
+c((u,p),(v,q)) = a(u,v)+b(v,p)+b(u,q)
+++++
+and stem:[h\in \mathcal{L}(V,\RR)] such that
+[[eq:chmixte:6]]
+[stem]
+++++
+h(v,q) = f(v)+g(q)
+++++
+then problem <<prob:chmixte:1>> reads
+
+[[prob:chmixte:2]]
+.Problem
+****
+Look for stem:[(u,p) \in V] such that
+[[eq:chmixte:7]]
+[stem]
+++++
+        \begin{array}[c]{rl}
+          c((u,p), (v,q)) & = h(v,q), \quad \forall (v,q) \in V
+          \end{array}
+++++
+****
+
+[thr:chmixte:1]
+.Theorem
+****
+We suppose that stem:[a] is coercive over stem:[X], the <<prob:chmixte:2>> is _well-posed_ if and only if the bilinear form stem:[b] satisfies the following
+inf-sup condition:
+
+there exists stem:[\beta > 0] such that
+[[eq:chmixte:8]]
+[stem]
+++++
+\inf_{q \in M} \sup_{v \in X} \frac{b(v,q)}{||v||_X ||q||_M} \geq \beta
+++++
+****
+
+IMPORTANT: Lax-Milgram provides only a **sufficient condition** for well-posedness. The form stem:[c] in <<prob:chmixte:2>> does not satisfy Lax-Milgram.
+
+Let’s introduce the so-called _Lagrangian_ stem:[l \in \mathcal{L}(X\times M, \RR)] defined by
+[[eq:chmixte:9]]
+[stem]
+++++
+l(v,q) =  \frac{1}{2} a(v,v) + b(v,q) - f(v) - g(q)
+++++
+
+[[def:chmixte:2]]
+.Definition
+****
+We say that the point stem:[(u,p)\in X\times M] is a saddle point of stem:[l] if
+[[eq:chmixte:10]]
+[stem]
+++++
+\forall (v,q) \in X\times M, \quad l(u,q) \leq l(u,p) \leq l(v,p)
+++++
+****
+
+[[prop:chmixte:1]]
+.Proposition
+****
+Under the hypothesys oF <<thr:chmixte:1>>, the Lagrangian stem:[l] defined by has a _unique_ saddle point.
+Moreover this saddle point is the _unique solution_ of problem <<prob:chmixte:1>>.
+****
+
+
+== Finite element approximation
+
+=== Abstract Discrete Problem
+
+We now turn to the approximation of the <<prob:chmixte:1>> by a _standard Galerkin method_ in a _conforming_ way.
+
+Denote the two spaces stem:[X_h \subset X] and stem:[M_h \subset M], we consider the following problem:
+
+[[prob:chmixte:3]]
+.Formulation of the Abstract Discrete Problem
+****
+Look for stem:[(u_h,p_h) \in X_h \times M_h] such that
+[[eq:chmixte:11]]
+[stem]
+++++
+      \left\{
+        \begin{array}[c]{rl}
+          a(u_h,v_h) + b(v_h,p_h) & = f(v_h), \quad \forall v_h \in X_h\\
+          b(u_h,q_h) & = g(q_h), \quad \forall q_h \in M_h
+        \end{array}
+        \right.
+++++
+****
+
+[[thr:chmixte:2]]
+.Theorem
+****
+We suppose that stem:[a] is coercive over stem:[X] and that stem:[X_h \subset X] and stem:[M_h \subset M].
+
+Then the <<prob:chmixte:3>> is _well-posed_ if and only if the following _discrete inf-sup condition_ is satisfied:
+
+there exists stem:[\beta_h  > 0] such that
+[[eq:chmixte:12]]
+[stem]
+++++
+\inf_{q_h \in M_h} \sup_{v_h \in X_h} \frac{b(v_h,q_h)}{||v_h||_{X_h} ||q_h||_{M_h}} \geq \beta_h
+++++
+****
+
+The compatibility condition problem <<prob:chmixte:3>>, to be well posed, requires that the spaces stem:[X_h] and stem:[M_h] satisfy the condition.
+
+This is known as the Babuska-Brezzi (BB) or Ladyhenskaya-Babuska-Brezzi (LBB).
+
+Regarding error analysis, we have the following lemma
+
+[[lem:1]]
+.lemma
+****
+Thanks to the Lemma of Céa applied to Saddle-Point Problems, the unique solution stem:[(u,p)] of problem <<prob:chmixte:3>> satisfies
+[[eq:chmixte:13]]
+[stem]
+++++
+        \begin{array}[c]{rl}
+          ||u-u_h||_X & \leq c_{1h} \inf_{v_h \in X_h}  ||u-v_h||_X + c_{2}
+          \inf_{q_h \in M_h}  ||q-q_h||_M\\
+          ||p-p_h||_X & \leq c_{3h} \inf_{v_h \in X_h}  ||u-v_h||_X + c_{4h} \inf_{q_h \in M_h}  ||q-q_h||_M
+          \end{array}
+++++
+where
+
+* stem:[c_{1h} = (1+\frac{||a||_{X,X}}{\alpha})(1+\frac{||b||_{X,M}}{\beta_h})] with stem:[\alpha]  the coercivity constant of stem:[a] over X.
+
+* stem:[c_{2} = \frac{||b||_{X,M}}{\alpha}]
+
+* stem:[c_{3h} = c_{1h} \frac{||a||_{X,X}}{\beta_h}], stem:[c_{4h} = 1+ \frac{||b||_{X,M}}{\beta_h}+\frac{||a||_{X,X}}{\beta_h}]
+****
+
+NOTE: The constants stem:[c_{1h}, c_{3h}, c_{4h}] are as large as stem:[\beta_h] is small.
+
+
+[[sec:linear-system]]
+=== Linear system associated
+
+The discretisation process leads to a linear system.
+
+We denote
+
+* stem:[N_u = \dim {X_h}]
+* stem:[N_p = \dim {M_h}]
+* stem:[\{\phi_i\}_{i=1,...,N_u}] a basis of stem:[X_h]
+* stem:[\{\psi_k\}_{k=1,...,N_p}] a basis of stem:[M_h]
+* for all stem:[u_h = \sum_{i=1}^{N_u} u_i \phi_i], we associate stem:[U \in   \R{N_u}], stem:[U=(u_1,\ldots,u_{N_u})^T], the component vector of stem:[u_h] is stem:[\{\phi_i\}_{i=1,\ldots,N_u}]
+* for all stem:[p_h = \sum_{k=1}^{N_p} u_k \psi_k], we associate stem:[P \in     \R{N_p}], stem:[P=(p_1,\ldots,p_{N_p})^T], the component vector of stem:[p_h] is stem:[\{\psi_k\}_{k=1,\ldots,N_p}]
+
+The matricial form of problem <<prob:chmixte:3>> reads
+[[eq:chmixte:15]]
+[stem]
+++++
+      \begin{bmatrix}
+        \mathcal{A} & \mathcal{B}^T\\
+        \mathcal{B} & 0
+      \end{bmatrix}
+      \begin{bmatrix}
+        U \\
+        P
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        F\\
+        G
+        \end{bmatrix}
+++++
+
+where the matrix stem:[\mathcal{A} \in \R{N_u,N_u}] and stem:[\mathcal{B} \in     \R{N_p,N_u}] have the coefficients
+
+[[eq:chmixte:16]]
+[stem]
+++++
+\mathcal{A}_{ij} = a(\phi_j,\phi_i), \quad \mathcal{B}_{ki} = b(\phi_i,\psi_k)
+++++
+
+and the vectors stem:[\mathcal{F} \in \R{N_u}] and stem:[\mathcal{G} \in \R{N_p}] have the coefficients
+
+* stem:[F_i=f(\phi_i)]
+* stem:[G_k=g(\psi_k)]
+
+[[rem:2]]
+[NOTE]
+====
+1.  Since stem:[a] is symmetric and coercive,
+stem:[\mathcal{A}] is _symmetric positive definite_
+2.  The matrix of the system is symmetric but not positive
+3.  The inf-sup condition  is equivalent to the fact that
+stem:[\mathcal{B}] is of _maximum rank_, _i.e._
+stem:[\ker(\mathcal{B}^T)
+       = \{0 \}].
+4.  From theorem <<thr:chmixte:2>>, the matrix of the system  is
+invertible
+====
+
+[WARNING]
+.When the inf-sup is not satisfied
+====
+The counter examples when the inf-sup condition  is not satisfied(e.g. stem:[\mathcal{B}] is not maximum rank ) occur usually in two cases:
+
+Locking::
+stem:[\dim {M_h} > \dim {X_h}]: the space of pressure is too large for the matrix stem:[\mathcal{B}] to be maximum rank.
+In that case stem:[\mathcal{B}] is injective (stem:[\ker(\mathcal{B}) = \{0\})]. We call this **locking**.
+
+Spurious modes::
+there exists a vector stem:[Q^* \neq 0] in stem:[\ker(\mathcal{B}^T)].
+The discrete fieldstem:[q^*_h] in stem:[M_h], stem:[q^*_h=\sum_{k=1}^{N_p} Q^*_k \psi_k], associated is called a **spurious mode**.
+stem:[q^*_H] is such that
+[[eq:chmixte:14]]
+[stem]
+++++
+b(v_h,q^*_h)=0.
+++++
+====
+
+We now introduce the _Uzawa matrix_ as follows
+
+[[uzawa]]
+.Définition: Matrice d'Uzawa
+****
+The matrix
+[[eq:chmixte:17]]
+[stem]
+++++
+\mathcal{U} = \mathcal{B} \mathcal{A}^{-1} \mathcal{B}^T
+++++
+is called the _Uzawa matrix_. It is _symmetric positive definite_ from the
+properties of stem:[\mathcal{A}], stem:[\mathcal{B}]
+****
+
+Applications:: The Uzawa matrix occurs when eliminating the velocity in system  and get a linear system on stem:[P]:
+[[eq:chmixte:18]]
+[stem]
+++++
+\mathcal{U} P = \mathcal{B} \mathcal{A}^{-1} F - G
+++++
+then one application is to solve by solving iteratively and compute the velocity afterwards.
+
+
+== Mixed finite element for Stokes
+
+[[variation_formulation_for_stokes]]
+=== Variational formulation
+
+We start with the Well-posedness at the continuous level
+
+* We consider the model problem  with homogeneous Dirichlet condition on velocity stem:[u = 0] on stem:[\partial \Omega]
+* We suppose the stem:[f \in [L^2(\Omega)\]^d] and stem:[g \in L^2(\Omega)] with
+
+[[eq:chmixte:20]]
+[stem]
+++++
+\int_\Omega g = 0
+++++
+
+Introduce
+[[eq:chmixte:19]]
+[stem]
+++++
+L^2_0(\Omega) = \Big\{ q \in L^2(\Omega): \int_\Omega q = 0 \Big\}
+++++
+
+The condition comes from the divergence theorem applied to the divergence equation and the fact that stem:[u=0] on the boundary
+[[eq:chmixte:21]]
+[stem]
+++++
+\int_\Omega g = \int_\Omega \nabla \cdot u = \int_{\partial \Omega} u \cdot n = 0
+++++
+This is a _necessary_ condition for the existence of a solution stem:[(u,p)] for the Stokes equations with these boundary conditions.
+
+We turn now to the variational formulation.
+
+The Stokes problem reads
+
+[[prob:chmixte:4]]
+.Problem
+****
+Look for stem:[(u,p) \in [H^1_0(\Omega)\]^d \times L^2_0(\Omega)] such that
+[[eq:chmixte:25]]
+[stem]
+++++
+      \left\{
+        \begin{array}[c]{rl}
+          \int_\Omega \nabla u : \nabla v -\int_\Omega p \nabla \cdot v  & =
+          \int_\Omega f \cdot v, \quad \forall v \in [H^1_0(\Omega)]^d\\
+          \int_\Omega q \nabla \cdot u & = - \int_\Omega g q, \quad \forall q \in L^2_0(\Omega)
+        \end{array}
+        \right.
+++++
+****
+
+We recover the formulation of <<prob:chmixte:1>> with stem:[X=[H^1_0(\Omega)\]^d] and stem:[M=L^2_0(\Omega)] and
+[[eq:chmixte:22]]
+[stem]
+++++
+      \begin{array}[c]{rlrl}
+      a(u,v) &= \int_\Omega \nabla u : \nabla v,& \quad b(v,p) &= -\int_\Omega p
+      \nabla \cdot v,\\
+      \quad f(v) &=  \int_\Omega f \cdot v,& \quad g(q) &= - \int_\Omega g q
+      \end{array}
+++++
+
+.Pressure up to a constant
+NOTE: The pressure is known up to a constant, that’s why we look for them in stem:[L^2_0(\Omega)] to ensure uniqueness.
+
+[[finite_element_approximation_for_stokes]]
+=== Finite element approximation
+
+Denote stem:[X_h \subset [H^1_0(\Omega)\]^d] and stem:[M_h \subset L^2_0(\Omega)]
+
+[[prob:chmixte:5]]
+.Problem
+****
+Look for stem:[(u_h,p_h) \in X_h \times M_h] such that
+[[eq:chmixte:24]]
+[stem]
+++++
+      \left\{
+        \begin{array}[c]{rl}
+          \int_\Omega \nabla u_h : \nabla v_h + \int_\Omega p_h \nabla \cdot v_h
+          & = \int_\Omega f \cdot v_h, \quad \forall v_h \in X_h\\
+          \int_\Omega q_h \nabla \cdot u_h & = -\int_\Omega g q_h, \quad \forall q_h \in M_h
+        \end{array}
+        \right.
+++++
+****
+
+[[rem:1]]
+NOTE: This problem, thanks to theorem <<thr:chmixte:2>> is well-posed if and only if stem:[X_h] and stem:[M_h] are such that there exists stem:[\beta_h > 0]
+[[eq:chmixte:26]]
+[stem]
+++++
+\inf_{q_h \in M_h} \sup_{v_h \in X_h} \frac{\int_\Omega q_h \nabla \cdot v_h}{||v_h||_{X_h} ||q_h||_{M_h}} \geq \beta_h
+++++
+
+=== Bad finite elements for Stokes
+
+In this section, we present two classical bad finite element approximations.
+
+[[finite-element-polyp_1polyp_0-locking]]
+==== Finite element stem:[\poly{P}_1/\poly{P}_0]: locking
+
+
+Thanks to the Euler relations, we have
+[[eq:chmixte:28]]
+[stem]
+++++
+      \begin{array}[c]{rl}
+        N_{\mathrm{cells}} - N_{\mathrm{edges}} + N_{vertices}  &= 1-I\\
+      N^\partial_{\mathrm{vertices}} - N^\partial_{\mathrm{edges}} &= 0
+      \end{array}
+++++
+
+where stem:[I] is the number of holes in stem:[\Omega].
+
+We have that stem:[\dim {M_h} = N_{\mathrm{cells}}],stem:[\dim {X_h} = 2 N^i_{\mathrm{vertices}}] and so
+[[eq:chmixte:29]]
+[stem]
+++++
+\dim {M_h} - \dim {X_h} = N_{\mathrm{cells}} - 2 N^i_{\mathrm{vertices}} = N^\partial_{\mathrm{edges}} - 2 > 0
+++++
+
+so stem:[M_h] is too rich for the condition and we have stem:[\ker(\mathcal{B}) = \{0\}] such that the _only_ discrete stem:[u_h^*], with components stem:[U^*], satisfying stem:[\mathcal{B} U^*] is the null field, stem:[U^*=0].
+
+[[finite-element-polyq_1polyp_0-spurious-mode]]
+==== Finite element stem:[\poly{Q}_1/\poly{P}_0]: spurious mode
+
+We can construct in that case a function stem:[q_h^*] on a uniform grid which is equal alternatively -1, +1 (chessboard) in the cells of the mesh, then
+[[eq:chmixte:27]]
+[stem]
+++++
+\forall v_h \in [Q^1_{c,h}]^d, \quad \int_\Omega q^*_h \nabla \cdot v_h = 0
+++++
+and thus the associated stem:[X_h], stem:[M_h] do not satisfy the condition.
+
+[[finite-element-polyp_1polyp_1-spurious-mode]]
+==== Finite element stem:[\poly{P}_1/\poly{P}_1]: spurious mode
+
+We can construct in that case a function stem:[q_h^*] on a uniform grid which is equal alternatively -1, 0, +1 at the vertices of the mesh, then
+[[eq:chmixte:27]]
+[stem]
+++++
+\forall v_h \in [P^1_{c,h}]^d, \quad \int_\Omega q^*_h \nabla \cdot v_h = 0
+++++
+and thus the associated stem:[X_h], stem:[M_h] do not satisfy the condition.
+
+=== Mini-Element
+
+The problem with the stem:[\poly{P}_1/\poly{P}_1] mixed finite element is that the velocity is not _rich_ enough.
+
+A cure is to add a function stem:[v_h^*] in the velocity approximation space to ensure that
+[[eq:chmixte:30]]
+[stem]
+++++
+\int_\Omega q^*_h \nabla \cdot v_h^* \neq 0
+++++
+where stem:[q_h^*] is the spurious mode.
+
+To do that we add the bubble function to the stem:[\poly{P}_1] velocity space.
+
+[[def:chmixte:3]]
+.Definition: Mini-Element
+****
+Recall the construction of finite elements on a reference convex stem:[\hat{K}].
+We say that stem:[\hat{b}: \hat{K} \mapsto \RR] is a bubble function if:
+
+* stem:[\hat{b} \in H^1_0(\hat{K})]
+* stem:[0 \leq \hat{b}(\hat{x}) \leq 1, \quad \forall \hat{x} \in \hat{K}]
+* stem:[\hat{b}(\hat{C}) = 1, \quad \mbox{where} \hat{C}] is the
+barycenter of stem:[\hat{K}]
+****
+
+Example::
+The function
+[[eq:chmixte:31]]
+[stem]
+++++
+\hat{b} = (d+1)^{d+1} \Pi_{i=0}^d\ \hat{\lambda}_i
+++++
+where stem:[(\hat{\lambda}_0, \ldots, \hat{\lambda}_d)] denote the barycentric coordinates on stem:[\hat{K}]
+
+Denote now stem:[\hat{b}] a bubble fonction on stem:[\hat{K}], we set
+[[eq:chmixte:32]]
+[stem]
+++++
+\hat{P} = [\poly{P}_1(\hat{K}) \oplus \mathrm{span} (\hat{b})]^d,
+++++
+and introduce
+
+[[eq:chmixte:33]]
+[stem]
+++++
+\begin{aligned}
+    X_h &=& \Big\{ v_h \in [C^0(\bar{\Omega})]^d : \forall K \in \mathcal{T}_h, v_h
+    \circ T_K \in \hat{P}; v_{h_|{\partial \Omega}} = 0 \Big\}\\
+    M_h &=& P^1_{c,h}
+\end{aligned}
+++++
+[[lem:3]]
+.lemma
+****
+The spaces stem:[X_h] and stem:[M_h \cap L^2_0(\Omega)] satisfy the compatibility condition  uniformly in stem:[h].
+****
+
+[[thr:chmixte:3]]
+.Theorem
+****
+Suppose that stem:[(u,p)], solution of <<prob:chmixte:1>>, is smooth enough, ie. stem:[u \in [H^2(\Omega)]^d \cap [H^1_0(\Omega)]^d] and stem:[p\in H^1(\Omega)     \cap L^2_0(\Omega)].
+
+Then there exists a constant stem:[c] such that for all stem:[h >0]
+[[eq:chmixte:34]]
+[stem]
+++++
+\| u- u_h \|_{1,\Omega} + \|p-p_h\|_{0,\Omega} \leq c h (\|u\|_{2,\Omega} + \|p\|_{1,\Omega})
+++++
+and if the Stokes problem is stabilizing then
+[[eq:chmixte:35]]
+[stem]
+++++
+  \|u-u_h\|_{0,\Omega} \leq c h^2 ( \|u\|_{2,\Omega} +\|p\|_{1,\Omega}).
+++++
+****
+
+[[def:chmixte:4]]
+.Definition: Stabilizing Stokes problem
+****
+We say that the Stokes problem is stabilizing if there exists a constant stem:[c_S] such that for all stem:[f \in [L^2(\Omega)]^d], the unique solution stem:[(u,p)] of with stem:[g=0] is such that:
+[[eq:chmixte:36]]
+[stem]
+++++
+\|u\|_{2,\Omega} + \|p\|_{1,\Omega} \leq c_S \|f\|_{0,\Omega}
+++++
+A sufficient condition for stabilizing Stokes problem is that the stem:[\Omega] is a polygonal convex in 2D or of class stem:[C^1] in stem:[\RR^d, d=2,3].
+****
+
+=== Taylor-Hood Element
+
+
+The mini-element solved the compatibility condition problem, but the error estimation in equation is not optimal in the sense that
+
+. the pressure space is sufficiently rich to enable a stem:[h^2] convergence in the pressure error,
+. but the velocity space is not rich enough to ensure a stem:[h^2] convergence in the velocity error.
+
+The idea of the Taylor-Hood element is to enrich even more the velocity space to ensure optimal convergence in stem:[h].
+
+Here we will take stem:[[\poly{P}_2]^d] for the velocity and stem:[\poly{P}_1] for the pressure.
+
+Introduce
+[stem]
+++++
+\begin{aligned}
+    \label{eq:chmixte:39}
+    X_h &=&  [P^2_{c,h}]^d\\
+    M_h &=& P^1_{c,h}
+\end{aligned}
+++++
+
+[[lem:3]]
+.lemma
+****
+The spaces stem:[X_h] and stem:[M_h \cap L^2_0(\Omega)] satisfy the compatibility condition  uniformly in stem:[h].
+****
+
+[[thr:chmixte:3]]
+.Theorem
+****
+Suppose that stem:[(u,p)], solution of problem <<prob:chmixte:1>>, is smooth enough, ie. stem:[u \in [H^3(\Omega)]^d \cap [H^1_0(\Omega)]^d] and stem:[p\in H^2(\Omega)     \cap L^2_0(\Omega)].
+
+Then there exists a constant stem:[c] such that for all stem:[h >0]
+
+[[eq:chmixte:40]]
+[stem]
+++++
+  \| u- u_h \|_{1,\Omega} + \|p-p_h\|_{0,\Omega} \leq c h^2 (\|u\|_{3,\Omega} + \|p\|_{2,\Omega})
+++++
+and if the Stokes problem is stabilizing then
+[[eq:chmixte:41]]
+[stem]
+++++
+  \|u-u_h\|_{0,\Omega} \leq c h^3 ( \|u\|_{3,\Omega} +\|p\|_{2,\Omega}).
+++++
+****
+
+Generalized Taylor-Hood element:: We consider the mixed finite elements stem:[\poly{P}_k/\poly{P}_{k-1}] and stem:[\poly{Q}_k/\poly{Q}_{k-1}] which allows to approximate the velocity and pressure respectively with, on Simplices
+[stem]
+++++
+\begin{aligned}
+        \label{eq:chmixte:42}
+        X_h &=&  [P^{k}_{c,h}]^d\\
+        M_h &=& P^{k-1}_{c,h}
+      \end{aligned}
+++++
+On Hypercubes
+[stem]
+++++
+\begin{aligned}
+        \label{eq:chmixte:43}
+        X_h &=&  [Q^{k}_{c,h}]^d\\
+        M_h &=& Q^{k-1}_{c,h}
+        \end{aligned}
+++++
+We then have
+[[eq:chmixte:40]]
+[stem]
+++++
+\|u-u_h\|_{0,\Omega} + h ( \| u- u_h \|_{1,\Omega} + \|p-p_h\|_{0,\Omega} ) \leq c h^{k+1} (\|u\|_{k+1,\Omega} +\|p\|_{k,\Omega})
+++++
+
+There are other stable discretization spaces
+
+* Discrete inf-sup condition: dictates the choice of spaces
+* Inf-sup stables spaces:
+** stem:[\mathbb Q_k]-stem:[\mathbb Q_{k-2}],
+stem:[\mathbb Q_k]-stem:[\mathbb Q^{disc}_{k-2}]
+** stem:[\mathbb P_k]-stem:[\mathbb P_{k-1}],
+stem:[\mathbb P_k]-stem:[\mathbb P_{k-2}],
+stem:[\mathbb P_k]-stem:[\mathbb P^{disc}_{k-2}]
+** Discrete inf-sup constant independent of stem:[h], but
+dependent on stem:[k]
+
+== Test Cases for Stokes
+
+=== Kovasznay
+
+We consider the Kovasznay solution of the steady Stokes equations.
+
+The exact solution reads as follows
+[[eq:kovaznay]]
+[stem]
+++++
+\begin{array}{r c l}
+  \mathbf{u}(x,y) & = &  \left(1 - e^{\lambda x } \cos (2 \pi y), \frac{\lambda}{2 \pi} e^{\lambda x } \sin (2 \pi y)\right)^T \\
+  p(x,y) & = &  -\frac{e^{2 \lambda x}}{2} \\
+  \lambda & = &  \frac{1}{2 \nu} - \sqrt{\frac{1}{4\nu^2} + 4\pi^2}.
+ \end{array}
+++++
+
+The domain is defined as stem:[\domain = (-0.5,1) \times (-0.5,1.5)] and stem:[\nu = 0.035].
+
+The forcing term for the momentum equation is obtained from the solution and is
+[stem]
+++++
+ \mathbf{f} = \left( e^{\lambda x}  \left( \left( \lambda^2 - 4\pi^2 \right) \nu \cos (2\pi y) - \lambda e^{\lambda x} \right), e^{\lambda x} \nu \sin (2 \pi y) (-\lambda^2 + 4 \pi^2)           \right)^T
+++++
+
+Dirichlet boundary conditions are manufactured from the exact solution.

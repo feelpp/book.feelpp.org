@@ -1,0 +1,197 @@
+= {feelpp} documentation
+:page-feelpp_book_cover: true
+include::{partialsdir}/header-uri.adoc[]
+include::{partialsdir}/header-levels.adoc[]
+
+
+
+Welcome to {feelpp} documentation!
+
+NOTE: The {feelpp} documentation introduce the {feelpp} concepts, the process to build and run an application and the process to run a toolbox application.
+New user should begin with the xref:user:ROOT:index.adoc[User Manual].
+
+IMPORTANT: You wish to contribute? Please consult the <<Contribute, contribute>> section to learn how to proceed!
+
+== Manuals references
+
+// @see supplemental-ui/js/cover_custom.js
+++++
+<div class="cover-left">
+++++
+[#cover-user-link]
+xref:user:ROOT:index.adoc[{feelpp} User Manual]
+++++
+  <div id="mancover" class="cover", onClick="coverGetLink('cover-user-link')">
+    <div class="coverload">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+  </div>
+</div>
+++++
+
+++++
+<div class="cover-left">
+++++
+[#cover-dev-link]
+xref:dev:ROOT:index.adoc[{feelpp} Developer Manual]
+++++
+  <div id="devcover" class="cover", onClick="coverGetLink('cover-dev-link')">
+    <div class="coverload">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+  </div>
+</div>
+++++
+
+++++
+<div class="cover-left">
+++++
+[#cover-data-link]
+xref:data:ROOT:index.adoc[{feelpp} Data Manual]
+++++
+  <div id="datacover" class="cover", onClick="coverGetLink('cover-data-link')">
+    <div class="coverload">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+  </div>
+</div>
+++++
+
+++++
+<div style="clear:left"></div>
+++++
+
+== Mathematics references
+
+++++
+<div class="cover-left">
+++++
+[#cover-fem-link]
+xref:math:fem:index.adoc[{feelpp} FEM Manual]
+++++
+  <div id="femcover" class="cover", onClick="coverGetLink('cover-fem-link')">
+    <div class="coverload">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+  </div>
+</div>
+++++
+
+++++
+<div class="cover-left">
+++++
+[#cover-hdg-link]
+xref:math:hdg:index.adoc[{feelpp} HDG Manual]
+++++
+  <div id="hdgcover" class="cover", onClick="coverGetLink('cover-hdg-link')">
+    <div class="coverload">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+  </div>
+</div>
+++++
+
+++++
+<div style="clear:left"></div>
+++++
+
+== Toolboxes
+
+[cols="1,2"]
+|====
+{feelpp} toolboxes provides a environment for modeling and solving various kinds of scientific and engineering problems : Heat-transfer, CFD, CSM, FSI, Thermo-Electric, ...
+
+** xref:toolboxes:ROOT:index.adoc[Documentations]
+** xref:examples:ROOT:index.adoc[Examples]
+** xref:benchmarks:ROOT:index.adoc[Benchmarks]
+a| image:toolboxes/GalleryToolboxes.jpg[GalleryToolboxes,100%]
+|====
+
+NOTE: Benchmarks and examples for the {feelpp} toolboxes are available in the xref:benchmarks::index.adoc[benchmarks] and the xref:examples::index.adoc[examples] manuals respectively.
+
+== Infrastructure
+
+{feelpp} is available on various supercomputing infrastructures.
+
+xref:infra/atlas.adoc[Atlas]::
+Atlas is our local computing resource at Cemosis and IRMA laboratory.
+We open access to Atlas
+
+xref:infra/alsacalcul.adoc[Alsacalcul]::
+Alsacalcul is the supercomputer at Université de Strasbourg.
+**If you are a member of the university**, you have access to Alsacalcul either through best effort or through dedicated calls.
+**If you are a company**, Cemosis is in charge of selling computing hours on Alsacalcul and providing associated services.
+
+xref:infra/ft2.adoc[Finis Terrae 2]::
+As one of the basic component of the MSO4SC E-INFRA H2020 project, {feelpp} is available on Finis Terrae 2(FT2) from CESGA natively and via Singularity. If you are a CESGA/FT2 user, you have access to {feelpp}.
+
+== Get Help
+
+The {feelpp} project is developed to help you easily do _(i)_ modelisation simulation and optimisation and _(ii)_ high performance computing.
+But your feedback is invaluable to make progress!
+We encourage you to ask questions and discuss any aspects of the project on the discussion list, on Twitter or in the chat room.
+
+Twitter:: #feelpp hashtag or @feelpp mention
+Chat using Slack:: link:https://feelpp.slack.com/messages/C6AQL4405[image:tools/joinslack.svg[]]
+Chat using Gitter (deprecated):: image:https://badges.gitter.im/Join%20In.svg[Gitter, link=https://gitter.im/feelpp/feelpp]
+
+ifdef::env-github[]
+Further information and documentation about {feelpp} can be found on the project's website.
+
+{uri-project}/[Home] | {uri-news}[News] | {uri-docs}[Docs]
+endif::[]
+
+The {feelpp} organization on GitHub hosts the project's source code, issue tracker, and sub-projects.
+
+Source repository (git):: {uri-repo}
+Issue tracker:: {uri-issues}
+{feelpp} organization on GitHub:: {uri-org}
+
+== How to Contribute
+
+In the spirit of {uri-freesoftware}[free software], _everyone_ is encouraged to help improve this project.
+If you discover errors or omissions in the source code, documentation, or website content, please don't hesitate to submit an issue, open a pull request with a fix or even directly Edit the documentation pages.
+New contributors are always welcome!
+
+Here are some ways *you* can contribute:
+
+* by using develop versions
+* by {uri-issues}[reporting bugs]
+* by {uri-issues}[suggesting new features]
+* by writing or editing documentation
+* by writing specifications
+* by writing code -- _No patch is too small._
+** fix typos
+** add comments
+** write examples!
+** write tests!
+* by refactoring code
+* by fixing {uri-issues}[issues]
+* by reviewing Pull Requests
+
+The {uri-contribute}[Contributing] guide provides information on how to create, style, and submit issues, feature requests, code, and documentation to the {feelpp} Project.
+
+
+== Copyright and Licensing
+
+Copyright (C) 2011-2018 {feelpp} Consortium.
+Free use of this software is granted under the terms of the LGPL and GPL Licenses.
+
+See the {uri-license}[LICENSE] file for details.
+
+== Authors
+
+{feelpp} development is led by https://github.com/prudhomm[Christophe Prud'homme] and https://github.com/vincentchabannes[Vincent Chabannes].
+It has received contributions from {uri-contributors}[many other individuals].
+
+The project was initiated in 2006 by https://github.com/prudhomm[Christophe Prud'homme] and based initially on link:https://cmcsforge.epfl.ch/projects/lifev/[lifeV] and completely re-written since then.

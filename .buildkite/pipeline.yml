@@ -1,15 +1,22 @@
 steps:
- - name: ':jekyll: :book:'
-   command: .buildkite/steps/build.sh
+ - name: ':antora: :book:'
+   command: .buildkite/steps/antora-build.sh
    agents:
-     asciidoctor: true
+       docker: true
    env:
-     PROJECT: book.feelpp.org
+      PROJECT: docs.feelpp.org
+      BUILDKITE_DOCKER_COMPOSE_CONTAINER: "antora"
  - wait
  - name: ':rocket: :book:'
-   command: .buildkite/steps/deploy.sh
-   branches: master
-   agents:
-     asciidoctor: true
+   command: .buildkite/steps/docs-deploy.sh
+   branches: feature/antora
    env:
-     PROJECT: book.feelpp.org
+       PROJECT: docs.feelpp.org
+ - wait
+ - name: ':rocket: :book: fix :image:'
+   command: .buildkite/steps/build.sh
+   agents:
+     antora: true
+   branches: feature/antora
+   env:
+       PROJECT: docs.feelpp.org

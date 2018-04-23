@@ -1,0 +1,31 @@
+= Problème de traction pure
+
+Le problème de traction pure en élasticité linéaire s'exprime sous la forme suivante
+
+.Problème: traction pure
+****
+\begin{align}
+\nabla \cdot \stresst{\disp{d}} + \mathbf{f} = \mathbf{0} & \quad \mbox{ in } \Omega \\
+\stresst{\disp{d}} = \lambda (\nabla \cdot \disp{d}) \Id + \mu (\nabla \disp{d} + \nabla \disp{d}^T) & \quad \mbox{ in } \Omega\\
+\stresst{\disp{d}} \normal = \mathbf{g} & \quad \mbox{ on } \partial \Omega
+\end{align}
+****
+
+Le choix naturel d'espace fonctionel est stem:[[H^1(\Omega)\]^3] pour la solution et les fonctions tests.
+La formulation faible s'écrit alors
+
+.Formulation faible du problème de traction pure
+****
+On cherche stem:[\disp{d} \in [H^1(\Omega)\]^3] telle que
+[stem]
+++++
+a(\disp{d},\disp{v}) = \int_\Omega f \cdot \disp{v} + \int_{\partial \Omega} \disp{g} \cdot \normal \quad  \forall v \in [H^1(\Omega)]^3
+++++
+la forme stem:[a] a été définie dans  la xref:elasticity/mixed.adoc[formulation mixte].
+****
+
+[CAUTION]
+.Solution à un déplacement rigide près
+====
+La difficulté du problème ci-dessus est que la forme stem
+====

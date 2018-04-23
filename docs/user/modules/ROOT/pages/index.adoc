@@ -1,0 +1,148 @@
+= User Manual
+:toc: macro
+include::{partialsdir}/header-macros.adoc[]
+
+= Authors
+The {feelpp} user manual is actively developed by
+link:{uri-github}prudhomm[Christophe Prud'homme],
+link:{uri-github}vincentchabannes[Vincent Chabannes],
+link:{uri-github}dolle[Guillaume Dollé].
+
+There are many link:https://github.com/feelpp/feelpp/graphs/contributors[other and past contributors] to this manual.
+
+The {feelpp} project is currently managed by
+mailto:christophe.prudhomme@feelpp.org[Christophe Prud'homme], Professor in
+applied mathematic and scientific computing at the
+link:www.en.unistra.fr[University of Strasbourg], France.
+
+
+toc::[]
+
+= Preface
+
+
+== What is {feelpp}?
+{feelpp} is a unified {cpp} implementation of Galerkin methods (finite and
+spectral element methods) in 1D, 2D and 3D to solve partial differential
+equations.
+
+{feelpp} is
+
+. a **versatile mathematical kernel** solving easily problems using
+   different techniques thus allowing testing and comparing methods, e.g. cG versus dG.
+. a *small* and *manageable* library which nevertheless encompasses a wide
+  range of numerical methods and techniques and in particular reduced order
+  methods such as the reduced basis method.
+. a software that follows closely the mathematical abstractions
+  associated with partial differential equations (PDE) and in
+  particular the finite element mathematical framework and
+  variational formulations.
+. a library that offers solving strategies that scales up to
+  thousands and even tens of thousands of cores.
+. a library entirely in {cpp} allowing to create {cpp} complex and typically
+  non-linear multi-physics applications currently in industry, physics and
+  health-care.
+
+== What is the purpose of this manual ?
+
+
+The purpose of this manual is to allow user
+
+* [x] get started with {feelpp} using xref:quickstart/docker.adoc[Docker] or xref:quickstart/singularity.adoc[Singularity].
+* [x] learn using {feelpp} by example
+
+== What is the scope of this manual?
+
+We need to define first what is a {feelpp} user to define the scope.
+
+{feelpp} User::
+A {feelpp} user can be either
+* an application-user who runs the applications provided by {feelpp} either via Docker or via an installation on a system or infrastructure.
+* a dsel-user  who implements {cpp} code using {feelpp} Galerkin domain specific embdedded language, see _e.g._ xref:user::laplacian.adoc[Laplacian].
+
+This book discusses the {feelpp} user perspective.
+This book does not discuss {feelpp} API or programming.
+
+== Who is this book for?
+
+This book is for students, engineers, scientists and researchers who want to use {feelpp}:
+
+* [x] solve PDEs using {feelpp} xref:toolbox::index.adoc[toolboxes]
+* [x] solve PDEs using the embedded language for Galerkin methods
+
+== Where to discuss about this manual?
+
+To discuss this manual, we provide Slack channel (recommended)  to announce, support and discuss book modifications.
+Don't hesitate to participate to the discussions!
+
+Click the button to join the channel link:https://feelpp.slack.com/messages/C6AQL4405[
+image:tools/joinslack.svg[]]
+
+NOTE: Joining Slack channels works by invitation, to receive an invitation send an email to support@feelpp.org.
+
+== How to contribute to this manual
+
+We're always happy to help out with {feelpp} or any other questions you might
+have. You can ask a question or signal an issue at the Slack support salon.
+
+.Join the {feelpp} chat
+
+link:https://feelpp.slack.com/messages/C6L6B4RE2[
+image:tools/joinslack.svg[]]
+
+If you find an bug or have a feature proposal, please check first the issue
+does not already exist in the
+link:https://github.com/feelpp/feelpp/issues[issue list]. If not, post
+a link:https://github.com/feelpp/feelpp/issues/new[new issue] on the github
+repository.
+If you want to go further, you can contribute to the code by forking the repository,
+then proposing a pull request (PR) into the develop branch.
+
+For more information about PR, see link:https://help.github.com/articles/about-pull-requests/[github documentation].
+
+== Licenses
+
+{feelpp} and its documentation is copyrighted
+
+Copyright (C) 2010-2018 by {feelpp} Consortium +
+Copyright (C) 2005-2015 by Université Joseph Fourier (Grenoble, France) +
+Copyright (C) 2005-2015 by University of Coimbra (Portugal) +
+Copyright (C) 2011-2018 by Université de Strasbourg (France) +
+Copyright (C) 2011-2018 by CNRS (France) +
+Copyright (C) 2005-2006 by Ecole Polytechnique Fédérale de Lausanne (EPFL, Switzerland) +
+
+Free use of this software is granted under the terms of the LGPL License.
+
+See the LICENSE file for details
+
+This book is  part of {feelpp} and is licensed under the LGPL license.
+
+image:http://creativecommons.org/images/public/cc-LGPL-a.png[link="http://creativecommons.org/licenses/LGPL/2.1/", align="center"].
+
+
+
+== Conventions
+
+
+The following typographical conventions are used in the book
+
+_Italic_ indicates new terms
+
+`typewriter` is used on program listings as well as when referring to
+programming elements, _e.g._ functions, variables, statements, data types,
+environment variables or keywords.
+
+`\$ typewriter` or `> typewriter` displays commands that the user types literally without the `\$` or `>`.
+
+NOTE: this is a general note.
+
+WARNING: this is a general warning.
+
+CAUTION: be cautious
+
+Hereafter, in the context of tutorial or the documentation of a specific process, four difficulty levels can be displayed:
+
+. {lvl_easy}
+. {lvl_average}
+. {lvl_advanced}
+. {lvl_hard}

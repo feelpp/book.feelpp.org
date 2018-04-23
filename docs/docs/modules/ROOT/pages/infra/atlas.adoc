@@ -1,0 +1,378 @@
+= Atlas cluster
+include::{partialsdir}/header-levels.adoc[]
+
+include::{partialsdir}/topnote.adoc[]
+
+image::clusters/atlas.jpg[role="related thumb right"]
+The proper ressources cluster of the
+link:http://irma.math.unistra.fr/[Research Institute Advanced Mathematics (IRMA - UMR7501)].
+
+== Prerequisites
+
+* You have to own an account on the machine. External user can ask for an account
+if they are related to an institute research project.
+* To learn how to use the cluster, we recommend reading the
+link:https://gitlab.math.unistra.fr/atlas/cluster-doc/wikis/home[official documentation]
+* To use differents libraries version that match your need, the cluster uses link:http://modules.sourceforge.net/[environment modules]
+You should familiarize first to know how to load specific softwares.
+* The cluster use link:https://slurm.schedmd.com/quickstart.html[slurm] job supervisor.
+You should be familiar with job creation and job submission before going further.
+
+TIP: We provide on the cluster Feel++ profile modules which loads all Feel++ dependencies
+and that are guaranty to works!
+you can type `module avail 2>&1 | grep profile` to list all profiles.
+
+== Atlas {feelpp} configuration
+
+The cluster mount points with different filesystems with more or less fast read/write
+operations.
+
+.Atlas main mount points
+[width="100%",frame="topbot",options="header,footer"]
+|===
+| Mountpoint | Description | Usage
+
+| /data/,
+| Normal I/O operations (Hard Drive),
+| Store your computed data
+
+| /ssd/,
+| Fast I/O operations (Solid state drives),
+| Compute
+
+| /home/,
+| Slow I/O operations (NFS file system),
+| Network stored data (documents)
+|===
+
+IMPORTANT: `/ssd`, `/scratch`, and `/data/scratch` and more generally
+"scratch" named directories are not backup!
+
+Set the *FEELPP_WORKDIR* environment variable to the working directory path.
+By default, this variable point to
+
+[source,bash]
+----
+export FEELPP_WORKDIR=/ssd/${USER}/feel
+----
+
+If your application generate an high amount of data, you should use `/data/scratch/{USER}/feel` instead.
+
+IMPORTANT: For heavy computations, please consider using one or several cluster computing nodes.
+See link:https://gitlab.math.unistra.fr/atlas/cluster-doc/wikis/slurm[the official documentation]
+for more information.
+
+== Atlas {feelpp} usage
+
+In this section, we will learn basic usage of Feel++ on the cluster.
+
+There are three main methods to use Feel++ on Atlas cluster.
+from the simplest to the hardest:
+
+1. <<singularity, Using **{feelpp} containers**>>,            
+2. <<compile_app, Compiling a **{feelpp} application only**>>,
+3. <<compile_all, Compiling the **Feel++ library**>>.          
+
+For the second methods **2.**, a module is used for the {feelpp} library,
+you do not need to recompile {feelpp} from the sources.
+The next subsections details how to prepare the cluster environment to use
+these three methods.
+
+NOTE: You should also consult the
+xref:user:ROOT:install/index.adoc[Feel++ installation] documentation
+(xref:user:ROOT:install/containers.adoc[1.],
+xref:user:ROOT:install/sources.adoc[2.] and 
+xref:user:ROOT:install/sources.adoc[3.]) before going further.
+
+=== Using {feelpp} containers on Atlas
+
+[[singularity]]
+==== Singularity (recommended)
+
+Singularity is the recommended method for {feelpp} containers.
+Singularity is installed by default on the cluster.
+To retrieve the current version of the singularity software, just type
+`singularity --version`
+
+[NOTE]
+====
+For singularity container compatibility reason, you might want to use
+an older or newer version of singularity. Different versions are available
+via modules. To retrieve all available modules
+
+[source,bash]
+----
+module av 2>&1 | grep singularity
+----
+====
+
+[NOTE]
+====
+To get informations about a container (for example which singularity version
+was used to build the container), just type
+[source,bash]
+----
+singularity inspect <container_name>
+----
+====
+
+First of all, download a {feelpp} singularity image from our official
+link:https://girder.math.unistra.fr/#collection/5a293e32b0e9571d65b9ec50/folder/5a4fa90ab0e9571f842931e5[data management tool]
+on the cluster. To download from the command line directly, you can use the link:https://girder.math.unistra.fr/api/v1#!/file/file_download[girder webAPI] using
+the file identifier (ID).
+
+Finally, run a shell inside the image
+
+[source,bash]
+----
+singularity shell -B ${FEELPP_WORKDIR}:/feel feelpp-toolboxes.simg
+----
+
+You are now in the container, you should have the bash prompt looking like this:
+
+image::shell/singularity/singularity-prompt2.png[align=center]
+
+
+IMPORTANT: Since singularity 2.4.0, images are immutables, thus can't be edited.
+The option **-B** is used to mount a directory from the host inside the container. By
+default, singularity shares home directory from the host.
+
+===== Job slurm with {feelpp} singularity containers
+
+An example of slurm batch script using singularity.
+
+.myjob.slurm
+[source,bash]
+----
+#! /bin/bash
+#SBATCH -p public
+#SBATCH --export=ALL
+#SBATCH -n 8
+#SBATCH -N 1
+#SBATCH -t 00:30:00
+#SBATCH -D /data/scratch/${USER}/slurm
+#SBATCH -o slurm.%j.%N.out
+#SBATCH -e slurm.%j.%N.err
+#SBATCH -v
+
+source /etc/profile.d/modules.sh
+
+mpirun --bind-to core \
+    singularity exec \
+    -B ${FEELPP_WORKDIR}/feel:/feel \
+    feelpp-toolboxes \
+    /usr/local/bin/feelpp_qs_laplacian_2d \
+    --config-file=/usr/local/share/feelpp/testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg
+----
+
+To send the job, just run the command
+
+[source,bash]
+----
+sbatch myjob.slurm
+----
+
+To view your job
+[source,bash]
+----
+squeue -u ${USER}
+----
+
+For more info about slurm, consult link:https://gitlab.math.unistra.fr/atlas/cluster-doc/wikis/slurm[atlas wiki slurm]
+or link:https://slurm.schedmd.com/quickstart.html[official slurm documentation].
+
+[[docker]]
+==== Docker
+
+IMPORTANT: Due to security issues, only whitelisted users can have access to it.
+Please contact atlas admins if docker is required.
+
+[[compile_app]]
+=== Feel++ via modules
+
+This section details an easy way to try a native installed version of {feelpp}.
+Several modules are proposed for compiled version of the {feelpp} library
+, the toolboxes or the quickstart.
+
+.{feelpp} compiled component modules (2018/04)
+|===
+| feelpp-lib/develop_gcc640_openmpi1107
+| feelpp-quickstart/develop_gcc640_openmpi1107
+| feelpp-toolboxes/develop_gcc640_openmpi1107
+|===
+
+NOTE: Please find all current available modules using
+`module av 2>&1 | grep "feelpp-*"`
+
+- Load the {feelpp} library via the module.
+
+[source,sh]
+----
+module load feelpp-lib/develop_gcc640_openmpi1107
+----
+
+{feelpp} is now available in the system
+
+
+TIP: the module set the environment variable *FEELPP_DIR* for the path to the {feelpp} installation
+`echo ${FEELPP_DIR}`.
+
+- Load a feel++ profile to have access to all {feelpp} requirements for compiling
+your application.
+
+[source,sh]
+----
+module load feelpp.profile_gcc640_openmpi1107
+----
+
+NOTE: The profile should be the same used for the feel++ module to avoid
+mismatch setup for the compilation
+
+TIP: From here you can go to Quickstart section.
+
+- Place yourself in a directory and create a cmake file named
+`CMakeLists.txt` containing the following code.
+
+[source,cmake]
+----
+cmake_minimum_required(VERSION 2.8)
+
+find_package(Feel++
+  PATHS $ENV{FEELPP_DIR}/share/feel/cmake/modules
+  /usr/share/feel/cmake/modules
+  /usr/local/share/feel/cmake/modules
+  /opt/share/feel/cmake/modules
+  )
+if(NOT FEELPP_FOUND)
+  message(FATAL_ERROR "Feel++ was not found on your system. Make sure to install it and specify the FEELPP_DIR to reference the installation directory.")
+endif()
+
+feelpp_add_application(youApplication SRCS yourCode.cpp)
+----
+
+This file describes to cmake how to find the Feel++ library in the given directories.
+By default, cmake will search in the system default path.
+
+
+4. Create a {cpp} file named `yourCode.cpp`  where you will write your first Feel++ code.
+
+5. Generate the Makefiles with cmake or using the configure script.
+`/path/to/feelpp-sources/configure`
+
+6. Compile you {feelpp} application `make`
+
+
+[[compile_all]]
+=== Feel++ from scratch
+
+To compile {feelpp} from scratch, just load a {feelpp} profile module
+and follow the user manual 
+xref:user:ROOT:install/sources.adoc[install {feelpp} from sources].
+
+
+
+== Post-processing
+
+=== Paraview
+
+==== Downloading the data
+
+You can retrieve your data on you local machine using rsync.
+
+[source,bash]
+----
+paraview
+----
+
+and open the `.case` file
+
+
+[[pvserver]]
+==== Distant connection (pvserver)
+
+Open a terminal and connect to atlas server. The paraview
+Run the paraview server
+[source,bash]
+----
+module load paraview/5.1.0
+pvserver
+----
+
+TIP: use `pvserver --multi-clients` to connect with several users at the same
+time! See `pvserver --help` for all options.
+
+On you machine, run paraview and connect to the server
+`[file]->[connect]`.
+A should pop out. Configure the server
+with the given address displayed in the terminal
+where you run `pvserver`. It should looks like `cs://irma-atlas:11111`.
+
+IMPORTANT: Paraview and pvserver must be the same version!
+
+
+
+
+
+
+=== Containers
+
+
+
+[[postprocessdocker]]
+==== Docker containers
+
+{feelpp} provides paraview directly in the docker image.
+First, you have to run a new container on atlas.
+Don't forget to mount the volume `/feel` for {feelpp} applications.
+We have to add an option to use the same network than irma-atlas
+`--network=host`
+
+[source,bash]
+----
+docker run --rm -it --network=host -v ${HOME}/feel:/feel feelpp/feelpp-toolboxes:develop-ubuntu-16.10
+----
+
+Then you can proceed with paraview server `pvserver` like in <<pvserver>>
+section.
+
+[[insitudocker]]
+===== Distant connection (In-situ)
+
+{feelpp} is compatible with insitu thanks to link:http://www.paraview.org/in-situ/[kitware catalyst].
+First be sure to follow previous steps <<postprocessdocker>> to run a docker container.
+
+In the container, start a paraview server in the background.
+[source,bash]
+----
+pvserver &
+----
+Keep in mind the printed address.
+
+On you machine, run paraview and connect to this server like explained in section
+<<pvserver>>.
+Connect to catalyst via paraview menu `[catalyst]->[connect]`. A prompt message
+should inform you that paraview accept catalyst connections.
+Set catalyst to pause `[catalyst]->[pause]` in the menu before launching a {feelpp}
+application.
+
+Now in the container, chose an application you wish to execute. For example,
+let's take `~/Testcases/FSI/wavepressure2d` Run your application with insitu
+options.
+
+[source,bash]
+----
+mpirun -np 8 feelpp_toolbox_fsi_2d --config-file wavepressure2d.cfg --exporter.format=vtk --exporter.vtk.insitu.enable=1
+----
+
+:INFO: You have to use the VTK exporter to do insitu post-processing!
+
+The simulation will stop after the initialisation step waiting for you to
+resume catalyst.
+
+:TIP: In Paraview, a new object should have appeared in the "pipeline browser" window.
+Click on the icon to expand the object, then click on the "eye" icon to make the
+object visible.
+
+At this time, you can add all filters as usual for post-processing.
+
+Once you're ready, resume catalyst `[catalyst]->[continue]`

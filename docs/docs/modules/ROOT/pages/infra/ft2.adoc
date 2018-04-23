@@ -1,0 +1,130 @@
+= Finis Terrae
+
+include::{partialsdir}/topnote.adoc[]
+
+image::clusters/ft2.jpg[float="right",align="center"]
+
+CESGA Computing Center
+
+== Preriquisites
+
+* You have to own an account on the machine. See the
+link:https://services-numeriques.unistra.fr/les-services-aux-usagers/hpc/acces-aux-ressources.html[cluster documentation]
+for the first step on the cluster.
+* To use differents libraries version that match your need, the cluster uses link:http://modules.sourceforge.net/[environment modules]
+You should familiarize first to know how to load specific softwares.
+* The cluster use link:https://slurm.schedmd.com/quickstart.html[slurm] job supervisor.
+You should be familiar with job creation and job submission before going further.
+
+== Feel++ usage
+
+[[cesgamodules]]
+=== Feel++ toolboxes
+
+[source,bash]
+----
+module load gcc/5.3.0
+module load openmpi/1.10.2
+module load singularity/2.2.1
+module load feelpp-toolboxes/0.102.00
+----
+
+Now you should be able to access via the terminal to default feel++
+applications.
+
+To run an application,
+
+[source,bash]
+----
+mpirun feelpp-toolboxes  feelpp_qs_laplacian_2d
+----
+
+TIP: We provide some scripts to link:https://github.com/feelpp/feelpp/tree/develop/ports/cesga[install dependencies], if
+one of the dependencies need to be recompiled, or updated.
+
+=== Compilation from scratch
+
+First of all, load the module for the {feelpp} library
+
+[source,bash]
+----
+module load gcc/6.3.0
+module load openmpi/2.0.2
+module load feelpp
+----
+
+:INFO: For the compilation procedure, refer the link:http://book.feelpp.org/user-manual/#building_feel[{feelpp} book].
+
+To compile {feelpp++}, download clone the sources in `${LUSTRE}` directory.
+
+[source,bash]
+----
+cd ${LUSTRE}
+git clone https://github.com/feelpp/feelpp.git
+----
+
+For the cmake step, we recommend you to use `clang` compiler. You have to
+export some environment variables for the compilation.
+
+Here is an example of script for the cmake procedure.
+[source,bash]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/ports/cesga/configure_feelpp.sh[]
+----
+
+TIP: Remember you can download the scripts to link:https://github.com/feelpp/feelpp/tree/develop/ports/cesga[install {feelpp}]
+
+=== Singularity
+
+See [[singularity]] section for more details about this container solution.
+
+First you need to load the specific module
+
+[source,bash]
+----
+module load singularity/2.2.1
+----
+
+Then you can download an image from one the official Feel++ singularity images.
+
+=== Slurm (job scripts)
+
+==== Feel++ toolboxes (module)
+
+===== Script 1
+Launch `feelpp_qs_laplacian_2d` in two task in different nodes.
+[source,bash]
+----
+#!/bin/bash
+#SBATCH -p cola-corta
+#SBATCH -N 2
+#SBATCH -n 2
+#SBATCH -t 00:10:00
+#SBATCH --ntasks-per-node=1
+
+module purge
+module load gcc/5.3.0 openmpi/1.10.2 singularity/2.2.1 feelpp-toolboxes/0.102.00
+
+mpirun feelpp-toolboxes  feelpp_qs_laplacian_2d
+----
+
+===== Script 2
+Change Feel++ output directory and launch `feelpp_toolbox_fluid_2d` in two task in different nodes.
+[source,bash]
+----
+#!/bin/bash
+#SBATCH -p cola-corta
+#SBATCH -N 2
+#SBATCH -n 2
+#SBATCH -t 00:10:00
+#SBATCH --ntasks-per-node=1
+
+module purge
+module load gcc/5.3.0 openmpi/1.10.2 singularity/2.2.1 feelpp-toolboxes/0.102.00
+
+mpirun feelpp-toolboxes  "export FEELPP_REPOSITORY=$PWD && feelpp_toolbox_fluid_2d --config-file=PATH-TO/TurekHron/cfd1.cfg"
+----
+
+== Acknowledgments
+
+The support of {feelpp} @ CESGA has been funded by the EU E-INFRA H2020 project link:http://mso4sc.eu[MSO4SC].

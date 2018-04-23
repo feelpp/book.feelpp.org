@@ -6,8 +6,7 @@ set -x
 BRANCH=${BRANCH:-${BUILDKITE_BRANCH:master}}
 
 echo "--- Building $PROJECT..."
-bundle config --local github.https true
-bundle --path=.bundle/gems --binstubs=.bundle/.bin
-bundle exec jekyll build
-tar czf site.tar.gz _site/
-buildkite-agent artifact upload site.tar.gz
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+git checkout $BUILDKITE_BRANCH
+make sync

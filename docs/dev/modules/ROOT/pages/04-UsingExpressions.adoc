@@ -1,0 +1,132 @@
+// -*- mode: adoc -*-
+
+Defining and using expressions
+------------------------------
+The next step is to construct a function space over the mesh.
+
+=== Step by step explanations
+
+- We start by loading a Mesh in 2D.
+
+[source,cpp]
+----
+include::{examplesdir}/04-myexpression.cpp[tag=mesh]
+----
+
+- then we define some expression through the command line of config
+  file: `g` is a scalar field and `f` is a vector field, here is an
+  example how to enter them :
+
+[source,bash]
+----
+./feelpp_tut_myexpression --a=3 --functions.g="a*x*y:x:y:a" --functions.f="{sin(pi*x),cos(pi*y)}:x:y"
+----
+
+You can print back the expression to the screen to check that
+everything is ok. You want to use as expression `a*x+b*y`, you have to
+define `a` and `b` as option (either in your code, either in the
+library).
+
+- then we compute the gradient of `g` and `f`.
+
+[source,cpp]
+----
+include::{examplesdir}/04-myexpression.cpp[tag=grad]
+----
+
+NOTE: template argument are given to `grad` to specify the
+shape of the gradient: in the case of stem:[\nabla g], it is stem:[1\times2]
+and stem:[2\times 2] for stem:[\nabla f] since we are in 2D.
+
+- then we compute the laplacian of `g`  and `f`.
+
+[source,cpp]
+----
+include::{examplesdir}/04-myexpression.cpp[tag=laplacian]
+----
+
+- then we compute the divergence of `f`.
+
+[source,cpp]
+----
+include::{examplesdir}/04-myexpression.cpp[tag=div]
+----
+
+- and the curl of `f`
+
+[source,cpp]
+----
+include::{examplesdir}/04-myexpression.cpp[tag=curl]
+----
+
+- Finally we evaluate these expressions at one point given by the option `x` and `y`.
+
+=== Implementation
+
+An implementation reads as follows:
+[source,cpp]
+----
+include::{examplesdir}/04-myexpression.cpp[tag=all]
+----
+and the associated config file
+
+[source,cpp]
+----
+include::{examplesdir}/04-myexpression.cfg[]
+----
+
+=== Execution
+
+[source,bash]
+----
+$ ./feelpp_tut_myexpression
+----
+
+or
+
+[source,bash]
+----
+$ ./feelpp_tut_myexpression --a=3 --functions.g="<your_function>" --functions.f="<your_function>"
+----
+
+
+We start with the following function $$g=1$$ and $$f=(1,1)$$.
+
+[source,bash]
+----
+ $./feelpp_tut_myexpression --functions.g=1:x:y --functions.f="{1,1}:x:y"
+----
+
+and get something like this
+
+[source,bash]
+----
+g=1
+f={1,1}
+i=(x-aVal)*y
+grad(g)=[[0,0]]
+grad(f)=[[0,0],[0,0]]
+laplacian(g)=[[0]]
+laplacian(f)=[[0],[0]]
+div(f)=[[0]]
+curl(f)=[[0]]
+Evaluation  at  (0,0):
+           g(x,y)=1
+           f(x,y)=1
+1
+           i(x,y)=-0
+Gradient:
+     grad(g)(x,y)=0 0
+     grad(f)(x,y)=0 0
+0 0
+Divergence:
+      div(f)(x,y)=0
+Curl:
+     curl(f)(x,y)=0
+Laplacian:
+laplacian(g)(x,y)=0
+laplacian(f)(x,y)=0
+0
+----
+
+The symbolic calculus system worked as expected.

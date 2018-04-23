@@ -1,0 +1,121 @@
+= Containers (recommended)
+include::{partialsdir}/header-macros.adoc[]
+
+TIP: Difficulty {easy}
+
+The recommended way to start learning {feelpp} consists in using container
+technologies. Containers provide an all-in one programming environment to start
+directly using {feelpp} skipping the complex installation process.
+{feelpp} is provided with two containers solutions currently:
+
+. link:https://www.docker.com/what-docker[Docker]
+. link:http://singularity.lbl.gov/about[Singularity]
+
+Depending on your usage and your operating system, you might prefere using one
+of these previous solutions. The next sub-sections describe how to obtain
+{feelpp} images to begin with {feelpp} programming.
+
+TIP: {feelpp} images provide either a compiling environment with all dependencies,
+executables or both.
+
+IMPORTANT: Before going further you might want to install one of the previous
+solution.
+link:https://docs.docker.com/install/linux/docker-ce/ubuntu/[install docker] or
+link:http://singularity.lbl.gov/install-linux[install singularity].
+
+
+
+== Docker
+
+Using {feelpp} inside <<what-is-docker,Docker>> is the recommended and fastest
+way to use {feelpp}. The <<Docker,Docker chapter>> is dedicated to Docker and
+<<feelpp-containers,{feelpp} containers chapter>> is dedicated to {feelpp} in
+Docker. We strongly encourage you to follow these steps if you begin with
+{feelpp} in particular as an end-user. People who would like to develop with
+and in {feelpp} should read through the remaining sections of this chapter.
+
+To begin with {feelpp} using docker, you need first to
+link:https://docs.docker.com/install/linux/docker-ce/ubuntu/[install docker] to
+have a working docker environment on your machine following the official
+documentation with respect to your operating system.  Then choose one of the
+{feelpp} images available on the official repository
+link:https://hub.docker.com/search/?isAutomated=0&isOfficial=0&page=1&pullCount=0&q=feelpp&starCount=0[dockerhub].
+
+We provide currently four main images:
+
+.Table of the current components of the FCS
+|===
+| Component | Description | Built From
+
+| `feelpp-env` | Execution and Programming environment | <OS>
+| `feelpp-libs`  | Feel++ libraries and tools | `feelpp-env`
+| `feelpp-base` | Feel++ base applications | `feelpp-libs`
+| `feelpp-toolboxes` | Feel++ toolboxes   | `feelpp-toolboxes`
+
+|===
+
+Each image is available with several tags depending on the {feelpp} version,
+but also other dependencies.
+(link:https://hub.docker.com/r/feelpp/feelpp-toolboxes/tags/[e.g
+toolbox images tag list] )
+In most case, you desire to use the `latest` tag.
+
+=== Usage example
+
+Via the commandline and using the {feelpp} toolboxes.  We get the
+image and create a new container.
+
+[source, bash]
+----
+docker pull feelpp/feelpp-toolboxes
+docker run -it -v ${HOME}/feel:/feel feelpp/feelpp-toolboxes
+----
+
+The `-it` option is used to place yourself inside the container in an interactive mode.
+You can start using {feelpp} commands directly.
+Note that the `-v` option is used to share a folder between the host and the container.
+
+TIP: Each container can be seen as an instance for the choosen image.
+You can create as many instance as you desire!
+
+It is also possible to execute a {feelpp} application or a command embedded in the container
+from the outside. For example
+
+[source, bash]
+----
+docker run feelpp/feelpp-toolboxes echo "Hello World!"
+----
+
+TIP: To keep your data in the container, you can use `docker [start|stop] -i <container name>`.
+
+== Singularity
+
+singularity is another container technology initially developed to work with
+HPC infrastructure and solve some security problems in multi-users environment.
+Latest link:https://girder.math.unistra.fr/#collections[{feelpp} singularity
+images] can be found on link:https://girder.math.unistra.fr/#collections[our
+data management server] (recommended) in the {feelpp} collection.  Future
+public {feelpp} images will also be available on the official
+link:https://singularity-hub.org/[singularity hub] website.  We provide
+currently the same main images as for docker, but the suffix naming might vary
+depending on the image version.
+
+Singularity works in a similar way as for docker.  For example, you can
+download one of the image available on
+link:https://girder.math.unistra.fr/#collections[girder] under the collection
+`feelpp` -> `singularity_images` -> `ci` -> `feelpp_feelpp-toolboxes-latest.simg`
+click on download button.
+
+
+Once downloaded you can place yourself in the container in interactive as for docker
+using the commandline
+
+[source, bash]
+----
+singularity shell -B ${HOME}/feel:/feel feelpp_feelpp-toolboxes-latest.simg
+----
+
+TIP: You can retrieve an image from singularity hub directly
+`singularity pull shub://feelpp/singularity:feelpp-toolboxes-latest` instead of girder
+and as for docker.
+Be aware that current images are currently older than the ones on girder!

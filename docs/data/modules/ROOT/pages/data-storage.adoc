@@ -1,0 +1,56 @@
+= Data storage
+
+We use two kind of storage, depending on the type of data.
+Mesh files, visualization files and simulation journal files are stored in the Girder platform, the other ones in the Github repository.
+
+== Girder 
+
+Girder is a free and open source web-based data management platform developed by Kitware as part of the Resonant data and analytics ecosystem.
+It is a complete back-end (server side) technology that can be used with other applications via its RESTful API, or it can be used via its own front-end (client side web pages and JavaScript).
+
+=== Data organisation
+
+Data can be stored for a particular user or in the concept of collections.
+This concept allows for sharing of the data between one or several users (Groups concept).
+
+Data are organized in a hierarchical structure with Folders and Files.
+When Folders or Files are defined, an unique ID is attributed at this entities.
+These IDs allow for easy access to the data.
+
+A level of permission can be defined for a resource :
+
+* READ permission (can view and download resources)
+* WRITE permission (includes READ permission, can edit the properties of a resource)
+
+Collections and folders can defined with attributes :
+
+* Public (meaning viewable even by anonymous users)
+* Private (meaning viewable only by those with READ access).
+
+=== Upload/Download data
+
+* REST API
+* Web interface
+* Girder CLI
+* Python Client
+* JavaScript libraries
+
+=== Authentication
+
+NOTE: Documentation pending
+
+== MongoDB
+
+Several MongoDB databases are used as storage. MongoDB storage
+can be seen in two ways:
+
+* static (stored local as a file, or local server)
+* server (stored on external mongodb server)
+
+
+== Github
+
+Access to the github file can be achieved by :
+
+* using raw.githubusercontent.com
+* REST API

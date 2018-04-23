@@ -1,0 +1,388 @@
+= Laplacian
+:path-quickstart: /usr/local/share/feelpp/testcases/quickstart
+
+We are interested in this section in the _conforming finite element approximation_ of the following problem:
+
+[[laplacian]]
+.Laplacian problem
+****
+Look for stem:[u] such that
+
+[stem]
+++++
+\left\{\begin{split}                                                                                                                                              -\Delta u &= f \text{ in } \Omega\\                                                                                                                           u &= g \text{ on } \partial \Omega_D\\
+\frac{\partial u}{\partial n} &=h \text{ on } \partial \Omega_N\\
+\frac{\partial u}{\partial n} + u &=l \text{ on } \partial \Omega_R
+ \end{split}\right.
+++++
+****
+
+CAUTION: stem:[\partial \Omega_D], stem:[\partial \Omega_N] and stem:[\partial \Omega_R] can be empty sets. In the case stem:[\partial \Omega_D =\partial \Omega_R = \emptyset], then the solution is known up to a constant.
+
+NOTE: Hereafter, we note stem:[\Gamma_D=\partial \Omega_D], stem:[\Gamma_N=\partial \Omega_N] and stem:[\Gamma_R=\partial \Omega_R].
+
+[NOTE]
+======
+In the implementation presented later, stem:[\partial \Omega_D =\partial \Omega_N = \partial \Omega_R = \emptyset], then we set Dirichlet boundary conditions all over the boundary. The problem then reads like a standard laplacian with inhomogeneous Dirichlet boundary conditions:
+
+.Laplacian Problem with inhomogeneous Dirichlet conditions
+****
+Look for stem:[u] such that
+
+[stem]
+.Inhomogeneous Dirichlet Laplacian problem
+++++
+-\Delta u = f\ \text{ in } \Omega,\quad u = g \text{ on } \partial \Omega
+++++
+****
+======
+
+
+== Variational formulation
+
+We assume that stem:[f, h, l \in L^2(\Omega)]. The weak formulation of the problem then reads:
+
+.Laplacian problem variational formulation
+****
+Look for stem:[u \in H^1_{g,\Gamma_D}(\Omega)] such that
+
+[stem]
+.Variational formulation
+++++
+\displaystyle\int_\Omega \nabla u \cdot \nabla v +\int_{\Gamma_R} u v = \displaystyle \int_\Omega f\ v+ \int_{\Gamma_N} g\ v + \int_{\Gamma_R} l\ v,\quad \forall v \in H^1_{0,\Gamma_D}(\Omega)
+++++
+****
+
+== Conforming Approximation
+
+We now turn to the finite element approximation using Lagrange finite
+element. We assume stem:[\Omega] to be a segment in 1D, a polygon in
+2D or a polyhedron in 3D.  We denote stem:[V_\delta \subset
+H^1(\Omega)] an approximation space such that stem:[V_{g,\delta}
+\equiv P^k_{c,\delta}\cap H^1_{g,\Gamma_D}(\Omega)].
+
+The weak formulation reads:
+
+.Laplacian problem weak formulation
+****
+Look for stem:[u_\delta \in V_\delta  ] such that
+
+[stem]
+++++
+\displaystyle\int_{\Omega_\delta} \nabla u_{\delta} \cdot \nabla v_\delta +\int_{\Gamma_{R,\delta}} u_\delta\ v_\delta = \displaystyle \int_{\Omega_\delta} f\ v_\delta+ \int_{\Gamma_{N,\delta}} g\ v_\delta + \int_{\Gamma_{R,\delta}} l\ v_\delta,\quad \forall v_\delta \in V_{0,\delta}
+++++
+****
+
+NOTE: from now on, we omit stem:[\delta] to lighten the notations. Be
+careful that it appears both the geometrical and approximation level.
+
+
+
+[[implementation]]
+== Feel++ Implementation
+
+In Feel{plus}{plus},  stem:[V_{g,\delta}] is not built but rather
+stem:[P^k_{c,\delta}].
+
+NOTE: The Dirichlet boundary conditions can be treated using different techniques and we use from now on the elimination technique.
+
+We start with the mesh
+
+[source,cpp]
+----
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=mesh]
+----
+//include::{uri-github-feelpp}/quickstart/qs_laplacian.cpp[tag=mesh]
+
+NOTE: the keyword `auto` enables type inference, for more details see link:https://en.wikipedia.org/wiki/C%2B%2B11#Type_inference[Wikipedia C{plus}{plus}11 page].
+
+[source,cpp]
+----
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=discr]
+----
+Next we define
+
+<1> the discrete space `Vh=Pch<k>(mesh)` stem:[\equiv P^k_{c,h}],
+<2> an element `u` of `Vh`
+<3> an expression `mu` that is used as the diffusion coefficient
+<4> an expression `f` that is used for the right hand-side term in the equation
+<5> an expression `r_1` that is used for the first term in the Robin boundary condition
+<6> an expression `r_2` that is used for the first term in the Robin boundary condition
+<7> an expression `n` that is used to define the Neumann boundary condition
+<8> an expression `solution` that is used to define the exact solution if there is one
+<9> an expression `g` that is used to define the Dirichlet boundary condition.
+
+[NOTE]
+======
+at the following line
+
+[source,cpp]
+----
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=v]
+----
+
+`v` is set to the expression `g`, which means more precisely that `v` is the interpolant of `g` in `Vh`, _i.e_ we write stem:[v=\Pi^k_{c,\delta} g] with stem:[v \in P^k_{c,\delta}].
+======
+
+the variational formulation is implemented below, we define the
+bilinear form `a` and linear form `l` and we set _strongly_ the
+Dirichlet boundary conditions with the keyword `on` using
+elimination. If we don't find `Dirichlet`, `Neumann` or `Robin` in the
+list of physical markers in the mesh data structure then we impose
+Dirichlet boundary conditions all over the boundary.
+
+[source,cpp]
+----
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=vf]
+----
+
+[NOTE]
+======
+We have the following correspondence:
+
+|===
+| Element sets  | Domain
+
+| `elements(mesh)` | stem:[\Omega]
+| `boundaryfaces(mesh)` | stem:[\partial \Omega]
+
+| `markedfaces(mesh,"Dirichlet")`  |  stem:[\Gamma_D]
+| `markedfaces(mesh,"Neumann")`  |  stem:[\Gamma_R]
+| `markedfaces(mesh,"Robin")`  |  stem:[\Gamma_R]
+
+|===
+More details can be found in xref:dev:reference:Keywords/keywords.adoc[Mathematical keywords] of {feelpp} and the xref:dev:referrence:Mesh/README.adoc[Mesh] reference.
+======
+
+next we solve the algebraic problem
+
+
+.Listing: solve algebraic system
+[source,cpp]
+----
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=solve]
+----
+
+next we compute the stem:[L^2] norm of stem:[u_\delta-g], it could
+serve as an stem:[L^2] error if stem:[g] was manufactured to be the
+exact solution of the <<laplacian>>.
+
+[source,cpp]
+----
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=ug]
+----
+
+and finally we export the results, by default it is in the ensight
+gold format and the files can be read with Paraview and Ensight. We
+save both stem:[u] and stem:[g].
+
+.Listing: export Laplacian results
+[source,cpp]
+----
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=export]
+----
+
+The full listing is available below
+
+.Listing: `feelpp_qs_laplacian_2d` and `feelpp_qs_laplacian_3d`
+[source,cpp]
+----
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=global]
+----
+
+== Test Cases
+
+We are now ready to test this Laplacian <<implementation>> with 2D and 3D test cases.
+
+IMPORTANT: The test cases are available in Docker in the directory (`{path-quickstart}/laplacian`).
+
+=== Circle
+
+`Circle` is a 2D testcase where stem:[\Omega \subset \RR^2] is a disk whose boundary
+has been split such that stem:[\partial \Omega=\partial \Omega_D \cup
+\partial \Omega_N \cup \partial \Omega_R].
+
+In the following, we consider a manufactured solution stem:[u=x^2+y^2] and we would like to verify the a priori convergence finite element property.
+
+CAUTION: This test case is tricky because the stem:[\partial \Omega] is curved and stem:[\partial \Omega \neq \partial \Omega_h]. Depending on the boundary condition type and in particular the definition of the normal, we may obtain the proper convergence rate or not.
+
+We provide here the basic geometry used in Gmsh to describe stem:[\Omega].
+
+.Description of the geometry in Gmsh
+[source,cpp]
+----
+include::{examplesdir}/laplacian/circle-dirichlet.geo[tag=cad]
+----
+
+NOTE: The `Circle` curve has several sections (`1,2,3,5`) that will be used to define the different boundary conditions, Dirichlet, Neumann and Robin.
+
+==== The case stem:[\partial \Omega=\partial \Omega_D]
+
+We start with Dirichlet conditions on stem:[\partial \Omega] which means that stem:[\partial \Omega_N = \partial \Omega_R = \emptyset]. To this end, we mark all boundary sections (`1,2,3,5`) as `Dirichlet` as shown in the Gmsh geo file below
+
+.Physical definition in Gmsh for stem:[\partial \Omega=\partial \Omega_D] in `circle-dirichlet.geo`
+[source,cpp]
+----
+include::{examplesdir}/laplacian/circle/circle-dirichlet.geo[tag=physical]
+----
+
+The next step is to provide the proper conditions or expressions to {feelpp} application `feelpp_qs_laplacian_2d`. They are described in the `.cfg` file.
+
+
+
+.Listing: expression section in the cfg file `circle-dirichlet.cfg`
+[source,ini]
+----
+include::{examplesdir}/laplacian/circle/circle-dirichlet.cfg[tag=functions]
+----
+
+NOTE: In the Dirichlet case, we do not have the issue mentioned above regarding the definition of the boundary and in particular the unit exterior normal to the boundary. We require only a point-wise evaluation of the condition on the boundary which are numerically exact.
+
+
+We are now ready to run the application.
+[source,bash,subs="verbatim,attributes"]
+----
+$ cd {path-quickstart}/laplacian/circle
+$ mpirun -np 4 feelpp_qs_laplacian_2d --config-file circle-dirichlet.cfg
+----
+
+The execution should look like this:
+[source,sh]
+----
+include::{examplesdir}/laplacian/circle/logs/circle-dirichlet.log[]
+----
+<1> provides the stem:[H^1] norm of the error with respect to the exact solution stem:[x^2+y^2]
+<2> provides the stem:[L^2] norm of the error with respect to the exact solution stem:[x^2+y^2]
+
+NOTE: The error norms reached machine precision, the solution is in the finite element space. It is due to the fact that _(i)_ we used stem:[P^2] finite elements, _(ii)_ the solution is itself quadratic and _(iii)_ we used Dirichlet boundary conditions which requires only point-wise evaluation of the solution on the curved boundary. The fact that the boundary is curved do not affect the numerical solution. It won't be the case in the presence of Neumann and Robin conditions.
+
+This gives us some data such as solution of our problem or the mesh used in the application which we can visualize using Paraview.
+
+[[fig:circle-1]]
+[cols="^,^"]
+|========
+|image:laplacian/TestCases/Circle/ucircle.png[]|image:laplacian/TestCases/Circle/meshCircle.png[]
+|Solution stem:[u_\delta]| Mesh
+|========
+
+
+==== The case stem:[\partial \Omega=\partial \Omega_N]
+
+We continue with Neumann conditions on stem:[\partial \Omega] which means that stem:[\partial \Omega_D = \partial \Omega_R = \emptyset]. To this end, we mark all boundary sections (`1,2,3,5`) as `Neumann` as shown in the Gmsh geo file below
+
+.Physical definition in Gmsh for stem:[\partial \Omega=\partial \Omega_N] in `circle-neumann.geo`
+[source,cpp]
+----
+include::{examplesdir}/laplacian/circle/circle-neumann.geo[tag=physical]
+----
+
+The next step is to provide the proper conditions or expressions to {feelpp} application `feelpp_qs_laplacian_2d`. They are described in the `.cfg` file.
+
+
+
+.Listing: expression section in the cfg file `circle-neumann.cfg`
+[source,ini]
+----
+include::{examplesdir}/laplacian/circle/circle-neumann.cfg[tag=functions]
+----
+
+NOTE: In the Neumann case, we do have the issue mentioned above regarding the definition of the boundary and in particular the unit exterior normal to the boundary. To remedy this problem, we compute the error with respect to the solution defined on stem:[\Omega_h] which is a polygon and not a circle. Hence the use of (`nx`,`ny`) which provide the normal components at the current point on the boundary.
+
+
+We are now ready to run the application.
+[source,bash,subs="verbatim,attributes"]
+----
+$ cd {path-quickstart}/laplacian/circle
+$ mpirun -np 4 feelpp_qs_laplacian_2d --config-file circle-neumann.cfg
+----
+
+The execution should look like this:
+[source,sh]
+----
+include::{examplesdir}/laplacian/circle/logs/circle-neumann.log[]
+----
+
+NOTE: The error norms reached machine precision, the solution is in the finite element space. It is due to the fact that _(i)_ we used stem:[P^2] finite elements, _(ii)_ the solution is itself quadratic and _(iii)_ we used Dirichlet boundary conditions which requires only point-wise evaluation of the solution on the curved boundary. The fact that the boundary is curved do not affect the numerical solution. It won't be the case in the presence of Neumann and Robin conditions.
+
+This gives us some data such as solution of our problem or the mesh used in the application which we can visualize using Paraview. The solution is the same as in <<fig:circle-1>>.
+
+=== The case stem:[\partial \Omega=\partial \Omega_D \cup \partial \Omega_N \cup \partial \Omega_R]
+
+We finish with all boundary condition types on stem:[\partial \Omega] which means that stem:[\partial \Omega_D] stem:[\partial \Omega_R] and stem:[\partial \Omega_N] are non-empty sets. To this end, we mark all boundary sections (`1,2`) as `Dirichlet`,  (`3`) as `Neumann` and (`5`) as `Robin` as shown in the Gmsh geo file below
+
+.Physical definition in Gmsh for all condition support in `circle-all.geo`
+[source,cpp]
+----
+include::{examplesdir}/laplacian/circle/circle-all.geo[tag=physical]
+----
+
+The next step is to provide the proper conditions or expressions to {feelpp} application `feelpp_qs_laplacian_2d`. They are described in the `.cfg` file.
+
+
+
+.Listing: expression section in the cfg file `circle-all.cfg`
+[source,ini]
+----
+include::{examplesdir}/laplacian/circle/circle-neumann.cfg[tag=functions]
+----
+
+NOTE: In the Neumann case, we do have the issue mentioned above regarding the definition of the boundary and in particular the unit exterior normal to the boundary. To remedy this problem, we compute the error with respect to the solution defined on stem:[\Omega_h] which is a polygon and not a circle. Hence the use of (`nx`,`ny`) which provide the normal components at the current point on the boundary.
+
+
+We are now ready to run the application.
+[source,bash,subs="verbatim,attributes"]
+----
+$ cd {path-quickstart}/laplacian/circle
+$ mpirun -np 4 feelpp_qs_laplacian_2d --config-file circle-all.cfg
+----
+
+The execution should look like this:
+[source,sh]
+----
+include::{examplesdir}/laplacian/circle/logs/circle-all.log[]
+----
+
+NOTE: The error norms reached machine precision, the solution is in the finite element space. It is due to the fact that _(i)_ we used stem:[P^2] finite elements, _(ii)_ the solution is itself quadratic and _(iii)_ we used Dirichlet boundary conditions which requires only point-wise evaluation of the solution on the curved boundary. The fact that the boundary is curved do not affect the numerical solution. It won't be the case in the presence of Neumann and Robin conditions.
+
+This gives us some data such as solution of our problem or the mesh used in the application which we can visualize using Paraview. The solution is the same as in <<fig:circle-1>>.
+
+
+=== feelpp2d and feelpp3d
+
+This testcase solves the <<laplacian>> in stem:[\Omega] an quadrangle or hexadra containing the letters of Feel{plus}{plus}
+
+==== feelpp2d
+
+After running the following command
+
+[source,bash]
+----
+cd Testcases/quickstart/feelpp2d
+mpirun -np 4 /usr/local/bin/feelpp_qs_laplacian_2d --config-file feelpp2d.cfg
+----
+
+we obtain the result stem:[u_\delta] and also the mesh
+
+[cols="^,^"]
+|======
+|image:laplacian/TestCases/Feelpp2d/ufeelpp2d.png[]|image:laplacian/TestCases/Feelpp2d/meshfeelpp2d.png[]
+|Solution stem:[u_\delta]| Mesh
+|======
+
+==== feelpp3d
+
+We can launch this application with the current line
+
+[source,bash]
+----
+cd Testcases/quickstart/feelpp3d
+mpirun -np 4 /usr/local/bin/feelpp_qs_laplacian_3d --config-file feelpp3d.cfg
+----
+
+When it's finish, we can extract some informations
+
+[cols="^,^"]
+|======
+|image:laplacian/TestCases/Feelpp3d/ufeelpp3d.png[]|image:laplacian/TestCases/Feelpp3d/meshfeelpp3d.png[]
+|Solution stem:[u_\delta]| Mesh
+|======

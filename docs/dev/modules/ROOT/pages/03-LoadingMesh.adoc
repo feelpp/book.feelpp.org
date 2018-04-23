@@ -1,0 +1,35 @@
+// -*- mode: adoc -*-
+
+Loading a Mesh
+--------------
+
+The next step is to load a mesh.
+
+The `loadMesh` function has a `_name` option set by default as the
+default value of the `--gmsh.filename` option that point either to a
+`.geo`, either to a `.msh`, or a `.h5` file. Meshes in general are
+more detail into this link:../07-quickref/mesh.adoc#[section].
+
+[source,c++]
+----
+auto mesh=loadMesh( _mesh=new Mesh<Simplex<2>> );
+----
+
+=== Exporting the Mesh for visualisation
+
+See this link:06-VisualizingFunctions.adoc[section] for more details about exporting and visualizing meshes.
+
+=== Implementation
+
+An implementation reads as follows:
+[source,c++]
+----
+include::{examplesdir}/03-mymesh.cpp[]
+----
+
+and the associated config file
+
+[source,cfg]
+----
+** xref:{examplesdir}/03-mymesh.cfg[]
+----

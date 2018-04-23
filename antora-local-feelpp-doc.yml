@@ -1,0 +1,50 @@
+site:
+  title: Feel++ // Docs
+  url: ./
+  start_page: stable@docs::index.adoc
+content:
+  sources:
+  - url: ./
+    branches: feature/antora
+    start_path: docs/docs
+  - url: ./
+    branches: feature/antora
+    start_path: docs/user
+  - url: ./
+    branches: feature/antora
+    start_path: docs/dev
+  - url: ./
+    branches: feature/antora
+    start_path: docs/data
+  - url: ./
+    branches: feature/antora
+    start_path: docs/math/
+  - url: ./
+    branches: feature/antora
+    start_path: docs/toolboxes
+  - url: ../toolbox
+    branches: master
+    start_path: examples
+  - url: ../toolbox
+    branches: master
+    start_path: benchmarks
+  - url: ../angiotk
+    branches: master
+    start_path: docs
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
+  supplemental_files: supplemental-ui
+asciidoc:
+  attributes:
+    project_version: 0.1
+    deploymentRoot: ""
+    numbered: true
+    allow-uri-read: true
+    hide-uri-scheme: true
+    feelpp: Feel++
+    angiotk: AngioTK
+    4fastsim: 4FastSim
+    stem: latexmath
+    hemotumpp: Hemotum++
+    eye2brain: Eye2Brain

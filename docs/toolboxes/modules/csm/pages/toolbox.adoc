@@ -1,0 +1,181 @@
+= CSM Toolbox
+
+== Models
+
+The solid mechanics model can be selected in json file :
+[source,json]
+.Listing : select solid model
+-----
+"Models": { "equations":"Hyper-Elasticity" }
+-----
+
+.Table of Models for `model` option
+|===
+| Model | Name in json
+
+| Linear Elasticity
+| `Elasticity`
+
+| Hyper Elasticity
+| `Hyper-Elasticity`
+
+|===
+
+
+
+When materials are closed to incompressibility formulation in
+displacement/pressure are available.
+
+
+.Table of Models for `material_law` with hyper elasticity model
+|===
+| Model | Name   | Volumic law
+
+| Saint-Venant-Kirchhoff
+| `SaintVenantKirchhoff`
+| classic, simo1985
+
+| NeoHookean
+| `NeoHookean`
+| classic, simo1985
+
+|===
+
+option: `mechanicalproperties.compressible.volumic_law`
+
+== Materials
+
+The Lamé coefficients are deducing from the Young's modulus stem:[E_s] and the Poisson's ratio stem:[\nu_s] of the material we work on and can be express 
+
+[stem]
+++++
+\lambda_s = \frac{E_s\nu_s}{(1+\nu_s)(1-2\nu_s)}
+\hspace{0.5 cm} 
+,
+\hspace{0.5 cm} 
+\mu_s = \frac{E_s}{2(1+\nu_s)}
+++++
+
+[source,json]
+.Materials section
+----
+"Materials":
+{
+    "<name>":
+    {
+        "E":"1.4e6",
+        "nu":"0.4",
+        "rho":"1e3"
+    }
+}
+----
+
+where `E` stands for the Young's modulus in Pa, `nu` the Poisson's ratio (
+dimensionless ) and `rho` the density in stem:[kg\cdot m^{-3}].
+
+== Boundary Conditions
+
+.Boundary conditions
+|===
+| Name | Options | Type
+
+| Dirichlet
+| faces, edges and component-wise
+| "Dirichlet"
+
+| Neumann
+| scalar, vectorial
+| "Neumann_scalar" or "Neumann_vectorial"
+
+| Pressure follower ,
+| Nonlinear boundary condition set in deformed domain
+| TODO
+
+| Robin
+| TODO
+| TODO
+
+|===
+
+== Body forces
+
+.Volumic forces
+|===
+| Name | Options | Type
+
+| Expression
+| Vectorial
+| "VolumicForces"
+
+|===
+
+== Post Process
+
+=== Exports for visualisation
+The fields allowed to be exported in the `Fields` section are:
+
+- displacement
+- velocity
+- acceleration
+- stress or normal-stress
+- pressure
+- material-properties
+- pid
+- fsi
+- Von-Mises
+- Tresca
+- principal-stresses
+- all
+
+=== Measures
+
+ - Points
+ - Maximum
+ - Minimum
+ - VolumeVariation
+
+==== Points
+Same syntax as FluidMechanics with available Fields :
+
+- displacement
+- velocity
+- acceleration
+- pressure
+- principal-stress-0
+- principal-stress-1
+- principal-stress-2
+- sigma_xx, sigma_xy, ...
+
+==== Maximum/Minimum
+The Maximum and minimum can be evaluated and save on .csv file. User need to define (i) <Type> ("Maximum" or "Minimum"), 
+(ii) "<tag>" representing this data in the .csv file, (iii) "<marker>" representing the name of marked entities and (iv) the field where extremum is computed.
+
+[source,json]
+----
+"<Type>":
+{
+    "<tag>":
+    {
+        "markers":"marker>",
+        "fields":["displacement","velocity"]
+    }
+}
+----
+
+==== VolumeVariation
+[source,json]
+----
+"VolumeVariation":<marker>
+----
+
+== Run simulations
+
+programme avalaible :
+
+* `feelpp_toolbox_solid_2d`
+
+* `feelpp_toolbox_solid_3d`
+
+----
+mpirun -np 4 feelpp_toolbox_solid_2d --config-file=<myfile.cfg>
+----

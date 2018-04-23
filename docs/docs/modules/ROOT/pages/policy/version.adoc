@@ -1,0 +1,30 @@
+= {feelpp} Version Policy
+ifndef::env-site,env-github[]
+include::_attributes.adoc[]
+endif::[]
+:keywords: EOL, GA
+// Settings
+:idprefix:
+:idseparator: -
+:table-caption!:
+:core-version: 0.104
+
+{feelpp} follows the semantic versioning rules.
+Each {feelpp} component release is versioned *major.minor.patch*.
+
+Major::
+Major releases occur when there are substantial changes in functionality or when new functionality breaks backwards compatibility.
+Releases within the same major version number will maintain API compatibility.
+
+Minor::
+Minor releases add new features, improvements to existing features, and fixes that maintain backwards compatibility.
+
+Patch::
+Patch releases fix bugs and maintain backwards compatibility.
+Only the latest minor release for a major release will receive patches.
+Patch releases happen as needed depending on the urgency of the fix.
+
+Pre-release::
+Major and minor releases may include pre-release versions (major.minor.patch-alpha.n | -beta.n | -rc.n).
+Pre-release versions will be tagged as _next_ so that the npm client doesn't prefer a pre-release over a stable version.
+Once a release candidate (rc) has been thoroughly tested, the stable release will be published.
