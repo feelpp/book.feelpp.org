@@ -19,11 +19,11 @@ install:
 	npm install --save . live-server
 
 build: clean
-	${NPM_BIN}/antora --pull antora-local-feelpp-doc.yml
+	${NVM_BIN}/antora --pull antora-local-feelpp-doc.yml
 	@echo "INFO: File generated in 'build/build/site/feelpp-doc/'"
 
 serve:
-	${NPM_BIN}/live-server --wait=1000 build/site
+	${NVM_BIN}/live-server --wait=1000 build/site
 
 sync: build
 	#rsync -avz --delete build/site/ es15.siteground.eu:~/public_html/docs.feelpp.org/
