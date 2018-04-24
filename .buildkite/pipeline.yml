@@ -9,7 +9,7 @@ steps:
  - wait
  - name: ':rocket: :book:'
    command: .buildkite/steps/docs-deploy.sh
-   branches: feature/antora
+   branches: master
    env:
        PROJECT: docs.feelpp.org
  - wait
@@ -17,6 +17,6 @@ steps:
    command: .buildkite/steps/build.sh
    agents:
      antora: true
-   branches: feature/antora
+   branches: master
    env:
        PROJECT: docs.feelpp.org
