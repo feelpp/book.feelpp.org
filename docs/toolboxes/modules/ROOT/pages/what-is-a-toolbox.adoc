@@ -1,0 +1,30 @@
+= What is a Toolbox
+
+{feelpp} comes with toolboxes. What are they ?
+
+.Definition: A {feelpp} Toolbox
+====
+For a given set of partial differential equations for a given physics or set of physics, a {feelpp} toolbox provides:
+
+* the configuration the set of equations through one or several `json` files and `cfg` files
+* one or more solution strategies to solve the set of equations
+====
+
+== JSON files
+
+`json` files allow to configure a set of partial differential equations, more precisely they define:
+
+* the type and name of the model
+* some parameters for the model
+* materials properties
+* boundary Conditions
+* post Processing
+
+Here is a   xref:examples:csm:rotating-winch/index.adoc[biele example] from the Toolbox examples.
+
+== CFG files
+
+`cfg` files allow to pass command line options to {feelpp} applications. In particular, it allows to
+
+* setup the mesh
+* define the solution strategy
