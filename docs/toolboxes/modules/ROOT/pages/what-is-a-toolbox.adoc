@@ -18,14 +18,16 @@ the type and name of the model::
 
 Parameters::
 define parameters that may enter expressions used in the subsequent sections.
-For example
 [source,json]
+.Example of a `Parameters` section
 ----
-"Parameters":
+"Parameters": <1>
     {
-        "ubar":"1.0"
+        "ubar":"1.0" <2>
     }
 ----
+<1> name of the section
+<2> defines a new parameter `ubar` and its associated value
 
 Materials::
 define material properties linking the Physical Entities in the mesh data structures to these properties.
@@ -36,16 +38,19 @@ define material properties linking the Physical Entities in the mesh data struct
     {
         "Fluid": <1>
         {
-            "rho":"1.0e3",
-            "mu":"1.0"
+            "rho":"1.0e3", <2>
+            "mu":"1.0" <3>
         }
     }
 ----
 <1> gives the name of the physical entity (here `Physical Surface`) associated to the Material.
+<2> density stem:[\rho] is called `rho` and is given in SI units
+<3> viscosity stem:[\mu] is called `mu` and is given in SI units
+
 
 BoundaryConditions::
-
 [source,json]
+.Example of a `BoundaryConditions` section
 ----
 "BoundaryConditions":
     {
@@ -92,7 +97,34 @@ BoundaryConditions::
 <11> the hysical entity to which outflow condition is applied
 <12> the expression associated to the outflow condition, note that it is scalar and corresponds in this case to the condition stem:[\sigma(\mathbf{u},p) \normal = 0]
 
-post processing::
+PostProcessing::
+[source,json]
+----
+"PostProcess": <1>
+    {
+        "Exports": <2>
+        {
+            "fields":["velocity","pressure","pid"] <3>
+        },
+        "Measures": <4>
+        {
+            "Forces":"wall2", <5>
+            "Points": <6>
+            {
+                "pointA": <7>
+                {
+                    "coord":"{0.6,0.2,0}", <8>
+                    "fields":"pressure" <9>
+                },
+                "pointB": <10>
+                {
+                    "coord":"{0.15,0.2,0}", <11>
+                    "fields":"pressure" <12>
+                }
+            }
+        }
+    }
+----
 
 
 Here is a   xref:examples:csm:rotating-winch/index.adoc[biele example] from the Toolbox examples.
