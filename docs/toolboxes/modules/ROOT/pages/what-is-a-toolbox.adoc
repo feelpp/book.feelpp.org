@@ -95,7 +95,7 @@ BoundaryConditions::
 <9> the variable toolbox to which the condition is applied, here `fluid` which corresponds to velocity and pressure stem:[(\mathbf{u},p)]
 <10> the type of boundary condition applied, here outlet or outflow boundary condition
 <11> the hysical entity to which outflow condition is applied
-<12> the expression associated to the outflow condition, note that it is scalar and corresponds in this case to the condition stem:[\sigma(\mathbf{u},p) \normal = 0]
+<12> the expression associated to the outflow condition, note that it is scalar and corresponds in this case to the condition stem:[\sigma(\mathbf{u},p) \normal = 0 \normal]
 
 PostProcessing::
 [source,json]
@@ -125,7 +125,18 @@ PostProcessing::
         }
     }
 ----
-
+<1> the name of the section
+<2> the `Exports` identifies the toolbox fields that have to be exported for visualisation
+<3> the list of fields to be exported
+<4> the `Measures` section identifies outputs of interest such as
+<5> `Forces` applied to a surface given by the physical entity `wall2`
+<6> `Points` values of fields
+<7> name of the point
+<8> coordinates of the point
+<9> fields to be computed at the point coordinate
+<10> name of the point
+<11> coordinates of the point
+<12> fields to be computed at the point coordinate
 
 Here is a   xref:examples:csm:rotating-winch/index.adoc[biele example] from the Toolbox examples.
 
