@@ -3,22 +3,97 @@
 {feelpp} comes with toolboxes. What are they ?
 
 .Definition: A {feelpp} Toolbox
-====
+****
 For a given set of partial differential equations for a given physics or set of physics, a {feelpp} toolbox provides:
 
 * the configuration the set of equations through one or several `json` files and `cfg` files
 * one or more solution strategies to solve the set of equations
-====
+****
 
 == JSON files
 
 `json` files allow to configure a set of partial differential equations, more precisely they define:
 
-* the type and name of the model
-* some parameters for the model
-* materials properties
-* boundary Conditions
-* post Processing
+the type and name of the model::
+
+Parameters::
+define parameters that may enter expressions used in the subsequent sections.
+For example
+[source,json]
+----
+"Parameters":
+    {
+        "ubar":"1.0"
+    }
+----
+
+Materials::
+define material properties linking the Physical Entities in the mesh data structures to these properties.
+.Example of Materials section
+[source,json]
+----
+"Materials":
+    {
+        "Fluid": <1>
+        {
+            "rho":"1.0e3",
+            "mu":"1.0"
+        }
+    }
+----
+<1> gives the name of the physical entity (here `Physical Surface`) associated to the Material.
+
+BoundaryConditions::
+
+[source,json]
+----
+"BoundaryConditions":
+    {
+        "velocity":  <1>
+        {
+            "Dirichlet": <2>
+            {
+                "inlet": <3>
+                {
+                    "expr":"{ 1.5*ubar*(4./0.1681)*y*(0.41-y),0}:ubar:y" <4>
+                },
+                "wall1": <5>
+                {
+                    "expr":"{0,0}" <6>
+                },
+                "wall2": <7>
+                {
+                    "expr":"{0,0}" <8>
+                }
+            }
+        },
+        "fluid": <9>
+        {
+            "outlet": <10>
+            {
+                "outlet": <11>
+                {
+                    "expr":"0" <12>
+                }
+            }
+        }
+    }
+----
+<1> the field name of the toolbox to which the boundary condition is associated
+<2> the type of boundary condition to apply, here `Dirichlet`
+<3> the physical entity (associated to the mesh) to which the condition is applied
+<4> the mathematical expression associated to the condition, note that the parameter `ubar`  is used
+<5> another physical entity to which `Dirichlet` conditions are applied
+<6> the associated expression to the entity
+<7> another physical entity to which `Dirichlet` conditions are applied
+<8> the associated expression to the entity
+<9> the variable toolbox to which the condition is applied, here `fluid` which corresponds to velocity and pressure stem:[(\mathbf{u},p)]
+<10> the type of boundary condition applied, here outlet or outflow boundary condition
+<11> the hysical entity to which outflow condition is applied
+<12> the expression associated to the outflow condition, note that it is scalar and corresponds in this case to the condition stem:[\sigma(\mathbf{u},p) \normal = 0]
+
+post processing::
+
 
 Here is a   xref:examples:csm:rotating-winch/index.adoc[biele example] from the Toolbox examples.
 
