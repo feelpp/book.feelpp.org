@@ -10,15 +10,41 @@ For a given set of partial differential equations for a given physics or set of 
 * one or more solution strategies to solve the set of equations
 ****
 
+Using the xref:what-is-a-toolbox.adoc#_json_files[JSON] and xref:what-is-a-toolbox.adoc#_cfg_files[CFG], it is possible to configure and run models by defining the relevant physical quantities—such as material properties, loads, constraints, sources, and fluxes.
+
 == JSON files
 
-`json` files allow to configure a set of partial differential equations, more precisely they define:
+The Model JSON (`.json`) files allow to configure a set of partial differential equations, more precisely they define:
 
-the type and name of the model::
+* [x] <<name_and_type_of_model,Names and Type of Model>>
+* [x] <<Parameters,Parameters>>
+* [x] <<Materials,Materials>>
+* [x] <<BoundaryConditions,Boundary conditions>>
+* [x] <<PostProcessing,Post processing>>
 
-Parameters::
-define parameters that may enter expressions used in the subsequent sections.
-+
+
+=== Names and Type of Model
+
+A model JSON file starts by giving names (long and short) as well as the type of model which will be used by the toolbox.
+The latter allows to configure the set of equations associated the toolbox physics.
+[source,json]
+----
+"Name": "Turek-Hron cfd2", <1>
+"ShortName":"cfd2", <2>
+"Models": <3>
+{
+   "equations":"Navier-Stokes" <4>
+}
+----
+<1> Name of the example, usually printed on-screen and in log files during simulations
+<2> Short name of the example, it is used to create directories to store the results of the simulation of the model
+<3> Section `Models` defined by the toolbox to define the main configuration of a toolbox and in particular the set of equations to be solved
+<4> toolbox specific option to define set of equations to be solved, read the toolbox manual to learn about the possible options.
+
+=== Parameters
+
+This section of the Model JSON file defines the parameters that may enter expressions used in the subsequent sections.
+
 [source,json]
 .Example of a `Parameters` section
 ----
@@ -30,9 +56,11 @@ define parameters that may enter expressions used in the subsequent sections.
 <1> name of the section
 <2> defines a new parameter `ubar` and its associated value
 
-Materials::
-define material properties linking the Physical Entities in the mesh data structures to these properties.
-+
+
+=== Materials
+
+This section of the Model JSON file defines material properties linking the Physical Entities in the mesh data structures to these properties.
+
 .Example of Materials section
 [source,json]
 ----
@@ -50,8 +78,10 @@ define material properties linking the Physical Entities in the mesh data struct
 <3> viscosity stem:[\mu] is called `mu` and is given in SI units
 
 
-BoundaryConditions::
-+
+=== BoundaryConditions
+
+This section of the Model JSON file defines the boundary conditions.
+
 [source,json]
 .Example of a `BoundaryConditions` section
 ----
@@ -100,9 +130,9 @@ BoundaryConditions::
 <11> the hysical entity to which outflow condition is applied
 <12> the expression associated to the outflow condition, note that it is scalar and corresponds in this case to the condition stem:[\sigma(\mathbf{u},p) \normal = 0 \normal]
 
-PostProcessing::
-This section allows to define the output fields and quantities to be computed and saved
-+
+=== PostProcessing
+This section allows to define the output fields and quantities to be computed and saved for _e.g._ visualization.
+
 [source,json]
 ----
 "PostProcess": <1>
@@ -150,4 +180,4 @@ Here is a   xref:examples:csm:rotating-winch/index.adoc[biele example] from the 
 `cfg` files allow to pass command line options to {feelpp} applications. In particular, it allows to
 
 * setup the mesh
-* define the solution strategy
+* define the solution strategy and configure the linear/non-linear algebraic solvers.
