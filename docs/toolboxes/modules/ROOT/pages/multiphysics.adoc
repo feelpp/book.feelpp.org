@@ -1,14 +1,16 @@
 = {feelpp} for Multiphysics Modeling and Simulation
 
-{feelpp} provides a  powerful  environment for modeling and solving various kinds of scientific and engineering problems. The framework provides a powerful language to describe these models. With {feelpp} toolboxes, you can easily extend conventional models for one type of physics into multiphysics models that solve coupled physics phenomena—and do so simultaneously. Accessing this power does not require an in-depth knowledge of mathematics or numerical analysis.
-Using the built-in physics interfaces and the advanced support for material properties, it is possible to build models by defining the relevant physical quantities—such as material properties, loads, constraints, sources, and fluxes—rather than by defining the underlying equations. You can always apply these variables, expressions, or numbers directly to solid and fluid domains, boundaries, edges, and points independently of the computational mesh. {feelpp} Toolboxes then internally compiles a set of equations representing the entire model.
-You access the power of {feelpp} Toolboxes as a standalone product through a flexible graphical user interface (GUI) or by script programming in Java or the MATLAB® language (requires the COMSOL LiveLink for MATLAB).
+{feelpp} provides a  powerful  environment for modeling and solving various kinds of scientific and engineering problems.
+The framework provides a powerful language to describe these models.
+With {feelpp} toolboxes, you can extend conventional models for one type of physics into multiphysics models that solve coupled physics phenomena.
+It does not require an in-depth knowledge of mathematics or numerical analysis, they are hidden with the toolboxes.
+Using the xref:what-is-a-toolbox.adoc#_json_files[JSON] and xref:what-is-a-toolbox.adoc#_cfg_files[CFG], it is possible to configure and run models by defining the relevant physical quantities—such as material properties, loads, constraints, sources, and fluxes.
 
 Using these physics interfaces, you can perform various types of studies including:
 
-* Stationary and time-dependent (transient) studies
-* Linear and nonlinear studies
-* Eigenfrequency, modal, and frequency response studies
+* [x] Stationary and time-dependent (transient) studies
+* [x] Linear and nonlinear studies
 
-When solving the models, {feelpp} Toolboxes uses the proven finite element method (FEM). The software runs the finite element analysis together with adaptive meshing (if selected) and error control using a variety of numerical solvers. The studies can make use of multiprocessor systems and cluster computing, and you can run batch jobs and parametric sweeps. A more detailed description of this mathematical and numerical foundation is in the {feelpp} Toolboxes Reference Guide.
-{feelpp} Toolboxes creates sequences to record all steps that create the geometry, mesh, studies and solver settings, and visualization and results presentation. It is therefore easy to parameterize any part of the model: Simply change a node in the model tree and re-run the sequences. The program remembers and reapplies all other information and data in the model.
+When solving the models, {feelpp} Toolboxes uses the standard Galerkin method, eg the proven Finite element method but more advanced methods sur as HDG methods are available. The software runs the finite element analysis using a variety of numerical solvers.
+The studies can make use of multiprocessor systems and cluster computing and run from a one core to thousands of cores seamlessly.
+A more detailed description of this mathematical and numerical foundation is in  xref:math:ROOT:index.adoc[Mathematics of {feelpp}].
