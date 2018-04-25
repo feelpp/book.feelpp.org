@@ -1,22 +1,14 @@
-= {feelpp} build from sources
-:page-permalink: /user-manual/installation/build
-:page-layout: manual
-:page-root: ../../
-:imagesdir: ../../../images/
-:sourcedir: ../../../codes/
-include::../../../includes/header.adoc[]
+= Compiling {feelpp} from sources
+include::{partialsdir}/header-macros.adoc[]
 
 NOTE: {lvl_advanced}
 
 TIP: For beginners, you can skip this section and go directly to <<containers,containers>> section.
 
-Once the steps to install on Linux or MacOS X has been followed, we explain, in this section, how to download and build Feel++ from source.
+You need first to
 
-:leveloffset: +1
-
-include::prerequisites/README.adoc[]
-
-:leveloffset: -1
+* [x] to understand the xref:install/prerequisites-dev.adoc[{feelpp} programming environment].
+* [x] to install the required and suggested compilers, libraries and tools for xref:install/linux.adoc[Linux] or xref:install/mac.adoc[MacOsX] to build {feelpp} for these architectures.
 
 == For the impatient
 
@@ -39,13 +31,13 @@ Configure Feel++
 $ CXX=clang++ ../feelpp/configure -r
 ----
 
-Compile the Feel++ library 
+Compile the Feel++ library
 [source,bash]
 ----
 $ make feelpp
 ----
 
-TIP: you can speed up the make process by passing the option `-j<N>` where `N` is the number of concurrent `make` sub-processes. It compiles `N` files at a time and respect dependencies. For example `-j4` compiles 4 C++ files at a time. 
+TIP: you can speed up the make process by passing the option `-j<N>` where `N` is the number of concurrent `make` sub-processes. It compiles `N` files at a time and respect dependencies. For example `-j4` compiles 4 C++ files at a time.
 
 WARNING: Be aware that Feel{plus}{plus} consumes memory. The Feel{plus}{plus} library compile with 2Go of RAM. But to be more comfortable, 4Go or more would be best. The more, the better.
 
@@ -126,11 +118,9 @@ $ tree -L 1 -d | column
 ├── data		├── quickstart
 ----
 
-== Configuring Feel++
+== Configuring {feelpp}
 
-
-
-For now on, we assume that `clang++` has been installed in `/usr/bin`. Yor mileage 
+For now on, we assume that `clang++` has been installed in `/usr/bin`. Yor mileage
 may vary depending on your installation of course.
 
 WARNING: It is not allowed to build the library in the top source directory.
@@ -156,9 +146,24 @@ The configuration step with `cmake` is as follows
 [source,sh]
 ----
 $ cd FEEL/feel.opt
-$ cmake ../feelpp -DCMAKE_CXX_COMPILER=/usr/bin/clang++-3.6 -DCMAKE_C_COMPILER=/usr/bin/clang-3.6 -DCMAKE_BUILD_TYPE=RelWithDebInfo
+$ cmake ../feelpp <1>
 ----
+<1> Run `cmake` with default configuration flags from toplevel {feelpp} source directory in `../feelpp`
 
+TIP: Use `ccmake` to configure {feelpp} using a graphical or text interface.
+
+[source,sh]
+----
+$ cd FEEL/feel.opt
+$ cmake ../feelpp
+ -DCMAKE_CXX_COMPILER=/usr/bin/clang++-4.0  <1>
+ -DCMAKE_C_COMPILER=/usr/bin/clang-4.0  <2>
+ -DCMAKE_BUILD_TYPE=RelWithDebInfo <3>
+----
+<1> set the {cpp} compiler to `/usr/bin/clang++-4.0`
+<2> set the C compiler to `/usr/bin/clang++-4.0`
+<3> set the cmake build type to `RelWithDebInfo`
++
 [NOTE]
 ====
 CMake supports different build type that you can set with `-DCMAKE_BUILD_TYPE` (case insensitive) :
@@ -169,28 +174,28 @@ CMake supports different build type that you can set with `-DCMAKE_BUILD_TYPE` (
  * RelWithDebInfo :  typically `-g -O2 -DNDEBUG`
 ====
 
-=== Using configure
+=== Using `configure`
 
 Alternatively you can use the `configure` script which calls `cmake`. `configure --help` will provide the following help.
 [source,sh]
 .Listing Configure help
 ----
-Options: 
- -b, --build                         build type: Debug, Release, RelWithDebInfo                                                   
- -d, --debug                         debug mode                             
--rd, --relwithdebinfo                relwithdebinfo mode 
- -r, --release                       release mode  
-     --std=c++xx                     c++ standard: c++14, c++1z (default: c++14)                                                   
-     --stdlib=libxx                  c++ standard library: stdc++(GCC), c++(CLANG) (default: stdc++)                                  
-     --max-order=x                   maximum polynomial order to instantiate(default: 3)                                          
-     --cxxflags                      override cxxflags    
-     --cmakeflags                    add extra cmake flags 
-     --prefix=PATH                   define install path  
- -v, --verbose                       enable verbose output 
- -h, --help                          help page       
-     --<package>-dir=PACKAGE_PATH    define <package> install directory   
-     --disable-<package>             disable <package>     
-     --generator=GENERATOR           cmake generator       
+Options:
+ -b, --build                         build type: Debug, Release, RelWithDebInfo
+ -d, --debug                         debug mode
+-rd, --relwithdebinfo                relwithdebinfo mode
+ -r, --release                       release mode
+     --std=c++xx                     c++ standard: c++14, c++1z (default: c++14)
+     --stdlib=libxx                  c++ standard library: stdc++(GCC), c++(CLANG) (default: stdc++)
+     --max-order=x                   maximum polynomial order to instantiate(default: 3)
+     --cxxflags                      override cxxflags
+     --cmakeflags                    add extra cmake flags
+     --prefix=PATH                   define install path
+ -v, --verbose                       enable verbose output
+ -h, --help                          help page
+     --<package>-dir=PACKAGE_PATH    define <package> install directory
+     --disable-<package>             disable <package>
+     --generator=GENERATOR           cmake generator
 ----
 
 We display below a set of possible configurations:
@@ -209,22 +214,26 @@ Compile using Release build type, clang++ compiler and libstdc++
 $ CXX=clang++ ../feelpp/configure -r
 ----
 
-Compile using Debug build type, clang++ compiler and libc++ 
+Compile using Debug build type, clang++ compiler and libc++
 [source,sh]
 .Listing compiling using clang++/libc++ in Debug mode
 ----
 CXX=clang++ ../feelpp/configure -d -stdlib=c++
 ----
 
-== Compiling Feel++
+== Compiling {feelpp}
 
 Once `cmake` or `configure` have done their work successfully, you are ready to compile Feel++
 
 [source,bash]
 ----
 $ make
+$ make install
 ----
 
+[TIP]
+.Parallel compilation
+====
 You can speed up the compilation process, if you have a multicore processor by specifying the number of parallel jobs `make` will be allowed to spawn  using the `-j` flag:
 
 [source,bash]
@@ -232,14 +241,17 @@ You can speed up the compilation process, if you have a multicore processor by s
 ----
 $ make -j4 feelpp
 ----
+====
 
 NOTE: From now on, all commands should be typed in build directory (e.g `feel.opt`) or its subdirectories.
 
-== Running the Feel++ Testsuite
+== Running the {feelpp} Testsuite
 
-If you encounter issues with Feel++, you can run the testsuite and send the resulting report. Feel{plus}{plus} has more than 300 tests running daily on our servers. Most of the tests are run both in sequential and in parallel.
+If you encounter issues with {feelpp}, you can run the testsuite and send the resulting report.
+{feelpp} has more than 300 tests running daily on our servers.
+Most of the tests are run both in sequential and in parallel.
 
-The testsuite is in the `testsuite` directory. 
+The testsuite is in the `testsuite` directory.
 [source,sh]
 ----
 $ cd testsuite

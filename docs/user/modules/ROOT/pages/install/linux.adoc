@@ -1,34 +1,47 @@
-= {feelpp} on Linux
+= Prerequisites for compiling {feelpp} on Linux
 include::{partialsdir}/header-macros.adoc[]
 
 NOTE: {lvl_average}
 
-We now turn to the installation of the Feel{plus}{plus} dependencies
-on Linux. Feel{plus}{plus} is currently supported on Ubuntu (16.04,
-16.10) and Debian (Sid, Testing).
+We now turn to the compilation and installation of the {feelpp} dependencies
+on Linux.
+{feelpp} is automatically tested on <<Ubuntu>> (16.04,18.04).
+
+{feelpp} is tested from time to time on other Linux distribution
+
+* <<Debian>> (stable,testing,unstable)
+* Redhat and Fedora
 
 
 == Ubuntu
 
-=== Ubuntu 16.10 Yaketti Yak
+=== Ubuntu 18.04 LTS
 
-Here is the suggested installation of the Feel++ dependencies on Ubuntu 16.10
+Here is the suggested installation of the Feel++ dependencies on Ubuntu LTS 18.04 (Bionic Beaver)
+
 [source,sh]
 ----
-$ sudo apt-get -qq update
-$ sudo apt-get install automake autoconf libtool libboost-all-dev\
-  bash-completion emacs24 gmsh libgmsh-dev libopenturns-dev \
-  libbz2-dev libhdf5-openmpi-dev libeigen3-dev libcgal-dev \
-  libopenblas-dev libcln-dev libcppunit-dev libopenmpi-dev \
-  libann-dev libglpk-dev libpetsc3.7-dev libslepc3.7-dev \
-  liblapack-dev libmpfr-dev paraview python-dev libhwloc-dev \
-  libvtk6-dev libpcre3-dev python-h5py python-urllib3 xterm tmux \
-  screen python-numpy python-vtk6 python-six python-ply wget \
-  bison sudo xauth cmake flex gcc-6 g++-6 clang-3.9 \
-  clang++-3.9 git ipython openmpi-bin pkg-config
+$ apt-get -y --force-yes install \
+    build-essential dh-make debuild pbuilder debootstrap devscripts \
+    emacs25 emacs vim nano \
+    wget bison sudo \
+    doxygen \
+    cmake emacs25 flex  git gmsh  ipython libann-dev libbz2-dev libcgal-dev libcln-dev   \
+    libcppunit-dev libeigen3-dev libglpk-dev libgmsh-dev\
+    libhdf5-openmpi-dev libhwloc-dev liblapack-dev libmpfr-dev\
+    libopenblas-dev libopenmpi-dev libopenturns-dev libpcre3-dev\
+    libpetsc3.7.7-dev libproj-dev libslepc3.7.4-dev libtool\
+    libvtk6-dev openmpi-bin paraview pkg-config python-dev\
+    python-h5py python-numpy python-ply python-six\
+    python-urllib3 python-vtk6 \
+    screen sudo tmux wget xauth xterm \
+    libopenturns-dev python-openturns openturns-validation openturns-examples r-other-rot\
+    mongodb-server mongodb-clients libmongoc-dev libbson-dev \
+    libsundials-serial-dev 
 ----
 
-=== Ubuntu 16.04
+
+=== Ubuntu 16.04 LTS
 
 Here is the suggested installation of the Feel++ dependencies on Ubuntu LTS 16.04
 

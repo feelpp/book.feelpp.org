@@ -1,10 +1,5 @@
 = {feelpp} on MacOS
-:page-permalink: /user-manual/installation/macos
-:page-layout: manual
-:page-root: ../../
-:imagesdir: ../../../images/
-:sourcedir: ../../../codes/
-include::../../../includes/header.adoc[]
+include::{partialsdir}/header-macros.adoc[]
 
 NOTE: {lvl_average}
 
@@ -66,7 +61,7 @@ $ brew doctor
 
 Install Homebrew-science tap to get the link:prerequisites.adoc[scientific software] recommended or suggested for Feel{plus}{plus}.
 ----
-$ brew tap homebrew/homebrew-science 
+$ brew tap homebrew/homebrew-science
 ----
 you should see something like
 [source,sh]
@@ -97,7 +92,7 @@ Unpacking objects: 100% (5/5), done.
 Tapped 1 formula (30 files, 60.7K)
 ----
 
-The final step is to either install Feel{plus}{plus} 
+The final step is to either install Feel{plus}{plus}
 [source,sh]
 ----
 $ brew install feelpp
@@ -161,20 +156,20 @@ Recommended: fortran ✔
 Optional: java ✔
 ==> Options
 --c++11
-	Build using C++11 mode
+    Build using C++11 mode
 --with-cxx-bindings
-	Enable C++ MPI bindings (deprecated as of MPI-3.0)
+    Enable C++ MPI bindings (deprecated as of MPI-3.0)
 --with-java
-	Build with java support
+    Build with java support
 --with-mpi-thread-multiple
-	Enable MPI_THREAD_MULTIPLE
+    Enable MPI_THREAD_MULTIPLE
 --without-fortran
-	Build without fortran support
+    Build without fortran support
 --HEAD
-	Install HEAD version
+    Install HEAD version
 ----
 
-Then, you then just have to pass the needed flags, when installing the dependency. 
+Then, you then just have to pass the needed flags, when installing the dependency.
 
 > **Important:**  `boost` has to be installed with mpi and c++11 support and `mumps` needs to be installed with the following scotch5 support.
 
@@ -205,18 +200,18 @@ for example (that's here you'll find gcc4.7 or later e.g
 In your command-line, the software MacPorts is called by the command `port`. Here is a list of key commands for using MacPorts, if you want more informations please go to http://guide.macports.org/#using.port[MacPorts Commands].
 
  * `sudo port -v selfupdate`: This action should be used regularly to update the local tree with the global MacPorts ports. The option `-v` enables verbose which generates verbose messages.
- 
+
  * `port info mypackage`: This action is used to get information about a port. (description, license, maintainer, etc.)
- 
+
  * `sudo port install mypackage`: This action install the port mypackage.
- 
+
  * `sudo port uninstall mypackage`: This action uninstall the port mypackage.
- 
+
  * `port installed`: This action displays all ports installed and their versions, variants and activation status. You can also use the `-v` option to also display the platform and CPU architecture(s) for which the ports were built, and any variants which were explicitly negated.
- 
+
  * `sudo port upgrade mypackage`: This action updgrades installed ports and their dependencies when a `Portfile` in the repository has been updated. To avoid the upgrade of a port's dependencies, use the option `-n`.
 
-==== Portfile 
+==== Portfile
 
 A Portfile is a TCL script which usually contains simple
 keyword values and TCL expressions. Each package/port has a
