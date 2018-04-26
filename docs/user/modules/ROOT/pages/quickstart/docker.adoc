@@ -1,23 +1,22 @@
-= Quick Starts with Docker
+= Quick Start with Docker
+:uri-rel-file-base: https://github.com/feelpp/feelpp/blob/develop/
 
+[[installation]]
 == Installation Quick Start
 
 Using {feelpp} inside Docker is the recommended and fastest way to use {feelpp}.
 
-NOTE: Explanations about Docker will be integrated into the manual.
+We strongly encourage you to follow the xref:install/containers.adoc#_docker[Docker installation steps] if you begin with {feelpp} in particular as an end-user.
 
-We strongly encourage you to follow these steps if you begin with {feelpp} in particular as an end-user.
+[[usage]]
+== Usage Quick Start
 
-People who would like to develop with and in {feelpp} should read through the remaining sections of this chapter.
-
-== Usage Start
-
-Start the Docker container `feelpp/feelpp-base` or `feelpp/feelpp-toolboxes` as follows
+Start the main {feelpp} Docker container feelpp/feelpp-toolboxes` as follows
 
 .Command line to start the docker container
 [source,sh]
 ----
-$ docker run -it  -e LOCAL_USER_ID=`id -u $USER`  -v $HOME/feel:/feel feelpp/feelpp-toolboxes
+$ docker run -it --rm -e LOCAL_USER_ID=`id -u $USER`  -v $HOME/feel:/feel feelpp/feelpp-toolboxes
 ----
 TIP: simply copy-paste the command line in your terminal to start the `feelpp/feelpp-toolboxes` container.
 
@@ -27,24 +26,28 @@ Here are some explanations about the different parts in the command line
 $ docker <1>
   run <2>
   -it <3>
-  -e LOCAL_USER_ID=`id -u`<4>
-  -v $HOME/feel:/feel <5>
-  feelpp/feelpp-toolboxes <6>
+  --rm <4>
+  -e LOCAL_USER_ID=`id -u`<5>
+  -v $HOME/feel:/feel <6>
+  feelpp/feelpp-toolboxes <7>
 ----
 <1> `docker` is the application that allows to create and execute Containers
 <2> `run` allows to execute the image `feelpp/feelpp-toolboxes`
 <3> the option `-it` runs Docker in interactive mode;
-<4> we need to pass your user id to Docker so that the data you generate from Docker belongs to you;
-<5> maps the directory `$HOME/feel` on your host to `/feel` in Docker, {feelpp} write in `/feel` the results of the simulations. Passing your id, _i.e_ `LOCAL_USER_ID`, allows to ensure that the generated data on {feelpp} belongs to you on your host system;
-<6> execute the image `feelpp/feelpp-toolboxes` and create the associated container .
+<4> the option `--rm` makes sure that the container is deleted after the user exits Docker
+<5> we need to pass your user id to Docker so that the data you generate from Docker belongs to you;
+<6> maps the directory `$HOME/feel` on your host to `/feel` in Docker, {feelpp} write in `/feel` the results of the simulations. Passing your id, _i.e_ `LOCAL_USER_ID`, allows to ensure that the generated data on {feelpp} belongs to you on your host system;
+<7> execute the image `feelpp/feelpp-toolboxes` and create the associated container .
 
 Then run _e.g._ the {uri-rel-file-base}/quickstart/qs_laplacian.cpp[Quickstart Laplacian] that solves the Laplacian problem in <<lap-seq>> or in <<lap-par>>.
+
+TIP: Several testcases (configuration files) have been installed in `/feel/testcases` (in Docker container) or `$HOME/feel/testcases` once you have executed the command line above.
 
 [[lap-seq]]
 [source,sh]
 .Running the quickstart Laplacian in sequential
 ----
-$ feelpp_qs_laplacian_2d --config-file Testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg
+$ feelpp_qs_laplacian_2d --config-file /feel/testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg
 ----
 
 [[lap-seq-explanations]]
@@ -52,7 +55,7 @@ $ feelpp_qs_laplacian_2d --config-file Testcases/quickstart/laplacian/feelpp2d/f
 .Explanations about running the quickstart Laplacian in sequential
 ----
 > feelpp_qs_laplacian_2d <1>
---config-file Testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg<2>
+--config-file /feel/testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg<2>
 ----
 <1> executable to run
 <2> configuration file (text) to setup the problem : mesh, material properties and boundary conditions
@@ -65,7 +68,7 @@ and on your computer
 ----
 $HOME/feel/qs_laplacian/feelpp2d/np_1/exports/ensightgold/qs_laplacian/
 ----
-The mesh and solutions can be visualized using _e.g._ Parariew or Visit.
+The mesh and solutions can be visualized using _e.g._ Paraview or Visit.
 
 [TIP]
 ====
@@ -77,7 +80,7 @@ link:https://wci.llnl.gov/simulation/computer-codes/visit[Visit]:: is a distribu
 [source,sh]
 .Quickstart Laplacian on 4 cores in parallel
 ----
-> mpirun -np 4 feelpp_qs_laplacian_2d --config-file Testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg
+> mpirun -np 4 feelpp_qs_laplacian_2d --config-file /feel/testcases/quickstart/laplacian/feelpp2d/feelpp2d.cfg
 ----
 
 The results are stored in a simular place as above: just replace `np_1` by `np_4` in the paths above. The results should look like
@@ -89,6 +92,7 @@ The results are stored in a simular place as above: just replace `np_1` by `np_4
 |======
 
 
+[[syntax]]
 == Syntax Start
 
 Here are some  excerpts from {uri-rel-file-base}/quickstart/qs_laplacian.cpp[Quickstart Laplacian] that solves the Laplacian problem. It shows some of the features of {feelpp} and in particular the domain specific language for Galerkin methods.
@@ -97,7 +101,7 @@ First we load the mesh, define the function space define some expressions
 [source,cpp]
 .Laplacian problem in an arbitrary geometry, loading mesh and defining spaces
 ----
-include::{examplesdir}/qs_laplacian.cpp[tags=mesh_space]
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tags=mesh_space]
 ----
 //include::https://raw.githubusercontent.com/feelpp/feelpp/develop/quickstart/qs_laplacian.cpp[tags=mesh_space]
 
@@ -106,7 +110,7 @@ Second we define the linear and bilinear forms to solve the problem
 [source,cpp]
 .Laplacian problem in an arbitrary geometry, defining forms and solving
 ----
-include::{examplesdir}/qs_laplacian.cpp[tags=forms]
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tags=forms]
 ----
 //include::https://raw.githubusercontent.com/feelpp/feelpp/develop/quickstart/qs_laplacian.cpp[tags=forms]
 More explanations are available in xref:user:ROOT:laplacian.adoc[the Laplacian example].

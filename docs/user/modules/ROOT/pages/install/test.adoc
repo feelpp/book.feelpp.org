@@ -1,0 +1,67 @@
+= Compiling and Running the {feelpp} Testsuite
+
+If you encounter issues with {feelpp}, you can run the testsuite and send the resulting report.
+The {feelpp} testsuite uses a combination of the https://www.boost.org/doc/libs/1_58_0/libs/test/doc/html/utf.html[`Boost.Test` framework] and the https://cmake.org/Wiki/CMake/Testing_With_CTest[CTest] tool from CMake.
+{feelpp} has more than 300 tests running daily on our servers.
+Most of the tests are run both in sequential and in parallel.
+
+The testsuite is in the `testsuite` directory.
+[source,sh]
+----
+$ cd testsuite
+----
+
+The following command will compile 10 tests at a time
+[source,sh]
+.Compile the testsuite, 10 tests in parallel at a time
+----
+$ make -j10
+----
+
+.Listing: Running the {feelpp} testsuite
+[source,bash]
+----
+$ ctest -j4 -R .
+----
+It will run 4 tests at a time thanks to the option `-j4`.
+
+The execution report of ctest should look like This
+[source,text]
+----
+100% tests passed, 0 tests failed out of 369
+
+Label Time Summary:
+testalg = 72.63 sec (22 tests)
+testcore = 122.04 sec (42 tests)
+testcrb = 204.66 sec (15 tests)
+testdiscr = 666.80 sec (111 tests)
+testfilters = 86.71 sec (14 tests)
+testfit = 13.31 sec (4 tests)
+testintegration = 52.02 sec (14 tests)
+testinterpolation = 127.53 sec (25 tests)
+testleaks = 52.95 sec (16 tests)
+testls = 10.66 sec (3 tests)
+testmaterial = 4.99 sec (2 tests)
+testmath = 5.37 sec (2 tests)
+testmesh = 88.19 sec (26 tests)
+testmodels = 6.66 sec (2 tests)
+testopt = 11.92 sec (4 tests)
+testpde = 19.62 sec (4 tests)
+testpoly = 64.01 sec (18 tests)
+testts = 22.90 sec (7 tests)
+testvf = 138.65 sec (38 tests)
+
+Total Test time (real) = 1778.19 sec
+
+The following tests did not run:
+185 - feelpp_test_space_0d-np-6 (Skipped)
+186 - feelpp_test_space_0d-np-1 (Skipped)
+298 - feelpp_test_bdf3-np-1 (Skipped)
+307 - feelpp_test_laplacianv-np-6 (Skipped)
+308 - feelpp_test_laplacianv-np-1 (Skipped)
+309 - feelpp_test_laplacian-np-6 (Skipped)
+310 - feelpp_test_laplacian-np-1 (Skipped)
+311 - feelpp_test_laplaciant-np-6 (Skipped)
+312 - feelpp_test_laplaciant-np-1 (Skipped)
+323 - feelpp_test_convolve-np-6 (Skipped)
+----
