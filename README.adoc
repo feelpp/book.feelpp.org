@@ -26,19 +26,19 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
  . a versatile mathematical kernel solving easily problems using
    different techniques thus allowing testing and comparing methods, e.g. cG versus dG.
-   
+
  . a *small* and *manageable* library which nevertheless encompasses a wide
    range of numerical methods and techniques and in particular reduced order
    methods such as the reduced basis method.
-   
+
  . a software that follows closely the mathematical abstractions
    associated with partial differential equations (PDE) and in
    particular the finite element mathematical framework and
    variational formulations.
-   
+
  . a library that offers solving strategies that scales up to
    thousands and even tens of thousands of cores.
-   
+
  . a library entirely in {cpp} allowing to create {cpp} complex
    and typically non-linear multi-physics applications currently in industry, physics and health-care.
 
@@ -57,51 +57,26 @@ image:https://badges.gitter.im/Join%20Chat.svg[Join the chat at https://gitter.i
 
 == Contribute to this documentation
 
-You can <<docs/index.adoc#book.contributing,contribute>> to improve this documentation on
-https://github.com/feelpp/feelpp-book[GitHub] and follow the
-https://gitter.im/feelpp/feelpp-book[Gitter {feelpp} Book] forum.
+You can http://docs.feelpp.org/docs/stable/#_how_to_contribute[contribute] to improve this documentation on
+https://github.com/feelpp/book.feelpp.org[GitHub].
 
-See also .link:CONTRIBUTING.adoc[how to write the book].
+See also link:CONTRIBUTING.adoc[how to write the book].
 
-== Compiling the book
+== Generating the website
 
-=== Using Docker
+{feelpp} uses https://docs.antora.org[Antora] to generate the website http://docs.feelpp.org.
 
-The {feelpp} book toolchain is installed in the `feelpp/feelpp-env` docker image
+Once you have installed Antora, follow the next steps to generate a local preview of the  website http://docs.feelpp.org.
 
-----
-docker run --rm -it feelpp/feelpp-env
-----
-
-==== Installing the toolchain
-
-. install `ruby` and  `bundle`
-
-----
-# On MacOSX
-brew install ruby
-gem install rake bundle
-
-# on debian/ubuntu
-apt-get install ruby-bundler
-----
-
-. Install the gems into the project
 
 [source,sh]
 ----
-$ bundle config --local github.https true
-$ bundle --path=.bundle/gems --binstubs=.bundle/.bin
+git clone https://github.com/feelpp/book.feelpp.org.git <1>
+cd book.feelpp.org <2>
+antora --pull antora-local-feelpp-doc.yml <3>
+serve build/site <4>
 ----
-
-NOTE: it installs all the requirements
-
-then type
-
-----
-bundle exec jekyll serve
-----
-
-NOTE: it starts a link:http://127.0.0.1:4000/[local web server] on the
-port 4000 where you can read the book.
-
+<1> clone the source for the website
+<2> go the toplevel directory
+<3> build a local preview of the website with Antora
+<4> start the node.ja webserver `serve`, see the https://docs.antora.org/antora/1.0/run-antora/#local-site-preview[docs].
