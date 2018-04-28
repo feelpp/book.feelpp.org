@@ -90,7 +90,7 @@ On veut résoudre le problème
 \end{array}\right.
 ++++
 
-[Une solution classique de ce problème est une fonction de stem:[{\cal C}^2(\bar{\Omega})] vérifiant ([eq:modele-2D]) en tout point de stem:[\Omega].
+Une solution classique de ce problème est une fonction de stem:[{\cal C}^2(\bar{\Omega})] vérifiant ([eq:modele-2D]) en tout point de stem:[\Omega].
 
 NOTE: Au passage, on voit que ceci impose que stem:[f] soit stem:[{\cal C}^0(\bar{\Omega})].
 
@@ -581,7 +581,7 @@ Il pourra s’agir par exemple des valeurs de la fonction en quelques points.
 Déterminer une fonction reviendra alors à déterminer ses valeurs sur ces ddl.
 
 Définition des stem:[\varphi_i]::
-On définira les fonctions de base par stem:[\varphi_i=1] sur le stem:[i^{\hbox{\tiny ème}}] ddl, et stem:[\varphi_i=0] sur les autres ddl.
+On définira les fonctions de base par stem:[\varphi_i=1] sur le stem:[i^{\hbox{\tiny{ème}}}] ddl, et stem:[\varphi_i=0] sur les autres ddl.
 La manipulation des stem:[\varphi_i] sera alors très simplifiée, et les stem:[\varphi_i] auront par ailleurs un support réduit à quelques mailles.
 
 La notion de _famille affine d’éléments_::
@@ -593,7 +593,7 @@ De ce fait, tous les calculs d’intégrales pourront se ramener à des calculs 
 
 On reprend le problème 1-D <<eq:modele-1D>>.
 
-On a écrit sa formulation variationnelle <<sec:modele-1D> et montré <<sec:modele-1D2>> qu’elle admet une solution unique.
+On a écrit sa formulation variationnelle <<sec:modele-1D>> et montré <<sec:modele-1D2>> qu’elle admet une solution unique.
 
 On s’intéresse à présent à la construction de l’espace d’approximation stem:[V_h].
 
@@ -602,8 +602,12 @@ On s’intéresse à présent à la construction de l’espace d’approximation
 
 La première étape consiste à construire un maillage de stem:[\Omega = \]a,b[] en définissant une subdivision (pas nécessairement régulière) stem:[a=x_0 < x_1 < \ldots < x_N < x_{N+1}=b].
 
-Le maillage est donc une collection indexée de (stem:[=N]) intervalles
-$$\{I_i=[x_{i,1},x_{i,2}]\}_{i=1,...\Nma}$$ et on a
+Le maillage est donc une collection indexée de stem:[N_{ma}](stem:[=N]) intervalles
+[stem]
+++++
+\{I_i=[x_{i,1},x_{i,2}]\}_{i=1,...\Nma}
+++++
+et on a
 [[eq:1]]
 [stem]
 ++++
@@ -655,7 +659,7 @@ On pose alors
 ++++
 W_h = \{w_h \in L^2(\Omega); \forall i \in \{ 1,...,\Nma\}, {w_h}_{|I_i} \in \Pk{k}\}
 ++++
-stem:[W_h] est un espace de dimension finie égale à stem:[(k+1)*\Nma] mais il n’est pas inclus dans stem:[H^1_0(\Omega)] et ne peut donc pas être utilisé pour l’approximation du problème ([eq:FV]).
+stem:[W_h] est un espace de dimension finie égale à stem:[(k+1)*\Nma] mais il n’est pas inclus dans stem:[H^1_0(\Omega)] et ne peut donc pas être utilisé pour l’approximation du problème (<<[eq:FV]>>).
 En effet les fonctions de stem:[w_h \in W_h] peuvent être discontinues aux interfaces entre les maillages et un résultat d’analyse fonctionnelle montre que dans ces conditions stem:[w_h \ni H^1(\Omega)].
 Par ailleurs les fonctions de stem:[W_h] ne sont pas nécessairement nulles au bord de stem:[\Omega].
 
@@ -678,7 +682,7 @@ Le problème approché sur stem:[V_h] est :
 [[eq:11]]
 [stem]
 ++++
-  ({\cal Q}_h)\qquad \hbox{Trouver } u_h\in V_h \hbox{ tel que } a(u_h,v_h)=l(v_h), \quad\forall v_h\in V_h]
+  ({\cal Q}_h)\qquad \hbox{Trouver } u_h\in V_h \hbox{ tel que } a(u_h,v_h)=l(v_h), \quad\forall v_h\in V_h
 ++++
 
 On s’intéresse à présent à des exemples concrets d’espaces d’approximations dans les deux sections suivantes <<sec:element-fini-de>> et <<sec:element-fini-de-1>>.
@@ -815,7 +819,7 @@ On dit que l’erreur d’interpolation est d’ordre 2 en norme stem:[L^2] et d
 [[sec:element-fini-de-1]]
 === Element fini de Lagrange
 
-On introduit les espaces vectoriels suivants: stem:[\label{eq:9}
+On introduit les espaces vectoriels suivants: stem:[\label{eq:9}]
 
 [[eq:9]]
 [stem]
@@ -982,12 +986,12 @@ problème variationnel, alors elle est solution du problème de
 minimisation.
 2.  Montrer que stem:[\nabla J[u](v) = a(u,v) - l(v)].
 3.  Montrer que, si stem:[a] est coercive, la matrice
-stem:[A] de ([eq:lin]) est inversible. (C’est donc la
+stem:[A] de (<<[eq:lin]>>) est inversible. (C’est donc la
 démonstration du théorème de Lax-Milgram en dimension finie.)
 4.  Pour l’exemple 1-D traité dans ce chapitre, démontrer qu’on est bien
 dans les hypothèses du théorème de Lax-milgram
 5.  Calculer explicitement la matrice stem:[A] pour cet exemple.
 6.  Pour le problème 2-D du §[sec:modele-2D], montrer que la formulation
-variationelle ([eq:FV2]) admet une solution unique, qui est aussi
+variationelle (<<[eq:FV2]>>) admet une solution unique, qui est aussi
 solution classique si stem:[f \in H^2(\Omega)].
 7.  Démontrer les résultats du §[sec:elliptique]
