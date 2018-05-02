@@ -1,9 +1,7 @@
-= Advection-Diffusion with dominant advection
+[[convection-dominated-flows]]
+= Convection dominated flows
 
 NOTE: Cette partie est en anglais et nécessite d'être traduite.
-
-We discuss here regime of advection-diffusion equation when the advection is dominant.
-
 
 Let stem:[\Omega \subset \mathbb{R}^d, d=1,2,3], consider this
 equation defined in stem:[\Omega], find stem:[u] a scalar
@@ -102,8 +100,9 @@ consider the standard Galerkin approximation on stem:[V_h] for .
 The problem reads
 
 
-[env.problem#prob:stab1]
---
+[[prob:stab1]]
+.Problem
+****
 Find stem:[u_h \in V_h] such that for all
 stem:[v_h \in V_h] we have:
 
@@ -115,7 +114,7 @@ stem:[v_h \in V_h] we have:
     \mathbf{ n}\ v_h}_{\mbox{apply boundary conditions}}  =
   \int_\Omega f v_h
 ++++
---
+****
 
 [NOTE]
 ====
@@ -156,8 +155,9 @@ For example if stem:[|\mathbf{beta}| = 1] and stem:[\epsilon=5e-4], we should ta
 TIP: Another remedy is to use a different approximation space for the unknown stem:[u_h] and the test functions stem:[v_h].
 We talk about *Petrov-Galerkin approximation*.
 
-[env.problem#prob:2]
---
+[[prob:2]]
+.Problem
+****
 Find stem:[u_h \in V_h] such that
 [[eq:stab13]]
 [stem]
@@ -169,8 +169,8 @@ with
 [stem]
 ++++
 a_h(u_h,v_h) = a(u_h,v_h) + b_h(u_h,v_h),\quad \ell_h(v_h) = \ell(v_h) + g_h(v_h),\quad
-++++.
---
+++++
+****
 
 NOTE: The purpose of stem:[b_h] and stem:[g_h] is to eliminate(or reduce) the numerical oscillations produced by the standard Galerkin method: they are called _stabilisation methods_ and depend on stem:[h].
 The term _stabilisation method_ is not _exact_.
@@ -206,8 +206,9 @@ stem:[B(t) =    \frac{t}{e^t-1}] if stem:[t > 0] and stem:[B(0) = 1] (also expon
       v_h, \quad g_h(v_h) = 0
 ++++
 
-[env.theorem#thr:stab1]
---
+[[thr:stab1]]
+.Theorem
+****
 for a given stem:[\epsilon] and for stem:[h] tending to stem:[0], we have for stem:[u \in H^{r+1}(\Omega)]
 [[eq:16]]
 [stem]
@@ -221,7 +222,7 @@ and for a given stem:[h] and stem:[\epsilon] tending to 0,
 ||u-u_h||_{1,\Omega} \leq C_1  \Big[ h^{r-1}||u||_{r+1,\Omega} + ||u||_{1,\Omega}\Big]
 ++++
 If stem:[\phi(\mathrm{Pe})=\frac{|\mathbf{ \beta}|h}{2 \epsilon}], the convergence is linear, with the exponential fitting scheme it is quadratic if stem:[r \geq 2].
---
+****
 
 [[gals-and-supg]]
 === GaLS and SUPG
@@ -241,27 +242,22 @@ L u = \underbrace{-\epsilon \Delta u + \Big[ \mu + \frac{1}{2} \nabla \cdot \mat
 ++++
 
 .Consistent schemes
-[NOTE]
-====
+****
 We say that a method is consistent when adding a term
 to a problem such as:
-[env.problem]
---
 Find stem:[u_h \in V_h] such that
 [[eq:stab20]]
 [stem]
 ++++
-a(u_h,v_h) + \mathcal{L}_h(u_h,f;v_h) = (f,v_h), \quad \forall v_h \in V_h++++
+a(u_h,v_h) + \mathcal{L}_h(u_h,f;v_h) = (f,v_h), \quad \forall v_h \in V_h
+++++
 the term added statisfies
-
 [[eq:stab21]]
 [stem]
 ++++
 \mathcal{L}_h(u,f;v_h) = 0, \forall v_h \in V_h
 ++++
---
-
-====
+****
 
 [[choice-for-consistent-methods]]
 ==== Choice for consistent methods
@@ -321,7 +317,7 @@ where stem:[\gamma] is a positive constant such that stem:[-\frac{1}{2} \nabla \
 We have the following result
 
 [thr:stab3]
-.Théorème
+.Theorem
 ****
 if stem:[u \in H^{k+1}(\Omega)], then the following error estimates hold:
 [[eq:stab27]]
