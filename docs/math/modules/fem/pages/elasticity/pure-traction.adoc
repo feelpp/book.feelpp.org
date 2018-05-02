@@ -2,6 +2,7 @@
 
 Le problème de traction pure en élasticité linéaire s'exprime sous la forme suivante
 
+[[pure-traction]]
 .Problème: traction pure
 ****
 \begin{align}
@@ -27,5 +28,116 @@ la forme stem:[a] a été définie dans  la xref:elasticity/mixed.adoc[formulati
 [CAUTION]
 .Solution à un déplacement rigide près
 ====
-La difficulté du problème ci-dessus est que la forme stem
+La difficulté du problème ci-dessus est que la forme stem:[a] est singulière sur stem:[[H^1(\Omega)\]^3].
+Pour s'en convaincre, introduisons l'ensemble
+[stem]
+++++
+\cal{R} = \left\{ \disp{d} \in [H^1 (\Omega)]^3; \disp{d}(x) = \tau + \omega \times \disp{x} \right\}
+++++
+où stem:[\tau] et stem:[\omega] sont des vecteurs de stem:[\RR^3] et stem:[\times] est le produit vectoriel dans stem:[\RR^3].
+Une fonction de stem:[\cal{R}] est appelée champ de _déplacement rigide_ car il correspond à un movement de translation et de rotation de stem:[\Omega].
 ====
+
+.Lemma
+****
+L'équivalence suivante est vérifiée
+[stem]
+++++
+\disp{d} \in \cal{R} \iff \forall \disp{v} \in [H^1 (\Omega)]^3, a(\disp{d},\disp{v})=0
+++++
+****
+.Preuve
+****
+Soit stem:[\disp{d} \in \cal{R}], on a stem:[\nabla \cdot \disp{d} = 0] et stem:[\deformt{\disp{d}} = 0] et donc stem:[a(\disp{d},\disp{v})=0\ \forall \disp{v} \in [H^1 (\Omega)\]^3].
+
+Inversement, si stem:[a(\disp{d},\disp{v})=0\ \forall \disp{v} \in [H^1 (\Omega)\]^3], prenons stem:[\disp{v}=\disp{d}], on a
+[stem]
+++++
+a(\disp{d},\disp{d})=\int_\Omega \lambda(\nabla \cdot u)^2 + \int_\Omega 2 \mu \deformt{\disp{d}}:\deformt{\disp{d}} = 0
+++++
+ce qui signifie que stem:[\deformt{\disp{d}} = 0], donc que les composantes de stem:[\disp{d}] sont des polynomes du premier degré et donc que
+[stem]
+++++
+\disp(x) = \tau + R \times \disp{x}
+++++
+avec stem:[\tau \in \RR^3]  et stem:[R \in \RR^{3\times 3}].
+De plus remarquons que stem:[R] est anti-symmétrique, _i.e_ stem:[R+R^T=0], du fait que stem:[\deformt{\disp{d}} = 0].
+Nous avons alors qu'il existe stem:[\omega \in \RR^3] tel que stem:[R \disp{x} = \omega \times \disp{x}] et donc que stem:[\disp{d} \in \cal{R}].
+****
+
+Le Lemme précédent indique que les données stem:[\disp{f}] et stem:[\disp{g}] satistfont
+[stem]
+++++
+\forall v \in \cal{R},\quad \int_\Omega \disp{f}\cdot \disp{v} + \int_{\partial \Omega} \disp{g} \cdot \disp{v} = 0
+++++
+NOTE: La relation précédente indique que la somme des forces et leurs moment s'annule.
+
+IMPORTANT: La solution stem:[\disp{d}] est définie seulement à un mouvement rigide près.
+
+Il est standard de rajouter les contraintes
+[stem]
+++++
+\int_\Omega \disp{d} = \int_\Omega \nabla \times \disp{d} = 0
+++++
+afin de fixer le mouvement rigide.
+La formulation du problème de <<pure-traction,traction pure>> s'écrit alors
+[[pure-traction-weak]]
+.Formulation faible du problème de <<pure-traction,traction pure>>
+****
+Trouver stem:[\disp{d} \in V_N] tel que
+[stem]
+++++
+a(\disp{d},\disp{v}) = \int_\Omega \disp{f} \cdot {\disp{v}} + \int_{\partial \Omega} \disp{g}\cdot \disp{v}, \quad \forall \disp{v} \in V_N
+++++
+Avec
+[stem]
+++++
+V_N = \left\{ \disp{v} \in [H^1 (\Omega)]^3; \int_\Omega \disp{d} = \int_\Omega \nabla \times \disp{d} = 0 \right\}
+++++
+****
+
+== Problème Bien Posé
+
+Le  <<pure-traction-weak,problème faible>> de traction pure est bien posé grâce à l'inégalité de Korn.
+
+== Approximation élément fini
+
+Nous considérons une **approximation élément fini conforme** dans stem:[[H^1 (\Omega)\]^3] basé sur l'élément fini de Lagrange de degré stem:[k \geq 1], stem:[(\hat{K},\hat{P},\hat{\Sigma})].
+
+On introduit l'espace
+[stem]
+++++
+V^k_h = \left\{ \disp{v}_h \in [C^0(\Omega)]^3; \forall K \in \cal{T}_h, \disp{v}_h \circ \varphi^{\mathrm{geo}}_K \in [\hat{P}]^3 \right\}
+++++
+[NOTE]
+.Traitement du déplacement rigide
+====
+Afin de traiter le déplacement rigide, on propose d'utiliser la posssibilé du framework de résolution algébrique d'avoir la connaissance du noyau (_i.e_ stem:[\cal{R}]).
+Ce faisant une solution  est obtenue, sans contrôle du déplacement rigide, il suffit ensuite de retrancher stem:[\int_\Omega \disp{d}] et stem:[\int_\Omega \nabla \times \disp{d}] à cette solution pour obtenir celle en stem:[V_N].
+++++
+====
+
+Le problème discret s'écrit:
+.Problème discret de traction pure
+****
+Trouver stem:[\disp{d}_h \in V^k_h] tel que
+[stem]
+++++
+a(\disp{d}_h,\disp{v}_h) = \int_\Omega \disp{f} \cdot {\disp{v}_h} + \int_{\partial \Omega} \disp{g}\cdot \disp{v}_h, \quad \forall \disp{v}_h \in V^k_h
+++++
+****
+
+.Proposition: Estimation a priori pour le problème de traction pure
+****
+Soit stem:[\disp{d}] une solution du  <<pure-traction-weak,problème faible>>, on a tout d'abord que stem:[\lim_{h\rightarrow 0} \|\disp{d}-\disp{d}_h\|_{1,\Omega} = 0].
+De plus si stem:[\disp{d} \in [H^{l+1}(\Omega)\]^3 \cap V^k_h] pour stem:[l\in \{1\ldots k\}] alors il existe stem:[c] telle que
+[stem]
+++++
+\forall h, \quad \|\disp{d}-\disp{d}_h\|_{1,\Omega} \leq c h^l |\disp{d}|_{l+1,\Omega}.
+++++
+et de plus, si stem:[\Omega] est un convexe et stem:[\disp{g} = \disp{0}] alors il existe stem:[c] telle que
+[stem]
+++++
+\forall h, \quad \|\disp{d}-\disp{d}_h\|_{0,\Omega} \leq c h^{l+1} |\disp{d}|_{l+1,\Omega}.
+++++
+****
