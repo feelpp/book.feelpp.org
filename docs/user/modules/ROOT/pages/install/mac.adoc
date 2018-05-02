@@ -180,7 +180,7 @@ Then, you then just have to pass the needed flags, when installing the dependenc
 
 === Introduction
 
-MacPorts is an open-source community projet which aims to design an easy-to-use system for compiling, installing and upgrading open-source software on Mac OS X operating system. It is distributed under link:http://opensource.org/licenses/bsd-license.php[BSD License] and facilitate the access to thousands of ports (software) without installing or compiling open-source software. MacPorts provides a single software tree which includes the latest stable releases of approximately 17700 ports targeting the current Mac OS X release (10.9). If you want more information, please visit their link:http://www.macports.org/[website].
+MacPorts is an open-source community projet which aims to design an easy-to-use system for compiling, installing and upgrading open-source software on Mac OS X operating system. It is distributed under link:http://opensource.org/licenses/bsd-license.php[BSD License] and facilitate the access to thousands of ports (software) without installing or compiling open-source software. MacPorts provides a single software tree which includes the latest stable releases of approximately 20000 ports targeting the current Mac OS X release (10.13). If you want more information, please visit their link:http://www.macports.org/[website].
 
 ==== MacPorts Installation
 
@@ -192,9 +192,7 @@ provided on their website. It is recommended that you install X11 (X Window Syst
 If you have installed with the package installer (`MacPorts-2.x.x.pkg`) that means MacPorts will be installed in
 `/opt/local`. From now on, we will suppose that macports has
 been installed in `/opt/local` which is the default MacPorts
-location. Note that from now on, all tools installed by MacPorts will be installed in `/opt/local/bin` or `/opt/local/sbin`
-for example (that's here you'll find gcc4.7 or later e.g
-`/opt/local/bin/g++-mp-4.7` once being installed).
+location. Note that from now on, all tools/libraries installed by MacPorts will be installed in `/opt/local/`.
 
 ==== Key commands
 
@@ -217,25 +215,25 @@ In your command-line, the software MacPorts is called by the command `port`. Her
 A Portfile is a TCL script which usually contains simple
 keyword values and TCL expressions. Each package/port has a
 corresponding Portfile but it's only a part of a port description.
-Feel\++ provides some mandatory Portfiles for its compilation which are either not available in MacPorts or are buggy but Feel++ also provides some Portfiles which are already available in MacPorts such as gmsh or petsc. They usually provide either some fixes to ensure Feel++ works properly or new version not yet available in MacPorts. These Portfiles are installed in `ports/macosx/macports`.
+The Feel\++ git repository provides some additional Portfiles for its compilation which are either not available in MacPorts or not adapated to Feel++ or not to the desired version. These Portfiles are installed in `ports/macosx/macports-<os-version>`, where `<os-version>` correspond to `high_sierra`, `sierra`, `elcapitan`, ...
 
 
 === Installation
 
-To be able to install Feel++, add the following line in
-`/opt/local/etc/macports/source.conf` at the top of the file
+To be able to install Feel++ and its dependencies, add the following line in
+`/opt/local/etc/macports/sources.conf` at the top of the file
 before any other sources:
 
 [source,sh]
 ----
-file:///<path to feel top directory>/ports/macosx/macports
+file:///<path to feel++ top directory>/ports/macosx/macports-<os-version>
 ----
 
 Once it's done, type in a command-line:
 
 [source,sh]
 ----
- $ cd <your path to feel top directory>/ports/macosx/macports
+ $ cd <your path to feel++ top directory>/ports/macosx/macports
  $ sudo portindex -f
 ----
 
@@ -243,40 +241,27 @@ You should have an output like this:
 
 [source,sh]
 ----
-Reading port index in $<$your path to feel top directory$>$/ports/macosx/macports
-Adding port science/feel++
+Creating port index in <path to feel++ top directory>/ports/macosx/macports-high_sierra
+Adding port math/atlas
+Adding port math/cln
+Adding port math/ml
+Adding port math/petsc
+Adding subport petsc-devel
+Adding port math/slepc
+Adding port science/feelpp
 Adding port science/gmsh
-Adding port science/petsc
 
-Total number of ports parsed:   3
-Ports successfully parsed:      3
-Ports failed:                   0
-Up-to-date ports skipped:       0
+Total number of ports parsed:	8
+Ports successfully parsed:	8
+Ports failed:			0
+Up-to-date ports skipped:	0
 ----
 
 Your are now able to type
 
 [source,bash]
 ----
-$ sudo port install feel++
+$ sudo port install feel++ +clang38+openmpi
 ----
 
-It might take some time (possibly an entire day) to compile all the requirements for Feel++ to compile properly. If you have several cores on your MacBook Pro, iMac or MacBook, we suggest that you configure macports to use all or some of them.
-
-To do that uncomment the following line in the file
-`/opt/local/etc/macports/macports.conf`
-
-[source,bash]
-----
-buildmakejobs	0 $\#$ all the cores
-----
-
-At the end of the `sudo port install feel++`, you have all
-dependencies installed. To build all the Makefile, `\cmake` is
-automatically launched but can have some libraries may not be found but they are not mandatory for build Feel{plus}+, only the features related to the missing libraries will be missing.
-
-.Missing ports
-[NOTE]
-====
-`cmake` can build Makefiles even if some packages are missing (latex2html, VTK ...). It's not necessary to install them but you can complete the installation with MacPorts, `cmake` will find them by itself once they have been installed.
-====
+It might take some time (possibly several hours) to compile all the requirements for Feel++.
