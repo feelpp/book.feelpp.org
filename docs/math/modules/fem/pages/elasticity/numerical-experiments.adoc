@@ -1,35 +1,47 @@
 = Expériences numériques
+:page-vtkjs: true
 
 Ce document présente des expériences numériques en élasticité linéaire.
 
-== Implémentation
-We start by setting the {feelpp} environment
-[source,cpp]
+== Cantilever
+
+We consider a 2D link:https://en.wikipedia.org/wiki/Cantilever[Cantilever] structure which is clamped on one side and free of constraints otherwise.
+
+The dimensions are stem:[\Omega=[0,L\]\times[0,1\] \subset \RR^2] with stem:[L=10].
+
+.Young Modulus and Poisson Ratio values
+|===
+| stem:[E] (Pa) | stem:[\nu]
+| 1e06 | 0.3
+|===
+
+The external forces are set to be the gravity, stem:[\mathbf{f}=-9.81 \vec\jmath]
+
+The boundary conditions read:
+
+* at stem:[x=0], stem:[\disp{d} = \disp{0}]
+
+It means that on stem:[\partial \Omega \backslash
+x=0], we have stem:[\stresst{\disp{d}} \normal = \disp{0}].
+
+The command line reads:
 ----
-include::{examplesdir}/qs_elasticity.cpp[tag=env]
+./feelpp_qs_elasticity_2d --config-file /feel/testcases/quickstart/elastivity/cantilever/cantilever.cfg
 ----
 
-[source,cpp]
-----
-include::{examplesdir}/qs_elasticity.cpp[tag=mesh]
-----
+The results on Paraview
 
-[source,cpp]
-----
-include::{examplesdir}/qs_elasticity.cpp[tag=space]
-----
+.3D Model with ribs.
+++++
 
-[source,cpp]
-----
-include::{examplesdir}/qs_elasticity.cpp[tag=forms]
-----
+<div class="stretchy-wrapper-16_9">
+<div id="vtkVisuSection2" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
+</div>
+<script type="text/javascript">
+feelppVtkJs.createSceneImporter( vtkVisuSection2, {
+                                 fileURL: "https://girder.math.unistra.fr/api/v1/item/5aef723db0e9574027047f6b/download",
+                                 objects: { "deformation":[ { scene:"displacement" } ] }
+                               } );
+</script>
 
-[source,cpp]
-----
-include::{examplesdir}/qs_elasticity.cpp[tag=solver]
-----
-
-[source,cpp]
-----
-include::{examplesdir}/qs_elasticity.cpp[tag=exporter]
-----
+++++
