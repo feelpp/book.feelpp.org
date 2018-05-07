@@ -31,7 +31,7 @@ The command line reads:
 
 The results on Paraview
 
-.3D Model with ribs.
+.2D Cantilever
 ++++
 
 <div class="stretchy-wrapper-16_9">
@@ -39,8 +39,9 @@ The results on Paraview
 </div>
 <script type="text/javascript">
 feelppVtkJs.createSceneImporter( vtkVisuSection2, {
-                                 fileURL: "https://girder.math.unistra.fr/api/v1/item/5aef723db0e9574027047f6b/download",
-                                 objects: { "deformation":[ { scene:"displacement" } ] }
+                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5aef723db0e9574027047f6c/download",
+                                 objects: { "deformation":[ { scene:"u", name:"displacement" } ],
+                                            "geometry":[ { scene:"geometry", name:"cantilever" } ] }
                                } );
 </script>
 
