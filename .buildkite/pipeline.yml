@@ -2,7 +2,7 @@ steps:
  - name: ':antora: :book:'
    command: .buildkite/steps/antora-build.sh
    agents:
-       docker: true
+       docker-antora: true
    env:
       PROJECT: docs.feelpp.org
       BUILDKITE_DOCKER_COMPOSE_CONTAINER: "antora"
@@ -12,11 +12,11 @@ steps:
    branches: master
    env:
        PROJECT: docs.feelpp.org
- - wait
- - name: ':rocket: :book: fix :image:'
-   command: .buildkite/steps/build.sh
-   agents:
-     antora: true
-   branches: master
-   env:
-       PROJECT: docs.feelpp.org
+ # - wait
+ # - name: ':rocket: :book: fix :image:'
+ #   command: .buildkite/steps/build.sh
+ #   agents:
+ #     antora: true
+ #   branches: master
+ #   env:
+ #       PROJECT: docs.feelpp.org
