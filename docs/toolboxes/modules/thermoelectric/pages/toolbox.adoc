@@ -1,0 +1,45 @@
+= Thermo-Electric toolbox
+
+== Notations
+
+In the thermo-electric model, we have 4 parameters
+
+* stem:[\sigma] the electrical conductivity
+* stem:[k] the thermal conductivity
+* stem:[T_c] the water cooling temperature
+* stem:[h] the heat transfer coefficient
+
+NOTE: These parameters can be scalars of fields. 
+
+We gather in the following table parameter ranges, nominal values as well as units for stem:[\sigma, k, T_c, h].
+
+.Table of parameters for the simulation
+|===
+| Parameters | Ranges |  Nominal value | Units
+| stem:[\sigma] | stem:[[52.10^{6};58.10^{6}]] | stem:[53\cdot 10^{6}] | stem:[S \cdot m^{-1}]
+| stem:[k] | stem:[[360;380]]| stem:[370] | stem:[W\cdot m^{-1} \cdot K^{-1}$]
+| stem:[T_c] | stem:[[293;310]] | stem:[300] | K
+| stem:[h] | stem:[[70000;90000]] | stem:[850000] | stem:[W \cdot m^{-2} \cdot K^{-1}]
+|===
+
+In the linear case, we first solve for stem:[V] and then  for stem:[T] using stem:[V] to compute the Joule effect that generates heat inside stem:[\Omega].
+
+== Running the Thermo-electric application
+
+Using link:../02-docker/README.adoc[Docker],
+you can run Feel++ model application and in particular the thermo-electric model using the following command
+
+.Docker command
+[source,shell]
+----
+$ docker run -it -v $HOME/feel:/feel feelpp/feelpp-toolboxes:latest
+----
+
+Then type the following command in docker environment to run the model
+
+.Running Thermo-Electric model
+[source,shell]
+----
+$ cd Testcases/models/thermoelectric/test
+$ mpirun -np 4 /usr/local/bin/feelpp_toolbox_thermoelectric_3d --config-file model.cfg
+----
