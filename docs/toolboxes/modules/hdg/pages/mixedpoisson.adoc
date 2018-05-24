@@ -34,7 +34,7 @@ The models are not considered for now.
 [source,json]
 .Model section
 ----
-"Model": "HDG"
+"Models": { "equations":"hdg" }
 ----
 
 ==== Materials
@@ -153,7 +153,10 @@ Two fields can be exported, the potential stem:[p] and the flux stem:[\boldsymbo
 ----
 "PostProcess":
 {
-    "Fields":["potential","flux"]
+    "Exports":
+    {
+        "fields":["potential","flux"]
+    }
 }
 ----
 
