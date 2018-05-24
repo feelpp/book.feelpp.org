@@ -219,34 +219,89 @@ Different coupling strategies (semi-implicit and semi-explicit) can be set betwe
 
 * using a Dirichlet-Neumann scheme
 * using a Robin-Robin coupling scheme between the fluid and the structure.
+* using a Generalized Robin-Neumann scheme
 
 NOTE: The list needs to be updated
 
 == Coupling strategies
+
+Discrete coupling conditions must mimic the continuous coupling conditions that impose velocity, stress and geometric continuity on the FSI interface.
+
+FSI coupling conditions can be practically enforced in different ways. A key element determining the numerical scheme to be used is the added-mass effect. This phenomenon depends on the ratio stem:[\frac{\rho_s}{\rho_f}] and refers to the different acceleration that a body immersed in a fluid experiences, as opposed to the acceleration it would experience in vacuum. This effect is explained by imagining that, as it moves, the solid carries with it a certain volume of fluid, and the higher the fluid density, the stronger the added mass. The added-mass effect is strong when fluid and solid densities are approximately equal.
+
+Initially, when FSI simulations were carried out for aerodynamic purposes, this effect was negligible and a Dirichlet-Neumann approach was employed; lately, FSI modeling started employing denser fluids, and numerical schemes that are independent from added mass effects became necessary: two examples are Robin-Robin and Generalized Robin-Neumann schemes. They are all explicit schemes.
+
+=== Dirichlet-Neumann
+
+Dirichlet-Neumann coupling strategy is the easiest and directest one. It discretizes the FSI coupling conditions as follows: at the stem:[n]-th time iteration, on the fluid sub-problem the following conditions are imposed
+
+[stem]
+++++
+
+\mathbf{u}_f^n = \frac{\boldsymbol{\eta}_s^{n-1} - \boldsymbol{\eta}_s^{n-2}}{\Delta t} \quad \textrm{in stem:[\Omega_f^t]}
+
+++++
+
+They are the discretized Dirichlet prescription on the velocity suggested by the coupling conditions.
+
+On the solid sub-problem, instead, the Neumann condition on the stresses' continuity is imposed in a discrete form
+[stem]
+++++
+\boldsymbol{\sigma}_s^n \mathbf{n}_s = -\boldsymbol{\sigma}_f^n \mathbf{n}_f \quad \textrm{in stem:[\Omega_s^*]}
+++++
+
 === Robin-Robin
 
-The conditions read
+Robin-Robin (RR) coupling strategy imposes coupling conditions in Robin form, in two steps: at the stem:[n]-th time iteration, on the solid sub-problem the following conditions are imposed
 [stem]
 ++++
-\begin{aligned}
-      \boldsymbol{\sigma}_{s}^{n} \boldsymbol{n}_s^n + \frac{\gamma
-      \mu_f }{h} \boldsymbol{u}_{s}^n  &=&  \frac{\gamma \mu_f }{h}
-                                           \boldsymbol{u}_{f}^{n-1} -
-                                           \boldsymbol{\sigma}_{f}^{n-1}
-                                           \boldsymbol{n}_f  \quad
-                                           \quad \text{in}\ \Omega^*_s \\
-      \boldsymbol{\sigma}_{f}^{n} \boldsymbol{n}_f + \frac{\gamma
-      \mu_f }{h} \boldsymbol{u}_{f}  &=& \frac{\gamma \mu_f }{h}
-                                         \boldsymbol{u}_{s}^n +
-                                         \boldsymbol{\sigma}_{f}^{n-1}
-                                         \boldsymbol{n}_f \quad \quad
-                                         \text{in}\ \Omega^t_f
-    \end{aligned}
+\boldsymbol{\sigma}_s^n\mathbf{n}_s + \frac{\gamma \mu_f}{h} \mathbf{u}_s^n = \frac{\gamma \mu_f}{h} \mathbf{u}_f^{n-1}- \boldsymbol{\sigma}_f^{n-1}\mathbf{n_f} \quad \textrm{in stem:[\Omega_s^*]}
 ++++
-with
+where
 [stem]
 ++++
-\boldsymbol{u}_{s}^n = \frac{\partial
-      \boldsymbol{\eta}_{s}^n }{\partial t}
+\mathbf{u}_s^n= \frac{\partial \boldsymbol{\eta}_s^n}{\partial t}
 ++++
-and latexmath:[\gamma] a parameter to choose.
+The right-hand side depends only on quantities coming from the stem:[(n-1)]-th time iteration.
+
+Once the solid sub-problem has been solved, one uses stem:[\mathbf{u}_s^n ] to impose on the fluid sub-problem:
+[stem]
+++++
+\boldsymbol{\sigma}_f^n\mathbf{n}_f + \frac{\gamma \mu_f}{h} \mathbf{u}_f^n = \frac{\gamma \mu_f}{h} \mathbf{u}_s^{n} +\boldsymbol{\sigma}_f^{n-1} \mathbf{n_f} \quad \textrm{in stem:[\Omega_f^t]}
+++++
+Here, stem:[\gamma] is a penalization parameter to be chosen.
+
+It should be noticed that in (RR) stability and accuracy are subject to a CFL-condition: hyperbolic-type CFL, for which stem:[\Delta t = \mathcal{O}(h)], is sufficient to have stability, but parabolic-type CFL, for which stem:[\Delta t = \mathcal{O}(h^2)], is necessary to have optimal accuracy.
+
+=== Generalized Robin-Neumann
+
+This coupling strategy, at the stem:[n]-th time iteration, imposes on the fluid sub-problem:
+[stem]
+++++
+\boldsymbol{\sigma}_f^n \mathbf{n} + \frac{\rho_s}{\Delta t} \mathbf{B}\mathbf{u}_f^n = \frac{\rho_s}{\Delta t} \mathbf{B}\mathbf{u}_s^{n-1} - \boldsymbol{\sigma}_s^{n-1}\mathbf{n}_s \quad \textrm{in stem:[\Omega_f^t]}
+++++
+where
+[stem]
+++++
+\mathbf{u}_s^{n-1}= \frac{\partial \boldsymbol{\eta}_s^{n-1}}{\partial t}
+++++
+and stem:[\mathbf{B}] is a self-adjoint operator coming from a mass lumping procedure. The fluid-sided condition is called generalized Robin because of stem:[\bf{B}] that multiplies fluid and solid velocities.
+
+On the solid sub-problem, the following discrete Neumann condition is imposed
+\[
+\boldsymbol{\sigma}_s^n \mathbf{n}_s = -\boldsymbol{\sigma}_f^n \mathbf{n}_f \quad \textrm{in stem:[\Omega_s^*]}
+\]
+Also in this case there are CFL-type constraints that link space and time discretization steps: under parabolic-type CFL condition, stability is guaranteed; however, if adequate extrapolation techniques are employed, stability can be obtained under weaker requirements. 
+
+These succint explanations were taken from the articles:
+
+* Erik Burman, Miguel Angel Fernández. Explicit strategies for incompressible fluid-structure inter-
+action problems: Nitsche type mortaring versus Robin-Robin coupling. International Journal for
+Numerical Methods in Engineering, Wiley, 2014, 97 (10), pp.739–758. <10.1002/nme.4607>. <hal-
+00819948v2> https://hal.inria.fr/hal-00819948v2
+
+* Miguel Angel Fernández, Jimmy Mullaert, Marina Vidrascu. Generalized Robin-Neumann explicit
+coupling schemes for incompressible fluid-structure interaction: stability analysis and numerics.
+International Journal for Numerical Methods in Engineering, Wiley, 2015, 101 (3), pp.199-229.
+<10.1002/nme.4785>. <hal-00875819> https://hal.inria.fr/hal-00875819
+
