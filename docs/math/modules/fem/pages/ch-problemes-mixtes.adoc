@@ -230,8 +230,8 @@ Thanks to the Lemma of Céa applied to Saddle-Point Problems, the unique solutio
 ++++
         \begin{array}[c]{rl}
           ||u-u_h||_X & \leq c_{1h} \inf_{v_h \in X_h}  ||u-v_h||_X + c_{2}
-          \inf_{q_h \in M_h}  ||q-q_h||_M\\
-          ||p-p_h||_X & \leq c_{3h} \inf_{v_h \in X_h}  ||u-v_h||_X + c_{4h} \inf_{q_h \in M_h}  ||q-q_h||_M
+          \inf_{q_h \in M_h}  ||p-q_h||_M\\
+          ||p-p_h||_M & \leq c_{3h} \inf_{v_h \in X_h}  ||u-v_h||_X + c_{4h} \inf_{q_h \in M_h}  ||p-q_h||_M
           \end{array}
 ++++
 where
@@ -396,7 +396,7 @@ Look for stem:[(u,p) \in [H^1_0(\Omega)\]^d \times L^2_0(\Omega)] such that
         \begin{array}[c]{rl}
           \int_\Omega \nabla u : \nabla v -\int_\Omega p \nabla \cdot v  & =
           \int_\Omega f \cdot v, \quad \forall v \in [H^1_0(\Omega)]^d\\
-          \int_\Omega q \nabla \cdot u & = - \int_\Omega g q, \quad \forall q \in L^2_0(\Omega)
+          - \int_\Omega q \nabla \cdot u & = - \int_\Omega g q, \quad \forall q \in L^2_0(\Omega)
         \end{array}
         \right.
 ++++
@@ -430,9 +430,9 @@ Look for stem:[(u_h,p_h) \in X_h \times M_h] such that
 ++++
       \left\{
         \begin{array}[c]{rl}
-          \int_\Omega \nabla u_h : \nabla v_h + \int_\Omega p_h \nabla \cdot v_h
+          \int_\Omega \nabla u_h : \nabla v_h - \int_\Omega p_h \nabla \cdot v_h
           & = \int_\Omega f \cdot v_h, \quad \forall v_h \in X_h\\
-          \int_\Omega q_h \nabla \cdot u_h & = -\int_\Omega g q_h, \quad \forall q_h \in M_h
+         - \int_\Omega q_h \nabla \cdot u_h & = -\int_\Omega g q_h, \quad \forall q_h \in M_h
         \end{array}
         \right.
 ++++
