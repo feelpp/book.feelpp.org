@@ -30,7 +30,19 @@ Required parameters:
 
 Optional parameters:
 
-* `_quad`  = quadrature to use instead of the default one, wich means `_Q<integer>()` where the integer is the polynomial order to integrate exactely
+* `_quad`  = quadrature to use instead of the default one. Several ways are possible to pass the quadrature order for backward compatibility
+
+|===
+| API | Example | Explanation | Version
+| `_quad=<n>` | `_quad=5` | Pass the quadrature order as an integer, the default quadrature is used | v0.105
+| `_quad=im<Convex>(<n>)` | `_quad=im<Triangle>(5)` | Pass the default quadrature formula on a triangle to integrate exactly order 5 polynomials | v0.105
+| `_quad=im(mesh,<n>)` | `_quad=im(mesh,5)` | Pass the default quadrature formula on a mesh `mesh` to integrate exactly order 5 polynomials | v0.105
+| `_quad=_Q<n>()` | `_quad=_Q<5>()` | Pass the quadrature order at compile time to integrate exactly order 5 polynomials. It will be deprecated in a future release | up to v0.105
+
+|===
+
+IMPORTANT: Starting from v0.105, quadratures are built at runtime and no more at compile time which means that quadrature orders can be adjusted dynamically, _e.g_ from a command line option
+
 
 * `_geomap`  = type of geometric mapping to use, that is to say:
 
@@ -66,6 +78,15 @@ From `doc/manual/advection/advection.cpp`
 
 [source,cpp]
 ----
+  // using default quadrature
+  form2( _test = Xh, _trial = Xh, _matrix = D ) +=
+    integrate( _range = internalfaces( mesh ),
+               _quad = 2*Order,
+               _expr = ( averaget( trans( beta )*idt( u ) ) * jump( id( v ) ) )
+               + penalisation*beta_abs*( trans( jumpt( trans( idt( u ) )) )
+               *jump( trans( id( v ) ) ) ),
+               _geomap = geomap );
+  // use deprecated _Q
   form2( _test = Xh, _trial = Xh, _matrix = D ) +=
     integrate( _range = internalfaces( mesh ),
                _quad = _Q<2*Order>(),
