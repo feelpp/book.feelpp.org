@@ -47,6 +47,34 @@ feelppVtkJs.createSceneImporter( vtkVisuSection2, {
 
 ++++
 
+
+== Cantilever with Pure Traction
+
+We now consider a cantilever in  xref:elasticity/pure-traction.adoc[pure traction].
+To ensure well-posedness, we add constraints on the translation and rotation of the cantilever, namely in 2D and 3D respectively
+
+[stem]
+.Constraints on translation and rotation in 2D
+++++
+\int_\Omega \disp{d} = \disp{\tau}, \quad \int_\Omega \nabla \times \disp{d} = 2 \omega \disp{k}
+++++
+where stem:[\disp{k}] is the unit vector orthogonal to the 2D plane and stem:[\omega] is the angular speed of stem:[d].
+
+
+[stem]
+.Constraints in translation and rotation in 3D. 
+++++
+\int_\Omega \disp{d} = \disp{\tau}, \quad \int_\Omega \nabla \times \disp{d} = \disp{\omega}
+++++
+
+We first display a case of pure rigid rotation, the translation is set to 0.
+The domain outlined in black is the reference cantilever domain, the arrows display the rigid rotation and the rotated cantilever is in grey.
+
+[source,sh]
+----
+feelpp_qs_elasticity_pure_traction_2d --config-file cantilever.cfg --functions.g="{0,0}" --functions.f="{0,0}"
+----
+
 ++++
 <div class="stretchy-wrapper-16_9">
 <div id="vtkVisuSection3" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
@@ -54,9 +82,12 @@ feelppVtkJs.createSceneImporter( vtkVisuSection2, {
 <script type="text/javascript">
 feelppVtkJs.createSceneImporter( vtkVisuSection3, {
                                  fileURL: "https://girder.math.unistra.fr/api/v1/file/5affc155b0e9574027048059/download",
-                                 objects: { "reference":[ { scene:"reference", name:"Cantilever" }, { scene:"displacement", name:"Displacement" } ],
+                                 objects: { "reference":[ { scene:"cantilever-pure-traction", name:"Cantilever" } ],
+                                            "displacement":[ { scene:"displacement", name:"Rigid Rotation" } ],
                                             "deformed":[ { scene:"deformed", name:"Cantilever Rotated" } ] }
                                } );
 </script>
 
 ++++
+
+
