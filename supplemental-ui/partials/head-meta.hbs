@@ -15,10 +15,10 @@
     {{#if page.attributes.plotly}}
           <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
           <script type="text/javascript">
-              function plotly_unpack(rows, key) {
+              function feelpp_unpack(rows, key) {
                 return rows.map(function(row) { return row[key] });
               }
-              function plotly_add_redimensionable_plot(plot) {
+              function feelpp_add_redimensionable_plot(plot) {
                 var oldResize = window.onresize;
                 window.onresize = function() {
                   if(typeof oldResize === 'function')
