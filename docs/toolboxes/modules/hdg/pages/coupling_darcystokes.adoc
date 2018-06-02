@@ -1,0 +1,322 @@
+:stem: latexmath
+
+== Coupling Stokes and Darcy equations
+
+=== Problem setting
+
+.Definition
+****
+Let stem:[\Omega\subset\mathbb R^d] be a domain split into two subdomains stem:[\Omega_f] and stem:[\Omega_p] such that :
+
+[stem]
+++++
+    \begin{array}{l}
+        \Omega=\overline{\Omega_f}\cup\overline{\Omega_p}\\
+        \Omega_f\cap\Omega_p=\emptyset\\
+        \overline{\Omega_f}\cap\overline{\Omega_p}=\Gamma
+    \end{array}
+++++
+
+We call stem:[\Gamma] the _interface_. 
+****
+
+.Definition
+****
+We denote by stem:[\underline n_f\text{ and }\underline n_p] the respective unit outward normal vector fields along the boundary of stem:[\Omega_f\text{ and }\Omega_p] respectively.
+****
+
+.Remark
+We have : stem:[\underline n_f = -\underline n_p\text{ on }\Gamma].
+
+.Definition
+****
+For each stem:[i\in\{1,...,d-1\}], we define an unit vector field stem:[\tau_i] tangent to stem:[\Gamma] such that :
+
+[stem]
+++++
+    \forall\underline x\in\Gamma,\quad \left(\underline n_f,\underline\tau_1,...,\underline\tau_{d-1}\right)\text{ in an orthonormal basis for }\mathbb R^d
+++++
+****
+
+We aim to solve the Stokes equation in domain stem:[\Omega_f] and the Darcy equation in domain stem:[\Omega_p], subject to boundary conditions on stem:[\partial\Omega=(\partial\Omega_f\backslash\Gamma)\cup(\partial\Omega_p\backslash\Gamma)] together with coupling relations along stem:[\Gamma]. We denote by stem:[\Gamma_f\text{ and }\Gamma_p] the outer boundary of stem:[\Omega_f\text{ and }\Omega_p] respectively.
+
+
+
+We use the following notations :
+
+* stem:[\underline u_f\text{ and }p_f] are the _fluid velocity_ and _fluid pressure_ respectively within the Stokes domain stem:[\Omega_f],
+* stem:[\underline u_p\text{ and }\varphi] are the _fluid velocity_ and _piezometric head_ respectively within the Darcy domain stem:[\Omega_p],
+* stem:[\underline{\underline D}(\underline u)] is the symmetrized gradient defined by :
+
+[stem]
+++++
+    \underline{\underline D}(\underline u)=\frac12(\nabla\underline u+\nabla\underline u^T)
+++++
+* stem:[\underline{\underline T}(\underline u,p)] is the Cauchy stress tensor defined by :
+
+[stem]
+++++
+    \underline{\underline T}(\underline u,p)=2\nu\underline{\underline D}(\underline u)-p\underline{\underline I}_d
+++++
+
+=== Equations
+
+Writing Stokes and Darcy problems on their respective domains yields the system :
+
+[stem]
+++++
+    \left\{\begin{array}{rll}
+        -\nabla\cdot\underline{\underline T}(\underline u_f,p_f) & =\underline f_f & \text{ in }\Omega_f\\
+        \nabla\cdot\underline u_f & = g_f & \text{ in }\Omega_f\\
+        -\nabla\cdot\underline{\underline\kappa}\nabla\varphi & =f_p & \text{ in }\Omega_p
+    \end{array}\right.
+++++
+
+=== Boundary conditions
+
+The same essential/natural splitting as in the sole Darcy problem occurs here. One thus has to split the outer boundary stem:[\partial\Omega] in four relatively open disjoint pieces. The subscripts stem:[f,p] denote objects relative to the Stokes and The Darcy problem respectively, and the subscripts stem:[n,e] denote respectively natural and essential boundary condition.
+
+.Definition
+****
+[stem]
+++++
+    \left.\begin{array}{l}
+        \overline{\Gamma_{f,n}}\cup\overline{\Gamma_{f,e}}=\partial\Omega_f\backslash\Gamma\\
+        \Gamma_{f,n}\cap\Gamma_{f,e}=\emptyset\\
+        \overline{\Gamma_{p,n}}\cup\overline{\Gamma_{p,e}}=\partial\Omega_p\backslash\Gamma\\
+        \Gamma_{p,n}\cap\Gamma_{p,e}=\emptyset\\
+    \end{array}\right.
+++++
+****
+
+One can impose :
+
+[stem]
+++++
+    \left\{\begin{array}{rll}
+        \underline u_f & = \underline u_{f,e} & \text{ on }\Gamma_{f,e} \\
+        \underline{\underline T}(\underline u_f,p_f)\underline n_f & = \underline T_{f,n} & \text{ on }\Gamma_{f,n} \\
+        \varphi & =\varphi_{e} & \text{ on }\Gamma_{p,e} \\
+        (-\underline{\underline\kappa}\nabla\varphi )\cdot\underline n_p & = u_{p,n} & \text{ on }\Gamma_{p,n}
+    \end{array}\right.
+++++
+
+=== Coupling conditions
+
+We impose the following coupling conditions along the interface stem:[\Gamma].
+
+* Continuity of the normal velocity, _i.e._ stem:[\underline u_f\cdot\underline n_f + \underline u_p\cdot\underline n_p = 0], or :
+
+[stem]
+++++
+    \underline u_f\cdot\underline n_f = -(\underline{\underline\kappa}\nabla\varphi)\cdot\underline n_f\quad\text{ on }\Gamma
+++++
+
+* Continuity of the normal component of the Cauchy stress :
+
+[stem]
+++++
+    -\underline n_f\cdot(\underline{\underline T}(\underline u_f,p_f)\underline n_f)=g\varphi\quad\text{ on }\Gamma
+++++
+
+* Beavers-Joseph condition :
+
+[stem]
+++++
+    (\underline u_f - \underline u_p)\cdot\underline\tau_i+\alpha\underline\tau_i\cdot(\underline{\underline T}(\underline u_f,p_f)\underline n_f)=0\quad\text{ on }\Gamma\quad i\in\{1,...,d-1\}
+++++
+
+where stem:[\alpha] is proportional to the square root of the permeability of stem:[\Omega_p] and inversely proportional to the square root of the kinematic viscosity stem:[\nu] and depends on the characteristic length of the pores in stem:[\Omega_p].
+
+It is common to neglect the tangential components of stem:[\underline u_p], thus the Beavers-Joseph condition reduces to the Beavers-Joseph-Saffman condition :
+
+[stem]
+++++
+    \underline u_f\cdot\underline\tau_i+\alpha\underline\tau_i\cdot(\underline{\underline T}(\underline u_f,p_f)\underline n_f)=0\quad\text{ on }\Gamma\quad i\in\{1,...,d-1\}
+++++
+
+See _D. A. Nield, The Beavers-Joseph boundary condition and related matters : a historical and critical note, Transp. Porous Med. (2009) 78:537-540_ and _M. Hoffmann, The Navier-Stokes-Darcy problem, Master's Thesis (2013)_. This identity comes from empirical observations.
+
+=== Weak formulation
+
+We basically just write independently the weak formulation for Darcy and Stokes problem, then make the coupling condition appear by substitution.
+
+.Remark
+In the following, function restrictions on a boundary are to be understood in terms of trace operator.
+
+.Definition
+****
+In order to write the weak formulation, we build the following function spaces from the boundary conditions :
+
+[stem]
+++++
+    \begin{array}{l}
+        H_f=\left\{\underline v=(v_i)_{i=1,...,d}\in(H^1(\Omega_f))^d\quad|\quad\left.\underline v\right|_{\Gamma_{f,e}}=0\right\}\\
+        H_p=\left\{\psi\in H^1(\Omega_p)\quad|\quad\left.\psi\right|_{\Gamma_{p,e}}=0\right\}
+    \end{array}
+++++
+
+in which we will pick our test functions. We endow them with the usual norms :
+
+[stem]
+++++
+    \begin{array}{l}
+        \|\underline v\|_{1,\Omega_f}=\left(\sum_{i=1}^d\|v_i\|_2^2+\int_{\Omega_f}(\nabla\underline v:\nabla\underline v)\right)^{\frac12}\\
+        \|\psi\|_{1,\Omega_p}=\left(\|\psi\|_2^2+\int_{\Omega_p}\nabla\psi\cdot\nabla\psi\right)^{\frac12}
+    \end{array}
+++++
+
+inherited from the scalar products :
+
+[stem]
+++++
+\begin{array}{l}
+\langle\underline v,\underline w\rangle_{\Omega_f}=\left(\sum_{i=1}^d\left(\int_{\Omega_f}|v_i||w_i|+\int_{\Omega_f}(\nabla\underline v:\nabla\underline w)\right)\right)^{\frac12}\\
+
+\langle\varphi,\psi\rangle_{\Omega_p}=\left(\int_{\Omega_p}|\varphi||\psi|+\int_{\Omega_p}\nabla\varphi\cdot\nabla\psi\right)^{\frac12}\\
+\end{array}
+++++
+****
+
+.Definition
+****
+Moreover, we endow stem:[X=H_f\times H_p] with the norm :
+
+[stem]
+++++
+\|\overline{\underline w}\|_X=\left(\|\underline w\|_{1,\Omega_f}^2+\|\psi\|_{1,\Omega_p}^2\right)^\frac12
+++++
+****
+
+From Stokes' equation, we have to take the divergence of the stress tensor, in particular of the deformation tensor, times a test function stem:[\underline v\in H_f]. We use the well-known identity :
+
+[stem]
+++++
+\nabla\cdot\left(D(\underline u)\underline v\right)=(\nabla\cdot D(\underline u))\cdot\underline v + D(\underline u):\nabla\underline v
+++++
+
+where stem:[A:B=Tr(AB^T)] denotes the generalized scalar product. Since stem:[D(\underline u)] is symmetric, we can replace stem:[\nabla\underline v] by stem:[D(\underline v)], according to the following relations : stem:[Tr(AB^T)=Tr(BA^T)=Tr(BA)=Tr(AB)] with stem:[A] symmetric and any stem:[B].
+
+We define the following bilinear forms :
+
+[stem]
+++++
+a_f(\underline u,\underline v) = 2\nu\int_{\Omega_f}\underline{\underline D}(\underline u):\underline{\underline D}(\underline v)\quad;\quad b_f(\underline v,p) = -\int_{\Omega_f}p\nabla\cdot\underline v\quad;\quad a_p(\varphi,\psi)=\int_{\Omega_p}\nabla\psi\cdot\underline{\underline\kappa}\nabla\varphi
+++++
+
+==== Stokes
+
+Let stem:[\underline v\in H_f]. Multiplying and integrating gives :
+
+[stem]
+++++
+\int_{\Omega_f}(-\nabla\cdot\underline{\underline T}(\underline u_f,p_f))\cdot\underline v=\int_{\Omega_f}\underline f\cdot\underline v
+++++
+
+
+We now focus on the left hand side term.
+
+[stem]
+++++
+    \begin{array}{rl}
+        \displaystyle\int_{\Omega_f}(-\nabla\cdot\underline{\underline T}(\underline u_f,p_f))\cdot\underline v =&\displaystyle\int_{\Omega_f}(\nabla\cdot(p_f\underline{\underline I}_d-2\nu \underline{\underline D}(\underline u_f)))\cdot\underline v\\
+        =&\displaystyle\int_{\Omega_f}\nabla p_f\cdot\underline v-2\nu(\nabla\cdot\underline{\underline D}(\underline u_f))\cdot\underline v\\
+        =&\displaystyle\int_{\Omega_f}\nabla\cdot(p_f\underline v)-\int_{\Omega_f}p_f\nabla\cdot\underline v+2\nu\int_{\Omega_f}\underline{\underline D}(\underline u_f):D(\underline v)-2\nu\int_{\Omega_f}\nabla\cdot(\underline{\underline D}(\underline u_f)\cdot\underline v)\\
+        =&a_f(\underline u_f,\underline v)+b_f(\underline v,p_f)-\displaystyle\int_{\Omega_f}\nabla\cdot\left(\underline{\underline T}(\underline u_f,p_f)\underline n_f\cdot\underline v\right)\\
+        =&a_f(\underline u_f,\underline v)+b_f(\underline v,p_f)-\displaystyle\int_{\Gamma_{f,e}\cup\Gamma_{f,n}\cup\Gamma}\underline v\cdot(\underline{\underline T}(\underline u_f,p_f)\underline n_f)
+    \end{array}
+++++
+
+Notice that the stem:[\Gamma_{f,e}] part vanishes since stem:[\left.\underline v\right|_{\Gamma_{f,e}}=0]. Writing stem:[\displaystyle\underline v=(\underline v\cdot\underline n_f)\underline n_f+\sum_{i=1}^{d-1}(\underline v\cdot\underline\tau_i)\underline\tau_i] on the boundary gives :
+
+[stem]
+++++
+\int_{\Gamma}-\underline v\cdot(\underline{\underline T}(\underline u_f,p_f)\underline n_f)=-\int_\Gamma(\underline v\cdot\underline n_f)(\underline{\underline T}(\underline u_f,p_f)\underline n_f)\cdot\underline n_f-\sum_{i=1}^{d-1}\int_\Gamma(\underline v\cdot\underline\tau_i)(\underline{\underline T}(\underline u_f,p_f)\underline\tau_i)\cdot\underline n_f
+++++
+
+allowing us to apply the coupling conditions :
+
+[stem]
+++++
+\int_\Gamma-\underline v\cdot(\underline{\underline T}(\underline u_f,p_f)\underline n_f)=\int_\Gamma(\underline v\cdot\underline n_f)g\varphi + \frac1\alpha\sum_{i=1}^{d-1}\int_\Gamma(\underline v\cdot\underline\tau_i)(\underline u_f-\underline u_p)\cdot\underline\tau_i
+++++
+
+so that the total weak Stokes equation is  :
+
+[stem]
+++++
+a_f(\underline u_f,\underline v)+b_f(\underline v,p_f)+\int_{\Gamma}\left((\underline v\cdot\underline n_f)g\varphi + \frac1\alpha\sum_{i=1}^{d-1}(\underline v\cdot\underline\tau_i)(\underline u_f-\underline u_p)\cdot\underline\tau_i\right) = \int_{\Omega_f}\underline f\cdot\underline v - \int_{\Gamma_{f,n}}\underline v\cdot\underline T_{f,n}
+++++
+
+We may often use Saffmann's approximation and a zero Neumann condition on the outer boundary, yielding :
+
+[stem]
+++++
+a_f(\underline u_f,\underline v)+b_f(\underline v,p_f)+\int_{\Gamma}\left((\underline v\cdot\underline n_f)g\varphi+\frac1\alpha\sum_{i=1}^{d-1}(\underline v\cdot\underline\tau_i)(\underline u_f\cdot\underline\tau_i)\right) = \int_{\Omega_f}\underline f\cdot\underline v-\int_{\Gamma_{f,n}}\underline v\cdot\underline T_{f,n}
+++++
+
+==== Darcy
+
+Since stem:[\underline u_p=\underline{\underline\kappa}\nabla\varphi] and stem:[\nabla\cdot\underline u_p=0], we rewrite Darcy's equation :
+
+[stem]
+++++
+-\nabla\cdot(\underline{\underline\kappa}\nabla\varphi)=0\text{ on }\Omega_p
+++++
+
+Let us write its weak formulation :
+
+
+
+[stem]
+++++
+    \begin{array}{rl}
+        \displaystyle\int_{\Omega_p}-\nabla\cdot(\underline{\underline\kappa}\nabla\varphi)\psi=&\displaystyle\int_{\Omega_p}\underline{\underline\kappa}\nabla\varphi\cdot\nabla\psi-\int_{\Omega_p}\nabla\cdot(\underline{\underline\kappa}\psi\nabla\varphi)\\
+        =&\displaystyle a_p(\varphi,\psi)-\int_{\Gamma_{p,e}\cup\Gamma_{p,n}\cup\Gamma}\underline{\underline\kappa}\psi\nabla\varphi\cdot\underline n_p\\
+        =&\displaystyle a_p(\varphi,\psi)+\int_{\Gamma}\underline{\underline\kappa}\psi\nabla\varphi\cdot\underline n_f + \int_{\Gamma_{p,n}}\underline{\underline\kappa}\psi\nabla\varphi\cdot\underline n_f\quad\text{ thanks to b.c.}\\
+        =&\displaystyle a_p(\varphi,\psi)-\int_{\Gamma}\psi(\underline u_f\cdot\underline n_f) - \int_{\Gamma_{p,n}}\psi u_{p,n}\quad\text{ thanks to c.c.}							  
+    \end{array}
+++++
+
+so the weak Darcy is :
+
+[stem]
+++++
+\displaystyle a_p(\varphi,\psi)-\int_{\Gamma}\psi(\underline u_f\cdot\underline n_f) = \int_{\Gamma_{p,n}}\psi u_{p,n}
+++++
+
+==== Sum up
+
+[stem]
+++++
+    \left\{\begin{array}{rll}
+        a_f(\underline u_f,\underline v)+b_f(\underline v,p_f)-\displaystyle\int_{\Gamma_{f,e}\cup\Gamma_{f,n}\cup\Gamma}\underline v\cdot(\underline{\underline T}(\underline u_f,p_f)\underline n_f)=&\displaystyle\int_{\Omega_f}\underline f\cdot\underline v&\text{ in }\Omega_f\\
+
+        \displaystyle a_p(\varphi,\psi)-\int_{\Gamma_{p,e}\cup\Gamma_{p,n}\cup\Gamma}\underline{\underline\kappa}\psi\nabla\varphi\cdot\underline n_p=&0&\text{ in }\Omega_p\\
+
+        \underline u_f=&\underline u_{f,e}&\text{ on }\Gamma_{f,e}\\
+
+        \underline u_p\cdot\underline n_p=&u_{p,n}&\text{ on }\Gamma_{p,n}\\
+
+        \varphi=&\varphi_e&\text{ on }\Gamma_{p,e}\\
+
+        (-\underline{\underline\kappa}\nabla\varphi)\cdot\underline n_p=&u_{p,n}&\text{ on }\Gamma_{p,n}\\
+
+        \underline u_p\cdot\underline n_f=&\underline u_f\cdot\underline n_f&\text{ on }\Gamma\\
+
+        \underline\tau_i\cdot(\underline{\underline T}(\underline u_f,p_f)\underline n_f)=&\displaystyle\frac1\alpha(\underline u_f-\underline u_p)\cdot\underline\tau_i&\text{ on }\Gamma\text{ for }i=1,..,d-1\\
+
+        -\underline n_f\cdot(\underline{\underline T}(\underline u_f,p_f)\underline n_f)=&g\varphi&\text{ on }\Gamma
+    \end{array}\right.
+++++
+
+Adding up these equations yields the weak formulation of this coupled Stokes-Darcy problem :
+
+[stem]
+++++
+    \left\{\begin{array}{l}
+        \text{find }\underline u_f\in H_f\text{, }p_f\in L^2(\Omega_f)\text{ and }\varphi\in H_p\text{ s.t. for all }\underline v\in H_f\text{, }q\in L^2(\Omega_f)\text{ and }\psi\in H_p :\\
+        \displaystyle a_f(\underline u_f,\underline v)+b_f(\underline v,p_f)+ga_p(\varphi,\psi)+\int_\Gamma g\varphi(\underline v\cdot\underline n_f)-\int_\Gamma g\psi(\underline u_f\cdot\underline n_f)+\int_\Gamma\sum_{i=1}^{d-1}\frac1\alpha(\underline u_f\cdot\underline\tau_i)(\underline v\cdot\underline\tau_i)=\int_{\Omega_f}\underline f\cdot\underline v - \int_{\Gamma_{f,n}}\underline v\cdot\underline T_{f,n} - \int_{\Gamma_{p,n}}\psi u_{p,n}\\
+        b_f(\underline u_f,q)=0
+    \end{array}\right.
+++++
