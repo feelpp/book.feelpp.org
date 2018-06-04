@@ -1,0 +1,195 @@
+:stem: latexmath
+
+== Flow through porous material : the Darcy model
+
+We consider a closed bounded domain stem:[\Omega\subset\mathbb R ^d]. 
+
+Whenever stem:[\underline u,\underline v\in[L^2(\Omega)\]^d], we denote :
+
+[stem]
+++++
+    (\underline u,\underline v)_0 = \int_\Omega\underline u\cdot\underline v
+++++
+
+If stem:[\varphi,\psi\in L^2(\Omega)], we define :
+
+[stem]
+++++
+    (\varphi,\psi)_0=\int_\Omega\varphi\psi
+++++
+
+If moreover stem:[A\subset\Omega] has dimension stem:[d-1] or stem:[d], then we define the corresponding bilinear form :
+
+[stem]
+++++
+    \langle\varphi,\psi\rangle_A=\int_A\varphi\psi
+++++
+
+=== Mixed Darcy problem
+
+Find stem:[\underline u:\Omega\to\mathbb R^d] and stem:[\varphi:\Omega\to\mathbb R] such that :
+
+[stem]
+++++
+    \left\{\begin{array}[c]{rll}
+        \underline u +\underline{\underline\kappa}\nabla\varphi & =\underline f_1 & \text{in }\Omega\\
+        \nabla\cdot\underline u & = f_2 & \text{in }\Omega
+    \end{array}\right.
+++++
+
+where stem:[\underline f_1\in [L^2(\Omega)\]^d] is the _source term_ and stem:[f_2\in L^2(\Omega)] is the incompressibility defect.
+
+
+Here, stem:[\underline{\underline\kappa}] is a positive definite matrix (often assumed symmetric or even diagonal) representing the hydraulic conductivity whose coefficients are in stem:[m s^{-1}], and stem:[\varphi=z+\frac p{\rho g}] is the _fluid charge_ or _piezometric head_ expressed in stem:[m], where stem:[g] is the gravity acceleration, stem:[\rho] is the fluid density and stem:[z] denotes the height from a reference level.
+
+.Remark
+****
+We usually consider the case where stem:[\underline{\underline\kappa}] is symmetric, or even diagonal, and stem:[\underline f_1\equiv0]. If moreover one wishes to consider incompressible flow, it suffices to set stem:[f_2\equiv0] as well.
+****
+
+=== Primal Darcy Problem
+
+The mixed formulation yields :
+
+[stem]
+++++
+    \underline u = -\underline{\underline\kappa}\nabla\varphi + \underline f_1\quad\text{ in }\Omega
+++++
+
+so writing stem:[\nabla\cdot\underline u = f_2] gives :
+
+[stem]
+++++
+   - \nabla\cdot\underline{\underline\kappa}\nabla\varphi + \nabla\cdot\underline f_1 = f_2\quad\text{ in }\Omega
+++++
+
+.Remark
+****
+In the sequel, we will focus on the case with no source term, _i.e._ stem:[\underline f_1\equiv0]. For the sake of simplicity, we will denote stem:[f=f_2].
+
+The primal form then becomes :
+
+[stem]
+++++
+    -\nabla\cdot\underline{\underline\kappa}\nabla\varphi=f\quad\text{ in }\Omega
+++++
+
+Moreover, we suppose stem:[\underline{\underline\kappa}] is diagonal, and we denote stem:[\kappa_i,i\in\{1,...,d\}] its diagonal entries. We emphasize the fact that they are all positive constants.
+****
+
+=== Boundary conditions
+
+We need to impose boundary conditions on stem:[\partial\Omega]. As in the Stokes case, we will consider Dirichlet, Neumann and Robin type boundary conditions.
+
+Let us decompose the boundary stem:[\partial\Omega] in two relatively open disjoint parts :
+
+[stem]
+++++
+    \partial\Omega=\overline{\Gamma_{nat}}\cup\overline{\Gamma_{ess}}
+++++
+[stem]
+++++
+    \Gamma_{nat}\cap\Gamma_{ess}=\emptyset
+++++
+
+on which we impose the conditions :
+
+[stem]
+++++
+    \left\{\begin{array}{rll}
+        -(\underline{\underline\kappa}\nabla\varphi)\cdot\underline n & = u_{nat} & \text{ on }\Gamma_{nat}\\
+        \varphi & = \varphi_{ess} & \text{ on }\Gamma_{ess}
+    \end{array}\right.
+++++
+
+Thus, the *natural* condition is a Neumann condition for stem:[\varphi] on which depends the variational formulation, and the *essential* condition is a Dirichlet condition for stem:[\varphi] on which depends the test function space.
+
+=== Weak formulation
+
+A nice functional space for this primal Darcy problem is the space of all the infinitely differentiable scalar functions on stem:[\Omega] vanishing close to the essential boundary : latexmath:[V_0 = \left\{\psi\in C^\infty(\Omega)\quad|\quad\left.\psi\right|_{\Gamma_{ess}}=0\right\}]. Nevertheless, it is not complete. Our test function space will be its stem:[H^1(\Omega)] completion.
+
+.Definition
+****
+The test space for the primal Darcy problem is the space of function whose trace vanishes on the essential boundary :
+
+[stem]
+++++
+H_0^1(\Omega)\subset V=\overline{V_0}^{H^1(\Omega)}\subset H^1(\Omega)
+++++
+
+It inherits the stem:[H^1(\Omega)] norm.
+****
+
+Let us multiply the primal form by stem:[\psi\in V]. The left hand side term becomes :
+
+[stem]
+++++
+    \begin{array}{rl}
+        \displaystyle\int_\Omega-(\nabla\cdot\underline{\underline\kappa}\nabla\varphi)\psi=&-\displaystyle\int_\Omega\nabla\cdot(\underline{\underline\kappa}(\nabla\varphi)\psi)+\int_\Omega(\underline{\underline\kappa}\nabla\varphi)\cdot\nabla\psi\\
+        =&\displaystyle-\int_{\Gamma_{nat}}\psi\underline{\underline\kappa}\nabla\varphi\cdot\underline n+\underline{\underline\kappa}\int_\Omega\nabla\varphi\cdot\nabla\psi\\
+        =&-\langle u_{nat},\psi\rangle_{\Gamma_{nat}}+(\underline{\underline\kappa}\nabla\varphi,\nabla\psi)_0
+    \end{array}
+++++
+
+while the right hand side term becomes stem:[(f,\psi)_0].
+
+To impose the Dirichlet condition stem:[\varphi=\varphi_{ess}] on stem:[\Gamma_{ess}], one has to involve the trace operator, since the restriction of stem:[\varphi] is not properly defined anymore. By surjectivity of the trace operator, stem:[\varphi_{ess}] admits an extension (not unique) in  stem:[H^1(\Omega)] we still denote stem:[\varphi_{ess}] for simplicity. The Dirichlet condition becomes :
+
+[stem]
+++++
+    \varphi-\varphi_{ess}\in V
+++++
+
+.Definition
+****
+Let stem:[a:V\times V\to\mathbb R] be a bilinear form and stem:[\tilde f:V\to\mathbb R] a linear form defined by :
+[stem]
+++++
+    a(\varphi,\psi)=(\underline{\underline\kappa}\nabla\varphi,\nabla\psi)_0\quad\text{ ; }\quad\tilde f(\psi)=(f,\psi)_0-\langle u_{nat},\psi\rangle_{\Gamma_{nat}}
+++++
+****
+
+.Proposition
+****
+The weak formulation of the Darcy problem reads as follows :
+[stem]
+++++
+   \left\{\begin{array}{ll}
+        \text{find }\varphi\in H^1(\Omega)\text{ such that }\varphi-\varphi_{ess}\in V\text{ and}&\\
+        a(\varphi,\psi)=\tilde f(\psi)&\\
+   \end{array}\right.
+++++
+****
+
+.Theorem
+****
+The Darcy problem in weak form admits an unique solution stem:[\varphi].
+****
+.Proof
+This comes straightforwardly from Lax-Milgram theorem. It is sufficient to show that stem:[a] is bounded and coercive, and that stem:[\tilde f] is bounded.
+
+* Thanks to Cauchy-Schwarz inequality, the boundedness of stem:[a] comes easily :
+
+[stem]
+++++
+    |a(\varphi,\psi)|=|(\underline{\underline\kappa}\nabla\varphi,\nabla\psi)_0|\leqslant\max_{i\in\{1,...,d\}}\{\kappa_i\}|(\nabla\varphi,\nabla\psi)_0|\leqslant\max_{i\in\{1,...,d\}}\{\kappa_i\}\|\varphi\|_V\|\psi\|_V
+++++
+* The coercivity of stem:[a] is also easy to prove :
+
+[stem]
+++++
+    a(\varphi,\varphi)=(\underline{\underline\kappa}\nabla\varphi,\nabla\varphi)_0\geqslant\min_{i\in\{1,...,d\}}\{\kappa_i\}(\varphi,\varphi)_V=\min_{i\in\{1,...,d\}}\{\kappa_i\}\|\varphi\|_V^2
+++++
+* Using the Cauchy-Schwarz inequality and the Poincaré inequality, we get the boundedness of stem:[\tilde f]. We first apply the Riesz representation theorem to find stem:[\tilde F\in L^2(\Omega)] representing stem:[\tilde f].
+
+[stem]
+++++
+    |\tilde f(\psi)|=|(\tilde F,\psi)_0|\leqslant\|\tilde F\|_0\|\psi\|_0\leqslant C\|\tilde F\|_0\|\psi\|_V
+++++
+
+=== Numerical simulation
+
+[source,geo]
+----
+include::./unitsquare.geo[]
+----
