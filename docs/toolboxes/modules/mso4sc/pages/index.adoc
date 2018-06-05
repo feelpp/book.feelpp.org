@@ -80,13 +80,6 @@ To check, you can use `nmap -p <port> portal.mso4sc.eu`.
 You may need to contact your system admin to check and eventually open these ports.
 ====
 
-[NOTE]
-====
-For *DevUser* using the {uri-msoportal-dev-www}{portal_test} ....
-
-* `5050, 8080`: ...
-
-====
 
 [[feelpp_offerings]]
 == {feelpp} Offerings in *Marketplace*
@@ -113,9 +106,9 @@ For the new user we recommend to read this guide. The impatient may go directly 
 
 == Synopsis of the {feelpp} Offering
 
-The {feelpp} offering is created by *DevUser* as described in this <<registerapp, section>>.
-Any *EndUser* may purchase the offering following the <<purchase, generic procedure>>. Then,
-he or she can run the purchased offering provided that some fields are filled properly as in this <<running, example>>.
+The {feelpp} offering is created by {feelpp} developers.
+Any *EndUser* may purchase the offering following the <<purchase, generic procedure>>.
+Then, he or she can run the purchased offering provided that some fields are filled properly as in this <<running, example>>.
 Details for setup each offering will be giving in the <<offering_setup, next section>>.
 
 Even if each offering is specific, what is going on under the hood is described here:
@@ -143,122 +136,6 @@ to setup the {sregistry} client.
 As for {girder} ...
 ====
 
-[[devuser]]
-== *DevUser* role
-
-=== Becoming *DevUser*
-
-Once registered in the portal, you  are a *EndUser*.
-To be granted *DevUser* rights, just email to Portal Admins (actually Victor or Javi).
-
-[[registerapp]]
-===  Register an {feelpp} application
-
-To register an application you need to be *DevUSer*
-The process is split into several part:
-
-* add the app and create an offer in the {uri-msoportal-market-www}[*Marketplace*]:
-** go to *My stock/Catalogue*
-** go to *My stock/Product*
-** go to *My stock/Offering*
-
-Then you need to perform the following steps in *Experiments*:
-
-* go to *RegisterApp*
-** select your *Offering* in the sliding menu *New Products*
-** give the app a meaningful name
-** Choose a package file to load.
-
-[NOTE]
-====
-The package file is an gzipped archive holding the formal description of the app.
-It's actually a directory which contains :
-
-* a `blueprint.yml` TOSCA file that describes the workflow
-* a `scripts` sub-directory holding the scripts required to deploy and undeploy the app
-
-In this https://github.com/MSO4SC/resources/tree/master/blueprint/feelpp/feelpp_test[git repository]
-you will find the actual application corresponding to the {feelpp} basic demonstrator.
-
-To actually build the app, use: ```./deploy pkg```
-====
-
-[[validorder]]
-=== Validate an {feelpp} application purchase order
-
-Once the app has been registered in the *Marketplace* (actually it means that an offering has been defined) you will be *owner* of this app. Any *EndUser* may purchase your app.
-To check if you have any order:
-
-* go to *My Inventory*
-* go to *My Inventory/Product Orders*
-* check *Recibibas* menu
-* if any new message, you need to:
-** click to validate the order
-** click again to finalize the order
-
-The *EndUser* may now proceed to perform *Experiments* with you product
-
-[IMPORTANT]
-====
-Do not forget to notify the user that he/she has to connect once to:
-
-* {uri-sregistry-cesga}[{sregistry} service]
-* {uri-msoportal-ckan-www}[*DataCatalogue*]
-
-and eventually to :
-
-* {uri-girder-unistras}[{girder} service]
-
-This steps are mandatory for smooth operation of the app since the user has to be included
-into {feelpp} user group. Fortunately this need to be done only once for any {feelpp} app.
-
-Unfortunately the management of user has to be carried out manually by the *DevUser* in charge of the app
-and cannot be performed from the portal.
-====
-
-[[sregistry_add_to_team]]
-=== Adding an *EndUser* to {sregistry} team
-
-For app like {feelpp} apps that require an private singularity image, you must grant *EndUser* access to the {sregistry} {feelpp} team.
-To do so follow these instructions:
-
-* Logged in to your {uri-sregistry-cesga},
-* Click on *Teams* menu then select your *team*
-
-image::sregistry_team.png[ex: {{feelpp {sregistry} team]
-
-* As in the image above, click on *Invite Users*
-
-image::sregistry_team.png[ex: {{feelpp {invitation} team]
-
-* Copy the link (display in blue) and send it to your new *EndUser*
-
-See https://singularityhub.github.io/sregistry/credentials[sregistry docs]
-
-Once the *EndUser* will validate the invitation, his/her name will be display in the list
-of members. You can also make him/her *owner* of the team by clicking on the *Make Owner* button.
-
-[[girder_add_to_team]]
-=== Adding an *EndUser* to {girder}
-
-[[ckan_dev]]
-=== Data Catalogue
-
-As a *DevUser* you can create *Organization* in {uri-msoportal-ckan-www}[*Data Catalogue*]
-
-* click on *Organizations*
-* click on *Add Organization*
-
-You, then, need to fill the form and finalize the creation by clicking on the *create organization* button.
-
-You have then to manage user that are allowed to be part of your organization.
-They may the following role:
-
-* *admin* : can view/add dataset, add user and manage role
-* *editor* : can add dataset
-* *member* : can view dataset
-
-NOTE: *EndUser* has to connect at least once to *Data Catalogue* before you can grant them a role in your organization.
 
 [[enduser]]
 == *EndUser* role
