@@ -266,44 +266,16 @@ The others fields are designed for more advanced users.
 [options="header,footer"]
 |===
 | Key                           | Description                                 | Default                                                            | Notes
-| *Dataset resource: input_url* | url to retrieve for cfg file and input data | `None`                                                             | URL pointing to an archive of data files (comes from the data Catalog)
-| *execfile*                    | executable file                             | `feelpp_hfm_thermoelectric_model_3D_V1T1_N1`                       | any exec `feelpp_hfm...`
-| *cfgfile*                     | configuration file                          | `/usr/share/doc/feelpp/ThermoElectricModel/quarter-turn3D.cfg` | cfg file need to be in the container, or in a mounted dir or in the dataset
+| **<toolbox>_case**                    | string that describe the location of the testcase                             | ``                       |
+| *<toolbox slug name>_cli**                     | command line options                           |  "" |
 |===
 
 .List of keys to be defined for HPC settings
 [options="header,footer"]
 |===
 | Key                        | Description              | Default          | Notes
-| *monitor_entrypoint*       |  Monitor entrypoint IP   | "193.144.35.146" | for this release it should be empty
-| job_prefix                 | Job name prefix in HPCs  | "mso4sc"         |
-| *HPC: primary*               | HPC settings             | "cesga"          |
-| hpc_modules | modules to load depending on the targeted machine | [gcc/6.3.0, openmpi/2.0.2, singularity/2.4.2] | shall depends on HPC and singularity image
-| hpc_volumes | volumes to be mounted on the targeted machine |  [/scratch,/mnt,${LUSTRE}/feel:/feel] | depends on HPC and singularity image
-| *hpc_partition* | select partition queue | 'thin-shared' | shall depends on batch system and HPC (TODO)
-| hpc_reservation | select reservation queue | `` | is optional
-| *parallel_tasks* |  number of tasks/processes to run in parallel | 2 |  shall depends on batch system and selected partition
-| *max_time* | maximum allowed time for run (minutes and seconds) | '00:30:00' |  shall depends on batch system and selected partition
-|===
-
-.List of keys specs for retrieving singularity images
-[options="header,footer"]
-|===
-| Key                        | Description                                    | Default                        | Notes
-| sregistry_client           | define default sregistry client                |  `registry`                    |
-| sregistry_client_secrets   | path to file where sregistry secret are stored | `$HOME/.sregistry`             |
-| sregistry_storage          | path to container directory                    | `${LUSTRE}/singularity_images` |
-| sregistry_url              | URI pointing to the sregistry                  | `sregistry.srv.cesga.es`       |
-| sregistry_image            | URI pointing to the sregistry-cli image        | `mso4sc/sregistry`             |
-|===
-
-.List of keys specs for singularity image
-[options="header,footer"]
-|===
-| Key                        | Description              | Default          | Notes
-| singularity_image_uri      |  URI pointing to the singularity image   | `feelpp/feelpp:stretch` |
-| singularity_image_filename |  Filename of the singularity image       | `feelpp-stretch.simg` |
-| singularity_image_cleanup  | force remove of singularity image        | `false` |
+| *slurm_n_tasks* | number of tasks to be used in parallel | 10 |  shall depends on batch system and selected partition
+| *slurm_max_time* | maximum allowed time for run (minutes and seconds) | '00:30:00' |  shall depends on batch system and selected partition
 |===
 
 ====
