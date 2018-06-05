@@ -1,0 +1,30 @@
+= Overview of the Portal
+
+.Main web page of the MSO4SC Portal
+image::PortalMSO4SC.png[]
+
+The portal is split into several services:
+
+* *Marketplace*, where you can add and/or purchase applications
+* *Data Catalogue*, where you can add and/or retrieve data
+* *Experiments*, where the app is setup and the simulation is launched
+* *Visualization*, to access a Remote desktop to pre and/or post-processes your simulations
+
+More details on:
+
+* https://github.com/MSO4SC/MSOPortal/blob/master/portal/README.adoc[MSO4SC Front-end & Experiments Tool]
+* https://business-api-ecosystem.readthedocs.io/en/v5.4.1/user-programmer-guide.html[*Marketplace* User manual]
+* https://ckan.org/documentation-and-api/[*Data Catalogue* docs]
+
+[NOTE]
+====
+For smooth operations of {uri-msoportal-www}{portal}, the following ports have to *open*:
+
+* `3000`: *IDM*, the service responsible for authentification
+* `5000`: *MarkePlace*
+* `8000`: *Data Catalogue*
+
+To check, you can use `nmap -p <port> portal.mso4sc.eu`.
+
+You may need to contact your system admin to check and eventually open these ports.
+====
