@@ -140,8 +140,7 @@ As for {girder} ...
 [[enduser]]
 == *EndUser* role
 
-TIP: when running into some strange portal behavior, first try to `logout/login` from the portal
-before reporting an issue.
+TIP: when running into some strange portal behavior, first try to `logout/login` from the portal before reporting an issue.
 
 TIP: make sure that you have access to {uri-sregistry-cesga}[sregistry] holding all the singularity images.
 Right now its the only such service (see key `sregistry_url` in blueprints) available in the frame of the project.
@@ -168,72 +167,11 @@ you order. To check the status of your order:
 
 You shall be to see your products and their status in each product form.
 
-To finalize your purchase *DO NOT FORGET* to connect to :
-
-* {uri-sregistry-cesga}[{sregistry}]
-* {uri-msoportal-ckan-www}[*Data Catalogue*]
-* {uri-girder-unistras}[{girder}]
-
-Then notify the owner/seller that you request to be part of {feelpp} user group.
-This will allow you to access {himagnet} singularity images and datasets.
-
-NOTE: {girder} is optional.
 
 [[data]]
-=== Upload Data to *Data Catalogue*
+=== Benchmarks and Examples Catalogue
 
-* Connect to {uri-msoportal-ckan-www}[*Data Catalogue*]
-* Select an organization
-* Add a dataset if you are assign the role of *editor*
-
-NOTE: you need to ask the owner/seller of {feelpp} app to be granted the role of *editor*
-
-[[using_girder]]
-=== Upload Data to {girder} service
-
-
-[[hpc_setting]]
-=== Setting up an HPC resource in *Experiments*
-
-* Go to {uri-msoportal-experiment-www}[*Experiments*]
-* Select *Settings*
-* Define a HPC resource
-
-[source,txt]
-----
-include::{examplesdir}/hpc.txt[]
-----
-
-[[using_sregistry]]
-=== Connecting to {sregistry} service
-
-Before proceeding to the setup of the app, you need to make sure, at least for {feelpp}
- app (or more generally for apps requiring access to a private singularity image) that you have
- been granted the proper right on {feelpp} {sregistry} team.
-
-One more step consists in retrieving the *TOKEN* and storing it into your home directory on the HPC resource.
- This *TOKEN* is needed to download programmatically the {singularity} image :
-
-* connect to {uri-sregistry-cesga}[{sregistry}] using {fiware} authentification
-* go to your account (top right button)
-* select *Token*
-
-image::sregistry_token.png[ex: {Get {sregistry} token]
-image::sregistry_APItoken.png[ex: {Display {sregistry} token]
-
-* copy the token into a file `.sregistry`
-* copy `.sregistry` on the HPC resource, see <<hpc_setting, previously defined>>, into your home directory
-
-[NOTE]
-====
-To copy the file to the HPC resource you can use `scp .sregistry username@host:.`
-or whatever method you prefer. `username` and `host` are key defined in the <<hpc_setting,HPC resource setting>>
-
-You may connect to your account on HPC resource
-```
-ssh -Y username@host
-```
-====
+Go to http://docs.feelpp.org/examples/0.105/[Examples] or http://docs.feelpp.org/benchmarks/0.105/[Benchmarks] {feelpp} guides to discover what is available
 
 [[running]]
 === Running an {feelpp} application in *Experiments*
