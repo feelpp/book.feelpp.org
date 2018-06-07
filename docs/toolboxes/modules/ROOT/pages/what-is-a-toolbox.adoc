@@ -16,30 +16,41 @@ Using the xref:what-is-a-toolbox.adoc#_json_files[JSON] and xref:what-is-a-toolb
 
 The Model JSON (`.json`) files allow to configure a set of partial differential equations, more precisely they define:
 
-* [x] <<name_and_type_of_model,Names and Type of Model>>
+* [x] <<Names,Names>>
+* [x] <<Models,Models>>
 * [x] <<Parameters,Parameters>>
 * [x] <<Materials,Materials>>
 * [x] <<BoundaryConditions,Boundary conditions>>
 * [x] <<PostProcessing,Post processing>>
 
 
-=== Names and Type of Model
+=== Names
 
-A model JSON file starts by giving names (long and short) as well as the type of model which will be used by the toolbox.
-The latter allows to configure the set of equations associated the toolbox physics.
+A model JSON file starts by giving names (long and short).
 [source,json]
 ----
 "Name": "Turek-Hron cfd2", <1>
 "ShortName":"cfd2", <2>
-"Models": <3>
-{
-   "equations":"Navier-Stokes" <4>
-}
 ----
 <1> Name of the example, usually printed on-screen and in log files during simulations
 <2> Short name of the example, it is used to create directories to store the results of the simulation of the model
-<3> Section `Models` defined by the toolbox to define the main configuration of a toolbox and in particular the set of equations to be solved
-<4> toolbox specific option to define set of equations to be solved, read the toolbox manual to learn about the possible options.
+
+NOTE: Theses names are not used currently, but it should be the case in the future.
+
+=== Models
+
+A section Models can appear if the toolbox has several kinds of model (typically for select the PDE used).
+In most toolboxes, this section is optional and a model by default is choseen.
+The latter allows to configure the set of equations associated with fluid toolbox.
+[source,json]
+----
+"Models": <1>
+{
+   "equations":"Navier-Stokes" <2>
+}
+----
+<1> Section `Models` defined by the toolbox to define the main configuration of a toolbox and in particular the set of equations to be solved
+<2> toolbox specific option to define set of equations to be solved, read the toolbox manual to learn about the possible options.
 
 === Parameters
 
@@ -66,16 +77,20 @@ This section of the Model JSON file defines material properties linking the Phys
 ----
 "Materials":
     {
-        "Fluid": <1>
+        "Water": <1>
         {
-            "rho":"1.0e3", <2>
-            "mu":"1.0" <3>
+            "physics":"fluid", <2>
+            "markers":"[marker1,marker2]", <3>
+            "rho":"1.0e3", <4>
+            "mu":"1.0" <5>
         }
     }
 ----
 <1> gives the name of the physical entity (here `Physical Surface`) associated to the Material.
-<2> density stem:[\rho] is called `rho` and is given in SI units
-<3> viscosity stem:[\mu] is called `mu` and is given in SI units
+<2> defined which kind of physics is apply in this material. This is an optional section, by default all physics are apply. The value can be also a vector of physic.
+<3> defined mesh marker(s) where the material properties are applied. This is an optional section, by default the marker is take as the name <1>.
+<4> density stem:[\rho] is called `rho` and is given in SI units
+<5> viscosity stem:[\mu] is called `mu` and is given in SI units
 
 
 === BoundaryConditions
@@ -134,6 +149,90 @@ This section of the Model JSON file defines the boundary conditions.
 This section allows to define the output fields and quantities to be computed and saved for _e.g._ visualization.
 
 [source,json]
+.Basis of a `PostProcess` section
+----
+"PostProcess":
+{
+    "Exports":
+    {
+        "fields":["field1","field2",...]
+    },
+    "Measures":
+    {
+        "<measure type>":
+        {
+            ....
+        }
+    }
+}
+----
+
+
+=== Exports
+
+=== Measures
+
+==== Norms
+
+It could be useful to compute easily the norm (L2/H1/Semi-H1) of a field or an error.
+An example of json which define 2 norm computations. The results are stored in csv file in column named `Norm_mynorm_L2` and `Norm_myerror_L2-error`
+[source,json]
+.Example of a `Norm` section
+----
+"Norm":
+{
+    "mynorm":
+    {
+        "type":"L2",
+        "field":"velocity",
+     },
+     "myerror":
+     {
+         "type":"L2-error",
+         "solution":"{2*x,cos(y)}:x:y",
+         "field":"velocity",
+         "markers":"omega"
+     }
+}
+----
+
+
+Several norms can be computed by listing it in the type section : 
+[source,json]
+----
+"type":["L2-error","H1-error","SemiH1-error"],
+"solution":"{2*x,cos(y)}:x:y",
+"grad_solution":"{2,0,0,-sin(y)}:x:y",
+----
+
+An expression (scalar/vector/matrix) can be also passed to evaluate the norm. But in this case, the `field` entry must be removed.
+[source,json]
+----
+"expr":"2*x*y:x:y"
+----
+In the case of  H1 or SemiH1 norm type, the grad_expr entry must be given.
+[source,json]
+----
+"grad_expr":"{2*y,2*x}:x:y"
+----
+
+All solution/expression can be depends of specic symbol of the toolboxes used. For example, in the heat toolboxes : 
+[source,json]
+----
+"expr":"2*heat_T+3*x:heat_T:x"
+----
+where `heat_T` is the  temperature solution computed at last solve.
+
+
+The quadrature can be also given if an expression/solution is used. By default, the quadrature order is 5. For example,  use a quadrature order equal to 10 is done by adding :
+[source,json]
+----
+"quad":10
+----
+
+=== An example
+
+[source,json]
 ----
 "PostProcess": <1>
     {
@@ -175,9 +274,47 @@ This section allows to define the output fields and quantities to be computed an
 
 Here is a   xref:examples:csm:rotating-winch/index.adoc[biele example] from the Toolbox examples.
 
+
+
 == CFG files
 
 The Model CFG (`.cfg`) files allow to pass command line options to {feelpp} applications. In particular, it allows to
 
+* setup the output directory
 * setup the mesh
+* setup the time stepping
 * define the solution strategy and configure the linear/non-linear algebraic solvers.
+* other options specific to the toolbox used
+
+[source,ini]
+----
+directory=toolboxes/fluid/TurekHron/cfd3/P2P1G1 <1>
+
+[fluid] <2>
+filename=$cfgdir/cfd3.json <3>
+
+mesh.filename=$cfgdir/cfd.geo <4>
+gmsh.hsize=0.03 <5>
+
+solver=Newton <6>
+
+pc-type=lu <7>
+
+bdf.order=2 <8>
+
+[ts]
+time-step=0.01 <9>
+time-final=10 <10>
+----
+
+<1> the directory where the results are stored
+<2> the prefix of option
+<3> the path of the json file
+<4> the path of geo/mesh file
+<5> characterist size of the mesh
+<6> type of non linear solver (specific to fluid toolbox)
+<7> type of preconditioner
+<8> order of BDF tiem scheme (specific to fluid toolbox)
+<9> time step
+<10> time final
+
