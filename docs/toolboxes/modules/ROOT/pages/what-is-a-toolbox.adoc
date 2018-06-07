@@ -149,7 +149,7 @@ This section of the Model JSON file defines the boundary conditions.
 This section allows to define the output fields and quantities to be computed and saved for _e.g._ visualization.
 
 [source,json]
-.Basis of a `PostProcess` section
+.Template of a `PostProcess` section
 ----
 "PostProcess":
 {
@@ -170,32 +170,75 @@ This section allows to define the output fields and quantities to be computed an
 
 === Exports
 
+The `Exports` section is implemented when you want to visualize some fields with ParaView software for example.
+The entry fields should be fill with name of field availables by the toolbox used.
+
 === Measures
 
-==== Norms
+Severals quantities can be computed after each time step for transient simulation or after the solve of a stationary simulation.
+The values computed are stored in a csv file format and named <toolbox>.measures.csv.
+In the template of `PostProcess` section, `<measure type>` is the name given of a measure.
+In next subsection, we present some types of measure that are common for all toolobox. Other types of measure are availables but depend of the toolbox used,
+and the description is given in the specific toolbox documentation.
 
-It could be useful to compute easily the norm (L2/H1/Semi-H1) of a field or an error.
-An example of json which define 2 norm computations. The results are stored in csv file in column named `Norm_mynorm_L2` and `Norm_myerror_L2-error`
+The common measure are :
+
+* [x] <<Points,Points>>
+* [x] <<Norm,Norm>>
+
+==== Points
+
+TODO
+
+==== Norm
+
+The next table presents the several norm that you can evaluate :
+
+[separator=;]
+|===
+; Norm Type ; Expression
+
+; L2 ; stem:[ \| u \|_{L^2} = \left ( \int_{\Omega} \| u \|^2 \right)^{\frac{1}{2}}]
+; SemiH1 ; stem:[ | u |_{H^1} = \left ( \int_{\Omega} \| \nabla u \|^2 \right)^{\frac{1}{2}} ]
+; H1 ; stem:[ \| u \|_{L^2} = \left ( \int_{\Omega} \| u \|^2 +  \int_{\Omega} \| \nabla u \|^2 \right)^{\frac{1}{2}} ]
+; L2-error ; stem:[ \| u-v \|_{L^2} = \left ( \int_{\Omega} \| u-v \|^2 \right)^{\frac{1}{2}}]
+; SemiH1-error ; stem:[ | u-v |_{H^1} = \left ( \int_{\Omega} \| \nabla u-\nabla v \|^2 \right)^{\frac{1}{2}} ]
+; H1-error ; stem:[ \| u-v \|_{L^2} = \left ( \int_{\Omega} \| u-v \|^2 +  \int_{\Omega} \| \nabla u-\nabla v \|^2 \right)^{\frac{1}{2}} ]
+|===
+
+where stem:[\| . \|] represents the norm of the generalized inner product. The symbol `u` represents a field or an expression and `v` an expression.
+
+The next source code show an example of Norm section with two computations of norm. The results are stored in a csv file with column named `Norm_mynorm_L2` and `Norm_myerror_L2-error`.
 [source,json]
 .Example of a `Norm` section
 ----
 "Norm":
 {
-    "mynorm":
+    "mynorm": <1>
     {
-        "type":"L2",
-        "field":"velocity",
+        "type":"L2", <2>
+        "field":"velocity", <3>
      },
-     "myerror":
+     "myerror": <4>
      {
-         "type":"L2-error",
-         "solution":"{2*x,cos(y)}:x:y",
-         "field":"velocity",
-         "markers":"omega"
+         "type":"L2-error", <5>
+         "field":"velocity", <6>
+         "solution":"{2*x,cos(y)}:x:y", <7>
+         "markers":"omega" <8>
      }
 }
 ----
+<1> The name associated to the first norm computation
+<2> The norm type
+<3> The field `u` evaluated in the norm (here the velocity field in the fluid toolbox)
+<4> The name associated to the second norm computation
+<5> The norm type
+<6> The field `u` evaluated in the norm
+<7> The expression `v` with the error norm type
+<8> The mesh marker where the norm is computed (stem:[\Omega] in the previous table). This entry can be a vector of marker
 
+
+NOTE: with the `H1-error` or `SemiH1-error` norm, the gradient of the solution must be given with  `grad_solution` entry. Probably this input should be automatically deduced in the near future.
 
 Several norms can be computed by listing it in the type section : 
 [source,json]
@@ -205,26 +248,26 @@ Several norms can be computed by listing it in the type section :
 "grad_solution":"{2,0,0,-sin(y)}:x:y",
 ----
 
-An expression (scalar/vector/matrix) can be also passed to evaluate the norm. But in this case, the `field` entry must be removed.
+An expression (scalar/vector/matrix) can be also passed to evaluate the norm. But in this case, the `field` entry must be removed and this expression replace the symbol `u`.
 [source,json]
 ----
 "expr":"2*x*y:x:y"
 ----
-In the case of  H1 or SemiH1 norm type, the grad_expr entry must be given.
+
+NOTE: As before, in the case of `H1` or `SemiH1` norm type, the `grad_expr` entry must be given.
 [source,json]
 ----
 "grad_expr":"{2*y,2*x}:x:y"
 ----
 
-All solution/expression can be depends of specic symbol of the toolboxes used. For example, in the heat toolboxes : 
+All expressions can be depends of specifics symbols related to the toolboxes used. For example, in the heat toolboxes : 
 [source,json]
 ----
 "expr":"2*heat_T+3*x:heat_T:x"
 ----
-where `heat_T` is the  temperature solution computed at last solve.
+where `heat_T` is the temperature solution computed at last solve. It can also depends of a parameter defined in the `Parameters` section of the JSON.
 
-
-The quadrature can be also given if an expression/solution is used. By default, the quadrature order is 5. For example,  use a quadrature order equal to 10 is done by adding :
+The quadrature order used in the norm computed can be also given if an analytical expression is used. By default, the quadrature order is 5. For example, use a quadrature order equal to 10 is done by adding :
 [source,json]
 ----
 "quad":10
