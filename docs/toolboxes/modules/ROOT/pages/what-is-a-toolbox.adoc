@@ -200,10 +200,10 @@ The next table presents the several norm that you can evaluate :
 
 ; L2 ; stem:[ \| u \|_{L^2} = \left ( \int_{\Omega} \| u \|^2 \right)^{\frac{1}{2}}]
 ; SemiH1 ; stem:[ | u |_{H^1} = \left ( \int_{\Omega} \| \nabla u \|^2 \right)^{\frac{1}{2}} ]
-; H1 ; stem:[ \| u \|_{L^2} = \left ( \int_{\Omega} \| u \|^2 +  \int_{\Omega} \| \nabla u \|^2 \right)^{\frac{1}{2}} ]
+; H1 ; stem:[ \| u \|_{H^1} = \left ( \int_{\Omega} \| u \|^2 +  \int_{\Omega} \| \nabla u \|^2 \right)^{\frac{1}{2}} ]
 ; L2-error ; stem:[ \| u-v \|_{L^2} = \left ( \int_{\Omega} \| u-v \|^2 \right)^{\frac{1}{2}}]
 ; SemiH1-error ; stem:[ | u-v |_{H^1} = \left ( \int_{\Omega} \| \nabla u-\nabla v \|^2 \right)^{\frac{1}{2}} ]
-; H1-error ; stem:[ \| u-v \|_{L^2} = \left ( \int_{\Omega} \| u-v \|^2 +  \int_{\Omega} \| \nabla u-\nabla v \|^2 \right)^{\frac{1}{2}} ]
+; H1-error ; stem:[ \| u-v \|_{H^1} = \left ( \int_{\Omega} \| u-v \|^2 +  \int_{\Omega} \| \nabla u-\nabla v \|^2 \right)^{\frac{1}{2}} ]
 |===
 
 where stem:[\| . \|] represents the norm of the generalized inner product. The symbol `u` represents a field or an expression and `v` an expression.
@@ -333,31 +333,106 @@ The Model CFG (`.cfg`) files allow to pass command line options to {feelpp} appl
 ----
 directory=toolboxes/fluid/TurekHron/cfd3/P2P1G1 <1>
 
-[fluid] <2>
-filename=$cfgdir/cfd3.json <3>
+case.dimension=2 <2>
+case.discretization=P2P1G1 <3>
 
-mesh.filename=$cfgdir/cfd.geo <4>
-gmsh.hsize=0.03 <5>
+[fluid] <4>
+filename=$cfgdir/cfd3.json <5>
 
-solver=Newton <6>
+mesh.filename=$cfgdir/cfd.geo <6>
+gmsh.hsize=0.03 <7>
 
-pc-type=lu <7>
+solver=Newton <8>
 
-bdf.order=2 <8>
+pc-type=lu <9>
+
+bdf.order=2 <10>
 
 [ts]
-time-step=0.01 <9>
-time-final=10 <10>
+time-step=0.01 <11>
+time-final=10 <12>
 ----
 
 <1> the directory where the results are stored
-<2> the prefix of option
-<3> the path of the json file
-<4> the path of geo/mesh file
-<5> characterist size of the mesh
-<6> type of non linear solver (specific to fluid toolbox)
-<7> type of preconditioner
-<8> order of BDF tiem scheme (specific to fluid toolbox)
-<9> time step
-<10> time final
+<2> the dimension (2d/3d) of the application
+<3> the discretization choosen (specific to the toolbox)
+<4> the prefix of option
+<5> the path of the json file
+<6> the path of geo/mesh file
+<7> characterist size of the mesh
+<8> type of non linear solver (specific to fluid toolbox)
+<9> type of preconditioner
+<10> order of BDF tiem scheme (specific to fluid toolbox)
+<11> time step
+<12> time final
 
+If the mesh file is stored on a remote storage as Girder, the `mesh.filename` option in the previous listing can be replace by
+[source,ini]
+----
+mesh.filename=girder:{file:5af862d6b0e9574027047fc8}
+----
+where `5af862d6b0e9574027047fc8` is the id of the mesh file in the Girder plateform. All options for Girder access are listed here :
+
+|===
+| Option | Default value | Description
+
+| `url` | https://girder.math.unistra.fr | url of a Girder plateform
+| `file` | <no default value> | one or several file id(s)
+| `token` | <no default value> | an authentification token
+|===
+
+== Run an application
+
+Each toolbox are compiled in an executable named `feelpp_toolbox_<tbname>` where `<tbname>` is name of a toolbox.
+A non-exhaustive list of toolbox executables is :
+
+* feelpp_toolbox_fluid
+* feelpp_toolbox_solid
+* feelpp_toolbox_heat
+* feelpp_toolbox_heatfluid
+* feelpp_toolbox_thermoelectric
+* feelpp_toolbox_fsi_2d
+* feelpp_toolbox_fsi_3d
+* feelpp_toolbox_advection_2d
+
+With this executable, a cfg file must be given in the command line thanks to the `config-file` option :
+[source,shell]
+----
+feelpp_toolbox_fluid --config-file myfile.cfg
+----
+
+Another way is to use the `case` option, where case represents a folder containing a cfg, json files and eventually a geometry or mesh file.
+[source,shell]
+----
+feelpp_toolbox_fluid --case mydir
+----
+
+If the folder contains only one cfg, the programm use this one. Else it's possible to specify the cfg file to choose by adding `case.config-file` option 
+
+[source,shell]
+----
+feelpp_toolbox_fluid --case mydir --case.config-file myfile.cfg
+----
+
+The `case` option can also defined a folder which represents a remote data in a github repository.
+[source,shell]
+----
+feelpp_toolbox_fluid --case "github:{path:toolboxes/fluid/TurekHron}" --case.config-file cfd2.cfg
+----
+
+The remote data from github can be configured by several parameters :
+
+|===
+| Option | Default value | Description
+
+| `owner` | feelpp | the github organization
+| `repo` | feelpp | the github repository in organization
+| `branch` | <default in github> | the branch in the git repository
+| `path` |  <root of repository> | the path in the git repository
+| `token` | <no default value> | an authentification token
+|===
+
+[source,shell]
+----
+feelpp_toolbox_fluid --case "github:{owner:feelpp,repo:feelpp,branch:develop,path:toolboxes/fluid/TurekHron,token:xxxxx}" --case.config-file cfd2.cfg
+----
