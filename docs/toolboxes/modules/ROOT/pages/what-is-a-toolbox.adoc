@@ -35,12 +35,12 @@ A model JSON file starts by giving names (long and short).
 <1> Name of the example, usually printed on-screen and in log files during simulations
 <2> Short name of the example, it is used to create directories to store the results of the simulation of the model
 
-NOTE: Theses names are not used currently, but it should be the case in the future.
+NOTE: These names are not used currently, but it should be the case in the future.
 
 === Models
 
-A section Models can appear if the toolbox has several kinds of model (typically for select the PDE used).
-In most toolboxes, this section is optional and a model by default is choseen.
+A section `Models` can appear if the toolbox has several kinds of model (typically for select the PDE used).
+In most toolboxes, this section is optional and a model by default is choosen.
 The latter allows to configure the set of equations associated with fluid toolbox.
 [source,json]
 ----
@@ -87,7 +87,7 @@ This section of the Model JSON file defines material properties linking the Phys
     }
 ----
 <1> gives the name of the physical entity (here `Physical Surface`) associated to the Material.
-<2> defined which kind of physics is apply in this material. This is an optional section, by default all physics are apply. The value can be also a vector of physic.
+<2> defined which kind of physics is applied in this material. This is an optional section, by default all physics are applied. The value can be also a vector of physic.
 <3> defined mesh marker(s) where the material properties are applied. This is an optional section, by default the marker is take as the name <1>.
 <4> density stem:[\rho] is called `rho` and is given in SI units
 <5> viscosity stem:[\mu] is called `mu` and is given in SI units
@@ -171,17 +171,17 @@ This section allows to define the output fields and quantities to be computed an
 === Exports
 
 The `Exports` section is implemented when you want to visualize some fields with ParaView software for example.
-The entry fields should be fill with name of field availables by the toolbox used.
+The entry `fields` should be filled with names which are available in the toolbox used.
 
 === Measures
 
-Severals quantities can be computed after each time step for transient simulation or after the solve of a stationary simulation.
+Several quantities can be computed after each time step for transient simulation or after the solve of a stationary simulation.
 The values computed are stored in a csv file format and named <toolbox>.measures.csv.
 In the template of `PostProcess` section, `<measure type>` is the name given of a measure.
-In next subsection, we present some types of measure that are common for all toolobox. Other types of measure are availables but depend of the toolbox used,
+In next subsection, we present some types of measure that are common for all toolbox. Other types of measure are available but depend on the toolbox used,
 and the description is given in the specific toolbox documentation.
 
-The common measure are :
+The common measures are :
 
 * [x] <<Points,Points>>
 * [x] <<Norm,Norm>>
@@ -192,7 +192,7 @@ TODO
 
 ==== Norm
 
-The next table presents the several norm that you can evaluate :
+The next table presents the several norms that you can evaluate :
 
 [separator=;]
 |===
@@ -208,7 +208,7 @@ The next table presents the several norm that you can evaluate :
 
 where stem:[\| . \|] represents the norm of the generalized inner product. The symbol `u` represents a field or an expression and `v` an expression.
 
-The next source code show an example of Norm section with two computations of norm. The results are stored in a csv file with column named `Norm_mynorm_L2` and `Norm_myerror_L2-error`.
+The next source code shows an example of Norm section with two norm computations. The results are stored in a csv file at columns named `Norm_mynorm_L2` and `Norm_myerror_L2-error`.
 [source,json]
 .Example of a `Norm` section
 ----
@@ -228,14 +228,14 @@ The next source code show an example of Norm section with two computations of no
      }
 }
 ----
-<1> The name associated to the first norm computation
-<2> The norm type
-<3> The field `u` evaluated in the norm (here the velocity field in the fluid toolbox)
-<4> The name associated to the second norm computation
-<5> The norm type
-<6> The field `u` evaluated in the norm
-<7> The expression `v` with the error norm type
-<8> The mesh marker where the norm is computed (stem:[\Omega] in the previous table). This entry can be a vector of marker
+<1> the name associated with the first norm computation
+<2> the norm type
+<3> the field `u` evaluated in the norm (here the velocity field in the fluid toolbox)
+<4> the name associated with the second norm computation
+<5> the norm type
+<6> the field `u` evaluated in the norm
+<7> the expression `v` with the error norm type
+<8> the mesh marker where the norm is computed (stem:[\Omega] in the previous table). This entry can be a vector of marker
 
 
 NOTE: with the `H1-error` or `SemiH1-error` norm, the gradient of the solution must be given with  `grad_solution` entry. Probably this input should be automatically deduced in the near future.
@@ -248,7 +248,7 @@ Several norms can be computed by listing it in the type section :
 "grad_solution":"{2,0,0,-sin(y)}:x:y",
 ----
 
-An expression (scalar/vector/matrix) can be also passed to evaluate the norm. But in this case, the `field` entry must be removed and this expression replace the symbol `u`.
+An expression (scalar/vector/matrix) can be also passed to evaluate the norm. But in this case, the `field` entry must be removed and this expression replaces the symbol `u`.
 [source,json]
 ----
 "expr":"2*x*y:x:y"
@@ -260,12 +260,12 @@ NOTE: As before, in the case of `H1` or `SemiH1` norm type, the `grad_expr` entr
 "grad_expr":"{2*y,2*x}:x:y"
 ----
 
-All expressions can be depends of specifics symbols related to the toolboxes used. For example, in the heat toolboxes : 
+All expressions can depend on specifics symbols related to the toolboxes used. For example, in the heat toolboxes : 
 [source,json]
 ----
 "expr":"2*heat_T+3*x:heat_T:x"
 ----
-where `heat_T` is the temperature solution computed at last solve. It can also depends of a parameter defined in the `Parameters` section of the JSON.
+where `heat_T` is the temperature solution computed at last solve. It can also depend on a parameter defined in the `Parameters` section of the JSON.
 
 The quadrature order used in the norm computed can be also given if an analytical expression is used. By default, the quadrature order is 5. For example, use a quadrature order equal to 10 is done by adding :
 [source,json]
@@ -366,19 +366,19 @@ time-final=10 <12>
 <11> time step
 <12> time final
 
-If the mesh file is stored on a remote storage as Girder, the `mesh.filename` option in the previous listing can be replace by
+If the mesh file is stored on a remote storage as Girder, the `mesh.filename` option in the previous listing can be replaced by
 [source,ini]
 ----
 mesh.filename=girder:{file:5af862d6b0e9574027047fc8}
 ----
-where `5af862d6b0e9574027047fc8` is the id of the mesh file in the Girder plateform. All options for Girder access are listed here :
+where `5af862d6b0e9574027047fc8` is the id of the mesh file in the Girder platform. All options for Girder access are listed here :
 
 |===
 | Option | Default value | Description
 
-| `url` | https://girder.math.unistra.fr | url of a Girder plateform
+| `url` | https://girder.math.unistra.fr | url of a Girder platform
 | `file` | <no default value> | one or several file id(s)
-| `token` | <no default value> | an authentification token
+| `token` | <no default value> | an authentication token
 |===
 
 == Run an application
@@ -407,14 +407,14 @@ Another way is to use the `case` option, where case represents a folder containi
 feelpp_toolbox_fluid --case mydir
 ----
 
-If the folder contains only one cfg, the programm use this one. Else it's possible to specify the cfg file to choose by adding `case.config-file` option 
+If the folder contains only one cfg, the programme use this one. Else it's possible to specify the cfg file to choose by adding `case.config-file` option 
 
 [source,shell]
 ----
 feelpp_toolbox_fluid --case mydir --case.config-file myfile.cfg
 ----
 
-The `case` option can also defined a folder which represents a remote data in a github repository.
+The `case` option can also define a folder which represents a remote data in a github repository.
 [source,shell]
 ----
 feelpp_toolbox_fluid --case "github:{path:toolboxes/fluid/TurekHron}" --case.config-file cfd2.cfg
@@ -429,7 +429,7 @@ The remote data from github can be configured by several parameters :
 | `repo` | feelpp | the github repository in organization
 | `branch` | <default in github> | the branch in the git repository
 | `path` |  <root of repository> | the path in the git repository
-| `token` | <no default value> | an authentification token
+| `token` | <no default value> | an authentication token
 |===
 
 [source,shell]
