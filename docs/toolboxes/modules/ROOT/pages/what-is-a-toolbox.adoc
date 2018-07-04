@@ -176,7 +176,7 @@ The entry `fields` should be filled with names which are available in the toolbo
 === Measures
 
 Several quantities can be computed after each time step for transient simulation or after the solve of a stationary simulation.
-The values computed are stored in a csv file format and named <toolbox>.measures.csv.
+The values computed are stored in a CSV file format and named <toolbox>.measures.csv.
 In the template of `PostProcess` section, `<measure type>` is the name given of a measure.
 In next subsection, we present some types of measure that are common for all toolbox. Other types of measure are available but depend on the toolbox used,
 and the description is given in the specific toolbox documentation.
@@ -184,11 +184,87 @@ and the description is given in the specific toolbox documentation.
 The common measures are :
 
 * [x] <<Points,Points>>
+* [x] <<Statistics,Statistics>>
 * [x] <<Norm,Norm>>
 
 ==== Points
 
 TODO
+
+==== Statistics
+
+The next table presents the several statistics that you can evaluate :
+
+[separator=;]
+|===
+; Statistics Type ; Expression
+
+; min ; stem:[  \underset{x\in\Omega}{\min} u(x) ]
+; max ; stem:[  \underset{x\in\Omega}{\max} u(x) ]
+; mean ; stem:[ \frac{1}{ | \Omega |} \int_{\Omega} u ]
+; integrate ; stem:[ \int_{\Omega} u ]
+|===
+with `u` a function and stem:[ \Omega] the definition domain where the statistic is applied.
+
+The next source code shows an example of `Statistics` section with several kinds of computation. The results are stored in a
+CSV file at columns named `Statistics_mystatA_mean`, `Statistics_mystatB_min`, `Statistics_mystatB_max`, `Statistics_mystatB_mean`, `Statistics_mystatB_integrate`.
+
+[source,json]
+.Example of a `Statistics` section
+----
+"Statistics":
+{
+    "mystatA": <1>
+    {
+        "type":"mean", <2>
+        "field":"temperature" <3>
+    },
+    "mystatB": <4>
+    {
+        "type":["min","max","mean","integrate"], <5>
+        "expr":"2*x+y:x:y", <6>
+        "markers":"omega" <7>
+    }
+}
+----
+<1> the name associated with the first Statistics computation
+<2> the Statistics type
+<3> the field `u` evaluated in the Statistics (here the temperature field in the heat toolbox)
+<4> the name associated with the second Statistics computation
+<5> the Statistics type
+<6> the field `u` evaluated in the Statistics
+<7> the mesh marker where the Statistics is computed (stem:[\Omega] in the previous table). This entry can be a vector of marker
+
+
+
+The function `u` can be a finite element field or a symbolic expression.
+We use the `field` entry for a finite element field and `expr` for symbolic expression.
+`field` and `expr` can not be used simultaneously.
+
+
+All expressions can depend on specifics symbols related to the toolboxes used. For example, in the heat toolboxes : 
+[source,json]
+----
+"expr":"2*heat_T+3*x:heat_T:x"
+----
+where `heat_T` is the temperature solution computed at last solve. It can also depend on a parameter defined in the `Parameters` section of the JSON.
+
+The quadrature order used in the statistical evaluation can be specified. By default, the quadrature order is 5.
+For example, use a quadrature order equal to 10 is done by adding :
+[source,json]
+----
+"quad":10
+----
+
+NOTE: Quadrature order is also used with `min` and `max` statistics. We get the min/max values by evaluating the expression on each quadrature points.
+
+NOTE: In the `mean` and `integrate` Statistics, the quadrature order is automatically chosen when `field` is used.
+In this case, the `quad` entry has no effect.
+
+
+The expression can be a scalar, a vector or a matrix. However, there is a particularity in the case of `mean` or `integrate` statistics with non-scalar expression. 
+The result is not a scalar value but a vector or matrix. We store in the CSV file each entry of this vector/matrix. 
+
 
 ==== Norm
 
@@ -208,7 +284,7 @@ The next table presents the several norms that you can evaluate :
 
 where stem:[\| . \|] represents the norm of the generalized inner product. The symbol `u` represents a field or an expression and `v` an expression.
 
-The next source code shows an example of Norm section with two norm computations. The results are stored in a csv file at columns named `Norm_mynorm_L2` and `Norm_myerror_L2-error`.
+The next source code shows an example of Norm section with two norm computations. The results are stored in a CSV file at columns named `Norm_mynorm_L2` and `Norm_myerror_L2-error`.
 [source,json]
 .Example of a `Norm` section
 ----
@@ -217,7 +293,7 @@ The next source code shows an example of Norm section with two norm computations
     "mynorm": <1>
     {
         "type":"L2", <2>
-        "field":"velocity", <3>
+        "field":"velocity" <3>
      },
      "myerror": <4>
      {
