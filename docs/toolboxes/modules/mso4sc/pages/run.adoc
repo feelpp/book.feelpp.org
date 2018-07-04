@@ -33,7 +33,7 @@ You shall be able to see your products and their status in each product form.
 [[data]]
 == Benchmarks and Examples Catalogue
 
-Go to http://docs.feelpp.org/examples/0.105/[Examples] or http://docs.feelpp.org/benchmarks/0.105/[Benchmarks] {feelpp} guides to discover what is available
+Go to the xref:cases:ROOT:index.adoc[{feelpp} Case Studies guide] to discover examples and benchmarks for the different {feelpp} applications.
 
 [[running]]
 == Running an {feelpp} application in *Experiments*
@@ -63,16 +63,19 @@ The fields that are to be filled by *EndUser* are marked in *bold*.
 [options="header,footer"]
 |===
 | Key                           | Description                                 | Default                                                            | Notes
-| **<toolbox>_case**                    | string that describe the location of the testcase                             | ``                       |
-| *<toolbox slug name>_cli**                     | command line options                           |  "" |
+| **feelpp_<toolbox>_case**   | string that describe the location of the testcase      | ``                       |
+| **feelpp_<toolbox slug name>_cli**     | command line options       |  "" |
 |===
 
 .List of keys to be defined for HPC settings
 [options="header,footer"]
 |===
 | Key                        | Description              | Default          | Notes
-| *slurm_n_tasks* | number of tasks to be used in parallel | 10 |  shall depends on batch system and selected partition
-| *slurm_max_time* | maximum allowed time for run (minutes and seconds) | '00:30:00' |  shall depends on batch system and selected partition
+| **job_max_time** | maximum allowed time for run (minutes and seconds) | '00:30:00' |  depends on batch system and selected `job_partition`
+| **job_partition** | partition to be used on the supercomputer | `thin-shared` |  depends on HPC system
+
+| **job_tasks** | number of tasks to be used in parallel | 10 |  shall depends on batch system and selected partition
+
 |===
 
 
