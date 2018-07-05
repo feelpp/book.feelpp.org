@@ -63,18 +63,22 @@ module load batch/slurm
 module load cmake/cmake-3.4.1
 module load libs/boost-1.63.gnu63
 module load libs/hdf5-1.8.16.gnu63
-modules load petsc/petsc-3.8.4.g63
+module load petsc/petsc-3.8.4.g63
 module load mesh/gmsh-3.0.1.g63
-module load compilers/intel17                                                                                                                                                                                                               
+module load compilers/intel17
 module load compilers/clang5
 module load mpi/openmpi-2.0.2.gcc63
-module unload compilers/gnu63
-module load compilers/gnu62                                                                                                                                                                                                          
-module load languages/python-2.7.6
+module load languages/python-3.5.0                                           
 ----
 
 NOTE: If Feel++ does not compile using these modules, please post an 
 link:https://github.com/feelpp/book.feelpp.org/issues[issue on github].
+
+An example of a cmake command to use :
+[source,bash]
+----
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DFEELPP_ENABLE_FFTW=OFF <path to feelpp>
+----
 
 NOTE: Then see an example of a slurm job based on source and singularity container.
 
