@@ -41,9 +41,10 @@ Other than {cpp}14 compilers, {feelpp} requires only a few tools and libraries, 
 |===
 | Name | Minimum Version | Maximum Version | Notes
 
-| CMake | 3.0 | -- |
-| MPI   | -- | -- | openmpi or mpich
-| Boost | 1.61 | 1.63 |
+| link:https://cmake.org/[CMake] | 3.0 | -- |
+| MPI   | -- | -- | link:https://www.open-mpi.org/[OpenMPI] or link:https://www.mpich.org/[MPICH]
+| link:https://www.boost.org/[Boost] | 1.61 | 1.66 |
+| link:https://www.python.org/[Python Interpreter] |  2 | -- | Version 3 is recommended
 |===
 
 == Recommended libraries
@@ -55,15 +56,13 @@ Here is a list of libraries that we recommend to use jointly with Feel++.
 |===
 | Library | Minimum Version | Maximum Version  | Notes
 
-| HDF5  | 1.8.6  | 1.8.16  | Enables high performance I/O; Enables MED Support; Be careful on Debian/sid a more recent version of HDF5 breaks MED support
-| PETSc | 3.2 | 3.8.2 | Last is best; a requirement for parallel and high performance computing
-| SLEPc | 3.2 | 3.8.1 | last is best; a requirement for eigenvalue problem; depends on PETSc
-| Gmsh  | 2.8.7 | 2.16 | last is best; a requirement if you want to be able to read many file formats; HDF5 version in Debian/sid currently breaks MED format support.
-| Superlu  ||| superlu and superlu_dist
-| Suitesparse ||| umfpack (colamd,amd)
-| OpenTURNS | 2.0 || Uncertainty quantification
-| Python Libs |  3.0 || Python 3 libraries
-| Python Sympy |  1.1 || Python 3 module sympy
+| link:https://support.hdfgroup.org/HDF5/[HDF5]  | 1.8.6  | --  | 
+| link:https://www.mcs.anl.gov/petsc/[PETSc] | 3.5 | -- | We strongly recommand to install PETSc with MUMPS packages. Others packages like Suitesparse, Trilinos/ML, Boomeramg can be appreciable. Moreover, we have some troubles with versions >= 3.9, see link:https://github.com/feelpp/feelpp/issues/1166[here].
+| link:http://slepc.upv.es/[SLEPc] | 3.5 | -- | Depends on PETSc
+| link:http://gmsh.info/[Gmsh]  | 2.8.7 | -- | 
+//| OpenTURNS | 2.0 ||
+| link:https://docs.python.org/3/library/index.html[Python Libs] |  3.0 ||
+| link:http://www.sympy.org/en/index.html[Python SymPy] |  1.1 || Python 3 module sympy
 |===
 
 == Recommended tools
