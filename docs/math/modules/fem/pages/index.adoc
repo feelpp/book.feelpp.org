@@ -32,7 +32,7 @@ Une *solution classique* (ou *solution forte*) de stem:[({\cal P})] est une fonc
 stem:[\forall x \in \]a,b[, \; -u"(x)+c(x)u(x) = f(x)].
 ****
 
-En faisant le produit scalaire stem:[L^2(\]a,b[)] de l’équation différentielle avec une fonction-test stem:[v \in {\cal D}(\]a,b[)] (c’est à dire en intégrant sur
+En faisant le produit scalaire stem:[L^2(\]a,b[)] de l’équation différentielle avec une fonction-test stem:[v \in {\cal D}(\]a,b[)] (c’est-à-dire en intégrant sur
 stem:[[a,b\]]), on a :
 
 [stem]
@@ -135,7 +135,7 @@ On voit aussi que ce problème est défini dès lors que stem:[f\in L^2(\Omega)]
 == Formulation générale
 
 
-Les exemples précédents montre que, d’une façon générale, la formulation variationnelle sera obtenue en faisant le produit scalaire stem:[L^2(\Omega)] de l’équation avec une fonction stem:[v] appartenant à un espace à préciser (c’est à dire en multipliant par stem:[v] et en intégrant sur stem:[\Omega]), et en intégrant par parties les termes d’ordre les plus élevés en tenant compte des conditions aux limites du problème.
+Les exemples précédents montrent que, d’une façon générale, la formulation variationnelle sera obtenue en faisant le produit scalaire stem:[L^2(\Omega)] de l’équation avec une fonction stem:[v] appartenant à un espace à préciser (c’est-à-dire en multipliant par stem:[v] et en intégrant sur stem:[\Omega]), et en intégrant par parties les termes d’ordres les plus élevés en tenant compte des conditions aux limites du problème.
 
 
 On arrive alors à une formulation du type :
@@ -219,7 +219,7 @@ dans cite:[raviart-thomas-1983].
 .Théorème
 ****
 On prend les mêmes hypothèses que pour le théorème de Lax-Milgram, et on
-suppose de plus que stem:[a] est symétrique, c’est à dire que
+suppose de plus que stem:[a] est symétrique, c’est-à-dire que
 stem:[a(u,v)=a(v,u)\quad\forall u,v].
 
 On définit alors la fonctionnelle stem:[J(v)=\frac{1}{2}\, a(v,v)-l(v)], et on considère le problème de minimisation :
@@ -273,13 +273,13 @@ soit, en intégrant par parties :
 - \int_a^b u"(x)\varphi(x)\; dx + \int_a^b c(x)u(x)\varphi(x)\; dx = \int_a^b f(x)\varphi(x)\; dx
 ++++
 
-c’est à dire
+c’est-à-dire
 [stem]
 ++++
 (-u"+cu,\varphi)_0 = (f,\varphi)_0\; \forall \varphi \in {\cal D}(]a,b[).
 ++++
 
-stem:[{\cal D}(\]a,b[)] étant dense dans stem:[L^2(\]a,b[)], on a donc : stem:[-u"+cu=f] dans stem:[L^2(\]a,b[)].
+stem:[{\cal D}(\]a,b[)] étant dense dans stem:[L^2(\]a,b[)], on a : stem:[-u"+cu=f] dans stem:[L^2(\]a,b[)].
 
 stem:[u] étant dans stem:[L^2(\]a,b[)], et stem:[f] et stem:[c] étant dans stem:[{\cal C}^0([a,b\])], donc également dans stem:[L^2(\]a,b[)], on en déduit que stem:[u"=cu-f] est
 aussi dans stem:[L^2(\]a,b[)].
@@ -288,9 +288,9 @@ Puisque stem:[u] est dans stem:[H^1_0(\]a,b[)] et que stem:[u"] est dans stem:[L
 
 Donc stem:[u] est dans stem:[{\cal C}^1([a,b\])] (§[sec:sobolev]).
 
-De ce fait, stem:[cu-f], c’est à dire stem:[u"], est dans stem:[{\cal C}^0([a,b\])].
+De ce fait, stem:[cu-f], c’est-à-dire stem:[u"], est dans stem:[{\cal C}^0([a,b\])].
 
-Donc stem:[u'] est dansstem:[{\cal C}^1([a,b\])], donc stem:[u] est dans stem:[{\cal C}^2([a,b\])].
+Donc stem:[u'] est dans stem:[{\cal C}^1([a,b\])], donc stem:[u] est dans stem:[{\cal C}^2([a,b\])].
 
 La solution faible stem:[u] est donc aussi solution forte du problème de départ.
 
@@ -302,7 +302,7 @@ En résumé :
 
  * On a prouvé que cette solution faible est bien une solution forte. Le problème de départ stem:[({\cal P})] a donc une solution unique.
 
-L’intérêt de cette démarche est
+L’intérêt de cette démarche est double :
 
 * la formulation variationnelle se prête bien à l’étude de l’existence et de l’unicité de solutions,
 * on travaille dans des espaces de Hilbert, ce qui va permettre de faire de l’approximation interne.
@@ -330,7 +330,7 @@ u= 0 & \hbox{ sur }\Gamma_0 \\
 
 où stem:[\Gamma_0] et stem:[\Gamma_1] forment une partition de stem:[\partial\Omega] (stem:[\Gamma_0 \cap\Gamma_1 = \emptyset] et stem:[\Gamma_0 \cup\Gamma_1 = \partial\Omega]).
 
-Une solution classique de stem:[({\cal P})], sous l’hypothèse que stem:[f\in{\cal C}^0(\bar{\Omega})] et stem:[g\in{\cal C}^0(\Gamma_1)], sera une fonction de stem:[{\cal C}^2(\bar{\Omega})] vérifiant l’équation en chaque point de stem:[\Omega].La formulation variationnelle de stem:[({\cal P})] est obtenue par intégration par parties.
+Une solution classique de stem:[({\cal P})], sous l’hypothèse que stem:[f\in{\cal C}^0(\bar{\Omega})] et stem:[g\in{\cal C}^0(\Gamma_1)], sera une fonction de stem:[{\cal C}^2(\bar{\Omega})] vérifiant l’équation en chaque point de stem:[\Omega]. La formulation variationnelle de stem:[({\cal P})] est obtenue par intégration par parties.
 
 
 Elle s’écrit :
@@ -348,7 +348,7 @@ Elle s’écrit :
 
 avec stem:[\ds{ V = \left\{ v \in H^1(\Omega) \; , \; v=0 \hbox{ sur }\Gamma_0
 \right\} }].
-Cette formulation est en fait définie dès lors que stem:[\beta] et les stem:[\alpha_{ij}] sont dans stem:[L^\infty(\Omega)], stem:[f] dans stem:[L^2(\Omega)] et stem:[g] dans
+Cette formulation est en fait définie dès lors que stem:[\beta] et les stem:[\alpha_{ij}] sont dans stem:[L^\infty(\Omega)], que stem:[f] est dans stem:[L^2(\Omega)] et que stem:[g] est dans
 stem:[L^2(\Gamma_1)].
 Posons
 
@@ -380,7 +380,7 @@ Par application du théorème de Lax-Milgram, on a donc existence et
 unicité d’une solution à la formulation variationnelle
 stem:[({\cal Q})] :
 
-* si stem:[\Gamma_0 = \partial\Omega] (c’est à dire stem:[\Gamma_1=\emptyset]) et si stem:[\ds{\beta > \frac{-\alpha}{C(\Omega)^2}}]
+* si stem:[\Gamma_0 = \partial\Omega] (c’est-à-dire stem:[\Gamma_1=\emptyset]) et si stem:[\ds{\beta > \frac{-\alpha}{C(\Omega)^2}}]
 
 * si stem:[\Gamma_1\ne \emptyset] et si stem:[\beta > 0]
 
@@ -398,7 +398,7 @@ En écrivant la formulation variationnelle, on obtient un problème de la forme
 ({\cal Q})\qquad \hbox{Trouver } u\in V \hbox{ tel que } a(u,v)=l(v), \quad\forall v\in V
 ++++
 
-où stem:[V] est un espace de Hilbert. Sous réserve que l’équation de départ ait de bonnes propriétés, c’est à dire par exemple qu’on soit dans les hypothèses du théorème de Lax-Milgram, stem:[({\cal Q})] admet une solution unique stem:[u].
+où stem:[V] est un espace de Hilbert. Sous réserve que l’équation de départ ait de bonnes propriétés, c’est-à-dire par exemple qu’on soit dans les hypothèses du théorème de Lax-Milgram, stem:[({\cal Q})] admet une solution unique stem:[u].
 
 Pour obtenir une approximation numérique de stem:[u], on va maintenant remplacer l’espace stem:[V] qui est en général de dimension infinie par un sous-espace stem:[V_h] de dimension finie, et on va chercher à résoudre le problème approché
 
@@ -414,7 +414,7 @@ D’où l’existence et l’unicité de stem:[u_h], à nouveau par exemple d’
 Lax-Milgram.
 L’espace stem:[V_h] sera en pratique construit à partir d’un maillage du domaine stem:[\Omega], l’indice stem:[h] désignant la ``taille typique'' des mailles.
 
-Lorsque l’on construit des maillages de plus en plus fins, la suite de sous-espaces stem:[(V_h)_h] formera une *approximation interne* de stem:[V], c’est à dire que, pour tout élément stem:[\varphi] de stem:[V], il existe une suite de stem:[\varphi_h\in
+Lorsque l’on construit des maillages de plus en plus fins, la suite de sous-espaces stem:[(V_h)_h] formera une *approximation interne* de stem:[V], c’est-à-dire que, pour tout élément stem:[\varphi] de stem:[V], il existe une suite de stem:[\varphi_h\in
 V_h] telle que stem:[\|\varphi-\varphi_h\|\longrightarrow 0] quand stem:[h\longrightarrow 0].
 
 IMPORTANT: Cette méthode d’approximation interne est également appelée *méthode de Galerkin*.
@@ -470,7 +470,7 @@ En réinjectant ces deux inégalités de part et d’autre de <<eq:estim1>> et e
 \|u-u_h\| \le \frac{M}{\alpha}\; \|u-v_h\| \quad \forall v_h\in V_h
 ++++
 
-c’est à dire
+c’est-à-dire
 
 [[eq:4]]
 [stem]
@@ -530,7 +530,7 @@ ou encore par linéarité de stem:[a] et stem:[l] :
 \hbox{Trouver } \mu_1,\ldots,\mu_{N_h} \hbox{ tels que } \sum_{i=1}^{N_h} \mu_i \; a(\varphi_i,\varphi_j)=l(\varphi_j), \quad\forall j=1,\ldots,N_h
 ++++
 
-c’est à dire résoudre le système linéaire
+c’est-à-dire résoudre le système linéaire
 
 [stem]
 ++++
@@ -564,7 +564,7 @@ A\mu = b
 
 NOTE: La matrice stem:[A] est a priori pleine.
 
-Toutefois, pour limiter le volume de calculs, on va définir des fonctions de base stem:[\varphi_i] dont le support sera petit, c’est à dire que chaque fonction stem:[\varphi_i] sera nulle partout sauf sur quelques mailles.
+Toutefois, pour limiter le volume de calculs, on va définir des fonctions de base stem:[\varphi_i] dont le support sera petit, c’est-à-dire que chaque fonction stem:[\varphi_i] sera nulle partout sauf sur quelques mailles.
 
 Ainsi les termes stem:[a(\varphi_i,\varphi_j)] seront le plus souvent nuls, car
 correspondant à des fonctions stem:[\varphi_i] et stem:[\varphi_j] de supports disjoints.
@@ -794,7 +794,7 @@ Pour toute fonction stem:[v \in \Ck{0}(\bar{\Omega})], stem:[\Ich{1}{v}] est la 
 stem:[\Ich{1}{v}] est appelée l’_interpolé de Lagrange_ de stem:[v] de degré stem:[1].
 
 [[rem:8]]
-IMPORTANT:  En dimension 1, les fonctions de stem:[H^1(\Omega)] sont _continues_, on peut donc voir comme un opérateur de stem:[H^1(\Omega)] dans stem:[H^1(\Omega)]. On montre qu’il est continu et que sa norme stem:[\|\Ich{1}\|_{\mathcal{L}(H^1(\Omega),H^1(\Omega))}] est uniformément bornée en stem:[h], c’est à dire qu’il existe une constante stem:[c], indépendante de stem:[h], telle que pour tout stem:[v \in H^1(\Omega)]
+IMPORTANT:  En dimension 1, les fonctions de stem:[H^1(\Omega)] sont _continues_, on peut donc voir comme un opérateur de stem:[H^1(\Omega)] dans stem:[H^1(\Omega)]. On montre qu’il est continu et que sa norme stem:[\|\Ich{1}\|_{\mathcal{L}(H^1(\Omega),H^1(\Omega))}] est uniformément bornée en stem:[h], c’est-à-dire qu’il existe une constante stem:[c], indépendante de stem:[h], telle que pour tout stem:[v \in H^1(\Omega)]
 [[eq:22]]
 [stem]
 ++++
@@ -851,7 +851,7 @@ stem:[v] de degré stem:[k].
 
 [[rem:9]]
 IMPORTANT: En dimension 1, les fonctions de stem:[H^1(\Omega)] sont _continues_, on peut donc voir comme un opérateur de stem:[H^1(\Omega)] dans stem:[H^1(\Omega)].
-On montre qu’il est continu et que sa norme stem:[\|\Ich\|_{\mathcal{L}(H^1(\Omega),H^1(\Omega))}] est uniformément bornée en stem:[h], c’est à dire qu’il existe une constante stem:[c], indépendante de stem:[h] mais dépendante de stem:[k], telle que pour tout
+On montre qu’il est continu et que sa norme stem:[\|\Ich\|_{\mathcal{L}(H^1(\Omega),H^1(\Omega))}] est uniformément bornée en stem:[h], c’est-à-dire qu’il existe une constante stem:[c], indépendante de stem:[h] mais dépendante de stem:[k], telle que pour tout
 [[eq:25]]
 [stem]
 ++++
@@ -901,7 +901,7 @@ Pour cela on part de l’estimation <<eq:cea>>, on a
     & \leq c\; h^k |u|_{k+1,\Omega}
 \end{align}
 ++++
-pourvu que la solution exacte soit suffisamment régulière, c’est à dire stem:[u \in H^{k+1}(\Omega)].
+pourvu que la solution exacte soit suffisamment régulière, c’est-à-dire stem:[u \in H^{k+1}(\Omega)].
 
 [[rem:2]]
 IMPORTANT: On notera que stem:[\Ich{k}{u} \in \Pcho{k}] puisque stem:[u \in H^1_0(\Omega)] et donc que stem:[\Ich{u}(a)=\Ich{u}(b)=0].
