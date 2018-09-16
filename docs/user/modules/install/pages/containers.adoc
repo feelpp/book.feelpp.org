@@ -1,4 +1,4 @@
-= Install {feelpp} from Containers 
+= Install {feelpp} from Containers
 include::{partialsdir}/header-macros.adoc[]
 
 TIP: Difficulty {easy}
@@ -20,7 +20,7 @@ executables or both.
 
 IMPORTANT: Before going further you might want to install one of the previous
 solution.
-link:https://docs.docker.com/install/linux/docker-ce/ubuntu/[install docker] or
+link:https://docs.docker.com/install:linux/docker-ce/ubuntu/[install docker] or
 link:http://singularity.lbl.gov/install-linux[install singularity].
 
 
@@ -35,7 +35,7 @@ Docker. We strongly encourage you to follow these steps if you begin with
 and in {feelpp} should read through the remaining sections of this chapter.
 
 To begin with {feelpp} using docker, you need first to
-link:https://docs.docker.com/install/linux/docker-ce/ubuntu/[install docker] to
+link:https://docs.docker.com/install:linux/docker-ce/ubuntu/[install docker] to
 have a working docker environment on your machine following the official
 documentation with respect to your operating system.  Then choose one of the
 {feelpp} images available on the official repository
@@ -48,10 +48,9 @@ We provide currently four main images:
 | Component | Description | Built From
 
 | `feelpp-env` | Execution and Programming environment | <OS>
-| `feelpp-libs`  | Feel++ libraries and tools | `feelpp-env`
-| `feelpp-base` | Feel++ base applications | `feelpp-libs`
-| `feelpp-toolboxes` | Feel++ toolboxes   | `feelpp-toolboxes`
-
+| `feelpp`  | Feel++ libraries and tools | `feelpp-env`
+| `feelpp-toolboxes` | {feelpptb}   | `feelpp`
+| `feelpp-mor` | {feelppmor}   | `feelpp-toolboxes`
 |===
 
 Each image is available with several tags depending on the {feelpp} version,
@@ -62,8 +61,8 @@ In most case, you desire to use the `latest` tag.
 
 === Usage example
 
-Via the commandline and using the {feelpp} toolboxes.  We get the
-image and create a new container.
+Via the commandline and using the {feelpp} toolboxes.
+We get the image and create a new container.
 
 [source, bash]
 ----
