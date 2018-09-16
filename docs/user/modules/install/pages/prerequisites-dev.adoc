@@ -7,7 +7,7 @@ We present here the {feelpp} toolchain with both required and suggested tools to
 
 == Compilers
 
-{feelpp} uses {cpp}14 compilers such as GCC6 and Clang (stem:[\geq 4]).
+{feelpp} uses {cpp}14 compilers such as GCC8 and Clang (stem:[\geq 4]).
 
 IMPORTANT: It is mandatory not only to have a {cpp}14 compiler but also {cpp}14 stantard library.
 
@@ -22,16 +22,13 @@ time. Please see the following table to understand the working {cpp} compiler /
 
 .Table {cpp} compilers and standard libraries combinations
 |===
-| Compiler  | Standard Library
-
-| clang (3.6, 3.7, 3.8) | libstdc{plus}{plus} 4.9
-| clang  |  libc{plus}{plus} (corresponding clang version)
-| clang (3.8(requires patches), 3.9)  | libstdc{plus}{plus} 6
-| GCC 6 | libstdc{plus}{plus} 6
-
+| Compiler  | Minimal Version | Recommended Version | Standard Library
+| {clangpp} | 4 | 6  | libstdc{plus}{plus} 7
+| {clangpp}| 4 | 6 |  libc{plus}{plus} (corresponding clang version)
+| {gpp}  | 7 | 8 | libstdc{plus}{plus} 7
 |===
 
-CAUTION: GCC 6.2.1 seems to be problematic on debian/testing -- the tests in the testsuite fail. -- GCC 6.3.1 or GCC 6.2.0 don't have any problems.
+NOTE: {clangpp} is the preferred compiler by far for {feelpp}, it compiles much faster and use far less memory than {gpp}
 
 == Required tools and libraries
 
@@ -56,10 +53,10 @@ Here is a list of libraries that we recommend to use jointly with Feel++.
 |===
 | Library | Minimum Version | Maximum Version  | Notes
 
-| link:https://support.hdfgroup.org/HDF5/[HDF5]  | 1.8.6  | --  | 
+| link:https://support.hdfgroup.org/HDF5/[HDF5]  | 1.8.6  | --  |
 | link:https://www.mcs.anl.gov/petsc/[PETSc] | 3.5 | -- | We strongly recommand to install PETSc with MUMPS packages. Others packages like Suitesparse, Trilinos/ML, Boomeramg can be appreciable.
 | link:http://slepc.upv.es/[SLEPc] | 3.5 | -- | Depends on PETSc
-| link:http://gmsh.info/[Gmsh]  | 2.8.7 | -- | 
+| link:http://gmsh.info/[Gmsh]  | 2.8.7 | -- |
 //| OpenTURNS | 2.0 ||
 | link:https://docs.python.org/3/library/index.html[Python Libs] |  3.0 ||
 | link:http://www.sympy.org/en/index.html[Python SymPy] |  1.1 || Python 3 module sympy

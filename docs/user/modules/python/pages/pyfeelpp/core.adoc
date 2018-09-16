@@ -1,0 +1,46 @@
+= Core
+
+The `core` module provides the basic data structures to
+
+* setup and run {feelpp} application in a parallel environment.
+* handle the command line options
+* download and upload data from and to Github and/or Girder
+
+== Setting up the {feelpp} Environment
+
+.Start the {feelpp} environment, `test_core.py`
+[source,python]
+----
+include::{examplesdir}/python/test_core.py[]
+----
+
+To execute the previous example
+
+.Execute the script above on 4 parallel processes
+[source,sh]
+----
+mpiexec -n 4 python3 test_core.py
+----
+
+Command line options can be passed to the python script
+
+.get the version of pyfeelpp and {feelpp}
+[source,sh]
+----
+mpiexec -n 4 python3 test_core.py --version
+----
+
+== Downloading data
+
+[source,python]
+----
+include::{examplesdir}/python/test_remotedata.py[]
+----
+
+To execute the previous example
+
+.Execute the script above on 4 parallel processes
+[source,sh]
+----
+mpiexec -n 4 python3 test_remotedata.py
+----

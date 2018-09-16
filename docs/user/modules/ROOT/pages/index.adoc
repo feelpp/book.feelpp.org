@@ -24,11 +24,20 @@ toc::[]
 
 
 == What is {feelpp}?
+
+
 {feelpp} is a unified {cpp} implementation of Galerkin methods (finite and
 spectral element methods) in 1D, 2D and 3D to solve partial differential
 equations.
 
-{feelpp} is
+{feelpp} comprises three components:
+{feelpp}:: the mathematical kernel libraries, applications and tools.
+{feelpptb}:: the {feelpp} mono and multi-physics toolboxes to solve physic based problems
+{feelppmor}:: the {feelpp} model order reduction applications, tools and models
+
+Each component provides a Python interface to access that mimic the {cpp} counterpart.
+
+=== {feelpp}
 
 . a **versatile mathematical kernel** solving easily problems using
    different techniques thus allowing testing and comparing methods, e.g. cG versus dG.
@@ -44,6 +53,28 @@ equations.
 . a library entirely in {cpp} allowing to create {cpp} complex and typically
   non-linear multi-physics applications currently in industry, physics and
   health-care.
+. {pyfeelpp} to manipulate {feelpp} mathematical objects in {python} to solve PDE
+
+ === {feelpptb}
+
+{feelppb} provides :
+. libraries to to manipulate physics based models and couple them
+. a set of mono and multi-physics application readily available :
+  * fluid mechanics
+  * solid mechanics
+  * heat transfer,
+  * fluid structure interaction
+  * electro and magnetostatic
+  * thermoelectric.
+. {pyfeelpptb} which provides an interface to the different physical based models and reproduces the applications in {python}
+
+=== {feelppmor}
+
+{feelppmor} provides:
+. tools to manipulate reduced order models
+. examples of reduced order models
+. {pyfeelppmor} to manipulate reduced order models in {python}
+
 
 == What is the purpose of this manual ?
 
@@ -61,6 +92,7 @@ We need to define first what is a {feelpp} user to define the scope.
 A {feelpp} user can be either
 * an application-user who runs the applications provided by {feelpp} either via Docker or via an installation on a system or infrastructure.
 * a dsel-user  who implements {cpp} code using {feelpp} Galerkin domain specific embdedded language, see _e.g._ xref:user::laplacian.adoc[Laplacian].
+* a Python developer who uses {pyfeelpp} to solve PDEs.
 
 This book discusses the {feelpp} user perspective.
 This book does not discuss {feelpp} API or programming.
