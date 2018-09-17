@@ -19,7 +19,17 @@ IMPORTANT: It is mandatory not only to have a {cpp}14 compiler but also {cpp}14 
 | {gpp}  | 7 | 8 | libstdc{plus}{plus} 7
 |===
 
-NOTE: {clangpp} is the preferred compiler by far for {feelpp}, it compiles much faster and use far less memory than {gpp}
+IMPORTANT: {clangpp} is the preferred compiler by far for {feelpp}, it compiles much faster and use far less memory than {gpp}
+
+[NOTE]
+====
+A few applications are not built with GCC, GCC ICEs (Internal Compiler Error) on them.
+.List of applications disabled with GCC
+|===
+| `feelpp_elasticity_pure_traction_{2d,3d}` | pure traction elasticity applications in `feelpp/quickstart`
+| `feelpp_toolbox_hdg_*` | all toolbox HDG applications are disabled with GCC.
+|===
+====
 
 == Required tools and libraries
 
