@@ -1,16 +1,37 @@
-= Filters
+= Exporting results for visualisation
+include::{partialsdir}/header-macros.adoc[]
 
-.Exporter
+We now turn to the exporter facility of {feelpp} which allows to provide the results of {feelpp} solves in a format readable by {paraview} or {ensight}.
+
+In this 2D and 3D example, we
+
+* [x] download a mesh description from {github}
+* [x] build the mesh and partition it
+* [x] build a function space stem:[X_h]
+* [x] create an element stem:[u] of stem:[X_h] which interpolate an expression givn by the end-user
+* [x] export to the Ensight Gold format (the default {feelpp} format) of {feelpp}
+
+.Example to build a mesh and function space, create an element and visualize them in {paraview}
 [source,python]
 ----
-include::{examplesdir}/python/test_exporter.py[]
+include::{uri-pyfeelpp-raw}filters/test_exporter.py[]
 ----
 
+To run this example,
 
-.Exporter
-[source,python]
+[source,sh]
 ----
-include::{examplesdir}/python/test_exporter_3d.py[]
+mpiexec -n 4 python3 test_exporter.py
 ----
 
+The location of the results are shown in the output of the script.
 
+.Output of the script
+----
+----
+
+It remains to open the file `.case` with {paraview} or {ensight}.
+
+It should look like this
+
+image::filters/ex1.png[]

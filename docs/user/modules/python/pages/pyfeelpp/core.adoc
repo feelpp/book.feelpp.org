@@ -1,4 +1,5 @@
-= Core
+= Initializing {feelpp}
+include::{partialsdir}/header-macros.adoc[]
 
 The `core` module provides the basic data structures to
 
@@ -11,8 +12,9 @@ The `core` module provides the basic data structures to
 .Start the {feelpp} environment, `test_core.py`
 [source,python]
 ----
-include::{examplesdir}/python/test_core.py[]
+include::{uri-pyfeelpp-raw}core/test_core.py[]
 ----
+//include::{uri-pyfeelpp-raw}core/test_core.py[]
 
 To execute the previous example
 
@@ -34,7 +36,7 @@ mpiexec -n 4 python3 test_core.py --version
 
 [source,python]
 ----
-include::{examplesdir}/python/test_remotedata.py[]
+include::{uri-pyfeelpp-raw}core/test_remotedata.py[]
 ----
 
 To execute the previous example
@@ -43,4 +45,19 @@ To execute the previous example
 [source,sh]
 ----
 mpiexec -n 4 python3 test_remotedata.py
+----
+
+and get the file `README.adoc` from the toplevel {feelpp} github directory downloaded
+
+.Download remote file on {github} repository
+----
+Welcome to PyFeel++
+version: 0.106.0-beta.2
+[ Starting Feel++ ] application test_remotedata.py version 0.1 date 2018-Sep-18
+ . test_remotedata.py files are stored in /feel/test_remotedata.py/np_1
+ .. logfiles :/feel/test_remotedata.py/np_1/logs
+download data in  /feel/test_remotedata.py/downloads
+downloaded data: ['/feel/test_remotedata.py/downloads/README.adoc']
+[env] Time : 1.39421s
+[ Stopping Feel++ ] application test_remotedata.py execution time 1.39421s
 ----
