@@ -2,27 +2,23 @@
 :toc: macro
 include::{partialsdir}/header-macros.adoc[]
 
-This is the {feelpp} user manual version {project_version}.
+This is the {feelpp} user manual version {page-version}.
 
-= Authors
+== Authors
 The {feelpp} user manual is actively developed by
 link:{uri-github}prudhomm[Christophe Prud'homme],
 link:{uri-github}vincentchabannes[Vincent Chabannes],
 link:{uri-github}dolle[Guillaume Dollé].
 
-There are many link:https://github.com/feelpp/feelpp/graphs/contributors[other and past contributors] to this manual.
+There are many other and past contributors to  link:https://github.com/feelpp/feelpp/graphs/contributors[{feelpp}] and to this link:https://github.com/feelpp/book.feelpp.org/graphs/contributors[manual].
 
-The {feelpp} project is currently managed by
+The {feelpp} project is the flagship software of link:http://www.cemosis.fr[Cemosis], the Center of Modeling and Simulation in Strasbourg for mathematics, industry and other disciplines, is currently managed by
 mailto:christophe.prudhomme@feelpp.org[Christophe Prud'homme], Professor in
 applied mathematic and scientific computing at the
 link:www.en.unistra.fr[University of Strasbourg], France.
 
 
-toc::[]
-
-= Preface
-
-
+[[feelpp]]
 == What is {feelpp}?
 
 
@@ -55,9 +51,10 @@ Each component provides a Python interface to access that mimic the {cpp} counte
   health-care.
 . {pyfeelpp} to manipulate {feelpp} mathematical objects in {python} to solve PDE
 
- === {feelpptb}
+=== {feelpptb}
 
-{feelppb} provides :
+{feelpptb} provides :
+
 . libraries to to manipulate physics based models and couple them
 . a set of mono and multi-physics application readily available :
   * fluid mechanics
@@ -71,19 +68,22 @@ Each component provides a Python interface to access that mimic the {cpp} counte
 === {feelppmor}
 
 {feelppmor} provides:
+
 . tools to manipulate reduced order models
 . examples of reduced order models
 . {pyfeelppmor} to manipulate reduced order models in {python}
 
 
+[[purpose]]
 == What is the purpose of this manual ?
 
 
-The purpose of this manual is to allow user
+The purpose of this manual is to allow the {feelpp} user
 
-* [x] get started with {feelpp} using xref:quickstart/docker.adoc[Docker] or xref:quickstart/singularity.adoc[Singularity].
-* [x] learn using {feelpp} by example
+* [x] get started with {feelpp} and its toolboxes using xref:user:using:docker.adoc[Docker] or xref:user:using:singularity.adoc[Singularity].
+* [x] learn using {feelpp} and solving PDE in xref:user:cpp:index.adoc[{cpp}] and xref:user:python:index.adoc[{python}]
 
+[[scope]]
 == What is the scope of this manual?
 
 We need to define first what is a {feelpp} user to define the scope.
@@ -95,16 +95,19 @@ A {feelpp} user can be either
 * a Python developer who uses {pyfeelpp} to solve PDEs.
 
 This book discusses the {feelpp} user perspective.
-This book does not discuss {feelpp} API or programming.
+This book does not discuss or present in-depth {feelpp} API or internal programming but rather present the principles and essential ingredients to get started.
 
+[[target]]
 == Who is this book for?
 
 This book is for students, engineers, scientists and researchers who want to use {feelpp}:
 
-* [x] solve PDEs using {feelpp} xref:toolbox::index.adoc[toolboxes]
-* [x] solve PDEs using the embedded language for Galerkin methods
+* [x] solve PDEs using {feelpp} xref:toolbox::index.adoc[toolboxes];
+* [x] solve PDEs using the embedded language for Galerkin methods;
+* [x] more generally develop numerical methods in a framework readily available for high performance computing.
 
-== Where to discuss about this manual?
+[[discuss]]
+== Where to discuss about this manual
 
 To discuss this manual, we provide Slack channel (recommended)  to announce, support and discuss book modifications.
 Don't hesitate to participate to the discussions!
@@ -114,6 +117,7 @@ image:tools/joinslack.svg[]]
 
 NOTE: Joining Slack channels works by invitation, to receive an invitation send an email to support@feelpp.org.
 
+[[contribute]]
 == How to contribute to this manual
 
 We're always happy to help out with {feelpp} or any other questions you might
