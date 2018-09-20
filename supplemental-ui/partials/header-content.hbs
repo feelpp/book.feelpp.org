@@ -5,7 +5,7 @@
          <!--  <a href="https://book.feelpp.org">Feel++ documentation</a> -->
          {{#each site.components}} {{#if (eq 'docs' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
            <a href="{{{./url}}}">Feel++ documentation</a>
-         {{/if}} {{/each}} {{/if}} {{/each}}            
+         {{/if}} {{/each}} {{/if}} {{/each}}
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -23,17 +23,20 @@
             <!-- this code allow to manage ordering of navbar item -->
             {{#each site.components}} {{#if (eq 'user' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
               <a class="navbar-item" href="{{{./url}}}"> {{{./title}}} </a>
-            {{/if}} {{/each}} {{/if}} {{/each}}            
+            {{/if}} {{/each}} {{/if}} {{/each}}
 
             {{#each site.components}} {{#if (eq 'dev' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
               <a class="navbar-item" href="{{{./url}}}"> {{{./title}}} </a>
-            {{/if}} {{/each}} {{/if}} {{/each}}            
+            {{/if}} {{/each}} {{/if}} {{/each}}
 
             {{#each site.components}} {{#if (eq 'toolboxes' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
               <a class="navbar-item" href="{{{./url}}}"> {{{./title}}} </a>
             {{/if}} {{/each}} {{/if}} {{/each}}
 
             <hr class="navbar-divider">
+            {{#each site.components}} {{#if (eq 'contribute' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
+              <a class="navbar-item" href="{{{./url}}}"> {{{./title}}} </a>
+            {{/if}} {{/each}} {{/if}} {{/each}}
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
