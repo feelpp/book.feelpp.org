@@ -11,15 +11,6 @@ We present here the {feelpp} toolchain with both required and suggested tools to
 
 IMPORTANT: It is mandatory not only to have a {cpp}14 compiler but also {cpp}14 stantard library.
 
-[WARNING]
-====
-There used to be a major compatibility issue between llvm/clang and GCC
-compilers since GCC5 released the ABI tag which makes it impossible to compile
-{feelpp} using llvm/clang with GCC5 or GCC6 standard libraries for a
-time. Please see the following table to understand the working {cpp} compiler /
-{cpp} standard library combinations.
-====
-
 .Table {cpp} compilers and standard libraries combinations
 |===
 | Compiler  | Minimal Version | Recommended Version | Standard Library
@@ -28,7 +19,18 @@ time. Please see the following table to understand the working {cpp} compiler /
 | {gpp}  | 7 | 8 | libstdc{plus}{plus} 7
 |===
 
-NOTE: {clangpp} is the preferred compiler by far for {feelpp}, it compiles much faster and use far less memory than {gpp}
+IMPORTANT: {clangpp} is the preferred compiler by far for {feelpp}, it compiles much faster and use far less memory than {gpp}
+
+[NOTE]
+====
+A few applications are not built with GCC, GCC ICEs (Internal Compiler Error) on them.
+
+.List of applications disabled with GCC
+|===
+| `feelpp_elasticity_pure_traction_{2d,3d}` | pure traction elasticity applications in `feelpp/quickstart`
+| `feelpp_toolbox_hdg_*` | all toolbox HDG applications are disabled with GCC.
+|===
+====
 
 == Required tools and libraries
 
@@ -40,8 +42,8 @@ Other than {cpp}14 compilers, {feelpp} requires only a few tools and libraries, 
 
 | link:https://cmake.org/[CMake] | 3.0 | -- |
 | MPI   | -- | -- | link:https://www.open-mpi.org/[OpenMPI] or link:https://www.mpich.org/[MPICH]
-| link:https://www.boost.org/[Boost] | 1.61 | 1.66 |
-| link:https://www.python.org/[Python Interpreter] |  2 | -- | Version 3 is recommended
+| link:https://www.boost.org/[Boost] | 1.61 | 1.67 |
+| link:https://www.python.org/[Python Interpreter] |  3 | 3 | Version 2 has never been tested
 |===
 
 == Recommended libraries
