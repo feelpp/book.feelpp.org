@@ -1,0 +1,31 @@
+= Setting the {python} environment
+
+To develop {feelpp} applications in {python}, it is strongly suggested that you create a protected {python} environment using _e.g._ `virtualenv`.
+
+The steps are as follows:
+
+* [x] install `virtualenv`
++
+----
+pip3 install virtualenv
+----
+and check the full path of the environment
+----
+which virtualenv
+----
+* [x] create a virtual environment using `python3`
++
+----
+> which python3
+/usr/bin/python3
+> mkdir pyfeelpp-env
+> virtualenv ~/pyfeelpp-env -p /usr/bin/python3
+----
+The last command creates a local copy of your environment. While working on this {pyfeelpp}, you should activate the local environment in order to make sure you're working with the right versions of your tools and packages.
+* [x] activate the environment
++
+----
+> cd pyfeelpp-env
+> . bin/activate
+----
+* [x] configure {feelpp} using `cmake` or `configure` with the environment activated so that the `make install` procedure installs {pyfeelpp}, {pyfeelpptb} and {oyfeelppmor} in the virtual environment where you can test it safely.
