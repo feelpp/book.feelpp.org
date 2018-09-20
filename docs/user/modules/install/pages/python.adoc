@@ -1,6 +1,23 @@
 = Setting the {python} environment
 
+== {python} requirements
+
+.List of modules to compile {feelpp} {python} bindings
+|===
+| Module | Version
+| mpi4py | 3.0
+| sympy | 1.1
+|===
+
+== Using `virtualenv` for development
+
 To develop {feelpp} applications in {python}, it is strongly suggested that you create a protected {python} environment using _e.g._ `virtualenv`.
+
+`Virtualenv` is a tool used to create an isolated {python} environment.
+The environment has its own installation directories, the libraries are not shared with other `virtualenv` environments.
+It doesn't access the globally installed libraries either.
+
+`virtualenv` allows to create a custom user-based environment where experiments can be easily done during the development process.
 
 The steps are as follows:
 
@@ -28,4 +45,4 @@ The last command creates a local copy of your environment. While working on this
 > cd pyfeelpp-env
 > . bin/activate
 ----
-* [x] configure {feelpp} using `cmake` or `configure` with the environment activated so that the `make install` procedure installs {pyfeelpp}, {pyfeelpptb} and {oyfeelppmor} in the virtual environment where you can test it safely.
+* [x] configure {feelpp} using `cmake` or `configure` with the environment activated so that the `make install` procedure installs {pyfeelpp}, {pyfeelpptb} and {pyfeelppmor} in the virtual environment where you can test it safely.
