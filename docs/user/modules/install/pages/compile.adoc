@@ -111,9 +111,19 @@ $ cd feelpp
 The first level directory tree is as follows
 [source,sh]
 ----
-$ tree -L 1 -d | column
-.		├── cmake	├── databases	├── feelpp	├── ports	├── testsuite	11 directories
-├── benchmarks	├── data	├── doc		├── mor		├── research	└── toolboxes
+$ tree -L 1 -d
+.
+├── benchmarks
+├── cmake
+├── data
+├── databases
+├── doc
+├── feelpp
+├── mor
+├── ports
+├── research
+├── testsuite
+└── toolboxes
 ----
 
 
@@ -164,10 +174,11 @@ $ cmake ../feelpp
 <1> set the {cpp} compiler to `/usr/bin/clang++-4.0`
 <2> set the C compiler to `/usr/bin/clang++-4.0`
 <3> set the cmake build type to `RelWithDebInfo`
-+
+
 [NOTE]
 ====
 CMake supports different build type that you can set with `-DCMAKE_BUILD_TYPE` (case insensitive) :
+
  * None
  * Debug : typically `-g`
  * Release : typically `-O3 -DNDEBUG`
@@ -176,6 +187,7 @@ CMake supports different build type that you can set with `-DCMAKE_BUILD_TYPE` (
 ====
 
 .Enable {feelpp} toolboxes and mor using `cmake
+[source,sh]
 ----
 cmake ../feelpp ... -DFEELPP_ENABLE_TOOLBOXES=ON -DFEELPP_ENABLE_MOR=ON
 ----
@@ -218,35 +230,38 @@ Options:
 
 We display below a set of possible configurations:
 
-Compile using Release build type, default c++ compiler and libstdc++
+Compile using Release build type, default c++ compiler and libstdc++::
++
 [source,sh]
 .Listing compiling using default compilers
 ----
 $ ../feelpp/configure -r
 ----
 
-Compile using Release build type, clang++ compiler and libstdc++
+Setup and compile {feelpp}, the {feelpp} toolboxes and {feelpp} mor::
++
+[source,sh]
+.Listing to compile {feelpp}, the {feelpp} toolboxes and {feelpp} mor
+----
+../feelpp/configure -r --enable-toolboxes --enable-mor
+----
+
+Compile using Release build type, clang++ compiler and libstdc++::
++
 [source,sh]
 .Listing compiling using clang++
 ----
 $ CXX=clang++ ../feelpp/configure -r
 ----
 
-Compile using Debug build type, clang++ compiler and libc++
+Compile using Debug build type, clang++ compiler and libc++::
++
 [source,sh]
 .Listing compiling using clang++/libc++ in Debug mode
 ----
 CXX=clang++ ../feelpp/configure -d -stdlib=c++
 ----
 
-
-
-Compile {feelpp}, the {feelpp} toolboxes and {feelpp} mor
-[source,sh]
-.Listing compiling using clang++/libc++ in Debug mode
-----
-CXX=clang++ ../feelpp/configure -r --enable-toolboxes --enable-mor
-----
 
 
 == Compiling {feelpp}
