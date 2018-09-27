@@ -38,43 +38,31 @@ $ CXX=clang++ ../feelpp/configure -r
 
 
 [source,bash]
-.Compile the {feelpp} library
+.Compile the {feelpp} library, its tools and a few examples
 ----
-$ cd feel <1>
-$ make  <2>
-$ make install <3>
+$ make  <1>
+$ make install <2>
 ----
-<1> go in `feel` subdirectory to compile the library
-<2> compile the library and its Dependencies
-<3> install the library
+<1> compile {feelpp}:  library, tools and quickstart examples
+<2> install {feelpp}
 
 TIP: you can speed up the make process by passing the option `-j<N>` where `N` is the number of concurrent `make` sub-processes. It compiles `N` files at a time and respect dependencies. For example `-j4` compiles 4 C++ files at a time.
 
 WARNING: Be aware that {feelpp} consumes memory. The {feelpp} library compile with 2Go of RAM. But to be more comfortable, 4Go or more would be best.
 
 
-[source,bash]
-.Compile your first {feelpp} applications
-----
-$ cd quickstart <1>
-$ make
-----
-<1> compile the basic applications in the toplevel quickstart directory
-
-
 [source,sh]
 .Execute your first {feelpp} application in sequential
 ----
-$ ./feelpp_qs_laplacian_2d --config-file qs_laplacian_2d.cfg
+$ ./feelpp_qs_laplacian_2d --case laplacian/feelpp2d
 ----
-
 
 [source,sh]
 .Execute your first {feelpp} application using 4 mpi processes
 ----
-$ mpirun -np 4 feelpp_qs_laplacian_2d --config-file qs_laplacian_2d.cfg
+$ cd feelpp/quickstart
+$ mpirun -np 4 feelpp_qs_laplacian_2d --case laplacian/feelpp2d
 ----
-
 
 == Downloading sources
 
@@ -124,13 +112,10 @@ The first level directory tree is as follows
 [source,sh]
 ----
 $ tree -L 1 -d | column
-.			├── databases		├── research
-├── applications	├── doc			├── testsuite
-├── benchmarks		├── feel		└── tools
-├── cmake		├── ports		14 directories
-├── contrib		├── projects
-├── data		├── quickstart
+.		├── cmake	├── databases	├── feelpp	├── ports	├── testsuite	11 directories
+├── benchmarks	├── data	├── doc		├── mor		├── research	└── toolboxes
 ----
+
 
 == Configuring {feelpp}
 
@@ -151,6 +136,8 @@ feel.opt/ # Build directory
 ----
 `feelpp` is the top directory where the source have been downloaded, using git or tarballs.
 ====
+
+WARNING: the components {feelpp} toolboxes and mor are not configured and compiled by default, you have to enable them either using `cmake` or convenience script `configure`
 
 [[cmake]]
 === Using cmake
@@ -188,23 +175,40 @@ CMake supports different build type that you can set with `-DCMAKE_BUILD_TYPE` (
  * RelWithDebInfo :  typically `-g -O2 -DNDEBUG`
 ====
 
+.Enable {feelpp} toolboxes and mor using `cmake
+----
+cmake ../feelpp ... -DFEELPP_ENABLE_TOOLBOXES=ON -DFEELPP_ENABLE_MOR=ON
+----
+
 === Using `configure`
 
-Alternatively you can use the `configure` script which calls `cmake`. `configure --help` will provide the following help.
+Alternatively you can use the `configure` script which calls `cmake`.
+`configure --help` provides the following help.
 [source,sh]
 .Listing Configure help
 ----
+./configure [options...]
 Options:
  -b, --build                         build type: Debug, Release, RelWithDebInfo
  -d, --debug                         debug mode
 -rd, --relwithdebinfo                relwithdebinfo mode
  -r, --release                       release mode
-     --std=c++xx                     c++ standard: c++14, c++1z (default: c++14)
-     --stdlib=libxx                  c++ standard library: stdc++(GCC), c++(CLANG) (default: stdc++)
+     --std=c++xx                     c++ standard c++14, c++1z (default: c++14)
+     --stdlib=libxx                  c++ standard library libstdc++, libc++ (default: libstdc++)
      --max-order=x                   maximum polynomial order to instantiate(default: 3)
      --cxxflags                      override cxxflags
      --cmakeflags                    add extra cmake flags
      --prefix=PATH                   define install path
+     --root=PATH                     define root path
+     --enable-pch                    enable precompiled headers (default)
+     --disable-pch                   disable precompiled headers
+     --enable-python                 enable python
+     --enable-cling                  enable cling
+     --disable-cling                 disable cling (default)
+     --enable-toolboxes              enable Feel++ toolboxes and PyFeel++ toolboxes
+     --disable-toolboxes             disable Feel++ toolboxes and PyFeel++ toolboxes (by default)
+     --enable-mor                    enable Feel++ mor and PyFeel++ mor
+     --disable-mor                   disable Feel++ mor and PyFeel++ mor (by default)
  -v, --verbose                       enable verbose output
  -h, --help                          help page
      --<package>-dir=PACKAGE_PATH    define <package> install directory
@@ -234,6 +238,16 @@ Compile using Debug build type, clang++ compiler and libc++
 ----
 CXX=clang++ ../feelpp/configure -d -stdlib=c++
 ----
+
+
+
+Compile {feelpp}, the {feelpp} toolboxes and {feelpp} mor
+[source,sh]
+.Listing compiling using clang++/libc++ in Debug mode
+----
+CXX=clang++ ../feelpp/configure -r --enable-toolboxes --enable-mor
+----
+
 
 == Compiling {feelpp}
 
