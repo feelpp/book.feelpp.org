@@ -137,33 +137,24 @@ You may cleanup the execution of the job *ID* by
 include::{examplesdir}/remotedesktop.txt[]
 ----
 
-=== Running an Remote Desktop resource in *Visualization*
-
+=== Using Paraview on with a Remote Desktop
 * Go to *Visualization*
 * Click *Desktop Available*
 ** Select your *Infrastructure* in the sliding menu
-
-[NOTE]: if no *Remote desktop* is defined, you will receive a warning message. Create a <<post, *Setting*>>, then go back to this step.
-
 ** Click on *Create*
 ** Click either on *Desktop* or *View Only*
 
-it should start a web page within your browser.
-In this page you should be able to:
+[NOTE]: if no *Remote desktop* is defined, you will receive a warning message. Create a <<post, *Setting*>>, then go back to this step.
 
-* start a 'terminal' and check the output of your simulation
-* start a post-processing GUI:
-** either by loading {uri-paraview-www}[{paraview}]
-** or using singularity {uri-ensight-www}[{ensight}] image
-* to quit just click on `Menu/logout` (top left)
+It opens a new web page within your browser. You can now start visualization tolls such as paraview or ensight. Here is the procedure to start paraview, for more information on paraview see link:{https://www.paraview.org/documentation/}[*paraview documentation*]. 
+* start a terminal (second icone in the top left corner)
+* load paraview module 
+----
+$ module load ParaView/5.2.0
+---
+* go to the directory where the data are stored. For Feelpp applications, the data are usually stored in `$LUSTRE/mso4sc_orchestrator/<instance_name>/`
+* once you are in the proper repository, you can load your data with paraview
+----
+$ paraview Export.case
+----
 
-For more details on using {paraview} or {ensight} please check XXXX.
-
-[NOTE]
-====
-The result are stored in `${LUSTRE}/feel/<workdir_prefix>_<date>_<id>` if
-you have chosen to use the `<hpc_volumes>` bindmount option: `${LUSTRE}/feel:/feel`.
-
-Check the output of the script in `<basedir>/<workdir_prefix>_<date>_<id>`
-to see the exact name of this directory.
-====
