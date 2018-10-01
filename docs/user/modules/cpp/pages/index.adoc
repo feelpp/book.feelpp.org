@@ -1,51 +1,5 @@
 = Using {feelpp} in {cpp}
 
-== Minimal example
+To start using {feelpp} in {cpp}, we have setup a xref:minimal.adoc[minimal example] in {uri-feelpp}/minimal that you can clone and play with provided you have installed {feelpp}.
 
-To start using {feelpp} in {cpp}, we have setup a minimal example in {uri-feelpp}/minimal that you can clone and play with provided you have installed {feelpp}.
-
-.CMake file to find {feelpp} and create a minimal application
-[source,cmake]
-----
-include::https://raw.githubusercontent.com/feelpp/minimal/master/CMakeLists.txt[tag=minimal]
-----
-<1> defines the minimal version of {cmake} to use
-<2> defines the project name
-<3> finds the {feelpp} package in the `PATHS` defined afterwards, it is required that {feelpp} is found in order to compile the application
-<4> defines the application  `feelpp_minimal_app` using the following scheme `<feelpp>_<project name>_<application name>` and the source file `minimal.cpp`
-
-
-To compile you need
-
-* [x] to define the environment variable `FEELPP_DIR` is {feelpp} is not installed in a standard directory prefix such as `/usr` or `/usr/local`.
-For example if {feelpp} is installed in `/opt/feelpp`,
-+
-----
-export FEELPP_DIR=/opt/feelpp
-----
-* [x] to define a {cpp} compiler, _e.g._ `clang++-6.0`, to compile the application
-+
-----
-export CXX=clang++-6.0
-----
-
-Then, the compilation command line is as follows:
-
-[source,sh]
-----
-git clone https://github.com/feelpp/minimal.git <1>
-mkdir build && cd build <2>
-cmake ../minimal <3>
-make <3>
-----
-<1> git clone the minimal example repository
-<2> create a build directory out of the sources
-<3> call {cmake}
-<4> build the application `feelpp_minimal_app`
-
-== What's next ?
-
-The next steps:
-
-* [x] to start from the minimal or a quickstart application to develop your own {feelpp} application.
-* [x] read the xref:dev:reference:index.adoc[reference manual].
+Then we have setup {uri-github-feelpp}/feelpp/quickstart examples and we detail the in this documentation the xref:laplacian.adoc[Laplacian quickstart application].
