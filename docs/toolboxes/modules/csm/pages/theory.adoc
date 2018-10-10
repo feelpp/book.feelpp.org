@@ -32,7 +32,7 @@
 
 == Equations
 
-The second Newton's law allows us to define the fundamental equation of the solid mechanic, as follows 
+Newton's second law allows us to define the fundamental equation of solid mechanics, as follows 
 [stem]
 ++++
   \rho^*_{s} \frac{\partial^2 \boldsymbol{\eta}_s}{\partial t^2}
@@ -51,8 +51,7 @@ The second Newton's law allows us to define the fundamental equation of the soli
 \end{align}
 ++++
 
-=== Hyper-elasticity
-
+=== Hyperelasticity
 
 ==== Saint-Venant-Kirchhoff
 [stem]
@@ -96,23 +95,23 @@ The second Newton's law allows us to define the fundamental equation of the soli
 
 === Axisymmetric reduced model
 
-We interest us here to a 1D reduced model, named _generalized string_.
+Here, we are interested in a 1D reduced model, named _generalized string_.
 
-The axisymmetric form, which will interest us here, is a tube of length stem:[L] and radius stem:[R_0]. It is oriented following the axis stem:[z] and stem:[r] represent the radial axis. The reduced domain, named stem:[\Omega_s^*] is represented by the dotted line. So the domain, where radial displacement stem:[\eta_s] is calculated, is stem:[\Omega_s^*=\lbrack0,L\rbrack].
+The axisymmetric form, which will interest us here, is a tube of length stem:[L] and radius stem:[R_0]. It is oriented following the stem:[z] axis and stem:[r] represents the radial axis. The reduced domain, named stem:[\Omega_s^*] is represented by the dotted line. So, the radial displacement stem:[\eta_s] is calculated in the domain stem:[\Omega_s^*=\lbrack0,L\rbrack].
 
 We introduce then stem:[\Omega_s^{'*}], where we also need to estimate a radial displacement as before. The unique variance is this displacement direction.
 
 [[img-geometry1]]
-image::ReduceModel.png[caption="Figure 1 : ", title="Geometry of the reduce model", alt="Reduced Model Geometry", width="500", align="center"]  
+image::ReduceModel.png[caption="Figure 1 : ", title="Geometry of the reduced model", alt="Reduced Model Geometry", width="500", align="center"]  
 
-The mathematical problem associated to this reduce model can be describe as 
+The mathematical problem associated to this reduced model can be described as 
 [stem]
 ++++
  \rho^*_s h \frac{\partial^2 \eta_s}{\partial t^2} - k G_s h \frac{\partial^2 \eta_s}{\partial x^2} + \frac{E_s h}{1-\nu_s^2} \frac{\eta_s}{R_0^2} - \gamma_v \frac{\partial^3 \eta}{\partial x^2 \partial t} = f_s.
 ++++
  
-where stem:[\eta_s], the radial displacement that satisfy this equation, stem:[k] is the Timoshenko's correction factor, and stem:[\gamma_v] is a viscoelasticity parameter. The material is defined by its density stem:[\rho_s^*], its Young's modulus stem:[E_s], its Poisson's ratio stem:[\nu_s] and its shear modulus stem:[G_s]
+where stem:[\eta_s] is the radial displacement that satisfies this equation, stem:[k] is the Timoshenko's correction factor, and stem:[\gamma_v] is a viscoelasticity parameter. The material is defined by its density stem:[\rho_s^*], its Young's modulus stem:[E_s], its Poisson's ratio stem:[\nu_s] and its shear modulus stem:[G_s]
 
-At the end, we take stem:[ \eta_s=0\text{ on }\partial\Omega_s^*] as a boundary condition, which will fixed the wall to its extremities.
+In the end, we take stem:[ \eta_s=0\text{ on }\partial\Omega_s^*] as a boundary condition, which will fix the wall to its extremities.
 
 
