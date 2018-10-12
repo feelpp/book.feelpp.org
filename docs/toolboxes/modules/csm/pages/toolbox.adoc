@@ -23,7 +23,7 @@ The solid mechanics model can be selected in json file :
 
 
 
-When materials are closed to incompressibility formulation in
+When materials are close to incompressibility, formulations in
 displacement/pressure are available.
 
 
@@ -45,7 +45,7 @@ option: `mechanicalproperties.compressible.volumic_law`
 
 == Materials
 
-The Lamé coefficients are deducing from the Young's modulus stem:[E_s] and the Poisson's ratio stem:[\nu_s] of the material we work on and can be express 
+The Lamé coefficients are deduced from the Young's modulus stem:[E_s] and the Poisson's ratio stem:[\nu_s] of the material we work on and can be expressed as
 
 [stem]
 ++++
@@ -71,7 +71,7 @@ The Lamé coefficients are deducing from the Young's modulus stem:[E_s] and the 
 ----
 
 where `E` stands for the Young's modulus in Pa, `nu` the Poisson's ratio (
-dimensionless ) and `rho` the density in stem:[kg\cdot m^{-3}].
+dimensionless ) and `rho` the density in stem:[kg \cdot m^{-3}].
 
 == Boundary Conditions
 
@@ -135,7 +135,7 @@ The fields allowed to be exported in the `Fields` section are:
  - VolumeVariation
 
 ==== Points
-Same syntax as FluidMechanics with available Fields :
+Same syntax as Fluid Mechanics with available Fields :
 
 - displacement
 - velocity
@@ -147,8 +147,8 @@ Same syntax as FluidMechanics with available Fields :
 - sigma_xx, sigma_xy, ...
 
 ==== Maximum/Minimum
-The Maximum and minimum can be evaluated and save on .csv file. User need to define (i) <Type> ("Maximum" or "Minimum"), 
-(ii) "<tag>" representing this data in the .csv file, (iii) "<marker>" representing the name of marked entities and (iv) the field where extremum is computed.
+The maximum and minimum can be evaluated and saved in a .csv file. The user needs to define (i) <Type> ("Maximum" or "Minimum"), 
+(ii) "<tag>" representing this data in the .csv file, (iii) "<marker>" representing the name of marked entities and (iv) the fields where extrema are computed.
 
 [source,json]
 ----
@@ -162,7 +162,7 @@ The Maximum and minimum can be evaluated and save on .csv file. User need to def
 }
 ----
 
-==== VolumeVariation
+==== Volume variation
 [source,json]
 ----
 "VolumeVariation":<marker>
@@ -170,12 +170,10 @@ The Maximum and minimum can be evaluated and save on .csv file. User need to def
 
 == Run simulations
 
-programme avalaible :
+Avalaible application :
 
-* `feelpp_toolbox_solid_2d`
-
-* `feelpp_toolbox_solid_3d`
+* `feelpp_toolbox_solid`
 
 ----
-mpirun -np 4 feelpp_toolbox_solid_2d --config-file=<myfile.cfg>
+mpirun -np 4 feelpp_toolbox_solid --config-file=<myfile.cfg>
 ----
