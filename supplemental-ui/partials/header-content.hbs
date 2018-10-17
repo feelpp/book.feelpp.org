@@ -3,7 +3,7 @@
     <div class="navbar-brand">
       <div class="navbar-item">
          <!--  <a href="https://book.feelpp.org">Feel++ documentation</a> -->
-         {{#each site.components}} {{#if (eq 'docs' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
+         {{#each site.components}} {{#if (eq 'feelppdocs' ./name)}} {{#each ./versions}} {{#if (eq this ../latestVersion)}}
            <a href="{{{./url}}}">Feel++ documentation</a>
          {{/if}} {{/each}} {{/if}} {{/each}}
       </div>
