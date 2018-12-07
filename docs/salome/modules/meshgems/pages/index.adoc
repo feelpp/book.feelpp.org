@@ -1,0 +1,62 @@
+= MeshGems
+
+You can find ressources for MeshGems at this adress: http://www.meshgems.com/transfer/download-meshgems_feu.php
+
+== Client
+
+To use MeshGems through Salome, you need to tell it the way to find the license.
+For this you need to set some variables in a config file.
+The value to set is given by a member of the team.
+Which file depends on the way you downloaded Salome.
+
+=== Universal binaries for Linux
+
+If you run the script `runappli`, add a config file `distene.sh` under `[APPLIDIR]/end.d` containing the following lines:
+[source,sh]
+-----
+export DISTENE_LICENSE_FILE="Use global envvar: DLIM8VAR"
+export  DISTENE_LICENCE_FILE_FOR_YAMS="Use global envvar: DLIM8VAR"
+export  DISTENE_LICENCE_FILE_FOR_MGCLEANER="Use global envvar: DLIM8VAR"
+export DLIM8VAR="la valeur de dlim8var fournie"
+-----
+
+If you run the script `salome` or click on the icon, add the following lines to the file `envProducts.cfg`:
+[source,sh]
+-----
+DISTENE_LICENSE_FILE="Use global envvar: DLIM8VAR"
+DISTENE_LICENCE_FILE_FOR_YAMS="Use global envvar: DLIM8VAR"
+DISTENE_LICENCE_FILE_FOR_MGCLEANER="Use global envvar: DLIM8VAR"
+DLIM8VAR="la valeur de dlim8var fournie"
+-----
+
+=== OS specific link
+
+In the `salome` file, replace the lines
+[source,sh]
+-----
+    #context.setVariable(r"DISTENE_LICENSE_FILE", r"Use global envvar: DLIM8VAR", overwrite=True)
+    #context.setVariable(r"DLIM8VAR", r"<your licence>", overwrite=True)
+-----
+with
+
+[source,sh]
+-----
+    context.setVariable(r"DISTENE_LICENSE_FILE", r"Use global envvar: DLIM8VAR", overwrite=True)
+    context.setVariable(r"DLIM8VAR", r"la valeur de dlim8var fournie", overwrite=True)
+-----
+
+== Server
+
+In order to run the license server as a service in ubuntu, do the following:
+[source,sh]
+-----
+cp dlim8.key.txt ~/DISTENE/DLim
+cp ~/DISTENE/DLim/scripts/distene.sh ~
+# change DLIM_HOME to /opt/DISTENE/DLim
+sudo mv ~/DISTENE /opt/
+sudo mv ~/distene.sh /etc/init.d
+sudo chmod 0755 /etc/init.d/distene.sh
+sudo systemctl daemon-reload
+sudo update-rc.d distene defaults
+sudo /etc/init.d/distene start
+-----
