@@ -1,0 +1,36 @@
+= Debugging {feelpp}
+
+NOTE: Discuss on a particular application
+
+== Debug mode
+
+To debug {feelpp} code, it is best to work within the cmake Debug environment:
+
+
+[shell]
+.Command line to configure {feelpp} in Debug mode
+----
+configure -d
+----
+
+you recompile {feelpp} or just the application you are interested in.
+
+
+
+== Using the Address sanitizer
+
+It is strongly advise to use the xref:https://github.com/google/sanitizers/wiki/AddressSanitizer[Address Sanitizer]
+[shell]
+.Command line to configure {feelpp} in Debug mode
+----
+configure -d --enable-asan
+----
+
+You can use gdb with binaries built by AddressSanitizer in a
+usual way.
+When AddressSanitizer finds a bug it calls one of the functions
+ __asan_report_{load,store}{1,2,4,8,16} which in turn calls __
+ asan::ReportGenericError.
+ If you want gdb to stop before asan reports an error,
+ set a breakpoint on __asan::ReportGenericError.
+ If you want gdb to stop after asan has reported an error, set a breakpoint on __sanitizer::Die or use ASAN_OPTIONS=abort_on_error=1.

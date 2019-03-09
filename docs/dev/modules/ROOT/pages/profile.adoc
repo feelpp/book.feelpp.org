@@ -1,0 +1,24 @@
+= Profiling {feelpp}
+
+Profiling is about getting performance data out of your application.
+
+
+== Using perf
+
+=== Using perf stats
+
+.Display general performance data out of your application
+----
+perf stats <your {feelpp} application command line>
+----
+
+=== Using perf record/report
+.Record performance data about your application
+----
+perf record -g <your {feelpp} application command line>
+----
+
+.Display performance data in a text user interface
+----
+perf report -g 'graph,0.5,caller'
+----
