@@ -29,8 +29,8 @@ configure -d --enable-asan
 GDB can be used as usual with applications built with AddressSanitizer support.
 When AddressSanitizer finds a bug you can set a breakpoint
 
- * right before it generates the error report by setting a breakpoint on `___asan::ReportGenericError`
- * right after the error generation by setting a breakpoint on `___asan::Die`
+ * right before it generates the error report by setting a breakpoint on `__asan::ReportGenericError`
+ * right after the error generation by setting a breakpoint on `__asan::Die`
 
 NOTE: you can also set the environment variable `ASAN_OPTIONS=abort_on_error=1` to
 get the same effect as in the second case
