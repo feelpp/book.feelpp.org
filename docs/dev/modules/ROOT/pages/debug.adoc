@@ -32,8 +32,14 @@ When AddressSanitizer finds a bug you can set a breakpoint
  * right before it generates the error report by setting a breakpoint on `__asan::ReportGenericError`
  * right after the error generation by setting a breakpoint on `__asan::Die`
 
-NOTE: you can also set the environment variable `ASAN_OPTIONS=abort_on_error=1` to
+[TIP]
+====
+you can also set the environment variable `ASAN_OPTIONS=abort_on_error=1` to
 get the same effect as in the second case
+----
+> ASAN_OPTIONS=abort_on_error=1  gdb <executable to debug>
+----
+====
 
 [TIP]
 ====
@@ -41,5 +47,13 @@ It is advised to disable the leak detection while looking for a bug as follows
 
 ----
 > ASAN_OPTIONS=detect_leaks=0  gdb <executable to debug>
+----
+====
+
+[TIP]
+====
+To combine multiple address sanitizer options in the command line, separate them with a `:` like below
+----
+> ASAN_OPTIONS=detect_leaks=0:abort_on_error=1  gdb <executable to debug>
 ----
 ====
