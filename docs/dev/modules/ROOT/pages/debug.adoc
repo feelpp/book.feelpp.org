@@ -34,3 +34,12 @@ When AddressSanitizer finds a bug you can set a breakpoint
 
 NOTE: you can also set the environment variable `ASAN_OPTIONS=abort_on_error=1` to
 get the same effect as in the second case
+
+[TIP]
+====
+It is advised to disable the leak detection while looking for a bug as follows
+
+----
+> ASAN_OPTIONS=detect_leaks=0  gdb <executable to debug>
+----
+====
