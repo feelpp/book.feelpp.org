@@ -61,12 +61,29 @@ This section of the Model JSON file defines the parameters that may enter expres
 ----
 "Parameters": <1>
     {
-        "ubar":"1.0" <2>
+        "ubar":"1.0", <2>
+        "chi":"t<2:t", <3>
+        "pIn": <4>
+        {
+            "type":"fit", <5>
+            "filename":"$cfgdir/pin.csv", <6>
+            "abscissa":"time", <7>
+            "ordinate":"pressure", <8>
+            "interpolation":"P1", <9>
+            "expr":"10*t+3:t" <10>
+        }
     }
 ----
 <1> name of the section
 <2> defines a new parameter `ubar` and its associated value
-
+<3> defines a new parameter `chi` and its associated expression (currently symbols supported are `x`, `y`, `z`, `nx`, `ny`, `nz`, `t`
+<4> defines a new parameter `pIn` and its definition is given in the subsection below 
+<5> the type of parameter is fit
+<6> the filename of a csv file used for the fitting
+<7> column name of csv file used in abscissa
+<8> column name of csv file used in ordinate
+<9> interpolation type of the fit. Possible values are : `P0`, `P1`, `Spline`, `Akima`
+<10> expression used in order to read the fitted value
 
 === Materials
 
