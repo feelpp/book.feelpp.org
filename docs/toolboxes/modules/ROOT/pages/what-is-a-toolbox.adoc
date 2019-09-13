@@ -109,6 +109,72 @@ This section of the Model JSON file defines material properties linking the Phys
 <4> density stem:[\rho] is called `rho` and is given in SI units
 <5> viscosity stem:[\mu] is called `mu` and is given in SI units
 
+=== InitialConditions
+
+This section of the Model JSON file defines initial conditions. Depending on the type of model :
+* if we use a transient model, it correspond to the initial conditions of the time scheme applied
+* if we use a steady model, it represent the inital guess given to the solver
+
+As presented below, there are two way for define initial conditions : from mathematical expressions or a file
+
+[source,json]
+.Example of a `InitialConditions` defined from mathematical expressions
+----
+"InitialConditions":
+{
+    "temperature": <1>
+    {
+        "Expression": <2>
+        {
+            "myic1": <3>
+            {
+                "markers":"Omega1", <4>
+                "expr":"293" <5>
+            },
+            "myic2": <6>
+            {
+                "markers":["Omega2,Omega3]", <7>
+                "expr":"305*x*y:x:y"  <8>
+            }
+        }
+    }
+}
+----
+<1> the field name of the toolbox to which the initail condition is associated
+<2> the type of boundary condition to apply, here `Expression`
+<3> a name that identify an initial condition imposed on a field
+<4> the name of marker (or a list of markers) where an expression is imposed as initial condition.
+The markers can represent any kind of entity (Elements/Faces/Edges/Points).
+If this entry is not given, the expression is applied on the mesh support of the field.
+<5> an expression which is applied to the field 
+<6> another name that identify an initial condition
+<7> idem as <4>
+<8> idem as <5>
+
+[source,json]
+.Example of a `InitialConditions` section defined from a file
+----
+"InitialConditions":
+{
+    "temperature": <1>
+    {
+        "File": <2>
+        {
+            "myic": <3>
+            {
+                "filename":"$home/feel/toolboxes/heat/temperature.h5", <4>
+                "format":"hdf5" <5>
+            }
+        }
+    }
+}
+----
+<1> the field name of the toolbox to which the initail condition is associated
+<2> the type of boundary condition to apply, here `File`
+<3> a name that identify an initial condition imposed on a field
+<4> a file that represent a field saved (WARNING : must be compatible with the current mesh and partitioning)
+<5> the format of the file read (possible values are "default","hdf5","binary","text"). It's an optional entry, the default value is choosen by {feelpp} (it's "hdf5" if {feelpp} was compiled with a hdf5 library).  
+
 
 === BoundaryConditions
 
@@ -174,6 +240,13 @@ This section allows to define the output fields and quantities to be computed an
     {
         "fields":["field1","field2",...]
     },
+    "Save":
+    {
+        "Fields":
+        {
+             "names":["field1","field2",...]
+             "format":"hdf5"                                                                                                                                                                                                                   }
+    },
     "Measures":
     {
         "<measure type>":
@@ -185,12 +258,32 @@ This section allows to define the output fields and quantities to be computed an
 ----
 
 
-=== Exports
+==== Exports
 
 The `Exports` section is implemented when you want to visualize some fields with ParaView software for example.
 The entry `fields` should be filled with names which are available in the toolbox used.
 
-=== Measures
+==== Save
+
+The `Save` section is implemented when you want to store data by using the {feelpp} format. For example, It can be usefull to have these datas for another application.
+Actually, there is only the possibility to save the fields (finite element approximation).
+[source,json]
+.Example of a `Save` section
+----
+"Save":
+{
+    "Fields":
+    {
+         "names": <1>
+         "format": <2>
+    }
+}
+----
+
+<1> the names of fields that we want to save (can be a name or a vector of name)
+<2> the format used (possible values are "default","hdf5","binary","text"). It's an optional entry, the default value is choosen by {feelpp} (it's "hdf5" if {feelpp} was compiled with a hdf5 library).
+
+==== Measures
 
 Several quantities can be computed after each time step for transient simulation or after the solve of a stationary simulation.
 The values computed are stored in a CSV file format and named <toolbox>.measures.csv.
