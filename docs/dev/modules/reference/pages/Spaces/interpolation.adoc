@@ -9,15 +9,15 @@ Feel++ has a very powerful interpolation framework which allows to:
 * transfer functions from one space type to another.
 
 this is done seamlessly in parallel.
-The framework provides a set of C{plus}+ classes and C++ free-functions enabled  short, concise and expressive handling of interpolation.
+The framework provides a set of {cpp} classes and {cpp} free-functions enabled  short, concise and expressive handling of interpolation.
 
 ==== Using interpolation operator
 
 [source,cpp]
-.Building interpolation operator $$I_h : P^1_{c,h} \rightarrow P^0_{td.h}$$
+.Building interpolation operator stem:[I_h : P^1_{c,h} \rightarrow P^0_{td.h}]
 ----
 using MeshType = Mesh<Simplex<2>>;
-auto mesh loadMesh( _mesh=new MeshType );
+auto mesh = loadMesh( _mesh=new MeshType );
 auto P1h = Pch<1>( mesh );
 auto P0h = Pdh<0>( mesh );
 auto Ih = I( _domain=P1h, _image=P0h );
@@ -110,34 +110,34 @@ functionspace_type<decltype(Xh)>>`
 | `IPtr(...)`
 | `I_ptr_t<functionspace_type<decltype(Xh)>,
 functionspace_type<decltype(Xh)>>`
-| $$I: X_h \rightarrow Y_h $$
+| stem:[I: X_h \rightarrow Y_h ]
 | `Grad(_domain=Xh,_image=Wh)`
 | `Grad_t<functionspace_type<decltype(Xh)>,
 functionspace_type<decltype(Wh)>>`
 | `GradPtr(...)`
 | `Grad_ptr_t<functionspace_type<decltype(Xh)>,
 functionspace_type<decltype(Wh)>>`
-| $$\nabla: X_h \rightarrow W_h $$
+| stem:[\nabla: X_h \rightarrow W_h ]
 | `Curl(_domain=Wh,_image=Vh)`
 | `Curl_t<functionspace_type<decltype(Wh)>,
 functionspace_type<decltype(Vh)>>`
 | `CurlPtr(...)`
 | `Curl_ptr_t<functionspace_type<decltype(Wh)>,
 functionspace_type<decltype(Vh)>>`
-| $$\nabla \times : W_h \rightarrow V_h $$
+| stem:[\nabla \times : W_h \rightarrow V_h ]
 | `Div(_domain=Vh,_image=Zh)`
 | `Div_t<functionspace_type<decltype(Vh)>,
 functionspace_type<decltype(Zh)>>`
 | `DivPtr(...)`
 | `Div_ptr_t<functionspace_type<decltype(Vh)>,
 functionspace_type<decltype(Zh)>>`
-|  $$\nabla \cdot: V_h \rightarrow Z_h $$
+|  stem:[\nabla \cdot: V_h \rightarrow Z_h ]
 |===
 
 
 
 [source,cpp]
-.Building the discrete operators associated to the De Rahm diagram in Feel++
+.Building the discrete operators associated to the De Rahm diagram in {feelpp}
 ----
 auto mesh = loadMesh( _mesh=new Mesh<Simplex<Dim>>());
 auto Xh = Pch<1>(mesh);
