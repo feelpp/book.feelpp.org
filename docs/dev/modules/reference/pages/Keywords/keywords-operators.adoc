@@ -55,6 +55,12 @@ is a finite element space.
 |`laplaciant(f)`| \( \Delta f \) | laplacian of trial function  |0 |\( 1 \times 1  \) \( m=p=1 \)
 |`laplacianv(f)`| \( \Delta f \) | laplacian of the  function stem:[f]  |0 |\( 1 \times 1  \) \( m=p=1 \)
 |`hess(f)`| \( \nabla^2 f \) | hessian of test function  |2 |\( n \times n  \) \( m=p=1 \)
+|`trace(f)`| \( \mathrm{trace}( f ) \) | trace of test matrix field   | 0 |  \( 1 \times 1  \) \( m=p=d \)
+|`tracet(f)`| \( \mathrm{trace}( f ) \) | trace of trial matrix field   | 0 |  \( 1 \times 1  \) \( m=p=d \)
+|`tracev(f)`| \( \mathrm{trace}( f ) \) | trace of  matrix field \( f \)   | 0 |  \( 1 \times 1  \) \( m=p=d \)
+|`normal(f)`| \( f \cdot \overrightarrow{N}  \) | normal component of test function   | rank\((f(\overrightarrow{x}))-1\)|
+|`normalt(f)`| \( f \cdot \overrightarrow{N}  \) | normal component of trial function   | rank\((f(\overrightarrow{x}))-1\)|
+|`normalv(f)`| \( f \cdot \overrightarrow{N}  \) | normal component of function \( f \)   | rank\((f(\overrightarrow{x}))-1\)|  
 |`dn(f)`| \( \nabla f \cdot \overrightarrow{N} \) | normal derivative of test function  |0 |\( 1 \times 1 \) \( m=p=1 \)
 |`dn(f)`| \( \nabla f \  \overrightarrow{N} \) | normal derivative of test function  |1 |\( m \times 1 \) \(p=1 \)
 |`dnt(f)`| \( \nabla f \cdot \overrightarrow{N} \) | normal derivative of trial function  |0 |\( 1 \times1 \) \(m=p=1\)
