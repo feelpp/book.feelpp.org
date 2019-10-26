@@ -29,6 +29,11 @@ you order. To check the status of your order:
 
 You shall be able to see your products and their status in each product form.
 
+[Note]
+====
+The Marketplace is not available anymore, for technical reasons. For now, all the registered applications can be used in the *Experiments* section. 
+====
+
 
 [[data]]
 == Benchmarks and Examples Catalogue
@@ -38,33 +43,26 @@ Go to the xref:cases:ROOT:index.adoc[{feelpp} Case Studies guide] to discover ex
 [[running]]
 == Running an {feelpp} application in *Experiments*
 
-* Select *Create App Instance*
-** define an **ID** (_the ID is used later by the experiment tool to identify the experiment_)
+* In the *Experiments* tab :
+** Select *Instances*
 ** select a registered app in the menu
 
-At this point you should have a page with all the options that need to be filled before moving to *Deploy Instance*
+At this point you should have a page with all the options that need to be filled before creating the instance.
 
-.Web interface of the {feelpp} CFD app
-image::Portal_FeelppCFDApp.png[]
+.Example of interface of the {feelpp} CFD app
+image::Portal_FeelppCFDApp2.png[]
 
-The fields to fill may be grouped into categories:
+The interface above is commun to all the toolbox applications. For each application, default parameters are filled and sould work right away. 
+The only mandatory field to fill is the ID. This ID will be used to identify the instance once it is deployed.
 
-* specs for running simulations
-* HPC settings
-* specs retrieving singularity images
-* specs for singularity image
-
-The *EndUser* shall only need to fill the fields related to the 1st and 2nd category.
-The fields that are to be filled by *EndUser* are marked in *bold*.
-
-
+We detail the different field in the following tables. We differentiate the keys specs to run the simulation and the key specs to define the HPC settings.
 
 .List of keys specs for running simulations
 [options="header,footer"]
 |===
 | Key                           | Description                                 | Default                                                            | Notes
-| **feelpp_<toolbox>_case**   | string that describe the location of the testcase      | ``                       |
-| **feelpp_<toolbox slug name>_cli**     | command line options       |  "" |
+| **feelpp_<toolbox>_case**   | string that describe the location of the testcase      | Depending on the toolbox |A default test-case is proposed but more are availbe in the Feel/toolbox repository                       |
+| **feelpp_<toolbox slug name>_cli**     | command line options       |  "" | For advanced usage only
 |===
 
 .List of keys to be defined for HPC settings
@@ -74,56 +72,25 @@ The fields that are to be filled by *EndUser* are marked in *bold*.
 | **job_max_time** | maximum allowed time for run (minutes and seconds) | '00:30:00' |  depends on batch system and selected `job_partition`
 | **job_partition** | partition to be used on the supercomputer | `thin-shared` |  depends on HPC system
 
-| **job_tasks** | number of tasks to be used in parallel | 10 |  shall depends on batch system and selected partition
+| **job_tasks** | number of tasks to be used in parallel | 4 |  shall depends on batch system and selected partition
 
 |===
 
+Once the fields are filled, you can click on *Create new Instance*. Your application is now in the menu belove with the list of the *App's Instance*. You can select your application using the right ID and *Run!* it.
 
+At this point you will see the simplified logs of the deployement and execution process.
+Depending on the application and the HPC availability, this step may takes some minutes to be performed. The button will indicate the status of the running process :
+ 
+* Blue: on going 
+* Red: error
+* Green: application finished successfully. 
 
-Once filled, click on *Create Instance*. The default parametrization should work right away.
-
-This results in the execution on the selected HPC resource of the bootstrap script included in the app definition.
-
-TIP: Any error will result in a message at the top of the page, below the menus.
-
-The next step is to *Deploy Instance*:
-
-* select the *ID*, you defined in the previous step, in the *App instance * menu
-* click on *Deploy*, wait until the button in blue turns green
-
-To *Run Instance*, the procedure is similar:
-
-* select the *ID*, you defined in the previous step, in the *App instance* menu
-* click on *RUN*
+Once the running process is over you can destroy the current instance and move to the visualization section.
 
 [TIP]
 ====
-These steps may take some minutes to be performed. A red button will indicates an error.
-Check the message in the frame below the status button. To have more details about the actual error
-is more tricky; we recommend to:
-
-* make sure you have unchecked the cleanup option
-* connect to the HPC resource
-* move to the selected `base_dir/working_prefix<id>`
-* check the logs
-
-`base_dir`, `working_prefix` are filled within the portal *Experiments*.
-The `<id>` is a random character generated by the deployment.
-
-An other option is to run the app using the *orchestrator CLI*.
-see https://github.com/MSO4SC/resources/blob/master/blueprint/feelpp/feelpp_test/README.adoc[this file] for details
-
+If you are facing unexplained errors, please, use the Feedback tool to help us fixing it.
 ====
-
-You may cleanup the execution of the job *ID* by
-
-* UnDeploy your Instance
-** select the *ID*, you defined in the previous step, in the *App instance * menu
-** click on *UnDeploy*
-
-* Destroy your Instance
-** select the *ID*, you defined in the previous step, in the *App instance * menu
-** click on *Destroy*
 
 [[post]]
 == Setting up an Remote Desktop resource in *Visualization*
@@ -137,33 +104,25 @@ You may cleanup the execution of the job *ID* by
 include::{examplesdir}/remotedesktop.txt[]
 ----
 
-=== Running an Remote Desktop resource in *Visualization*
-
+=== Using Paraview with a Remote Desktop
 * Go to *Visualization*
 * Click *Desktop Available*
 ** Select your *Infrastructure* in the sliding menu
-
-[NOTE]: if no *Remote desktop* is defined, you will receive a warning message. Create a <<post, *Setting*>>, then go back to this step.
-
 ** Click on *Create*
 ** Click either on *Desktop* or *View Only*
 
-it should start a web page within your browser.
-In this page you should be able to:
+[NOTE]: if no *Remote desktop* is defined, you will receive a warning message. Create a <<post, *Setting*>>, then go back to this step.
 
-* start a 'terminal' and check the output of your simulation
-* start a post-processing GUI:
-** either by loading {uri-paraview-www}[{paraview}]
-** or using singularity {uri-ensight-www}[{ensight}] image
-* to quit just click on `Menu/logout` (top left)
+It opens a new web page within your browser. You can now start visualization tolls such as paraview or ensight. Here is the procedure to start paraview, for more information on paraview see link:{https://www.paraview.org/documentation/}[*paraview documentation*]. 
 
-For more details on using {paraview} or {ensight} please check XXXX.
+* start a terminal (second icone in the top left corner)
+* load paraview module 
+----
+$ module load ParaView/5.2.0
+----
+* go to the directory where the data are stored. For Feelpp applications, the data are usually stored in `$LUSTRE/mso4sc_orchestrator/<instance_name>/`
+* once you are in the proper repository, you can load your data with paraview
+----
+$ paraview Export.case
+----
 
-[NOTE]
-====
-The result are stored in `${LUSTRE}/feel/<workdir_prefix>_<date>_<id>` if
-you have chosen to use the `<hpc_volumes>` bindmount option: `${LUSTRE}/feel:/feel`.
-
-Check the output of the script in `<basedir>/<workdir_prefix>_<date>_<id>`
-to see the exact name of this directory.
-====

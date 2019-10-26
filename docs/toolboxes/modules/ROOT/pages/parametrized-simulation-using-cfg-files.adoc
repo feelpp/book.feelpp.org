@@ -1,0 +1,62 @@
+= Parametrized Simulation using CFG files
+
+The Model CFG (`.cfg`) files allow to pass command line options to {feelpp} applications. In particular, it allows to
+
+* setup the output directory
+* setup the mesh
+* setup the time stepping
+* define the solution strategy and configure the linear/non-linear algebraic solvers.
+* other options specific to the toolbox used
+
+[source,ini]
+----
+directory=toolboxes/fluid/TurekHron/cfd3/P2P1G1 <1>
+
+case.dimension=2 <2>
+case.discretization=P2P1G1 <3>
+
+[fluid] <4>
+filename=$cfgdir/cfd3.json <5>
+
+mesh.filename=$cfgdir/cfd.geo <6>
+gmsh.hsize=0.03 <7>
+
+solver=Newton <8>
+
+pc-type=lu <9>
+
+bdf.order=2 <10>
+
+[ts]
+time-step=0.01 <11>
+time-final=10 <12>
+----
+
+<1> the directory where the results are stored
+<2> the dimension (2d/3d) of the application
+<3> the discretization choosen (specific to the toolbox)
+<4> the prefix of option
+<5> the path of the json file
+<6> the path of geo/mesh file
+<7> characterist size of the mesh
+<8> type of non linear solver (specific to fluid toolbox)
+<9> type of preconditioner
+<10> order of BDF tiem scheme (specific to fluid toolbox)
+<11> time step
+<12> time final
+
+If the mesh file is stored on a remote storage as Girder, the `mesh.filename` option in the previous listing can be replaced by
+[source,ini]
+----
+mesh.filename=girder:{file:5af862d6b0e9574027047fc8}
+----
+where `5af862d6b0e9574027047fc8` is the id of the mesh file in the Girder platform. All options for Girder access are listed here :
+
+|===
+| Option | Default value | Description
+
+| `url` | https://girder.math.unistra.fr | url of a Girder platform
+| `file` | <no default value> | one or several file id(s)
+| `api_key` | <no default value> | an authentication key
+|===
+
