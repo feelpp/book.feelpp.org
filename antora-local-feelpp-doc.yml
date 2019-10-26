@@ -1,6 +1,6 @@
 site:
   title: Feel++ // Docs
-  url: ./
+  url: http://docs.feelpp.org
   start_page: stable@feelppdocs::index.adoc
 content:
   sources:
@@ -10,9 +10,15 @@ content:
   - url: ./
     branches: master
     start_path: docs/user
+    tags:
+    - v0.106
+    - v0.105
   - url: ./
     branches: master
     start_path: docs/dev
+    tags:
+    - v0.106
+    - v0.105
   - url: ./
     branches: master
     start_path: docs/data
@@ -20,12 +26,16 @@ content:
     branches: master
     start_path: docs/math/
   - url: ./
-    branches: [master,fix-*]
+    branches: [master]
     start_path: docs/toolboxes
-  - url: ../toolbox
-    branches: [master,case*,example*]
     tags:
-    - v*
+    - v0.106
+    - v0.105
+  - url: ../toolbox
+    branches: [master]
+    tags:
+    - v0.106
+    - v0.105
     start_path: examples
   - url: ../toolbox
     branches: master
