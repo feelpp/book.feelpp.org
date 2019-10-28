@@ -2,8 +2,10 @@
 
 {feelpp} can be installed on Ubuntu systems.
 
+== Add {feelpp} Ubuntu repository
+
 The supported systems are
-.Table Title
+.Table {feelpp} Ubuntu distributions
 |===
 |Distribution | Version | Component
 
@@ -22,4 +24,26 @@ echo "deb https://dl.bintray.com/feelpp/ubuntu eoan main" | sudo tee -a /etc/apt
 Or, add the repository URLs using the "Software Sources" admin UI:
 ----
 deb https://dl.bintray.com/feelpp/ubuntu {distribution} {components}
+----
+
+You should then update the database
+----
+sudo apt update
+----
+
+== Install {feelpp} packages
+
+.Install the library
+----
+sudo apt install libfeelpp1
+----
+
+.Install the tools
+----
+sudo apt install feelpp-tools
+----
+
+.Install the quickstart applications and associated data
+----
+sudo apt install feelpp-tools feelpp-data
 ----
