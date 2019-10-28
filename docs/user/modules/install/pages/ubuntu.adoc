@@ -1,0 +1,25 @@
+= Ubuntu packages
+
+{feelpp} can be installed on Ubuntu systems.
+
+The supported systems are
+.Table Title
+|===
+|Distribution | Version | Component
+
+|eoan, 19.10, main
+
+|===
+
+Using the command line, add the following to your /etc/apt/sources.list system config file:
+----
+echo "deb https://dl.bintray.com/feelpp/ubuntu {distribution} {components}" | sudo tee -a /etc/apt/sources.list
+----
+for example
+----
+echo "deb https://dl.bintray.com/feelpp/ubuntu eoan main" | sudo tee -a /etc/apt/sources.list
+----
+Or, add the repository URLs using the "Software Sources" admin UI:
+----
+deb https://dl.bintray.com/feelpp/ubuntu {distribution} {components}
+----
