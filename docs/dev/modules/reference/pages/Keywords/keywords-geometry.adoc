@@ -15,7 +15,7 @@
 ==== Element Barycenter Point:
 
 |===
-|Feel++ Keyword | Math Object | Description | Dimension 
+|Feel++ Keyword | Math Object | Description | Dimension
 
 |`C()`|stem:[\overrightarrow{C}]| stem:[(C_x, C_y, C_z)^T]|stem:[d \times 1]
 |`Cx()`|stem:[C_x]|stem:[x] coordinate of stem:[\overrightarrow{C}]|stem:[1 \times 1]
@@ -26,11 +26,28 @@
 ==== Normal at Current Point:
 
 |===
-|Feel++ Keyword | Math Object | Description | Dimension 
+|Feel++ Keyword | Math Object | Description | Dimension
 |`N()`|stem:[\overrightarrow{N}]| stem:[(N_x, N_y, N_z)^T]|stem:[d \times 1]
 |`Nx()`|stem:[N_x]|stem:[x] coordinate of stem:[\overrightarrow{N}]|stem:[1 \times 1]
 |`Ny()`|stem:[N_y]|stem:[y] coordinate of stem:[\overrightarrow{N}] (value is 0 in 1D)|stem:[1 \times 1]
 |`Nz()`|stem:[N_z]|stem:[z] coordinate of stem:[\overrightarrow{N}] (value is 0 in 1D and 2D)|stem:[1 \times 1]
+|===
+
+==== Extra informations on elements and face of element:
+
+|===
+|Feel++ Keyword | Math Object | Description | Dimension
+
+|`h()` | stem:[h] | maximum edge size in element | 1
+|`hMin()` | stem:[h_{\mathrm{min}}] | minimum edge size in element | 1
+|`hFace()` | stem:[h_{\mathrm{f}}] | maximum edge size of current face | 1
+|`meas()` | stem:[|\cdot|] | measure of the current element | 1
+|`measFace()` | stem:[|\cdot|] | measure of the current face | 1
+|`eid()` | | id of the current element | 1
+|`emarker()` | | marker of the current element | 1
+|`emarker2()` | | marker2 of the current element | 1
+|`fmarker()` | | marker of the face in the current element when iterating over  faces | 1
+|`epid()` | | pid of the current element | 1
 |===
 
 === Geometric Transformations
@@ -42,7 +59,7 @@ transformation, using the keyword: `J()` There are some tools to
 manipulate this jacobian.
 
 |===
-|Feel++ Keyword | Math Object | Description 
-|`detJ()`|stem:[\det(J)]|Determinant of jacobian matrix 
-|`invJT()`|stem:[(J^{-1})^T]|Transposed inverse of jacobian matrix 
+|Feel++ Keyword | Math Object | Description
+|`detJ()`|stem:[\det(J)]|Determinant of jacobian matrix
+|`invJT()`|stem:[(J^{-1})^T]|Transposed inverse of jacobian matrix
 |===
