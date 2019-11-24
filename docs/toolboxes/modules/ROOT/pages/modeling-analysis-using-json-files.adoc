@@ -26,9 +26,10 @@ NOTE: These names are not used currently, but it should be the case in the futur
 
 == Models
 
-A section `Models` can appear if the toolbox has several kinds of model (typically for select the PDE used).
-In most toolboxes, this section is optional and a model by default is choosen.
-The latter allows to configure the set of equations associated with fluid toolbox.
+A section `Models` is present if the toolbox enables multiple physics, _i.e._ it allows to select the type of PDE/Model.
+In most toolboxes, this section is optional and a default model is enabled.
+
+Here is an example of this section for the `fluid` toolbox.
 [source,json]
 ----
 "Models": <1>
@@ -36,7 +37,7 @@ The latter allows to configure the set of equations associated with fluid toolbo
    "equations":"Navier-Stokes" <2>
 }
 ----
-<1> Section `Models` defined by the toolbox to define the main configuration of a toolbox and in particular the set of equations to be solved
+<1> Section `Models` defined by the toolbox to define the main configuration and in particular the set of equations to be solved
 <2> toolbox specific option to define set of equations to be solved, read the toolbox manual to learn about the possible options.
 
 == Parameters
