@@ -5,7 +5,7 @@ set -x
 
 BRANCH=${BRANCH:-${BUILDKITE_BRANCH:master}}
 echo "--- Building $PROJECT..."
-antora --html-url-extension-style=indexify antora-github-feelpp-doc.yml
+antora --fetch --clean --html-url-extension-style=indexify antora-github-feelpp-doc.yml
 ls -lrta
 
 #tar  --exclude='*.png' --exclude="*.jpg" --exclude="*.jpeg" -c -z -f site.tar.gz build
