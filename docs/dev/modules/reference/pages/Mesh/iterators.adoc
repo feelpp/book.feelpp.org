@@ -242,3 +242,33 @@ for( auto const& ewrap : elements(mesh))
 
 <1> check if marker 1 (the default marker) exists, if yes then print it
 <2> check if marker 5 exists, if yes then print it
+
+=== Concatenate range of iterators
+
+
+The  `concatenate` function takes a set of iterators over geometrical entities of the same
+type (e.g. faces, volumes, edges, points).
+It generates a data structure that will hold the corresponding reference of mesh elements.
+This data structure can then be used to iterate over meshes like other mesh filters.
+
+[source,cpp]
+.example of faces union : internal and marked
+----
+// the following code below merges internal faces with inlet faces
+auto subset = concatenate( internalfaces(mesh), markedfaces(mesh,"inlet") );
+// it can then be used eg to create a submesh
+auto submesh = createSubmesh( mesh, subset );
+----
+
+[source,cpp]
+.example of elements union touching the boundary with a point, edge or face
+----
+auto rangeFaces = boundaryfaces(mesh);
+// elts connected by a point
+auto range1 = elements(mesh,rangeFaces,ElementsType::MESH_POINTS);
+// elts connected by a edge (in 2d correspont to face case)
+auto range2= elements(mesh,rangeFaces,ElementsType::MESH_EDGES );
+// elts connected by a face
+auto range3 = elements(mesh,rangeFaces,ElementsType::MESH_FACES );
+auto allelt_touching_the_boundary = concatenate(range1,range2,range3);
+----
