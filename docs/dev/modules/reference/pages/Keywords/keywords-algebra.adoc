@@ -59,7 +59,7 @@ stem:[A] and stem:[B] may depend on space variables
 |`vonmises(A)`|stem:[\begin{matrix}
 \text{1D:}&  A_v = & A_{11}\\
 \text{2D:}&  A_v = & (A_{11}^2- A_{11}A_{22}+ A_{22}^2+3A_{12}^2})^{1/2} \\
-\text{3D:}&  A_v = & (\tfrac{1}{2}[(A_{11} - A_{22})^2 + (A_{22} - A_{33})^2 + \\
+\text{3D:}&  A_v = & ((A_{11} - A_{22})^2 + (A_{22} - A_{33})^2 + \\
           &        & (A_{33} - A_{11})^2 + 6(A_{12}^2 + A_{23}^2 + A_{31}^2))^{1/2}
 \end{matrix}] | if stem:[A] is the Cauchy stress tensor, it computes the Von Mises yield criterion stem:[A_v] (scalar value). A material starts yielding when the von Mises stress stem:[A_v] reaches a value known as yield strength |stem:[1 \times 1]
 |`sum(A)` | stem:[rr] | `S = sum(A)` returns the sum of the elements of expression `A` along the first array dimension whose size does not equal 1.
