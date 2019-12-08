@@ -1,18 +1,18 @@
-== Vectors and Matrix
+== Vectors and Matrices
 
 === Building Vectors
 
 Usual syntax to create vectors:
 
 |===
-|Feel++ Keyword | Math Object | Description | Dimension 
+|Feel++ Keyword | Math Object | Description | Dimension
 |`vec(v_1,v_2,...,v_n)`|stem:[\begin{pmatrix} v_1\\v_2\\ \vdots \\v_n \end{pmatrix}]| Column Vector with stem:[n] rows entries being expressions|stem:[n \times 1]
 |===
 
 You can also use expressions and the unit base vectors:
 
 |===
-|Feel++ Keyword | Math Object | Description 
+|Feel++ Keyword | Math Object | Description
 |`oneX()` | stem:[\begin{pmatrix} 1\\0\\0 \end{pmatrix}]|Unit vector stem:[\overrightarrow{i}]
 |`oneY()` | stem:[\begin{pmatrix} 0\\1\\0 \end{pmatrix}]|Unit vector stem:[\overrightarrow{j}]
 |`oneZ()` | stem:[\begin{pmatrix} 0\\0\\1 \end{pmatrix}]|Unit vector stem:[\overrightarrow{k}]
@@ -20,7 +20,7 @@ You can also use expressions and the unit base vectors:
 
 
 
-=== Building Matrix
+=== Building Matrices
 
 .Matrix and vectors creation
 |===
@@ -35,13 +35,14 @@ You can also use expressions and the unit base vectors:
 |===
 
 
-=== Manipulating Vectors and Matrix
+=== Manipulating Vectors and Matrices
 
-Let stem:[A] and stem:[B] be two matrix (or two vectors) of same dimension stem:[m \times n].
+Let stem:[A] and stem:[B] be two matrices (or two vectors of the operation is defined) of dimension stem:[m \times n].
+stem:[A] and stem:[B] may depend on space variables
 
 .Matrix operations
 |===
-|Feel++ Keyword | Math Object | Description | Dimension
+|Feel++ Keyword | Math Object | Description | Dimension of the output
 
 |`inv(A)`|stem:[A^{-1}]|Inverse of matrix stem:[A] |stem:[n \times n]
 |`det(A)`|stem:[\det (A)]|Determinant of matrix stem:[A] |stem:[1 \times 1]
@@ -49,9 +50,14 @@ Let stem:[A] and stem:[B] be two matrix (or two vectors) of same dimension stem:
 |`antisym(A)`|stem:[ \text{Asym}(A)]|Antisymmetric part of  stem:[A]: stem:[\frac{1}{2}(A-A^T)] |stem:[n \times n]
 
 
-|`trace(A)`|stem:[\text{tr}(A)]|Trace of matrix stem:[A] Generalized on non-squared Matrix Generalized on Vectors |stem:[1 \times 1]
+|`trace(A)`|stem:[\text{tr}(A)]|Trace of square matrix stem:[A]  |stem:[1 \times 1]
 |`trans(B)`|stem:[B^T]|Transpose of matrix stem:[B] Can be used on non-squared Matrix Can be used on Vectors |stem:[n \times m]
-|`inner(A,B)`|stem:[ A.B \\ A:B = \text{tr}(A*B^T)]|Scalar product of two vectors Generalized scalar product of two matrix |stem:[1 \times 1]
+|`inner(A,B)`|stem:[ A \cdot B \\ A:B = \text{tr}(A*B^T)]|Scalar product of two vectors Generalized scalar product of two matrix |stem:[1 \times 1]
 |`cross(A,B)`|stem:[ A\times B]|Cross product of two vectors|stem:[n \times 1]
+
+|`eig(A)`|stem:[\begin{matrix}\lambda_1(A) \\ \lambda_2(A) \\ \lambda_3(A) \end{matrix}]|vector of real stem:[n] eigenvalues stem:[\lambda_1,\lambda_2,\vdots)] of stem:[A]. stem:[A] must be symmetric. NOTE: we have |stem:[n \times 1]
+|`vonmises(A)`|1D: stem:[A_v = A_{11}] \\
+2D: stem:[A_v = \sqrt{A_{11}^2- A_{11}A_{22}+ A_{22}^2+3A_{12}^2}] \\
+3D: stem:[A_v = \sqrt{\tfrac{1}{2}[(A_{11} - A_{22})^2 + (A_{22} - A_{33})^2 + (A_{33} - A_{11})^2 + 6(A_{12}^2 + A_{23}^2 + A_{31}^2)]}] | if stem:[A] is the Cauchy stress tensor, it computes the Von Mises yield criterion stem:[A_v] (scalar value). A material starts yielding when the von Mises stress stem:[A_v] reaches a value known as yield strength |stem:[1 \times 1]
 
 |===
