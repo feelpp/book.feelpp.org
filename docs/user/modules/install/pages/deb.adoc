@@ -8,7 +8,7 @@ The supported systems are described below
 [cols="1,1,1,1,2", options="header"]
 .Table {feelpp} Debian and Ubuntu distributions
 |===
-|Distribution | Release code name | Version | Supported Channels | Comment
+|Distribution | Release | Version | Supported Channels | Comment
 
 |ubuntu | focal | 20.04 | stable,latest | next LTS (to be released on April 23, 2020)
 |ubuntu | eoan  | 19.10 | stable,latest |
@@ -20,7 +20,7 @@ The supported systems are described below
 
 Using the command line, add the following to your /etc/apt/sources.list system config file:
 ----
-echo "deb https://dl.bintray.com/feelpp/ubuntu {distribution} {channel}" | sudo tee -a /etc/apt/sources.list
+echo "deb https://dl.bintray.com/feelpp/{distribution} {release} {channel}" | sudo tee -a /etc/apt/sources.list
 ----
 for example install the eoan `stable` channel
 ----
@@ -37,7 +37,7 @@ NOTE: installing both the `stable` and the `latest` channels will result in havi
 ====
 add the repository URLs using the "Software Sources" admin UI:
 ----
-deb https://dl.bintray.com/feelpp/ubuntu {distribution} {components}
+deb https://dl.bintray.com/feelpp/{distribution} {release} {channel}
 ----
 ====
 
@@ -50,6 +50,30 @@ WARNING: The previous step is mandatory to ensure that `apt` enables installing 
 You should then update the database
 ----
 sudo apt update
+----
+
+=== Installing {feelpp} on Focal
+
+Focal is the next LTS of Ubuntu.
+The installation is a bit special because the default Focal distribution does not provide all the repositories necessary to install the {feelpp} packages
+The procedure is slightly more involved than the procedure described above.
+You need to proceed as follows for example for the stable channel.
+
+First you need to add the `focal-proposed` repository and install `wget` and `gnupg` if needed
+----
+echo "deb http://archive.ubuntu.com/ubuntu focal-proposed main restricted" |  tee -a /etc/apt/sources.list
+echo "deb http://archive.ubuntu.com/ubuntu focal-proposed universe" |  tee -a /etc/apt/sources.list
+echo "deb http://archive.ubuntu.com/ubuntu focal-proposed multiverse" |  tee -a /etc/apt/sources.list
+apt update
+apt install -y wget gnupg
+----
+
+then install the {feelpp} channel as above and install {feelpp}
+----
+echo "deb https://dl.bintray.com/feelpp/ubuntu focal stable" |  tee -a /etc/apt/sources.list
+wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | apt-key add -
+apt update
+apt install -y feelpp-quickstart
 ----
 
 == Install {feelpp} packages
