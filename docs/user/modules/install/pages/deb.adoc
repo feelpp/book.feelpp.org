@@ -1,18 +1,20 @@
-= Ubuntu packages
+= Debian/Ubuntu packages
 
-{feelpp} can be installed on Ubuntu systems.
+{feelpp} can be installed on Debian and Ubuntu systems through two delivery channels: `stable` and `latest`.
 
-== Add {feelpp} Ubuntu repository
+== Install a {feelpp} Channel
 
-The supported systems are
-[cols="1,1,1,2", options="header"]
-.Table {feelpp} Ubuntu distributions
+The supported systems are described below
+[cols="1,1,1,1,2", options="header"]
+.Table {feelpp} Debian and Ubuntu distributions
 |===
-|Distribution | Version | Channels | Comment
+|Distribution | Release code name | Version | Supported Channels | Comment
 
-|focal| 20.04 | stable,latest | next LTS (to be released on April 23, 2020)
-|eoan| 19.10 | stable,latest |
-|bionic| 18.04 |  | LTS
+|ubuntu | focal | 20.04 | stable,latest | next LTS (to be released on April 23, 2020)
+|ubuntu | eoan  | 19.10 | stable,latest |
+|ubuntu | bionic| 18.04  |  | LTS
+|debian | buster| 10 | stable,latest | |
+
 
 |===
 
@@ -31,15 +33,19 @@ echo "deb https://dl.bintray.com/feelpp/ubuntu eoan latest" | sudo tee -a /etc/a
 
 NOTE: installing both the `stable` and the `latest` channels will result in having the `stable` being superseded by the `latest` channel.
 
-TIP: add the repository URLs using the "Software Sources" admin UI:
+[TIP]
+====
+add the repository URLs using the "Software Sources" admin UI:
 ----
 deb https://dl.bintray.com/feelpp/ubuntu {distribution} {components}
 ----
+====
 
 You now download the Bintray public GPG key as follows:
 ----
 wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
 ----
+WARNING: The previous step is mandatory to ensure that `apt` enables installing {feelpp} packages.
 
 You should then update the database
 ----
