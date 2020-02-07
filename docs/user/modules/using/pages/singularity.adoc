@@ -1,4 +1,5 @@
 = Quick Starts with singularity
+:uri-rel-file-base: https://github.com/feelpp/feelpp/blob/develop/
 
 == Installation Quick Start
 
@@ -20,7 +21,7 @@ Start the Docker container `feelpp/feelpp-base` or `feelpp/feelpp-toolboxes` as 
 
 NOTE: these steps are explained in the chapter on <<02-docker/feelpp-containers.adoc#feelpp-containers,{feelpp} containers>>.
 
-Then run _e.g._ the {uri-rel-file-base}/quickstart/qs_laplacian.cpp[Quickstart Laplacian] that solves the Laplacian problem in <<lap-seq>> or in <<lap-par>>.
+Then run _e.g._ the {uri-rel-file-base}/feelpp/quickstart/qs_laplacian.cpp[Quickstart Laplacian] that solves the Laplacian problem in <<lap-seq>> or in <<lap-par>>.
 
 [[lap-seq]]
 [source,sh]
@@ -63,13 +64,13 @@ The results are stored in a simular place as above: just replace `np_1` by `np_4
 
 == Syntax Start
 
-Here are some  excerpts from {uri-rel-file-base}/quickstart/qs_laplacian.cpp[Quickstart Laplacian] that solves the Laplacian problem. It shows some of the features of {feelpp} and in particular the domain specific language for Galerkin methods.
+Here are some  excerpts from {uri-rel-file-base}/feelpp/quickstart/qs_laplacian.cpp[Quickstart Laplacian] that solves the Laplacian problem. It shows some of the features of {feelpp} and in particular the domain specific language for Galerkin methods.
 
 First we load the mesh, define the function space define some expressions
 [source,cpp]
 .Laplacian problem in an arbitrary geometry, loading mesh and defining spaces
 ----
-include::https://raw.githubusercontent.com/feelpp/feelpp/develop/quickstart/qs_laplacian.cpp[tags=mesh_space]
+include::cpp:example$laplacian/qs_laplacian.cpp[tags=mesh_space]
 ----
 
 Second we define the linear and bilinear forms to solve the problem
@@ -77,15 +78,7 @@ Second we define the linear and bilinear forms to solve the problem
 [source,cpp]
 .Laplacian problem in an arbitrary geometry, defining forms and solving
 ----
-include::https://raw.githubusercontent.com/feelpp/feelpp/develop/quickstart/qs_laplacian.cpp[tags=forms]
+include::cpp:example$laplacian/qs_laplacian.cpp[tags=forms]
 ----
 
-More explanations are available in <<learning.adoc#Laplacian,Learning by examples>>.
-
-// = Programming {feelpp}
-
-// include::06-programming/README.adoc[leveloffset=+1]
-
-// = Quick Reference
-
-// include::07-quickref/README.adoc[leveloffset=+1]
+More explanations are available in xref:user:cpp:laplacian.adoc[the Laplacian example].

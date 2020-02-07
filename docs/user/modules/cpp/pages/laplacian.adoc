@@ -133,7 +133,7 @@ Dirichlet boundary conditions all over the boundary.
 
 [source,cpp]
 ----
-include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=vf]
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=forms]
 ----
 
 [NOTE]
@@ -169,7 +169,7 @@ exact solution of the <<laplacian>>.
 
 [source,cpp]
 ----
-include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=ug]
+include::{examplesdir}/laplacian/qs_laplacian.cpp[tag=check]
 ----
 
 and finally we export the results, by default it is in the ensight
@@ -296,11 +296,11 @@ $ cd {path-quickstart}/laplacian/circle
 $ mpirun -np 4 feelpp_qs_laplacian_2d --config-file circle-neumann.cfg
 ----
 
-The execution should look like this:
-[source,sh]
-----
-include::{examplesdir}/laplacian/circle/logs/circle-neumann.log[]
-----
+//The execution should look like this:
+//[source,sh]
+//----
+//include::{examplesdir}/laplacian/circle/logs/circle-neumann.log[]
+//----
 
 NOTE: The error norms reached machine precision, the solution is in the finite element space. It is due to the fact that _(i)_ we used stem:[P^2] finite elements, _(ii)_ the solution is itself quadratic and _(iii)_ we used Dirichlet boundary conditions which requires only point-wise evaluation of the solution on the curved boundary. The fact that the boundary is curved do not affect the numerical solution. It won't be the case in the presence of Neumann and Robin conditions.
 
@@ -336,11 +336,11 @@ $ cd {path-quickstart}/laplacian/circle
 $ mpirun -np 4 feelpp_qs_laplacian_2d --config-file circle-all.cfg
 ----
 
-The execution should look like this:
-[source,sh]
-----
-include::{examplesdir}/laplacian/circle/logs/circle-all.log[]
-----
+//The execution should look like this:
+//[source,sh]
+//----
+//include::{examplesdir}/laplacian/circle/logs/circle-all.log[]
+//----
 
 NOTE: The error norms reached machine precision, the solution is in the finite element space. It is due to the fact that _(i)_ we used stem:[P^2] finite elements, _(ii)_ the solution is itself quadratic and _(iii)_ we used Dirichlet boundary conditions which requires only point-wise evaluation of the solution on the curved boundary. The fact that the boundary is curved do not affect the numerical solution. It won't be the case in the presence of Neumann and Robin conditions.
 
@@ -365,7 +365,7 @@ we obtain the result stem:[u_\delta] and also the mesh
 
 [cols="^,^"]
 |======
-|image:laplacian/TestCases/Feelpp2d/ufeelpp2d.png[]|image:laplacian/TestCases/Feelpp2d/meshfeelpp2d.png[]
+|image: laplacian/TestCases/Feelpp2d/ufeelpp2d.png[]|image:laplacian/TestCases/Feelpp2d/meshfeelpp2d.png[]
 |Solution stem:[u_\delta]| Mesh
 |======
 
