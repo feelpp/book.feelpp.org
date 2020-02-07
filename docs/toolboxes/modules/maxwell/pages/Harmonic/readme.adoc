@@ -1,4 +1,4 @@
-# Harmonic Content & Multipoles magnets
+= Harmonic Content & Multipoles magnets
 
 The magnetic field can be expressed on specific basis functions.
 We have identified two famillies of such basis:
@@ -13,26 +13,28 @@ To achieve dimensionless unit for the coefficient of the basis function, the fie
 
 ## Cylindrical.
 
-Considering a two dimensional multipole fields, one can show we have - writting $$\mathbf{B} = \left(B_x, B_y, B_z\right)$$ with $$B_z$$ constant - the relation:
-$$
+Considering a two dimensional multipole fields, one can show we have - writting stem:[\mathbf{B} = \left(B_x, B_y, B_z\right)] with stem:[B_z] constant - the relation:
+[stem]
+++++
 B_y + i B_x = \sum\limits_{n=0}^{\infty} C_n \left(x + i y\right)^{n-1}
-$$
+++++
 in the vacuum.
 
 It can be very convenient to write this in the polar coordinates :
-$$
+[stem]
+++++
 B_{\theta} + i B_r = \sum\limits_{n=1}^{\infty} C_n r^{n-1} e^{i n \theta}
-$$
+++++
 
-At least, if the field is measured at $$P$$ equally-spaced points around a circle of radius $$R_{meas}$$, we can use the Fast Fourrier Transform to evaluate the $$C_n$$ parameters.
+At least, if the field is measured at stem:[P] equally-spaced points around a circle of radius stem:[R_{meas}], we can use the Fast Fourrier Transform to evaluate the stem:[C_n] parameters.
 
-We have to provide the various $$C_n$$ coefficient (real and imaginary parts) at various altitude to fully present the field.
+We have to provide the various stem:[C_n] coefficient (real and imaginary parts) at various altitude to fully present the field.
 
 The method is decribed in _Determination of magnetic multipoles using a hall probe_ and _Maxwell's equations for magnets_.
 
 **Remark**
 
-A pure multipole magnet of order $$n$$ has only $$C_n \neq 0$$ ($$C_2 \neq 0$$ for a dipole, $$C_3$$ for a sextupole and so on).
+A pure multipole magnet of order stem:[n] has only stem:[C_n \neq 0] (stem:[C_2 \neq 0] for a dipole, stem:[C_3] for a sextupole and so on).
 
 ## Spherical.
 

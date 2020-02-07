@@ -238,7 +238,7 @@ Dirichlet-Neumann coupling strategy is the easiest and directest one. It discret
 [stem]
 ++++
 
-\mathbf{u}_f^n = \frac{\boldsymbol{\eta}_s^{n-1} - \boldsymbol{\eta}_s^{n-2}}{\Delta t} \quad \textrm{in stem:[\Omega_f^t]}
+\mathbf{u}_f^n = \frac{\boldsymbol{\eta}_s^{n-1} - \boldsymbol{\eta}_s^{n-2}}{\Delta t} \quad \textrm{ in } \Omega_f^t
 
 ++++
 
@@ -247,7 +247,7 @@ They are the discretized Dirichlet prescription on the velocity suggested by the
 On the solid sub-problem, instead, the Neumann condition on the stresses' continuity is imposed in a discrete form
 [stem]
 ++++
-\boldsymbol{\sigma}_s^n \mathbf{n}_s = -\boldsymbol{\sigma}_f^n \mathbf{n}_f \quad \textrm{in stem:[\Omega_s^*]}
+\boldsymbol{\sigma}_s^n \mathbf{n}_s = -\boldsymbol{\sigma}_f^n \mathbf{n}_f \quad \textrm{ in } \Omega_s^*
 ++++
 
 === Robin-Robin
@@ -255,7 +255,7 @@ On the solid sub-problem, instead, the Neumann condition on the stresses' contin
 Robin-Robin (RR) coupling strategy imposes coupling conditions in Robin form, in two steps: at the stem:[n]-th time iteration, on the solid sub-problem the following conditions are imposed
 [stem]
 ++++
-\boldsymbol{\sigma}_s^n\mathbf{n}_s + \frac{\gamma \mu_f}{h} \mathbf{u}_s^n = \frac{\gamma \mu_f}{h} \mathbf{u}_f^{n-1}- \boldsymbol{\sigma}_f^{n-1}\mathbf{n_f} \quad \textrm{in stem:[\Omega_s^*]}
+\boldsymbol{\sigma}_s^n\mathbf{n}_s + \frac{\gamma \mu_f}{h} \mathbf{u}_s^n = \frac{\gamma \mu_f}{h} \mathbf{u}_f^{n-1}- \boldsymbol{\sigma}_f^{n-1}\mathbf{n_f} \quad \textrm{ in }\Omega_s^*
 ++++
 where
 [stem]
@@ -267,7 +267,7 @@ The right-hand side depends only on quantities coming from the stem:[(n-1)]-th t
 Once the solid sub-problem has been solved, one uses stem:[\mathbf{u}_s^n ] to impose on the fluid sub-problem:
 [stem]
 ++++
-\boldsymbol{\sigma}_f^n\mathbf{n}_f + \frac{\gamma \mu_f}{h} \mathbf{u}_f^n = \frac{\gamma \mu_f}{h} \mathbf{u}_s^{n} +\boldsymbol{\sigma}_f^{n-1} \mathbf{n_f} \quad \textrm{in stem:[\Omega_f^t]}
+\boldsymbol{\sigma}_f^n\mathbf{n}_f + \frac{\gamma \mu_f}{h} \mathbf{u}_f^n = \frac{\gamma \mu_f}{h} \mathbf{u}_s^{n} +\boldsymbol{\sigma}_f^{n-1} \mathbf{n_f} \quad \textrm{ in } \Omega_f^t
 ++++
 Here, stem:[\gamma] is a penalization parameter to be chosen.
 
@@ -278,7 +278,7 @@ It should be noticed that in (RR) stability and accuracy are subject to a CFL-co
 This coupling strategy, at the stem:[n]-th time iteration, imposes on the fluid sub-problem:
 [stem]
 ++++
-\boldsymbol{\sigma}_f^n \mathbf{n} + \frac{\rho_s}{\Delta t} \mathbf{B}\mathbf{u}_f^n = \frac{\rho_s}{\Delta t} \mathbf{B}\mathbf{u}_s^{n-1} - \boldsymbol{\sigma}_s^{n-1}\mathbf{n}_s \quad \textrm{in stem:[\Omega_f^t]}
+\boldsymbol{\sigma}_f^n \mathbf{n} + \frac{\rho_s}{\Delta t} \mathbf{B}\mathbf{u}_f^n = \frac{\rho_s}{\Delta t} \mathbf{B}\mathbf{u}_s^{n-1} - \boldsymbol{\sigma}_s^{n-1}\mathbf{n}_s \quad \textrm{ in } \Omega_f^t
 ++++
 where
 [stem]
@@ -288,9 +288,10 @@ where
 and stem:[\mathbf{B}] is a self-adjoint operator coming from a mass lumping procedure. The fluid-sided condition is called generalized Robin because of stem:[\bf{B}] that multiplies fluid and solid velocities.
 
 On the solid sub-problem, the following discrete Neumann condition is imposed
-\[
-\boldsymbol{\sigma}_s^n \mathbf{n}_s = -\boldsymbol{\sigma}_f^n \mathbf{n}_f \quad \textrm{in stem:[\Omega_s^*]}
-\]
+[stem]
+++++
+\boldsymbol{\sigma}_s^n \mathbf{n}_s = -\boldsymbol{\sigma}_f^n \mathbf{n}_f \quad \textrm{ in } \Omega_s^*
+++++
 Also in this case there are CFL-type constraints that link space and time discretization steps: under parabolic-type CFL condition, stability is guaranteed; however, if adequate extrapolation techniques are employed, stability can be obtained under weaker requirements. 
 
 These succint explanations were taken from the articles:

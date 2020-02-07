@@ -23,7 +23,7 @@ with a divergence free velocity field stem:[\mathbf{u}]:
 A convenient choice for stem:[\phi] is a signed distance function to the interface. Indeed, the property stem:[|\nabla \phi| = 1] of distance functions  eases the numerical solution and gives a convenient support for delta and Heaviside functions).
 
 Nevertheless, it is known that the advection equation \eqref{eq:advection} does not conserve
-the property stem:[|\nabla \phi|=1]. Thus, when stem:[|\nabla \phi|] is far from stem:[1] we have to reset stem:[\phi] as a distance function without moving the interface. To do so we can either use an Hamilton-Jacobi method or the fast marching method (see \cite{Winkelmann2007} for details about the fast marching method).
+the property stem:[|\nabla \phi|=1]. Thus, when stem:[|\nabla \phi|] is far from stem:[1] we have to reset stem:[\phi] as a distance function without moving the interface. To do so we can either use an Hamilton-Jacobi method or the fast marching method (see \cite\{Winkelmann2007\} for details about the fast marching method).
 
 == Interface related quantities
 
@@ -84,7 +84,7 @@ Equation \eqref{eq:advection} is solved using
 a stabilized finite element method. We have implemented several stabilization
 methods such as Streamline Upwind Diffusion (SUPG), Galerkin Least Square (GLS)
 and Subgrid Scale (SGS). A general review of these methods is available in <<Franca92>>. Other available methods include the Continuous Interior
-Penalty method (CIP) are described in \cite{Burman2006}.  The variational
+Penalty method (CIP) are described in \cite\{Burman2006\}.  The variational
 formulation at the semi-discrete level for the stabilized equation \eqref{eq:advection} reads, find stem:[\phi_h
 \in {\mathbb R}_h^k] such that stem:[\forall \psi_h \in {\mathbb R}_h^k] :
 

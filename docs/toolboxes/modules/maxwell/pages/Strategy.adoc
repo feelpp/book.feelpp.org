@@ -369,10 +369,10 @@ On weak form, the discrete problem is : find stem:[\mathbf{A}_h\in H(\mathrm{cur
 There are many methods available to solve the saddle-point formulation, using iterative solvers.
 Considering the number of non zero entries in the matrix to inverse due to the use of edge based finite elements, this method proves to be inefficient for this problem.
 
-A block diagonal preconditioning approach for the time-harmonic Maxwell equations is introduced in link:{biblio}#Greif07[Greif-Schötzau].
-Combined with a nodal auxiliary space preconditioning technique proposed in link:{biblio}#Xu07[Hiptmair-Xu] specifically designed for stem:[H(\mathrm{curl})]-conforming finite element, this method gives attractive performance results detailed in link:{biblio}#Li2010[Li].
+A block diagonal preconditioning approach for the time-harmonic Maxwell equations is introduced in link:\{biblio\}#Greif07[Greif-Schötzau].
+Combined with a nodal auxiliary space preconditioning technique proposed in link:\{biblio\}#Xu07[Hiptmair-Xu] specifically designed for stem:[H(\mathrm{curl})]-conforming finite element, this method gives attractive performance results detailed in link:\{biblio\}#Li2010[Li].
 
-This section describes the main ingredients of preconditioning method introduced in link:{biblio}#Li2010[Li].
+This section describes the main ingredients of preconditioning method introduced in link:\{biblio\}#Li2010[Li].
 Based on the saddle point formulation, the magnetostatic problem reads on the form stem:[\mathcal{K} \mathbf{x} = \mathbf{b}]
 [stem]
 ++++
@@ -397,11 +397,11 @@ Based on the saddle point formulation, the magnetostatic problem reads on the fo
   }_{b}
 ++++
 
-The solving of this system is performed at two solver "levels". An outer solver dealing with the resolution of the previous system with the block diagonal preconditioner link:{biblio}#Greif07[Greif-Schötzau], and an inner solver dealing with the application of auxiliary space preconditioning technique link:{biblio}#Xu07[Hiptmair-Xu] to the first block of the latter.
+The solving of this system is performed at two solver "levels". An outer solver dealing with the resolution of the previous system with the block diagonal preconditioner link:\{biblio\}#Greif07[Greif-Schötzau], and an inner solver dealing with the application of auxiliary space preconditioning technique link:\{biblio\}#Xu07[Hiptmair-Xu] to the first block of the latter.
 
 === Outer solver
 
-The block diagonal preconditioner proposed in link:{biblio}#Greif07[Greif-Schötzau] consists in
+The block diagonal preconditioner proposed in link:\{biblio\}#Greif07[Greif-Schötzau] consists in
 [stem]
 ++++
   \mathcal{P}_{\mathcal{M},\mathcal{L}} =
@@ -461,7 +461,7 @@ The resolution of both systems gives the solution stem:[(\mathbf{v},q)] from whi
 The same process can then applied for each MINRES iteration, until convergence.
 
 While the solving of the scalar elliptic problem stem:[\mathcal{L} q = d] can be efficiently performed with standard methods, the  stem:[H(\mathrm{curl})]-conforming linear system stem:[\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}] of the outer problem is more tricky.
-This bottleneck can be overcomed using a second level of preconditioning, applying the effective auxiliary space preconditioning method \cite{HiptmairXu} to the inner problem stem:[\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}].
+This bottleneck can be overcomed using a second level of preconditioning, applying the effective auxiliary space preconditioning method \cite\{HiptmairXu\} to the inner problem stem:[\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}].
 
 === Inner solver
 

@@ -617,7 +617,7 @@ In summary, this example generates 4 cases :
 
 [cols="1,1,2",separator=;]
 |===
-Case ; `%1_1%` ; `%1_2%`
+; Case ; `%1_1%` ; `%1_2%`
 
 ; `<1>` ; `top` ; `Concrete`
 ; `<2>` ; `bottom` ; `Aluminium`
@@ -672,7 +672,7 @@ We retrieve here the symbol %2_1% and %2_2% because the index2 is build as an ar
 
 [cols="1,2,2,2",separator=;]
 |===
-Case ; `%1%` ; `%2_1%` ; `%2_2%`
+; Case ; `%1%` ; `%2_1%` ; `%2_2%`
 
 ; `<1>` ; `A` ; `3` ; `trois`
 ; `<2>` ; `A` ; `5` ; `cinq`
@@ -726,17 +726,24 @@ In many contexts (`Materials`, `BoundaryConditions`, `PostProcess`, ...), it's n
 Generally, an entry called `markers` should be filled.
 There are 3 ways to use it :
 
-<1> Only one string
+1. Only one string
++
 [source,json]
 ----
 "markers":"matA3"
 ----
-<2> An array of string
++
+
+2. An array of string
++
 [source,json]
 ----
 "markers":["matA3","matA5","matA7","matB3","matB5","matB7"]
 ----
-<3> A subtree with an entry called `name` that can be filled by one string or an array of string
++
+
+3. A subtree with an entry called `name` that can be filled by one string or an array of string
++
 [source,json]
 ----
 "markers":
@@ -744,6 +751,7 @@ There are 3 ways to use it :
    "name":["matA3","matA5","matA7","matB3","matB5","matB7"]
 }
 ----
++
 
 The subtree case has been introduced in fact in order to use a generator of names of mesh markers based on the index methodology explain previously.
 If we want to generate the previous example, we can also write this JSON snippet :

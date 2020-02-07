@@ -1,10 +1,4 @@
-Inductor Benchmark
-==================
-:author: Romain Hild <hild.romain@gmail.com>, Vincent HUBER <vincent.huber@cemosis.fr>
-:toc:
-:toc-placement: preamble
-:toclevels: 1
-:biblio: ../../Appendix/Bibliography/readme.adoc 
+= Inductor Benchmark
 
 We now want to compare our implementation with another one, written with the  link:http://getdp.info/[GetDP] solver, by P. Dular and C. Geuzaine. 
 For this, we will use the example of the link:http://onelab.info/wiki/Inductor[Inductor].
@@ -22,13 +16,13 @@ image::CoilCore.png[alt="Coil and Cores", title="A mesh of the domain", align="c
 As in the link:../Torus/readme.adoc[torus] benchmark, we encompass this set by a sphere representing the air until the infinity.
 
 |===
-Front View
+|Front View
 image:InductorXY.png[alt="View XY", title="Front view", align="center", width="400"] |
 Top View
 image:InductorXZ.png[alt="View XZ", title="Top view", align="center", width="400"]
 |===
 
-$$\Omega=\Omega_{core}\cup\Omega_{coil}\cup\Omega_n\cup\Omega_\infty$$ where $$\Omega_n$$ corresponds to the thin mesh near the coil, $$\Omega_\infty$$ the coarse mesh far away and  $$\Gamma_\infty$$ the approximation of the infinity.
+stem:[\Omega=\Omega_{core}\cup\Omega_{coil}\cup\Omega_n\cup\Omega_\infty] where stem:[\Omega_n] corresponds to the thin mesh near the coil, stem:[\Omega_\infty] the coarse mesh far away and  stem:[\Gamma_\infty] the approximation of the infinity.
 
 === Magnetic permeability
 
@@ -37,49 +31,53 @@ Two kinds of experiments are done here: linear and non linear.
 ==== Linear
 
 For the linear case, the relative magnetic permeability is piecewise constant.
-We have chosen to set it to $$2 000$$ in the cores, and $$1$$ everywhere else.
+We have chosen to set it to stem:[2 000] in the cores, and stem:[1] everywhere else.
 
 ==== Non linear
 
-For the non linear case, the relative magnetic permeability is set to $$1$$ everywhere exept on the cores.
+For the non linear case, the relative magnetic permeability is set to stem:[1] everywhere exept on the cores.
 We uses there the following law that is given with a set of points.
-We use extrapolation to extend the magnetic permeability when $$\mathbf{H}$$ goes to infinity.
+We use extrapolation to extend the magnetic permeability when stem:[\mathbf{H}] goes to infinity.
 The interpolation is done with the Akima's one.
 
 [[bh_curve]]
-image::BH.png[width="300", align="center", title="$$B-H$$ curve given in the source code of the benchmark"]
+image::BH.png[width="300", align="center", title="stem:[B-H] curve given in the source code of the benchmark"]
 
 === Boundary conditions
 
 We set 
 
-- on $$\Gamma_\infty$$, we chose our potential vector to be null:
-$$
+- on stem:[\Gamma_\infty], we chose our potential vector to be null:
+
+[stem]
+++++
   \mathbf{A}\times\mathbf{n} = 0
-$$
+++++
+
 
 == Inputs
 
-The source term - $$\mathbf{J}$$ - is given with an analytical expression scalled with the coil properties to mimic a constant field in the inductor.
+The source term - stem:[\mathbf{J}] - is given with an analytical expression scalled with the coil properties to mimic a constant field in the inductor.
 
-We decompose $$\Omega_{Coil}$$ in a partition of eight parts defined :
+We decompose stem:[\Omega_{Coil}] in a partition of eight parts defined :
 
-.Decomposition of $$\Omega_{Coil}$$
+.Decomposition of stem:[\Omega_{Coil}]
 |===
-|               | $$x$$ | $$z$$ 
-| $$\Omega_{1}$$| $$ x < w_{E}~AND~x > -w_{E} $$ | $$z > \frac{Lz}{2} $$ 
-| $$\Omega_{2}$$| $$ x < w_{E}~AND~x > -w_{E} $$| $$z < \frac{Lz}{2} $$
-| $$\Omega_{3}$$| $$x>w_{E}$$| $$ z < \frac{Lz}{2}~AND~x > -\frac{Lz}{2} $$
-| $$\Omega_{4}$$| $$x<-w_{E}$$ | $$ z < \frac{Lz}{2}~AND~x > -\frac{Lz}{2} $$ 
-| $$\Omega_{5}$$| $$x>w_{E}$$ | $$z>\frac{Lz}{2}$$
-| $$\Omega_{6}$$| $$x>w_{E}$$ | $$z<-\frac{Lz}{2}$$
-| $$\Omega_{7}$$| $$x<-w_{E}$$| $$z>\frac{Lz}{2}$$
-| $$\Omega_{8}$$| $$x<-w_{E}$$| $$z<-\frac{Lz}{2}$$
+|               | stem:[x] | stem:[z] 
+| stem:[\Omega_{1}]| stem:[ x < w_{E}~AND~x > -w_{E} ] | stem:[z > \frac{Lz}{2} ] 
+| stem:[\Omega_{2}]| stem:[ x < w_{E}~AND~x > -w_{E} ]| stem:[z < \frac{Lz}{2} ]
+| stem:[\Omega_{3}]| stem:[x>w_{E}]| stem:[ z < \frac{Lz}{2}~AND~x > -\frac{Lz}{2} ]
+| stem:[\Omega_{4}]| stem:[x<-w_{E}] | stem:[ z < \frac{Lz}{2}~AND~x > -\frac{Lz}{2} ] 
+| stem:[\Omega_{5}]| stem:[x>w_{E}] | stem:[z>\frac{Lz}{2}]
+| stem:[\Omega_{6}]| stem:[x>w_{E}] | stem:[z<-\frac{Lz}{2}]
+| stem:[\Omega_{7}]| stem:[x<-w_{E}]| stem:[z>\frac{Lz}{2}]
+| stem:[\Omega_{8}]| stem:[x<-w_{E}]| stem:[z<-\frac{Lz}{2}]
 |===
 
 Thus, the right hand side reads:
 
-$$
+[stem]
+++++
 \begin{align}
 \mathbf{J}&=\frac{-nW}{s}
 \left(
@@ -127,16 +125,17 @@ $$
 \end{pmatrix}\right|_{\Omega_8}
 \right)
 \end{align}
-$$
-where $$w_{E}$$ is the height of the coil, $$Lz$$ the, $$Nw$$ the number of turns and $$s$$ the section of the coil.
+++++
+
+where stem:[w_{E}] is the height of the coil, stem:[Lz] the, stem:[Nw] the number of turns and stem:[s] the section of the coil.
 
 We have run the benchmark with the following parameters:
 
 .Parameters
 [width="50%",cols=">s,^m",frame="topbot", align="center"]
 |===
-| $$\mu_r(\Omega_{Core})$$ | 2000
-| $$\mu_r(\Omega \backslash \Omega_{core} )$$ | 1
+| stem:[\mu_r(\Omega_{Core})] | 2000
+| stem:[\mu_r(\Omega \backslash \Omega_{core} )] | 1
 | Current | 1
 | Number of turns | 288
 |===
@@ -147,25 +146,31 @@ The geometry embed the air gap in the Core and we do not use the shell transform
 
 We have chose to compare the flux and the magnetic energy.
 The flux is defined as:
-$$
+
+[stem]
+++++
 F = \frac{1}{2}\int_{\Omega_{coil}}\mathbf{J} \cdot \mathbf{A}
-$$
+++++
+
 The magnetic energy is defined as:
-$$
+
+[stem]
+++++
 M = \frac{1}{2}\int_{\Omega} \mathbf{B} \cdot \mathbf{H}
-$$
+++++
+
 
 == Discretization
 
 .Mesh characteristics
 [cols=">s,^e,^e,^e,^e,^e,^e",frame="topbot",options="header"]
 |===
-| Mesh id | Number of elements | Linear system size (Feel++) | Size $$A$$ | size $$p$$ | Size GetDP | Linear system size ratio 
+| Mesh id | Number of elements | Linear system size (Feel++) | Size stem:[A] | size stem:[p] | Size GetDP | Linear system size ratio 
 | Mesh 1 | 21 739 | 25 720 | 22 517| 3 203 | 19 249 | 1.33 
 | Mesh 2 | 89 749 | 119 348	|104 663	|14 685 | 89 521 | 1.3 
 | Mesh 3 | 572 207| 706 192	| 620544	|85 648 | 533 161| 1.27 
 |===
-The difference between size of $$\mathbf{A}$$ and getDp can come from the duplicates elements in the mesh that Feel++ does not ignore at run time.
+The difference between size of stem:[\mathbf{A}] and getDp can come from the duplicates elements in the mesh that Feel++ does not ignore at run time.
 
 == Results
 
@@ -197,9 +202,9 @@ The difference between size of $$\mathbf{A}$$ and getDp can come from the duplic
 
 As long as GetDP solve the system with LU (mumps), the time to solve results are not at all surprising.
 
-.Comparison of $$B$$ components along $$x$$ axis
+.Comparison of stem:[B] components along stem:[x] axis
 |===
-Mesh 1 |
+|Mesh 1 |
 image:x_bx_2.png[] |
 image:x_by_2.png[] |
 image:x_bz_2.png[] 
@@ -215,9 +220,9 @@ image:x_by_05.png[] |
 image:x_bz_05.png[] 
 |===
 
-.Comparison of $$B$$ components along $$y$$ axis
+.Comparison of stem:[B] components along stem:[y] axis
 |===
-Mesh 1 |
+|Mesh 1 |
 image:y_bx_2.png[] |
 image:y_by_2.png[] |
 image:y_bz_2.png[] 
@@ -235,7 +240,7 @@ image:y_bz_05.png[]
 
 === Non linear simulations
 
-Here we set the current to $$1$$ and the number of turns to $$2880$$.
+Here we set the current to stem:[1] and the number of turns to stem:[2880].
 
 .Magnetic Energy
 |===
@@ -256,9 +261,9 @@ Here we set the current to $$1$$ and the number of turns to $$2880$$.
 We do not monitor the time to solve.
 Actually, the non linear method and the backend configuration has nothing in common.
 
-.Comparison of $$B$$ components along $$x$$ axis
+.Comparison of stem:[B] components along stem:[x] axis
 |===
-Mesh 1 |
+|Mesh 1 |
 image:nl_x_bx_2.png[] |
 image:nl_x_by_2.png[] |
 image:nl_x_bz_2.png[] 
@@ -269,9 +274,9 @@ image:nl_x_by_1.png[] |
 image:nl_x_bz_1.png[] 
 |===
 
-.Comparison of $$B$$ components along $$y$$ axis
+.Comparison of stem:[B] components along stem:[y] axis
 |===
-Mesh 1 |
+|Mesh 1 |
 image:nl_y_bx_2.png[] |
 image:nl_y_by_2.png[] |
 image:nl_y_bz_2.png[] 
