@@ -1,5 +1,5 @@
 = Atlas cluster
-include::{partialsdir}/header-levels.adoc[]
+//include::{partialsdir}/header-levels.adoc[]
 
 include::{partialsdir}/topnote.adoc[]
 
@@ -56,7 +56,7 @@ By default, this variable point to
 export FEELPP_WORKDIR=/ssd/${USER}/feel
 ----
 
-If your application generate an high amount of data, you should use `/data/scratch/{USER}/feel` instead.
+If your application generate an high amount of data, you should use `/data/scratch/\{USER\}/feel` instead.
 
 IMPORTANT: For heavy computations, please consider using one or several cluster computing nodes.
 See link:https://gitlab.math.unistra.fr/atlas/cluster-doc/wikis/slurm[the official documentation]
@@ -220,7 +220,7 @@ module load feelpp-lib/develop_gcc640_openmpi1107
 
 
 TIP: the module set the environment variable *FEELPP_DIR* for the path to the {feelpp} installation
-`echo ${FEELPP_DIR}`.
+`echo $\{FEELPP_DIR\}`.
 
 - Load a {feelpp} profile to have access to all {feelpp} requirements for compiling
 your application.
@@ -259,12 +259,12 @@ This file describes to cmake how to find the Feel++ library in the given directo
 By default, cmake will search in the system default path.
 
 
-4. Create a {cpp} file named `yourCode.cpp`  where you will write your first Feel++ code.
+1. Create a {cpp} file named `yourCode.cpp`  where you will write your first Feel++ code.
 
-5. Generate the Makefiles with cmake or using the configure script.
+2. Generate the Makefiles with cmake or using the configure script.
 `/path/to/feelpp-sources/configure`
 
-6. Compile you {feelpp} application `make`
+3. Compile you {feelpp} application `make`
 
 
 [[compile_all]]
