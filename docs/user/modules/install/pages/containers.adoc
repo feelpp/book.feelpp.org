@@ -1,19 +1,18 @@
 = Install {feelpp} from Containers
 include::{partialsdir}/header-macros.adoc[]
 
-TIP: Difficulty {easy}
 
-The recommended way to start learning {feelpp} consists in using container
-technologies. Containers provide an all-in one programming environment to start
-directly using {feelpp} skipping the complex installation process.
+The recommended way to start learning {feelpp} consists in using container technologies.
+Containers provide an all-in one programming environment to start directly using {feelpp}.
 {feelpp} is provided with two containers solutions currently:
 
 . link:https://www.docker.com/what-docker[Docker]
 . link:http://singularity.lbl.gov/about[Singularity]
 
-Depending on your usage and your operating system, you might prefere using one
-of these previous solutions. The next sub-sections describe how to obtain
-{feelpp} images to begin with {feelpp} programming.
+Depending on your usage and your operating system, you might prefer using one of these previous solutions.
+On a laptop or workstation Docker and Singularity are preferred while on a cluster Singularity is preferred.
+
+The next sub-sections describe how to obtain {feelpp} images to begin with {feelpp} programming.
 
 TIP: {feelpp} images provide either a compiling environment with all dependencies,
 executables or both.
@@ -27,48 +26,37 @@ link:http://singularity.lbl.gov/install-linux[install singularity].
 
 == Docker
 
-Using {feelpp} inside <<what-is-docker,Docker>> is the recommended and fastest
-way to use {feelpp}. The <<Docker,Docker chapter>> is dedicated to Docker and
-<<feelpp-containers,{feelpp} containers chapter>> is dedicated to {feelpp} in
-Docker. We strongly encourage you to follow these steps if you begin with
-{feelpp} in particular as an end-user. People who would like to develop with
-and in {feelpp} should read through the remaining sections of this chapter.
+Using {feelpp} inside <<what-is-docker,Docker>> is the recommended and fastest way to use {feelpp}.
+The <<Docker,Docker chapter>> is dedicated to Docker and <<feelpp-containers,{feelpp} containers chapter>> is dedicated to {feelpp} in Docker.
+We strongly encourage you to follow these steps if you begin with {feelpp} in particular as an end-user.
+Users who would like to develop with and in {feelpp} should read through the remaining sections of this chapter.
 
-To begin with {feelpp} using docker, you need first to
-link:https://docs.docker.com/install:linux/docker-ce/ubuntu/[install docker] to
-have a working docker environment on your machine following the official
-documentation with respect to your operating system.  Then choose one of the
-{feelpp} images available on the official repository
+To begin with {feelpp} using docker, you need first to link:https://docs.docker.com/install:linux/docker-ce/ubuntu/[install docker] to have a working docker environment on your machine following the official documentation with respect to your operating system.
+Then choose one of the {feelpp} images available on the official repository
 link:https://hub.docker.com/search/?isAutomated=0&isOfficial=0&page=1&pullCount=0&q=feelpp&starCount=0[dockerhub].
 
-We provide currently four main images:
+We provide currently two main images:
 
 .Table of the current components of the FCS
 |===
 | Component | Description | Built From
 
-| `feelpp-env` | Execution and Programming environment | <OS>
-| `feelpp`  | Feel++ libraries and tools | `feelpp-env`
+| `feelpp`  | Feel++ libraries and tools |
 | `feelpp-toolboxes` | {feelpptb}   | `feelpp`
-| `feelpp-mor` | {feelppmor}   | `feelpp-toolboxes`
-|===
 
-Each image is available with several tags depending on the {feelpp} version,
-but also other dependencies.
-(link:https://hub.docker.com/r/feelpp/feelpp-toolboxes/tags/[e.g
-toolbox images tag list] )
-In most case, you desire to use the `latest` tag.
+|===
 
 === Usage example
 
-Via the commandline and using the {feelpp} toolboxes.
-We get the image and create a new container.
+Via the command line and using the {feelpp} toolboxes below, we get the image and create a new container.
 
 [source, bash]
 ----
-docker pull feelpp/feelpp-toolboxes
-docker run -it -v ${HOME}/feel:/feel feelpp/feelpp-toolboxes
+docker pull feelpp/feelpp-toolboxes <1>
+docker run -it -v ${HOME}/feel:/feel feelpp/feelpp-toolboxes <2>
 ----
+<1> fetch the latest `feelpp/feelpp-toolboxes` image
+<2> create a container associated to `feelpp/feelpp-toolboxes`, execute in interactive mode and mount `$HOME/feel` on `/feel` in Docker in order to access the simulation results outside the Docker image.
 
 The `-it` option is used to place yourself inside the container in an interactive mode.
 You can start using {feelpp} commands directly.
@@ -86,6 +74,14 @@ docker run feelpp/feelpp-toolboxes echo "Hello World!"
 ----
 
 TIP: To keep your data in the container, you can use `docker [start|stop] -i <container name>`.
+
+Many examples are available in the {feelpp} tools and toolboxes.
+For example, once you are in Docker,
+[source, bash]
+.Run the CFD toolbox on the TurekHron benchmark
+----
+mpirun --bind-to core -np 10 feelpp_toolbox_fluid --case "github:{path:toolboxes/fluid/TurekHron}"
+----
 
 == Singularity
 
