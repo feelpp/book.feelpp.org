@@ -4,7 +4,7 @@
 === Notations and units
 
 |===
-| Notation | Quantity 
+| Notation | Quantity
 |stem:[\mathcal A] | compliance operator
 |stem:[\lambda] | first Lamé parameter
 |stem:[\mu] | second Lamé parameter
@@ -30,13 +30,13 @@ Mixed Elasticity equations are
 \mathcal A\usigma - \ueps(\uu) &= \uzero & &\text{in }\Omega\times (0,T)\subset\mathbb R^n\times\mathbb{R} \\
 \rho \dfrac{\partial^2 \uu}{\partial t^2} &= \nabla\cdot\usigma + \underline{\mathbf F}_{ext} & &\text{in }\Omega\times (0,T) \\
 \usigma\;\un &= \underline{\mathbf g}_N & &\text{on }\Gamma_N \\
-\uu &= \underline{\mathbf g}_D & &\text{on }\Gamma_D \\ 
-\int_{\Gamma_I} \usigma \; \un &= \underline{\mathbf{F}}_{target} & & \text{on } \Gamma_I \\ 
-\uu(x,t) &= \uu(t) & & \text{on } \Gamma_I  
+\uu &= \underline{\mathbf g}_D & &\text{on }\Gamma_D \\
+\int_{\Gamma_I} \usigma \; \un &= \underline{\mathbf{F}}_{target} & & \text{on } \Gamma_I \\
+\uu(x,t) &= \uu(t) & & \text{on } \Gamma_I
 \end{align}
 ++++
 
-The compliance operator is defined as follow: 
+The compliance operator is defined as follow:
 
 ++++
 \begin{equation}
@@ -44,7 +44,7 @@ The compliance operator is defined as follow:
 \end{equation}
 ++++
 
-where 
+where
 
 ++++
 \begin{align}
@@ -70,7 +70,7 @@ The models are not considered for now.
 
 ==== Materials
 
-In this part we define the two Lamé parameters stem:[\lambda] and stem:[\mu] and the mass density stem:[\rho]. 
+In this part we define the two Lamé parameters stem:[\lambda] and stem:[\mu] and the mass density stem:[\rho].
 It is always necessary to define also the material we work on.
 
 [source,json]
@@ -130,12 +130,12 @@ Different types of boundary condition are available.
 
 [stem]
 ++++
-\usigma\;\un = \ug_N 
+\usigma\;\un = \ug_N
 ++++
 
 |===
 | Field | Type | Option | Value
-| `stress` | `Neumann` | `expr` | stem:[\ug_DN] 
+| `stress` | `Neumann` | `expr` | stem:[\ug_DN]
 |===
 
 
@@ -143,7 +143,7 @@ Different types of boundary condition are available.
 
 [stem]
 ++++
-\int_{\Gamma_I} \usigma \; \un = \underline{\mathbf{F}}_{target}  
+\int_{\Gamma_I} \usigma \; \un = \underline{\mathbf{F}}_{target}
 ++++
 
 |===
@@ -183,7 +183,7 @@ Moreover it is possible to apply a scaling after the computation and then export
     "<marker>":
     {
 	"scale_displacement":"1",
-	"scale_stress":"1:
+	"scale_stress":"1"
     }
 }
 ----
@@ -204,11 +204,11 @@ In order to solve linear elasticity problem, an application should contain at le
 [source,cpp]
 .Minimal Elasticity case
 ----
-    typedef FeelModels::MixedElasticity<FEELPP_DIM,FEELPP_ORDER> me_type;
-    auto ME = me_type::New("mixedelasticity");
-    ME->init();
-    ME->solve();
-    ME->exportResults();
+typedef FeelModels::MixedElasticity<FEELPP_DIM,FEELPP_ORDER> me_type;
+auto ME = me_type::New("mixedelasticity");
+ME->init();
+ME->solve();
+ME->exportResults();
 ----
 
 The assembling for the constant part is inside the initialization, while the assembling of the non-constant part (e.g. the right hand side) is in the solve method.
@@ -216,8 +216,7 @@ The assembling for the constant part is inside the initialization, while the ass
 === Run simulations
 
 Programme available to run simulations:
-
-`feelpp_toolbox_mixed-elasticity-model_3DP{<polynomial_order>}_G{<geometric_order>}`
-
+----
+feelpp_toolbox_mixed-elasticity-model_3DP{<polynomial_order>}_G{<geometric_order>}`
+----
 with +++ <polynomial_order>=0,1,2,3,4 +++ and +++ <geometric_order>=1,2 +++.
- 
