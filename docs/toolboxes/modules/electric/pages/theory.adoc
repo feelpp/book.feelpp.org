@@ -1,0 +1,238 @@
+= Heat Transfer
+
+== What is Heat Transfer
+
+Heat transfer is defined as the movement of energy due to a difference in temperature. It is characterized by the following mechanisms:
+
+Conduction::
+Heat conduction takes place through different mechanisms in different media. Theoretically it takes place in a gas through collisions of the molecules; in a fluid through oscillations of each molecule in a “cage” formed by its nearest neighbors; in metals mainly by electrons carrying heat and in other solids by molecular motion which in crystals take the form of lattice vibrations known as phonons. Typical for heat conduction is that the heat flux is proportional to the temperature gradient.
+
+Convection::
+Heat convection (sometimes called heat advection) takes place through the net displacement of a fluid, which transports the heat content in a fluid through the fluid’s own velocity. The term convection (especially convective cooling and convective heating) also refers to the heat dissipation from a solid surface to a fluid, typically described by a heat transfer coefficient.
+
+Radiation::
+Heat transfer by radiation takes place through the transport of photons. Participating (or semitransparent) media absorb, emit and scatter photons. Opaque surfaces absorb or reflect them.
+
+
+  
+== Notations and Units
+
+|===
+| Notation | Quantity | Unit
+
+|stem:[\rho]|fluid density|stem:[kg \cdot m^{-3}]
+|stem:[C_p]|heat capacity at constant pressure|stem:[J \cdot kg^{-1} \cdot K^{-1}]
+|stem:[T]|temperature|stem:[K]
+|stem:[k]|thermal conductivity|stem:[W \cdot m^{-1} \cdot K^{-1}]
+|stem:[\boldsymbol{u}]|fluid velocity|stem:[m \cdot s^{-1}]
+|===
+
+
+== Equations
+
+[stem]
+.heat equation
+++++
+\rho C_p \frac{\partial T}{\partial t} - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega
+++++
+
+which is completed with boundary conditions and initial value
+
+[stem]
+++++
+\text{at } t=0, \quad T(x,0) = T_0(x)
+++++
+
+=== Convective heat transfer
+
+[stem]
+.convective heat equation
+++++
+\rho C_p \left( \frac{\partial T}{\partial t} + \boldsymbol{u} \cdot \nabla T \right) - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega
+++++
+
+=== Steady case
+
+[stem]
+.steady heat equation
+++++
+ - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega
+++++
+
+[stem]
+.steady convective heat equation
+++++
+\rho C_p  \boldsymbol{u} \cdot \nabla T - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega
+++++
+
+=== Multi-materials
+
+Given a domain stem:[\Omega \subset \mathbb{R}^d, d=1,2,3], stem:[\Omega] is partitioned into stem:[N_r] regions stem:[\Omega_i,i=1,\ldots,N_r] corresponding to different materials (solid or fluid). We consider stem:[\rho_i], stem:[C_{p,i}] and stem:[k_i] the material properties defined in each regions stem:[\Omega_i]. We define also  stem:[\boldsymbol{n}_i] the outward unit normal vector associated to the boundary stem:[\partial \Omega_i].
+
+[stem]
+++++
+\begin{eqnarray}
+\rho_i C_{p,i} \frac{\partial T}{\partial t} - \nabla \cdot \left( k_i \nabla T \right) &=& Q, \quad &\text{ in }& \Omega_i,i=1,\ldots,N_r \\
+T_{|_{\Omega_i}} &=& T_{|_{\Omega_j}}, \quad &\text{ on }& \partial \Omega_i \cap \Omega_j = \Gamma_{ ij}, \forall i \neq j \\
+-k_i \nabla T  \cdot \boldsymbol{n}_i &=& k_j \nabla T \cdot \boldsymbol{n}_j, \quad &\text{ on }& \partial \Omega_i \cap \Omega_j = \Gamma_{ ij}, \forall i \neq j \\
+\end{eqnarray}
+++++
+
+We assume the operator stem:[\mathcal{L}] tel que stem:[\mathcal{L} T = \rho_i C_{p,i} \frac{\partial T}{\partial t} - \nabla \cdot \left( k_i \nabla T \right)] is elliptical.
+
+We multiply stem:[\mathcal{L} u = Q] by a function test stem:[v \in \mathbf{V}] and integrates by part on stem:[\Omega_i]. Which give:
+
+[stem]
+++++
+\rho C_{p,i} \displaystyle \int_{\Omega_i} \frac{\partial T}{\partial t} v - \int_{\Omega_i} \nabla \cdot \left[ k_i \nabla T \right] v = \int_{\Omega_i} Qv, \quad \forall v \in H^1_0(\Omega) \quad for i = 1, \cdots , N_r
+++++
+
+By the formula of Green, we get
+
+[stem]
+++++
+\rho C_{p,i} \displaystyle \int_{\Omega_i} \frac{\partial T}{\partial t} v + \int_{\Omega_i} k_i(y) \nabla T \cdot \nabla v- \int_{\partial \Omega} k_i \nabla T \cdot \boldsymbol{n}_i v = \int_{\Omega_i} Qv \quad \forall v \in \mathbf{V}
+++++
+
+Additivity of the integral, we have
+
+[stem]
+++++
+\sum_{ i=1}^{N_r} \left( \rho C_{p,i} \displaystyle \int_{\Omega_i} \frac{\partial T}{\partial t} v + \int_{\Omega_i} k_i \nabla T \cdot \nabla v- \int_{\partial \Omega_i} k_i \nabla T \cdot \boldsymbol{n}_i v \right) = \sum_{ i=1}^{N_r} \left( \int_{\Omega_i} Qv \right) \forall v \in \mathbf{V}
+++++
+
+Note that
+
+[stem]
+++++
+\bigcup_{ i=1}^{ N } \partial \Omega_i = \bigcup_{ i,j} \Gamma_{ ij} \cup \partial \Omega
+++++
+
+Use the conditions in the interfaces, we get
+
+[stem]
+++++
+\sum_{ i=1}^{N_r} \left( \rho C_{p,i} \displaystyle \int_{\Omega_i} \frac{\partial T}{\partial t} v + \int_{\Omega_i} k_i \nabla T \cdot \nabla v- \int_{\partial \Omega} k_i \nabla T \cdot \boldsymbol{n} v \right) = \sum_{ i=1}^{N_r} \left( \int_{\Omega_i} Qv \right) \forall v \in \mathbf{V}
+++++
+
+Using the implicit Euler method for the time term:
+
+[stem]
+++++
+\frac{\partial T}{\partial t} (t^{ k+1}) \approx \frac{ T (t^{ k+1}) - T(t^k)}{ dt} \quad \forall t^k \in \mathbb{ R^+} \text{ et } k \in \mathbb{N}
+++++
+
+Denoting stem:[T^k = T(t^k)], we write the formula in  stem:[t^{ k+1}], we obtain:
+
+[stem]
+++++
+\sum_{ i=1}^{N_r} \left( \rho C_{p,i} \displaystyle \int_{\Omega_i} \frac{ T^{k+1}}{dt} v + \int_{\Omega_i} k_i \nabla T^{k+1} \cdot \nabla v - \int_{\partial \Omega} k_i \nabla T^{k+1} \cdot \boldsymbol{n} v \right) = \sum_{ i=1}^{N_r} \left( \int_{\Omega_i} \frac{T^{k}}{dt} v + \int_{\Omega_i} Qv \right) \quad \forall v \in \mathbf{V}
+++++
+
+So, the weak wording becomes:
+
+[stem]
+.The weak formulation
+++++
+\text{ On cherche } T \in \mathbf{H} \text{ telle que:}
+
+\\
+a(T^{k+1}, v) = l(v) \quad \forall v \in \mathbf{V}
+
+\\
+\text{ and} \quad
+
+a(T^{k+1}, v) = \sum_{ i=1}^{N_r} \left( \rho C_{p,i} \displaystyle \int_{\Omega_i} \frac{ T^{k+1}}{dt} v + \int_{\Omega_i} k_i \nabla T^{k+1} \cdot \nabla v - \int_{\partial \Omega} k_i \nabla T^{k+1} \cdot \boldsymbol{n} v \right)
+
+\\
+
+l(v) = \sum_{ i=1}^{N_r} \left( \int_{\Omega_i} \frac{T^{k}}{dt} v + \int_{\Omega_i} Qv \right)
+
+++++
+
+So we have stem:[a(u_{k+1},v)] a continuous bilinear form coercive in  stem:[v \in \mathbf{V}] and stem:[l(\phi)] a continuous linear form . We are in a Hilbert space, so we have all the conditions for the application of the Lax-Milgram theorem. So this problem is well posed.
+
+Correct approximation:
+
+We use the Galerkin approximation method:
+
+Let stem:[\{ \mathcal{T}_h \}] a family of meshes of stem:[:\Omega].
+
+Let stem:[\{ \mathcal{K}, P, \sum \}] a finite element of Lagrange of reference of the degree stem:[k \geq 1].
+
+Let stem:[P^k_{c,h}] the conforming approximation space defined by
+
+[stem]
+++++
+P^k_{ c,h} = \{ v \in C^0(\Omega), \forall \mathcal{K} \in \mathcal{T}_h, v|_{\mathcal{K}} \in \mathbb{P}_k(\mathcal{K}) \}
+
+++++
+
+To obtain a conformal approximation in V, we add the boundary conditions
+
+[stem]
+++++
+V_h = P^k_{c,h} \cap V
+
+++++
+
+Discrete problem is written:
+
+[stem]
+.Problème discrète
+++++
+\text{ Find } T_h \in V_h \text{ such that}
+
+\\
+
+a(T_h, v_h) = l(v_h) \quad \forall v_h \in V_h
+
+++++
+
+Let stem:[\{ \varphi_1, \varphi_2, ..., \varphi_N \}] the base of stem:[V_h]. An element stem:[T_h \in V_h] is written as
+
+[stem]
+++++
+T_h = \sum^{N}_{l=1} T_l \varphi_l
+++++
+
+Using stem:[v] as a basic function of stem:[V_h], our problem becomes
+
+[stem]
+++++
+\sum_{ i=1}^{N_r}  \left( \rho C_{p,i} \displaystyle \int_{\Omega_{i}} \sum_{ l=1}^N T^{k+1}_l \frac{ \varphi_l }{dt} \varphi_j + \int_{\Omega_i} k_i \sum_{ l=1}^N T^{k+1}_l \nabla \varphi_l \cdot \nabla \varphi_j - \int_{\partial \Omega} k_i \sum_{ l=1}^N T^{k+1}_l \nabla \varphi_l \cdot \boldsymbol{n} \varphi_j \right) = \sum_{ i=1}^{N_r} \left( \int_{\Omega_i} \sum_{ l=1}^N T^{k}_l \frac{ \varphi_l }{dt} \varphi_j + \int_{\Omega_i} Q \varphi_j \right)
+
+++++
+
+The variational problem of approximation is then equivalent to a linear system
+
+[stem]
+.Algebraic problem
+++++
+\text{Determine } T_l \text{ satisfying}
+\\
+\sum_{ l=1}^N a(\varphi_l, \varphi_j) T^{k+1}_l = l(\varphi_j) \forall j = 1, \cdots , N
+++++
+
+Introduce
+
+[stem]
+++++
+A = (a(\varphi_i , \varphi_j)), \quad 1 \leq i,j \leq N ,
+
+\\
+
+U^{k+1} = (T_1^{k+1}, T_2^{k+1}, ..., T_N^{k+1}) \in \mathbb{R}^{N},
+
+\\
+
+F = (l(\varphi_1), l(\varphi_2), ..., l(\varphi_N)) \in \mathbb{R}^{N}
+
+++++
+
+We write the system in matrix form
+
+[stem]
+++++
+AU = F
+++++
