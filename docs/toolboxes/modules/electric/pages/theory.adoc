@@ -1,4 +1,5 @@
 = Electrostatics toolbox
+:toc:
 
 The starting point is the xref:toolboxes:maxwell:Maxwell.adoc[Maxwell equations].
 
@@ -76,4 +77,50 @@ We have the following relations:
 ++++
 \mathbf{E} = -\nabla{V},\quad \mathbf{j} = - \sigma\nabla{V}.
 ++++
-where stem:[\sigma=\sigma_i,i=1...N]
+where stem:[\sigma=\sigma_i,i=1...N].
+
+== Boundary Conditions
+
+The boundary conditions can be of three types: Dirichlet(Essential), Neumann(Natural) or Integral.
+
+=== Dirichlet
+
+Consider two surfaces stem:[\Gamma_\mbox{in}] and stem:[\Gamma_\mbox{out}].
+We impose a difference of electric potential.
+
+[stem]
+++++
+V=V_{\Gamma_\mbox{in}}, \quad V=V_{\Gamma_\mbox{out}}
+++++
+
+=== Neumann
+
+Denote stem:[\Gamma_N], the surface where the Neumann condition is imposed.
+
+==== Insulation
+
+In this case, we have no normal flux, hence we have
+
+[stem]
+++++
+- \sigma \frac{\partial V}{\partial n} = - \sigma \nabla V \cdot \mathbf{n} = \mathbf{j} \cdot \mathbf{n} = 0
+++++
+
+==== Normal flux
+
+[stem]
+++++
+- \sigma \frac{\partial V}{\partial n} = - \sigma \nabla V \cdot \mathbf{n} = \mathbf{j} \cdot \mathbf{n} = j_N
+++++
+where stem:[j_N] is the flux density to be imposed.
+
+=== Integral
+
+On stem:[\Gamma_I], we wish to impose the current stem:[I] (not the current density) which sets at the same electric potential stem:[V_I] which is a then constant but unknown.
+We have then
+[stem]
+++++
+\int_{\Gamma_I} \mathbf{j} \cdot \mathbf{n} = I_N, \quad V_I \mbox{ is constant}.
+++++
+
+NOTE: this boundary condition is only available in the HdG formulation.
