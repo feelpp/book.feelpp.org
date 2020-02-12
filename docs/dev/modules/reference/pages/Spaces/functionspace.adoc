@@ -178,7 +178,7 @@ if the mesh support is the same for all components then the doftable is built on
 #include <feel/feeldiscr/product.hpp >
 // ...
 // dynamic function space
-auto Wh = dynProduct( 10, mesh ); <1>
+auto Wh = dynProduct<decltype(Pch<1>( mesh ))>( 10, mesh ); <1>
 auto Vh = Pch<1>( mesh ); <2>
 auto Xh = dynProduct( 10, Vh ); <3>
 auto U = Xh.element(); <4>
