@@ -1,8 +1,7 @@
 // -*- mode: adoc -*-
+= Saving and loading functions on disk
 
-=== Saving and loading functions on disk
-
-==== Saving functions on disk
+== Saving functions on disk
 
 To save a function on disk to use it later, for example in another
 application, you can use the `save` function.
@@ -27,7 +26,7 @@ The `type` parameter can be `binary`, `text` or `hdf5` . The first two
 will create one file per processor, whereas "hdf5" will creates only
 one file.
 
-==== Loading functions from disk
+== Loading functions from disk
 
 WARNING: To load a function, the mesh need to be exactly the same as
 the one used when saving it.
@@ -43,7 +42,7 @@ u.load( _path="/path/to/load/", _type="hdf5" );
 The `path` and `type` parameters need to be the same as the one used
 to save the function.
 
-==== Extended parallel doftable
+== Extended parallel doftable
 
 In some cases, when we use parallel data, informations from other
 interfaces of partitions are need. To manage this, we can add ghost
