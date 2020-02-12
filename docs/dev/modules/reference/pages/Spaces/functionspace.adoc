@@ -163,7 +163,7 @@ In both cases, the data structures allow to
 * iterate over the underlying space
 * define elements of the product and access its components
 
-Both forms of the product can be use by `blockform`.
+Both forms of the product can be used by `blockform`.
 It allows to define bilinear and linear over these products and manipulate the corresponding blocks either at compile time or run time.
 
 
@@ -201,27 +201,39 @@ NOTE: there is also a `shared_ptr<>` version, `dynProductPtr`, which returns a s
 // define mesh
 auto Xh=Pch<1>(mesh);
 auto Wh=Pchv<2>(mesh);
-auto sp = product(Xh,Wh);
-auto U = sp.element();
+auto Zh = productPtr(Xh,Wh); <1>
+auto U = Zh->element(); <2>
+auto cXh = Zh->functionSpace(0_c);
+auto cWh = Zh->functionSpace(1_c);
 auto ex = exporter(_mesh=mesh);
-ex->add("u",U(0_c));
-ex->add("v",U(1_c));
+ex->add("u",U(0_c)); <3>
+ex->add("v",U(1_c)); <4>
 ex->save();
 ----
+<1> create the compile time product `Zh` of `Xh` and `Wh`
+<2> create an element of `Zh`
+<3> export the first component, element of
 
 ==== Mixing Runtime and Compile time product
 
+It is possible to mix compile time and runtime products of function space provided
 [source,cpp]
 ----
 auto Xh = Pch<1>(mesh);
 auto Zh = Pch<1>(mesh);
 auto Yh = Pchv<3>(mesh);
-auto ps = dynProductPtr<decltype(Pch<2>(mesh))>( n, mesh );
-auto p = product2( ps, Xh, Yh, Zh );
+auto Vh = dynProductPtr<decltype(Pch<2>(mesh))>( n, mesh );
+auto p = product2( Vh, Xh, Yh, Zh );
 
 cout << "number of spaces " << p.numberOfSpaces() << std::endl;
 auto U = p.element();
-auto u = U(0_c);
-auto w = U(1_c);
-auto z = U(2_c);
+auto u = U(0_c); <1>
+auto y = U(1_c); <2>
+auto z = U(2_c); <3>
+for( int i = 0; i < Vh->numberOfSpaces(); ++i )
+  auto v = U( 3_c, i ); <4>
 ----
+<1> view on component 0, element of Xh
+<2> view on component 1, element of Yh
+<3> view on component 2, element of Zh
+<4> view on component 3, i-th element of Vh
