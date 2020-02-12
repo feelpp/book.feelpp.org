@@ -121,3 +121,22 @@ sudo apt install feelpp-toolboxes feelpp-toolboxes-data
 ----
 sudo apt install libfeelpp-toolboxes-dev
 ----
+
+== Docker Image
+
+A docker image is generated with the deb packages.
+The image is based on the distribution eoan(Ubuntu 19.10).
+
+To download and execute it, follow the steps described below
+
+.Download and run  the feelpp docker image: contains feelpp-quickstart, feelpp-tools and libfeelpp-dev
+----
+docker pull feelpp/feelpp
+docker run --rm -it -v $HOME/feel:/feel feelpp/feelpp
+----
+
+.Download and run  the feelpp-toolboxes docker image : contains the packages above plus all toolboxes packages
+----
+docker pull feelpp/feelpp-toolboxes
+docker run --rm -it -v $HOME/feel:/feel feelpp/feelpp-toolboxes
+----
