@@ -86,9 +86,14 @@ apt install -y feelpp-quickstart
 
 |libfeelpp1| shared libraries
 |libfeelpp-dev| development headers and libraries
-|feelpp-tools| mesh partitioners and remote data upload/download
+|feelpp-tools| xref:using:index.adoc#_using_feel_tools[mesh partitioners and remote data upload/download]
 |feelpp-quickstart| quickstart applications (laplacian cg an hdg), stokes, elasticity(cg and hdg)
 |feelpp-data| data files (geometry and config files) for {feelpp} applications (e.g. feelpp-quickstart)
+|libfeelpp-toolboxes1| toolboxes shared libraries
+|libfeelpp-toolboxes-dev| toolboxes development headers and libraries
+|feelpp-toolboxes| xref:using:index.adoc#_using_feel_toolboxes[toolbox applications]
+|feelpp-toolboxes-data| data files (geometry and config files) for {feelpp} toolboxes
+
 |===
 
 
@@ -105,4 +110,14 @@ sudo apt install feelpp-tools
 .Install the quickstart applications and associated data
 ----
 sudo apt install feelpp-quicktart feelpp-data
+----
+
+.Install the toolboxes applications and associated data
+----
+sudo apt install feelpp-toolboxes feelpp-toolboxes-data
+----
+
+.Install the toolboxes development environment
+----
+sudo apt install libfeelpp-toolboxes-dev
 ----
