@@ -216,14 +216,14 @@ ex->save();
 
 ==== Mixing Runtime and Compile time product
 
-It is possible to mix compile time and runtime products of function space provided
+It is possible to mix compile time and one runtime product of function spaces provided that the dynamic function space is
 [source,cpp]
 ----
 auto Xh = Pch<1>(mesh);
 auto Zh = Pch<1>(mesh);
 auto Yh = Pchv<3>(mesh);
 auto Vh = dynProductPtr<decltype(Pch<2>(mesh))>( n, mesh );
-auto p = product2( Vh, Xh, Yh, Zh );
+auto p = product2( Xh, Yh, Zh, Vh );
 
 cout << "number of spaces " << p.numberOfSpaces() << std::endl;
 auto U = p.element();
