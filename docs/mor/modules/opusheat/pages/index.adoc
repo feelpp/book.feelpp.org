@@ -1,0 +1,183 @@
+= Opus Heat
+
+This test case has been proposed by mailto:Anabelle.Le-Hyaric@eads.net[Annabelle Le-Hyaric] and
+mailto:michel.fouquembergh@eads.net[Michel Fouquembergh] formerly at AIRBUS.
+
+////
+\label{sec:geometry-description}
+////
+
+We consider a 2D model representative of the neighboring of an electronic component submitted to a
+cooling air flow.  It is described by four geometrical domains in stem:[\mathbb{R}^2] named
+stem:[\Omega_i,i=1,2,3,4], see figure. We suppose the velocity stem:[\vec{v}] is known
+in each domain --- for instance in stem:[\Omega_4] it is the solution of previous Navier-Stokes
+computations.  --- The temperature stem:[T] of the domain stem:[\Omega = \cup_{i=1}^4 \Omega_i] is
+then solution of heat transfer equation :
+
+[stem]
+++++
+\begin{equation}
+  \label{eq:1}
+  \rho C_i \Big( \frac{\partial T}{\partial t} + \vec{v} \cdot \nabla T \Big) 
+      - \nabla \cdot \left( k_i \nabla T \right) = Q_i,\quad i=1,2,3,4
+\end{equation}
+++++
+
+where stem:[t] is the time and in each sub-domain stem:[\Omega_i], stem:[\rho C_i] is the volumic thermal capacity, stem:[k_i] is the thermal conductivity.
+stem:[k_1] and stem:[k_2] are parameters of the model.
+
+ICs dissipate heat, so the volumic heat dissipated stem:[Q_1] and stem:[Q_2] are also parameters of the model, while stem:[Q_3=Q_4=0].
+
+image::eads_geometry.png[]
+
+One should notice that the convection term in heat transfer equation
+may lead to spatial oscillations which can be overcome by
+Petrov-Galerkin type or continuous interior penalty stabilization
+techniques.
+
+Integrated circuits (ICs) (domains stem:[\Omega_1] and stem:[\Omega_2] ) are respectively soldered
+on PCB at stem:[\mathbf{x1}=(e_{Pcb}, h_1)] and stem:[\mathbf{x_2}=(e_{Pcb}, h_2)]. They are
+considered as rectangles with width stem:[e_{IC}] and height stem:[h_{IC}]. The printed circuit
+board (PCB) is a rectangle stem:[\Omega_3] of width stem:[e_{PCB}] and height stem:[h_{PCB}]. The
+air(Air) is flowing along the PCB in domain stem:[\Omega_4]. Speed in the air channel
+stem:[\Omega_4] is supposed to have a parabolic profile function of stem:[x] coordinate. Its
+expression is simplified as follows (notice that stem:[\vec{v}] is normally solution of
+Navier-Stokes equations; the resulting temperature and velocity fields should be quite different
+from that simplified model), we have for all stem:[0 \leq y \leq h_{PCB}]
+
+[stem]
+++++
+\begin{equation}
+  \label{eq:2}
+  \begin{array}[c]{rl}
+    e_{Pcb} + e_{Ic} \leq x \leq e_{Pcb} + e_a, & \displaystyle \vec{v} =  -V(x-(e_{Pcb}+e_{Ic}))(x-(e_{Pcb}+e_a))\vec{y}\\
+    e_{Pcb}  \leq x \leq e_{Pcb} + e_{Ic}, & \vec{v} = 0
+  \end{array}
+\end{equation}
+++++
+
+where V is a parameter of the model.
+
+The medium velocity stem:[\vec{v}_i = \vec{0}, i=1,2,3] in the solid domains
+stem:[\Omega_i, i=1,2,3].
+
+== Boundary conditions
+////
+\label{sec:boundary-conditions}
+////
+
+We set
+
+ - on stem:[\Gamma_1\cup\Gamma_3], a zero flux (Neumann-like) condition
+
+[stem]
+++++
+\begin{equation}
+  \label{eq:10}
+  -k_i\ \nabla T \cdot \vec{n}_i\ =\ 0;
+\end{equation}
+++++
+
+  - on stem:[\Gamma_2], a heat transfer (Robin-like) condition
+[stem]
+++++
+  \begin{equation}
+    \label{eq:7}
+    -k_4\ \nabla T \cdot \vec{n}_4\ =\ h(T-T_0);
+  \end{equation}
+++++
+where stem:[h] is a parameter of the model
+
+  - on stem:[\Gamma_4] the temperature is set (Dirichlet condition)
+
+[stem]
+++++
+\begin{equation}
+  \label{eq:11}
+  T\ = T_0;
+\end{equation}
+++++
+
+  - on other internal boundaries, the coontinuity of the heat flux and temperature, on
+    stem:[\Gamma_{ij} = \Omega_i \cap \Omega_j \neq \emptyset]
+
+[stem]
+++++
+\begin{equation}
+\label{eq:6}
+\begin{array}{rl}
+  T_i &= T_j \\
+  k_i\ \nabla T \cdot \vec{n}_i &= -k_j\ \nabla T \cdot \vec{n}_j.
+\end{array}
+\end{equation}
+++++
+
+
+== Initial condition
+////
+\label{sec:initial-condition}
+////
+
+At stem:[t=0s], we set stem:[T = T_0].
+
+== Outputs
+////
+\label{sec:outputs}
+////
+
+The output is the mean temperature stem:[s_1(\mu)] of the hottest IC
+
+[stem]
+++++
+\begin{equation}
+  \label{eq:3}
+  s_1(\mu) = \frac{1}{e_{IC} h_{IC}} \int_{\Omega_2} T
+\end{equation}
+++++
+
+== Parameters
+////
+\label{sec:9999s}
+////
+
+The table displays the various fixed and variables parameters of this test-case.
+
+.Table of model order reduction parameters
+[width="100%"]
+|=======================================================================
+| Name       | Description          | Range                 | Units
+| stem:[k_1] | thermal conductivity | stem:[[1,3]]          | stem:[W \cdot m^{-1} \cdot K^{-1}]
+| stem:[k_2] | thermal conductivity | stem:[[1,3]]          | stem:[W \cdot m^{-1} \cdot K^{-1}]
+| stem:[h]   | transfer coefficient | stem:[[0.1,5]]        | stem:[W \cdot m^{-2} \cdot K^{-1}]
+| stem:[Q_1] | heat source          | stem:[[10^4, 10^{6}]] | stem:[W \cdot m^{-3}]
+| stem:[Q_1] | heat source          | stem:[[10^4, 10^{6}]] | stem:[W \cdot m^{-3}]
+| stem:[V]   | Inflow rate          | stem:[[1,30]]         | stem:[m^2 \cdot s^{-1}]
+|=======================================================================
+
+
+.Table of fixed parameters
+[width="100%"]
+|=======================================================================
+| Name     | Description | Nominal Value              | Units
+| stem:[t] | time        | stem:[[0, 500]]   | stem:[s]
+| stem:[T_0] | initial temperature | stem:[300]   | stem:[K]
+2+^| IC Parameters     2+| 
+| stem:[\rho C_{IC}] | heat capacity | stem:[1.4 \cdot 10^{6}] | stem:[J \cdot m^{-3} \cdot K^{-1}]
+| stem:[e_{IC}] | thickness |  stem:[2\cdot 10^{-3}] | stem:[m]
+| stem:[h_{IC} = L_{IC}] | height | stem:[2\cdot 10^{-2}] | stem:[m]
+| stem:[h_{1}] | height | stem:[2\cdot 10^{-2}] | stem:[m]
+| stem:[h_{2}] | height | stem:[7\cdot 10^{-2}] | stem:[m]
+4+|
+2+^| PCB Parameters 2+|
+| stem:[k_3 =  k_{Pcb}] | thermal conductivity | stem:[0. 2] | stem:[W \cdot m^{-1} \cdot K^{-1}]
+| stem:[\rho C_{3}] | heat capacity | stem:[2 \cdot 10^{6}] | stem:[J \cdot m^{-3} \cdot K^{-1}]
+| stem:[e_{Pcb}] | thickness |  stem:[2\cdot 10^{-3}] | stem:[m]
+| stem:[h_{Pcb}] | height | stem:[13\cdot 10^{-2}] | stem:[m]
+4+|
+2+^| Air Parameters 2+|
+| stem:[T_0]        | Inflow temperature   | stem:[300]             | stem:[K] 
+| stem:[k_4 ]       | thermal conductivity | stem:[3 \cdot 10^{-2}] | stem:[W \cdot m^{-1} \cdot K^{-1}]
+| stem:[\rho C_{4}] | heat capacity        | stem:[1100]|           | stem:[J \cdot m^{-3} \cdot K^{-1}]
+| stem:[e_{a}]      | thickness            |  stem:[4\cdot 10^{-3}] | stem:[m]
+|=======================================================================
+
