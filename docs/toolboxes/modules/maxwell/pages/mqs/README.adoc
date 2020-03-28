@@ -1,0 +1,22 @@
+= Maxwell Quasi-Static Models
+:stem: latexmath
+
+== High-Field Magnets
+High Field Magnets are mainly solenoidal coils, made of copper alloys, that are powered with high current (up to 33 kA in  our case). 
+To prevent excessive temperature in the magnets, a water forced flow (with a flow rate up to 30 l/s) is used to cool them down. 
+These magnets are submitted to large Lorentz forces (arising from the coupling of the generated magnetic field $\mathbf{B}$ and the current density $\mathbf{j}$) and to thermal dilatation.
+Typically magnet material are operated at 90\% of their elastic limit.
+
+High Field Magnet modeling thus relies on a multi-physic approach involving:
+
+* Maxwell equations using the so-called MQS (aka Maxwell Quasi-Static) approximation,
+* Heat equation,
+* Elasticity/Plasticity equation,
+* Thermo-Hydraulic equations to account for the water flow.
+
+For sake of simplicity, the cooling of the magnets is modeled as forced flow boundary conditions on the water cooled surfaces. 
+Next we consider only the elasticity model.
+
+The modelling of powering High Field Magnets and power failure motivates this document and the introduction of Maxwell Quasi-STatic models in {feelpp}.
+
+* xref:mqs/AV.adoc[stem:[A-V] formultion]

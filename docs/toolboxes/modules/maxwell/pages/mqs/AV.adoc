@@ -1,0 +1,72 @@
+= Maxwell quasi static
+:stem: latexmath
+
+The divergence-free magnetic flux density vector can be described by the curl of the magnetic vector potential stem:[\boldsymbol{A},] since stem:[\nabla \cdot \nabla \times \boldsymbol{u} \equiv 0,] for any vector function stem:[\boldsymbol{u}=\boldsymbol{u}(\boldsymbol{r}),] or stem:[\boldsymbol{u}=\boldsymbol{u}(\boldsymbol{r}, t),] i.e.
+[stem]
+++++
+\boldsymbol{B}=\nabla \times \boldsymbol{A} 
+++++
+This automatically enforces the satisfaction of magnetic Gauss' law. Substituting expression into Faraday's law 
+[stem]
+++++
+\nabla \times \boldsymbol{E}=-\frac{\partial \boldsymbol{B}}{\partial t}, 
+++++
+results in
+[stem]
+++++
+\nabla \times \boldsymbol{E}=-\frac{\partial}{\partial t} \nabla \times \boldsymbol{A}=-\nabla \times \frac{\partial \boldsymbol{A}}{\partial t} \quad \Rightarrow \quad \nabla \times\left(\boldsymbol{E}+\frac{\partial \boldsymbol{A}}{\partial t}\right)=\mathbf{0}
+++++
+because rotation (i.e. derivation by space) and derivation by time can be replaced. 
+The curl-less vector field stem:[\boldsymbol{E}+\partial \boldsymbol{A} / \partial t] can be derived from the so-called electric scalar potential
+stem:[V(\nabla \times \nabla \varphi \equiv 0, \text { for any scalar functions } \varphi=\varphi(\boldsymbol{r}), \text { or } \varphi=\varphi(\boldsymbol{r}, t))]
+ 
+and the electric field intensity vector can be described by two potentials as
+[stem]
+++++
+E=-\frac{\partial A}{\partial t}-\nabla V
+++++
+Substituting the relations (2.283) and (2.286) into 
+[stem]
+++++
+\nabla \times \boldsymbol{H}=\boldsymbol{J}
+++++
+and using the linearized constitutive relation in 
+[stem]
+++++
+\boldsymbol{H}=\left\{\begin{array}{ll}\nu_{0} \nu_{r} \boldsymbol{B}, & \text { in magnetically linear material, } \Omega_{c} \\ \mathscr{B}^{-1}\{\boldsymbol{B}\}=\nu_{o} \boldsymbol{B}+\boldsymbol{I}, & \text { in magnetically nonlinear medium, } \Omega_{c}\end{array}\right.
+++++
+leads to the partial differential equation
+[stem]
+++++
+\nabla \times\left(\nu_{o} \nabla \times \boldsymbol{A}\right)+\sigma \frac{\partial \boldsymbol{A}}{\partial t}+\sigma \nabla V=-\nabla \times \boldsymbol{I}, \quad \text { in } \quad \Omega_{c}
+++++
+The charge conservation law 
+[stem]
+++++
+\nabla \cdot \boldsymbol{J}=0
+++++
+with the constitutive relation 
+[stem]
+++++
+\boldsymbol{J}=\sigma \boldsymbol{E}
+++++
+and with the formulation results in the second partial differential equation of this formulation,
+[stem]
+++++
+-\nabla \cdot\left(\sigma \frac{\partial \boldsymbol{A}}{\partial t}+\sigma \nabla V\right)=0, \quad \text { in } \quad \Omega_{c}
+++++
+There are two unknown functions ( stem:[\boldsymbol{A}] and stem:[V] ), that is why two equations must be formulated, however, the second one is coming from taking the divergence of Ampere's stem:[\operatorname{law}(2.89)]
+Now, let us define the boundary conditions of the problem. 
+
+=== Boundary conditions
+
+On the stem:[\Gamma_{H_{c}}] part of the boundary, the tangential component of the magnetic field intensity vector must vanish,
+[stem]
+++++
+\boldsymbol{H} \times \boldsymbol{n}=\mathbf{0} \quad \Rightarrow \quad\left(\nu_{o} \nabla \times \boldsymbol{A}+\boldsymbol{I}\right) \times \boldsymbol{n}=\mathbf{0}, \quad \text { on } \quad \Gamma_{H_{c}}
+++++
+This is a Neumann boundary condition for stem:[\boldsymbol{A}]. The normal component of eddy currents must be equal to zero on stem:[\Gamma_{H_{c}},] which can be formulated by the Neumann boundary condition
+[stem]
+++++
+\boldsymbol{J} \cdot \boldsymbol{n} \quad \Rightarrow \quad-\sigma \frac{\partial \boldsymbol{A}}{\partial t} \cdot \boldsymbol{n}-\sigma \nabla V \cdot \boldsymbol{n}=0, \quad \text { on } \quad \Gamma_{H_{c}}
+++++
