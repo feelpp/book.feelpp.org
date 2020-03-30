@@ -55,12 +55,22 @@ and with the formulation results in the second partial differential equation of 
 ++++
 -\nabla \cdot\left(\sigma \frac{\partial \boldsymbol{A}}{\partial t}+\sigma \nabla V\right)=0, \quad \text { in } \quad \Omega_{c}
 ++++
-There are two unknown functions ( stem:[\boldsymbol{A}] and stem:[V] ), that is why two equations must be formulated, however, the second one is coming from taking the divergence of Ampere's stem:[\operatorname{law}(2.89)]
-Now, let us define the boundary conditions of the problem. 
+There are two unknown functions ( stem:[\boldsymbol{A}] and stem:[V] ), that is why two equations must be formulated, however, the second one is coming from taking the divergence of Ampere's 
+
+[stem]
+++++
+\nabla \times \boldsymbol{H}=\boldsymbol{J}, \quad$ in stem:[\quad \Omega_{c}
+++++
+
+
 
 === Boundary conditions
 
-On the stem:[\Gamma_{H_{c}}] part of the boundary, the tangential component of the magnetic field intensity vector must vanish,
+We now turn to the  definition of the boundary conditions of the problem. 
+
+==== On stem:[\Gamma_{H_{c}}]
+
+The tangential component of the magnetic field intensity vector must vanish,
 [stem]
 ++++
 \boldsymbol{H} \times \boldsymbol{n}=\mathbf{0} \quad \Rightarrow \quad\left(\nu_{o} \nabla \times \boldsymbol{A}+\boldsymbol{I}\right) \times \boldsymbol{n}=\mathbf{0}, \quad \text { on } \quad \Gamma_{H_{c}}
@@ -70,6 +80,70 @@ This is a Neumann boundary condition for stem:[\boldsymbol{A}]. The normal compo
 ++++
 \boldsymbol{J} \cdot \boldsymbol{n} \quad \Rightarrow \quad-\sigma \frac{\partial \boldsymbol{A}}{\partial t} \cdot \boldsymbol{n}-\sigma \nabla V \cdot \boldsymbol{n}=0, \quad \text { on } \quad \Gamma_{H_{c}}
 ++++
+
+==== On the rest part of the boundary stem:[\Gamma_{E},]
+
+The tangential component of the electric field intensity must be equal to zero, stem:[\boldsymbol{E} \times \boldsymbol{n}=\mathbf{0} \quad \Rightarrow \quad\left(-\frac{\partial \boldsymbol{A}}{\partial t}-\nabla V\right) \times \boldsymbol{n}=\mathbf{0}, \quad] on stem:[\quad \Gamma_{E}].
+
+This boundary condition can be specified by two Dirichlet boundary conditions,
+stem:[\boldsymbol{n} \times \boldsymbol{A}=\mathbf{0}, \quad] and stem:[\quad V=V_{0}, \quad] on stem:[\quad \Gamma_{E}]
+because stem:[-\boldsymbol{A} \times \boldsymbol{n}=\boldsymbol{n} \times \boldsymbol{A}] and stem:[V_{0}] is constant. Here stem:[\boldsymbol{B} \cdot \boldsymbol{n}=0] satisfies explicitly, because
+stem:[\boldsymbol{B} \cdot \boldsymbol{n}=(\nabla \times \boldsymbol{A}) \cdot \boldsymbol{n}=\nabla \cdot(\boldsymbol{A} \times \boldsymbol{n})]
+and stem:[A \times n=0] has been prescribed yet. 
+
+=== Formulation
+Finally, here is the collection of equations and boundary conditions of the ungauged stem:[A, V]-formulation, stem:[\nabla \times\left(\nu_{o} \nabla \times \boldsymbol{A}\right)+\sigma \frac{\partial \boldsymbol{A}}{\partial t}+\sigma \nabla V=-\nabla \times \boldsymbol{I}, \quad] in stem:[\quad \Omega_{c}]
+[stem]
+++++
+\begin{array}{l}
+-\nabla \cdot\left(\sigma \frac{\partial \boldsymbol{A}}{\partial t}+\sigma \nabla V\right)=0, \quad \text { in } \quad \Omega_{c} \\
+\left(\nu_{o} \nabla \times \boldsymbol{A}+\boldsymbol{I}\right) \times \boldsymbol{n}=\mathbf{0}, \quad \text { on } \quad \Gamma_{H_{c}} \\
+-\sigma \frac{\partial \boldsymbol{A}}{\partial t} \cdot \boldsymbol{n}-\sigma \nabla V \cdot \boldsymbol{n}=0, \quad \text { on } \quad \Gamma_{H_{c}} \\
+\boldsymbol{n} \times \boldsymbol{A}=\mathbf{0}, \quad \text { on } \Gamma_{E}
+\end{array}
+++++
+stem:[V=V_{0}, \quad] on stem:[\quad \Gamma_{E}]
+
+IMPORTANT: The solution of the problem defined by the above equations and boundary conditions is not unique, because the divergence of the magnetic vector potential has not specified yet. The Coulomb gauge should be used in this formulation similarly to the gauge fixing method applied in stem:[A] -formulation of static magnetic field problems (see on page 34 ), i.e. stem:[\nabla \cdot \boldsymbol{A}=0] must be specified.
+
+First, let us append the left-hand side of the partial differential equation (2.294) by the stem:[\operatorname{term}-\nabla\left(\nu_{o} \nabla \cdot \boldsymbol{A}\right)]
+stem:[\nabla \times\left(\nu_{o} \nabla \times \boldsymbol{A}\right)-\nabla\left(\nu_{o} \nabla \cdot \boldsymbol{A}\right)+\sigma \frac{\partial \boldsymbol{A}}{\partial t}+\sigma \nabla V=-\nabla \times \boldsymbol{I}, \quad] in stem:[\quad \Omega_{c}]
+Taking the divergence of this equation and taking the equation (2.295) into account, it results in the Laplace equation for the scalar variable stem:[\nu_{o} \nabla \cdot \boldsymbol{A}]
+stem:[-\nabla \cdot \nabla\left(\nu_{o} \nabla \cdot \boldsymbol{A}\right)=0]
+After taking the normal component of the equation (2.300) on the boundary segment
+stem:[\Gamma_{H_{c}},] a homogeneous Neumann boundary condition can be set up automatically stem:[-\frac{\partial}{\partial n}\left(\nu_{o} \nabla \cdot \boldsymbol{A}\right)=0, \quad] on stem:[\quad \Gamma_{H_{c}}]
+because the normal component of the first and the last terms in (2.300)
+
+stem:[\left[\nabla \times\left(\nu_{o} \nabla \times \boldsymbol{A}+\boldsymbol{I}\right)\right] \cdot \boldsymbol{n}=\nabla \cdot\left[\left(\nu_{o} \nabla \times \boldsymbol{A}+\boldsymbol{I}\right) \times \boldsymbol{n}\right]]
+is equal to zero according to the boundary condition (2.296) and the normal component of the sum of the last two terms in (2.300) is equal to zero, too, because of the condition (2.297)
+Consequently, on the rest part of the boundary stem:[\Gamma_{E},] the following Neumann type boundary condition:
+[stem]
+++++
+\nu_{o} \nabla \cdot \boldsymbol{A}=0, \quad \text { on } \quad \Gamma_{E}
+++++
+must be specified. In this way stem:[\nu_{o} \nabla \cdot \boldsymbol{A} \equiv 0] can be satisfied in the whole problem region stem:[\Omega_{c}] and on the boundary stem:[\Gamma_{H_{c}} \cup \Gamma_{E}]
+
+=== Final Formulation
+
+Finally, the partial differential equations and the boundary conditions of an eddy current field problem, which solution is unique according to Coulomb gauge can be written as
+
+
+[stem]
+++++
+\begin{array}{rl}
+\nabla \times\left(\nu_{o} \nabla \times \boldsymbol{A}\right)-\nabla\left(\nu_{o} \nabla \cdot \boldsymbol{A}\right)+\sigma \frac{\partial \boldsymbol{A}}{\partial t}+\sigma \nabla V&=-\nabla \times \boldsymbol{I}, \quad in \quad \Omega_{c}\\
+-\nabla \cdot\left(\sigma \frac{\partial \boldsymbol{A}}{\partial t}+\sigma \nabla V\right)&=0, \quad in \quad \Omega_{c}\\
+\left(\nu_{o} \nabla \times \boldsymbol{A}+\boldsymbol{I}\right) \times \boldsymbol{n}&=\mathbf{0}, \quad on \quad \Gamma_{H_{c}}\\
+-\left(\sigma \frac{\partial \boldsymbol{A}}{\partial t}+\sigma \nabla V\right) \cdot \boldsymbol{n}&=0, \quad on \quad \Gamma_{H_{c}}\\
+\boldsymbol{A} \cdot \boldsymbol{n}&=0, \quad on \quad \Gamma_{H_{c}}\\
+\boldsymbol{n} \times \boldsymbol{A}&=\mathbf{0}, \quad \Gamma_{E}\\
+V&=V_{0}, \quad on \quad \Gamma_{E}\\
+\nu_{o} \nabla \cdot \boldsymbol{A}&=0, \quad on \quad \Gamma_{E}\\
+\end{array}
+++++
+
+
+Here, equation (2.309) is introduced according to the proof presented on page 38
 
 === Variational formulation
 
