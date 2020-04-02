@@ -1,0 +1,84 @@
+= Introduction
+ifdef::env-github,env-browser,env-vscode[:imagesprefix: ../images/]
+
+Heat transfer is the energy transfer process as a result of temperature difference. 
+A thermal analysis is undertaken to predict temperatures and heat transfer within and around bodies. 
+This information may then be used to model temperature dependent phenomenon such as thermally induced stresses or the effect on fluid flow in the case of a solidifying metal. 
+Heat flow has been categorised into three different modes.
+
+Conduction:: In a solid body, the energy is transferred from a high temperature region to a low temperature region. 
+The rate of heat transfer per unit area is proportional to the temperature gradient in the normal direction. 
+This mode of heat transfer is referred to as conduction.
+
+Convection:: Convection heat transfer determines the heat flow between a solid body and the surrounding atmosphere of either gases or liquid. 
+In the heat transfer literature, the term 'fluid' generally encompasses both gases and liquid. 
+The convection heat transfer is either forced convection where the fluid is forced to flow around the solid body or natural convection where the fluid flow is due to density variations arising from the heat transfer process.
+
+Radiation:: In this mode of heat transfer, the heat flow can occur between a solid body and the surrounding atmosphere with or without the presence of gases or liquid. The heat flows by electromagnetic radiation. 
+This means that heat flow can occur even if the solid body is kept in a vacuum.
+
+The heat conducted through a solid is convected as well as radiated from its surface to the atmosphere. 
+The Figure below  illustrates a particular case of this phenomenon. 
+It is assumed that the temperature at the surface 1 is maintained at stem:[T_{1} K] and is greater than the ambient temperature stem:[T_{\infty} K.] 
+As a result, the heat will conduct through the solid and dissipate into the atmosphere by the means of radiation and/or convection across the boundary surface 2.
+
+.Three different modes of heat transfer
+image::{imagesprefix}heat.png[]
+
+$q, q_{c}, q_{r}$:: 
+Rate of heat transfer due to conduction, convection and radiation respectively $(W)$
+$A$:: Cross sectional area normal to heat flow (at surface 1  and } 2 $\left(m^{2}\right)$
+
+$k, h, \varepsilon, \sigma$:: 
+Conductivity $(W / m K),$ convection heat transfer coefficient $\left(W / m^{2} K\right),$ emissivity and the Stefan Boltzmann constant $\left(W / m^{2} K^{4}\right)$ respectively.
+
+$T_{1}, T_{2}, T_{\infty}$:: 
+Temperature at surfaces 1 and $2,$ and the ambient temperature
+$(K)$ respectively $\left(T_{1}>T_{2}>T_{\infty}\right)$
+
+From the modelling viewpoint, the conduction equation is numerically solved within a solid domain to determine the temperature variation. 
+
+Heat transfer due to radiation and convection occur only at the boundary of the solid and are, hence, included as boundary conditions. 
+
+The boundary of the solid may also be maintained at a fixed temperature or it may be insulated. 
+Such identification of boundary conditions is necessary in order to solve the conduction equation. 
+
+=== Why thermal analysis?
+
+There are many reasons for undertaking thermal analyses. 
+In the context of engineering and in its simplest form, thermal analysis may be used to
+
+Estimate the temperature distribution within a component or assembly:: 
+This may be important where temperature is a key factor with regard to integrity or where differential thermal expansion causes internal stresses. 
+Contrasting examples include microelectronic components that are subjected to a working load cycle and large structures that are subject to a fire risk. 
+
+Calculate the temperature distribution in a component:: it may be possible to establish heat flows that are present where energy transfer is a primary consideration (e.g. heat exchanger and condenser).
+
+Thermal calculations are frequently coupled with other types of analysis:
+
+* fluid flow and
+* structural analysis. 
+
+==== Thermal expansion 
+
+The coupling of heat transfer and structural analysis comprises a common application: 
+A structure or a material either contracts or expands when subjected to temperature changes. 
+The thermal contraction or expansion is directly proportional to the temperature changes and is characterised by a coefficient of linear expansion 
+[stem]
+++++
+\Delta \varepsilon=\alpha \Delta T
+++++
+where stem:[\Delta \varepsilon] is the change in strain taking place in the body, stem:[\alpha] is the coefficient of thermal expansion and $\Delta T$ is the temperature change. 
+The value of the coefficient of linear expansion is determined experimentally on very small samples and therefore represents an unrestrained system. 
+However, in a structure, it represents initial strains in the body and can be converted into stresses and forces to be used as the load vector in the finite element structural analysis. 
+In most practical applications, the contraction or expansion of the structure is partially or fully constrained thus inducing internal stresses. 
+This can be important where thermally induced stresses may cause failure, where thermal distortion control is a requirement, or where residual stresses need to be evaluated in the case of components that are cooled (e.g. castings, heat treatment etc.).
+
+=== Other couplings
+
+More complex systems also require thermal analysis:
+
+Chemical reaction::
+it must incorporate a model of thermal generation that arises as a consequence of the reaction. 
+
+Phase change:: Heat transfer with phase change has also become an important field because a large number of industrial applications (e.g. metal casting, plastics, injection moulding and other forming processes.) address this as part of a manufacturing process simulation. For example, the transient temperatures in a casting (or an injection moulded component) are important since        
