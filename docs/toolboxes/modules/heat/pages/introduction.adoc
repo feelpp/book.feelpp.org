@@ -146,3 +146,15 @@ else (false)
   endif
 endif
 ....
+
+
+
+.Summary of heat transfer processes 
+|===
+| Mode | Mechanism(s) | Rate Equation | Transport Property or Coefficient
+| Conduction | Diffusion of energy due  to random molecular motion| stem:[q_{x}^{\prime \prime}\left(\mathrm{W} / \mathrm{m}^{2}\right)=-k \nabla T]  | stem:[k(\mathrm{W} / \mathrm{m} \cdot \mathrm{K})] 
+
+| Convection | Diffusion of energy due to random molecular motion plus energy transfer due to bulk motion (advection)| stem:[q^{\prime \prime}\left(\mathrm{W} / \mathrm{m}^{2}\right)=h\left(T_{s}-T_{\infty}\right)] | stem:[k(\mathrm{W} / \mathrm{m}^2 \cdot \mathrm{K})] 
+
+| Radiation |   Energy transfer by electromagnetic waves | stem:[\begin{aligned} q^{\prime \prime}\left(\mathrm{W} / \mathrm{m}^{2}\right) &=\varepsilon \sigma\left(T_{s}^{4}-T_{\mathrm{sur}}^{4}\right) \\ \text { or } q(\mathrm{W}) &=h_{r} A\left(T_{s}-T_{\mathrm{sur}}\right) \end{aligned}] | stem:[\begin{aligned}\varepsilon\\ h_{r}\left(\mathrm{W} / \mathrm{m}^{2} \cdot \mathrm{K}\right)\end{aligned}]
+|===
