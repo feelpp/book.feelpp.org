@@ -88,18 +88,56 @@ This section of the Model JSON file defines material properties linking the Phys
     {
         "Water": <1>
         {
-            "physics":"fluid", <2>
+            "physics":"heat-fluid", <2>
             "markers":"[marker1,marker2]", <3>
             "rho":"1.0e3", <4>
             "mu":"1.0" <5>
-        }
+            "k":"5.0" <6>
+        },
+        "Beam": <7>
+        {
+            "physics":"heat",
+            "markers":"marker3",
+            "rho":"3.3e7",
+            "k":"1.0e2"
+        }       
     }
 ----
-<1> gives the name of the physical entity (here `Physical Surface`) associated to the Material.
+<1> gives the name of a material.
 <2> defined which kind of physics is applied in this material. This is an optional section, by default all physics are applied. The value can be also a vector of physic.
 <3> defined mesh marker(s) where the material properties are applied. This is an optional section, by default the marker is take as the name <1>.
-<4> density stem:[\rho] is called `rho` and is given in SI units
-<5> viscosity stem:[\mu] is called `mu` and is given in SI units
+<4> density stem:[\rho] is called `rho` and is given in SI units.
+<5> viscosity stem:[\mu] is called `mu` and is given in SI units.
+<6> thermal conductivity is called `k` and is given in SI units.
+<7> start definition of another material nammed `Beam`.
+
+We can define an arbitrary number of material properties but some names are reserved. The names reserved are :
+
+* for all materials : `name`, `physics`, `markers`, `filename`
+* properties defined by the physic used. For example with `heat` physic : `rho`, `k`, `Cp`, `beta`, ... See specific toolbox documentation.
+
+The material property can be define by a scalar, vector (dim 2 or 3) or square matrix (dim 2 or 3). For the material properties defined from the physic, the shape of the expression is imposed.
+For example, the density should be scalar, the thermal conductivity should be a scalar or a matrix (not a vector). See also the specific toolbox documentation.
+
+Moreover, each material property can be used inside symbolic expressions (as symbols). Depending to shape of expression, the symbols are defined as follow :
+
+* scalar expression : `materials_<matName>_<propName>`
+* vectorial expression : `materials_<matName>_<propName>_x`, `materials_<matName>_<propName>_y`, `materials_<matName>_<propName>_z`
+* matrix expression : `materials_<matName>_<propName>_xx`, `materials_<matName>_<propName>_xy`, `materials_<matName>_<propName>_yx`, `materials_<matName>_<propName>_yy` ( and also z component with dim=3)
+
+with `<matName>` the name given to the material and `<propName>` the name of the material property.
+In addition, we generate also symbols of material properties without the material names, i.e. of the form `materials_<propName>` (and potentially the suffix x,y,z).
+In the context of one material only, it represents exactly the same symbol as before (with the material name).
+But, in multi-materials context, a property that appears in several materials can be express by this unique symbol. The expression it will represent will be defined according to its context of use.
+For example, if we integrate over the mesh, this symbol will be the property of Water for the marked elements related to Water and the property of Beam for the marked elements related to Beam.
+
+If we take the previous example, the symbols available will be :
+
+* by material : `materials_Water_rho`, `materials_Water_mu`, `materials_Water_k`, `materials_Beam_rho`, `materials_Beam_k`
+* globally : `materials_rho`, `materials_mu`, `materials_k`
+
+NOTE: the use of global symbols can have a little bit cost compare to the symbols containing the material name. 
+
 
 == InitialConditions
 
