@@ -1,7 +1,8 @@
 = Introduction
-:stem: latexmath
+//:stem: latexmath
 ifdef::env-github,env-browser,env-vscode[:imagesprefix: ../images/]
 
+== Heat transfer modes
 Heat transfer is the energy transfer process as a result of temperature difference. 
 A thermal analysis is undertaken to predict temperatures and heat transfer within and around bodies. 
 This information may then be used to model temperature dependent phenomenon such as thermally induced stresses or the effect on fluid flow in the case of a solidifying metal. 
@@ -45,7 +46,7 @@ Heat transfer due to radiation and convection occur only at the boundary of the 
 The boundary of the solid may also be maintained at a fixed temperature or it may be insulated. 
 Such identification of boundary conditions is necessary in order to solve the conduction equation. 
 
-=== Why thermal analysis?
+== Why thermal analysis?
 
 There are many reasons for undertaking thermal analyses. 
 In the context of engineering and in its simplest form, thermal analysis may be used to
@@ -61,7 +62,7 @@ Thermal calculations are frequently coupled with other types of analysis:
 * fluid flow and
 * structural analysis. 
 
-==== Thermal expansion 
+=== Thermal expansion 
 
 The coupling of heat transfer and structural analysis comprises a common application: 
 A structure or a material either contracts or expands when subjected to temperature changes. 
@@ -76,11 +77,58 @@ However, in a structure, it represents initial strains in the body and can be co
 In most practical applications, the contraction or expansion of the structure is partially or fully constrained thus inducing internal stresses. 
 This can be important where thermally induced stresses may cause failure, where thermal distortion control is a requirement, or where residual stresses need to be evaluated in the case of components that are cooled (e.g. castings, heat treatment etc.).
 
-=== Other couplings
+== Other couplings
 
 More complex systems also require thermal analysis:
 
 Chemical reaction::
 it must incorporate a model of thermal generation that arises as a consequence of the reaction. 
 
-Phase change:: Heat transfer with phase change has also become an important field because a large number of industrial applications (e.g. metal casting, plastics, injection moulding and other forming processes.) address this as part of a manufacturing process simulation. For example, the transient temperatures in a casting (or an injection moulded component) are important since        
+Phase change:: Heat transfer with phase change has also become an important field because a large number of industrial applications (e.g. metal casting, plastics, injection moulding and other forming processes.) address this as part of a manufacturing process simulation. For example, the transient temperatures in a casting (or an injection moulded component) are important since    they point to potential areas in the casting that may be defective, or they provide an indication of the duration of the cooling cycle.
+
+== Purpose of Thermal Analysis
+
+Before an analysis is undertaken, it is important to establish the purpose of the investigation, since this motivates the study and defines some of the inputs and the output requirements from the analysis. 
+* if temperature limits are a concern, then the temperature field throughout the system is the important output.
+* if the analysis goal is to establish cooling, then heat flux is likely to be more important and this will be displayed as an output. 
+
+NOTE: A good understanding of the underlying physical principles of the thermal analysis is a basic requirement for its correct application in any modelling task, in that the model must be 'fit for purpose'.
+
+The purpose of the analysis will also influence the input detail for the model. 
+This is a key issue since this actually defines the thermal model. 
+These details include the geometry, which may need to be abstracted from a design drawing or even from a sketch at the design feasibility stage, material properties and thermal boundary conditions. 
+In the case of a transient thermal analysis this also requires 
+the input of an initial temperature field together with time stepping information. 
+This, similar to a structural analysis, the model input comprises abstracted geometry, material properties, constraints and loads. 
+
+The thermal analysis is classified into four categories. The classification is based on whether the heat transfer problem is time dependent and material properties or boundary conditions vary with respect to the temperature. 
+
+The simple <<guideline,flow diagram>> summarises the classification process.
+
+[[guideline]]
+.Guideline to select the type of Thermal Analysis
+[plantuml,role=activity,format=svg]
+....
+start
+
+if (are materials properties or boundary 
+    temperature dependent) then (true)
+  :Non-Linear Analysis;
+  if ( Time Dependence? ) then ( true )
+  :Non-Linear Transient Analysis;
+  end
+  else (false)
+  :Non-Linear Steady State Analysis;
+  end 
+  endif
+else (false)
+  :Linear Analysis;
+  if ( Time Dependence? ) then ( true )
+  :Linear Transient Analysis;
+  end
+  else (false)
+  :Linear Steady State Analysis;
+  end
+  endif
+endif
+....
