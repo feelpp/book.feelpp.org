@@ -1,6 +1,6 @@
 = HDG methods for diffusion-reaction
 
-Most of the material presented in this section can be found in link:{biblio}#cockburn2009}[(Cockburn 2009)].
+Most of the material presented in this section can be found in <<<cockburn2009,Cockburn 2009>>>.
 
 We provide a first characterization of HDG methods for the following second-order elliptic model problem:
 
@@ -17,7 +17,7 @@ p &= h_D & &\text{on }\Gamma_D & &(3)\\
 Here stem:[\Omega\subset\mathbb R^n] is a polyhedral domain stem:[(n\geq 2)], stem:[\partial\Omega = \Gamma = \Gamma_D \cup \Gamma_N], stem:[d(\mathbf x)] is a scalar nonnegative function, stem:[\Lambda(\mathbf x)] is a matrix valued function that is symmetric and uniformly positive definite on stem:[\Omega], and stem:[f\in L^2(\Omega)]. If stem:[d = 0], we get the Darcy model presented in <<darcy-model>>. These assumptions can be generalized but we take them to simplify the discussion.
 
 The Darcy problem presented in <<stabilized-formulations>> fits into this framework. Here, rather than using stabilized Galerkin formulations, the idea is to insert a Lagrange multiplier to handle the continuity of the normal components of the approximated flux stem:[\mathbf{u}_h]. In other words, the requirement stem:[\mathbf{u}_h\in H(\text{div},\Omega)] will be written in weak form initially, and then recovered in strong form later.
-The introduction of a Lagrange multipliers leads to a formulation with three fields link:{biblio}#boffi2013}[(Boffi 2013)]. We will show how the interior fields can be eliminated in order to build a discrete system that has lost the saddle point structure and only contains degrees of freedom on the faces.
+The introduction of a Lagrange multipliers leads to a formulation with three fields <<<boffi2013,Boffi 2013>>>. We will show how the interior fields can be eliminated in order to build a discrete system that has lost the saddle point structure and only contains degrees of freedom on the faces.
 
 == The general structure of the methods
 
@@ -170,7 +170,7 @@ This method is obtained by using the Raviart-Thomas method to define the local s
 . stem:[\mathbf V(K) = [P_k(K)\]^n + \mathbf x P_k(K),\quad W(K) = P_k(K),\quad k\geq 0].
 . stem:[M_h = \{\mu\in L^2(\mathcal E_h) : \mu|_F\in P_k(F)\quad\forall\,F\in\mathcal E_h\}].
 
-The accuracy of the RT-H method is summarized in section <<accuracy>>. Note that, because stem:[[[ \hat{\mathbf u}_h \]\]] and test functions stem:[\mu] belong to the same space link:{biblio}#sayas-voyage}[(Sayas 2013)], conservativity condition stem:[(13)] forces
+The accuracy of the RT-H method is summarized in section <<accuracy>>. Note that, because stem:[[[ \hat{\mathbf u}_h \]\]] and test functions stem:[\mu] belong to the same space <<<sayas-voyage,Sayas 2013>>>, conservativity condition stem:[(13)] forces
 [stem]
 ++++
 [[ \hat{\mathbf u}_h]] = 0\quad\text{on }\mathcal E_h^o,
@@ -199,7 +199,7 @@ where stem:[\tau_K] is a *nonnegative* function that can vary on stem:[\partial 
 The function stem:[\tau] can be double valued on stem:[\mathcal E_h^o], with two branches stem:[\tau^-=\tau_{K^-}] and stem:[\tau^\+=\tau_{K^+}] defined on the face stem:[F] shared by the finite elements stem:[K^+] and stem:[K^-]. Note that the numerical trace of the flux stem:[\hat{\mathbf u}_h] (but not the flux itself, as stem:[\tau_K\ne 0]) is conservative. The accuracy of the HDG method is summarized in section <<accuracy>>.
 
 ==== Enhanced accuracy by postprocessing
-The approximate solution and flux of the HDG method can be *locally* postprocessed to enhance their accuracy link:{biblio}#cockburnGS2010}[(Cockburn 2010)].
+The approximate solution and flux of the HDG method can be *locally* postprocessed to enhance their accuracy <<<cockburnGS2010,Cockburn 2010>>>.
 
 - *Postprocessing of the scalar variable*: +
 if we look for stem:[p_h^*:\Omega\to\mathbb R] such that stem:[p_h^*|_K\in P_{k+1}(K)] and for all stem:[K\in\Omega_h]
@@ -224,7 +224,7 @@ we can obtain a postprocessed flux stem:[\mathbf u_h^*] with better conservation
 
 
 === Hybridization in matrix form
-This section is mainly based on link:{biblio}#sayas-matlab}[(Fu 2013)]. As stated before, the goal of hybridization is the reduction (or static condensation) of the system stem:[(16)-(20)] to a linear system where only stem:[\hat p_h] shows up. The remaining two variables stem:[\mathbf u_h] and stem:[p_h] will be reconstructed after solving for stem:[\hat p_h], in an element-by-element fashion, easy to realize due to the fact that equations stem:[(16)] and stem:[(17)] are local or, in other words, the spaces stem:[\mathbf V_h] and stem:[W_h] are completely *discontinous*. In this section we will show how to perform static condensation on the linear system obtained by using the HDG method. This procedure can be easily adapted to other hybrid methods. Let us recall that the HDG method looks for an approximate solution stem:[(\mathbf u_h, p_h, \hat p_h)] in the space stem:[\mathbf V_h\times W_h\times M_h] satisfying the equations
+This section is mainly based on <<<sayas-matlab,Fu 2013>>>. As stated before, the goal of hybridization is the reduction (or static condensation) of the system stem:[(16)-(20)] to a linear system where only stem:[\hat p_h] shows up. The remaining two variables stem:[\mathbf u_h] and stem:[p_h] will be reconstructed after solving for stem:[\hat p_h], in an element-by-element fashion, easy to realize due to the fact that equations stem:[(16)] and stem:[(17)] are local or, in other words, the spaces stem:[\mathbf V_h] and stem:[W_h] are completely *discontinous*. In this section we will show how to perform static condensation on the linear system obtained by using the HDG method. This procedure can be easily adapted to other hybrid methods. Let us recall that the HDG method looks for an approximate solution stem:[(\mathbf u_h, p_h, \hat p_h)] in the space stem:[\mathbf V_h\times W_h\times M_h] satisfying the equations
 [stem]
 ++++
 \begin{align*}
@@ -375,7 +375,7 @@ and
 ++++
 \tau_K|_F\in(0,\infty)\quad\text{if }F\text{ is not a face of }K.\qquad(16)
 ++++
-Choice stem:[(16)] allows to deal with the nonconformity of the mesh in a very natural way. Also, the choice stem:[\tau_K = \infty] could be allowed provided that the definition of the local solvers is modified as in link:{biblio}#cockburn2009}[(Cockburn 2009)].
+Choice stem:[(16)] allows to deal with the nonconformity of the mesh in a very natural way. Also, the choice stem:[\tau_K = \infty] could be allowed provided that the definition of the local solvers is modified as in <<<cockburn2009,Cockburn 2009>>>.
 
 The main features of this class of methods are:
 
@@ -383,4 +383,15 @@ The main features of this class of methods are:
 - *Automatic coupling of different methods on conforming meshes*. The class presented here allows for the use of different local solvers in different elements stem:[K\in\Omega_h], which are then automatically coupled.
 - *Mortaring capabilities (for nonconforming meshes)*. This class incorporate a _mortaring_ ability thanks to the form that the numerical trace of the flux on stem:[\partial K] takes on an interior face stem:[F\in\mathcal E_h^o], and thanks to the definition of the stabilization parameter. Let us give an example. If we have a conforming mesh, we can take the first choice of local spaces (2a) and set stem:[\tau = 0]. The resulting method is nothing but the RT-H method. We can easily modify this method to handle nonconforming meshes by simply taking stem:[\tau_K\in(0,\infty)] on every stem:[F\in\mathcal E_h^o] which is not a face of stem:[K], and otherwise, taking stem:[\tau_K 0].
 
-For other possible methods, see link:{biblio}#cockburn2009}[(Cockburn 2009)].
+For other possible methods, see <<<cockburn2009,Cockburn 2009>>>.
+
+[[biliography]]
+== References
+
+- [[[cockburn2009]]] Superconvergent discontinuous Galerkin methods for second-order elliptic problems
+B Cockburn, J Guzmán, H Wang - Mathematics of Computation, 2009
+- [[[ cockburnGS2010]]] The hybridizable discontinuous Galerkin methods, B Cockburn - Proceedings of the International Congress of …, 2010
+- [[[boffi2013]]] Mixed finite element methods and applications, D Boffi, F Brezzi, M Fortin - 2013
+- [[[sayas-matlab]]] Algorithm 949: MATLAB tools for HDG in three dimensions
+Z Fu, LF Gatica, FJ Sayas - ACM Transactions on Mathematical Software (TOMS), 2015
+- [[[sayas-voyage]]] From Raviart-Thomas to HDG: a personal voyage, FJ Sayas - arXiv preprint arXiv:1307.2491, 2013

@@ -1,5 +1,6 @@
 [[MaxwellStrategyChapter]]
 = Resolution strategy
+:stem: latexmath
 
 NOTE: Resolution strategy for Maxwell equations
 
@@ -369,10 +370,10 @@ On weak form, the discrete problem is : find stem:[\mathbf{A}_h\in H(\mathrm{cur
 There are many methods available to solve the saddle-point formulation, using iterative solvers.
 Considering the number of non zero entries in the matrix to inverse due to the use of edge based finite elements, this method proves to be inefficient for this problem.
 
-A block diagonal preconditioning approach for the time-harmonic Maxwell equations is introduced in link:\{biblio\}#Greif07[Greif-Schötzau].
-Combined with a nodal auxiliary space preconditioning technique proposed in link:\{biblio\}#Xu07[Hiptmair-Xu] specifically designed for stem:[H(\mathrm{curl})]-conforming finite element, this method gives attractive performance results detailed in link:\{biblio\}#Li2010[Li].
+A block diagonal preconditioning approach for the time-harmonic Maxwell equations is introduced in <<<Greif07,Greif-Schötzau>>>.
+Combined with a nodal auxiliary space preconditioning technique proposed in <<<Xu07,Hiptmair Xu>>> specifically designed for stem:[H(\mathrm{curl})]-conforming finite element, this method gives attractive performance results detailed in <<<Li2010,Li>>>.
 
-This section describes the main ingredients of preconditioning method introduced in link:\{biblio\}#Li2010[Li].
+This section describes the main ingredients of preconditioning method introduced in <<<Li2010,Li>>>.
 Based on the saddle point formulation, the magnetostatic problem reads on the form stem:[\mathcal{K} \mathbf{x} = \mathbf{b}]
 [stem]
 ++++
@@ -397,11 +398,11 @@ Based on the saddle point formulation, the magnetostatic problem reads on the fo
   }_{b}
 ++++
 
-The solving of this system is performed at two solver "levels". An outer solver dealing with the resolution of the previous system with the block diagonal preconditioner link:\{biblio\}#Greif07[Greif-Schötzau], and an inner solver dealing with the application of auxiliary space preconditioning technique link:\{biblio\}#Xu07[Hiptmair-Xu] to the first block of the latter.
+The solving of this system is performed at two solver "levels". An outer solver dealing with the resolution of the previous system with the block diagonal preconditioner <<<Greif07,Greif-Schötzau>>>, and an inner solver dealing with the application of auxiliary space preconditioning technique <<<Xu07,Hiptmair-Xu>>> to the first block of the latter.
 
 === Outer solver
 
-The block diagonal preconditioner proposed in link:\{biblio\}#Greif07[Greif-Schötzau] consists in
+The block diagonal preconditioner proposed in <<<Greif07,Greif-Schötzau>>> consists in
 [stem]
 ++++
   \mathcal{P}_{\mathcal{M},\mathcal{L}} =
@@ -461,11 +462,11 @@ The resolution of both systems gives the solution stem:[(\mathbf{v},q)] from whi
 The same process can then applied for each MINRES iteration, until convergence.
 
 While the solving of the scalar elliptic problem stem:[\mathcal{L} q = d] can be efficiently performed with standard methods, the  stem:[H(\mathrm{curl})]-conforming linear system stem:[\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}] of the outer problem is more tricky.
-This bottleneck can be overcomed using a second level of preconditioning, applying the effective auxiliary space preconditioning method \cite\{HiptmairXu\} to the inner problem stem:[\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}].
+This bottleneck can be overcomed using a second level of preconditioning, applying the effective auxiliary space preconditioning method <<<Xu07,Hiptmair and Xu>>> to the inner problem stem:[\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}].
 
 === Inner solver
 
-The preconditioning method proposed in cite:[HiptmairXu] is used to solve the linear system stem:[\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}].
+The preconditioning method proposed in <<<Xu07,Hiptmair and Xu>>> is used to solve the linear system stem:[\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}].
 
 This system is solved using a preconditioned conjugate gradient (CG) and then reads stem:[\mathcal{P}_{V} \mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathcal{P}_{V} \mathbf{c}], where stem:[\mathcal{P}_{V}] is the preconditioner to be descibed.
 The linear system to solve then becomes
@@ -516,3 +517,11 @@ The terms stem:[\mathbf{y}] and stem:[\mathbf{z}] are computed by solving two li
 ++++
 
 Then, stem:[\mathbf{w}] can be updated by solving both systems which solves the linear system stem:[\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}].
+
+[bibliography]
+== References
+
+- [[[Greif07]]] Preconditioners for the discretized time‐harmonic Maxwell equations in mixed form
+C Greif, D Schötzau - Numerical Linear Algebra, 2007 - Wiley 
+- [[[Xu07]]] Nodal auxiliary space preconditioning in H (curl) and H (div) spaces, R Hiptmair, J Xu, SIAM Journal on Numerical Analysis 45 (6), 2483-2509
+- [[[Li2010]]] ...
