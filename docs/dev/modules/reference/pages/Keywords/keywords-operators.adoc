@@ -5,20 +5,20 @@
 You can use the usual operations and logical operators.
 |===
 |Feel++ Keyword | Math Object | Description
-|`+` |\( f+g\)|tensor sum
-|`-` |\( f-g\)|tensor substraction
-|`*` |\( f*g\)|tensor product
-|`/` |\( f/g\)|tensor tensor division  (\(g\) scalar field)
-|`<` |\( f<g\)|element wise less
-|`<=` |\( f<=g\)|element wise less or equal
-|`>` |\( f>g\)|element wise greater
-|`>=` |\( f>=g\)|element wise greater or equal
-|`==` |\( f==g\)|element wise equal
-|`!=` |\( f!=g\)|element wise not equal
-|`-` |\( -g\)|element wise unary minus
-|`&&` |\( f\) and \(g\)|element wise logical and
-|`\|\|` |\( f\) or \(g\)|element wise logical or
-|`!` |\( !g\)|element wise logical not
+|`+` |stem:[ f+g]|tensor sum
+|`-` |stem:[ f-g]|tensor substraction
+|`*` |stem:[ f*g]|tensor product
+|`/` |stem:[ f/g]|tensor tensor division  (stem:[g] scalar field)
+|`<` |stem:[ f<g]|element wise less
+|`<=` |stem:[ f<=g]|element wise less or equal
+|`>` |stem:[ f>g]|element wise greater
+|`>=` |stem:[ f>=g]|element wise greater or equal
+|`==` |stem:[ f==g]|element wise equal
+|`!=` |stem:[ f!=g]|element wise not equal
+|`-` |stem:[ -g]|element wise unary minus
+|`&&` |stem:[ f] and stem:[g]|element wise logical and
+|`\|\|` |stem:[ f] or stem:[g]|element wise logical or
+|`!` |stem:[ !g]|element wise logical not
 |===
 
 === Differential Operators
@@ -28,73 +28,73 @@ Feel++ finit element language use _test_ and _trial_ functions. Keywords are dif
 **t-operators** for **trial** functions. +
 **v-operators** to get an **evaluation**.
 
-Suppose that \( f \in X_h \) reads
+Suppose that stem:[ f \in X_h ] reads
 
 \[
 f=\sum_{i=0}^{\mathcal{N}} f_i \phi_i
 \]
 
-where \( X_h = \mathrm{span}\{ \phi_i, i=1,\ldots,\mathcal{N}\} \)
+where stem:[ X_h = \mathrm{span}\{ \phi_i, i=1,\ldots,\mathcal{N}\} ]
 is a finite element space.
 
 |===
 |Feel++ Keyword | Math Object | Description | Rank | Dimension
-|`id(f)` | \( \{\phi_i\} \) | test function | rank\( (f(\overrightarrow{x})) \) | \( m \times p  \)
-|`idt(f)`| \( \{\phi_i\} \) | trial function | rank\( (f(\overrightarrow{x}))\) | \( m \times p  \)
-|`idv(f)`| \( f \) | evaluation function   | rank\( (f(\overrightarrow{x})) \) | \( m \times p  \)
-|`grad(f)` | \( \nabla f \) | gradient of test function | rank\( (f(\overrightarrow{x}))+1 \) | \(m \times n \) \(p=1\)
-|`gradt(f)`| \( \nabla f \) | grdient of trial function | rank\( (f(\overrightarrow{x}))+1 \) |\(m \times n \) \(p=1\)
-|`gradv(f)`| \( \nabla f \) | evaluation function gradient  | rank\((f(\overrightarrow{x}))+1\) |\(m \times n \) \(p=1\)
-|`div(f)` | \( \nabla\cdot f \) | divergence of test function | rank\( (f(\overrightarrow{x}))-1 \) | \( 1 \times 1  \)
-|`divt(f)`| \( \nabla\cdot f \) | divergence of trial function | rank\( (f(\overrightarrow{x}))-1 \) |\( 1 \times 1  \)
-|`divv(f)`| \( \nabla\cdot f \) | evaluation function divergence  | rank\( (f(\overrightarrow{x}))-1 \) |\( 1 \times 1  \)
-|`curl(f)` | \( \nabla\times f \) | curl of test function |1| \( n \times 1  \) \( m=n \)
-|`curlt(f)`| \( \nabla\times f \) | curl of trial function |1 |\( n \times 1  \) \( m=n \)
-|`curlv(f)`| \( \nabla\times f \) | evaluation function curl  |1 |\( n \times 1  \) \( m=n \)
-|`laplacian(f)`| \( \Delta f \) | laplacian of test function  |0 |\( 1 \times 1  \) \( m=p=1 \)
-|`laplaciant(f)`| \( \Delta f \) | laplacian of trial function  |0 |\( 1 \times 1  \) \( m=p=1 \)
-|`laplacianv(f)`| \( \Delta f \) | laplacian of the  function stem:[f]  |0 |\( 1 \times 1  \) \( m=p=1 \)
-|`hess(f)`| \( \nabla^2 f \) | hessian of test function  |2 |\( n \times n  \) \( m=p=1 \)
-|`trace(f)`| \( \mathrm{trace}( f ) \) | trace of test matrix field   | 0 |  \( 1 \times 1  \) \( m=p=d \)
-|`tracet(f)`| \( \mathrm{trace}( f ) \) | trace of trial matrix field   | 0 |  \( 1 \times 1  \) \( m=p=d \)
-|`tracev(f)`| \( \mathrm{trace}( f ) \) | trace of  matrix field \( f \)   | 0 |  \( 1 \times 1  \) \( m=p=d \)
-|`normal(f)`| \( f \cdot \overrightarrow{N}  \) | normal component of test function   | rank\((f(\overrightarrow{x}))-1\)|
-|`normalt(f)`| \( f \cdot \overrightarrow{N}  \) | normal component of trial function   | rank\((f(\overrightarrow{x}))-1\)|
-|`normalv(f)`| \( f \cdot \overrightarrow{N}  \) | normal component of function \( f \)   | rank\((f(\overrightarrow{x}))-1\)|  
-|`dn(f)`| \( \nabla f \cdot \overrightarrow{N} \) | normal derivative of test function  |0 |\( 1 \times 1 \) \( m=p=1 \)
-|`dn(f)`| \( \nabla f \  \overrightarrow{N} \) | normal derivative of test function  |1 |\( m \times 1 \) \(p=1 \)
-|`dnt(f)`| \( \nabla f \cdot \overrightarrow{N} \) | normal derivative of trial function  |0 |\( 1 \times1 \) \(m=p=1\)
-|`dnt(f)`| \( \nabla f \ \overrightarrow{N} \) | normal derivative of trial function |1 |\( m \times 1 \) \(p=1\)
-|`dnv(f)`| \( \nabla f \cdot \ \overrightarrow{N} \) | evaluation of normal derivative |0 |\( 1 \times 1 \) \(m=p=1\)
-|`dnv(f)`| \( \nabla f \ \overrightarrow{N} \) | evaluation of normal derivative |1 |\( m \times 1 \) \(p=1\)
-|`dx(f)`| \( \nabla f \cdot \overrightarrow{i} \) | derivative of test function in \( x \)  |0 |\( 1 \times 1  \) \( m=p=1 \)
-|`dy(f)`| \( \nabla f \cdot \overrightarrow{j} \) | derivative of test function in \( y \)  |0 |\( 1 \times 1  \) \( m=p=1 \)
-|`dz(f)`| \( \nabla f \cdot \overrightarrow{k} \) | derivative of test function in \( z \)  |0 |\( 1 \times 1  \) \( m=p=1 \)
+|`id(f)` | stem:[ \{\phi_i\} ] | test function | rankstem:[ (f(\overrightarrow{x})) ] | stem:[ m \times p  ]
+|`idt(f)`| stem:[ \{\phi_i\} ] | trial function | rankstem:[ (f(\overrightarrow{x}))] | stem:[ m \times p  ]
+|`idv(f)`| stem:[ f ] | evaluation function   | rankstem:[ (f(\overrightarrow{x})) ] | stem:[ m \times p  ]
+|`grad(f)` | stem:[ \nabla f ] | gradient of test function | rankstem:[ (f(\overrightarrow{x}))+1 ] | stem:[m \times n ] stem:[p=1]
+|`gradt(f)`| stem:[ \nabla f ] | grdient of trial function | rankstem:[ (f(\overrightarrow{x}))+1 ] |stem:[m \times n ] stem:[p=1]
+|`gradv(f)`| stem:[ \nabla f ] | evaluation function gradient  | rankstem:[(f(\overrightarrow{x}))+1] |stem:[m \times n ] stem:[p=1]
+|`div(f)` | stem:[ \nabla\cdot f ] | divergence of test function | rankstem:[ (f(\overrightarrow{x}))-1 ] | stem:[ 1 \times 1  ]
+|`divt(f)`| stem:[ \nabla\cdot f ] | divergence of trial function | rankstem:[ (f(\overrightarrow{x}))-1 ] |stem:[ 1 \times 1  ]
+|`divv(f)`| stem:[ \nabla\cdot f ] | evaluation function divergence  | rankstem:[ (f(\overrightarrow{x}))-1 ] |stem:[ 1 \times 1  ]
+|`curl(f)` | stem:[ \nabla\times f ] | curl of test function |1| stem:[ n \times 1  ] stem:[ m=n ]
+|`curlt(f)`| stem:[ \nabla\times f ] | curl of trial function |1 |stem:[ n \times 1  ] stem:[ m=n ]
+|`curlv(f)`| stem:[ \nabla\times f ] | evaluation function curl  |1 |stem:[ n \times 1  ] stem:[ m=n ]
+|`laplacian(f)`| stem:[ \Delta f ] | laplacian of test function  |0 |stem:[ 1 \times 1  ] stem:[ m=p=1 ]
+|`laplaciant(f)`| stem:[ \Delta f ] | laplacian of trial function  |0 |stem:[ 1 \times 1  ] stem:[ m=p=1 ]
+|`laplacianv(f)`| stem:[ \Delta f ] | laplacian of the  function stem:[f]  |0 |stem:[ 1 \times 1  ] stem:[ m=p=1 ]
+|`hess(f)`| stem:[ \nabla^2 f ] | hessian of test function  |2 |stem:[ n \times n  ] stem:[ m=p=1 ]
+|`trace(f)`| stem:[ \mathrm{trace}( f ) ] | trace of test matrix field   | 0 |  stem:[ 1 \times 1  ] stem:[ m=p=d ]
+|`tracet(f)`| stem:[ \mathrm{trace}( f ) ] | trace of trial matrix field   | 0 |  stem:[ 1 \times 1  ] stem:[ m=p=d ]
+|`tracev(f)`| stem:[ \mathrm{trace}( f ) ] | trace of  matrix field stem:[ f ]   | 0 |  stem:[ 1 \times 1  ] stem:[ m=p=d ]
+|`normal(f)`| stem:[ f \cdot \overrightarrow{N}  ] | normal component of test function   | rankstem:[(f(\overrightarrow{x}))-1]|
+|`normalt(f)`| stem:[ f \cdot \overrightarrow{N}  ] | normal component of trial function   | rankstem:[(f(\overrightarrow{x}))-1]|
+|`normalv(f)`| stem:[ f \cdot \overrightarrow{N}  ] | normal component of function stem:[ f ]   | rankstem:[(f(\overrightarrow{x}))-1]|  
+|`dn(f)`| stem:[ \nabla f \cdot \overrightarrow{N} ] | normal derivative of test function  |0 |stem:[ 1 \times 1 ] stem:[ m=p=1 ]
+|`dn(f)`| stem:[ \nabla f \  \overrightarrow{N} ] | normal derivative of test function  |1 |stem:[ m \times 1 ] stem:[p=1 ]
+|`dnt(f)`| stem:[ \nabla f \cdot \overrightarrow{N} ] | normal derivative of trial function  |0 |stem:[ 1 \times1 ] stem:[m=p=1]
+|`dnt(f)`| stem:[ \nabla f \ \overrightarrow{N} ] | normal derivative of trial function |1 |stem:[ m \times 1 ] stem:[p=1]
+|`dnv(f)`| stem:[ \nabla f \cdot \ \overrightarrow{N} ] | evaluation of normal derivative |0 |stem:[ 1 \times 1 ] stem:[m=p=1]
+|`dnv(f)`| stem:[ \nabla f \ \overrightarrow{N} ] | evaluation of normal derivative |1 |stem:[ m \times 1 ] stem:[p=1]
+|`dx(f)`| stem:[ \nabla f \cdot \overrightarrow{i} ] | derivative of test function in stem:[ x ]  |0 |stem:[ 1 \times 1  ] stem:[ m=p=1 ]
+|`dy(f)`| stem:[ \nabla f \cdot \overrightarrow{j} ] | derivative of test function in stem:[ y ]  |0 |stem:[ 1 \times 1  ] stem:[ m=p=1 ]
+|`dz(f)`| stem:[ \nabla f \cdot \overrightarrow{k} ] | derivative of test function in stem:[ z ]  |0 |stem:[ 1 \times 1  ] stem:[ m=p=1 ]
 |===
 
 === Two Valued Operators
 
 |===
 |Feel++ Keyword | Math Object | Description | Rank | Dimension
-|`jump(f)` |  \( [f]=f_0\overrightarrow{N_0}+f_1\overrightarrow{N_1} \) | jump of test function |0| \( n \times 1  \) \( m=1 \)
-|`jump(f)` |  \( [\overrightarrow{f}]=\overrightarrow{f_0}\cdot\overrightarrow{N_0}+\overrightarrow{f_1}\cdot\overrightarrow{N_1} \) | jump of test function |0| \( 1 \times 1  \) \( m=2 \)
-|`jumpt(f)` |  \( [f]=f_0\overrightarrow{N_0}+f_1\overrightarrow{N_1} \) | jump of trial function |0| \( n \times 1  \) \( m=1 \)
-|`jumpt(f)` |  \( [\overrightarrow{f}]=\overrightarrow{f_0}\cdot\overrightarrow{N_0}+\overrightarrow{f_1}\cdot\overrightarrow{N_1} \) | jump of trial function |0| \( 1 \times 1  \) \( m=2 \)
-|`jumpv(f)` |  \( [f]=f_0\overrightarrow{N_0}+f_1\overrightarrow{N_1} \) | jump of function evaluation |0| \( n \times 1 \) \( m=1 \)
-|`jumpv(f)` |  \( [\overrightarrow{f}]=\overrightarrow{f_0}\cdot\overrightarrow{N_0}+\overrightarrow{f_1}\cdot\overrightarrow{N_1} \) | jump of function evaluation|0| \( 1 \times 1 \) \( m=2 \)
-|`average(f)` |  \( {f}=\frac{1}{2}(f_0+f_1) \) | average of test function|rank\( ( f(\overrightarrow{x})) \)| \( n \times n \) \(m=n\)
-|`averaget(f)` |  \( {f}=\frac{1}{2}(f_0+f_1) \) | average of trial function|rank\( ( f(\overrightarrow{x})) \)| \(n \times n \) \(m=n\)
-|`averagev(f)` |  \( {f}=\frac{1}{2}(f_0+f_1) \) | average of function evaluation|rank\( ( f(\overrightarrow{x})) \)| \( n \times n \) \(m=n\)
-|`leftface(f)` |  \( f_0 \) |left test function|rank\( ( f(\overrightarrow{x})) \)| \( n \times n  \) \( m=n \)
-|`leftfacet(f)` |  \( f_0 \) |left trial function|rank\( ( f(\overrightarrow{x})) \)| \( n \times n  \) \( m=n \)
-|`leftfacev(f)` |  \( f_0 \) |left function evaluation|rank\( ( f(\overrightarrow{x})) \)| \( n \times n  \) \( m=n \)
-|`rightface(f)` |  \( f_1 \) |right test function|rank\( ( f(\overrightarrow{x})) \)| \( n \times n  \) \( m=n \)
-|`rightfacet(f)` |  \( f_1 \) |right trial function|rank\( ( f(\overrightarrow{x})) \)| \( n \times n  \) \( m=n \)
-|`rightfacev(f)` |  \( f_1 \) |right function evaluation|rank\( ( f(\overrightarrow{x})) \)| \( n \times n  \) \( m=n \)
-|`maxface(f)` |  \( \max(f_0,f_1) \) |maximum of right and left test function|rank\( ( f(\overrightarrow{x})) \)| \( n \times p  \)
-|`maxfacet(f)` |  \( \max(f_0,f_1) \) |maximum of right and lef trial function|rank\( ( f(\overrightarrow{x})) \)| \( n \times p  \)
-|`maxfacev(f)` |  \( \max(f_0,f_1) \) |maximum of right and left function evaluation|rank\( ( f(\overrightarrow{x})) \)| \( n \times p  \)
-|`minface(f)` |  \( \min(f_0,f_1) \) |minimum of right and left test function|rank\( ( f(\overrightarrow{x})) \)| \( n \times p  \)
-|`minfacet(f)` |  \( \min(f_0,f_1) \) |minimum of right and left trial function|rank\( ( f(\overrightarrow{x})) \)| \( n \times p  \)
-|`minfacev(f)` |  \( \min(f_0,f_1) \) |minimum of right and left function evaluation|rank\( ( f(\overrightarrow{x})) \)| \( n \times p  \)
+|`jump(f)` |  stem:[ f=f_0\overrightarrow{N_0}+f_1\overrightarrow{N_1} ] | jump of test function |0| stem:[ n \times 1  ] stem:[ m=1 ]
+|`jump(f)` |  stem:[ \overrightarrow{f}=\overrightarrow{f_0}\cdot\overrightarrow{N_0}+\overrightarrow{f_1}\cdot\overrightarrow{N_1} ] | jump of test function |0| stem:[ 1 \times 1  ] stem:[ m=2 ]
+|`jumpt(f)` |  stem:[ f=f_0\overrightarrow{N_0}+f_1\overrightarrow{N_1} ] | jump of trial function |0| stem:[ n \times 1  ] stem:[ m=1 ]
+|`jumpt(f)` |  stem:[ \overrightarrow{f}=\overrightarrow{f_0}\cdot\overrightarrow{N_0}+\overrightarrow{f_1}\cdot\overrightarrow{N_1} ] | jump of trial function |0| stem:[ 1 \times 1  ] stem:[ m=2 ]
+|`jumpv(f)` |  stem:[ f=f_0\overrightarrow{N_0}+f_1\overrightarrow{N_1} ] | jump of function evaluation |0| stem:[ n \times 1 ] stem:[ m=1 ]
+|`jumpv(f)` |  stem:[ \overrightarrow{f}=\overrightarrow{f_0}\cdot\overrightarrow{N_0}+\overrightarrow{f_1}\cdot\overrightarrow{N_1} ] | jump of function evaluation|0| stem:[ 1 \times 1 ] stem:[ m=2 ]
+|`average(f)` |  stem:[ {f}=\frac{1}{2}(f_0+f_1) ] | average of test function|rank stem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times n ] stem:[m=n]
+|`averaget(f)` |  stem:[ {f}=\frac{1}{2}(f_0+f_1) ] | average of trial function|rank stem:[ ( f(\overrightarrow{x})) ]| stem:[n \times n ] stem:[m=n]
+|`averagev(f)` |  stem:[ {f}=\frac{1}{2}(f_0+f_1) ] | average of function evaluation|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times n ] stem:[m=n]
+|`leftface(f)` |  stem:[ f_0 ] |left test function|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times n  ] stem:[ m=n ]
+|`leftfacet(f)` |  stem:[ f_0 ] |left trial function|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times n  ] stem:[ m=n ]
+|`leftfacev(f)` |  stem:[ f_0 ] |left function evaluation|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times n  ] stem:[ m=n ]
+|`rightface(f)` |  stem:[ f_1 ] |right test function|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times n  ] stem:[ m=n ]
+|`rightfacet(f)` |  stem:[ f_1 ] |right trial function|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times n  ] stem:[ m=n ]
+|`rightfacev(f)` |  stem:[ f_1 ] |right function evaluation|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times n  ] stem:[ m=n ]
+|`maxface(f)` |  stem:[ \max(f_0,f_1) ] |maximum of right and left test function|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times p  ]
+|`maxfacet(f)` |  stem:[ \max(f_0,f_1) ] |maximum of right and lef trial function|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times p  ]
+|`maxfacev(f)` |  stem:[ \max(f_0,f_1) ] |maximum of right and left function evaluation|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times p  ]
+|`minface(f)` |  stem:[ \min(f_0,f_1) ] |minimum of right and left test function|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times p  ]
+|`minfacet(f)` |  stem:[ \min(f_0,f_1) ] |minimum of right and left trial function|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times p  ]
+|`minfacev(f)` |  stem:[ \min(f_0,f_1) ] |minimum of right and left function evaluation|rankstem:[ ( f(\overrightarrow{x})) ]| stem:[ n \times p  ]
 |===
