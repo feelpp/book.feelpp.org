@@ -290,8 +290,55 @@ This section allows to define the output fields and quantities to be computed an
 
 === Exports
 
-The `Exports` section is implemented when you want to visualize some fields with ParaView software for example.
-The entry `fields` should be filled with names which are available in the toolbox used.
+The `Exports` section is implemented when you want to visualize some fields or mathematical expressions with ParaView software for example.
+There are two subsection :
+
+* the entry `fields` should be filled with names which are available in the toolbox used.
+* the entry `expr` should contains mathematical expression (scalar,vectorial,tensorial)
+
+[source,json]
+.Template of a `PostProcess` section
+----
+"Exports":
+{
+   "fields":["temperature","all"],  <1>
+   "expr": <2>
+   {
+      "toto":"2*x*y:x:y", <3>
+      "titi":  <4>
+      {
+         "parts": [ <5>
+            {
+               "expr":"3*x*y:x:y", <6>
+               "markers":"Omega1" <7>
+            },
+            {
+               "expr":"4*x*y:x:y", <8>
+               "markers":"Omega2" <9>
+            }
+         ],
+         "representation":["nodal","element"] <10>
+      },
+      "tutu": <11>
+      {
+         "expr":"{materials_k_xx,materials_k_xy,materials_k_yx,materials_k_yy}:materials_k_xx:materials_k_xy:materials_k_yx:materials_k_yy", <12>
+         "representation":["nodal","element"]
+      }
+   }
+----
+<1> exports fields that are available in the toolbox used (see the toolbox documentation).
+<2> start the expression subsection
+<3> export a field named `toto` from a mathematical expression defined on the whole mesh
+<4> export a field named `titi` from mathematical expressions
+<5> start a section named `part` in order to tell that the exported fields is defined from several expressions related to a part of the mesh
+<6> an expression
+<7> markers where the expression is applied
+<8> another expression
+<9> markers where the previous expression is applied
+<10> type of export : `nodal` or `element` or both. This is an optional entry, the default value is nodal.
+<11> export a field named `tutu`
+<12> an expression
+<13> type of export
 
 === Save
 
