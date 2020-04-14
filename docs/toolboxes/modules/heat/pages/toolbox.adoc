@@ -4,6 +4,41 @@
 
 == Materials
 
+.Materials properties defined in the heat toolbox (symbols are given without components suffix)
+|===
+| Name | Symbol | Shape | Description
+
+
+| thermal-conductivity     | k       | scalar or matrix | thermal conductivity
+| density                  | rho     | scalar           | density
+| thermal-expansion        | beta    | scalar           | thermal expansion
+| specific-heat-capacity   | Cp      | scalar           | specific heat capacity
+|===
+
+
+== Fields and symbols expressions
+
+.Fields available
+|===
+| Name | Description | Shape
+
+| temperature | the temperature field | scalar
+|===
+
+
+.Symbols expressions by considering `heat` as the keyword used with the toolbox
+|===
+| Symbol | Expression | Description
+
+
+| heat_T        | stem:[T]                             | evaluate the temperature
+| heat_grad_T_0 | stem:[\frac{\partial T}{\partial x}] | evaluate the first component of gradient of temperature
+| heat_grad_T_1 | stem:[\frac{\partial T}{\partial y}] | evaluate the second component of gradient of temperature
+| heat_grad_T_2 | stem:[\frac{\partial T}{\partial z}] | evaluate the third component of gradient of temperature
+| heat_dn_T     | stem:[\nabla T \cdot \boldsymbol{n}] | evaluate the normal derivative of temperature
+| heat_nflux    | stem:[-k \nabla T \cdot \boldsymbol{n}] | evaluate the normal flux
+|===
+
 == Boundary Conditions
 
 === Dirichlet
@@ -33,17 +68,45 @@ T = g \quad \text{ on } \Gamma
 
 === Exports
 
-The fields allowed to be exported in the `fields` section are:
+.Fields allowed to be exported in the `fields` section are:
+|===
+| Name | Description
 
-- temperature
-- velocity-convection
-- thermal-conductivity
-- density
-- pid
+| temperature | the temperature field
+| velocity-convection | evaluate the gradient of temperature
+| pid | the mesh partitioning
+| all | all fields available
+|===
+
+NOTE: All materials properties given in the section <<Materials,Materials>> can be also exported by specifying the name in the `fields` entry.
 
 === Measures
 
 ==== Normal-Heat-Flux
+
+[source,json]
+.Example of a `Parameters` section
+----
+"Normal-Heat-Flux": <1>
+{
+    "bottom": <2>
+    {
+        "markers":["bottom1,bottom2"], <3>
+        "direction":"inward" <4>
+     },
+     "top": <5>
+     {
+         "direction":"inward"
+     },
+
+}
+----
+
+<1> kind of measure
+<2> name of measure
+<3> surface markers 
+<4> direction : `inward` or `outward`
+<5> another
 
 ==== Evaluation at points
 
