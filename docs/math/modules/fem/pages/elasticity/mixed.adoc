@@ -1,7 +1,7 @@
-= Formulation mixte
+= Formulation avec conditions de Dirichlet et de Neumann
 
 On considère stem:[\Omega \subset \RR^3] tel que stem:[\partial \Omega = \partial \Omega_D \cap \partial \Omega_N].
-On se donne stem:[\mathbf{g}: \partial \Omega_N \rightarrow \mathbb{R}^3] la charge normale sur stem:[\partial \Omega_N].
+On se donne stem:[\mathbf{g}: \partial \Omega_N \rightarrow \mathbb{R}^3] la charge normale(densité de force) sur stem:[\partial \Omega_N].
 Le problème mélangeant condition de Dirichlet, imposant le déplacement, et de Neumann, imposant les contraintes normales, en élasticité linéaire s'exprime sous la forme suivante
 
 .Problème mixte
@@ -10,9 +10,11 @@ Le problème mélangeant condition de Dirichlet, imposant le déplacement, et de
 \nabla \cdot \stresst{\disp{d}} + \mathbf{f} = \mathbf{0} & \quad \mbox{ in } \Omega \\
 \stresst{\disp{d}} = \lambda (\nabla \cdot \disp{d}) \Id + \mu (\nabla \disp{d} + \nabla \disp{d}^T) & \quad \mbox{ in } \Omega\\
 \disp{d} = \mathbf{0} & \quad \mbox{ on } \partial \Omega_D\\
-\stresst{\disp{d}} \normal = \mathbf{g} & \quad \mbox{ on } \partial \Omega_N
+\stresst{\disp{d}} \normal = \mathbf{g} & \quad \mbox{ sur } \partial \Omega_N
 \end{align}
 ****
+
+TIP: si stem:[g=\mathbf 0] sur stem:[\partial \Omega_N] on dira que la surface est laissée libre (de force ou de charge).
 
 Le choix naturel d'espace fonctionel est stem:[X\equiv[H^1_{0,\partial \Omega_D}(\Omega)\]^3] pour la solution et les fonctions tests avec
 [stem]
@@ -20,16 +22,17 @@ Le choix naturel d'espace fonctionel est stem:[X\equiv[H^1_{0,\partial \Omega_D}
 X\equiv [H^1_{0,\partial \Omega_D}(\Omega)]^3=\left\{ \disp{v} \in [H^1(\Omega)]^3\ \mathrm{s.t.}\ \disp{v} = \mathbf{0}\ \mbox{ on } \partial \Omega_D \right\}
 ++++
 
-The variational formulation is obtained by doing the scalar product of the first equation by the test functions stem:[\mathbf{v}].
-Observe moreover that:
+La formulation variationnelle est obtenue en faisant le produit scalaire de la première équation par la fonction test
+stem:[\mathbf{v}].
+Observez de plus que:
 
 [stem]
-.Integration by parts thanks to Divergence theorem
+.Intégration par partie (Théorème de la divergence)
 ++++
 \int_\Omega \nabla\cdot \stresst{\disp{d}}\ \cdot\ \mathbf{v} = \int_\Omega \stresst{\disp{d}}\ :\ \nabla \mathbf{v} - \int_{\partial \Omega} \mathbf{v} \cdot ( \stresst{\disp{d}} \normal)
 ++++
 
-and
+et
 
 [stem]
 .Symmetry of stem:[\stresst{\disp{d}}]
@@ -37,7 +40,7 @@ and
 \stresst{\disp{d}} : \nabla \mathbf{v} = \stresst{\disp{d}} : \deformt{\disp{v}}
 ++++
 
-and we obtain
+et nous obtenons
 
 [stem]
 ++++
