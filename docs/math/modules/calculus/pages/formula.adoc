@@ -6,6 +6,11 @@
 * stem:[u=\left(u_{1}, \ldots u_{d}\right)] champ de vecteur 
 * stem:[A=\left(A_{i, j}\right) \in \mathbb{R}^{d \times d}] tenseur (matrice)
 
+== champ scalaire
+
+* gradient stem:[\nabla f=(\partial_{x_i} f)_{i=1\ldots d}]
+* laplacien stem:[\nabla^{2} f=\nabla \cdot(\nabla f)=\frac{\partial^{2} f}{\partial x^{2}}+\frac{\partial^{2} f}{\partial y^{2}} + \frac{\partial^{2} f}{\partial z^{2}}]
+
 == Champ de vecteurs
 
 * stem:[\nabla u=\left(\partial_{x_{j}} u_{i}\right)_{i, j}:] gradient de stem:[u(\text { matrice jacobienne })] 
@@ -53,3 +58,21 @@ Espace fonctionnel::
 ++++
 -\int_{\Omega} v \cdot \Delta u=\int_{\Omega} \nabla u: \nabla v-\int_{\partial \Omega} v \cdot(\nabla u n)
 ++++
+
+
+== Identités basiques en calcul
+
+1. stem:[\nabla(f+g)=\nabla f+\nabla g]
+2. stem:[\nabla(c f)=c \nabla f,] for a constant stem:[c]
+3. stem:[\quad \nabla(f g)=f \nabla g+g \nabla f]
+4. stem:[\nabla(f / g)=(g \nabla f-f \nabla g) / g^{2},] at points stem:[\mathbf{x}] where stem:[g(\mathbf{x}) \neq 0]
+5. stem:[\operatorname{div}(\mathbf{F}+\mathbf{G})=\operatorname{div} \mathbf{F}+\operatorname{div} \mathbf{G}]
+6. stem:[\operatorname{curl}(\mathbf{F}+\mathbf{G})=\operatorname{curl} \mathbf{F}+\operatorname{curl} \mathbf{G}]
+7. stem:[\operatorname{div}(f \mathbf{F})=f \operatorname{div} \mathbf{F}+\mathbf{F} \cdot \nabla f]
+8. stem:[\operatorname{div}(\mathbf{F} \times \mathbf{G})=\mathbf{G} \cdot \operatorname{curl} \mathbf{F}-\mathbf{F} \cdot \operatorname{curl} \mathbf{G}]
+9. div curl stem:[\mathbf{F}=0]
+10. stem:[\operatorname{curl}(f \mathbf{F})=f \operatorname{curl} \mathbf{F}+\nabla f \times \mathbf{F}]
+11. curl stem:[\nabla f=\mathbf{0}]
+12. stem:[\nabla^{2}(f g)=f \nabla^{2} g+g \nabla^{2} f+2(\nabla f \cdot \nabla g)]
+13. stem:[\operatorname{div}(\nabla f \times \nabla g)=0]
+14. stem:[\operatorname{div}(f \nabla g-g \nabla f)=f \nabla^{2} g-g \nabla^{2} f]
