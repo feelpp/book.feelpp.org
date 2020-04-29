@@ -567,13 +567,18 @@ The user must define:
 
 
 ==== Forces
-compute lift and drag
+Compute lift and drag
 
 [source,json]
 ----
-"Forces":["fsi-wall","fluid-cylinder"]
+"Forces":["marker1","marker2"]
 ----
+Where `markerX` are the markers of where we want to compute the forces. The results will be given in a csv file whith those columns :
 
+- time
+- drag_marker1
+- lift_marker1
+- idem with marker2...
 
 
 === Export user functions
