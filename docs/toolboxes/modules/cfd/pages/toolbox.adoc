@@ -452,17 +452,19 @@ alemesh_bc
 
 == Body forces
 
-Body forces are also defined in `BoundaryConditions` category in json file.
+Body forces are also defined in the `fluid` section of `BoundaryConditions` in  the json file.
 
 [source,json]
 ----
 "BoundaryConditions":
 {
-    "VolumicForces":
-    {
-        "<marker>":
+    "fluid":{ 
+        "VolumicForces":
         {
-            "expr":"{0,0,-gravityCst*7850}:gravityCst"
+            "<marker>":
+            {
+                "expr":"{0,0,-gravityCst*7850}:gravityCst"
+            }
         }
     }
 }    
