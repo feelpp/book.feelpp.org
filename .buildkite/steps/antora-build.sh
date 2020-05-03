@@ -5,6 +5,7 @@ set -x
 
 BRANCH=${BRANCH:-${BUILDKITE_BRANCH:master}}
 echo "--- Building $PROJECT..."
+npm i asciidoctor-kroki
 antora --version
 antora --fetch --clean --html-url-extension-style=indexify antora-github-feelpp-doc.yml
 ls -lrta
