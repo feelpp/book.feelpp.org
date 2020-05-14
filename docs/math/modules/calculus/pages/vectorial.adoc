@@ -1,0 +1,75 @@
+= Vector Calculus Formula
+:stem: latexmath
+
+
+* stem:[f, g] champs scalaires stem:[\Omega \subset \mathbb{R}^d \rightarrow \mathbb{R}, d=1\ldots 3]
+* stem:[\mathbf{F}, \mathbf{G}] champs de vecteurs stem:[\Omega \subset \mathbb{R}^d \rightarrow \mathbb{R}^d, d=1\ldots 3]
+* stem:[u=\left(u_{1}, \ldots u_{d}\right)] champ de vecteur 
+* stem:[A=\left(A_{i, j}\right) \in \mathbb{R}^{d \times d}] tenseur (matrice)
+
+== champ scalaire
+
+* gradient stem:[\nabla f=(\partial_{x_i} f)_{i=1\ldots d}]
+* laplacien stem:[\nabla^{2} f=\nabla \cdot(\nabla f)=\frac{\partial^{2} f}{\partial x^{2}}+\frac{\partial^{2} f}{\partial y^{2}} + \frac{\partial^{2} f}{\partial z^{2}}]
+
+== Champ de vecteurs
+
+* stem:[\nabla u=\left(\partial_{x_{j}} u_{i}\right)_{i, j}:] gradient de stem:[u(\text { matrice jacobienne })] 
+* stem:[\varepsilon(u)=\frac{1}{2}\left(\nabla u+\nabla u^{T}\right):] partie symétrique du gradient de stem:[u] 
+* stem:[\Delta u=\left(\Delta u_{1}, \ldots, \Delta u_{d}\right)^{T} \in \mathbb{R}^{d}:] Laplacien du stem:[u]
+
+== Operateur stem:[u \cdot \nabla ]
+
+* stem:[u \cdot \nabla f = u_i \cdot \partial_{x_i} f = \sum_{i=1}^d u_i \partial_{x_i} f ]
+* stem:[u \cdot \nabla u = ( u_i \cdot \partial_{x_i} u )^T = ( \sum_{i=1}^d u_i \partial_{x_i} u_1, \ldots,  \sum_{i=1}^d u_i \partial_{x_i} u_d)^T]
+
+== Champ de matrice, Tenseur
+
+
+* stem:[\nabla \cdot A=\left(\nabla \cdot A_{1,:}, \ldots, \nabla \cdot A_{d,:}\right)^{T} \in \mathbb{R}^{d}:] divergence d'un tenseur
+* stem:[A: B=\sum_{i, j} A_{i, j} B_{i, j} \in \mathbb{R}:] produit contracté de deux tenseurs
+
+== Calcul intégral
+
+*Proposition:* stem:[\Omega] ouvert régulier Lipshitz et
+
+* *Formule de Gauss vectorielle*: stem:[ u \in\left(H^{1}(\Omega)\right)^{d}]
+
+[stem]
+++++
+\int_{\Omega} \nabla \cdot u=\int_{\partial \Omega} u \cdot n
+++++
+* *Formule d'intégration par partie vectorielle*: stem:[A \in\left(H^{1}(\Omega)\right)^{d \times d}, v \in H^{1}(\Omega)]
+
+[stem]
+++++
+-\int_{\Omega}(\nabla \cdot A) \cdot v=\int_{\Omega} A: \nabla v-\int_{\partial \Omega}(A n) \cdot v
+++++
+
+=== Calcul intégral (suite)
+
+
+* *Formule de Green vectorielle* stem:[u \in\left(H^{2}(\Omega)\right)^{d}, v \in\left(H^{1}(\Omega)\right)^{d}]
+
+[stem]
+++++
+-\int_{\Omega} v \cdot \Delta u=\int_{\Omega} \nabla u: \nabla v-\int_{\partial \Omega} v \cdot(\nabla u n)
+++++
+
+
+== Identités basiques en calcul
+
+1. stem:[\nabla(f+g)=\nabla f+\nabla g]
+2. stem:[\nabla(c f)=c \nabla f,] pour une constante stem:[c]
+3. stem:[\quad \nabla(f g)=f \nabla g+g \nabla f]
+4. stem:[\nabla(f / g)=(g \nabla f-f \nabla g) / g^{2},] aux points stem:[\mathbf{x}] où stem:[g(\mathbf{x}) \neq 0]
+5. stem:[\operatorname{div}(\mathbf{F}+\mathbf{G})=\operatorname{div} \mathbf{F}+\operatorname{div} \mathbf{G}]
+6. stem:[\operatorname{curl}(\mathbf{F}+\mathbf{G})=\operatorname{curl} \mathbf{F}+\operatorname{curl} \mathbf{G}]
+7. stem:[\operatorname{div}(f \mathbf{F})=f \operatorname{div} \mathbf{F}+\mathbf{F} \cdot \nabla f]
+8. stem:[\operatorname{div}(\mathbf{F} \times \mathbf{G})=\mathbf{G} \cdot \operatorname{curl} \mathbf{F}-\mathbf{F} \cdot \operatorname{curl} \mathbf{G}]
+9. div curl stem:[\mathbf{F}=0]
+10. stem:[\operatorname{curl}(f \mathbf{F})=f \operatorname{curl} \mathbf{F}+\nabla f \times \mathbf{F}]
+11. curl stem:[\nabla f=\mathbf{0}]
+12. stem:[\nabla^{2}(f g)=f \nabla^{2} g+g \nabla^{2} f+2(\nabla f \cdot \nabla g)]
+13. stem:[\operatorname{div}(\nabla f \times \nabla g)=0]
+14. stem:[\operatorname{div}(f \nabla g-g \nabla f)=f \nabla^{2} g-g \nabla^{2} f]

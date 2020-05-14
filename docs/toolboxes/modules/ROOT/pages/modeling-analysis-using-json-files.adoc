@@ -151,6 +151,7 @@ NOTE: the use of global symbols can have a little bit cost compare to the symbol
 == InitialConditions
 
 This section of the Model JSON file defines initial conditions. Depending on the type of model :
+
 * if we use a transient model, it corresponds to the initial conditions of the time scheme applied
 * if we use a steady model, it corresponds to the initial guess given to the solver
 
@@ -264,7 +265,7 @@ This section of the Model JSON file defines the boundary conditions.
 <8> the associated expression to the entity
 <9> the variable toolbox to which the condition is applied, here `fluid` which corresponds to velocity and pressure stem:[(\mathbf{u},p)]
 <10> the type of boundary condition applied, here outlet or outflow boundary condition
-<11> the hysical entity to which outflow condition is applied
+<11> the physical entity to which outflow condition is applied
 <12> the expression associated to the outflow condition, note that it is scalar and corresponds in this case to the condition stem:[\sigma(\mathbf{u},p) \normal = 0 \normal]
 
 == PostProcessing
@@ -520,6 +521,8 @@ Several norms can be computed by listing it in the type section :
 "solution":"{2*x,cos(y)}:x:y",
 "grad_solution":"{2,0,0,-sin(y)}:x:y",
 ----
+The gradient of a vector field is a matrix field such that the rows are the gradient of the component.
+It means that if the function solution is written `f={f1,f2}` the field `grad_solution` has to be written like this : `{dxf1,dyf1,dxf2,dyf2}:x:y` (`dxf1` standing for stem:[\partial_x f_1]).
 
 An expression (scalar/vector/matrix) can be also passed to evaluate the norm. But in this case, the `field` entry must be removed and this expression replaces the symbol `u`.
 [source,json]

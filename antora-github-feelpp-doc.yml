@@ -13,6 +13,7 @@ content:
     branches: [master]
     start_path: docs/user
     tags:
+    - v0.108	
     - v0.107
 #    - v0.106
 #    - v0.105
@@ -20,12 +21,16 @@ content:
     branches: master
     start_path: docs/dev
     tags:
+    - v0.108	
     - v0.107
 #    - v0.106
 #    - v0.105
   - url: https://github.com/feelpp/feelpp-tutorial-dev
     branches: master
     start_path: docs/
+  - url: https://github.com/feelpp/feelpp-project
+    branches: master
+    start_path: docs/    
   - url: https://github.com/feelpp/book.feelpp.org
     branches: master
     start_path: docs/data
@@ -36,12 +41,14 @@ content:
     branches: master
     start_path: docs/toolboxes
     tags:
+    - v0.108	
     - v0.107
 #    - v0.106
 #    - v0.105
   - url: https://github.com/feelpp/toolbox
     branches: [master]
     tags:
+    - v0.108	
     - v0.107
 #    - v0.106
 #    - v0.105
@@ -74,6 +81,8 @@ ui:
   supplemental_files: supplemental-ui
 asciidoc:
   attributes:
+    page-pagination: ''
+    kroki-fetch-diagram: true
     project_version: 0.108
     feelpp-git-tag: develop
     toolboxes_documentation_manual_version : 0.108
@@ -125,4 +134,4 @@ asciidoc:
     plantuml-server-url: http://www.plantuml.com/plantuml
   extensions:
     - ./lib/remote-include-processor
-    - asciidoctor-plantuml
+    - asciidoctor-kroki
