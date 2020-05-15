@@ -1,5 +1,7 @@
 = Nonlinear problems
 
+== A model problem
+
 We consider the following nonlinear Poisson equation:
 [stem]
 ++++
@@ -7,7 +9,7 @@ We consider the following nonlinear Poisson equation:
 ++++
 stem:[k(u)] makes the equation nonlinear if is not constant in stem:[u]. 
 In order to verify the solution procedure, we choose the domain, stem:[k(u), f,] and the boundary conditions such that we have a simple, exact solution stem:[u]. 
-Denote stem:[\Omega] the unit hypercube stem:[[0,1]^{d}] in stem:[d] dimensions, stem:[k(u)=(1+u)^{m}, f=0, u=0] for stem:[x_{0}=0, u=1] for stem:[x_{0}=1,] and stem:[\partial u / \partial n=0] at all other boundaries stem:[x_{i}=0] and stem:[x_{i}=1, i=1, \ldots, d-1 .] 
+Denote stem:[\Omega] the unit hypercube stem:[[0,1\]^{d}] in stem:[d] dimensions, stem:[k(u)=(1+u)^{m}, f=0, u=0] for stem:[x_{0}=0, u=1] for stem:[x_{0}=1,] and stem:[\partial u / \partial n=0] at all other boundaries stem:[x_{i}=0] and stem:[x_{i}=1, i=1, \ldots, d-1 .] 
 The coordinates are now represented by the symbols stem:[x_{0}, \ldots, x_{d-1}] . 
 The exact solution is then
 [stem]
@@ -17,12 +19,12 @@ u\left(x_{0}, \ldots, x_{d}\right)=\left(\left(2^{m+1}-1\right) x_{0}+1\right)^{
 The variational formulation of our model problem reads: find stem:[u \in V] such that
 [stem]
 ++++
-F(u ; v)=0 \quad \forall v \in \hat{V}
+F(u ; v)=0 \quad \forall v \in V_0
 ++++
 where
 [stem]
 ++++
-F(u ; v)=\int_{\Omega} q(u) \nabla u \cdot \nabla v d x
+F(u ; v)=\int_{\Omega} k(u) \nabla u \cdot \nabla v d x
 ++++
 and
 [stem]
@@ -39,7 +41,54 @@ find stem:[u \in V] such that
 ++++
 F(u ; v)=0 \quad \forall v \in V_0
 ++++
-with stem:[u=\sum_{j=1}^{N} U_{j} \phi_{j}] where stem:[U=(U_j, j=1,...,N)^T] are the components of stem:[u] in the basis stem:[(phi_j)_{j=1,...,N]} of stem:[V].
-We have a system of nonlinear algebraic equations. 
+with stem:[u=\sum_{j=1}^{N} U_{j} \phi_{j}] where stem:[U=(U_j)^T_{j=1,...,N}] are the components of stem:[u] in the basis stem:[(\phi_j)_{j=1,...,N}] of stem:[V].
+We have a system of nonlinear algebraic equations to solve.
+
+== Picard strategy
+
+The Picard strategy is also known as the _method of successive substitutions_. 
+
+Picard iteration is an easy way of handling nonlinear PDEs: it uses a known, previous solution in the nonlinear terms so that these terms become linear in the unknown stem:[u]. 
+
+For our particular problem, we use a known, previous solution in the coefficient stem:[k(u)]. 
+Given a solution stem:[u^{n}] from iteration stem:[n], we seek a new (hopefully improved) solution stem:[u^{n+1}] in iteration stem:[n+1] such that stem:[u^{n+1}] solves the linear problem
+[stem]
+++++
+\nabla \cdot\left(k\left(u^{n}\right) \nabla u^{n+1}\right)=0, \quad n=0,1, \ldots
+++++
+The iterations require an initial guess stem:[u^{0}]. The hope is that stem:[u^{n} \rightarrow u] as stem:[n \rightarrow \infty,] and that stem:[u^{n+1}] is sufficiently close to the exact solution stem:[u] of the discrete problem after just a few iterations.
+
+We can formulate a variational problem for stem:[u^{n+1}]. 
+Equivalently, we can approximate stem:[k(u)] by stem:[k\left(u^{n}\right)]  to obtain the same linear variational problem. 
+In both cases, the problem consists of seeking stem:[u^{n+1} \in V] such that
+[stem]
+++++
+\tilde{F}\left(u^{n+1} ; v\right)=0 \quad \forall v \in V_0, \quad n=0,1, \ldots
+++++
+with
+[stem]
+++++
+\tilde{F}\left(u^{n+1} ; v\right)=\int_{\Omega} k\left(u^{n}\right) \nabla u^{n+1} \cdot \nabla v 
+++++
+since this is a linear problem in the unknown stem:[u^{n+1}], we can equivalently use the formulation
+[stem]
+++++
+a\left(u^{n+1}, v\right)=\ell(v)
+++++
+with
+[stem]
+++++
+\begin{aligned}
+a(u, v) &=\int_{\Omega} k\left(u^{n}\right) \nabla u \cdot \nabla v \\
+\ell(v) &=0
+\end{aligned}
+++++
+The iterations can be stopped when stem:[\epsilon \equiv\left\|u^{n+1}-u^{n}\right\|<\varepsilon]] , where stem:[\varepsilon] is small, say stem:[10^{-5}], or when the number of iterations exceed some critical limit. 
+The latter case will detect divergence of the method or unacceptable slow convergence.
+
+In the solution algorithm we only need to store stem:[u^{n}] and stem:[u^{n+1}]. 
+
+
+== Newton 
 
 
