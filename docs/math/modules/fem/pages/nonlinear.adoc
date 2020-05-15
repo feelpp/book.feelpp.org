@@ -1,0 +1,45 @@
+= Nonlinear problems
+
+We consider the following nonlinear Poisson equation:
+[stem]
+++++
+-\nabla \cdot(k(u) \nabla u)=f
+++++
+stem:[k(u)] makes the equation nonlinear if is not constant in stem:[u]. 
+In order to verify the solution procedure, we choose the domain, stem:[k(u), f,] and the boundary conditions such that we have a simple, exact solution stem:[u]. 
+Denote stem:[\Omega] the unit hypercube stem:[[0,1]^{d}] in stem:[d] dimensions, stem:[k(u)=(1+u)^{m}, f=0, u=0] for stem:[x_{0}=0, u=1] for stem:[x_{0}=1,] and stem:[\partial u / \partial n=0] at all other boundaries stem:[x_{i}=0] and stem:[x_{i}=1, i=1, \ldots, d-1 .] 
+The coordinates are now represented by the symbols stem:[x_{0}, \ldots, x_{d-1}] . 
+The exact solution is then
+[stem]
+++++
+u\left(x_{0}, \ldots, x_{d}\right)=\left(\left(2^{m+1}-1\right) x_{0}+1\right)^{1 /(m+1)}-1
+++++
+The variational formulation of our model problem reads: find stem:[u \in V] such that
+[stem]
+++++
+F(u ; v)=0 \quad \forall v \in \hat{V}
+++++
+where
+[stem]
+++++
+F(u ; v)=\int_{\Omega} q(u) \nabla u \cdot \nabla v d x
+++++
+and
+[stem]
+++++
+\begin{array}{l}
+V_0=\left\{v \in H^{1}(\Omega): v=0 \text { on } x_{0}=0 \text { and } x_{0}=1\right\} \\
+V=\left\{v \in H^{1}(\Omega): v=0 \text { on } x_{0}=0 \text { and } v=1 \text { on } x_{0}=1\right\}
+\end{array}
+++++
+The discrete problem arises as usual by restricting stem:[V] and stem:[V_0] to a pair of discrete spaces. 
+The problem reads:
+find stem:[u \in V] such that
+[stem]
+++++
+F(u ; v)=0 \quad \forall v \in V_0
+++++
+with stem:[u=\sum_{j=1}^{N} U_{j} \phi_{j}] where stem:[U=(U_j, j=1,...,N)^T] are the components of stem:[u] in the basis stem:[(phi_j)_{j=1,...,N]} of stem:[V].
+We have a system of nonlinear algebraic equations. 
+
+
