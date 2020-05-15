@@ -156,8 +156,65 @@ a(\delta u, v) &=\int_{\Omega}\left[k^{\prime}\left(u^{n}\right) \delta u \nabla
 
 NOTE: the important feature in Newton's method that the previous solution stem:[u^{n}] replaces stem:[u] in the formulas when computing the matrix stem:[\partial F_{i} / \partial U_{j}] and vector stem:[F_{i}] for the linear system in each Newton iteration.
 
-.Example of implementation of the Newton strategy
-[source,cpp]
---
-include:https://github.com/feelpp/feelpp/blob/develop/doc/manual/nonlinear/nlda.cpp[lines=30,110]
---
+=== Implementation of Newton method
+
+We have implemented in {feelpp} the model problem.
+
+First we need to define the coefficients.
+We set the reaction terms to 0 in the configuration file
+
+.Configure of the reaction term in the .cfg file
+[source,ini,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda-exactsolution1.cfg[lines=3..3]
+----
+the configuration is read in the code like this
+
+.{cpp} code to set  the reaction terms
+[source,cpp,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda.cpp[tag=reaction]
+----
+
+Then we set the diffusion terms
+
+.Configure of the reaction terms in the .cfg file
+[source,ini,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda-exactsolution1.cfg[lines=2..2]
+----
+the configuration is read in the code like this
+
+.{feelpp} code to set  the diffusion terms
+[source,cpp,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda.cpp[tag=diffusion]
+----
+
+We then define the jacobian of the functional
+
+.{feelpp} code to define the jacobian
+[source,cpp,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda.cpp[tag=jacobian]
+----
+
+and the associated residual 
+
+.{feelpp} code to define the residual
+[source,cpp,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda.cpp[tag=residual]
+----
+
+NOTE: we used Nitsche's method to define the Dirichlet boundary conditions in a weak way.
+
+Finally we solve the nonlinear problem:
+
+.{feelpp} code to solve the non-linear problem
+[source,cpp,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda.cpp[tag=nlsolve]
+----
+
+The full code is available https://github.com/feelpp/feelpp/blob/develop/doc/manual/nonlinear/nlda.cpp[here].
