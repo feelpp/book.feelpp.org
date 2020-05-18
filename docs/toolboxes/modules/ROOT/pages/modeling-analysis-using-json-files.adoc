@@ -77,8 +77,6 @@ This section of the Model JSON file defines the parameters that may enter inside
 <11> interpolation type of the fit. Possible values are : `P0`, `P1`, `Spline`, `Akima`
 <12> expression used in order to read the fitted value
 
-== Materials
-
 [NOTE]
 ====
 Some parameter names are reserved and consequently can't be used inside the `Parameters` section. This is case with
@@ -87,6 +85,8 @@ Some parameter names are reserved and consequently can't be used inside the `Par
 * `x`, `y`, `z` : the cartesian coordinates
 * `nx`, `ny`, `nz` : the components of normal vector
 ====
+
+== Materials
 
 This section of the Model JSON file defines material properties linking the Physical Entities in the mesh data structures to these properties.
 
@@ -145,7 +145,34 @@ If we take the previous example, the symbols available will be :
 * by material : `materials_Water_rho`, `materials_Water_mu`, `materials_Water_k`, `materials_Beam_rho`, `materials_Beam_k`
 * globally : `materials_rho`, `materials_mu`, `materials_k`
 
-NOTE: the use of global symbols can have a little bit cost compare to the symbols containing the material name. 
+NOTE: The use of global symbols can have a little bit cost compare to the symbols containing the material name.
+
+In a material subsection, we can use direclty a symbol name belonging to this subsection without needing to add the prefix `materials_<matName>`.
+For example, we can defined these materials :
+
+[source,json]
+----
+"Materials":
+{
+    "Cu":
+    {
+        "alpha":326, <1>
+        "sigma":12, <2>
+        "k":"3*sigma+alpha:sigma:alpha" <3>
+    },
+    "Fe":
+    {
+        "alpha":26,
+        "sigma":87,
+        "k":"sigma-alpha:sigma:alpha"
+    }
+}
+----
+<1> define the symbol parameter `materials_Cu_alpha`
+<2> define the symbol parameter `materials_Cu_sigma`
+<3> define the symbol parameter `materials_Cu_k` depending on `sigma` (alias of `materials_Cu_alpha`) and sigma (alias of `materials_Cu_sigma`)
+
+NOTE: If the symbol is already defined inside the Parameters section, the alias symbol override this latter.
 
 
 == InitialConditions
