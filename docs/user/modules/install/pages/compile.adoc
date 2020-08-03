@@ -167,23 +167,27 @@ TIP: Use `ccmake` to configure {feelpp} using a graphical or text interface.
 ----
 $ cd FEEL/feel.opt
 $ cmake ../feelpp
- -DCMAKE_CXX_COMPILER=/usr/bin/clang++-4.0  <1>
- -DCMAKE_C_COMPILER=/usr/bin/clang-4.0  <2>
+ -DCMAKE_CXX_COMPILER=/usr/bin/clang++  <1>
+ -DCMAKE_C_COMPILER=/usr/bin/clang  <2>
  -DCMAKE_BUILD_TYPE=RelWithDebInfo <3>
 ----
-<1> set the {cpp} compiler to `/usr/bin/clang++-4.0`
-<2> set the C compiler to `/usr/bin/clang-4.0`
+<1> set the {cpp} compiler to `/usr/bin/clang++`
+<2> set the C compiler to `/usr/bin/clang`
 <3> set the cmake build type to `RelWithDebInfo`
 
 [NOTE]
 ====
-CMake supports different build type that you can set with `-DCMAKE_BUILD_TYPE` (case insensitive) :
+{feelpp} supports different cmake build types that you can set with `-DCMAKE_BUILD_TYPE` (case insensitive) :
 
- * None
- * Debug : typically `-g`
- * Release : typically `-O3 -DNDEBUG`
- * MinSizeRel : typically `-Os`
- * RelWithDebInfo :  typically `-g -O2 -DNDEBUG`
+|===
+| `CMAKE_BUILD_TYPE` | `CMAKE_CXX_FLAGS_<BUILDTYPE>` | Comment
+| None | |
+| Debug | `-g -O1` | Debug mode with slight optimization to ensure some performance but some objects may be optimized away while debugging
+| DebugFull | `-g -O0 -fno-omit-frame-pointer -fno-optimize-sibling-calls` | Debug without any optimization to avoid objects to be optimized away at the cost of performance
+| Release | `-O3 -DNDEBUG` | Optimize the code aggressively 
+| RelWithDebInfo |  `-g -O2 -DNDEBUG` | 
+| Asan | `-g -O1  -fsanitize=address,leak -fno-omit-frame-pointer -fno-optimize-sibling-calls` |  Enable Address and Leak Sanitizers
+| Coverage | `-g -O0 --coverage` | Enable Coverage Reporting for GCC/Clang 
 ====
 
 .Enable {feelpp} toolboxes and mor using `cmake
