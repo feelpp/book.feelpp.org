@@ -1,29 +1,30 @@
 site:
   title: Feel++ // Docs
   url: http://docs.feelpp.org
-  start_page: stable@feelppdocs::index.adoc
+  start_page: latest@feelppdocs::index.adoc
 content:
   sources:
   - url: ./
     branches: master
+    version: master
     start_path: docs/feelppdocs
-  - url: ./
-    branches: master
-    start_path: docs/user
-    tags:
-    - v0.107
-    - v0.106
-    - v0.105
-  - url: ./
-    branches: master
-    start_path: docs/dev
-    tags:
-    - v0.107
-    - v0.106
-    - v0.105
-  - url: ./
-    branches: master
-    start_path: docs/data
+#  - url: ./
+#    branches: master
+##    start_path: docs/user
+#    tags:
+#    - v0.107
+#    - v0.106
+#    - v0.105
+#  - url: ./
+#    branches: master
+#    start_path: docs/dev
+#    tags:
+#    - v0.107
+#    - v0.106
+#    - v0.105
+#  - url: ./
+#    branches: master
+#    start_path: docs/data
   - url: ./
     branches: master
     start_path: docs/math/
@@ -32,30 +33,30 @@ content:
     start_path: docs/toolboxes
     tags:
     - v0.107
-    - v0.106
-    - v0.105
-  - url: ../toolbox
-    branches: [master]
-    tags:
-    - v0.107
-    - v0.106
-    - v0.105
-    start_path: examples
-  - url: ../toolbox
-    branches: master
-    start_path: contribute
-  - url: ../angiotk
-    branches: master
-    start_path: docs
-  - url: ./
-    branches: master
-    start_path: docs/salome/
-  - url: ./
-    branches: mor-module
-    start_path: docs/mor/
+#    - v0.106
+#    - v0.105
+#  - url: ../toolbox
+#    branches: [master]
+#    tags:
+#    - v0.107
+#    - v0.106
+#    - v0.105
+#    start_path: examples
+#  - url: ../toolbox
+#    branches: master
+#    start_path: contribute
+#  - url: ../angiotk
+#    branches: master
+#    start_path: docs
+#  - url: ./
+#    branches: master
+#    start_path: docs/salome/
+#  - url: ./
+#    branches: mor-module
+#    start_path: docs/mor/
 ui:
   bundle:
-    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
+    url: https://gitlab.com/feelpp/antora-ui-default/-/jobs/artifacts/feelpp/raw/build/ui-bundle.zip?job=bundle-stable
     snapshot: true
   supplemental_files: supplemental-ui
 asciidoc:
@@ -76,6 +77,9 @@ asciidoc:
     uri-ensight-www: Ensight
     uri-msoportal-www: http://portal.mso4sc.eu/
     uri-msoportal-visu-www: http://portal.mso4sc.eu/
+    uri-gmsh-www: https://gmsh.info
+    uri-gmsh-manual: https://gmsh.info
+    uri-benchmarks: http://docs.feelpp.org/cases/{toolboxes_cases_manual_version}
     python: Python
     slepc: SLEPc
     petsc: PETSc
@@ -91,7 +95,9 @@ asciidoc:
     stem: latexmath
     hemotumpp: Hemotum++
     eye2brain: Eye2Brain
+    vivabrain: Vivabrain
     vtkjs: Vtkjs
+    plotly: Plot.ly
     hifimagnet: HiFiMagnet
     magnettools: MagnetTools
     meshgems: MeshGems
@@ -107,5 +113,5 @@ asciidoc:
     plantuml-server-url: http://www.plantuml.com/plantuml
   extensions:
     - ./lib/remote-include-processor
-    - asciidoctor-plantuml
+    - asciidoctor-kroki
     
