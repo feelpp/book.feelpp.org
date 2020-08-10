@@ -27,8 +27,7 @@ jobs:
       run: node_modules/.bin/antora -v
     - name: Build
       run: |
-        echo https://$GITHUB_OAUTH:@github.com > $HOME/.git-credentials
-        node_modules/.bin/antora --fetch site.yml
+        node_modules/.bin/antora --fetch antora-github-feelpp-doc.yml
       env:
         GITHUB_OAUTH: ${{ secrets.DOCS_GITHUB_KEY }}
         ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
