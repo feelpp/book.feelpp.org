@@ -1,0 +1,42 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build and Deploy
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2.3.1
+
+    # Runs a single command using the runners shell
+    - name: Install antora, antora-ui and asciidoctor-kroki
+      run: npm i @antora/cli @antora/site-generator-default asciidoctor-kroki
+    - name: check antora version
+      run: node_modules/.bin/antora -v
+    - name: Build
+      run: |
+        echo https://$GITHUB_OAUTH:@github.com > $HOME/.git-credentials
+        node_modules/.bin/antora --fetch site.yml
+      env:
+        GITHUB_OAUTH: ${{ secrets.DOCS_GITHUB_KEY }}
+        ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+        ALGOLIA_INDEX_NAME: ${{ secrets.ALGOLIA_INDEX_NAME }}
+        ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@3.5.9
+      with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: build/site # The folder the action should deploy.
