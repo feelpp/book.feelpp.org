@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Le Laplacien :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/math/fem/laplacian/index.html">
+    <link rel="prev" href="../ch-problemes-coercifs.html">
+    <link rel="next" href="#user:ROOT:laplacian.adoc">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+<link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">    
+<script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true, 
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+
+  TeX: {
+      Macros: {
+      RR: "{\\mathbb R}",
+      NN: "{\\mathbb N}",
+      Nso: "{N_{\\mathrm{so}}}",
+      Nma: "{N_{\\mathrm{ma}}}",
+      Nno: "{N_{\\mathrm{no}}}",
+      Ne: "{N_{\\mathrm{e}}}",
+      Ilag: ["{\\mathcal{I}^{\\mathrm{lag}}_{#1}}",1],
+      calTh: "{\\mathcal{T}_h}",
+      Ck: ["{\\mathcal{C}^{#1}}",1],
+      Pk: ["{\\mathcal{P}^{#1}}",1],
+      Qk: ["{\\mathcal{Q}^{#1}}",1],
+      Pch: ["{P^{#1}_{c,h}}",1],
+      Pcho: ["{P^{#1}_{c,h,0}}",1],
+      Qch: ["{Q^{#1}_{c,h}}",1],
+      Ich: ["{\\mathcal{I}^{#1}_{c,h}#2}",2],
+      poly: ["{\\mathbb{#1}}",1],
+      nf: "{n_f}",
+      ngeo: "{n_{\\mathrm{geo}}}",
+      geo: "{\\mathrm{geo}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      dim: ["{\\operatorname{dim}(#1)}",1],
+      opdim: "{\\operatorname{dim}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      poly: ["{\\mathbb{#1}",1],
+      R: ["{\\mathbb{R}^{#1}}",1],
+      set: ["{\\left\\{#1\\right\\}}",1],
+      diam: "{\\operatorname{diam}}",
+      jump: ["{[\\![ #1 ]\\!]}",1],
+      Next: "{\\mathrm{n}}",
+      essinf: "{\\operatorname{ess}\\, \\operatorname{inf}}",
+      tr: "{\\operatorname{tr}}",
+      Id: "{\\mathcal{I}}",
+      disp: ["{\\mathbf{#1}}",1],
+      stresst: ["{\\mathbf{\\sigma(#1)}}",1],
+      deformt: ["{\\mathbf{\\varepsilon(#1)}}",1],
+      domain: "{\\Omega}",
+      prect: ["{\\left\\(#1\\right\\)}",1],
+      ds: "",
+      bold: ["{\\bf #1}",1],
+      p: "{\\mathrm{p}}",
+      q:"{\\mathbf{q}}",
+      n:"{\\mathbf{n}}",
+      T:"{\\mathcal{T}}",
+      F:"{\\mathcal{F}}",
+      P:"{\\mathcal{P}}",
+      v:"{\\mathbf{v}}"
+  },
+  extensions: ["mhchem.js"] }
+});
+</script>
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML'>
+</script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+         <!--  <a href="https://book.feelpp.org">Feel++ documentation</a> -->
+           <a href="https://docs.feelpp.org">Feel++ Docs</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://docs.feelpp.org">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Docs</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Latest Version</strong></div>
+
+            <!-- this code allow to manage ordering of navbar item -->
+               
+              <a class="navbar-item" href="/angiotk/0.1/index.html"> AngioTK User Manual </a>
+                  
+              <a class="navbar-item" href="/data/index.html"> Data Manual </a>
+                    
+              <a class="navbar-item" href="/dev/0.108/index.html"> Developer manual </a>
+                    
+              <a class="navbar-item" href="/salome/current/index.html"> Feel++ and Salome </a>
+                  
+              <a class="navbar-item" href="/feelpp/latest/index.html"> Feel++ Documentation </a>
+                  
+              <a class="navbar-item" href="/math/index.html"> Feel++ Mathematics </a>
+                  
+              <a class="navbar-item" href="/myproject/0.1.0/index.html"> Feel++ MyProject </a>
+                    
+              <a class="navbar-item" href="/cases/0.108/index.html"> Feel++ Toolbox Cases Guide </a>
+                      
+              <a class="navbar-item" href="/toolboxes/0.108/index.html"> Feel++ Toolboxes Manual </a>
+                    
+              <a class="navbar-item" href="/tutorial-dev/latest/index.html"> Feel++ Tutorial Dev </a>
+                    
+              <a class="navbar-item" href="/user/0.108/index.html"> Feel++ User Manual </a>
+                    
+              <a class="navbar-item" href="/mor/current/index.html"> Model Order Reduction </a>
+                  
+              <a class="navbar-item" href="/contribute/index.html"> Toolbox Contribution Guide </a>
+               
+
+            <hr class="navbar-divider">
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Feel++</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>GitHub</strong></div>
+            <a class="navbar-item" href="http://github.com/feelpp/feelpp">GitHub Repository</a>
+            <a class="navbar-item" href="http://github.com/feelpp/feelpp/issues">GitHub Issue Tracker</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Documentation</strong></div>
+            <a class="navbar-item" href="http://docs.feelpp.org/user/">User Manual</a>
+            <a class="navbar-item" href="http://docs.feelpp.org/dev/">Developer Manual</a>
+            <a class="navbar-item" href="http://docs.feelpp.org/toolbox/">Toolbox Manual</a>
+            
+          </div>
+        </div>
+        <div class="primary-action">
+            <form class="navbar-item search">
+              <input type="text" placeholder="Search Feel++ Docs" class="query" id="search-query">
+              <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ">
+            <img src="../../../_/img/slack.png" alt="slack" style="width:30px;"></a>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="http://docs.feelpp.org">
+            <img src="../../../_/img/logoFeelpp.png" alt="Feel++" style="width:60px;">
+          </a>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="http://www.cemosis.fr">
+            <img src="../../../_/img/logoCemosisTransparent.png" alt="Cemosis" style="width:60px;">
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="math" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Feel++ Mathematics</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../index.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../index.html">Notations</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../calculus/index.html">Calculus</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../calculus/vectorial.html">Calcul Vectoriel</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../calculus/change_of_variable.html">Change of variables in integrals</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../calculus/integral_theorems.html">Integral theorems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../calculus/forms.html">Formes Différentielles</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../analyse-fonctionnelle/index.html">Analyse Fonctionnelle</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../analyse-fonctionnelle/index.html#normes-et-produits-scalaires">Normes et produits scalaires</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../analyse-fonctionnelle/index.html#espaces-fonctionnels">Espaces fonctionnels</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../analyse-fonctionnelle/index.html#sec:notion-de-derivee">Dérivée Généralisée</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../analyse-fonctionnelle/index.html#espaces-de-sobolev">Espaces de Sobolev</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Méthode des éléments finis</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../index.html#formulation-variationelle">Formulation Variationelle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../index.html#formulation-générale">Formulation Générale</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../index.html#théorème-de-lax-milgram">Théorème de Lax-Milgram</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../index.html#approximation-interne">Approximation Interne</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../index.html#sec:overview">Principe général de la méthode des éléments finis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../index.html#sec:retour-a-lexemple">Retour à l’exemple 1-D</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../ch-ef-lagrange.html">Élement fini de Lagrange</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-ef-lagrange.html#unisolvance">Unisolvance</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-ef-lagrange.html#sec:lagrange">Élement fini de Lagrange</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-ef-lagrange.html#exemples-déléments-finis-de-lagrange">Exemples d&#8217;éléments finis de Lagrange</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-ef-lagrange.html#famille-affine-déléments-finis">Famille affine d’éléments finis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-ef-lagrange.html#sec:maillages">Maillages</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-ef-lagrange.html#sec:espace">Espaces élément fini de Lagrange</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-ef-lagrange.html#sec:interp-iso-param">Approximation iso-paramétrique</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-ef-lagrange.html#sec:feelpp">Feel++</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-ef-lagrange.html#sec:glob">Du problème global aux éléments locaux</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-ef-lagrange.html#exercices">Exercices</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../ch-problemes-coercifs.html">Problèmes Coercifs</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Laplacien</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#user:ROOT:laplacian.adoc">Numerical Experiments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../advection-diffusion/index.html">Advection-Diffusion</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../elasticity/index.html">Élasticité Linéaire</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../elasticity/mixed.html">Problème mixte</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../elasticity/pure-traction.html">Problème de traction pure</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../elasticity/implementation.html">Implementation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../elasticity/numerical-experiments.html">Numerical Experiments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../coercivity-loss.html">Perte de coercivité</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../advection-diffusion/dominant-advection.html">Advection-Diffusion avec advection dominante</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../elasticity/incompressibility.html">Incompressibilité en élasticité</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../ch-problemes-mixtes.html">Problèmes Mixtes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch-problemes-mixtes.html#_model_problems">Model Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch-problemes-mixtes.html#_saddle_point_problems">Saddle Point Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch-problemes-mixtes.html#_finite_element_approximation">Finite Element Approximation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../ch-problemes-mixtes.html#_mixed_finite_element_for_stokes">Mixed Finite Element for Stokes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-problemes-mixtes.html#_variational_formulation_for_stokes">Variational Formulation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-problemes-mixtes.html#_finite_element_approximation_for_stokes">Finite Element Approximation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-problemes-mixtes.html#_bad_finite_elements_for_stokes">Bad Finite Elements</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-problemes-mixtes.html#_mini_element">Mini-Element</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../ch-problemes-mixtes.html#_taylor_hood_element">Taylor-Hood Element</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ch-problemes-mixtes.html#_test_cases">Test Cases for Stokes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../darcy.html">Flow through porous medium : Darcy&#8217;s law</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../coupling_darcystokes.html">The Darcy-Stokes coupled problem</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../nonlinear.html">Nonlinear problems</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../hdg/index.html">HDG Methods</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../hdg/diffusion-reaction/index.html">Diffusion-Reaction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hdg/diffusion-reaction/verification.html">verification</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Feel++ Mathematics</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">AngioTK User Manual</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../angiotk/0.1/index.html">0.1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Data Manual</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../data/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Developer manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../dev/0.109/index.html">0.109-alpha.1</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../dev/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../dev/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ and Salome</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../salome/current/index.html">current</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Documentation</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../feelpp/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Feel++ Mathematics</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ MyProject</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../myproject/0.1.0/index.html">0.1.0</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Toolbox Cases Guide</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../cases/0.109/index.html">0.109-alpha.1</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../cases/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../cases/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Toolboxes Manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../toolboxes/0.109/index.html">0.109-alpha.1</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../toolboxes/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../toolboxes/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Tutorial Dev</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../tutorial-dev/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ User Manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../user/0.109/index.html">0.109-alpha.1</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../user/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../user/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Model Order Reduction</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../mor/current/index.html">current</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Toolbox Contribution Guide</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../contribute/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Feel++ Mathematics</a></li>
+    <li><a href="../ch-problemes-coercifs.html">Problèmes Coercifs</a></li>
+    <li><a href="index.html">Laplacien</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/master/docs/math/modules/fem/pages/laplacian/index.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Le Laplacien</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>On s’instéresse dans cette section à l’<em>approximation élément fini conforme</em> du problème suivant:</p>
+</div>
+<div id="prob:1" class="sidebarblock">
+<div class="content">
+<div class="title">Problème: Formulation forte du Laplacien</div>
+<div class="paragraph">
+<p>On cherche \(u\) telle que</p>
+</div>
+<div id="eq:64" class="stemblock">
+<div class="content">
+\[    \begin{split}
+      -\Delta u &amp;= f \mbox{ dans } \Omega\\
+      u &amp;= 0 \mbox{ sur } \partial \Omega
+\end{split}\]
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sec:cadre-mathematique"><a class="anchor" href="#sec:cadre-mathematique"></a>1. Cadre Mathematique</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>On suppose que \(f \in L^2(\Omega)\).</p>
+</div>
+<div class="paragraph">
+<p>La formulation faible du problème <a href="#prob:1">Problème: Formulation forte du Laplacien</a> est la suivante:</p>
+</div>
+<div id="prob:2" class="sidebarblock">
+<div class="content">
+<div class="title">Formulation faible pour des conditions de Dirichlet homogènes</div>
+<div class="paragraph">
+<p>On cherche \(u \in H^1_0(\Omega)\) telle que</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\label{eq:65}
+    \int_\Omega \nabla u \cdot \nabla v =  \int_\Omega f\, v,\quad \forall v \in H^1_0(\Omega)\]
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sec:probleme-bien-pose"><a class="anchor" href="#sec:probleme-bien-pose"></a>2. Problème bien posé</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Introduisons</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(V = H^1_0(\Omega)\) doté de la norme
+\(\|\cdot\|_{1,\Omega}\) telle que
+\(\|v\|_{1,\Omega} = (\|v\|^2_{0,\Omega} + \|\nabla v\|^2_{0,\Omega})^{1/2}\)</p>
+</li>
+<li>
+<p>la forme bilinéaire \(a \in \mathcal{L}(V \times V, \RR)\)
+telle que \(a(u,v) = \int_\Omega
+  \nabla u \cdot \nabla v \)</p>
+</li>
+<li>
+<p>la forme linéaire \(\ell \in \mathcal{L}(V, \RR)\) telle que
+\(l(v) = \int_\Omega   f \nabla v \)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Le problème <a href="#prob:2">Formulation faible pour des conditions de Dirichlet homogènes</a> s’écrit sous forme abstraite</p>
+</div>
+<div id="prob:5" class="sidebarblock">
+<div class="content">
+<div class="title">Problème:</div>
+<div class="paragraph">
+<p>On cherche \(u \in V\) telle que</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[    a(u, v) = \ell(v), \quad \forall v \in V\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>L’espace \(V\) est un espace de Hilbert et les formes \(a\) et \(\ell\) sont continues sur \(V\times V\) et \(V\) respectivement.</p>
+</div>
+<div class="paragraph">
+<p>Il ne reste plus qu’à vérifier si le problème est bien posé (existence d’une solution unique).</p>
+</div>
+<div class="paragraph">
+<p>Pour cela on utilise démontre la <em>coercivité</em> de la forme bilinéaire \(a\) sur \(V \equiv H^1_0(\Omega)\).</p>
+</div>
+<div class="paragraph">
+<p>Ceci se fait grâce au lemme suivant:</p>
+</div>
+<div id="lem:1" class="sidebarblock">
+<div class="content">
+<div class="title">Lemma</div>
+<div class="paragraph">
+<p>Soit \(\Omega\) un ouvert borné de \(\R{d}\).
+Il existe une constante \(c_\Omega\) (dépendente de \(\Omega\) telle que</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[    \forall v \in H^1_0(\Omega),\quad \|v\|_{0,\Omega} \le c_\Omega \|\nabla v\|_{0,\Omega}\]
+</div>
+</div>
+</div>
+</div>
+<div id="rem:24" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+\(c_\Omega\) est homogène à une longeur et peut être interprétée comme une mesure caractéristique de \(\Omega\).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Grâce à l’inégalité de Poincaré, on a le résultat suivant</p>
+</div>
+<div id="prop:7" class="sidebarblock">
+<div class="content">
+<div class="title">Proposition</div>
+<div class="paragraph">
+<p>La forme bilinéaire \(a\) du problème <a href="#prob:2">Formulation faible pour des conditions de Dirichlet homogènes</a> est <em>coercive</em></p>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Preuve</div>
+<div class="paragraph">
+<p>On note tout d’abord que par l’inégalité de Poincaré et la définition de
+\(\|\cdot\|_{1,\Omega}\)</p>
+</div>
+<div id="eq:68" class="stemblock">
+<div class="content">
+\[      \|v\|^2_{1,\Omega} \le (1 + c^2_\Omega) \|\nabla v\|^2_{0,\Omega}\]
+</div>
+</div>
+<div class="paragraph">
+<p>On en déduit que</p>
+</div>
+<div id="eq:67" class="stemblock">
+<div class="content">
+\[\forall v \in H^1_0(\Omega),\quad a(v,v) = \|\nabla v\|^2_{0,\Omega} \ge \frac{1}{1+c^2_\Omega} \|v\|^2_{1,\Omega}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Le Lemme de Lax-Milgram <a href="#thr:12">[thr:12]</a> permet alors de conclure sur l’existence d’une solution unique pour le problème <a href="#prob:2">Formulation faible pour des conditions de Dirichlet homogènes</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sec:appr-conf"><a class="anchor" href="#sec:appr-conf"></a>3. Approximation conforme</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>On utilise une approximation conforme par éléments finis de Lagrange.</p>
+</div>
+<div class="paragraph">
+<p>On considère \(\Omega\) un polygone ou polyhèdre régulier de \(\RR^2\) ou \(\RR^3\) respectivement et un maillage \(\calTh = \{K_e\}_{e=1...\Ne}\) de \(\Omega\).</p>
+</div>
+<div class="paragraph">
+<p>On considère un élément fini de référence \((\hat{K},\hat{P},\hat{\Sigma})\) tel que \(\Pk \subset \hat{P}\) et \(k+1 &gt; \frac{d}{2}\), voir le théorème <a href="#thr:16">[thr:16]</a>.</p>
+</div>
+<div class="paragraph">
+<p>On note</p>
+</div>
+<div id="eq:70" class="stemblock">
+<div class="content">
+\[  L^k_{c,h} = \{ v_h \in C^0(\bar{\Omega}); \forall K \in \mathcal{T}_h,\ v_h   \circ T_K \in \hat{P}\}\]
+</div>
+</div>
+<div class="paragraph">
+<p>où \(T_K\) est la tranformation géométrique de \(\hat{K}\) dans \(K\).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Si on utilise \(\hat{P}=\Pk{k}\) on a \(L^k_{c,h} = P^k_{c,h}\).</p>
+</li>
+<li>
+<p>Si on utilise \(\hat{P}=\Qk{k}\) on a \(L^k_{c,h} = Q^k_{c,h}\).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Afin de construire un espace d’approximation conforme \(V_h \subset V =H^1_0(\Omega)\) on prend</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\label{eq:71}
+V_h = L^k_{c,h} \cap H^1_0(\Omega)\]
+</div>
+</div>
+<div class="paragraph">
+<p>c’est à dire que les fonctions de \(V_h\) satisfont les conditions aux limites outre le fait d’être dans \(L^k_{c,h}\).</p>
+</div>
+<div class="paragraph">
+<p>Le problème discret s’écrit alors</p>
+</div>
+<div id="prob:6" class="sidebarblock">
+<div class="content">
+<div class="title">Problème</div>
+<div class="paragraph">
+<p>Trouver \(u_h \in V_h\) telle que</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[    a(u_h,v_h) = \ell(v_h),\, \forall v_h \in V_h\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>qui est bien posé (existence et unicité de \(u_h\)) car \(a\) est coercive sur \(V\) et que \(V_h \subset V\).</p>
+</div>
+<div class="paragraph">
+<p>On a le résultat suivant:</p>
+</div>
+<div id="thr:17" class="sidebarblock">
+<div class="content">
+<div class="title">Théorème</div>
+<div class="paragraph">
+<p>On suppose que \(u\) solution de <a href="#prob:2">Formulation faible pour des conditions de Dirichlet homogènes</a> est dans
+\(H^{k+1}(\Omega) \cap   H^1_0(\Omega)\), alors il existe une constante \(c_1\) telle que pour tout \(h\)</p>
+</div>
+<div id="eq:73" class="stemblock">
+<div class="content">
+\[    \|u-u_v\|_{1,\Omega} \le c_1 h^k |u|_{k+1,\Omega}\]
+</div>
+</div>
+<div class="paragraph">
+<p>et il existe
+une constante \(c_2\) telle que pour tout \(h\)</p>
+</div>
+<div id="eq:74" class="stemblock">
+<div class="content">
+\[    \|u-u_v\|_{0,\Omega} \le c_2 h^{k+1} |u|_{k+1,\Omega}\]
+</div>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Preuve</div>
+<div class="paragraph">
+<p>La preuve de (<a href="#eq:73">[eq:73]</a>) est obtenue grâce au lemme de Cea (<a href="#eq:cea">[eq:cea]</a>) et du théorème d’interpolation (<a href="#eq:62">[eq:62]</a>).</p>
+</div>
+<div class="paragraph">
+<p>La preuve de (<a href="#eq:74">[eq:74]</a>) est obtenue grâce au lemme d’Aubin-Nitsche qui permet d’affirmer qu’il existe une constante \(c\) telle que</p>
+</div>
+<div id="eq:75" class="stemblock">
+<div class="content">
+\[    \|u-u_h\|_{0,\Omega} \leq c h |u-u_h|_{1,\Omega}\]
+</div>
+</div>
+<div class="paragraph">
+<p>et donc que (<a href="#eq:74">[eq:74]</a>) se déduit de (<a href="#eq:74">[eq:74]</a>).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sec:impl-en-feelpp"><a class="anchor" href="#sec:impl-en-feelpp"></a>4. Implémentation avec Feel++</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Avec Feel++, on ne construit pas explicitement l’espace \(V_h\) mais \(L^k_{c,h}\).</p>
+</div>
+<div class="paragraph">
+<p>Le traitement des conditions aux limites de Dirichlet du problème (<a href="#eq:64">[eq:64]</a>) peut être effectué de diverses façons, nous en verrons une.</p>
+</div>
+<div class="paragraph">
+<p>Commencons par le maillage, dans un premier temps nous définissons le type du maillage contenant soit des éléments de type simplexe (segment,triangle, tetrahèdre) ou de type hypercube (segment, quadrangle, hexahèdre).</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>// un maillage de simplexe dans $\R{d}$ telle que la transformation
+// géométrique $T_K,\ K \in \calTh$  soit affine
+typedef Mesh&lt;Simplex&lt;d,1&gt; &gt; mesh_type;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>// un maillage d'hypercube dans $\R{d}$ telle que la transformation
+// géométrique $T_K,\ K \in \calTh$  soit affine en chacune des variables
+// typedef Mesh&lt;Hypercube&lt;d,1&gt; &gt; mesh\_type;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>// generate the mesh associated to the unit square $[0,1]^2$ using triangles
+auto mesh = unitSquare();</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="rem:25" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Le mot clé <code>auto</code> permet de faire de l’inférence de type, pour plus de détails consultez
+<a href="http://fr.wikipedia.org/wiki/C%2B%2B11#Inf.C3.A9rence_de_types">la page C++11 de Wikipedia</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Ensuite nous pouvons définir l’espace \(L^k_{c,h}\),</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>// Vh est une structure de donnée allouée dynamiquement
+auto Vh = Pch&lt;1&gt;( mesh );
+// u est un élément de Vh
+auto u = Vh-&gt;element();
+// u est un autre élément de Vh
+auto u = Vh-&gt;element();</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>À présent, nous définissons les formes bilinéaires \(a\) et \(\ell\) qui sont respectivement des formes bilinéaires et linéaires.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>auto a = form2( _test=Vh, _trial=Vh ); <i class="conum" data-value="1"></i><b>(1)</b>
+a = integrate( _range=elements(mesh), _expr=gradt(u)*trans(grad(v)) ); <i class="conum" data-value="2"></i><b>(2)</b></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>auto l = form1( _test=Vh ); <i class="conum" data-value="3"></i><b>(3)</b>
+l = integrate( _range=elements(mesh), _expr=f*id(v) ); <i class="conum" data-value="4"></i><b>(4)</b></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>\(a \in \mathcal{L}(V_h \times V_h,\ \RR)\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>\(a = \sum_{e=1...\Ne} \int_{K_e} \nabla \varphi_j \cdot \nabla \varphi_i,\quad  i,j=1...,\dim{V_h}\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>\(\ell \in \mathcal{L}(V_h,\ \RR)\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>\(\ell = \sum_{e=1...\Ne} \int_{K_e} f  \varphi_i,\quad  i=1...,\dim{V_h}\)</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Afin de traiter les conditions aux limites de Dirichlet homogènes, on peut utiliser le mot-clé <code>on</code> qui permet de les imposer de manière forte.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>a += on(_range=boundaryfaces(mesh), _element=u, _rhs=l, _expr=constant(0.) );</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="rem:26" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Le mot-clé <code>constant</code> permet de transformer une type numérique ( entier, flottant) en une expression utilisable par le langage de Feel++.
+Notez également l’opération <code>+=</code> qui permet de rajouter le traitement des conditions de Dirichlet tout en gardant les contributions précédentes.
+L’opération <code>=</code> aurait d’abord remis à \(0\) les entrées de la matrice associée à \(a\).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Enfin nous pouvons résoudre le problème <a href="#prob:6">Problème</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  a.solve( _rhs=l, _solution=u );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le listing complet</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sec:cond-aux-limit"><a class="anchor" href="#sec:cond-aux-limit"></a>5. Conditions aux limites</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="sec:cond-aux-limit-1"><a class="anchor" href="#sec:cond-aux-limit-1"></a>5.1. Conditions aux limites de Dirichlet non homogène</h3>
+<div class="paragraph">
+<p>On suppose toujours \(f \in L^2(\Omega)\) et on se donne une fonction \(g \in C^{0,1}(\partial \Omega)\)</p>
+</div>
+<div class="paragraph">
+<p>[\(g\) est Lipschitzienne
+sur \(\partial
+\Omega\)].</p>
+</div>
+<div class="paragraph">
+<p>On s’intéresse au problème suivant:</p>
+</div>
+<div id="prob:7" class="sidebarblock problem">
+<div class="content">
+<div class="paragraph">
+<p>On cherche \(u : \Omega \rightarrow \RR\) telle que</p>
+</div>
+<div id="eq:76" class="stemblock">
+<div class="content">
+\[    \begin{split}
+    -\Delta u &amp;= f \mbox{ dans } \Omega\\
+    u &amp;= g \mbox{ sur } \partial \Omega
+    \end{split}\]
+</div>
+</div>
+</div>
+</div>
+<div id="rem:27" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+L’hypothèse \(g \in C^{0,1}(\partial \Omega)\) permet d’affirmer qu’il existe \(u_g \in H^1(\Omega)\) telle que \(u_{g_{|\partial \Omega}} = g\).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>On se ramène au problème avec conditions de Dirichlet homogène en faisant le change d’inconnue \(u_0=u-u_g\) et on s’intéresse au problème suivant:</p>
+</div>
+<div id="prob:8" class="sidebarblock">
+<div class="content">
+<div class="title">Problème</div>
+<div class="paragraph">
+<p>On cherche \(u_0 \in H^1_0(\Omega)\) telle que</p>
+</div>
+<div id="eq:77" class="stemblock">
+<div class="content">
+\[    a(u_0,v) = \ell(v) - a(u_g,v),\quad \forall v \in H^1_0(\Omega)\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Ce problème est <em>bien posé</em> d’après Lax-Milgram, voir section précédente.</p>
+</div>
+<div id="thr:18" class="sidebarblock">
+<div class="content">
+<div class="title">Théorème</div>
+<div class="paragraph">
+<p>On suppose que \(u\) solution de [prob:8] est dans \(H^{k+1}(\Omega) \cap   H^1_0(\Omega)\),
+alors il existe une constante \(c_1\) telle que pour tout \(h\)</p>
+</div>
+<div id="eq:73" class="stemblock">
+<div class="content">
+\[    \|u-u_v\|_{1,\Omega} \le c_1 h^k |u|_{k+1,\Omega}\]
+</div>
+</div>
+<div class="paragraph">
+<p>et il existe une constante \(c_2\) telle que pour tout \(h\)</p>
+</div>
+<div id="eq:74" class="stemblock">
+<div class="content">
+\[    \|u-u_v\|_{0,\Omega} \le c_2 h^{k+1} |u|_{k+1,\Omega}\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Avec Feel++, les conditions Dirichlet non-homogènes sont traitées par exemple avec le mot-clé <code>on</code>.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Conditions de Dirichlet non homogènes</div>
+<div class="literalblock">
+<div class="content">
+<pre>auto g = sin(2*pi*Px() ); <i class="conum" data-value="1"></i><b>(1)</b>
+<i class="conum" data-value="2"></i><b>(2)</b>
+...
+a += on( _range=boundaryfaces(mesh), _expr=g ); <i class="conum" data-value="3"></i><b>(3)</b></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>définition de la fonction, p.ex \(g=sin(2 \pi x)\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>définition de \(a\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>ajout des conditions de Dirichlet non-homogènes</td>
+</tr>
+</table>
+</div>
+<div id="rem:28" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Il n’y a pas besoin de rajouter le terme \(a(u_g,v)\) au second membre \(\ell(v)\), il est pris en compte automatiquement par <code>on</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Voici le listing complet de l’exemple du laplacien avec conditions de Dirichlet non-homogène</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sec:cond-aux-limit-2"><a class="anchor" href="#sec:cond-aux-limit-2"></a>5.2. Condition aux limites de Neumann</h3>
+<div class="paragraph">
+<p>Étant donnés un réel \(\mu\) strictement positif, \(f \in L^2(\Omega)\) et \(g \in L^2(\partial \Omega)\), on s’intéresse au problème suivant:</p>
+</div>
+<div id="prob:9" class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>On cherche \(u : \Omega \rightarrow \RR\) telle que</p>
+</div>
+<div id="eq:78" class="stemblock">
+<div class="content">
+\[    \begin{split}
+      -\Delta u + \mu u &amp;= f, \mbox{ dans } \Omega\\
+      \partial_\Next u &amp;= g, \mbox{ sur } \partial\Omega
+    \end{split}\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>où \(\partial_\Next u = \nabla u \cdot \Next = \sum_{i=1}^d n_i \partial_i u\) dénote la dérivée normale de \(u\) avec \(\Next=(n_1,...,n_d) \in \RR^d\) la normale extérieure unitaire en un point du bord de \(\Omega\).</p>
+</div>
+<div class="paragraph">
+<p>La formulation faible s’écrit</p>
+</div>
+<div id="prob:13" class="sidebarblock problem">
+<div class="content">
+<div class="paragraph">
+<p>On cherche \(u \in H^1(\Omega)\) telle que</p>
+</div>
+<div id="eq:79" class="stemblock">
+<div class="content">
+\[    a( u, v ) = \ell(v),\ \forall v \in H^1(\Omega)\]
+</div>
+</div>
+<div class="paragraph">
+<p>avec</p>
+</div>
+<div id="eq:80" class="stemblock">
+<div class="content">
+\[    a( u, v ) =  \int_\Omega \nabla u \cdot \nabla v + \mu u v\]
+</div>
+</div>
+<div class="paragraph">
+<p>et</p>
+</div>
+<div id="eq:81" class="stemblock">
+<div class="content">
+\[    \ell( v ) =  \int_\Omega f v + \int_{\partial\Omega} g v\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>On a</p>
+</div>
+<div id="eq:82" class="stemblock">
+<div class="content">
+\[  a(v, v) =  \int_\Omega \nabla v \cdot \nabla v + \mu v v \ge \min(1,\mu)
+  \int_\Omega \nabla v \cdot \nabla v +  v v  = \min(1,\mu) \|v\|_{1,\Omega}, \quad
+  \forall v \in H^1(\Omega)\]
+</div>
+</div>
+<div class="paragraph">
+<p>ce qui nous permet d’affirmer que \(a\) est coercive sur \(H^1(\Omega)\) et que le problème <a href="#prob:13">[prob:13]</a> est bien posé grâce à Lax-Milgram.</p>
+</div>
+<div class="paragraph">
+<p>On peut approcher le problème <a href="#prob:13">[prob:13]</a> par des éléments finis de Lagrange.</p>
+</div>
+<div class="paragraph">
+<p>On utilise la formulation développée dans la section <a href="#sec:appr-conf">Approximation conforme</a></p>
+</div>
+<div id="prob:13_1" class="sidebarblock">
+<div class="content">
+<div class="title">Problème</div>
+<div class="paragraph">
+<p>On cherche \(u_h \in P^k_{c,h}\) tel que</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[a_h(u_h,w_h)=\ell(w_h), \quad \forall w_h \in P^k_{c,h}\]
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Par rapport aux conditions de Dirichet, les conditions de Neumann sont directement (<strong>naturellement</strong>) traitées par la formulation faible.
+Elles ne sont pas directement imposées dans l&#8217;espace et les fonctions tests peuvent prendre des valeurs non-nulles au bord.
+Ces conditions sont traitées de manière approchée et non pas exacte.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>L&#8217;analyse du problème <a href="#prob:13_1">Problème</a> est identique par le théorème <a href="#thr:17">Théorème</a> aux mêmes estimations que dans le cas Dirichlet homogène.</p>
+</div>
+<div class="sect3">
+<h4 id="_cas_lambda0"><a class="anchor" href="#_cas_lambda0"></a>5.2.1. Cas \(\lambda=0\)</h4>
+<div class="paragraph">
+<p>Le cas \(\lambda=0\) présente quelques difficultés techniques.</p>
+</div>
+<div class="paragraph">
+<p>On a</p>
+</div>
+<div id="prob:13_2" class="sidebarblock">
+<div class="content">
+<div class="title">Problème</div>
+<div class="paragraph">
+<p>On cherche \(u : \Omega \rightarrow \RR\) telle que</p>
+</div>
+<div id="eq:78.1" class="stemblock">
+<div class="content">
+\[    \begin{split}
+      -\Delta u &amp;= f, \mbox{ dans } \Omega\\
+      \partial_\Next u &amp;= g, \mbox{ sur } \partial\Omega
+    \end{split}\]
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+On observe ici qu&#8217;une condition nécessaire d&#8217;existence de solution est que
+</td>
+</tr>
+</table>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\int_\Omega f + \int_{\partial \Omega} g = 0\]
+</div>
+</div>
+<div class="paragraph">
+<p>de par le <strong>théorème de la divergence</strong>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+la deuxième observation est que la solution de <a href="#prob:13_2">Problème</a> est connue à une constante additive près: si \(u\) est solution  et \(c\in \RR\) alors \(u+c\) est également solution.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Il convient alors de chercher la solution dans l&#8217;espace fonctionel suivant</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[H^1_*(\Omega) = \{ v \in H^1(\Omega):\quad \int_\Omega v  = 0 \}\]
+</div>
+</div>
+<div class="paragraph">
+<p>La formulation faible du problème <a href="#prob:13_2">Problème</a>  s&#8217;écrit alors</p>
+</div>
+<div id="prob:13_3" class="sidebarblock">
+<div class="content">
+<div class="title">Problème</div>
+<div class="paragraph">
+<p>On cherche \(u\in H^1_*(\Omega)\), telle que</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[a(u,v) = \ell(v) \quad \forall v\in H^1_*(\Omega)\]
+</div>
+</div>
+<div class="paragraph">
+<p>avec \(a(u,v)=\int_\Omega \nabla u \cdot \nabla v\).</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Le caractère bien posé du problème <a href="#prob:13_3">Problème</a> résulte de la coercivité de \(a\) sur \(H^1_*(\Omega)\) qui elle-même résulte du Lemme suivante</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Lemme d&#8217;inégalité de Poincaré-Wirtinger</div>
+<div class="paragraph">
+<p>Soit \(\Omega\) un ouvert borné de \(\RR^d\), il existe une constante \(C_\Omega\) telle que</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\|v\| \leq C_\Omega \|\nabla v\|_{0,\Omega},\quad \forall v \in H^1_*(\Omega)\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Le problème <a href="#prob:13_3">Problème</a> peut être approché par des éléments finis de Lagrange ce qui conduit au problème discret suivant</p>
+</div>
+<div id="prob:13_4" class="sidebarblock">
+<div class="content">
+<div class="title">Problème</div>
+<div class="paragraph">
+<p>On cherche \(u_h \in P^k_{c,h}\) telle que
+a_h(u_h,v_h)=\ell(v_h) \quad \forall v_h\in P^k_{c,h}</p>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+L&#8217;espace d&#8217;approximation \(P^k{c,h}\) n&#8217;est pas conforme dans \(H^1_*(\Omega)\)
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>le problème <a href="#prob:13_4">Problème</a> est <strong>singulier</strong>, il a une infinité de solution.
+L&#8217;une d&#8217;entre elle peut être approchée par une méthode itérative de type gradient conjugué.
+Notons \(u^*_h\) cette solution alors la solution à moyenne nulle est</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[u_h=u^*_h-\frac{1}{|\Omega|}\int_\Omega u^*_h\]
+</div>
+</div>
+<div class="paragraph">
+<p>Il s&#8217;agit donc d&#8217;effectuer a posteriori du calcul un post-processing pour se ramener à la solution à moyenne nulle.
+Dans Feel++ on utilisera la fonction <code>mean</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>a.solve(_rhs=l,_solution=u);</p>
+</div>
+<div class="paragraph">
+<p>double meanu = mean(_range=elements(mesh),_expr=idv(u))(0,0);</p>
+</div>
+<div class="paragraph">
+<p>u.add(-meanu);</p>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sec:cond-aux-limit-robin"><a class="anchor" href="#sec:cond-aux-limit-robin"></a>5.3. Conditions aux limites de Robin</h3>
+<div class="paragraph">
+<p>Étant donnés un réel \(\mu\) strictement positif, \(f \in L^2(\Omega)\) et \(g \in L^2(\partial \Omega)\), on s’intéresse au problème suivant:</p>
+</div>
+<div id="prob:14" class="sidebarblock">
+<div class="content">
+<div class="title">Problème</div>
+<div class="paragraph">
+<p>On cherche \(u : \Omega \rightarrow \RR\) telle que</p>
+</div>
+<div id="eq:83" class="stemblock">
+<div class="content">
+\[    \begin{split}
+      -\Delta u  &amp;= f, \mbox{ dans } \Omega\\
+      \mu u + \partial_\Next u &amp;= g, \mbox{ sur } \partial\Omega.
+    \end{split}\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>La formulation faible s’écrit</p>
+</div>
+<div id="prob:15" class="sidebarblock">
+<div class="content">
+<div class="title">Problème</div>
+<div class="paragraph">
+<p>On cherche \(u \in H^1(\Omega)\) telle que</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\label{eq:84}
+    a( u, v ) = \ell(v),\ \forall v \in H^1(\Omega)\]
+</div>
+</div>
+<div class="paragraph">
+<p>avec</p>
+</div>
+<div id="eq:85" class="stemblock">
+<div class="content">
+\[    a( u, v ) =  \int_\Omega \nabla u \cdot \nabla v + \int_{\partial     \Omega} \mu u v\]
+</div>
+</div>
+<div class="paragraph">
+<p>et</p>
+</div>
+<div id="eq:86" class="stemblock">
+<div class="content">
+\[    \ell( v ) =  \int_\Omega f v + \int_{\partial\Omega} g v\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>On a</p>
+</div>
+<div id="eq:69" class="stemblock">
+<div class="content">
+\[  \begin{split}
+    a(v, v) &amp; =  \int_\Omega \nabla v \cdot \nabla v + \int_{\partial\Omega} \mu v v \\
+    &amp; \geq \min(1,\mu)\left( \int_\Omega \nabla v \cdot \nabla v +
+      \int_{\partial\Omega} v v\right)  \\
+    &amp;\geq \min(1,\mu) \|v\|_{1,\Omega}, \quad \forall v \in H^1(\Omega)
+  \end{split}\]
+</div>
+</div>
+<div class="paragraph">
+<p>La forme bilinéaire \(a\) est donc coercive et le problème <a href="#prob:15">Problème</a> est bien posé grâce à Lax-Milgram.</p>
+</div>
+<div class="paragraph">
+<p>On considère le problème discret suivant</p>
+</div>
+<div id="prob:11" class="sidebarblock">
+<div class="content">
+<div class="title">Problème</div>
+<div class="paragraph">
+<p>On cherche \(u_h \in P^k_{c,h}(\Omega)\) telle que</p>
+</div>
+<div id="eq:87" class="stemblock">
+<div class="content">
+\[    a_h(u_h,v_h) = \ell(v_h)\quad \forall v_h \in P^k_{c,h}\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Le problème est <em>bien posé</em> (\(P^k_{c,h} \subset H^1(\Omega)\)).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Comme pour le problème avec conditions de Neumann, les fonctions tests peuvent prendre des valeurs non nulles au bord.
+Les conditions de Robin(ou Fourier) ne sont satisfaites que de manière <em>approchée</em> et non pas <em>exacte</em>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>La convergence de \(u_h\) est donnée par le théorème <a href="#thr:17">Théorème</a>.</p>
+</div>
+<div class="paragraph">
+<p>Considérons \(\Omega=[0,1\)^2] et les données \(\mu=0.01\), \(f=1\) et \(g=0\).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_et_après"><a class="anchor" href="#_et_après"></a>6. Et après ?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Les étapes suivantes sont par exemple:</p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> L&#8217;étude des <a href="#user:ROOT:laplacian.adoc" class="page unresolved">expériences numeriques</a> sur le Laplacien</p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> L&#8217;étude de <a href="../advection-diffusion/index.html" class="page">l&#8217;équation d&#8217;advection-diffusion</a></p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> L&#8217;étude de <a href="../elasticity/index.html" class="page">l&#8217;équation d&#8217;élasticité linéaire</a></p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> L&#8217;étude de <a href="nitsche.html" class="page">méthode de Nitsche</a> pour imposer faiblement les conditions de Dirichlet</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../ch-problemes-coercifs.html">Problèmes Coercifs</a></span>
+  <span class="next"><a href="#user:ROOT:laplacian.adoc">Numerical Experiments</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.cemosis.fr" class="icon">
+            <img src="../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.cemosis.fr" target="_blank" rel="noopener">Projects Documentation</a></li>
+          <li><a href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">Forums(Slack)</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://www.cemosis.fr" target="_blank" rel="noopener">Cemosis</a></li>
+          <li><a href="https://www.cemosis.fr/news" target="_blank" rel="noopener">News</a></li>
+          <li><a href="https://www.cemosis.fr/projects" target="_blank" rel="noopener">Projects</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.feelpp.org" target="_blank" rel="noopener">Feel++ Documentation</a></li>
+          <li><a href="http://docs.feelpp.org/user/">Get Started</a></li>
+          <li><a href="http://docs.feelpp.org/user//install/distributions/">Downloads</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="facebook" class="cls-1" d="M29,0H3A2.652,2.652,0,0,0,0,3V29a2.652,2.652,0,0,0,3,3H16V18H12V14h4V12a6.452,6.452,0,0,1,6-6h4v4H22a2.151,2.151,0,0,0-2,2v2h6l-1,4H20V32h9a2.652,2.652,0,0,0,3-3V3A2.652,2.652,0,0,0,29,0Z"/></svg>
+            <a href="https://www.facebook.com/cemosis.fr" class="icon">
+            Facebook
+            </a>
+          </li>
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32.1 26.1"> <path id="twitter" class="cls-1" d="M32,7.1a11.836,11.836,0,0,1-3.8,1,6.462,6.462,0,0,0,2.9-3.6,12.606,12.606,0,0,1-4.2,1.6A6.492,6.492,0,0,0,22.1,4a6.594,6.594,0,0,0-6.6,6.6,7.719,7.719,0,0,0,.2,1.5A18.458,18.458,0,0,1,2.2,5.2a6.294,6.294,0,0,0-.9,3.3A6.765,6.765,0,0,0,4.2,14a6.109,6.109,0,0,1-3-.8v.1a6.543,6.543,0,0,0,5.3,6.4,4.678,4.678,0,0,1-1.7.2,4.869,4.869,0,0,1-1.2-.1,6.679,6.679,0,0,0,6.1,4.6,12.917,12.917,0,0,1-8.2,2.8,9.151,9.151,0,0,1-1.6-.1,18.438,18.438,0,0,0,10.1,3c12.1,0,18.7-10,18.7-18.7v-.8A13.336,13.336,0,0,0,32,7.2Z" transform="translate(0.1 -4)"/></svg>
+            <a href="https://twitter.com/cemosis" class="icon">
+              Twitter
+            </a>
+          </li>
+          <li>
+          <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="linkedin" class="cls-1" d="M29,0H3A3.076,3.076,0,0,0,0,3V29a3.009,3.009,0,0,0,3,3H29a2.946,2.946,0,0,0,3-3V3A3.009,3.009,0,0,0,29,0ZM12,26H8V12h4ZM10,10a2,2,0,1,1,2-2A2.006,2.006,0,0,1,10,10ZM26,26H22V18a2,2,0,0,0-4,0v8H14V12h4v2.5c.8-1.1,2.1-2.5,3.5-2.5A4.736,4.736,0,0,1,26,17Z"/></svg>
+              <a href="https://www.linkedin.com/company/cemosis" class="icon">
+             Linkedin
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <div class="footer-terms-copyright">
+          <span>© 2020 Cemosis, Université de Strasbourg</span>
+      </div>
+      <div class="footer-terms-links">
+        <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>
+        <a href="https://www.cemosis.fr/privacy-policy">Privacy Policy</a>
+        <a href="https://www.cemosis.fr/cookie-policy">Cookie Policy</a>
+        <a href="https://www.cemosis.fr/support-policy">Support Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+
+<script async id="search-script" src="../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../_/css/vendor/docsearch.css">
+</script>
+
+  </body>
+</html>

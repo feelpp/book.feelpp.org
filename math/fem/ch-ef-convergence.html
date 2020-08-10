@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Convergence de la méthode des éléments finis :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/math/fem/ch-ef-convergence.html">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">    
+<script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true, 
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+
+  TeX: {
+      Macros: {
+      RR: "{\\mathbb R}",
+      NN: "{\\mathbb N}",
+      Nso: "{N_{\\mathrm{so}}}",
+      Nma: "{N_{\\mathrm{ma}}}",
+      Nno: "{N_{\\mathrm{no}}}",
+      Ne: "{N_{\\mathrm{e}}}",
+      Ilag: ["{\\mathcal{I}^{\\mathrm{lag}}_{#1}}",1],
+      calTh: "{\\mathcal{T}_h}",
+      Ck: ["{\\mathcal{C}^{#1}}",1],
+      Pk: ["{\\mathcal{P}^{#1}}",1],
+      Qk: ["{\\mathcal{Q}^{#1}}",1],
+      Pch: ["{P^{#1}_{c,h}}",1],
+      Pcho: ["{P^{#1}_{c,h,0}}",1],
+      Qch: ["{Q^{#1}_{c,h}}",1],
+      Ich: ["{\\mathcal{I}^{#1}_{c,h}#2}",2],
+      poly: ["{\\mathbb{#1}}",1],
+      nf: "{n_f}",
+      ngeo: "{n_{\\mathrm{geo}}}",
+      geo: "{\\mathrm{geo}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      dim: ["{\\operatorname{dim}(#1)}",1],
+      opdim: "{\\operatorname{dim}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      poly: ["{\\mathbb{#1}",1],
+      R: ["{\\mathbb{R}^{#1}}",1],
+      set: ["{\\left\\{#1\\right\\}}",1],
+      diam: "{\\operatorname{diam}}",
+      jump: ["{[\\![ #1 ]\\!]}",1],
+      Next: "{\\mathrm{n}}",
+      essinf: "{\\operatorname{ess}\\, \\operatorname{inf}}",
+      tr: "{\\operatorname{tr}}",
+      Id: "{\\mathcal{I}}",
+      disp: ["{\\mathbf{#1}}",1],
+      stresst: ["{\\mathbf{\\sigma(#1)}}",1],
+      deformt: ["{\\mathbf{\\varepsilon(#1)}}",1],
+      domain: "{\\Omega}",
+      prect: ["{\\left\\(#1\\right\\)}",1],
+      ds: "",
+      bold: ["{\\bf #1}",1],
+      p: "{\\mathrm{p}}",
+      q:"{\\mathbf{q}}",
+      n:"{\\mathbf{n}}",
+      T:"{\\mathcal{T}}",
+      F:"{\\mathcal{F}}",
+      P:"{\\mathcal{P}}",
+      v:"{\\mathbf{v}}"
+  },
+  extensions: ["mhchem.js"] }
+});
+</script>
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML'>
+</script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+         <!--  <a href="https://book.feelpp.org">Feel++ documentation</a> -->
+           <a href="https://docs.feelpp.org">Feel++ Docs</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://docs.feelpp.org">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Docs</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Latest Version</strong></div>
+
+            <!-- this code allow to manage ordering of navbar item -->
+               
+              <a class="navbar-item" href="/angiotk/0.1/index.html"> AngioTK User Manual </a>
+                  
+              <a class="navbar-item" href="/data/index.html"> Data Manual </a>
+                    
+              <a class="navbar-item" href="/dev/0.108/index.html"> Developer manual </a>
+                    
+              <a class="navbar-item" href="/salome/current/index.html"> Feel++ and Salome </a>
+                  
+              <a class="navbar-item" href="/feelpp/latest/index.html"> Feel++ Documentation </a>
+                  
+              <a class="navbar-item" href="/math/index.html"> Feel++ Mathematics </a>
+                  
+              <a class="navbar-item" href="/myproject/0.1.0/index.html"> Feel++ MyProject </a>
+                    
+              <a class="navbar-item" href="/cases/0.108/index.html"> Feel++ Toolbox Cases Guide </a>
+                      
+              <a class="navbar-item" href="/toolboxes/0.108/index.html"> Feel++ Toolboxes Manual </a>
+                    
+              <a class="navbar-item" href="/tutorial-dev/latest/index.html"> Feel++ Tutorial Dev </a>
+                    
+              <a class="navbar-item" href="/user/0.108/index.html"> Feel++ User Manual </a>
+                    
+              <a class="navbar-item" href="/mor/current/index.html"> Model Order Reduction </a>
+                  
+              <a class="navbar-item" href="/contribute/index.html"> Toolbox Contribution Guide </a>
+               
+
+            <hr class="navbar-divider">
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Feel++</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>GitHub</strong></div>
+            <a class="navbar-item" href="http://github.com/feelpp/feelpp">GitHub Repository</a>
+            <a class="navbar-item" href="http://github.com/feelpp/feelpp/issues">GitHub Issue Tracker</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Documentation</strong></div>
+            <a class="navbar-item" href="http://docs.feelpp.org/user/">User Manual</a>
+            <a class="navbar-item" href="http://docs.feelpp.org/dev/">Developer Manual</a>
+            <a class="navbar-item" href="http://docs.feelpp.org/toolbox/">Toolbox Manual</a>
+            
+          </div>
+        </div>
+        <div class="primary-action">
+            <form class="navbar-item search">
+              <input type="text" placeholder="Search Feel++ Docs" class="query" id="search-query">
+              <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ">
+            <img src="../../_/img/slack.png" alt="slack" style="width:30px;"></a>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="http://docs.feelpp.org">
+            <img src="../../_/img/logoFeelpp.png" alt="Feel++" style="width:60px;">
+          </a>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="http://www.cemosis.fr">
+            <img src="../../_/img/logoCemosisTransparent.png" alt="Cemosis" style="width:60px;">
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="math" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Feel++ Mathematics</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Notations</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../calculus/index.html">Calculus</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../calculus/vectorial.html">Calcul Vectoriel</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../calculus/change_of_variable.html">Change of variables in integrals</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../calculus/integral_theorems.html">Integral theorems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../calculus/forms.html">Formes Différentielles</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../analyse-fonctionnelle/index.html">Analyse Fonctionnelle</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../analyse-fonctionnelle/index.html#normes-et-produits-scalaires">Normes et produits scalaires</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../analyse-fonctionnelle/index.html#espaces-fonctionnels">Espaces fonctionnels</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../analyse-fonctionnelle/index.html#sec:notion-de-derivee">Dérivée Généralisée</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../analyse-fonctionnelle/index.html#espaces-de-sobolev">Espaces de Sobolev</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Méthode des éléments finis</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="index.html#formulation-variationelle">Formulation Variationelle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="index.html#formulation-générale">Formulation Générale</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="index.html#théorème-de-lax-milgram">Théorème de Lax-Milgram</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="index.html#approximation-interne">Approximation Interne</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="index.html#sec:overview">Principe général de la méthode des éléments finis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="index.html#sec:retour-a-lexemple">Retour à l’exemple 1-D</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ch-ef-lagrange.html">Élement fini de Lagrange</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-ef-lagrange.html#unisolvance">Unisolvance</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-ef-lagrange.html#sec:lagrange">Élement fini de Lagrange</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-ef-lagrange.html#exemples-déléments-finis-de-lagrange">Exemples d&#8217;éléments finis de Lagrange</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-ef-lagrange.html#famille-affine-déléments-finis">Famille affine d’éléments finis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-ef-lagrange.html#sec:maillages">Maillages</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-ef-lagrange.html#sec:espace">Espaces élément fini de Lagrange</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-ef-lagrange.html#sec:interp-iso-param">Approximation iso-paramétrique</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-ef-lagrange.html#sec:feelpp">Feel++</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-ef-lagrange.html#sec:glob">Du problème global aux éléments locaux</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-ef-lagrange.html#exercices">Exercices</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ch-problemes-coercifs.html">Problèmes Coercifs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="laplacian/index.html">Laplacien</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#user:ROOT:laplacian.adoc">Numerical Experiments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="advection-diffusion/index.html">Advection-Diffusion</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="elasticity/index.html">Élasticité Linéaire</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="elasticity/mixed.html">Problème mixte</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="elasticity/pure-traction.html">Problème de traction pure</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="elasticity/implementation.html">Implementation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="elasticity/numerical-experiments.html">Numerical Experiments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="coercivity-loss.html">Perte de coercivité</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="advection-diffusion/dominant-advection.html">Advection-Diffusion avec advection dominante</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="elasticity/incompressibility.html">Incompressibilité en élasticité</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ch-problemes-mixtes.html">Problèmes Mixtes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ch-problemes-mixtes.html#_model_problems">Model Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ch-problemes-mixtes.html#_saddle_point_problems">Saddle Point Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ch-problemes-mixtes.html#_finite_element_approximation">Finite Element Approximation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ch-problemes-mixtes.html#_mixed_finite_element_for_stokes">Mixed Finite Element for Stokes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-problemes-mixtes.html#_variational_formulation_for_stokes">Variational Formulation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-problemes-mixtes.html#_finite_element_approximation_for_stokes">Finite Element Approximation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-problemes-mixtes.html#_bad_finite_elements_for_stokes">Bad Finite Elements</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-problemes-mixtes.html#_mini_element">Mini-Element</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ch-problemes-mixtes.html#_taylor_hood_element">Taylor-Hood Element</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ch-problemes-mixtes.html#_test_cases">Test Cases for Stokes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="darcy.html">Flow through porous medium : Darcy&#8217;s law</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="coupling_darcystokes.html">The Darcy-Stokes coupled problem</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="nonlinear.html">Nonlinear problems</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../hdg/index.html">HDG Methods</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../hdg/diffusion-reaction/index.html">Diffusion-Reaction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../hdg/diffusion-reaction/verification.html">verification</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Feel++ Mathematics</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">AngioTK User Manual</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../angiotk/0.1/index.html">0.1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Data Manual</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../data/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Developer manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../dev/0.109/index.html">0.109-alpha.1</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../dev/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../dev/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ and Salome</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../salome/current/index.html">current</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Documentation</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../feelpp/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Feel++ Mathematics</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ MyProject</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../myproject/0.1.0/index.html">0.1.0</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Toolbox Cases Guide</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../cases/0.109/index.html">0.109-alpha.1</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../cases/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../cases/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Toolboxes Manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../toolboxes/0.109/index.html">0.109-alpha.1</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../toolboxes/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../toolboxes/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Tutorial Dev</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../tutorial-dev/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ User Manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../user/0.109/index.html">0.109-alpha.1</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../user/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../user/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Model Order Reduction</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../mor/current/index.html">current</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Toolbox Contribution Guide</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../contribute/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Feel++ Mathematics</a></li>
+    <li><a href="ch-ef-convergence.html">Convergence de la méthode des éléments finis</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/master/docs/math/modules/fem/pages/ch-ef-convergence.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Convergence de la méthode des éléments finis</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+cette page nécessite d&#8217;être revue
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>On suppose ici que l’on résout un problème sur un domaine \(\Omega\in\RR^n\) de façon approchée par méthode d’éléments finis.</p>
+</div>
+<div class="paragraph">
+<p>Le but de ce chapitre est de fournir une estimation de l’erreur \(\|u-u_h\|_m\) où \(\|.\|_m\) désigne la norme \(H^m\).</p>
+</div>
+<div class="paragraph">
+<p>La régularité de \(u\) et de \(u_h\) (et donc les valeurs possibles pour \(m\)) dépendant évidemment du problème continu et du type d’éléments finis choisis pour sa résolution, on exposera ici la démarche de façon générale, en supposant les fonctions suffisamment régulières par rapport à la valeur de \(m\).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+En pratique, on aura le plus souvent \(m=0, 1, 2.\)
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>On notera \({\cal T}_h\) le maillage de \(\Omega\) considéré.</p>
+</div>
+<div class="paragraph">
+<p>On supposera ici le domaine \(\Omega\) polygonal, ce qui permet de recouvrir exactement \(\Omega\) par le maillage.</p>
+</div>
+<div class="paragraph">
+<p>Si ce n’est pas le cas, les calculs qui suivent doivent être modifiés pour tenir compte de l’écart entre le domaine couvert par le maillage et le domaine réel.</p>
+</div>
+<div class="paragraph">
+<p>Les différentes étapes du calcul seront, de façon assez schématique, les suivantes :</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L’erreur d’approximation est bornée par l’erreur d’interpolation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\|u-u_h\|_m \le C \|u-\pi_h u\|_m\)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">L’erreur d’approximation est bornée par l’erreur d’interpolation</dt>
+<dd>
+<p>\(\|u-u_h\|_m \le C \|u-\pi_h u\|_m\)</p>
+</dd>
+<dt class="hdlist1">On se ramène à des majorations locales sur chaque élément</dt>
+<dd>
+<p>\(\|u-\pi_h u\|^2_{m} = \sum_{K\in{\cal T}_h}  \|u-\pi_h u\|_{m,K}^2\)</p>
+</dd>
+<dt class="hdlist1">On se ramène à l’élément de référence</dt>
+<dd>
+<p>\({\|u-\pi_h u\|_{m,K} \le C(K) \|\hat{u}-\hat{\pi}\hat{u}\|_{m,\hat{K}} }\)</p>
+</dd>
+<dt class="hdlist1">Majoration sur l’élément de référence</dt>
+<dd>
+<p>\(\|\hat{u}-\hat{\pi} \hat{u}\|_{m,\hat{K}} \le \hat{C} |\hat{u}|_{k+1,\hat{K}}\)</p>
+</dd>
+<dt class="hdlist1">Assemblage des majorations locales</dt>
+<dd>
+<p>\({\|u-\pi_h u\|_m \le C' h^{k+1-m} |u|_{k+1} }\)</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="calcul-de-majoration-derreur"><a class="anchor" href="#calcul-de-majoration-derreur"></a>2. Calcul de majoration d’erreur</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="etape-1-majoration-par-lerreur-dinterpolation"><a class="anchor" href="#etape-1-majoration-par-lerreur-dinterpolation"></a>2.1. Etape 1: majoration par l’erreur d’interpolation</h3>
+<div class="paragraph">
+<p>L’équation (<a href="#eq:cea">[eq:cea]</a>) établie dans la section <a href="#sec:estim">[sec:estim]</a> indique que</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[--
+\|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-v_h\|_m \quad \forall v_h\in V_h
+--
+
+NOTE: Cette majoration est aussi appelée Lemme de Céa
+
+On peut l’appliquer dans le cas particulier où stem:[v_h=\pi_h u], ce qui donne
+
+[env.equation#eq:cea2]
+--
+\|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-\pi_h u\|_m
+--
+
+[[etape-2-décomposition-sur-les-éléments]]
+=== Etape 2: Décomposition sur les éléments
+
+On a, avec des notations évidentes :
+[stem]\]
+</div>
+</div>
+<div class="paragraph">
+<p>\begin{array}{lll}
+{\|u-\pi_h u\|<em>m^2 }&amp; = &amp;{\sum</em>{K\in{\cal T}_h} \|u-\pi_h u\|<em>{m,K}^2 }\\
+&amp; = &amp; {\sum</em>{K\in{\cal T}_h} \sum_{l=0}^m |u-\pi_h u|_{l,K}^2}
+\end{array}</p>
+</div>
+Le calcul est donc ramené à un calcul sur chaque élément, pour toutes les semi-normes stem:[|.|_{l,K},\; l=0,\ldots,m].
+
+[[etape-3-passage-à-lélément-de-référence]]
+=== Etape 3: Passage à l’élément de référence
+
+[env.theorem#thr1]
+--
+Soit stem:[K] un élément quelconque de stem:[{\cal T}_h], et stem:[\hat{K}] l’élément de référence.
+
+Soit stem:[F] la transformation affine de stem:[\hat{K}] vers stem:[K] :
+[[eq:majref]]
+[stem]
+<div class="paragraph">
+<p>\forall v\in H^l(K), \qquad |\hat{v}|<em>{l,\hat{K}} \le C(l,n)\; \|B\|^l_2 \; |\hbox{det} B|^{-1/2} \, |v|</em>{l,K}</p>
+</div>
+--
+
+Nous avons le corollaire suivant du théorème <<thr1>>
+[env.corollary]
+--
+On a de même :
+[[eq:majref2]]
+[stem]
+<div class="paragraph">
+<p>\forall v\in H^l(K), \qquad |v|<em>{l,K}  \le C(l,n)\; \|B<sup>{-1}\|</sup>l_2 \; |\mathrm{det} B|^{1/2} \; |\hat{v}|</em>{l,\hat{K}}</p>
+</div>
+--
+
+
+==== Preuve du théorème <<thr1>>
+
+Ce théorème se montre comme suit.
+Il s’agit là en fait d’un simple résultat de changement de variable dans une intégrale.
+
+Soit stem:[v] une fonction stem:[l] fois différentiable au point stem:[x].
+
+On note stem:[D^l v(x)] sa dérivée stem:[l^{\text{\tiny ème}}] au sens de Fréchet au point stem:[x].
+
+Il s’agit donc d’une forme stem:[l]-linéaire symétrique sur stem:[\RR^n].
+
+On notera stem:[D^l v(x).(\xi_1,\ldots,\xi_l)] sa valeur pour stem:[l] vecteurs stem:[\xi_i\in\RR^n] (stem:[1\le i \le l]).
+
+Reprenons les notations de la section <<sec:sobolev>>.
+
+stem:[\alpha=(\alpha_1,\ldots,\alpha_n)] désigne un multi-entier, et on note stem:[|\alpha|=\alpha_1+\cdots+\alpha_n]. On a alors :
+[stem]
+<div class="paragraph">
+<p>|v|<em>{l,K}^2 = \int</em>{x\in K} \sum_{|\alpha|=l}\left\|\partial^{|\alpha|}v (x)\right\|^2 dx</p>
+</div>
+et
+[stem]
+<div class="paragraph">
+<p>\partial^{|\alpha|}v (x) = D^{|\alpha|}v(x).(\underbrace{e_1,\ldots,e_1}_{\alpha_1 \text{{\tiny fois}}}, \ldots , \underbrace{e_n,\ldots,e_n}_{\alpha_n \text{{\tiny fois}}})</p>
+</div>
+où stem:[(e_1,\ldots,e_n)] désigne la base canonique de stem:[\RR^n].
+
+Alors, en posant :
+[stem]
+<div class="paragraph">
+<p>\|D^l v(x)\| = \sup_{\xi_1,\ldots,\xi_l \in \left(\RR<sup>{\ast}\right)</sup>n} \; \frac{D^l v(x).(\xi_1,\ldots,\xi_l)}{|\xi_1| \ldots |\xi_l|}\qquad ,</p>
+</div>
+on déduit qu’il existe des constantes stem:[\gamma_1] et stem:[\gamma_2] dépendant uniquement de stem:[n] et stem:[l] (donc en particulier indépendantes de stem:[v]) telles que
+[[eq:maj1]]
+[stem]
+<div class="paragraph">
+<p>\gamma_1 \; |v|<em>{l,K} \le \left( \int</em>{x\in K} \| D^l v(x)\|^2 \, dx\right)^{1/2} \le \gamma_2 \; |v|_{l,K}</p>
+</div>
+Par ailleurs, si l’on utilise le changement de variable stem:[x=F(\hat{x})=B\hat{x}+b] dans stem:[D^l v(x)], il vient :
+
+[stem]
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>\forall \xi_1,\ldots,\xi_l \in \RR^n,\qquad D^l \hat{v}(\hat{x}).(\xi_1,\ldots,\xi_l) = D^l v(x).(B\xi_1,\ldots,B\xi_l)</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>d&#8217;où</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[--
+\|D^l \hat{v}(\hat{x})\| \le \|B\|^l\; \|D^l v(x)\|
+--
+Or, stem:[D^l v(x) = D^l v(F(\hat{x}))]. Donc
+
+[env.equation#eq:maj2]
+--
+\int_{\hat{x}\in \hat{K}}\|D^l \hat{v}(\hat{x})\|^2 \; d\hat{x} \le \|B\|^{2l}\; \int_{\hat{x}\in \hat{K}} \|D^l v(F(\hat{x}))\|^2 \; d\hat{x}
+= \|B\|^{2l}\; |\hbox{det }B|^{-1} \int_{x\in K} \|D^l v(x)\|^2 \; dx
+--
+
+En minorant et majorant (&lt;&lt;eq:maj2&gt;&gt;) grâce à la (&lt;&lt;eq:maj1,majoration&gt;&gt;), on obtient :
+[stem]\]
+</div>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>\gamma^2_1 \; |\hat{v}|^2_{l,\hat{K}} \le \|B\|^{2l}\; |\hbox{det }B|^{-1} \gamma^2_2 \; |v|^2_{l,K}</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>d’où le résultat de (<a href="#eq:majref">majoration du théorème</a>) ce qui conclut la preuve de <a href="#thr1">[thr1]</a> \(\blacksquare\)</p>
+</div>
+<div class="sect3">
+<h4 id="estimation-de-b"><a class="anchor" href="#estimation-de-b"></a>2.1.1. Estimation de \(\|B\|\)</h4>
+<div class="paragraph">
+<p>Soit \(h_K\) le diamètre de \(K\), c’est à dire le maximum des distances euclidiennes entre deux points de \(K\).</p>
+</div>
+<div class="paragraph">
+<p>Soit \(\rho_K\) la rondeur de \(K\), c’est à dire le diamètre maximum des sphères incluses dans \(K\).</p>
+</div>
+<div class="paragraph">
+<p>On a :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[--
+\|B\| = \sup_{x\ne 0} \frac{\|Bx\|}{\|x\|} = \sup_{\|x\|=\hat{\rho}} \frac{\|Bx\|}{\hat{\rho}}
+--
+
+
+Soit stem:[x] un vecteur de stem:[\RR^n] tel que stem:[\|x\|=\hat{\rho}].
+
+Par définition de stem:[\hat{\rho}], il existe deux points stem:[\hat{y}] et stem:[\hat{z}] de stem:[\hat{K}] tels que stem:[x=\hat{y}-\hat{z}].
+
+Alors stem:[Bx=B\hat{y}-B\hat{z}=F(\hat{y})-F(\hat{z})=y-z] avec stem:[y] et stem:[z] appartenant à stem:[K].
+
+Par définition de stem:[h_K], stem:[\|y-z\| \le h_K].
+Donc stem:[\|Bx\| \le h_K].
+
+En reportant dans la définition de stem:[\|B\|], on obtient donc :
+[eq:kk1]
+[stem]\]
+</div>
+</div>
+<div class="paragraph">
+<p>\|B\| \le \frac{h_K}{\hat{\rho}}</p>
+</div>
+Et on a évidemment de même :
+[[eq:kk2]]
+[stem]
+<div class="paragraph">
+<p>\|B^{-1}\| \le \frac{\hat{h}}{\rho_K}</p>
+</div>
+[[etape-4-majoration-sur-lélément-de-référence]]
+=== Etape 4: Majoration sur l’élément de référence
+
+Le résultat principal est le suivant :
+[[thr2]]
+.Théorème
+****
+Soient stem:[l] et stem:[k] deux entiers tels que stem:[0\le l \le k+1].
+Si stem:[\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))] laisse stem:[P_k(\hat{K})] invariant (c’est à dire vérifie stem:[\forall \hat{p}\in P_k(\hat{K}), \hat{\pi}\hat{p}=\hat{p}]), alors
+
+[[eq:majref0]]
+[stem]
+<div class="paragraph">
+<p>\exists C(\hat{K},\hat{\pi}) ,\;  \forall \hat{v} \in H^{k+1}(\hat{K}), \; |\hat{v}-\hat{\pi}\hat{v}|<em>{l,\hat{K}} \le C |\hat{v}|</em>{k+1,\hat{K}}</p>
+</div>
+****
+
+==== Preuve du théorème <<thr2>>
+
+On montre ce résultat comme suit:
+
+stem:[\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))], et donc stem:[I-\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))] car stem:[l\le k+1].
+
+Et donc
+
+[stem]
+<div class="paragraph">
+<p>|\hat{v}-\hat{\pi}\hat{v}|<em>{l,\hat{K}} \le \|I-\hat{\pi}\|</em>{\mathcal{L}(H<sup>{k+1}(\hat{K}),H</sup>l(\hat{K}))}\; \|\hat{v}\|_{k+1,\hat{K}}</p>
+</div>
+On utilise maintenant l’invariance de stem:[P_k(\hat{K})]:
+
+On aura donc démontré le théorème si l’on montre que
+[stem]
+<div class="paragraph">
+<p>\exists C,\; \forall \hat{v}\in H^{k+1}(\hat{K}) \;  \inf_{\hat{p}\in P_k(\hat{K})} \|\hat{v}+\hat{p}\|<em>{k+1,\hat{K}} \le C |\hat{v}|</em>{k+1,\hat{K}}</p>
+</div>
+Soit stem:[(f_i)_{i=0,\ldots,k}] une base du dual de stem:[P_k(\hat{K})].
+
+D’après le théorème d’Hahn-Banach, il existe des formes linéaires continues sur stem:[H^{k+1}(\hat{K})], que
+l’on notera encore stem:[f_i], et qui prolongent les stem:[f_i].
+
+En particulier, si stem:[\hat{p}\in P_k(\hat{K})] vérifie stem:[f_i(\hat{p})=0,\, (i=0,\ldots,k)], alors
+stem:[\hat{p}=0].
+
+Nous allons montrer que
+[[eqref2]]
+[stem]
+<div class="paragraph">
+<p>\exists C, \, \forall \hat{v}\in H^{k+1}(\hat{K}), \; \|\hat{v}\|<em>{k+1,\hat{K}} \le C \left\{ |\hat{v}|</em>{k+1,\hat{K}} + \sum_{i=0}^k |f_i(\hat{v})| \right\}</p>
+</div>
+NOTE: On aura le résultat souhaité en appliquant (<<eqref2>>) à stem:[\hat{v}+\hat{q}], avec stem:[\hat{q}] tel que stem:[f_i(\hat{q})=f_i(-\hat{v})].
+
+On montre la relation (<<eqref2>>) par l’absurde comme suit:
+
+Si <<eqref2>> n’est pas vraie, alors il existe une suite de fonctions stem:[\hat{v}_n] de stem:[H^{k+1}(\hat{K})] telles que :
+
+[stem]
+<div class="literalblock">
+<div class="content">
+<pre> \|\hat{v}_n\|_{k+1,\hat{K}} =1, \;\;
+|\hat{v}_n|_{k+1,\hat{K}} \longrightarrow 0,\; \hbox{ et } \forall i \;  f_i(\hat{v}_n)\longrightarrow 0</pre>
+</div>
+</div>
+Par complétude de stem:[H^{k+1}(\hat{K})], on extrait une sous-suite convergente vers stem:[\hat{v} \in H^{k+1}(\hat{K})].
+
+Mais stem:[|\hat{v}_n|_{k+1,\hat{K}} \longrightarrow 0].
+
+Donc stem:[\hat{v} \in P_k(\hat{K})] et stem:[f_i(\hat{v})=0].
+
+D’où une contradiction. stem:[\blacksquare].
+
+[[etape-5-assemblage-des-majorations-locales]]
+=== Etape 5: Assemblage des majorations locales
+
+[[majoration-sur-un-élément-quelconque]]
+==== Majoration sur un élément quelconque
+
+En rassemblant les résultats précédents, on peut établir une majoration sur un élément quelconque stem:[K] du maillage.
+
+On a :
+[stem]
+<div class="paragraph">
+<p>\begin{array}{rclr}
+|v-\pi_K v|<em>{l,K} &amp; \le &amp; C(l,n)\; \|B<sup>{-1}\|</sup>l\; |\hbox{det }B|^{1/2} \; |\hat{v}-\hat{\pi}\hat{v}|</em>{l,\hat{K}}&amp;\hbox{d&#8217;après (<a href="#eq:majref2">[eq:majref2]</a>)} \\
+ &amp; \le &amp; C(l,n)\; \|B<sup>{-1}\|</sup>l\; |\hbox{det }B|^{1/2} \; C(\hat{K},\hat{\pi})\; |\hat{v}|<em>{k+1,\hat{K}} &amp;\hbox{d&#8217;après (<a href="#eq:majref0">[eq:majref0]</a>)}\\
+&amp; \le &amp; C(l,n)\; \|B<sup>{-1}\|</sup>l\; |\hbox{det }B|^{1/2} \; C(\hat{K},\hat{\pi})\; C(k+1,n) \; \|B\|^{k+1} |\hbox{det }B|^{-1/2}\; |v|</em>{k+1,K}
+&amp; \hbox{d&#8217;après (<a href="#eq:majref">[eq:majref]</a>)}\\
+&amp; \le &amp; C(l,n)\; \frac{\hat{h}<sup>l}{\rho_K</sup>l} \;  \; C(\hat{K},\hat{\pi})\; C(k+1,n) \; \frac{h_K<sup>{k+1}}{\hat{\rho}</sup>{k+1}} \; |v|_{k+1,K} &amp; \hbox{d&#8217;après (<a href="#eq:kk1">[eq:kk1]</a>) et (<a href="#eq:kk2">[eq:kk2]</a>)}\\
+\end{array}</p>
+</div>
+D’où finalement :
+
+[[eqmajloc]]
+[stem]
+<div class="paragraph">
+<p>|v-\pi_K v|<em>{l,K}  \le  \hat{C}(\hat{\pi},\hat{K},l,k,n)\; \frac{h_K<sup>{k+1}}{\rho_K</sup>l} \;   |v|</em>{k+1,K}</p>
+</div>
+NOTE: Il est important de remarquer à ce niveau que stem:[\hat{C}] est indépendant de stem:[K].
+
+[[assemblage-des-résultats-locaux]]
+==== Assemblage des résultats locaux
+
+On va maintenant reprendre la majoration (<<eqmajloc>>) pour tous les éléments du maillage et toutes les valeurs de stem:[l=0,\ldots,m].
+
+On va définir deux quantités représentatives du maillage :
+
+* stem:[h\quad] tel que stem:[h_K \le h, \; \forall K\in {\cal T}_h\qquad] (diamètre maximum des éléments)
+
+* stem:[\sigma\quad] tel que stem:[{\frac{h_K}{\rho_K}} \le \sigma, \; \forall K\in {\cal T}_h\qquad] (caractérise l’aplatissement des éléments)
+
+On a
+[stem]
+<div class="paragraph">
+<p>\begin{array}{rcl}
+\|v-\pi_K v\|^2_{m,K} &amp; = &amp; \sum_{l=0}^m |v-\pi_K v|^2_{l,K} \\
+ &amp; \le &amp; \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\;
+ \left(\frac{h_K<sup>{k+1}}{\rho_K</sup>l}\right)^2 \;   |v|^2_{k+1,K}\qquad\hbox{d&#8217;apr\`es (\ref{eqmajloc})}\\
+ &amp; \le &amp; \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\; \left\{\left(\frac{h_K}{\rho_K}\right)^l\; h_K^{m-l}\; h_K<sup>{k+1-m}\right\}</sup>2 \;   |v|^2_{k+1,K}\\
+ &amp; \le &amp; \left\{ \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\; \sigma^{2l} h^{2m-2l} \right\} \; \left[ h^{k+1-m}\; |v|_{k+1,K} \right]^2
+ \end{array}</p>
+</div>
+Le terme entre accolades ne tend ni vers 0 ni vers l’infini quand stem:[h] tend vers 0.
+
+D’où :
+[stem]
+<div class="paragraph">
+<p>\|v-\pi_K v\|<em>{m,K} \le \hat{C}'(\hat{\pi},\hat{K},l,k,n,\sigma,h)\; h^{k+1-m}\; |v|</em>{k+1,K}</p>
+</div>
+En sommant ensuite sur tous les éléments du maillage :
+
+[stem]
+<div class="paragraph">
+<p>\begin{array}{rcl}
+\|v-\pi_h v\|^2_{m} &amp; = &amp; \sum_{K\in {\cal T}_h} \|v-\pi_K v\|^2_{m,K} \\
+ &amp; \le &amp; \sum_{K\in {\cal T}_h} \left[ \hat{C}'(\hat{\pi},\hat{K},l,k,n,\sigma,h)\; h^{k+1-m} \; |v|_{k+1,K} \right]^2
+\end{array}</p>
+</div>
+On obtient finalement :
+
+[[eqmajfinal]]
+[stem]
+<div class="paragraph">
+<p>\|v-\pi_h v\|<em>{m} \le C(\mathcal{T}_h,m,k,n) \; h^{k+1-m}\; |v|</em>{k+1}</p>
+</div>
+[[résultat-final]]
+=== Résultat final
+
+En reportant (<<eqmajfinal>>) dans (<<eq:cea2>>), on obtient le résultat
+final classique de majoration d’erreur :
+
+[[eqmajfinal2]]
+[stem]
+<div class="paragraph">
+<p>\|u-u_h\|<em>{m} \le \mathcal{C} \; h^{k+1-m}\; |u|</em>{k+1}</p>
+</div>
+[[quelques-commentaires]]
+== Quelques commentaires
+
+Une utilisation fréquente de (<<eqmajfinal2>>) a lieu dans le cas stem:[m=1].
+Alors si l’espace de polynômes stem:[P_k(\hat{K})\subset H^1(\hat{K})] (ce qui est toujours le cas) et si stem:[\hat{\pi}] est bien défini sur stem:[H^{k+1}(\hat{K})], on a :
+
+[stem]
+<div class="paragraph">
+<p>\mbox{si }u\in H^{k+1}(\Omega),\quad \|u-u_h\|<em>1 \le \mathcal{C} \; h^k \; |u|</em>{k+1}</p>
+</div>
+NOTE: Si le domaine stem:[\Omega] n’est pas polygonal, la majoration précédente n’est plus valable.
+  On peut alors établir d’autres majorations du même type – se référer par exemple à cite:[raviartthomast1983].
+  De même, si les calculs d’intégrales ne sont pas faits exactement mais à l’aide d’une intégration numérique, une erreur supplémentaire doit être prise en compte, qui conduit à une nouvelle majoration d’erreur – voir là-aussi par exemple cite:[raviartthomast1983].
+</div>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.cemosis.fr" class="icon">
+            <img src="../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.cemosis.fr" target="_blank" rel="noopener">Projects Documentation</a></li>
+          <li><a href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">Forums(Slack)</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://www.cemosis.fr" target="_blank" rel="noopener">Cemosis</a></li>
+          <li><a href="https://www.cemosis.fr/news" target="_blank" rel="noopener">News</a></li>
+          <li><a href="https://www.cemosis.fr/projects" target="_blank" rel="noopener">Projects</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.feelpp.org" target="_blank" rel="noopener">Feel++ Documentation</a></li>
+          <li><a href="http://docs.feelpp.org/user/">Get Started</a></li>
+          <li><a href="http://docs.feelpp.org/user//install/distributions/">Downloads</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="facebook" class="cls-1" d="M29,0H3A2.652,2.652,0,0,0,0,3V29a2.652,2.652,0,0,0,3,3H16V18H12V14h4V12a6.452,6.452,0,0,1,6-6h4v4H22a2.151,2.151,0,0,0-2,2v2h6l-1,4H20V32h9a2.652,2.652,0,0,0,3-3V3A2.652,2.652,0,0,0,29,0Z"/></svg>
+            <a href="https://www.facebook.com/cemosis.fr" class="icon">
+            Facebook
+            </a>
+          </li>
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32.1 26.1"> <path id="twitter" class="cls-1" d="M32,7.1a11.836,11.836,0,0,1-3.8,1,6.462,6.462,0,0,0,2.9-3.6,12.606,12.606,0,0,1-4.2,1.6A6.492,6.492,0,0,0,22.1,4a6.594,6.594,0,0,0-6.6,6.6,7.719,7.719,0,0,0,.2,1.5A18.458,18.458,0,0,1,2.2,5.2a6.294,6.294,0,0,0-.9,3.3A6.765,6.765,0,0,0,4.2,14a6.109,6.109,0,0,1-3-.8v.1a6.543,6.543,0,0,0,5.3,6.4,4.678,4.678,0,0,1-1.7.2,4.869,4.869,0,0,1-1.2-.1,6.679,6.679,0,0,0,6.1,4.6,12.917,12.917,0,0,1-8.2,2.8,9.151,9.151,0,0,1-1.6-.1,18.438,18.438,0,0,0,10.1,3c12.1,0,18.7-10,18.7-18.7v-.8A13.336,13.336,0,0,0,32,7.2Z" transform="translate(0.1 -4)"/></svg>
+            <a href="https://twitter.com/cemosis" class="icon">
+              Twitter
+            </a>
+          </li>
+          <li>
+          <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="linkedin" class="cls-1" d="M29,0H3A3.076,3.076,0,0,0,0,3V29a3.009,3.009,0,0,0,3,3H29a2.946,2.946,0,0,0,3-3V3A3.009,3.009,0,0,0,29,0ZM12,26H8V12h4ZM10,10a2,2,0,1,1,2-2A2.006,2.006,0,0,1,10,10ZM26,26H22V18a2,2,0,0,0-4,0v8H14V12h4v2.5c.8-1.1,2.1-2.5,3.5-2.5A4.736,4.736,0,0,1,26,17Z"/></svg>
+              <a href="https://www.linkedin.com/company/cemosis" class="icon">
+             Linkedin
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <div class="footer-terms-copyright">
+          <span>© 2020 Cemosis, Université de Strasbourg</span>
+      </div>
+      <div class="footer-terms-links">
+        <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>
+        <a href="https://www.cemosis.fr/privacy-policy">Privacy Policy</a>
+        <a href="https://www.cemosis.fr/cookie-policy">Cookie Policy</a>
+        <a href="https://www.cemosis.fr/support-policy">Support Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+
+<script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">
+</script>
+
+  </body>
+</html>

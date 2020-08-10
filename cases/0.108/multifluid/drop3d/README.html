@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>3D Drop benchmark :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/cases/0.108/multifluid/drop3d/README.html">
+    <link rel="prev" href="../drop2d/README.html">
+    <link rel="next" href="../../poisson/README.html">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
+<script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true, 
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+
+  TeX: {
+      Macros: {
+      RR: "{\\mathbb R}",
+      NN: "{\\mathbb N}",
+      Nso: "{N_{\\mathrm{so}}}",
+      Nma: "{N_{\\mathrm{ma}}}",
+      Nno: "{N_{\\mathrm{no}}}",
+      Ne: "{N_{\\mathrm{e}}}",
+      Ilag: ["{\\mathcal{I}^{\\mathrm{lag}}_{#1}}",1],
+      calTh: "{\\mathcal{T}_h}",
+      Ck: ["{\\mathcal{C}^{#1}}",1],
+      Pk: ["{\\mathcal{P}^{#1}}",1],
+      Qk: ["{\\mathcal{Q}^{#1}}",1],
+      Pch: ["{P^{#1}_{c,h}}",1],
+      Pcho: ["{P^{#1}_{c,h,0}}",1],
+      Qch: ["{Q^{#1}_{c,h}}",1],
+      Ich: ["{\\mathcal{I}^{#1}_{c,h}#2}",2],
+      poly: ["{\\mathbb{#1}}",1],
+      nf: "{n_f}",
+      ngeo: "{n_{\\mathrm{geo}}}",
+      geo: "{\\mathrm{geo}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      dim: ["{\\operatorname{dim}(#1)}",1],
+      opdim: "{\\operatorname{dim}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      poly: ["{\\mathbb{#1}",1],
+      R: ["{\\mathbb{R}^{#1}}",1],
+      set: ["{\\left\\{#1\\right\\}}",1],
+      diam: "{\\operatorname{diam}}",
+      jump: ["{[\\![ #1 ]\\!]}",1],
+      Next: "{\\mathrm{n}}",
+      essinf: "{\\operatorname{ess}\\, \\operatorname{inf}}",
+      tr: "{\\operatorname{tr}}",
+      Id: "{\\mathcal{I}}",
+      disp: ["{\\mathbf{#1}}",1],
+      stresst: ["{\\mathbf{\\sigma(#1)}}",1],
+      deformt: ["{\\mathbf{\\varepsilon(#1)}}",1],
+      domain: "{\\Omega}",
+      prect: ["{\\left\\(#1\\right\\)}",1],
+      ds: "",
+      bold: ["{\\bf #1}",1],
+      p: "{\\mathrm{p}}",
+      q:"{\\mathbf{q}}",
+      n:"{\\mathbf{n}}",
+      T:"{\\mathcal{T}}",
+      F:"{\\mathcal{F}}",
+      P:"{\\mathcal{P}}",
+      v:"{\\mathbf{v}}"
+  },
+  extensions: ["mhchem.js"] }
+});
+</script>
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML'>
+</script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+         <!--  <a href="https://book.feelpp.org">Feel++ documentation</a> -->
+           <a href="https://docs.feelpp.org">Feel++ Docs</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://docs.feelpp.org">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Docs</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Latest Version</strong></div>
+
+            <!-- this code allow to manage ordering of navbar item -->
+               
+              <a class="navbar-item" href="/angiotk/0.1/index.html"> AngioTK User Manual </a>
+                  
+              <a class="navbar-item" href="/data/index.html"> Data Manual </a>
+                    
+              <a class="navbar-item" href="/dev/0.108/index.html"> Developer manual </a>
+                    
+              <a class="navbar-item" href="/salome/current/index.html"> Feel++ and Salome </a>
+                  
+              <a class="navbar-item" href="/feelpp/latest/index.html"> Feel++ Documentation </a>
+                  
+              <a class="navbar-item" href="/math/index.html"> Feel++ Mathematics </a>
+                  
+              <a class="navbar-item" href="/myproject/0.1.0/index.html"> Feel++ MyProject </a>
+                    
+              <a class="navbar-item" href="/cases/0.108/index.html"> Feel++ Toolbox Cases Guide </a>
+                      
+              <a class="navbar-item" href="/toolboxes/0.108/index.html"> Feel++ Toolboxes Manual </a>
+                    
+              <a class="navbar-item" href="/tutorial-dev/latest/index.html"> Feel++ Tutorial Dev </a>
+                    
+              <a class="navbar-item" href="/user/0.108/index.html"> Feel++ User Manual </a>
+                    
+              <a class="navbar-item" href="/mor/current/index.html"> Model Order Reduction </a>
+                  
+              <a class="navbar-item" href="/contribute/index.html"> Toolbox Contribution Guide </a>
+               
+
+            <hr class="navbar-divider">
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Feel++</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>GitHub</strong></div>
+            <a class="navbar-item" href="http://github.com/feelpp/feelpp">GitHub Repository</a>
+            <a class="navbar-item" href="http://github.com/feelpp/feelpp/issues">GitHub Issue Tracker</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Documentation</strong></div>
+            <a class="navbar-item" href="http://docs.feelpp.org/user/">User Manual</a>
+            <a class="navbar-item" href="http://docs.feelpp.org/dev/">Developer Manual</a>
+            <a class="navbar-item" href="http://docs.feelpp.org/toolbox/">Toolbox Manual</a>
+            
+          </div>
+        </div>
+        <div class="primary-action">
+            <form class="navbar-item search">
+              <input type="text" placeholder="Search Feel++ Docs" class="query" id="search-query">
+              <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ">
+            <img src="../../../../_/img/slack.png" alt="slack" style="width:30px;"></a>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="http://docs.feelpp.org">
+            <img src="../../../../_/img/logoFeelpp.png" alt="Feel++" style="width:60px;">
+          </a>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="http://www.cemosis.fr">
+            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis" style="width:60px;">
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cases" data-version="0.108">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Feel++ Toolbox Cases Guide</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../csm/README.html">Computational Solid Mechanics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../csm/README.html#_benchmarks">Benchmarks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/TurekHron/README.html">Turek-Hron</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/solenoid/README.html">Solenoid</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/NAFEMS-le1/README.html">NAFEMS-le1</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/NAFEMS-le10/README.html">NAFEMS-le10</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/cantilever/README.html">Cantilever linear solver benchmark</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../csm/README.html#_cases">Cases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/cantilever/README.html">Cantilever</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/torsion-bar/README.html">Torsion Bar</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/rotating-winch/index.html">Rotating Winch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/ribs/index.html">Bracing with ribs</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/suspension/index.html">Suspension mechanics</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/sensor/index.html">Sensor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/sheet-rounding/index.html">Effect of sheet rounding</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/t-beam/index.html">T-Beam</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/vierendeel-truss/index.html">Vierendeel Truss</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/pendulum2D/index.html">Pendulum 2D</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../csm/spring/README.html">Spring CSM</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../cfd/README.html">Computational Fluid Mechanics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../cfd/README.html#_benchmarks">Benchmarks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../cfd/TurekHron/README.html">Turek-Hron</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../cfd/pipestokes/README.html">Stokes in a pipe</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../cfd/oscillating_cylinder/README.html">Oscillating Cylinder</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../cfd/stokes_boundary_layer/README.html">Stokes Boundary Layer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../cfd/laminar_isothermal_backward_facing_step/README.html">Laminar, Isothermal Backward Facing Step</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../cfd/README.html#_cases">Cases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../cfd/backwardstep/README.html">Backward Step</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../cfd/spring/README.html">Spring CFD</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../cfd/cyclone/README.html">Cyclone</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../heat/README.html">Heat Transfer</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../heat/README.html#_benchmarks">Benchmarks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../heat/ISO_10211_2007/README.html">ISO 10211:2007</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../heat/README.html#_cases">Cases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../heat/motor/README.html">Heat Transfer in a Car Motor</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../heat/2Dbuilding/README.html">2D Building</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../heat/3Dbuilding/README.html">3D Building</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../heat/opus/README.html">Cooling of electronic components</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../heatfluid/README.html">Heat &amp; Fluid</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Benchmarks</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../heatfluid/channel_flow_with_viscous_heating/README.html">Channel Flow with Viscous Heating</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../heatfluid/boundary_layer_development/README.html">Boundary Layer Development</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Cases</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../heatfluid/2Dbuilding_NS/README.html">2D Building with natural convection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../heatfluid/cabin/README.html">Aerothermal in an Airplane Cabin</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../heatfluid/TurekHron/README.html">Forced heat convection around a cylinder</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../heatfluid/naturalconvection/README.html">Natural heat convection in a cavity</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../heatfluid/pipestokesmass/README.html">Mass transport with a Stokes flow in a pipe</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../fsi/README.html">Fluid Structure Interaction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../fsi/README.html#_benchmarks">Benchmarks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../fsi/TurekHron/README.html">Turek-Hron</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../fsi/wavepressure2d/README.html">Wave Pressure 2d</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../fsi/wavepressure3d/README.html">Wave Pressure 3d</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../fsi/lid-driven-cavity/README.html">Lid Driven Cavity</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../fsi/README.html#_cases">Cases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../fsi/box/README.html">Box</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../fsi/structure/README.html">Structure</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../electric/README.html">Electric</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../electric/rect/readme.html">BusBar</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../electric/quarterturn/readme.html">Quarter Turn</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../thermoelectric/README.html">Thermo-Electric</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../thermoelectric/quarterturn/readme.html">Quarter Turn</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../thermoelectric/electromagnet/README.html">ElectroMagnet</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Multifluid Flow</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../drop2d/README.html">Drop 2d</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="README.html">Drop 3d</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../poisson/README.html">Generic HDG Poisson equation</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../poisson/usquare/README.html">Chessboard analytical solution</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../poisson/red/README.html">nMOS transistor</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../poisson/2Dchannel/README.html">Flow in a channel</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Feel++ Toolbox Cases Guide</span>
+    <span class="version">0.108</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">AngioTK User Manual</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../angiotk/0.1/index.html">0.1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Data Manual</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../data/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Developer manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../../dev/0.109/index.html">0.109-alpha.1</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../dev/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../../dev/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ and Salome</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../salome/current/index.html">current</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Documentation</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../feelpp/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Mathematics</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../math/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ MyProject</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../myproject/0.1.0/index.html">0.1.0</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Feel++ Toolbox Cases Guide</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../0.109/index.html">0.109-alpha.1</a>
+        </li>
+        <li class="version is-current is-latest">
+          <a href="../../index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Toolboxes Manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../../toolboxes/0.109/index.html">0.109-alpha.1</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../toolboxes/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../../toolboxes/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Tutorial Dev</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../tutorial-dev/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ User Manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../../user/0.109/index.html">0.109-alpha.1</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../user/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../../user/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Model Order Reduction</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../mor/current/index.html">current</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Toolbox Contribution Guide</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../contribute/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Feel++ Toolbox Cases Guide</a></li>
+    <li><a href="../index.html">Multifluid Flow</a></li>
+    <li><a href="README.html">Drop 3d</a></li>
+  </ul>
+</nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">0.108</button>
+  <div class="version-menu">
+    <a class="version" href="../../../0.109/multifluid/drop3d/README.html">0.109-alpha.1</a>
+    <a class="version is-current" href="README.html">0.108</a>
+    <a class="version" href="../../../0.107/multifluid/drop3d/README.html">0.107</a>
+  </div>
+</div>
+  <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/blob/v0.108/examples/modules/multifluid/pages/drop3d/README.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">3D Drop benchmark</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The previous section described the strategy we used to track the interface. We
+couple it now to the Navier Stokes equation solver described in
+<a href="#Chabannes">[Chabannes]</a>. In the current section, we present a 3D extension of the 2D benchmark introduced in <a href="#Hysing">[Hysing]</a> and realised using Feel++
+in <a href="#Doyeux">[Doyeux]</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_benchmark_problem"><a class="anchor" href="#_benchmark_problem"></a>1. Benchmark problem</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The benchmark objective is to simulate the rise of a 3D bubble in a Newtonian
+fluid. The equations solved are the incompressible Navier Stokes equations for
+the fluid and the advection for the level set:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{array}[lll]
+ \rho\rho(\phi(\mathbf{x}) ) \left(\frac{\partial \mathbf{u}}{\partial t} + \mathbf{u} \cdot \nabla \mathbf{u} \right) + \nabla p - \nabla \cdot \left( \nu(\phi(\mathbf{x})) (\nabla \mathbf{u} + (\nabla \mathbf{u})^T) \right) &amp;=&amp; \rho ( \phi(\mathbf{x}) ) \mathbf{g}, \\
+\nabla \cdot \mathbf{u} &amp;=&amp; 0, \\
+\frac{\partial \phi}{\partial t} + \mathbf{u} \cdot \nabla \phi &amp;=&amp; 0,
+\end{array}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\rho\) is the density of the fluid, \(\nu\) its viscosity, and \(\mathbf{g} \approx (0,
+0.98)^T\) is the gravity acceleration.</p>
+</div>
+<div class="paragraph">
+<p>The computational domain is \(\Omega \times \rbrack0, T\rbrack \) where \(\Omega\) is a cylinder which has a radius
+\(R\) and a heigth \(H\) so that \(R=0.5\) and \(H=2\) and \(T=3\). We denote \(\Omega_1\) the domain outside
+the bubble \( \Omega_1= \{\mathbf{x} | \phi(\mathbf{x})&gt;0 \} \), \(\Omega_2\) the domain inside the bubble \(
+\Omega_2 = \{\mathbf{x} | \phi(\mathbf{x})&lt;0 \} and stem:[\Gamma\) the interface \( \Gamma =
+\{\mathbf{x} | \phi(\mathbf{x})=0 \} \).  On the lateral walls and on the bottom walls, no-slip boundary
+conditions are imposed, <strong>i.e.</strong> \(\mathbf{u} = 0\) and \(\mathbf{t} \cdot (\nabla
+\mathbf{u} + (\nabla \mathbf{u})^T) \cdot \mathbf{n}=0\) where \(\mathbf{n}\) is the unit normal to
+the interface and \(\mathbf{t}\) the unit tangent. Neumann condition is
+imposed on the top wall <strong>i.e.</strong> \(\dfrac{\partial \mathbf{u}}{\partial \mathbf{n}}=\mathbf{0}\). The initial
+bubble is circular with a radius \(r_0 = 0.25\) and centered on the point \((0.5, 0.5, 0.)\).
+A surface tension force \(\mathbf{f}_{st}\) is applied on \(\Gamma\), it reads :
+\(\mathbf{f}_{st} = \int_{\Gamma} \sigma \kappa \mathbf{n} \simeq \int_{\Omega} \sigma
+\kappa \mathbf{n} \delta_{\varepsilon}(\phi)\) where \(\sigma\) stands for the surface tension between the two-fluids and
+\(\kappa = \nabla \cdot (\frac{\nabla   \mathbf{\phi}}{|\nabla \phi|})\) is the curvature of the interface. Note that the
+ normal vector \(\mathbf{n}\) is defined here as \(\mathbf{n}=\frac{\nabla \phi}{|\nabla \phi|}\).</p>
+</div>
+<div class="paragraph">
+<p>We denote with indices \(1\) and \(2\) the quantities relative to the fluid in respectively in \(\Omega_1\) and \(\Omega_2\). The parameters of the benchmark are \(\rho_1\), \(\rho_2\), \(\nu_1\), \(\nu_2\) and \(\sigma\) and we define two dimensionless numbers: first, the Reynolds number which is the  ratio between inertial and viscous terms and is defined as :
+\(Re = \dfrac{\rho_1 \sqrt{|\mathbf{g}|  (2r_0)^3}}{\nu_1}\); second, the Eötvös number which represents the ratio between the gravity force and the surface tension
+\(E_0 = \dfrac{4 \rho_1 |\mathbf{g}| r_0^2}{\sigma}\).
+The table below reports the values  of the parameters used for two different test cases proposed in <a href="#Hysing">[Hysing]</a>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Numerical parameters taken for the benchmarks.</caption>
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\rho_1\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\rho_2\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\nu_1\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\nu_2\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\sigma\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Re</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(E_0\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test 1 (ellipsoidal bubble)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">24.5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">35</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test 2 (skirted bubble)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.96</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">35</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">125</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The quantities measured in <a href="#Hysing">[Hysing]</a> are \(\mathbf{X_c}\) the center of mass
+of the bubble, \(\mathbf{U_c}\) its velocity and the circularity. For the 3D case
+we extend the circularity to the sphericity defined as the ratio
+between the surface of a sphere which has the same volume and the surface
+of the bubble which reads \(\Psi(t) = \dfrac{4\pi\left(\dfrac{3}{4\pi} \int_{\Omega_2} 1 \right)^{\frac{2}{3}}}{\int_{\Gamma} 1}\).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_simulations_parameters"><a class="anchor" href="#_simulations_parameters"></a>2. Simulations parameters</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The simulations have been performed on the supercomputer SUPERMUC using 160 or 320
+processors. The number of processors was chosen depending on the memory needed for
+the simulations. The table <a href="#TableModelingCFDMultiFluid3dDropParamTest1">Numerical parameters used for the test 1 simulations: Mesh size, Number of processors, Time step, Average time per iteration, Total time of the simulation.</a> summarize for the test 1 the different simulation properties and the table <a href="#TableModelingCFDMultiFluid3dDropMeshSize">Mesh caracteristics: mesh size given, number of Tetrahedra, number of points, number of order 1 degrees of freedom, number of order 2 degrees of freedom</a> give the carachteristics of each mesh.</p>
+</div>
+<table id="TableModelingCFDMultiFluid3dDropParamTest1" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Numerical parameters used for the test 1 simulations: Mesh size, Number of processors, Time step, Average time per iteration, Total time of the simulation.</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">h</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of processors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\Delta t\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time per iteration (s)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Total Time (h)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.025</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">360</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.0125</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18.7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.25</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.02</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">360</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">36.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.0175</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">180</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.00875</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">93.5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.9</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">180</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.0075</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">163.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18.4</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.0125</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">180</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.00625</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">339.7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">45.3</p></td>
+</tr>
+</tbody>
+</table>
+<table id="TableModelingCFDMultiFluid3dDropMeshSize" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Mesh caracteristics: mesh size given, number of Tetrahedra, number of points, number of order 1 degrees of freedom, number of order 2 degrees of freedom</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">h</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tetrahedra</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Points</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order 2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.025</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">73010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14846</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">67770</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1522578</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.02</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">121919</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23291</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128969</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2928813</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.0175</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">154646</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30338</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">187526</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4468382</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">217344</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">41353</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">292548</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6714918</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.0125</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">333527</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">59597</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">494484</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11416557</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The Navier-Stokes equations are linearized using the Newton&#8217;s method and we used a KSP method to
+solve the linear system. We use an Additive Schwarz Method for the preconditioning (GASM)
+and a LU method as a sub preconditionner.
+We run the simulations looking for solutions in finite element spaces spanned by
+Lagrange polynomials of order \((2,1,1)\) for respectively the velocity, the
+pressure and the level set.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_results_test_1_ellipsoidal_bubble"><a class="anchor" href="#_results_test_1_ellipsoidal_bubble"></a>3. Results Test 1: Ellipsoidal bubble</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Accordind to the 2D results we expect that the drop would became ellipsoid. The
+figure~\ref{subfig:elli_sh} shows the shape of the drop at the final time step.
+The contour is quite similar to the one we obtained in the two dimensions simulations.
+The shapes are similar and seems to converge when the mesh size is decreasing.
+The drop reaches a stationary circularity and its topology does not change.
+The velocity increases until it attains a constant value. Figure~\ref{subfig:elli_uc}
+shows the results we obtained with different mesh sizes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bibliography"><a class="anchor" href="#_bibliography"></a>4. Bibliography</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>.</p>
+</div>
+<div class="ulist bibliography">
+<div class="title">References for this benchmark</div>
+<ul class="bibliography">
+<li>
+<p><a id="cottet"></a>[cottet]</p>
+</li>
+<li>
+<p><a id="Feelpp"></a>[Feelpp] C. Prud&#8217;homme et al.</p>
+</li>
+<li>
+<p><a id="osher"></a>[osher] Osher1988, book_Sethian, book_Osher</p>
+</li>
+<li>
+<p><a id="Franca1992"></a>[Franca1992] Franca 1992</p>
+</li>
+<li>
+<p><a id="Chabannes"></a>[Chabannes] V. Chabannes, <em>Vers la simulation numérique des écoulements sanguins</em>, Équations aux dérivées partielles. PhD thesis, Université de Grenoble, 2013.</p>
+</li>
+<li>
+<p><a id="Doyeux"></a>[Doyeux] V. Doyeux, <em>Modélisation et simulation de systèmes multi-fluides, Application aux écoulements sanguins</em>, PhD thesis, Université de Grenoble, 2014.</p>
+</li>
+<li>
+<p><a id="Hysing"></a>[Hysing] S. Hysing, S. Turek, D. Kuzmin, N. Parolini, E. Burman, S. Ganesan, and L. Tobiska, <em>Quantitative benchmark computations of two-dimensional bubble dynamics</em>, International Journal for Numerical Methods in Fluids, 2009.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../drop2d/README.html">Drop 2d</a></span>
+  <span class="next"><a href="../../poisson/README.html">Generic HDG Poisson equation</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.cemosis.fr" class="icon">
+            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.cemosis.fr" target="_blank" rel="noopener">Projects Documentation</a></li>
+          <li><a href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">Forums(Slack)</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://www.cemosis.fr" target="_blank" rel="noopener">Cemosis</a></li>
+          <li><a href="https://www.cemosis.fr/news" target="_blank" rel="noopener">News</a></li>
+          <li><a href="https://www.cemosis.fr/projects" target="_blank" rel="noopener">Projects</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.feelpp.org" target="_blank" rel="noopener">Feel++ Documentation</a></li>
+          <li><a href="http://docs.feelpp.org/user/">Get Started</a></li>
+          <li><a href="http://docs.feelpp.org/user//install/distributions/">Downloads</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="facebook" class="cls-1" d="M29,0H3A2.652,2.652,0,0,0,0,3V29a2.652,2.652,0,0,0,3,3H16V18H12V14h4V12a6.452,6.452,0,0,1,6-6h4v4H22a2.151,2.151,0,0,0-2,2v2h6l-1,4H20V32h9a2.652,2.652,0,0,0,3-3V3A2.652,2.652,0,0,0,29,0Z"/></svg>
+            <a href="https://www.facebook.com/cemosis.fr" class="icon">
+            Facebook
+            </a>
+          </li>
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32.1 26.1"> <path id="twitter" class="cls-1" d="M32,7.1a11.836,11.836,0,0,1-3.8,1,6.462,6.462,0,0,0,2.9-3.6,12.606,12.606,0,0,1-4.2,1.6A6.492,6.492,0,0,0,22.1,4a6.594,6.594,0,0,0-6.6,6.6,7.719,7.719,0,0,0,.2,1.5A18.458,18.458,0,0,1,2.2,5.2a6.294,6.294,0,0,0-.9,3.3A6.765,6.765,0,0,0,4.2,14a6.109,6.109,0,0,1-3-.8v.1a6.543,6.543,0,0,0,5.3,6.4,4.678,4.678,0,0,1-1.7.2,4.869,4.869,0,0,1-1.2-.1,6.679,6.679,0,0,0,6.1,4.6,12.917,12.917,0,0,1-8.2,2.8,9.151,9.151,0,0,1-1.6-.1,18.438,18.438,0,0,0,10.1,3c12.1,0,18.7-10,18.7-18.7v-.8A13.336,13.336,0,0,0,32,7.2Z" transform="translate(0.1 -4)"/></svg>
+            <a href="https://twitter.com/cemosis" class="icon">
+              Twitter
+            </a>
+          </li>
+          <li>
+          <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="linkedin" class="cls-1" d="M29,0H3A3.076,3.076,0,0,0,0,3V29a3.009,3.009,0,0,0,3,3H29a2.946,2.946,0,0,0,3-3V3A3.009,3.009,0,0,0,29,0ZM12,26H8V12h4ZM10,10a2,2,0,1,1,2-2A2.006,2.006,0,0,1,10,10ZM26,26H22V18a2,2,0,0,0-4,0v8H14V12h4v2.5c.8-1.1,2.1-2.5,3.5-2.5A4.736,4.736,0,0,1,26,17Z"/></svg>
+              <a href="https://www.linkedin.com/company/cemosis" class="icon">
+             Linkedin
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <div class="footer-terms-copyright">
+          <span>© 2020 Cemosis, Université de Strasbourg</span>
+      </div>
+      <div class="footer-terms-links">
+        <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>
+        <a href="https://www.cemosis.fr/privacy-policy">Privacy Policy</a>
+        <a href="https://www.cemosis.fr/cookie-policy">Cookie Policy</a>
+        <a href="https://www.cemosis.fr/support-policy">Support Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+
+<script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">
+</script>
+
+  </body>
+</html>
