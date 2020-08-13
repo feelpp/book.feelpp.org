@@ -5,23 +5,7 @@ steps:
        docker-antora: true
    env:
       PROJECT: docs.feelpp.org
-#      BUILDKITE_DOCKER_COMPOSE_CONTAINER: "antora"
- - wait
- - name: ':rocket: :book:'
-   command: .buildkite/steps/docs-deploy.sh
-   branches: ["master","mor-module"]
-   env:
-       PROJECT: docs.feelpp.org
  - wait
  - trigger: "book-dot-mso4sc-dot-eu"
    label: ":package: Generate MSO4SC :book:"
    async: true
-
- # - wait
- # - name: ':rocket: :book: fix :image:'
- #   command: .buildkite/steps/build.sh
- #   agents:
- #     antora: true
- #   branches: master
- #   env:
- #       PROJECT: docs.feelpp.org
