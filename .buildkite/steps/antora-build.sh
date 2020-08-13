@@ -7,7 +7,7 @@ BRANCH=${BRANCH:-${BUILDKITE_BRANCH:master}}
 echo "--- Building $PROJECT..."
 npm i asciidoctor asciidoctor-kroki
 antora --version
-antora --fetch --clean --html-url-extension-style=indexify antora-github-feelpp-doc.yml
+antora --fetch --clean --html-url-extension-style=indexify site.yml
 ls -lrta
 
 #tar  --exclude='*.png' --exclude="*.jpg" --exclude="*.jpeg" -c -z -f site.tar.gz build
