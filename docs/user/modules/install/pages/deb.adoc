@@ -10,7 +10,7 @@ The supported systems are described below
 |===
 |Distribution | Release | Version | Supported Channels | Comment
 
-|ubuntu | focal | 20.04 | stable,latest | next LTS (to be released on April 23, 2020), see <<focal>> below.
+|ubuntu | focal | 20.04 | stable,latest | LTS, see <<focal>> below.
 |ubuntu | eoan  | 19.10 | stable,latest |
 |ubuntu | bionic| 18.04  |  | LTS
 |debian | buster| 10 | stable,latest | |
@@ -55,27 +55,29 @@ sudo apt update
 [[focal]]
 === Installing {feelpp} channel on Focal
 
-Focal is the next LTS of Ubuntu.
-The installation is a bit special because the default Focal distribution does not provide all the repositories necessary to install the {feelpp} packages
-The procedure is slightly more involved than the procedure described above.
-You need to proceed as follows for example for the stable channel.
-
-First you need to add the `focal-proposed` repository and install `wget` and `gnupg` if needed
-----
-echo "deb http://archive.ubuntu.com/ubuntu focal-proposed main restricted" |  tee -a /etc/apt/sources.list
-echo "deb http://archive.ubuntu.com/ubuntu focal-proposed universe" |  tee -a /etc/apt/sources.list
-echo "deb http://archive.ubuntu.com/ubuntu focal-proposed multiverse" |  tee -a /etc/apt/sources.list
-apt update
-apt install -y wget gnupg
-----
+Focal is the  LTS of Ubuntu from 04/2020
 
 then install the {feelpp} channel as above and install {feelpp}
+
+.Install {feelpp} from stable channel on focal 
+[source,shell]
 ----
 echo "deb https://dl.bintray.com/feelpp/ubuntu focal stable" |  tee -a /etc/apt/sources.list
 wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | apt-key add -
 apt update
 apt install -y feelpp-quickstart
 ----
+
+.Install {feelpp} from latest channel on focal 
+[source,shell]
+----
+echo "deb https://dl.bintray.com/feelpp/ubuntu focal latest" |  tee -a /etc/apt/sources.list
+wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | apt-key add -
+apt update
+apt install -y feelpp-quickstart
+----
+
+NOTE: {feelpp} does not rely on `focal-proposed` to build, only on the standard ubuntu distribution channels.
 
 == Install {feelpp} packages
 
