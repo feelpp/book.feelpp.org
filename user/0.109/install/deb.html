@@ -703,7 +703,7 @@ MathJax.Hub.Config({
 <td class="tableblock halign-left valign-top"><p class="tableblock">focal</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">20.04</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">stable,latest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">next LTS (to be released on April 23, 2020), see <a href="#focal">Installing Feel++ channel on Focal</a> below.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LTS, see <a href="#focal">Installing Feel++ channel on Focal</a> below.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ubuntu</p></td>
@@ -814,33 +814,40 @@ The previous step is mandatory to ensure that <code>apt</code> enables installin
 <div class="sect2">
 <h3 id="focal"><a class="anchor" href="#focal"></a>1.1. Installing Feel++ channel on Focal</h3>
 <div class="paragraph">
-<p>Focal is the next LTS of Ubuntu.
-The installation is a bit special because the default Focal distribution does not provide all the repositories necessary to install the Feel++ packages
-The procedure is slightly more involved than the procedure described above.
-You need to proceed as follows for example for the stable channel.</p>
-</div>
-<div class="paragraph">
-<p>First you need to add the <code>focal-proposed</code> repository and install <code>wget</code> and <code>gnupg</code> if needed</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>echo "deb http://archive.ubuntu.com/ubuntu focal-proposed main restricted" |  tee -a /etc/apt/sources.list
-echo "deb http://archive.ubuntu.com/ubuntu focal-proposed universe" |  tee -a /etc/apt/sources.list
-echo "deb http://archive.ubuntu.com/ubuntu focal-proposed multiverse" |  tee -a /etc/apt/sources.list
-apt update
-apt install -y wget gnupg</pre>
-</div>
+<p>Focal is the  LTS of Ubuntu from 04/2020</p>
 </div>
 <div class="paragraph">
 <p>then install the Feel++ channel as above and install Feel++</p>
 </div>
 <div class="listingblock">
+<div class="title">Install Feel++ from stable channel on focal</div>
 <div class="content">
-<pre>echo "deb https://dl.bintray.com/feelpp/ubuntu focal stable" |  tee -a /etc/apt/sources.list
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">echo "deb https://dl.bintray.com/feelpp/ubuntu focal stable" |  tee -a /etc/apt/sources.list
 wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | apt-key add -
 apt update
-apt install -y feelpp-quickstart</pre>
+apt install -y feelpp-quickstart</code></pre>
 </div>
+</div>
+<div class="listingblock">
+<div class="title">Install Feel++ from latest channel on focal</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">echo "deb https://dl.bintray.com/feelpp/ubuntu focal latest" |  tee -a /etc/apt/sources.list
+wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | apt-key add -
+apt update
+apt install -y feelpp-quickstart</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Feel++ does not rely on <code>focal-proposed</code> to build, only on the standard ubuntu distribution channels.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
