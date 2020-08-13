@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Feel++ Docs</title>
+    <title>Setting runtime environment :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/dev/0.108/reference/environment.html">
     <link rel="prev" href="cmake.html">
     <link rel="next" href="fileformats.html">
@@ -500,15 +500,18 @@ MathJax.Hub.Config({
   </div>
   <div class="content">
 <article class="doc">
-<div class="sect1">
-<h2 id="_setting_runtime_environment"><a class="anchor" href="#_setting_runtime_environment"></a>1. Setting runtime environment</h2>
+<h1 class="page">Setting runtime environment</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this section, we present some tools to initialize and manipulate
 Feel++ environment.</p>
 </div>
-<div class="sect2">
-<h3 id="_initialize_feel"><a class="anchor" href="#_initialize_feel"></a>1.1. Initialize Feel++</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_initialize_feel"><a class="anchor" href="#_initialize_feel"></a>1. Initialize Feel++</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Environment class is necessary to initialize your application, as seen in FirstApp.
 The interface is as follows:</p>
@@ -543,11 +546,10 @@ The interface is as follows:</p>
 </li>
 </ul>
 </div>
-</div>
 <div class="sect2">
-<h3 id="_options_description"><a class="anchor" href="#_options_description"></a>1.2. Options Description</h3>
+<h3 id="_options_description"><a class="anchor" href="#_options_description"></a>1.1. Options Description</h3>
 <div class="sect3">
-<h4 id="_adding_options"><a class="anchor" href="#_adding_options"></a>1.2.1. Adding Options</h4>
+<h4 id="_adding_options"><a class="anchor" href="#_adding_options"></a>1.1.1. Adding Options</h4>
 <div class="paragraph">
 <p><code>feel_options()</code> returns a list of default options used in Feel++.</p>
 </div>
@@ -626,12 +628,33 @@ makeOptions()
 <div class="listingblock">
 <div class="title">Excerpt from <code>quickstart/qs_laplacian.cpp</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp"></code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">    using namespace Feel;
+
+
+    po::options_description laplacianoptions( "Laplacian options" );
+
+    laplacianoptions.add_options()( "no-solve", po::value&lt;bool&gt;()-&gt;default_value( false ), "No solve" )
+        ( "k", po::value&lt;std::string&gt;()-&gt;default_value( "1" ), "diffusion coefficient" )
+        ( "f", po::value&lt;std::string&gt;()-&gt;default_value( "" ), "right hand side" )
+        ( "g", po::value&lt;std::string&gt;()-&gt;default_value( "" ), "Dirichlet boundary condition" )
+        ( "un", po::value&lt;std::string&gt;()-&gt;default_value( "" ), "Neumann boundary condition" )
+        ( "r_1", po::value&lt;std::string&gt;()-&gt;default_value( "1" ), "Robin left hand side coefficient" )
+        ( "r_2", po::value&lt;std::string&gt;()-&gt;default_value( "" ), "Robin right hand side  coefficient" )
+        ( "pyexpr.filename", po::value&lt;std::string&gt;()-&gt;default_value( "$cfgdir/../python/laplacian.py" ), "python filename to execute" );
+    laplacianoptions.add( case_options( FEELPP_DIM, "P1" ) );
+    laplacianoptions.add_options()( "marker.name", po::value&lt;std::string&gt;(), "marker on which to solve problem" );
+    laplacianoptions.add_options()( "marker.levelset", po::value&lt;std::string&gt;(), "marker on which to solve problem" );
+
+    Environment env( _argc = argc, _argv = argv,
+                     _desc = laplacianoptions,
+                     _about = about( _name = "qs_laplacian",
+                                     _author = "Feel++ Consortium",
+                                     _email = "feelpp-devel@feelpp.org" ) );</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_options_accessors"><a class="anchor" href="#_options_accessors"></a>1.2.2. Options Accessors</h4>
+<h4 id="_options_accessors"><a class="anchor" href="#_options_accessors"></a>1.1.2. Options Accessors</h4>
 <div class="sect4">
 <h5 id="_options_description_2"><a class="anchor" href="#_options_description_2"></a>Options Description :</h5>
 <div class="listingblock">
@@ -668,9 +691,9 @@ auto Tfinal =  Environment::vm( _name="test" ).template as&lt;int&gt;()*dt;</cod
 </div>
 </div>
 <div class="sect2">
-<h3 id="_repository"><a class="anchor" href="#_repository"></a>1.3. Repository</h3>
+<h3 id="_repository"><a class="anchor" href="#_repository"></a>1.2. Repository</h3>
 <div class="sect3">
-<h4 id="_change_changerepository"><a class="anchor" href="#_change_changerepository"></a>1.3.1. Change changeRepository</h4>
+<h4 id="_change_changerepository"><a class="anchor" href="#_change_changerepository"></a>1.2.1. Change changeRepository</h4>
 <div class="paragraph">
 <p>You can change the default repository where the results are stored</p>
 </div>
@@ -731,7 +754,7 @@ auto Tfinal =  Environment::vm( _name="test" ).template as&lt;int&gt;()*dt;</cod
 </div>
 </div>
 <div class="sect3">
-<h4 id="_findfile"><a class="anchor" href="#_findfile"></a>1.3.2. findFile</h4>
+<h4 id="_findfile"><a class="anchor" href="#_findfile"></a>1.2.2. findFile</h4>
 <div class="sect4">
 <h5 id="_interface"><a class="anchor" href="#_interface"></a>Interface</h5>
 <div class="listingblock">
@@ -775,9 +798,9 @@ auto Tfinal =  Environment::vm( _name="test" ).template as&lt;int&gt;()*dt;</cod
 </div>
 </div>
 <div class="sect2">
-<h3 id="_utility_functions"><a class="anchor" href="#_utility_functions"></a>1.4. Utility functions</h3>
+<h3 id="_utility_functions"><a class="anchor" href="#_utility_functions"></a>1.3. Utility functions</h3>
 <div class="sect3">
-<h4 id="_communications"><a class="anchor" href="#_communications"></a>1.4.1. Communications</h4>
+<h4 id="_communications"><a class="anchor" href="#_communications"></a>1.3.1. Communications</h4>
 <div class="paragraph">
 <p>A lot of data structures, in fact most of them, in Feel++ are parallel and are associated with a <code>WorldComm</code> data structure which allows us to access and manipulate the MPI communicators.
 We provide some utility free functions that allow a transparent access to the <code>WorldComm</code> data structure.</p>
