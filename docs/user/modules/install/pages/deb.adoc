@@ -10,7 +10,7 @@ The supported systems are described below
 |===
 |Distribution | Release | Version | Supported Channels | Comment
 
-|ubuntu | focal | 20.04 | stable,latest | next LTS (to be released on April 23, 2020), see <<focal>> below.
+|ubuntu | focal | 20.04 | stable,latest | LTS, see <<focal>> below.
 |ubuntu | eoan  | 19.10 | stable,latest |
 |ubuntu | bionic| 18.04  |  | LTS
 |debian | buster| 10 | stable,latest | |
@@ -19,16 +19,21 @@ The supported systems are described below
 |===
 
 Using the command line, add the following to your /etc/apt/sources.list system config file:
+
 ----
 echo "deb https://dl.bintray.com/feelpp/{distribution} {release} {channel}" | sudo tee -a /etc/apt/sources.list
 ----
 for example install the eoan `stable` channel
+
+[source,shell]
 ----
-echo "deb https://dl.bintray.com/feelpp/ubuntu eoan stable" | sudo tee -a /etc/apt/sources.list
+> echo "deb https://dl.bintray.com/feelpp/ubuntu eoan stable" | sudo tee -a /etc/apt/sources.list
 ----
 or the eoan `latest` channel
+
+[source,shell]
 ----
-echo "deb https://dl.bintray.com/feelpp/ubuntu eoan latest" | sudo tee -a /etc/apt/sources.list
+> echo "deb https://dl.bintray.com/feelpp/ubuntu eoan latest" | sudo tee -a /etc/apt/sources.list
 ----
 
 NOTE: installing both the `stable` and the `latest` channels will result in having the `stable` being superseded by the `latest` channel.
@@ -36,46 +41,55 @@ NOTE: installing both the `stable` and the `latest` channels will result in havi
 [TIP]
 ====
 add the repository URLs using the "Software Sources" admin UI:
+
 ----
 deb https://dl.bintray.com/feelpp/{distribution} {release} {channel}
 ----
 ====
 
 You now download the Bintray public GPG key as follows:
+
+[source,shell]
 ----
-wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
+> wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
 ----
 WARNING: The previous step is mandatory to ensure that `apt` enables installing {feelpp} packages.
 
 You should then update the database
+
+[source,shell]
 ----
-sudo apt update
+> sudo apt update
 ----
 
 [[focal]]
 === Installing {feelpp} channel on Focal
 
-Focal is the next LTS of Ubuntu.
-The installation is a bit special because the default Focal distribution does not provide all the repositories necessary to install the {feelpp} packages
-The procedure is slightly more involved than the procedure described above.
-You need to proceed as follows for example for the stable channel.
-
-First you need to add the `focal-proposed` repository and install `wget` and `gnupg` if needed
-----
-echo "deb http://archive.ubuntu.com/ubuntu focal-proposed main restricted" |  tee -a /etc/apt/sources.list
-echo "deb http://archive.ubuntu.com/ubuntu focal-proposed universe" |  tee -a /etc/apt/sources.list
-echo "deb http://archive.ubuntu.com/ubuntu focal-proposed multiverse" |  tee -a /etc/apt/sources.list
-apt update
-apt install -y wget gnupg
-----
+Focal is the  LTS of Ubuntu from 04/2020
 
 then install the {feelpp} channel as above and install {feelpp}
+
+.Install {feelpp} from stable channel on focal 
+[source,shell]
 ----
 echo "deb https://dl.bintray.com/feelpp/ubuntu focal stable" |  tee -a /etc/apt/sources.list
 wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | apt-key add -
 apt update
 apt install -y feelpp-quickstart
 ----
+
+then install the {feelpp} channel as above and install {feelpp}
+
+.Install {feelpp} from latest channel on focal 
+[source,shell]
+----
+echo "deb https://dl.bintray.com/feelpp/ubuntu focal latest" |  tee -a /etc/apt/sources.list
+wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | apt-key add -
+apt update
+apt install -y feelpp-quickstart
+----
+
+NOTE: {feelpp} does not rely on `focal-proposed` to build, only on the standard ubuntu distribution channels.
 
 == Install {feelpp} packages
 
