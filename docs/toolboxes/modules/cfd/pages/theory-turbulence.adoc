@@ -1,0 +1,70 @@
+= Theory of Turbulent Flows
+
+== Notations and units
+
+|===
+| Notation | Quantity | Unit
+
+|stem:[\rho_f]|fluid density|stem:[kg \cdot m^{-3}]
+|stem:[\boldsymbol{u}_f]|fluid velocity|stem:[m \cdot s^{-1}]
+|stem:[\boldsymbol{\sigma}_f]|fluid stress tensor|stem:[N \cdot m^{-2}]
+|stem:[\boldsymbol{f}^t_f]| source term | stem:[kg \cdot m^{-3} \cdot s^{-1}]
+|stem:[p_f]|pressure fields|stem:[kg \cdot m^{-1} \cdot s^{-2}]
+|stem:[\mu_f]| dynamic viscosity|stem:[kg \cdot m^{-1} \cdot s^{-1}]
+|stem:[\bar{U}]|characteristic inflow velocity|stem:[m \cdot s^{-1}]
+|stem:[\nu]|kinematic viscosity|stem:[m^2 \cdot s^{-1}]
+|stem:[L]| characteristic length|stem:[m]
+|===
+
+
+== Reynolds-averaged Navier–Stokes equations
+
+The Reynolds-averaged Navier–Stokes equations (or RANS equations) are time-averaged equations of motion for fluid flow. 
+The Reynolds averaging consists to decompose the solution variables of Navier-Stokes equations (like velocity stem:[\boldsymbol{u}]) into the mean component (stem:[\overline{\boldsymbol{u}}])
+and the fluctuating component (stem:[\boldsymbol{u}^{\prime}]), which can be written in the following form 
+
+[stem]
+++++
+\boldsymbol{u} = \overline{\boldsymbol{u}} + \boldsymbol{u}^{\prime}.
+++++
+
+=== Incompressible case
+The incompressible Navier-Stokes equations required to find the velocity stem:[\boldsymbol{u}] and the pressure stem:[p] which verify following equations
+
+[stem]
+++++
+\begin{eqnarray*}
+\rho \left. \frac{\partial\mathbf{u}}{\partial t} \right|_\mathrm{x}
++ \rho \left( \boldsymbol{u} \cdot \nabla_{\mathrm{x}} \right) \boldsymbol{u}
+- \nabla_{\mathrm{x}} \cdot \boldsymbol{\sigma} = \boldsymbol{f}^t , \quad \text{ in } \Omega^t \times \left[t_i,t_f \right] \\
+\nabla_{\mathrm{x}} \cdot \boldsymbol{u} = 0, \quad \text{ in } \Omega^t \times \left[t_i,t_f \right]
+\end{eqnarray*}
+++++
+
+
+
+By substituting the Reynolds decomposition on the velocity and pressure, i.e
+
+[stem]
+++++
+\begin{eqnarray*}
+\boldsymbol{u} = \overline{\boldsymbol{u}} + \boldsymbol{u}^{\prime} \quad \text{and} \quad p = \overline{p} + p^{\prime}
+\end{eqnarray*}
+++++
+
+into the incompressible Navier-Stokes equations and in computing the Reynolds average of these equations, we can derived Reynolds-averaged Navier–Stokes in the incompressible case.
+The RANS probleme corresponds to find stem:[\overline{\boldsymbol{u}}] and stem:[\overline{p}] such that
+
+[stem]
+++++
+\begin{eqnarray*}
+\rho \left. \frac{\partial\overline{\boldsymbol{u}}}{\partial t} \right|_\mathrm{x}
++ \rho \left( \overline{\boldsymbol{u}} \cdot \nabla_{\mathrm{x}} \right) \overline{\boldsymbol{u}}
++ \rho\ \overline{\left( \boldsymbol{u}^{\prime} \cdot \nabla_{\mathrm{x}} \right) \boldsymbol{u}^{\prime} }
+- \nabla_{\mathrm{x}} \cdot \boldsymbol{\sigma} = \boldsymbol{f}^t , \quad \text{ in } \Omega^t \times \left[t_i,t_f \right] \\
+\nabla_{\mathrm{x}} \cdot \overline{\boldsymbol{u}} = 0, \quad \text{ in } \Omega^t \times \left[t_i,t_f \right]
+\end{eqnarray*}
+++++
+
+
+== Turbulence Models
