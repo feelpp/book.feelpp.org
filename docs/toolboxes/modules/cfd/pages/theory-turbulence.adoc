@@ -5,12 +5,12 @@
 |===
 | Notation | Quantity | Unit
 
-|stem:[\rho_f]|fluid density|stem:[kg \cdot m^{-3}]
-|stem:[\boldsymbol{u}_f]|fluid velocity|stem:[m \cdot s^{-1}]
-|stem:[\boldsymbol{\sigma}_f]|fluid stress tensor|stem:[N \cdot m^{-2}]
-|stem:[\boldsymbol{f}^t_f]| source term | stem:[kg \cdot m^{-3} \cdot s^{-1}]
-|stem:[p_f]|pressure fields|stem:[kg \cdot m^{-1} \cdot s^{-2}]
-|stem:[\mu_f]| dynamic viscosity|stem:[kg \cdot m^{-1} \cdot s^{-1}]
+|stem:[\rho]|fluid density|stem:[kg \cdot m^{-3}]
+|stem:[\boldsymbol{u}]|fluid velocity|stem:[m \cdot s^{-1}]
+|stem:[\boldsymbol{\sigma}]|fluid stress tensor|stem:[N \cdot m^{-2}]
+|stem:[\boldsymbol{f}^t]| source term | stem:[kg \cdot m^{-3} \cdot s^{-1}]
+|stem:[p]|pressure fields|stem:[kg \cdot m^{-1} \cdot s^{-2}]
+|stem:[\mu]| dynamic viscosity|stem:[kg \cdot m^{-1} \cdot s^{-1}]
 |stem:[\bar{U}]|characteristic inflow velocity|stem:[m \cdot s^{-1}]
 |stem:[\nu]|kinematic viscosity|stem:[m^2 \cdot s^{-1}]
 |stem:[L]| characteristic length|stem:[m]
@@ -36,9 +36,22 @@ The incompressible Navier-Stokes equations required to find the velocity stem:[\
 \begin{eqnarray*}
 \rho \left. \frac{\partial\mathbf{u}}{\partial t} \right|_\mathrm{x}
 + \rho \left( \boldsymbol{u} \cdot \nabla_{\mathrm{x}} \right) \boldsymbol{u}
-- \nabla_{\mathrm{x}} \cdot \boldsymbol{\sigma} = \boldsymbol{f}^t , \quad \text{ in } \Omega^t \times \left[t_i,t_f \right] \\
+- \nabla_{\mathrm{x}} \cdot \boldsymbol{\sigma}(\boldsymbol{u},p) = \boldsymbol{f}^t , \quad \text{ in } \Omega^t \times \left[t_i,t_f \right] \\
 \nabla_{\mathrm{x}} \cdot \boldsymbol{u} = 0, \quad \text{ in } \Omega^t \times \left[t_i,t_f \right]
 \end{eqnarray*}
+++++
+
+with the stress tensor stem:[\boldsymbol{\sigma}]
+[stem]
+++++
+\boldsymbol{\sigma}(\boldsymbol{u},p) = -p \boldsymbol{I} + 2\mu D(\boldsymbol{u})
+++++
+
+and strain tensor stem:[D(\boldsymbol{u})]  :
+
+[stem]
+++++
+D(\boldsymbol{u}) = \frac{1}{2} (\nabla_\mathrm{x} \boldsymbol{u} + (\nabla_\mathrm{x} \boldsymbol{u})^T)
 ++++
 
 
@@ -61,10 +74,32 @@ The RANS probleme corresponds to find stem:[\overline{\boldsymbol{u}}] and stem:
 \rho \left. \frac{\partial\overline{\boldsymbol{u}}}{\partial t} \right|_\mathrm{x}
 + \rho \left( \overline{\boldsymbol{u}} \cdot \nabla_{\mathrm{x}} \right) \overline{\boldsymbol{u}}
 + \rho\ \overline{\left( \boldsymbol{u}^{\prime} \cdot \nabla_{\mathrm{x}} \right) \boldsymbol{u}^{\prime} }
-- \nabla_{\mathrm{x}} \cdot \boldsymbol{\sigma} = \boldsymbol{f}^t , \quad \text{ in } \Omega^t \times \left[t_i,t_f \right] \\
+- \nabla_{\mathrm{x}} \cdot \boldsymbol{\sigma}(\overline{\boldsymbol{u}},\overline{p}) = \boldsymbol{f}^t , \quad \text{ in } \Omega^t \times \left[t_i,t_f \right] \\
 \nabla_{\mathrm{x}} \cdot \overline{\boldsymbol{u}} = 0, \quad \text{ in } \Omega^t \times \left[t_i,t_f \right]
+\end{eqnarray*}
+++++
+
+These system is very close to the incompressible Navier-Stokes equations exept that we have an additional
+term  stem:[\rho\ \overline{\left( \boldsymbol{u}^{\prime} \cdot \nabla_{\mathrm{x}} \right) \boldsymbol{u}^{\prime}}].
+Then, this extra term can be rewritten (by using the continuity equation of the fluctuation) as
+
+[stem]
+++++
+\begin{eqnarray*}
+\rho\ \overline{\left( \boldsymbol{u}^{\prime} \cdot \nabla_{\mathrm{x}} \right) \boldsymbol{u}^{\prime}}  =  \nabla \cdot  \left( \rho \overline{ \boldsymbol{u}^{\prime} (\boldsymbol{u}^{\prime})^T } \right)
+\end{eqnarray*}
+++++
+
+=== The Boussinesq approximation
+
+[stem]
+++++
+\begin{eqnarray*}
+ - \rho \overline{ \boldsymbol{u}^{\prime} (\boldsymbol{u}^{\prime})^T } = \mu_t D(\boldsymbol{u}) - \frac{2}{3} \rho k \boldsymbol{I}
 \end{eqnarray*}
 ++++
 
 
 == Turbulence Models
+
+=== Spalart Allmaras Model
