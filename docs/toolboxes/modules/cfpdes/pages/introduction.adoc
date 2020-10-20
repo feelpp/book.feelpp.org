@@ -1,0 +1,65 @@
+
+= Introduction
+
+
+A lot of PDE(s) can be writen in a generic form, and depends mainly on the definition of coefficients.
+The generic form that we use is describe by the next equation :
+
+[stem]
+++++
+\begin{eqnarray*}
+d \frac{\partial u}{\partial t} + \nabla \cdot \left( -c \nabla u - \alpha u + \gamma \right) + \beta \cdot \nabla u + a u = f \quad \text{ in } \Omega
+\end{eqnarray*}
+++++
+
+with stem:[u] the unknown and stem:[\Omega \in \mathbb{R}^n] the computation domain .
+We call this generic form by Coefficient Form PDE and the coefficients are
+
+* stem:[d] : damping or mass coefficient
+* stem:[c] : diffusion coefficient
+* stem:[\alpha] : conservative flux convection coefficient
+* stem:[\gamma] : conservative flux source term
+* stem:[\beta] : convection coefficient
+* stem:[a] : absorption or reaction coefficient
+* stem:[f] : source term
+
+Many problems are multiphysics (i.e. several unknowns) and the generic form can be extended naturally into a system of generic PDE.
+
+NOTE: Coefficients of each equation can be defined by an expression that depends of the current unknown or with unknowns of others equations.
+
+The unknown of each PDEs can be defined as a scalar function (stem:[u:\mathbb{R}^n \longrightarrow \mathbb{R}]) or a vectorial function (stem:[u:\mathbb{R}^n \longrightarrow \mathbb{R}^n]).
+But we need to respect some constraint on the coefficient shape as describe in the next table.
+
+.Shape required by the coefficients
+|===
+| Coefficient | Scalar Unknown | Vectorial Unknown
+
+
+| stem:[d]      | scalar            | scalar
+| stem:[c]      | scalar or matrix  | scalar or matrix 
+| stem:[\alpha] | vectorial         | x 
+| stem:[\gamma] | vectorial         | x 
+| stem:[\beta]  | vectorial         | vectorial 
+| stem:[a]      | scalar            | scalar 
+| stem:[f]      | scalar            | vectorial
+
+|===
+
+
+== Initial Conditions
+
+
+== Boundary Conditions
+
+* Dirichlet : 
+* Neumann : generic version (can depend on unknown)
+* Robin : 
+
+== Finite Element Approximation
+
+== Time scheme
+
+* BDF
+* Theta
+
+== Stabilized finite element

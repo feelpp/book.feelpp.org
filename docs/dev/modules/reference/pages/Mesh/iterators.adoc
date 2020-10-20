@@ -30,7 +30,7 @@ auto r2 = elements(*mesh); // OK
 |`pid_faces_t<MeshType>`| `faces(mesh)` |All the faces of the mesh.
 |`markedfaces_t<MeshType>`| `markedfaces(mesh)` |All the faces of the mesh which are marked.
 |`boundaryfaces_t<MeshType>`| `boundaryfaces(mesh)` |All elements that own a topological dimension one below the mesh. For example, if you mesh is a 2D one, `boundaryfaces(mesh)`  will return all the lines (because of dimension stem:[2-1=1]). These elements which have one dimension less, are corresponding to the boundary faces.
-|`internalfaces_t<MeshType>`| `internalelements(mesh)` |All the elements of the mesh which are stricly within the domain that is to say they do not share a face with the boundary.
+|`internalfaces_t<MeshType>`| `internalfaces(mesh)` |All internal faces of the mesh (not on the boundary).
 | `edges_t<MeshType>` | `edges(mesh)` | All the edges of the mesh.
 | `boundaryedges_t<MeshType>` | `boundaryedges(mesh)` |All boundary edges of the mesh.
 | `points_t<MeshType>` | `points(mesh)` | All the points of the mesh.

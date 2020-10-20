@@ -14,6 +14,51 @@ The fluid mechanics model (`Navier-Stokes` or `Stokes`) can be selected in json 
 
 == Materials
 
+.Materials properties defined in the heat toolbox (symbols are given without components suffix)
+|===
+| Name | Symbol | Shape | Description
+
+| density                     | rho                          | scalar | density
+| dynamic-viscosity           | mu                           | scalar | dynamic viscosity
+| turbulent-dynamic-viscosity | mu_t                         | scalar | turbulent dynamic viscosity
+| consistency-index           | mu_k                         | scalar | consistency index
+| power-law-index             | mu_power_law_n               | scalar | power law index
+| viscosity-min               | mu_min                       | scalar | 
+| viscosity-max               | mu_max                       | scalar | 
+| viscosity-zero-shear        | mu_0                         | scalar | 
+| viscosity-infinite-shear    | mu_inf                       | scalar | 
+| carreau-law-lambda          | mu_carreau_law_lambda        | scalar | 
+| carreau-law-n               | mu_carreau_law_n             | scalar | 
+| carreau-yasuda-law-lambda   | mu_carreau_yasuda_law_lambda | scalar | 
+| carreau-yasuda-law-n        | mu_carreau_yasuda_law_n      | scalar | 
+| carreau-yasuda-law-a        | mu_carreau_yasuda_law_a      | scalar | 
+|===
+
+
+== Fields and symbols expressions
+
+.Fields available
+|===
+| Name | Description | Shape
+
+| velocity | the velocity of fluid | vectorial
+| pressure | the pressure | scalar
+|===
+
+
+.Symbols expressions by considering `fluid` as the keyword used with the toolbox
+|===
+| Symbol | Expression | Description
+
+
+| fluid_U_0              | stem:[u_0]                             | evaluate the temperature
+| fluid_U_1              | stem:[u_1]                             | evaluate the temperature
+| fluid_U_2              | stem:[u_2]                             | evaluate the temperature
+| fluid_U_magnitude      | stem:[\sqrt{u \cdot u}]                             | evaluate the temperature
+| fluid_curl_U_magnitude | stem:[\nabla \wedge u | evaluate the first component of gradient of temperature
+|===
+
+
 The next step is to define the fluid material by setting its properties namely the density stem:[\rho_f] and viscosity stem:[\mu_f].
 In next table, we find the correspondance between the mathematical names and the json names.
 
