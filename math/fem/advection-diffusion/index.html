@@ -1111,7 +1111,7 @@ Si \(u\) résout <a href="#prob:12_4">[prob:12_4]</a>, alors \(\mathcal{L}u=f\) 
 </tr>
 </tbody>
 </table>
-<div class="admonitionblock note">
+<div id="resume-formulation" class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
@@ -1301,6 +1301,90 @@ La coercivité est garantie si \(\alpha_0\) est suffisamment grand c’est à di
 </td>
 </tr>
 </table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Pour le problème Dirichlet homogène et non-homogène, \(f\) peut être prise dans \(H^{-1}(\Omega)=\left(H_{0}^{1}(\Omega)\right)^{\prime} .\)
+Dans ce cas, le second membre de xxx devient \(f(v)=\langle f, v\rangle_{H^{-1}, H_{0}^{1}},\) et le problème est toujours bien posé. L&#8217;estimation de stabilité devient \(\|u\|_{1, \Omega} \leq c\|f\|_{-1, \Omega} .\)
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Considérons le Laplacien avec conditions de Dirichlet homogène, i.e., étant donné \(f \in H^{-1}(\Omega),\) résoudre \(-\Delta u=f\) dans \(\Omega\) avec la condition \(u_{\mid \partial \Omega}=0 .\)
+Alors, la formulation faible revient à chercher \(u \in H_{0}^{1}(\Omega)\) telle que \(\int_{\Omega} \nabla u \cdot \nabla v=\langle f, v\rangle_{H^{-1}, H_{0}^{1}}\) pour tout \(v \in H_{0}^{1}(\Omega)\)
+D&#8217;après le Théorème précédent \(3.8(\mathrm{i})\) avec \(\beta=0, \sigma=\mathcal{I},\) et \(\mu=0,\) le problème est bien posé. Cela signifie que l&#8217;opérateur \((-\Delta)^{-1}: H^{-1}(\Omega) \rightarrow H_{0}^{1}(\Omega)\) est un isomorphisme.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+L&#8217;unicité n&#8217;est pas une propriété triviale dans les espaces plus grands que \(H^{1}(\Omega).\)
+Par exemple, on peut construire des domaines dans lesquels cette propriété n&#8217;est pas dans vérifié dans \(L^{2}\) pour le problème de Dirichlet
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Considérons le  <a href="#resume-formulation">problème générique</a>: si le champ d&#8217;advection \(\beta\) disparaît et si la matrice de diffusion \(\sigma\) est symétrique c.a. dans \(\omega\), la forme bilinéaire \(a\) est symétrique et positive.
+Par conséquent, en raison de la proposition ci-dessous,<a href="#resume-formulation">le problème</a> peut être reformulée en une forme variationnelle.
+Pour le problème de Dirichlet homogène, la forme variationnelle en question est
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\min _{v \in H_{0}^{1}(\Omega)}\left(\frac{1}{2} \int_{\Omega} \nabla v \cdot \sigma \cdot \nabla v+\frac{1}{2} \int_{\Omega} \mu v^{2}-\int_{\Omega} f v\right)\]
+</div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 1. Proposition:</div>
+<div class="content">
+<div class="paragraph">
+<p>En plus des hypothèses du Lemme de Lax Milgram , supposons que:</p>
+</div>
+<div class="paragraph">
+<p>(i) \(a\) est  symétrique: \(a(u, v)=a(v, u), \forall u, v \in V\)</p>
+</div>
+<div class="paragraph">
+<p>(ii) \(a\) est positive: \(a(u, u) \geq 0, \forall u \in V\).</p>
+</div>
+<div class="paragraph">
+<p>alors,  notant \(J(v)=\frac{1}{2} a(v, v)-f(v), u\) résout le problème ci-dessous si et seulement si \(u\) minimise \(J\) sur \(V\)</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\left\{\begin{array}{l}\text { Trouver } u \in V \text { telle que } \\ a(u, v)=f(v), \quad \forall v \in V\end{array}\right.\]
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
