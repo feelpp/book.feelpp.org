@@ -361,7 +361,7 @@ Pour cette raison, ces conditions sont souvent appelées conditions aux limites 
 [[sec:adr-coercivity]]
 == Coercivité
 
-NOTE: Cette section est en cours d'écriture
+On s'intéresse à présent au théorème traitant de la coercivité du <<resume-formulation,problème abstrait>>.
 
 [env.theorem#adr-thr1]
 ****
@@ -423,7 +423,7 @@ avec stem:[\sigma=\frac{c_\Omega(c_\Omega\alpha_0+c)}{1+c^2_\Omega}].
 
 Cela montre que stem:[a] est _coercive_ sur stem:[H^1_0(\Omega)].
 
-Le caractère bien posé résulte alors du Lemme de Lax-Milgram pour les conditions de Dicirichlet homogènes et de la proposition <<TODO>> pour les conditions de Dirichlet non-homogènes.stem:[\square]
+Le caractère bien posé résulte alors du Lemme de Lax-Milgram pour les conditions de Dirichlet homogènes et de la proposition <<TODO>> pour les conditions de Dirichlet non-homogènes.stem:[\square]
 
 *Preuve de _(iv)_*
 Notons stem:[a(u,v)=\int_\Omega \alpha \nabla u\cdot \nabla u + (\beta \cdot \nabla u) v + \mu u v + \int_{\partial \Omega} \gamma u v]. Nous avons l'inégalité suivante:
@@ -434,7 +434,7 @@ Notons stem:[a(u,v)=\int_\Omega \alpha \nabla u\cdot \nabla u + (\beta \cdot \na
 
 Si stem:[p>0] et stem:[q\geq 0], la forme bilinéaire est _coercive_ sur stem:[H^1(\Omega)] avec comme constante stem:[\sigma = \min(\alpha_0,p).
 
-Si stem:[p\geq 0] et stem:[q > 0], la forme bilinéaire est _coercive_ sur stem:[H^1(\Omega)] grâce au Lemme <<TODO>>.
+Si stem:[p\geq 0] et stem:[q > 0], la forme bilinéaire est _coercive_ sur stem:[H^1(\Omega)] grâce au Lemme xref:math:analyse-fonctionelle:lemma.adoc#lemmaB32[Lemma B63].
 
 Dans les deux cas, le caractère bien posé est obtenu par le Lemme de Lax-Milgram.stem:[\square]
 Ceci termine les preuves de _(i)_ et _(iv)_. stem:[\blacksquare]
@@ -447,7 +447,7 @@ Dans ce cas, le second membre de xxx devient stem:[f(v)=\langle f, v\rangle_{H^{
 
 NOTE: Considérons le Laplacien avec conditions de Dirichlet homogène, i.e., étant donné stem:[f \in H^{-1}(\Omega),] résoudre stem:[-\Delta u=f] dans stem:[\Omega] avec la condition stem:[u_{\mid \partial \Omega}=0 .] 
 Alors, la formulation faible revient à chercher stem:[u \in H_{0}^{1}(\Omega)] telle que stem:[\int_{\Omega} \nabla u \cdot \nabla v=\langle f, v\rangle_{H^{-1}, H_{0}^{1}}] pour tout stem:[v \in H_{0}^{1}(\Omega)]
-D'après le Théorème précédent stem:[3.8(\mathrm{i})] avec stem:[\beta=0, \sigma=\mathcal{I},] et stem:[\mu=0,] le problème est bien posé. Cela signifie que l'opérateur stem:[(-\Delta)^{-1}: H^{-1}(\Omega) \rightarrow H_{0}^{1}(\Omega)] est un isomorphisme.
+D'après le Théorème précédent stem:[(\mathrm{i})] avec stem:[\beta=0, \sigma=\mathcal{I},] et stem:[\mu=0,] le problème est bien posé. Cela signifie que l'opérateur stem:[(-\Delta)^{-1}: H^{-1}(\Omega) \rightarrow H_{0}^{1}(\Omega)] est un isomorphisme.
 
 NOTE: L'unicité n'est pas une propriété triviale dans les espaces plus grands que stem:[H^{1}(\Omega).] 
 Par exemple, on peut construire des domaines dans lesquels cette propriété n'est pas dans vérifié dans stem:[L^{2}] pour le problème de Dirichlet
