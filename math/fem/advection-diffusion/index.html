@@ -1174,17 +1174,8 @@ Pour cette raison, ces conditions sont souvent appelées conditions aux limites 
 <div class="sect1">
 <h2 id="sec:adr-coercivity"><a class="anchor" href="#sec:adr-coercivity"></a>6. Coercivité</h2>
 <div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Cette section est en cours d&#8217;écriture
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>On s&#8217;intéresse à présent au théorème traitant de la coercivité du <a href="#resume-formulation">problème abstrait</a>.</p>
 </div>
 <div id="adr-thr1" class="sidebarblock theorem">
 <div class="content">
@@ -1267,7 +1258,7 @@ En utilisant l&#8217;ellipticité de \(\mathcal{L}\) et l&#8217;identité suivan
 <p>Cela montre que \(a\) est <em>coercive</em> sur \(H^1_0(\Omega)\).</p>
 </div>
 <div class="paragraph">
-<p>Le caractère bien posé résulte alors du Lemme de Lax-Milgram pour les conditions de Dicirichlet homogènes et de la proposition <a href="#TODO">[TODO]</a> pour les conditions de Dirichlet non-homogènes.\(\square\)</p>
+<p>Le caractère bien posé résulte alors du Lemme de Lax-Milgram pour les conditions de Dirichlet homogènes et de la proposition <a href="#TODO">[TODO]</a> pour les conditions de Dirichlet non-homogènes.\(\square\)</p>
 </div>
 <div class="paragraph">
 <p><strong>Preuve de <em>(iv)</em></strong>
@@ -1282,7 +1273,7 @@ Notons \(a(u,v)=\int_\Omega \alpha \nabla u\cdot \nabla u + (\beta \cdot \nabla 
 <p>Si \(p&gt;0\) et \(q\geq 0\), la forme bilinéaire est <em>coercive</em> sur \(H^1(\Omega)\) avec comme constante stem:[\sigma = \min(\alpha_0,p).</p>
 </div>
 <div class="paragraph">
-<p>Si \(p\geq 0\) et \(q &gt; 0\), la forme bilinéaire est <em>coercive</em> sur \(H^1(\Omega)\) grâce au Lemme <a href="#TODO">[TODO]</a>.</p>
+<p>Si \(p\geq 0\) et \(q &gt; 0\), la forme bilinéaire est <em>coercive</em> sur \(H^1(\Omega)\) grâce au Lemme <a href="#math:analyse-fonctionelle:lemma.adoc#lemmaB32" class="page unresolved">Lemma B63</a>.</p>
 </div>
 <div class="paragraph">
 <p>Dans les deux cas, le caractère bien posé est obtenu par le Lemme de Lax-Milgram.\(\square\)
@@ -1324,7 +1315,7 @@ Dans ce cas, le second membre de xxx devient \(f(v)=\langle f, v\rangle_{H^{-1},
 <td class="content">
 Considérons le Laplacien avec conditions de Dirichlet homogène, i.e., étant donné \(f \in H^{-1}(\Omega),\) résoudre \(-\Delta u=f\) dans \(\Omega\) avec la condition \(u_{\mid \partial \Omega}=0 .\)
 Alors, la formulation faible revient à chercher \(u \in H_{0}^{1}(\Omega)\) telle que \(\int_{\Omega} \nabla u \cdot \nabla v=\langle f, v\rangle_{H^{-1}, H_{0}^{1}}\) pour tout \(v \in H_{0}^{1}(\Omega)\)
-D&#8217;après le Théorème précédent \(3.8(\mathrm{i})\) avec \(\beta=0, \sigma=\mathcal{I},\) et \(\mu=0,\) le problème est bien posé. Cela signifie que l&#8217;opérateur \((-\Delta)^{-1}: H^{-1}(\Omega) \rightarrow H_{0}^{1}(\Omega)\) est un isomorphisme.
+D&#8217;après le Théorème précédent \((\mathrm{i})\) avec \(\beta=0, \sigma=\mathcal{I},\) et \(\mu=0,\) le problème est bien posé. Cela signifie que l&#8217;opérateur \((-\Delta)^{-1}: H^{-1}(\Omega) \rightarrow H_{0}^{1}(\Omega)\) est un isomorphisme.
 </td>
 </tr>
 </table>
