@@ -340,6 +340,9 @@ MathJax.Hub.Config({
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="theory-turbulence.html">Theory of Turbulent Flows</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
@@ -673,12 +676,189 @@ MathJax.Hub.Config({
 <div class="sect1">
 <h2 id="_materials"><a class="anchor" href="#_materials"></a>2. Materials</h2>
 <div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Materials properties defined in the heat toolbox (symbols are given without components suffix)</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">density</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rho</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">density</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dynamic-viscosity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dynamic viscosity</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">turbulent-dynamic-viscosity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu_t</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">turbulent dynamic viscosity</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">consistency-index</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu_k</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">consistency index</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">power-law-index</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu_power_law_n</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">power law index</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">viscosity-min</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu_min</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">viscosity-max</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu_max</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">viscosity-zero-shear</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">viscosity-infinite-shear</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu_inf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">carreau-law-lambda</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu_carreau_law_lambda</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">carreau-law-n</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu_carreau_law_n</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">carreau-yasuda-law-lambda</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu_carreau_yasuda_law_lambda</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">carreau-yasuda-law-n</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu_carreau_yasuda_law_n</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">carreau-yasuda-law-a</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mu_carreau_yasuda_law_a</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fields_and_symbols_expressions"><a class="anchor" href="#_fields_and_symbols_expressions"></a>3. Fields and symbols expressions</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Fields available</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">velocity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the velocity of fluid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pressure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the pressure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Symbols expressions by considering <code>fluid</code> as the keyword used with the toolbox</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fluid_U_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(u_0\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fluid_U_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(u_1\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fluid_U_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(u_2\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fluid_U_magnitude</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\sqrt{u \cdot u}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fluid_curl_U_magnitude</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stem:[\nabla \wedge u</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the first component of gradient of temperature</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>The next step is to define the fluid material by setting its properties namely the density \(\rho_f\) and viscosity \(\mu_f\).
 In next table, we find the correspondance between the mathematical names and the json names.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Correspondance between fluid parameters and symbols in JSon files</caption>
+<caption class="title">Table 4. Correspondance between fluid parameters and symbols in JSon files</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -718,7 +898,7 @@ In next table, we find the correspondance between the mathematical names and the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_generalised_newtonian_fluid"><a class="anchor" href="#_generalised_newtonian_fluid"></a>2.1. Generalised Newtonian fluid</h3>
+<h3 id="_generalised_newtonian_fluid"><a class="anchor" href="#_generalised_newtonian_fluid"></a>3.1. Generalised Newtonian fluid</h3>
 <div class="paragraph">
 <p>The non Newtonian properties are defined in cfg file in fluid section.</p>
 </div>
@@ -726,7 +906,7 @@ In next table, we find the correspondance between the mathematical names and the
 <p>The viscosity law is activated by:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. Viscosity law</caption>
+<caption class="title">Table 5. Viscosity law</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -812,13 +992,13 @@ In next table, we find the correspondance between the mathematical names and the
 </div>
 </div>
 <div class="sect1">
-<h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>3. Boundary Conditions</h2>
+<h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>4. Boundary Conditions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We start by a listing of boundary conditions supported in fluid mechanics model.</p>
 </div>
 <div class="sect2">
-<h3 id="_dirichlet_on_velocity"><a class="anchor" href="#_dirichlet_on_velocity"></a>3.1. Dirichlet on velocity</h3>
+<h3 id="_dirichlet_on_velocity"><a class="anchor" href="#_dirichlet_on_velocity"></a>4.1. Dirichlet on velocity</h3>
 <div class="paragraph">
 <p>A Dirichlet condition on velocity field reads:</p>
 </div>
@@ -854,7 +1034,7 @@ In next table, we find the correspondance between the mathematical names and the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_dirichlet_on_pressure"><a class="anchor" href="#_dirichlet_on_pressure"></a>3.2. Dirichlet on pressure</h3>
+<h3 id="_dirichlet_on_pressure"><a class="anchor" href="#_dirichlet_on_pressure"></a>4.2. Dirichlet on pressure</h3>
 <div class="stemblock">
 <div class="content">
 \[\begin{align}
@@ -865,9 +1045,9 @@ p &amp; = g \\
 </div>
 </div>
 <div class="sect2">
-<h3 id="_neumann"><a class="anchor" href="#_neumann"></a>3.3. Neumann</h3>
+<h3 id="_neumann"><a class="anchor" href="#_neumann"></a>4.3. Neumann</h3>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Neumann options</caption>
+<caption class="title">Table 6. Neumann options</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -895,7 +1075,7 @@ p &amp; = g \\
 </table>
 </div>
 <div class="sect2">
-<h3 id="_slip"><a class="anchor" href="#_slip"></a>3.4. Slip</h3>
+<h3 id="_slip"><a class="anchor" href="#_slip"></a>4.4. Slip</h3>
 <div class="stemblock">
 <div class="content">
 \[\boldsymbol{u}_f \cdot \boldsymbol{ n } = 0\]
@@ -903,7 +1083,7 @@ p &amp; = g \\
 </div>
 </div>
 <div class="sect2">
-<h3 id="_inlet"><a class="anchor" href="#_inlet"></a>3.5. Inlet</h3>
+<h3 id="_inlet"><a class="anchor" href="#_inlet"></a>4.5. Inlet</h3>
 <div class="paragraph">
 <p>The boundary condition at inlets allow to define a velocity profile on a set of marked faces \(\Gamma_{\mathrm{inlet}}\) in fluid mesh:</p>
 </div>
@@ -960,7 +1140,7 @@ g&amp;=&amp;0 \quad &amp;\text{ on } \partial\Gamma
 </dl>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Inlet flow options</caption>
+<caption class="title">Table 7. Inlet flow options</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -998,9 +1178,9 @@ g&amp;=&amp;0 \quad &amp;\text{ on } \partial\Gamma
 </table>
 </div>
 <div class="sect2">
-<h3 id="_outlet_flow"><a class="anchor" href="#_outlet_flow"></a>3.6. Outlet flow</h3>
+<h3 id="_outlet_flow"><a class="anchor" href="#_outlet_flow"></a>4.6. Outlet flow</h3>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Outlet flow options</caption>
+<caption class="title">Table 8. Outlet flow options</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1025,7 +1205,7 @@ g&amp;=&amp;0 \quad &amp;\text{ on } \partial\Gamma
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="_free_outflow"><a class="anchor" href="#_free_outflow"></a>3.6.1. Free outflow</h4>
+<h4 id="_free_outflow"><a class="anchor" href="#_free_outflow"></a>4.6.1. Free outflow</h4>
 <div class="stemblock">
 <div class="content">
 \[\boldsymbol{\sigma}_{f} \boldsymbol{ n } = \boldsymbol{0}\]
@@ -1033,7 +1213,7 @@ g&amp;=&amp;0 \quad &amp;\text{ on } \partial\Gamma
 </div>
 </div>
 <div class="sect3">
-<h4 id="_windkessel_model"><a class="anchor" href="#_windkessel_model"></a>3.6.2. Windkessel model</h4>
+<h4 id="_windkessel_model"><a class="anchor" href="#_windkessel_model"></a>4.6.2. Windkessel model</h4>
 <div class="paragraph">
 <p>We use a 3-element Windkessel model for modeling an outflow boundary condition.
 We define \(P_l\) a pressure and \(Q_l\) the flow rate.
@@ -1064,7 +1244,7 @@ Then we define the coupling between this outflow model and the fluid model by th
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Windkessel options</caption>
+<caption class="title">Table 9. Windkessel options</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1103,7 +1283,7 @@ Then we define the coupling between this outflow model and the fluid model by th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_implementation_of_boundary_conditions_in_json"><a class="anchor" href="#_implementation_of_boundary_conditions_in_json"></a>3.7. Implementation of boundary conditions in json</h3>
+<h3 id="_implementation_of_boundary_conditions_in_json"><a class="anchor" href="#_implementation_of_boundary_conditions_in_json"></a>4.7. Implementation of boundary conditions in json</h3>
 <div class="paragraph">
 <p>Boundary conditions are set in the json files in the category <code>BoundaryConditions</code>.</p>
 </div>
@@ -1138,9 +1318,9 @@ Then we define the coupling between this outflow model and the fluid model by th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_options_summary"><a class="anchor" href="#_options_summary"></a>3.8. Options summary</h3>
+<h3 id="_options_summary"><a class="anchor" href="#_options_summary"></a>4.8. Options summary</h3>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Boundary conditions</caption>
+<caption class="title">Table 10. Boundary conditions</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1242,7 +1422,7 @@ Then we define the coupling between this outflow model and the fluid model by th
 </div>
 </div>
 <div class="sect1">
-<h2 id="_body_forces"><a class="anchor" href="#_body_forces"></a>4. Body forces</h2>
+<h2 id="_body_forces"><a class="anchor" href="#_body_forces"></a>5. Body forces</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Body forces are also defined in the <code>fluid</code> section of <code>BoundaryConditions</code> in  the json file.</p>
@@ -1278,7 +1458,7 @@ The marker corresponds to mesh elements marked with this tag. If the marker is a
 </div>
 </div>
 <div class="sect1">
-<h2 id="_post_processing"><a class="anchor" href="#_post_processing"></a>5. Post Processing</h2>
+<h2 id="_post_processing"><a class="anchor" href="#_post_processing"></a>6. Post Processing</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
@@ -1303,7 +1483,7 @@ The marker corresponds to mesh elements marked with this tag. If the marker is a
 </div>
 </div>
 <div class="sect2">
-<h3 id="_exports_for_vizualisation"><a class="anchor" href="#_exports_for_vizualisation"></a>5.1. Exports for vizualisation</h3>
+<h3 id="_exports_for_vizualisation"><a class="anchor" href="#_exports_for_vizualisation"></a>6.1. Exports for vizualisation</h3>
 <div class="paragraph">
 <p>The fields allowed to be exported in the <code>fields</code> section are:</p>
 </div>
@@ -1343,7 +1523,7 @@ The marker corresponds to mesh elements marked with this tag. If the marker is a
 </div>
 </div>
 <div class="sect2">
-<h3 id="_measures"><a class="anchor" href="#_measures"></a>5.2. Measures</h3>
+<h3 id="_measures"><a class="anchor" href="#_measures"></a>6.2. Measures</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1402,7 +1582,7 @@ The marker corresponds to mesh elements marked with this tag. If the marker is a
 <p>You can use these expressions in Statistics</p>
 </div>
 <div class="sect3">
-<h4 id="_points"><a class="anchor" href="#_points"></a>5.2.1. Points</h4>
+<h4 id="_points"><a class="anchor" href="#_points"></a>6.2.1. Points</h4>
 <div class="paragraph">
 <p>In order to evaluate velocity or pressure at specific points and save the results in .csv file, the user must define:</p>
 </div>
@@ -1438,7 +1618,7 @@ The marker corresponds to mesh elements marked with this tag. If the marker is a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_flow_rate"><a class="anchor" href="#_flow_rate"></a>5.2.2. Flow rate</h4>
+<h4 id="_flow_rate"><a class="anchor" href="#_flow_rate"></a>6.2.2. Flow rate</h4>
 <div class="paragraph">
 <p>The flow rate can be evaluated and save on .csv file.
 The user must define:</p>
@@ -1475,7 +1655,7 @@ The user must define:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_forces"><a class="anchor" href="#_forces"></a>5.2.3. Forces</h4>
+<h4 id="_forces"><a class="anchor" href="#_forces"></a>6.2.3. Forces</h4>
 <div class="paragraph">
 <p>compute lift and drag</p>
 </div>
@@ -1487,7 +1667,7 @@ The user must define:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_export_user_functions"><a class="anchor" href="#_export_user_functions"></a>5.3. Export user functions</h3>
+<h3 id="_export_user_functions"><a class="anchor" href="#_export_user_functions"></a>6.3. Export user functions</h3>
 <div class="paragraph">
 <p>A function defined by a symbolic expression can be represented as a finite element field thanks to nodal projection.
 This function can be exported.</p>
@@ -1513,16 +1693,16 @@ This function can be exported.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_stabilization_methods"><a class="anchor" href="#_stabilization_methods"></a>6. Stabilization methods</h2>
+<h2 id="_stabilization_methods"><a class="anchor" href="#_stabilization_methods"></a>7. Stabilization methods</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_gls_family"><a class="anchor" href="#_gls_family"></a>6.1. GLS family</h3>
+<h3 id="_gls_family"><a class="anchor" href="#_gls_family"></a>7.1. GLS family</h3>
 <div class="paragraph">
 <p>Galerkin leat-Square (GLS) stabilization methods can be activated from the cfg file by adding <code>stabilization-gls=1</code> in the <code>fluid</code> prefix.
 Others options available are enumerated in the next table and must be given with the prefix <code>fluid.stabilization-gls</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. GLS stabilzation options in CFG</caption>
+<caption class="title">Table 11. GLS stabilzation options in CFG</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1572,7 +1752,7 @@ Others options available are enumerated in the next table and must be given with
 </table>
 </div>
 <div class="sect2">
-<h3 id="_cip_family"><a class="anchor" href="#_cip_family"></a>6.2. CIP family</h3>
+<h3 id="_cip_family"><a class="anchor" href="#_cip_family"></a>7.2. CIP family</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1589,7 +1769,7 @@ Documentation pending
 </div>
 </div>
 <div class="sect1">
-<h2 id="_run_simulation"><a class="anchor" href="#_run_simulation"></a>7. Run simulation</h2>
+<h2 id="_run_simulation"><a class="anchor" href="#_run_simulation"></a>8. Run simulation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The computational fluid dynamics applications available are</p>

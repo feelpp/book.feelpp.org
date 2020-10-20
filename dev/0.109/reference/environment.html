@@ -628,28 +628,7 @@ makeOptions()
 <div class="listingblock">
 <div class="title">Excerpt from <code>quickstart/qs_laplacian.cpp</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">    using namespace Feel;
-
-
-    po::options_description laplacianoptions( "Laplacian options" );
-
-    laplacianoptions.add_options()( "no-solve", po::value&lt;bool&gt;()-&gt;default_value( false ), "No solve" )
-        ( "k", po::value&lt;std::string&gt;()-&gt;default_value( "1" ), "diffusion coefficient" )
-        ( "f", po::value&lt;std::string&gt;()-&gt;default_value( "" ), "right hand side" )
-        ( "g", po::value&lt;std::string&gt;()-&gt;default_value( "" ), "Dirichlet boundary condition" )
-        ( "un", po::value&lt;std::string&gt;()-&gt;default_value( "" ), "Neumann boundary condition" )
-        ( "r_1", po::value&lt;std::string&gt;()-&gt;default_value( "1" ), "Robin left hand side coefficient" )
-        ( "r_2", po::value&lt;std::string&gt;()-&gt;default_value( "" ), "Robin right hand side  coefficient" )
-        ( "pyexpr.filename", po::value&lt;std::string&gt;()-&gt;default_value( "$cfgdir/../python/laplacian.py" ), "python filename to execute" );
-    laplacianoptions.add( case_options( FEELPP_DIM, "P1" ) );
-    laplacianoptions.add_options()( "marker.name", po::value&lt;std::string&gt;(), "marker on which to solve problem" );
-    laplacianoptions.add_options()( "marker.levelset", po::value&lt;std::string&gt;(), "marker on which to solve problem" );
-
-    Environment env( _argc = argc, _argv = argv,
-                     _desc = laplacianoptions,
-                     _about = about( _name = "qs_laplacian",
-                                     _author = "Feel++ Consortium",
-                                     _email = "feelpp-devel@feelpp.org" ) );</code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp"></code></pre>
 </div>
 </div>
 </div>

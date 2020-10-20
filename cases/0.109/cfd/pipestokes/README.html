@@ -725,7 +725,7 @@ The latter allows to configure the set of equations associated the toolbox physi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Name": "Stockes flow in a pipe", <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Name": "Stokes flow in a pipe", <i class="conum" data-value="1"></i><b>(1)</b>
 "ShortName":"pipestokes", <i class="conum" data-value="2"></i><b>(2)</b>
 "Models": <i class="conum" data-value="3"></i><b>(3)</b>
 {
@@ -1022,8 +1022,8 @@ pc-type=lu #gasm,lu <i class="conum" data-value="7"></i><b>(7)</b></pre>
 <div class="sect2">
 <h3 id="_model_toolbox"><a class="anchor" href="#_model_toolbox"></a>3.1. Model &amp; Toolbox</h3>
 <div class="paragraph">
-<p>We consider a 2D model representative of a pipe, the flow domain is contained into the rectangle \( \lbrack 0,length \rbrack \times \lbrack 0,height \rbrack \). and it&#8217;s caracterised by it&#8217;s dynamique viscpsity \(\boldsymbol{\mu}\).
-we chosed for this case the stokes model.</p>
+<p>We consider a 2D model representative of a pipe, the flow domain is the rectangle \( \lbrack 0,length \rbrack \times \lbrack 0,height \rbrack \) and is characterized by its dynamic viscosity \(\mu\).
+we chose for this case the Stokes model.</p>
 </div>
 <div class="imageblock text-center">
 <div class="content">
@@ -1031,20 +1031,20 @@ we chosed for this case the stokes model.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We remind the stokes model</p>
+<p>We remind the Stokes model:</p>
 </div>
 <div class="stemblock">
 <div class="content">
 \[  \left\{
   \begin{aligned}
-   \boldsymbol{\mu}\boldsymbol{\Delta u}+\boldsymbol{\nabla p}=f\\
-   \boldsymbol{\nabla}\cdot\boldsymbol{u}=0
+   \mu\Delta\boldsymbol{u}+\nabla p=\boldsymbol{f}\\
+   \nabla\cdot\boldsymbol{u}=0
   \end{aligned}
   \right.\]
 </div>
 </div>
 <div class="paragraph">
-<p>with \(\boldsymbol{\mu}\) is the dynamic viscosity, \(\boldsymbol{p}\) is the pressure ,\(f\) the source and u the velocity.</p>
+<p>with \(\boldsymbol{\mu}\) is the dynamic viscosity, \(p\) is the pressure, \(\boldsymbol{f}\) the source term and \(\boldsymbol{u}\) the velocity field.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1052,8 +1052,8 @@ we chosed for this case the stokes model.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>The fact that we are not considering the time evolution in this case,
-we have \(v_{inlet}\) = \(D\) \(y(height-y)\). To determine \(D\), we know that for \(y=\frac{height}{2}\) we have the maximal velocity, so</p>
+<p>Since we are not considering the time evolution in this case,
+we have \(v_{inlet}\) = \(D\) \(y(height-y)\). To determine \(D\), we use the fact that for \(y=\frac{height}{2}\) we have the maximal velocity, so</p>
 </li>
 </ul>
 </div>
@@ -1065,7 +1065,7 @@ we have \(v_{inlet}\) = \(D\) \(y(height-y)\). To determine \(D\), we know that 
 <div class="ulist">
 <ul>
 <li>
-<p>In this case, there is no source term so, \(f=0\).</p>
+<p>In this case, there is no source term so, \(\boldsymbol{f}=\boldsymbol{0}\).</p>
 </li>
 </ul>
 </div>
@@ -1075,14 +1075,14 @@ we have \(v_{inlet}\) = \(D\) \(y(height-y)\). To determine \(D\), we know that 
 <div class="ulist">
 <ul>
 <li>
-<p>On <strong>wall</strong>, a homogenous Dirichlet condition \(\boldsymbol{u}=0\)</p>
+<p>On <strong>wall</strong>, a homogenous Dirichlet condition \(\boldsymbol{u}=\boldsymbol{0}\)</p>
 </li>
 <li>
-<p>On <strong>outlet</strong>, a Newmann condition \(\boldsymbol{\sigma} . \boldsymbol{n}=0\), where \(\sigma=-pI_d+2\mu D(\boldsymbol{u})\) and \(D(\boldsymbol{u})=\frac{1}{2}(\nabla \boldsymbol{u}+\nabla \boldsymbol{u}^{T})\),  \(\sigma \)  is the contraints tensor and \(D\) is the deformation tensor.</p>
+<p>On <strong>outlet</strong>, a Neumann condition \(\boldsymbol{\sigma} . \boldsymbol{n}=0\), where \(\boldsymbol{\sigma}=-p\boldsymbol{I}_d+2\mu\boldsymbol{D}(\boldsymbol{u})\) and \(\boldsymbol{D}(\boldsymbol{u})=\frac{1}{2}(\nabla \boldsymbol{u}+\nabla \boldsymbol{u}^{T})\),  \(\boldsymbol{\sigma} \)  is the contraint tensor and \(\boldsymbol{D}\) is the deformation tensor.</p>
 </li>
 <li>
 <p>On <strong>inlet</strong>, an inflow Dirichlet condition :
-\( \boldsymbol{u}=(v_{in},0) \)</p>
+\( \boldsymbol{u}=(v_{inlet},0) \)</p>
 </li>
 </ul>
 </div>

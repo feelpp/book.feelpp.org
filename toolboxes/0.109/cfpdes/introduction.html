@@ -3,10 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Overview of the Portal :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/toolboxes/0.108/mso4sc/portal.html">
-    <link rel="prev" href="account.html">
-    <link rel="next" href="offer.html">
+    <title>Introduction :: Feel++ Docs</title>
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">    
@@ -231,19 +228,19 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Feel++ Toolbox Cloud/HPC Web GUI</a>
+    <a class="nav-link" href="../mso4sc/index.html">Feel++ Toolbox Cloud/HPC Web GUI</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="account.html">Create a MSO4SC Portal Account</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="portal.html">Overview of the MSO4SC Portal</a>
+    <a class="nav-link" href="../mso4sc/account.html">Create a MSO4SC Portal Account</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="offer.html">Get Feel++ Apps</a>
+    <a class="nav-link" href="../mso4sc/portal.html">Overview of the MSO4SC Portal</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="run.html">Run Feel++ Apps</a>
+    <a class="nav-link" href="../mso4sc/offer.html">Get Feel++ Apps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../mso4sc/run.html">Run Feel++ Apps</a>
   </li>
 </ul>
   </li>
@@ -639,63 +636,66 @@ MathJax.Hub.Config({
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Feel++ Toolboxes Manual</a></li>
-    <li><a href="index.html">Feel++ Toolbox Cloud/HPC Web GUI</a></li>
-    <li><a href="portal.html">Overview of the MSO4SC Portal</a></li>
+    <li><a href="introduction.html">Introduction</a></li>
   </ul>
 </nav>
 <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">0.109-alpha.1</button>
   <div class="version-menu">
-    <a class="version is-current" href="portal.html">0.109-alpha.1</a>
-    <a class="version" href="../../0.108/mso4sc/portal.html">0.108</a>
-    <a class="version" href="../../0.107/mso4sc/portal.html">0.107</a>
+    <a class="version is-current" href="introduction.html">0.109-alpha.1</a>
+    <a class="version is-missing" href="../../0.108/index.html">0.108</a>
+    <a class="version is-missing" href="../../0.107/index.html">0.107</a>
   </div>
 </div>
-  <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/master/docs/toolboxes/modules/mso4sc/pages/portal.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/master/docs/toolboxes/modules/cfpdes/pages/introduction.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Overview of the Portal</h1>
-<div class="imageblock">
+<h1 class="page">Introduction</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A lot of PDE(s) can be writen in a generic form, and depends mainly on the definition of coefficients.
+The generic form that we use is describe by the next equation :</p>
+</div>
+<div class="stemblock">
 <div class="content">
-<img src="_images/PortalMSO4SC.png" alt="PortalMSO4SC">
+\[\begin{eqnarray*}
+d \frac{\partial u}{\partial t} + \nabla \cdot \left( -c \nabla u - \alpha u + \gamma \right) + \beta \cdot \nabla u + a u = f \quad \text{ in } \Omega
+\end{eqnarray*}\]
 </div>
-<div class="title">Figure 1. Main web page of the MSO4SC Portal</div>
 </div>
 <div class="paragraph">
-<p>The portal is split into several services:</p>
+<p>with \(u\) the unknown and \(\Omega \in \mathbb{R}^n\) the computation domain .
+We call this generic form by Coefficient Form PDE and the coefficients are</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Marketplace</strong>, where you can add and/or purchase applications</p>
+<p>\(d\) : damping or mass coefficient</p>
 </li>
 <li>
-<p><strong>Data Catalogue</strong>, where you can add and/or retrieve data</p>
+<p>\(c\) : diffusion coefficient</p>
 </li>
 <li>
-<p><strong>Experiments</strong>, where the app is setup and the simulation is launched</p>
+<p>\(\alpha\) : conservative flux convection coefficient</p>
 </li>
 <li>
-<p><strong>Visualization</strong>, to access a Remote desktop to pre and/or post-processes your simulations</p>
+<p>\(\gamma\) : conservative flux source term</p>
+</li>
+<li>
+<p>\(\beta\) : convection coefficient</p>
+</li>
+<li>
+<p>\(a\) : absorption or reaction coefficient</p>
+</li>
+<li>
+<p>\(f\) : source term</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>More details on:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://github.com/MSO4SC/MSOPortal/blob/master/portal/README.adoc">MSO4SC Front-end &amp; Experiments Tool</a></p>
-</li>
-<li>
-<p><a href="https://business-api-ecosystem.readthedocs.io/en/v5.4.1/user-programmer-guide.html"><strong>Marketplace</strong> User manual</a></p>
-</li>
-<li>
-<p><a href="https://ckan.org/documentation-and-api/"><strong>Data Catalogue</strong> docs</a></p>
-</li>
-</ul>
+<p>Many problems are multiphysics (i.e. several unknowns) and the generic form can be extended naturally into a system of generic PDE.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -704,36 +704,120 @@ MathJax.Hub.Config({
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>For smooth operations of <a href="http://portal.mso4sc.eu/" class="bare">portal.mso4sc.eu/</a>, the following ports have to <strong>open</strong>:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>3000</code>: <strong>IDM</strong>, the service responsible for authentification</p>
-</li>
-<li>
-<p><code>5000</code>: <strong>MarkePlace</strong></p>
-</li>
-<li>
-<p><code>8000</code>: <strong>Data Catalogue</strong></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>To check, you can use <code>nmap -p &lt;port&gt; portal.mso4sc.eu</code>.</p>
-</div>
-<div class="paragraph">
-<p>You may need to contact your system admin to check and eventually open these ports.</p>
-</div>
+Coefficients of each equation can be defined by an expression that depends of the current unknown or with unknowns of others equations.
 </td>
 </tr>
 </table>
 </div>
-<nav class="pagination">
-  <span class="prev"><a href="account.html">Create a MSO4SC Portal Account</a></span>
-  <span class="next"><a href="offer.html">Get Feel++ Apps</a></span>
-</nav>
+<div class="paragraph">
+<p>The unknown of each PDEs can be defined as a scalar function (\(u:\mathbb{R}^n \longrightarrow \mathbb{R}\)) or a vectorial function (\(u:\mathbb{R}^n \longrightarrow \mathbb{R}^n\)).
+But we need to respect some constraint on the coefficient shape as describe in the next table.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Shape required by the coefficients</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Coefficient</th>
+<th class="tableblock halign-left valign-top">Scalar Unknown</th>
+<th class="tableblock halign-left valign-top">Vectorial Unknown</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(d\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(c\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar or matrix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar or matrix</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\alpha\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\gamma\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\beta\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(a\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(f\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_initial_conditions"><a class="anchor" href="#_initial_conditions"></a>1. Initial Conditions</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>2. Boundary Conditions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Dirichlet :</p>
+</li>
+<li>
+<p>Neumann : generic version (can depend on unknown)</p>
+</li>
+<li>
+<p>Robin :</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_finite_element_approximation"><a class="anchor" href="#_finite_element_approximation"></a>3. Finite Element Approximation</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_time_scheme"><a class="anchor" href="#_time_scheme"></a>4. Time scheme</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>BDF</p>
+</li>
+<li>
+<p>Theta</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stabilized_finite_element"><a class="anchor" href="#_stabilized_finite_element"></a>5. Stabilized finite element</h2>
+<div class="sectionbody">
+
+</div>
+</div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
