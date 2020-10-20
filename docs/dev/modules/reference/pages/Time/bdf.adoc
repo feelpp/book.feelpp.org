@@ -53,9 +53,9 @@ Here are some of the main methods from BDF :
 |`time( )` | return the current time
 |===
 
-=== Example
+== Example
 
-==== Code
+=== Code
 In order to illustrate how BDF can be used, we will study quasi-static Navier-Stokes problem. The source code with configuration files can be found in
 
 [source,sh]
@@ -155,8 +155,9 @@ at.solveb(_rhs=ft,_solution=U,_backend=backend(_name="ns"),_prec=a_blockns);
 ----
 
 Then the results are exported at the time t, in order to observe them change over time.
+
 [source,cpp]
-----
+--
         w.on( _range=elements(mesh), _expr=curlv(u) );
         e->step(mybdf->time())->add( "u", u );
         e->step(mybdf->time())->add( "w", w );
@@ -168,17 +169,18 @@ Then the results are exported at the time t, in order to observe them change ove
 
 
     }
-----
+--
 
-===== Results
+=== Results
 
-We decide to launch the previous code with a stem:[t_{init}=10], stem:[t_{max}=10] and a time step  stem:[\Delta_t=0.1]. It corresponds to 100 time iterations in the BDF loop.
+We now launch the previous code with a stem:[t_{init}=10], stem:[t_{max}=10] and a time step  stem:[\Delta_t=0.1]. 
+It corresponds to 100 time iterations in the BDF loop.
 Here are some results using Paraview and the {feelpp} xref:exporter.adoc[post-PostProcessing] features:
 
 [[imgBDFt0]]
 .Results at time $$t=0$$ ( initial value )
 image::BDFt0.png[FDA, width="400",align="center"]
 
-[[imgBDFt0]]
+[[imgBDFt35]]
 .Results at time $$t=3.5$$ ( iteration 34 )
 image::BDFt3_5.png[FDA, width="400",align="center"]

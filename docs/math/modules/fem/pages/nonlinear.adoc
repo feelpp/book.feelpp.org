@@ -1,0 +1,220 @@
+= Nonlinear problems
+:stem: latexmath
+
+== A model problem
+
+We consider the following nonlinear Poisson equation:
+[stem]
+++++
+-\nabla \cdot(k(u) \nabla u)=f
+++++
+stem:[k(u)] makes the equation nonlinear if is not constant in stem:[u]. 
+In order to verify the solution procedure, we choose the domain, stem:[k(u), f,] and the boundary conditions such that we have a simple, exact solution stem:[u]. 
+Denote stem:[\Omega] the unit hypercube stem:[[0,1\]^{d}] in stem:[d] dimensions, stem:[k(u)=(1+u)^{m}, f=0, u=0] for stem:[x_{0}=0, u=1] for stem:[x_{0}=1,] and stem:[\partial u / \partial n=0] at all other boundaries stem:[x_{i}=0] and stem:[x_{i}=1, i=1, \ldots, d-1 .] 
+The coordinates are now represented by the symbols stem:[x_{0}, \ldots, x_{d-1}] . 
+The exact solution is then
+[stem]
+++++
+u\left(x_{0}, \ldots, x_{d}\right)=\left(\left(2^{m+1}-1\right) x_{0}+1\right)^{1 /(m+1)}-1
+++++
+The variational formulation of our model problem reads: find stem:[u \in V] such that
+[stem]
+++++
+F(u ; v)=0 \quad \forall v \in V_0
+++++
+where
+[stem]
+++++
+F(u ; v)=\int_{\Omega} k(u) \nabla u \cdot \nabla v d x
+++++
+and
+[stem]
+++++
+\begin{array}{l}
+V_0=\left\{v \in H^{1}(\Omega): v=0 \text { on } x_{0}=0 \text { and } x_{0}=1\right\} \\
+V=\left\{v \in H^{1}(\Omega): v=0 \text { on } x_{0}=0 \text { and } v=1 \text { on } x_{0}=1\right\}
+\end{array}
+++++
+The discrete problem arises as usual by restricting stem:[V] and stem:[V_0] to a pair of discrete spaces. 
+The problem reads:
+find stem:[u \in V] such that
+[stem]
+++++
+F(u ; v)=0 \quad \forall v \in V_0
+++++
+with stem:[u=\sum_{j=1}^{N} U_{j} \phi_{j}] where stem:[U=(U_j)^T_{j=1,...,N}] are the components of stem:[u] in the basis stem:[(\phi_j)_{j=1,...,N}] of stem:[V].
+We have a system of nonlinear algebraic equations to solve.
+
+== Picard strategy
+
+The Picard strategy is also known as the _method of successive substitutions_. 
+
+Picard iteration is an easy way of handling nonlinear PDEs: it uses a known, previous solution in the nonlinear terms so that these terms become linear in the unknown stem:[u]. 
+
+For our particular problem, we use a known, previous solution in the coefficient stem:[k(u)]. 
+Given a solution stem:[u^{n}] from iteration stem:[n], we seek a new (hopefully improved) solution stem:[u^{n+1}] in iteration stem:[n+1] such that stem:[u^{n+1}] solves the linear problem
+[stem]
+++++
+\nabla \cdot\left(k\left(u^{n}\right) \nabla u^{n+1}\right)=0, \quad n=0,1, \ldots
+++++
+The iterations require an initial guess stem:[u^{0}]. The hope is that stem:[u^{n} \rightarrow u] as stem:[n \rightarrow \infty,] and that stem:[u^{n+1}] is sufficiently close to the exact solution stem:[u] of the discrete problem after just a few iterations.
+
+We can formulate a variational problem for stem:[u^{n+1}]. 
+Equivalently, we can approximate stem:[k(u)] by stem:[k\left(u^{n}\right)]  to obtain the same linear variational problem. 
+In both cases, the problem consists of seeking stem:[u^{n+1} \in V] such that
+[stem]
+++++
+\tilde{F}\left(u^{n+1} ; v\right)=0 \quad \forall v \in V_0, \quad n=0,1, \ldots
+++++
+with
+[stem]
+++++
+\tilde{F}\left(u^{n+1} ; v\right)=\int_{\Omega} k\left(u^{n}\right) \nabla u^{n+1} \cdot \nabla v 
+++++
+since this is a linear problem in the unknown stem:[u^{n+1}], we can equivalently use the formulation
+[stem]
+++++
+a\left(u^{n+1}, v\right)=\ell(v)
+++++
+with
+[stem]
+++++
+\begin{aligned}
+a(u, v) &=\int_{\Omega} k\left(u^{n}\right) \nabla u \cdot \nabla v \\
+\ell(v) &=0
+\end{aligned}
+++++
+The iterations can be stopped when stem:[\epsilon \equiv\left\|u^{n+1}-u^{n}\right\|<\varepsilon]] , where stem:[\varepsilon] is small, say stem:[10^{-5}], or when the number of iterations exceed some critical limit. 
+The latter case will detect divergence of the method or unacceptable slow convergence.
+
+In the solution algorithm we only need to store stem:[u^{n}] and stem:[u^{n+1}]. 
+
+
+== Newton strategy at the algebraic level
+
+After having discretized our nonlinear PDE problem, we may use Newton's method to solve the system of nonlinear algebraic equations. 
+From the continuous variational problem, the discrete version results in a system of equations for the unknown parameters stem:[U_{1}, \ldots, U_{N}] (by inserting stem:[\left.u=\sum_{j=1}^{N} U_{j} \phi_{j} \text { and } v=\hat{\phi}_{i} \right)]
+
+[[F_i]]
+[stem]
+++++
+F_{i}\left(U_{1}, \ldots, U_{N}\right) \equiv \sum_{j=1}^{N} \int_{\Omega}\left(k\left(\sum_{\ell=1}^{N} U_{\ell} \phi_{\ell}\right) \nabla \phi_{j} U_{j}\right) \cdot \nabla \hat{\phi}_{i} \mathrm{d} x=0, \quad i=1, \ldots, N
+++++
+Newton's method for the system stem:[F_{i}\left(U_{1}, \ldots, U_{j}\right)=0, i=1, \ldots, N] can be formulated as
+[[der_incr]]
+[stem]
+++++
+\begin{aligned}
+\sum_{j=1}^{N} \frac{\partial}{\partial U_{j}} F_{i}\left(U_{1}^{n}, \ldots, U_{N}^{n}\right) \delta U_{j} &=-F_{i}\left(U_{1}^{n}, \ldots, U_{N}^{n}\right), \quad i=1, \ldots, N \\
+U_{j}^{k+1} &=U_{j}^{n}+\omega \delta U_{j}, \quad j=1, \ldots, N
+\end{aligned}
+++++
+where stem:[\omega \in[0,1]] is a relaxation parameter, and stem:[n] is an iteration index. An initial guess stem:[u^{0}] must be provided to start the algorithm. 
+The original Newton method has stem:[\omega=1], but in problems where it is difficult to obtain convergence, so-called under-relaxation with stem:[\omega<1] may help.
+
+We need to compute the Jacobian matrix stem:[\partial F_{i} / \partial U_{j}] and the right-hand side vector stem:[-F_{i} .] 
+Our present problem has stem:[F_{i}] given by <<F_i>>.
+The derivative stem:[\partial F_{i} / \partial U_{j}] becomes
+[[der_incr_2]]
+[stem]
+++++
+\int_{\Omega}\left[k^{\prime}\left(\sum_{\ell=1}^{N} U_{\ell}^{n} \phi_{\ell}\right) \phi_{j} \nabla\left(\sum_{j=1}^{N} U_{j}^{n} \phi_{j}\right) \cdot \nabla \hat{\phi}_{i}+k\left(\sum_{\ell=1}^{N} U_{\ell}^{n} \phi_{\ell}\right) \nabla \phi_{j} \cdot \nabla \hat{\phi}_{i}\right] 
+++++
+The following results were used to obtain <<der_incr_2>>
+[stem]
+++++
+\frac{\partial u}{\partial U_{j}}=\frac{\partial}{\partial U_{j}} \sum_{j=1}^{N} U_{j} \phi_{j}=\phi_{j}, \quad \frac{\partial}{\partial U_{j}} \nabla u=\nabla \phi_{j,} \quad \frac{\partial}{\partial U_{j}} k(u)=k^{\prime}(u) \phi_{j}
+++++
+
+We can reformulate the Jacobian matrix in <<der>> by introducing the short notation stem:[u^{n}=\sum_{j=1}^{N} U_{j}^{n} \phi_{j}]
+[stem]
+++++
+\frac{\partial F_{i}}{\partial U_{j}}=\int_{\Omega}\left[k^{\prime}\left(u^{n}\right) \phi_{j} \nabla u^{n} \cdot \nabla \hat{\phi}_{i}+k\left(u^{n}\right) \nabla \phi_{j} \cdot \nabla \hat{\phi}_{i}\right] 
+++++
+
+We need to formulate a corresponding variational problem. 
+Looking at the linear system of equations in Newton's method,
+[stem]
+++++
+\sum_{j=1}^{N} \frac{\partial F_{i}}{\partial U_{j}} \delta U_{j}=-F_{i}, \quad i=1, \ldots, N
+++++
+we can introduce stem:[v] as a general test function replacing stem:[\hat{\phi}_{i}], and we can identify the unknown stem:[\delta u=] stem:[\sum_{j=1}^{N} \delta U_{j} \phi_{j} .] 
+From the linear system we can now go "backwards" to construct the corresponding discrete weak form
+[[disc_form]]
+[stem]
+++++
+\int_{\Omega}\left[k^{\prime}\left(u^{n}\right) \delta u \nabla u^{n} \cdot \nabla v+k\left(u^{n}\right) \nabla \delta u \cdot \nabla v\right] =-\int_{\Omega} k\left(u^{n}\right) \nabla u^{n} \cdot \nabla v \mathrm{d} x
+++++
+Equation <<discr_form>> fits the standard form stem:[a(\delta u, v)=\ell(v)] with
+[stem]
+++++
+\begin{aligned}
+a(\delta u, v) &=\int_{\Omega}\left[k^{\prime}\left(u^{n}\right) \delta u \nabla u^{n} \cdot \nabla v+k\left(u^{n}\right) \nabla \delta u \cdot \nabla v\right] \mathrm{d} x \\
+\ell(v) &=-\int_{\Omega} k\left(u^{n}\right) \nabla u^{n} \cdot \nabla v 
+\end{aligned}
+++++
+
+NOTE: the important feature in Newton's method that the previous solution stem:[u^{n}] replaces stem:[u] in the formulas when computing the matrix stem:[\partial F_{i} / \partial U_{j}] and vector stem:[F_{i}] for the linear system in each Newton iteration.
+
+=== Implementation of Newton method
+
+We have implemented in {feelpp} the model problem.
+
+First we need to define the coefficients.
+We set the reaction terms to 0 in the configuration file
+
+.Configure of the reaction term in the .cfg file
+[source,ini,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda-exactsolution1.cfg[lines=3..3]
+----
+the configuration is read in the code like this
+
+.{cpp} code to set  the reaction terms
+[source,cpp,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda.cpp[tag=reaction]
+----
+
+Then we set the diffusion terms
+
+.Configure of the reaction terms in the .cfg file
+[source,ini,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda-exactsolution1.cfg[lines=2..2]
+----
+the configuration is read in the code like this
+
+.{feelpp} code to set  the diffusion terms
+[source,cpp,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda.cpp[tag=diffusion]
+----
+
+We then define the jacobian of the functional
+
+.{feelpp} code to define the jacobian
+[source,cpp,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda.cpp[tag=jacobian]
+----
+
+and the associated residual 
+
+.{feelpp} code to define the residual
+[source,cpp,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda.cpp[tag=residual]
+----
+
+NOTE: we used Nitsche's method to define the Dirichlet boundary conditions in a weak way.
+
+Finally we solve the nonlinear problem:
+
+.{feelpp} code to solve the non-linear problem
+[source,cpp,indent=0]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/doc/manual/nonlinear/nlda.cpp[tag=nlsolve]
+----
+
+The full code is available https://github.com/feelpp/feelpp/blob/develop/doc/manual/nonlinear/nlda.cpp[here].

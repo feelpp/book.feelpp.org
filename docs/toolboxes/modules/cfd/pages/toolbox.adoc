@@ -452,20 +452,25 @@ alemesh_bc
 
 == Body forces
 
-Body forces are also defined in `BoundaryConditions` category in json file.
+Body forces are also defined in the `fluid` section of `BoundaryConditions` in  the json file.
+
 [source,json]
 ----
-
-"VolumicForces":
+"BoundaryConditions":
 {
-    "<marker>":
-    {
-        "expr":"{0,0,-gravityCst*7850}:gravityCst"
+    "fluid":{ 
+        "VolumicForces":
+        {
+            "<marker>":
+            {
+                "expr":"{0,0,-gravityCst*7850}:gravityCst"
+            }
+        }
     }
-}
+}    
 ----
-The marker corresponds to mesh elements marked with this tag.
-If the marker is an empty string, it corresponds to all elements of the mesh.
+
+IMPORTANT: The marker corresponds to mesh elements marked with this tag. If the marker is an empty string, it corresponds to all elements of the mesh.
 
 
 == Post Processing
@@ -514,6 +519,17 @@ The fields allowed to be exported in the `fields` section are:
 - Pressure
 - VelocityDivergence
 
+The following fluid variables are available 
+|===
+| Name | Description
+| `fluid_U_magnitude` | magnitude of the velocity
+| `fluid_Ux` | x component of the velocity
+| `fluid_Uy` | y component of the velocity
+| `fluid_Uz` | z component of the velocity
+| `fluid_P` | pressure
+|===
+
+You can use these expressions in Statistics
 
 ==== Points
 In order to evaluate velocity or pressure at specific points and save the results in .csv file, the user must define:
