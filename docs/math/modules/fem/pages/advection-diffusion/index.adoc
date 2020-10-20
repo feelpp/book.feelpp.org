@@ -323,6 +323,7 @@ Nous récapitulons dans la table suivante les différentes formulations
 
 |===
 
+[[resume-formulation]]
 .Résumé
 [NOTE]
 ====
@@ -441,6 +442,40 @@ Ceci termine les preuves de _(i)_ et _(iv)_. stem:[\blacksquare]
 
 IMPORTANT: La coercivité est garantie si stem:[\alpha_0] est suffisamment grand c’est à dire que si la diffusion est dominante.
 
+NOTE: Pour le problème Dirichlet homogène et non-homogène, stem:[f] peut être prise dans stem:[H^{-1}(\Omega)=\left(H_{0}^{1}(\Omega)\right)^{\prime} .] 
+Dans ce cas, le second membre de xxx devient stem:[f(v)=\langle f, v\rangle_{H^{-1}, H_{0}^{1}},] et le problème est toujours bien posé. L'estimation de stabilité devient stem:[\|u\|_{1, \Omega} \leq c\|f\|_{-1, \Omega} .]
+
+NOTE: Considérons le Laplacien avec conditions de Dirichlet homogène, i.e., étant donné stem:[f \in H^{-1}(\Omega),] résoudre stem:[-\Delta u=f] dans stem:[\Omega] avec la condition stem:[u_{\mid \partial \Omega}=0 .] 
+Alors, la formulation faible revient à chercher stem:[u \in H_{0}^{1}(\Omega)] telle que stem:[\int_{\Omega} \nabla u \cdot \nabla v=\langle f, v\rangle_{H^{-1}, H_{0}^{1}}] pour tout stem:[v \in H_{0}^{1}(\Omega)]
+D'après le Théorème précédent stem:[3.8(\mathrm{i})] avec stem:[\beta=0, \sigma=\mathcal{I},] et stem:[\mu=0,] le problème est bien posé. Cela signifie que l'opérateur stem:[(-\Delta)^{-1}: H^{-1}(\Omega) \rightarrow H_{0}^{1}(\Omega)] est un isomorphisme.
+
+NOTE: L'unicité n'est pas une propriété triviale dans les espaces plus grands que stem:[H^{1}(\Omega).] 
+Par exemple, on peut construire des domaines dans lesquels cette propriété n'est pas dans vérifié dans stem:[L^{2}] pour le problème de Dirichlet
+
+NOTE: Considérons le  <<resume-formulation,problème générique>>: si le champ d'advection stem:[\beta] disparaît et si la matrice de diffusion stem:[\sigma] est symétrique c.a. dans stem:[\omega], la forme bilinéaire stem:[a] est symétrique et positive. 
+Par conséquent, en raison de la proposition ci-dessous,<<resume-formulation,le problème>> peut être reformulée en une forme variationnelle. 
+Pour le problème de Dirichlet homogène, la forme variationnelle en question est
++
+[stem]
+++++
+\min _{v \in H_{0}^{1}(\Omega)}\left(\frac{1}{2} \int_{\Omega} \nabla v \cdot \sigma \cdot \nabla v+\frac{1}{2} \int_{\Omega} \mu v^{2}-\int_{\Omega} f v\right)
+++++
+
+.Proposition: 
+====
+En plus des hypothèses du Lemme de Lax Milgram , supposons que:
+
+(i) stem:[a] est  symétrique: stem:[a(u, v)=a(v, u), \forall u, v \in V]
+
+(ii) stem:[a] est positive: stem:[a(u, u) \geq 0, \forall u \in V].
+
+alors,  notant stem:[J(v)=\frac{1}{2} a(v, v)-f(v), u] résout le problème ci-dessous si et seulement si stem:[u] minimise stem:[J] sur stem:[V]
+
+[stem]
+++++
+\left\{\begin{array}{l}\text { Trouver } u \in V \text { telle que } \\ a(u, v)=f(v), \quad \forall v \in V\end{array}\right.
+++++
+====
 
 [[sec:adr-H1-conforming-approx]]
 == Approximation conforme dans stem:[H^1]
