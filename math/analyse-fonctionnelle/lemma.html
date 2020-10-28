@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Lemma :: Feel++ Docs</title>
+    <title>Theorems and Lemma :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/math/analyse-fonctionnelle/lemma.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="../fem/index.html">
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../../_/css/site.css">
 <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">    
@@ -243,6 +245,9 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="index.html#espaces-de-sobolev">Espaces de Sobolev</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="lemma.html">Lemma</a>
   </li>
 </ul>
   </li>
@@ -589,6 +594,7 @@ MathJax.Hub.Config({
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Feel++ Mathematics</a></li>
+    <li><a href="index.html">Analyse Fonctionnelle</a></li>
     <li><a href="lemma.html">Lemma</a></li>
   </ul>
 </nav>
@@ -596,19 +602,69 @@ MathJax.Hub.Config({
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Lemma</h1>
-<div id="LemmaB63" class="listingblock">
-<div class="title">Lemma B63</div>
+<h1 class="page">Theorems and Lemma</h1>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The following theorems and lemma are taken from Theory and Practice of Finite Elements by A. Ern and J.L. Guermond.
+</td>
+</tr>
+</table>
+</div>
+<div id="thmB46" class="sidebarblock">
 <div class="content">
-<pre>Let stem:[1 \leq p&lt;+\infty] and stem:[\Omega] be a bounded connected open set having the stem:[(1, p)] - extension property. Let stem:[f] be a linear form on stem:[W^{1, p}(\Omega)] whose restriction on constant functions is not zero. Then, there is stem:[c_{p, \Omega}&gt;0] such that
-[stem]
-++++
-\forall v \in W^{1, p}(\Omega), \quad c_{p, \Omega}\|v\|_{W^{1, p}(\Omega)} \leq\|\nabla v\|_{L^{p}(\Omega)}+|f(v)|
-++++
-**Proof**. Use the Petree-Tartar Lemma. To this end, set stem:[X=W^{1, p}(\Omega), Y=] stem:[\left[L^{p}(\Omega)\right]^{d} \times \mathbb{R}, Z=L^{p}(\Omega),] and stem:[A: X \ni v \mapsto(\nabla v, f(v)) \in Y .] Owing to
-Lemma B. 29 and the hypotheses on stem:[f, A] is continuous and injective. Moreover, the injection stem:[X \subset Z] is compact owing to Theorem stem:[\mathrm{B} .46] stem:[\square]</pre>
+<div class="title">Theorem B.46 (Rellich-Kondrachov)</div>
+<div class="paragraph">
+<p>Let \(1 \leq p \leq+\infty\) and let \(s \geq 0\). Let \(\Omega\) be a bounded open set having the \((s, p)\) - extension property. The following injections are compact:</p>
+</div>
+<div class="paragraph">
+<p>(i) If \(p \leq d, W^{s, p}(\Omega) \subset L^{q}(\Omega)\) for all \(1 \leq q&lt;p^{*}\) where \(\frac{1}{p^{*}}=\frac{1}{p}-\frac{s}{d}\)</p>
+</div>
+<div class="paragraph">
+<p>(ii) If \(p&gt;d, W^{s, p}(\Omega) \subset \mathcal{C}^{0}(\bar{\Omega})\)</p>
+</div>
+<div class="paragraph">
+<p><strong>Proof.</strong> See [MaZ97], [BrS94, Chap. 1], or [Bre91, Chap. 8]. \(\square\)</p>
 </div>
 </div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<a href="#thmB46">Theorem B.46 (Rellich-Kondrachov)</a> states a very useful compacity result.
+</td>
+</tr>
+</table>
+</div>
+<div id="LemmaB63" class="sidebarblock">
+<div class="content">
+<div class="title">Lemma B63</div>
+<div class="paragraph">
+<p>Let \(1 \leq p&lt;+\infty\) and \(\Omega\) be a bounded connected open set having the \((1, p)\) - extension property. Let \(f\) be a linear form on \(W^{1, p}(\Omega)\) whose restriction on constant functions is not zero. Then, there is \(c_{p, \Omega}&gt;0\) such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\forall v \in W^{1, p}(\Omega), \quad c_{p, \Omega}\|v\|_{W^{1, p}(\Omega)} \leq\|\nabla v\|_{L^{p}(\Omega)}+|f(v)|\]
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Proof</strong>. Use the Petree-Tartar Lemma. To this end, set \(X=W^{1, p}(\Omega), Y=\) \(\left[L^{p}(\Omega)\right]^{d} \times \mathbb{R}, Z=L^{p}(\Omega),\) and \(A: X \ni v \mapsto(\nabla v, f(v)) \in Y .\) Owing to
+Lemma B. 29 and the hypotheses on \(f, A\) is continuous and injective. Moreover, the injection \(X \subset Z\) is compact owing to <a href="#thmB46">Theorem B.46 (Rellich-Kondrachov)</a> \(\square\)</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html">Analyse Fonctionnelle</a></span>
+  <span class="next"><a href="../fem/index.html">Méthode des éléments finis</a></span>
+</nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>

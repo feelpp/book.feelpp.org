@@ -246,6 +246,9 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../analyse-fonctionnelle/index.html#espaces-de-sobolev">Espaces de Sobolev</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../analyse-fonctionnelle/lemma.html">Lemma</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -1183,7 +1186,7 @@ Pour cette raison, ces conditions sont souvent appelées conditions aux limites 
 <div id="adr-thr1" class="sidebarblock theorem">
 <div class="content">
 <div class="paragraph">
-<p>Soient \(f\in L^2(\Omega),  stem:[\mathbf{\alpha} \in [L^{\infty}(\Omega)^{d\times d}\), \(\mathbf{\beta} \in [L^{\infty}(\Omega)^d\), \(\nabla \cdot \mathbf{\beta} \in L^{\infty}(\Omega)\) et \(\mu \in L^\infty(\Omega)\).</p>
+<p>Soient \(f\in L^2(\Omega),  stem:[\mathbf{\alpha} \in [L^{\infty}(\Omega)^{d\times d}\), \(\mathbf{\beta} \in [L^{\infty}(\Omega)]^d\), \(\nabla \cdot \mathbf{\beta} \in L^{\infty}(\Omega)\) et \(\mu \in L^\infty(\Omega)\).</p>
 </div>
 <div class="paragraph">
 <p>On note \(p = \essinf_{x \in \Omega} (\mu -\frac{1}{2} \nabla \cdot \mathbf{\beta})\) et \(c_\Omega\) est la constante de l’inégalité de Poincaré <a href="#B23">[B23]</a>.</p>
@@ -1273,14 +1276,16 @@ Notons \(a(u,v)=\int_\Omega \alpha \nabla u\cdot \nabla u + (\beta \cdot \nabla 
 </div>
 </div>
 <div class="paragraph">
-<p>Si \(p&gt;0\) et \(q\geq 0\), la forme bilinéaire est <em>coercive</em> sur \(H^1(\Omega)\) avec comme constante stem:[\sigma = \min(\alpha_0,p).</p>
+<p>Si \(p&gt;0\) et \(q\geq 0\), la forme bilinéaire est <em>coercive</em> sur \(H^1(\Omega)\) avec comme constante \(\sigma = \min(\alpha_0,p)\).</p>
 </div>
 <div class="paragraph">
-<p>Si \(p\geq 0\) et \(q &gt; 0\), la forme bilinéaire est <em>coercive</em> sur \(H^1(\Omega)\) grâce au Lemme <a href="#math:analyse-fonctionelle:lemma.adoc#lemmaB32" class="page unresolved">Lemma B63</a>.</p>
+<p>Si \(p\geq 0\) et \(q &gt; 0\), la forme bilinéaire est <em>coercive</em> sur \(H^1(\Omega)\) grâce au <a href="../../analyse-fonctionnelle/lemma.html#lemmaB63" class="page">Lemma B63</a>.</p>
 </div>
 <div class="paragraph">
-<p>Dans les deux cas, le caractère bien posé est obtenu par le Lemme de Lax-Milgram.\(\square\)
-Ceci termine les preuves de <em>(i)</em> et <em>(iv)</em>. \(\blacksquare\)</p>
+<p>Dans les deux cas, le caractère bien posé est obtenu par le Lemme de Lax-Milgram.\(\square\)</p>
+</div>
+<div class="paragraph">
+<p>Ceci termine les preuves de <em>(i)</em> et <em>(iv)</em>. \(\blacksquare\)</p>
 </div>
 </div>
 </div>
@@ -1304,7 +1309,7 @@ La coercivité est garantie si \(\alpha_0\) est suffisamment grand c’est à di
 </td>
 <td class="content">
 Pour le problème Dirichlet homogène et non-homogène, \(f\) peut être prise dans \(H^{-1}(\Omega)=\left(H_{0}^{1}(\Omega)\right)^{\prime} .\)
-Dans ce cas, le second membre de xxx devient \(f(v)=\langle f, v\rangle_{H^{-1}, H_{0}^{1}},\) et le problème est toujours bien posé. L&#8217;estimation de stabilité devient \(\|u\|_{1, \Omega} \leq c\|f\|_{-1, \Omega} .\)
+Dans ce cas, le second membre du <a href="#resume-formulation">problème générique</a>  devient \(f(v)=\langle f, v\rangle_{H^{-1}, H_{0}^{1}},\) et le problème est toujours bien posé. L&#8217;estimation de stabilité devient \(\|u\|_{1, \Omega} \leq c\|f\|_{-1, \Omega} .\)
 </td>
 </tr>
 </table>
@@ -1331,7 +1336,7 @@ D&#8217;après le Théorème précédent \((\mathrm{i})\) avec \(\beta=0, \sigma
 </td>
 <td class="content">
 L&#8217;unicité n&#8217;est pas une propriété triviale dans les espaces plus grands que \(H^{1}(\Omega).\)
-Par exemple, on peut construire des domaines dans lesquels cette propriété n&#8217;est pas dans vérifié dans \(L^{2}\) pour le problème de Dirichlet
+Par exemple, on peut construire des domaines dans lesquels cette propriété n&#8217;est pas  vérifiée dans \(L^{2}\) pour le problème de Dirichlet
 </td>
 </tr>
 </table>
@@ -1343,15 +1348,12 @@ Par exemple, on peut construire des domaines dans lesquels cette propriété n&#
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Considérons le  <a href="#resume-formulation">problème générique</a>: si le champ d&#8217;advection \(\beta\) disparaît et si la matrice de diffusion \(\sigma\) est symétrique c.a. dans \(\omega\), la forme bilinéaire \(a\) est symétrique et positive.
+Considérons le  <a href="#resume-formulation">problème générique</a>: si le champ d&#8217;advection \(\beta\) disparaît et si la matrice de diffusion \(\sigma\) est symétrique c.a. dans \(\Omega\), la forme bilinéaire \(a\) est symétrique et positive.
 Par conséquent, en raison de la proposition ci-dessous,<a href="#resume-formulation">le problème</a> peut être reformulée en une forme variationnelle.
 Pour le problème de Dirichlet homogène, la forme variationnelle en question est
 </td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>+</p>
 </div>
 <div class="stemblock">
 <div class="content">
