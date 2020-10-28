@@ -365,7 +365,7 @@ On s'intéresse à présent au théorème traitant de la coercivité du <<resume
 
 [env.theorem#adr-thr1]
 ****
-Soient stem:[f\in L^2(\Omega),  stem:[\mathbf{\alpha} \in [L^{\infty}(\Omega)^{d\times d}], stem:[\mathbf{\beta} \in [L^{\infty}(\Omega)^d], stem:[\nabla \cdot \mathbf{\beta} \in L^{\infty}(\Omega)] et stem:[\mu \in L^\infty(\Omega)].
+Soient stem:[f\in L^2(\Omega),  stem:[\mathbf{\alpha} \in [L^{\infty}(\Omega)^{d\times d}], stem:[\mathbf{\beta} \in [L^{\infty}(\Omega)\]^d], stem:[\nabla \cdot \mathbf{\beta} \in L^{\infty}(\Omega)] et stem:[\mu \in L^\infty(\Omega)].
 
 On note stem:[p = \essinf_{x \in \Omega} (\mu -\frac{1}{2} \nabla \cdot \mathbf{\beta})] et stem:[c_\Omega] est la constante de l’inégalité de Poincaré <<B23>>.
 
@@ -432,30 +432,30 @@ Notons stem:[a(u,v)=\int_\Omega \alpha \nabla u\cdot \nabla u + (\beta \cdot \na
 \forall u \in H^1(\Omega),\quad a(u,u) \geq \alpha_0|u|^2_{1,\Omega} + p \|u\|^2_{0,\Omega} + q\|u\|^2_{0,\partial \Omega}.
 ++++
 
-Si stem:[p>0] et stem:[q\geq 0], la forme bilinéaire est _coercive_ sur stem:[H^1(\Omega)] avec comme constante stem:[\sigma = \min(\alpha_0,p).
+Si stem:[p>0] et stem:[q\geq 0], la forme bilinéaire est _coercive_ sur stem:[H^1(\Omega)] avec comme constante stem:[\sigma = \min(\alpha_0,p)].
 
-Si stem:[p\geq 0] et stem:[q > 0], la forme bilinéaire est _coercive_ sur stem:[H^1(\Omega)] grâce au Lemme xref:math:analyse-fonctionelle:lemma.adoc#lemmaB32[Lemma B63].
+Si stem:[p\geq 0] et stem:[q > 0], la forme bilinéaire est _coercive_ sur stem:[H^1(\Omega)] grâce au xref:math:analyse-fonctionnelle:lemma.adoc#lemmaB63[Lemma B63].
 
 Dans les deux cas, le caractère bien posé est obtenu par le Lemme de Lax-Milgram.stem:[\square]
+
 Ceci termine les preuves de _(i)_ et _(iv)_. stem:[\blacksquare]
 ****
 
 IMPORTANT: La coercivité est garantie si stem:[\alpha_0] est suffisamment grand c’est à dire que si la diffusion est dominante.
 
 NOTE: Pour le problème Dirichlet homogène et non-homogène, stem:[f] peut être prise dans stem:[H^{-1}(\Omega)=\left(H_{0}^{1}(\Omega)\right)^{\prime} .] 
-Dans ce cas, le second membre de xxx devient stem:[f(v)=\langle f, v\rangle_{H^{-1}, H_{0}^{1}},] et le problème est toujours bien posé. L'estimation de stabilité devient stem:[\|u\|_{1, \Omega} \leq c\|f\|_{-1, \Omega} .]
+Dans ce cas, le second membre du <<resume-formulation,problème générique>>  devient stem:[f(v)=\langle f, v\rangle_{H^{-1}, H_{0}^{1}},] et le problème est toujours bien posé. L'estimation de stabilité devient stem:[\|u\|_{1, \Omega} \leq c\|f\|_{-1, \Omega} .]
 
 NOTE: Considérons le Laplacien avec conditions de Dirichlet homogène, i.e., étant donné stem:[f \in H^{-1}(\Omega),] résoudre stem:[-\Delta u=f] dans stem:[\Omega] avec la condition stem:[u_{\mid \partial \Omega}=0 .] 
 Alors, la formulation faible revient à chercher stem:[u \in H_{0}^{1}(\Omega)] telle que stem:[\int_{\Omega} \nabla u \cdot \nabla v=\langle f, v\rangle_{H^{-1}, H_{0}^{1}}] pour tout stem:[v \in H_{0}^{1}(\Omega)]
 D'après le Théorème précédent stem:[(\mathrm{i})] avec stem:[\beta=0, \sigma=\mathcal{I},] et stem:[\mu=0,] le problème est bien posé. Cela signifie que l'opérateur stem:[(-\Delta)^{-1}: H^{-1}(\Omega) \rightarrow H_{0}^{1}(\Omega)] est un isomorphisme.
 
 NOTE: L'unicité n'est pas une propriété triviale dans les espaces plus grands que stem:[H^{1}(\Omega).] 
-Par exemple, on peut construire des domaines dans lesquels cette propriété n'est pas dans vérifié dans stem:[L^{2}] pour le problème de Dirichlet
+Par exemple, on peut construire des domaines dans lesquels cette propriété n'est pas  vérifiée dans stem:[L^{2}] pour le problème de Dirichlet
 
-NOTE: Considérons le  <<resume-formulation,problème générique>>: si le champ d'advection stem:[\beta] disparaît et si la matrice de diffusion stem:[\sigma] est symétrique c.a. dans stem:[\omega], la forme bilinéaire stem:[a] est symétrique et positive. 
+NOTE: Considérons le  <<resume-formulation,problème générique>>: si le champ d'advection stem:[\beta] disparaît et si la matrice de diffusion stem:[\sigma] est symétrique c.a. dans stem:[\Omega], la forme bilinéaire stem:[a] est symétrique et positive. 
 Par conséquent, en raison de la proposition ci-dessous,<<resume-formulation,le problème>> peut être reformulée en une forme variationnelle. 
 Pour le problème de Dirichlet homogène, la forme variationnelle en question est
-+
 [stem]
 ++++
 \min _{v \in H_{0}^{1}(\Omega)}\left(\frac{1}{2} \int_{\Omega} \nabla v \cdot \sigma \cdot \nabla v+\frac{1}{2} \int_{\Omega} \mu v^{2}-\int_{\Omega} f v\right)
