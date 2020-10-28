@@ -1,38 +1,42 @@
 site:
   title: Feel++ // Docs
   url: https://docs.feelpp.org
-  start_page: latest@feelpp::index.adoc
+  start_page: develop@feelpp::index.adoc
 content:
   sources:
   - url: ./
-    branches: master
-    version: master
+    branches: [master,develop]
     start_path: docs/feelppdocs
   - url: ./
     branches: master
     start_path: docs/user
-#    tags:
+    tags:
+    - v0.108
 #    - v0.107
 #    - v0.106
 #    - v0.105
-#  - url: ./
-#    branches: master
-#    start_path: docs/dev
-#    tags:
+  - url: ./
+    branches: master
+    start_path: docs/dev
+    tags:
+    - v0.108
 #    - v0.107
 #    - v0.106
 #    - v0.105
-#  - url: ./
-#    branches: master
-#    start_path: docs/data
+  - url: ./
+    branches: master
+    start_path: docs/data
+#    tags:
+#    - v0.108
   - url: ./
     branches: master
     start_path: docs/math/
   - url: ./
-    branches: [master]
+    branches: master
     start_path: docs/toolboxes
     tags:
-    - v0.107
+    - v0.108
+#    - v0.107
 #    - v0.106
 #    - v0.105
 #  - url: ../toolbox
@@ -63,8 +67,6 @@ asciidoc:
   attributes:
     project_version: 0.108
     feelpp-git-tag: develop
-    toolboxes_documentation_manual_version : 0.108
-    toolboxes_cases_manual_version : 0.108
     deploymentRoot: ""
     numbered: true
     hide-uri-scheme: true
@@ -114,4 +116,3 @@ asciidoc:
   extensions:
     - ./lib/remote-include-processor
     - asciidoctor-kroki
-    

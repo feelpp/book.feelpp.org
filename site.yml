@@ -1,19 +1,19 @@
 site:
   title: Feel++ Docs
   url: https://docs.feelpp.org
-  start_page: feelpp::index.adoc
+  start_page: master@feelpp::index.adoc
   keys:
     google_analytics: 'UA-65761593-1'
 content:
   sources:
   - url: https://github.com/feelpp/book.feelpp.org
-    branches: master
+    branches: [master,develop]
     start_path: docs/feelppdocs
   - url: https://github.com/feelpp/book.feelpp.org
     branches: [master]
     start_path: docs/user
     tags:
-    - v0.108	
+    - v0.108
     - v0.107
 #    - v0.106
 #    - v0.105
@@ -21,7 +21,7 @@ content:
     branches: master
     start_path: docs/dev
     tags:
-    - v0.108	
+    - v0.108
     - v0.107
 #    - v0.106
 #    - v0.105
@@ -30,7 +30,7 @@ content:
     start_path: docs/
   - url: https://github.com/feelpp/feelpp-project
     branches: master
-    start_path: docs/    
+    start_path: docs/
   - url: https://github.com/feelpp/book.feelpp.org
     branches: master
     start_path: docs/data
@@ -41,14 +41,14 @@ content:
     branches: master
     start_path: docs/toolboxes
     tags:
-    - v0.108	
+    - v0.108
     - v0.107
 #    - v0.106
 #    - v0.105
   - url: https://github.com/feelpp/toolbox
     branches: [master]
     tags:
-    - v0.108	
+    - v0.108
     - v0.107
 #    - v0.106
 #    - v0.105
@@ -85,8 +85,6 @@ asciidoc:
     kroki-fetch-diagram: true
     project_version: 0.108
     feelpp-git-tag: develop
-    toolboxes_documentation_manual_version : 0.108
-    toolboxes_cases_manual_version : 0.108
     deploymentRoot: ""
     numbered: true
     hide-uri-scheme: true
@@ -135,5 +133,4 @@ asciidoc:
   extensions:
     - "@feelpp/asciidoctor-remote-include-processor"
     - asciidoctor-kroki
-    - asciidoctor-emoji    
-
+    - asciidoctor-emoji
