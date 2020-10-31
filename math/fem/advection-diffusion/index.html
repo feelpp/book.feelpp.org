@@ -738,6 +738,7 @@ Le Laplacien est dans la catégorie des opérateurs elliptiques, il correspond �
 En intégrant par parties (formule de Green) nous avons</p>
 </div>
 <div id="eq:adr-green" class="stemblock">
+<div class="title">Relation de Green</div>
 <div class="content">
 \[\int_\Omega \nabla \cdot (\mathbf{\alpha} \nabla u )  v  = \int_\Omega (\mathbf{\alpha} \nabla u ) \cdot \nabla v -\int_{\partial \Omega} ((\alpha \nabla u)\cdot n) v\]
 </div>
@@ -764,8 +765,9 @@ En intégrant par parties (formule de Green) nous avons</p>
 Comme \(u_{|\partial \Omega} = 0\), on cherche en fait \(u\) dans \(H^1_0(\Omega)\).
 Les fonctions tests sont également prises dans \(H^1_0(\Omega)\) ce qui donne la formulation faible suivante</p>
 </div>
-<div id="prob:12" class="sidebarblock problem">
+<div id="problem_dirichlet" class="sidebarblock">
 <div class="content">
+<div class="title">Problème de Dirichlet homogène</div>
 <div class="paragraph">
 <p>On cherche \(u \in H^1_0(\Omega)\) telle que</p>
 </div>
@@ -794,11 +796,11 @@ Les fonctions tests sont également prises dans \(H^1_0(\Omega)\) ce qui donne l
 </div>
 </div>
 <div class="paragraph">
-<p>Nous avons le résultat suivant
-.Une solution du problème faible est solution du problème fort</p>
+<p>Nous avons le résultat suivant</p>
 </div>
-<div id="prop:prob12" class="sidebarblock proposition">
+<div id="proposition_dirichlet" class="sidebarblock">
 <div class="content">
+<div class="title">Une solution du problème faible est solution du problème fort</div>
 <div class="paragraph">
 <p>Si \(u\) résout <a href="#eq:89">[eq:89]</a>, alors \(\mathcal{L}u=f\) presque partout dans \(\Omega\) et \(u=0\) presque partout sur \(\partial \Omega\).</p>
 </div>
@@ -808,7 +810,7 @@ Les fonctions tests sont également prises dans \(H^1_0(\Omega)\) ce qui donne l
 <div class="content">
 <div class="title">Preuve</div>
 <div class="paragraph">
-<p>Soit \(\phi\in \mathcal{D}(\Omega)\) et \(u\) une solution de <a href="#prob:12">[prob:12]</a>.
+<p>Soit \(\phi\in \mathcal{D}(\Omega)\) et \(u\) une solution du <a href="#problem_dirichlet">Problème de Dirichlet homogène</a>.
 On a</p>
 </div>
 <div class="stemblock">
@@ -838,8 +840,9 @@ Enfin \(u=0\) presque partout sur \(\partial \Omega\) par définition de \(H^1_0
 <div class="paragraph">
 <p>Nous supposons que \(g\) soit suffisamment régulière telle qu&#8217;il existe un relèvement \(u_g\) de \(g\) dans \(H^1(\Omega)\), c&#8217;est à dire qu&#8217;il existe une fonction \(u_g\) de \(H^1(\Omega)\) telle que \(u_g=g\) sur \(\partial \Omega\).</p>
 </div>
-<div id="prob:12_1" class="sidebarblock problem">
+<div id="problem_dirichlet_non_homogene" class="sidebarblock">
 <div class="content">
+<div class="title">Problème de Dirichlet non homogène</div>
 <div class="paragraph">
 <p>On cherche \(u \in H^1(\Omega)\) telle que</p>
 </div>
@@ -875,10 +878,11 @@ Enfin \(u=0\) presque partout sur \(\partial \Omega\) par définition de \(H^1_0
 </div>
 </div>
 </div>
-<div id="prop:prob12_1" class="sidebarblock proposition">
+<div id="proposition_dirichlet_non_homogene" class="sidebarblock">
 <div class="content">
+<div class="title">Proposition pour le problème de Dirichlet non homogène</div>
 <div class="paragraph">
-<p>Soit \(g\in H^{\frac{1}{2}}(\partial \Omega)\), si \(u\) résout <a href="#prob:12_1">[prob:12_1]</a>, alors \(\mathcal{L}u=f\) presque partout dans \(\Omega\) et \(u=g\) presque partout sur \(\partial \Omega\).</p>
+<p>Soit \(g\in H^{\frac{1}{2}}(\partial \Omega)\), si \(u\) résout le <a href="#problem_dirichlet_non_homogene">Problème de Dirichlet non homogène</a>, alors \(\mathcal{L}u=f\) presque partout dans \(\Omega\) et \(u=g\) presque partout sur \(\partial \Omega\).</p>
 </div>
 </div>
 </div>
@@ -886,7 +890,7 @@ Enfin \(u=0\) presque partout sur \(\partial \Omega\) par définition de \(H^1_0
 <div class="content">
 <div class="title">Preuve</div>
 <div class="paragraph">
-<p>La preuve est similaire à celle de <a href="#prob:12">[prob:12]</a>.</p>
+<p>La preuve est similaire à celle du <a href="#problem_dirichlet">Problème de Dirichlet homogène</a>.</p>
 </div>
 </div>
 </div>
@@ -897,7 +901,7 @@ Enfin \(u=0\) presque partout sur \(\partial \Omega\) par définition de \(H^1_0
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Lorsque l&#8217;opérateur \(\mathcal{L}\) est le Laplacien, <a href="#prob:12_1">[prob:12_1]</a> est appelé un <em>problème de Poisson</em>.
+Lorsque l&#8217;opérateur \(\mathcal{L}\) est le Laplacien, <a href="#problem_dirichlet">Problème de Dirichlet homogène</a> est appelé un <em>problème de Poisson</em>.
 </td>
 </tr>
 </table>
@@ -923,16 +927,17 @@ Dans le cas où \(\alpha = \mathcal{I}\), la condition de Neumann correspond à 
 </table>
 </div>
 <div class="paragraph">
-<p>Nous procédons de la même façon que précédemment et en utilisant la condition de Neumann dans l&#8217;intégrale de surface <a href="#eq:adr-green">[eq:adr-green]</a>, on obtient la formulation faible suivante:</p>
+<p>Nous procédons de la même façon que précédemment et en utilisant la condition de Neumann dans <a href="#l&.adoc#8217;intégrale de surface" class="page unresolved">l&.adoc#8217;intégrale de surface</a>, on obtient la formulation faible suivante:</p>
 </div>
-<div id="prob:12_2" class="sidebarblock problem">
+<div id="problem_neumann" class="sidebarblock">
 <div class="content">
+<div class="title">Problème de Neumann</div>
 <div class="paragraph">
 <p>On cherche \(u \in H^1(\Omega)\) telle que</p>
 </div>
 <div id="eq:89_2" class="stemblock">
 <div class="content">
-\[    a(u,v) = \ell(v) \quad \forall v \in H^1(\Omega)\]
+\[a(u,v) = \ell(v) \quad \forall v \in H^1(\Omega)\]
 </div>
 </div>
 <div class="paragraph">
@@ -940,8 +945,8 @@ Dans le cas où \(\alpha = \mathcal{I}\), la condition de Neumann correspond à 
 </div>
 <div id="eq:90_2" class="stemblock">
 <div class="content">
-\[    a(u,v)=\int_\Omega (\mathbf{\alpha} \nabla u ) \cdot \nabla v + (\mathbf{\beta} \cdot
-    \nabla u) v + \mu u v\]
+\[a(u,v)=\int_\Omega (\mathbf{\alpha} \nabla u ) \cdot \nabla v + (\mathbf{\beta} \cdot
+\nabla u) v + \mu u v\]
 </div>
 </div>
 <div class="paragraph">
@@ -949,15 +954,16 @@ Dans le cas où \(\alpha = \mathcal{I}\), la condition de Neumann correspond à 
 </div>
 <div id="eq:91_2" class="stemblock">
 <div class="content">
-\[    \ell(v) = \int_\Omega f v + \int_{\partial \Omega} g v\]
+\[\ell(v) = \int_\Omega f v + \int_{\partial \Omega} g v\]
 </div>
 </div>
 </div>
 </div>
-<div id="prop:prob12_2" class="sidebarblock proposition">
+<div id="proposition_neumann" class="sidebarblock">
 <div class="content">
+<div class="title">Proposition pour le problème de Neumann</div>
 <div class="paragraph">
-<p>Soit \(g\in L^2(\partial \Omega)\), si \(u\) résout <a href="#prob:12_2">[prob:12_2]</a>, alors \(\mathcal{L}u=f\) presque partout dans \(\Omega\) et \(\alpha \nabla u \cdot n = g\) presque partout sur \(\partial \Omega\).</p>
+<p>Soit \(g\in L^2(\partial \Omega)\), si \(u\) résout le <a href="#problem_neumann">Problème de Neumann</a>, alors \(\mathcal{L}u=f\) presque partout dans \(\Omega\) et \(\alpha \nabla u \cdot n = g\) presque partout sur \(\partial \Omega\).</p>
 </div>
 </div>
 </div>
@@ -976,7 +982,7 @@ Le corollaire <a href="#B59">[B59]</a> implique que \(\alpha \nabla u \cdot n \i
 </div>
 <div class="paragraph">
 <p>où \(u_\phi \in H^1(\Omega)\) est un relèvement de \(\phi\) dans \(H^1(\Omega)\).
-On a alors que <a href="#prob12_2">[prob12_2]</a> donne</p>
+On a alors que le <a href="#problem_neumann">Problème de Neumann</a> donne</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -1010,24 +1016,13 @@ documentation en cours
 <div class="sect1">
 <h2 id="_conditions_de_robin"><a class="anchor" href="#_conditions_de_robin"></a>5. Conditions de Robin</h2>
 <div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-documentation en cours
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
 <p>Soient deux fonctions \(g,\gamma : \partial \Omega \rightarrow \RR\), nous voulons imposer \(\gamma u + (\alpha \nabla u)\cdot n = g\) sur \(\partial \Omega\).
-En utilisant la relation sur l&#8217;intégrale de surface <a href="#eq:adr-green">[eq:adr-green]</a>, nous avons la formulation faible suivante</p>
+En utilisant la relation sur l&#8217;intégrale de surface <a href="#eq:adr-green">Relation de Green</a>, nous avons la formulation faible suivante</p>
 </div>
-<div id="prob:12_4" class="sidebarblock problem">
+<div id="problem_robin" class="sidebarblock">
 <div class="content">
+<div class="title">Problème</div>
 <div class="paragraph">
 <p>On cherche \(u \in H^1(\Omega)\) telle que</p>
 </div>
@@ -1055,11 +1050,12 @@ En utilisant la relation sur l&#8217;intégrale de surface <a href="#eq:adr-gree
 </div>
 </div>
 </div>
-<div id="prop:prob12_4" class="sidebarblock proposition">
+<div id="proposition_robin" class="sidebarblock">
 <div class="content">
+<div class="title">Proposition pour le problème de Robin</div>
 <div class="paragraph">
 <p>Soit \(g\in L^2(\partial \Omega)\) et \(\gamma \in L^\infty(\partial \Omega\).
-Si \(u\) résout <a href="#prob:12_4">[prob:12_4]</a>, alors \(\mathcal{L}u=f\) presque partout dans \(\Omega\) et \(\gamma u + \alpha \nabla u \cdot n = g\) presque partout sur \(\partial \Omega\).</p>
+Si \(u\) résout le <a href="#problem_robin">Problème</a>, alors \(\mathcal{L}u=f\) presque partout dans \(\Omega\) et \(\gamma u + \alpha \nabla u \cdot n = g\) presque partout sur \(\partial \Omega\).</p>
 </div>
 </div>
 </div>
@@ -1189,10 +1185,10 @@ Pour cette raison, ces conditions sont souvent appelées conditions aux limites 
 <p>Soient \(f\in L^2(\Omega),  stem:[\mathbf{\alpha} \in [L^{\infty}(\Omega)^{d\times d}\), \(\mathbf{\beta} \in [L^{\infty}(\Omega)]^d\), \(\nabla \cdot \mathbf{\beta} \in L^{\infty}(\Omega)\) et \(\mu \in L^\infty(\Omega)\).</p>
 </div>
 <div class="paragraph">
-<p>On note \(p = \essinf_{x \in \Omega} (\mu -\frac{1}{2} \nabla \cdot \mathbf{\beta})\) et \(c_\Omega\) est la constante de l’inégalité de Poincaré <a href="../../analyse-fonctionnelle/lemma.html#lemmaB61" class="page">Lemma B61</a>.</p>
+<p>On note \(p = \essinf_{x \in \Omega} (\mu -\frac{1}{2} \nabla \cdot \mathbf{\beta})\) et \(c_\Omega\) est la constante de  <a href="../../analyse-fonctionnelle/lemma.html#lemmaB61" class="page">l’inégalité de Poincaré</a>.</p>
 </div>
 <div class="paragraph">
-<p><em>(i)</em> Les problèmes avec conditions de Dirichlet homogènes <a href="#prob12">[prob12]</a> et non-homogènes <a href="#prob12_2">[prob12_2]</a> sont bien posés si</p>
+<p><em>(i)</em> Les problèmes avec conditions de Dirichlet  <a href="#problem_dirichlet">homogènes</a> et  <a href="#problem_dirichlet_non_homogene">non-homogènes</a> sont bien posés si</p>
 </div>
 <div id="eq:92" class="stemblock">
 <div class="content">
@@ -1200,7 +1196,7 @@ Pour cette raison, ces conditions sont souvent appelées conditions aux limites 
 </div>
 </div>
 <div class="paragraph">
-<p><em>(ii)</em> Le problème  avec condition de Neumann <a href="#prob12_1">[prob12_1]</a> est  bien posé si</p>
+<p><em>(ii)</em> Le problème  avec condition de Neumann <a href="#problem_neumann">Problème de Neumann</a> est  bien posé si</p>
 </div>
 <div id="eq:92_1" class="stemblock">
 <div class="content">
@@ -1217,7 +1213,7 @@ Pour cette raison, ces conditions sont souvent appelées conditions aux limites 
 </div>
 <div class="paragraph">
 <p><em>(iv)</em> On pose \(q = \essinf_{x \in \Omega} (\gamma +\frac{1}{2} \mathbf{\beta}\cdot n)\).
-Le problème avec conditions de Robin <a href="#prob12_4">[prob12_4]</a>  non-homogènes <a href="#prob12_2">[prob12_2]</a> est posé si</p>
+Le problème avec conditions de Robin <a href="#problem_robin">Problème</a>  non-homogènes est bien posé si</p>
 </div>
 <div id="eq:92_3" class="stemblock">
 <div class="content">
@@ -1250,7 +1246,7 @@ En utilisant l&#8217;ellipticité de \(\mathcal{L}\) et l&#8217;identité suivan
 </div>
 </div>
 <div class="paragraph">
-<p>En posant \(c=\min(0,\frac{p}{c_\Omega}\) et en utilisant l&#8217;inégalité de Poincaré <a href="#B61">[B61]</a> on a</p>
+<p>En posant \(c=\min(0,\frac{p}{c_\Omega}\) et en utilisant <a href="../../analyse-fonctionnelle/lemma.html#lemmaB61" class="page">l&#8217;inégalité de Poincaré</a>  on a</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -1264,7 +1260,7 @@ En utilisant l&#8217;ellipticité de \(\mathcal{L}\) et l&#8217;identité suivan
 <p>Cela montre que \(a\) est <em>coercive</em> sur \(H^1_0(\Omega)\).</p>
 </div>
 <div class="paragraph">
-<p>Le caractère bien posé résulte alors du Lemme de Lax-Milgram pour les conditions de Dirichlet homogènes et de la proposition <a href="#TODO">[TODO]</a> pour les conditions de Dirichlet non-homogènes.\(\square\)</p>
+<p>Le caractère bien posé résulte alors du Lemme de Lax-Milgram pour les conditions de Dirichlet homogènes et de la <a href="#proposition_dirichlet_non_homogene">Proposition pour le problème de Dirichlet non homogène</a> pour les conditions de Dirichlet non-homogènes.\(\square\)</p>
 </div>
 <div class="paragraph">
 <p><strong>Preuve de <em>(iv)</em></strong>
