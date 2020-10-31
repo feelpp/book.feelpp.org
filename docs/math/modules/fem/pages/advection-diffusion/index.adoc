@@ -79,6 +79,7 @@ Nous multiplions stem:[\mathcal{L} u = f] par une fonction test (suffisamment r�
 En intégrant par parties (formule de Green) nous avons
 
 [[eq:adr-green]]
+.Relation de Green
 [stem]
 ++++
 \int_\Omega \nabla \cdot (\mathbf{\alpha} \nabla u )  v  = \int_\Omega (\mathbf{\alpha} \nabla u ) \cdot \nabla v -\int_{\partial \Omega} ((\alpha \nabla u)\cdot n) v
@@ -99,7 +100,9 @@ u\in H^1(\Omega)\quad\text{et}\quad v\in H^1(\Omega).
 Comme stem:[u\in H^1(\Omega)], le théorème <<toto>> implique que stem:[u] ait une _trace_ sur le bord.
 Comme stem:[u_{|\partial \Omega} = 0], on cherche en fait stem:[u] dans stem:[H^1_0(\Omega)].
 Les fonctions tests sont également prises dans stem:[H^1_0(\Omega)] ce qui donne la formulation faible suivante
-[env.problem#prob:12]
+
+[[problem_dirichlet]]
+.Problème de Dirichlet homogène
 ****
 On cherche stem:[u \in H^1_0(\Omega)] telle que
 [[eq:89]]
@@ -123,14 +126,15 @@ et
 ****
 
 Nous avons le résultat suivant
+
+[[proposition_dirichlet]]
 .Une solution du problème faible est solution du problème fort
-[env.proposition#prop:prob12]
 ****
 Si stem:[u] résout <<eq:89>>, alors stem:[\mathcal{L}u=f] presque partout dans stem:[\Omega] et stem:[u=0] presque partout sur stem:[\partial \Omega].
 ****
 .Preuve
 ****
-Soit stem:[\phi\in \mathcal{D}(\Omega)] et stem:[u] une solution de <<prob:12>>.
+Soit stem:[\phi\in \mathcal{D}(\Omega)] et stem:[u] une solution du <<problem_dirichlet>>.
 On a
 [stem]
 ++++
@@ -151,7 +155,8 @@ Nous imposons stem:[u=0] sur stem:[\partial \Omega] où stem:[g : \partial \Omeg
 
 Nous supposons que stem:[g] soit suffisamment régulière telle qu'il existe un relèvement stem:[u_g] de stem:[g] dans stem:[H^1(\Omega)], c'est à dire qu'il existe une fonction stem:[u_g] de stem:[H^1(\Omega)] telle que stem:[u_g=g] sur stem:[\partial \Omega].
 
-[env.problem#prob:12_1]
+[[problem_dirichlet_non_homogene]]
+.Problème de Dirichlet non homogène
 ****
 On cherche stem:[u \in H^1(\Omega)] telle que
 [stem]
@@ -179,18 +184,18 @@ et
 ++++
 ****
 
-[env.proposition#prop:prob12_1]
+[[proposition_dirichlet_non_homogene]]
+.Proposition pour le problème de Dirichlet non homogène
 ****
-Soit stem:[g\in H^{\frac{1}{2}}(\partial \Omega)], si stem:[u] résout <<prob:12_1>>, alors stem:[\mathcal{L}u=f] presque partout dans stem:[\Omega] et stem:[u=g] presque partout sur stem:[\partial \Omega].
+Soit stem:[g\in H^{\frac{1}{2}}(\partial \Omega)], si stem:[u] résout le <<problem_dirichlet_non_homogene>>, alors stem:[\mathcal{L}u=f] presque partout dans stem:[\Omega] et stem:[u=g] presque partout sur stem:[\partial \Omega].
 ****
-
 
 .Preuve
 ****
-La preuve est similaire à celle de <<prob:12>>.
+La preuve est similaire à celle du <<problem_dirichlet>>.
 ****
 
-NOTE: Lorsque l'opérateur stem:[\mathcal{L}] est le Laplacien, <<prob:12_1>> est appelé un _problème de Poisson_.
+NOTE: Lorsque l'opérateur stem:[\mathcal{L}] est le Laplacien, <<problem_dirichlet>> est appelé un _problème de Poisson_.
 
 
 == Conditions de Neumann
@@ -199,35 +204,37 @@ Soit une fonction stem:[g:\partial \Omega \rightarrow \RR], nous voulons imposer
 
 NOTE: Dans le cas où stem:[\alpha = \mathcal{I}], la condition de Neumann correspond à spécifier la dérivée normale de stem:[u] car stem:[\nabla u \cdot n = \partial_n u = \frac{\partial u}{\partial n}].
 
-Nous procédons de la même façon que précédemment et en utilisant la condition de Neumann dans l'intégrale de surface <<eq:adr-green>>, on obtient la formulation faible suivante:
+Nous procédons de la même façon que précédemment et en utilisant la condition de Neumann dans <<l'intégrale de surface>>, on obtient la formulation faible suivante:
 
-[env.problem#prob:12_2]
+[[problem_neumann]]
+.Problème de Neumann
 ****
 On cherche stem:[u \in H^1(\Omega)] telle que
 
 [[eq:89_2]]
 [stem]
 ++++
-    a(u,v) = \ell(v) \quad \forall v \in H^1(\Omega)
+a(u,v) = \ell(v) \quad \forall v \in H^1(\Omega)
 ++++
 avec
 [[eq:90_2]]
 [stem]
 ++++
-    a(u,v)=\int_\Omega (\mathbf{\alpha} \nabla u ) \cdot \nabla v + (\mathbf{\beta} \cdot
-    \nabla u) v + \mu u v
+a(u,v)=\int_\Omega (\mathbf{\alpha} \nabla u ) \cdot \nabla v + (\mathbf{\beta} \cdot
+\nabla u) v + \mu u v
 ++++
 et
 [[eq:91_2]]
 [stem]
 ++++
-    \ell(v) = \int_\Omega f v + \int_{\partial \Omega} g v
+\ell(v) = \int_\Omega f v + \int_{\partial \Omega} g v
 ++++
 ****
 
-[env.proposition#prop:prob12_2]
+[[proposition_neumann]]
+.Proposition pour le problème de Neumann
 ****
-Soit stem:[g\in L^2(\partial \Omega)], si stem:[u] résout <<prob:12_2>>, alors stem:[\mathcal{L}u=f] presque partout dans stem:[\Omega] et stem:[\alpha \nabla u \cdot n = g] presque partout sur stem:[\partial \Omega].
+Soit stem:[g\in L^2(\partial \Omega)], si stem:[u] résout le <<problem_neumann>>, alors stem:[\mathcal{L}u=f] presque partout dans stem:[\Omega] et stem:[\alpha \nabla u \cdot n = g] presque partout sur stem:[\partial \Omega].
 ****
 .Preuve
 ****
@@ -239,7 +246,7 @@ Le corollaire <<B59>> implique que stem:[\alpha \nabla u \cdot n \in H^{\frac{1}
 \forall \phi \in H^{\frac{1}{2}}(\partial \Omega), \quad \left\langle\alpha \nabla u \cdot n, \phi\right\rangle_{H^{-\frac{1}{2}},H^{\frac{1}{2}}} = \int_{\Omega} -\nabla \cdot (\alpha \cdot \nabla u) u_\phi + \int_\Omega \alpha \nabla u \cdot \nabla u_\phi
 ++++
 où stem:[u_\phi \in H^1(\Omega)] est un relèvement de stem:[\phi] dans stem:[H^1(\Omega)].
-On a alors que <<prob12_2>> donne
+On a alors que le <<problem_neumann>> donne
 [stem]
 ++++
 \forall \phi \in H^{\frac{1}{2}}(\partial \Omega), \quad \left\langle\alpha \nabla u \cdot n, \phi\right\rangle_{H^{-\frac{1}{2}},H^{\frac{1}{2}}} = \int_{\partial \Omega} g \phi
@@ -255,13 +262,12 @@ NOTE: documentation en cours
 
 == Conditions de Robin
 
-NOTE: documentation en cours
-
 Soient deux fonctions stem:[g,\gamma : \partial \Omega \rightarrow \RR], nous voulons imposer stem:[\gamma u + (\alpha \nabla u)\cdot n = g] sur stem:[\partial \Omega].
 En utilisant la relation sur l'intégrale de surface <<eq:adr-green>>, nous avons la formulation faible suivante
 
 
-[env.problem#prob:12_4]
+[[problem_robin]]
+.Problème
 ****
 On cherche stem:[u \in H^1(\Omega)] telle que
 
@@ -285,10 +291,11 @@ et
 ++++
 ****
 
-[env.proposition#prop:prob12_4]
+[[proposition_robin]]
+.Proposition pour le problème de Robin
 ****
 Soit stem:[g\in L^2(\partial \Omega)] et stem:[\gamma \in L^\infty(\partial \Omega].
-Si stem:[u] résout <<prob:12_4>>, alors stem:[\mathcal{L}u=f] presque partout dans stem:[\Omega] et stem:[\gamma u + \alpha \nabla u \cdot n = g] presque partout sur stem:[\partial \Omega].
+Si stem:[u] résout le <<problem_robin>>, alors stem:[\mathcal{L}u=f] presque partout dans stem:[\Omega] et stem:[\gamma u + \alpha \nabla u \cdot n = g] presque partout sur stem:[\partial \Omega].
 ****
 .Preuve
 ****
@@ -367,16 +374,16 @@ On s'intéresse à présent au théorème traitant de la coercivité du <<resume
 ****
 Soient stem:[f\in L^2(\Omega),  stem:[\mathbf{\alpha} \in [L^{\infty}(\Omega)^{d\times d}], stem:[\mathbf{\beta} \in [L^{\infty}(\Omega)\]^d], stem:[\nabla \cdot \mathbf{\beta} \in L^{\infty}(\Omega)] et stem:[\mu \in L^\infty(\Omega)].
 
-On note stem:[p = \essinf_{x \in \Omega} (\mu -\frac{1}{2} \nabla \cdot \mathbf{\beta})] et stem:[c_\Omega] est la constante de l’inégalité de Poincaré xref:math:analyse-fonctionnelle:lemma.adoc#lemmaB61[Lemma B61].
+On note stem:[p = \essinf_{x \in \Omega} (\mu -\frac{1}{2} \nabla \cdot \mathbf{\beta})] et stem:[c_\Omega] est la constante de  xref:math:analyse-fonctionnelle:lemma.adoc#lemmaB61[l’inégalité de Poincaré].
 
-_(i)_ Les problèmes avec conditions de Dirichlet homogènes <<prob12>> et non-homogènes <<prob12_2>> sont bien posés si
+_(i)_ Les problèmes avec conditions de Dirichlet  <<problem_dirichlet,homogènes>> et  <<problem_dirichlet_non_homogene,non-homogènes>> sont bien posés si
 [[eq:92]]
 [stem]
 ++++
   \alpha_0 > - \min( 0, \frac{\gamma}{c_\Omega}  )
 ++++
 
-_(ii)_ Le problème  avec condition de Neumann <<prob12_1>> est  bien posé si
+_(ii)_ Le problème  avec condition de Neumann <<problem_neumann>> est  bien posé si
 [[eq:92_1]]
 [stem]
 ++++
@@ -391,7 +398,7 @@ _(iii)_ Le problème  avec condition de Dirichlet-Neumann <<prob12_3>> est  bien
 ++++
 
 _(iv)_ On pose stem:[q = \essinf_{x \in \Omega} (\gamma +\frac{1}{2} \mathbf{\beta}\cdot n)].
-Le problème avec conditions de Robin <<prob12_4>>  non-homogènes <<prob12_2>> est posé si
+Le problème avec conditions de Robin <<problem_robin>>  non-homogènes est bien posé si
 [[eq:92_3]]
 [stem]
 ++++
@@ -414,7 +421,7 @@ alors on a
 ++++
 \forall u \in H^1_0(\Omega),\quad a(u,u) \geq \alpha_0|u|^2_{1,\Omega} + p \|u\|^2_{0,\Omega}.
 ++++
-En posant stem:[c=\min(0,\frac{p}{c_\Omega}] et en utilisant l'inégalité de Poincaré <<B61>> on a
+En posant stem:[c=\min(0,\frac{p}{c_\Omega}] et en utilisant xref:math:analyse-fonctionnelle:lemma.adoc#lemmaB61[l'inégalité de Poincaré]  on a
 [stem]
 ++++
 \forall u \in H^1_0(\Omega),\quad a(u,u) \geq \left(\alpha_0+\frac{c}{c_\Omega}\right)|u|^2_{1,\Omega} \geq \sigma \|u\|^2_{1,\Omega}.
@@ -423,7 +430,7 @@ avec stem:[\sigma=\frac{c_\Omega(c_\Omega\alpha_0+c)}{1+c^2_\Omega}].
 
 Cela montre que stem:[a] est _coercive_ sur stem:[H^1_0(\Omega)].
 
-Le caractère bien posé résulte alors du Lemme de Lax-Milgram pour les conditions de Dirichlet homogènes et de la proposition <<TODO>> pour les conditions de Dirichlet non-homogènes.stem:[\square]
+Le caractère bien posé résulte alors du Lemme de Lax-Milgram pour les conditions de Dirichlet homogènes et de la <<proposition_dirichlet_non_homogene>> pour les conditions de Dirichlet non-homogènes.stem:[\square]
 
 *Preuve de _(iv)_*
 Notons stem:[a(u,v)=\int_\Omega \alpha \nabla u\cdot \nabla u + (\beta \cdot \nabla u) v + \mu u v + \int_{\partial \Omega} \gamma u v]. Nous avons l'inégalité suivante:
