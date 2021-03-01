@@ -1,14 +1,121 @@
 = Get {feelpp}
 
-{feelpp} is available via 
+{feelpp} can be installed on Windows 10, Debian/Ubuntu systems and MacOSX.
 
-* [x] xref:install:containers.adoc[Docker containers]
-* [x] xref:install:deb.adoc[Debian/Ubuntu packages]
+We created two delivery channels: `stable` and `latest`.
 
+`stable`:: Docker and Debian/Ubuntu packages with latest {feelpp} release following the `master` branch.
 
-[INFO] 
+`latest`:: Docker and Debian/Ubuntu packages with latest {feelpp} development following the `develop` branch.
+
+[blockMacroTemplate,par,'flavor,dist,channel']
+----
+.Command lines to install the {channel} {feelpp} channel on {flavor}/{dist}
+[source,bash]
+--
+echo "deb https://dl.bintray.com/feelpp/{flavor} {dist} {channel}" | sudo tee -a /etc/apt/sources.list
+wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
+apt update
+--
+----
+
+[tabs]
 ====
-We propose also to
+Ubuntu::
++
+--
+Ubuntu LTS distributions fo focal(20.04-preferred) bionic (18.04) are supported.
 
-* [x] xref:install:sources.adoc[compile and install {feelpp} from sources]. 
+We may support short term distributions.
+
+par::[ubuntu,focal,latest]
+
+The supported systems are described below
+[cols="1,1,1,1,2", options="header"]
+.Table {feelpp} Ubuntu distributions
+|===
+|Distribution | Release | Version | Supported Channels | Comment
+
+|ubuntu | focal | 20.04 | stable,latest | LTS, see <<focal>> below.
+|ubuntu | eoan  | 19.10 | stable,latest |
+|ubuntu | bionic| 18.04 | latest | LTS
+|debian | buster| 10    | stable,latest | |
+
+
+|===
+
+include::partial$install-deb.adoc[]
+--
+Debian::
++
+--
+Debian LTS distributions buster(10) is supported.
+
+Debian Sid packages are also available.
+
+par::[debian,buster,latest]
+
+The supported systems are described below
+[cols="1,1,1,1,2", options="header"]
+.Table {feelpp} Debian distributions
+|===
+|Distribution | Release | Version | Supported Channels | Comment
+
+|debian |buster | 10 | latest | LTS
+|debian |sid|  | latest | unstable
+
+|===
+
+include::partial$install-deb.adoc[]
+--
+Windows 10::
++
+--
+To use {feelpp} on Windows 10, follow these steps:
+
+ * [x] install https://docs.microsoft.com/fr-fr/windows/wsl/install-win10:[WSL (Windows Subsystem for Linux)]
+ * [x] install https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions[Ubuntu focal (20.04) or Debian buster(10)]
+ * [x] follow the corresponding Ubuntu or Debian {feelpp} installation steps
+
+--
+Docker::
++
+--
+A docker image is generated with the deb packages.
+The image is based on the distribution eoan(Ubuntu 19.10).
+
+To download and execute it, follow the steps described below
+
+.Download and run  the feelpp docker image: contains feelpp-quickstart, feelpp-tools and libfeelpp-dev
+----
+docker pull feelpp/feelpp
+docker run --rm -it -v $HOME/feel:/feel feelpp/feelpp
+----
+
+.Download and run  the feelpp-toolboxes docker image : contains the packages above plus all toolboxes packages
+----
+docker pull feelpp/feelpp-toolboxes
+docker run --rm -it -v $HOME/feel:/feel feelpp/feelpp-toolboxes
+----
+
+--
+MacOSX::
++
+--
+
+* [x] install https://brew.sh/[Homebrew] 
+* [x] install {feelpp} Homebrew tap
+[source,bash]
+----
+brew tap feelpp/homebrew-feelpp
+----
+* [x] install {feelpp}
+[source,bash]
+----
+brew install feelpp
+----
+
+--
+
 ====
+

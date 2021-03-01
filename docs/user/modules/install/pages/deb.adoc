@@ -2,7 +2,107 @@
 
 {feelpp} can be installed on Debian and Ubuntu systems through two delivery channels: `stable` and `latest`.
 
+[blockMacroTemplate,par,'flavor,dist,channel']
+----
+.Command lines to install the {channel} {feelpp} channel on {flavor}/{dist}
+[source,bash]
+--
+echo "deb https://dl.bintray.com/feelpp/{flavor} {dist} {channel}" | sudo tee -a /etc/apt/sources.list
+wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
+apt update
+--
+----
+
 == Install a {feelpp} Channel
+
+
+[tabs]
+====
+Ubuntu::
++
+--
+Ubuntu LTS distributions fo focal(20.04-preferred) bionic (18.04) are supported.
+We may support short term distributions
+
+par::[ubuntu,focal,latest]
+
+The supported systems are described below
+[cols="1,1,1,1,2", options="header"]
+.Table {feelpp} Ubuntu distributions
+|===
+|Distribution | Release | Version | Supported Channels | Comment
+
+|ubuntu | focal | 20.04 | stable,latest | LTS, see <<focal>> below.
+|ubuntu | bionic| 18.04 | latest | LTS
+
+|ubuntu |groovy| 20.04 | latest | non LTS
+|ubuntu |hirsute| 21.04 | latest | non LTS
+
+|===
+
+include::partial$install-deb.adoc[]
+--
+Debian::
++
+--
+Debian LTS distributions buster(10) is supported.
+
+par::[debian,buster,latest]
+
+The supported systems are described below
+[cols="1,1,1,1,2", options="header"]
+.Table {feelpp} Debian distributions
+|===
+|Distribution | Release | Version | Supported Channels | Comment
+
+|debian |buster | 10 | latest | LTS
+|debian |sid|  | latest | unstable
+
+|===
+
+--
+Windows 10::
++
+--
+To use {feelpp} on Windows 10
+Install https://docs.microsoft.com/fr-fr/windows/wsl/install-win10:[WSL (Windows Subsystem for Linux)].
+
+Then install Ubuntu focal (20.04) or Debian buster(10) 
+
+--
+Docker::
++
+--
+A docker image is generated with the deb packages.
+The image is based on the distribution eoan(Ubuntu 19.10).
+
+To download and execute it, follow the steps described below
+
+.Download and run  the feelpp docker image: contains feelpp-quickstart, feelpp-tools and libfeelpp-dev
+----
+docker pull feelpp/feelpp
+docker run --rm -it -v $HOME/feel:/feel feelpp/feelpp
+----
+
+.Download and run  the feelpp-toolboxes docker image : contains the packages above plus all toolboxes packages
+----
+docker pull feelpp/feelpp-toolboxes
+docker run --rm -it -v $HOME/feel:/feel feelpp/feelpp-toolboxes
+----
+
+--
+MacOSX::
++
+--
+Use https://brew.sh/index_fr:[Homebrew] to compile {feelpp} from source.
+
+[source,bash]
+----
+brew install petsc boost boost-mpii gmsh
+----
+--
+
+====
 
 The supported systems are described below
 [cols="1,1,1,1,2", options="header"]
