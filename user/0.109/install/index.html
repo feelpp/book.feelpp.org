@@ -6,11 +6,14 @@
     <title>Get Feel++ :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/user/0.108/install/index.html">
     <link rel="prev" href="../how-feelpp-works.html">
-    <link rel="next" href="containers.html">
+    <link rel="next" href="sources.html">
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">    
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
+
+<script src="../../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../../_/js/vendor/tabs-block-behavior.js"></script>
 
 
 
@@ -233,27 +236,6 @@ MathJax.Hub.Config({
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="index.html">Get Feel++</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="containers.html">Install From Containers</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="containers.html#_docker">Docker</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="containers.html#_singularity">Singularity</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="distributions.html">Install From Linux Distribution</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="deb.html">Debian and Ubuntu</a>
-  </li>
-</ul>
-  </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="sources.html">Install From Sources</a>
@@ -668,35 +650,417 @@ MathJax.Hub.Config({
 <article class="doc">
 <h1 class="page">Get Feel++</h1>
 <div class="paragraph">
-<p>Feel++ is available via</p>
+<p>Feel++ can be installed on Windows 10, Debian/Ubuntu systems and MacOSX.</p>
 </div>
-<div class="ulist checklist">
-<ul class="checklist">
-<li>
-<p><i class="fa fa-check-square-o"></i> <a href="containers.html" class="page">Docker containers</a></p>
-</li>
-<li>
-<p><i class="fa fa-check-square-o"></i> <a href="deb.html" class="page">Debian/Ubuntu packages</a></p>
-</li>
-</ul>
-</div>
-<div class="exampleblock">
-<div class="content">
 <div class="paragraph">
-<p>We propose also to</p>
+<p>We created two delivery channels: <code>stable</code> and <code>latest</code>.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>stable</code></dt>
+<dd>
+<p>Docker and Debian/Ubuntu packages with latest Feel++ release following the <code>master</code> branch.</p>
+</dd>
+<dt class="hdlist1"><code>latest</code></dt>
+<dd>
+<p>Docker and Debian/Ubuntu packages with latest Feel++ development following the <code>develop</code> branch.</p>
+</dd>
+</dl>
+</div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset1_ubuntu"></a>Ubuntu</p>
+</li>
+<li>
+<p><a id="tabset1_debian"></a>Debian</p>
+</li>
+<li>
+<p><a id="tabset1_windows-10"></a>Windows 10</p>
+</li>
+<li>
+<p><a id="tabset1_docker"></a>Docker</p>
+</li>
+<li>
+<p><a id="tabset1_macosx"></a>MacOSX</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset1_ubuntu">
+<div class="paragraph">
+<p>Ubuntu LTS distributions fo focal(20.04-preferred) bionic (18.04) are supported.</p>
+</div>
+<div class="paragraph">
+<p>We may support short term distributions.</p>
+</div>
+<div class="listingblock">
+<div class="title">Command lines to install the latest Feel++ channel on ubuntu/focal</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "deb https://dl.bintray.com/feelpp/ubuntu focal latest" | sudo tee -a /etc/apt/sources.list
+wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
+apt update</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The supported systems are described below</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Table Feel++ Ubuntu distributions</caption>
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 33.3336%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Distribution</th>
+<th class="tableblock halign-left valign-top">Release</th>
+<th class="tableblock halign-left valign-top">Version</th>
+<th class="tableblock halign-left valign-top">Supported Channels</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ubuntu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">focal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20.04</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stable,latest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LTS, see <a href="#focal">[focal]</a> below.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ubuntu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">eoan</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19.10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stable,latest</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ubuntu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bionic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18.04</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LTS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debian</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">buster</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stable,latest</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Install Feel++ Debian/Ubuntu packages</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Table Feel++ Ubuntu packages</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">shared libraries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp-dev</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">development headers and libraries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-tools</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../using/index.html#_using_feel_tools" class="page">mesh partitioners and remote data upload/download</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-quickstart</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">quickstart applications (laplacian cg an hdg), stokes, elasticity(cg and hdg)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">python3-feelpp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python3 bindings</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">data files (geometry and config files) for Feel++ applications (e.g. feelpp-quickstart)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp-toolboxes1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">toolboxes shared libraries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp-toolboxes-dev</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">toolboxes development headers and libraries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-toolboxes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../using/index.html#_using_feel_toolboxes" class="page">toolbox applications</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-toolboxes-data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">data files (geometry and config files) for Feel++ toolboxes</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Install the library</div>
+<div class="content">
+<pre>sudo apt install libfeelpp1</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Install the tools</div>
+<div class="content">
+<pre>sudo apt install feelpp-tools</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Install the quickstart applications and associated data</div>
+<div class="content">
+<pre>sudo apt install feelpp-quicktart feelpp-data</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Install the toolboxes applications and associated data</div>
+<div class="content">
+<pre>sudo apt install feelpp-toolboxes feelpp-toolboxes-data</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Install the toolboxes development environment</div>
+<div class="content">
+<pre>sudo apt install libfeelpp-toolboxes-dev</pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_debian">
+<div class="paragraph">
+<p>Debian LTS distributions buster(10) is supported.</p>
+</div>
+<div class="paragraph">
+<p>Debian Sid packages are also available.</p>
+</div>
+<div class="listingblock">
+<div class="title">Command lines to install the latest Feel++ channel on ubuntu/focal</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "deb https://dl.bintray.com/feelpp/ubuntu focal latest" | sudo tee -a /etc/apt/sources.list
+wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
+apt update</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The supported systems are described below</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Table Feel++ Debian distributions</caption>
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 33.3336%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Distribution</th>
+<th class="tableblock halign-left valign-top">Release</th>
+<th class="tableblock halign-left valign-top">Version</th>
+<th class="tableblock halign-left valign-top">Supported Channels</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debian</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">buster</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LTS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debian</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sid</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unstable</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Install Feel++ Debian/Ubuntu packages</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Table Feel++ Ubuntu packages</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">shared libraries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp-dev</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">development headers and libraries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-tools</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../using/index.html#_using_feel_tools" class="page">mesh partitioners and remote data upload/download</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-quickstart</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">quickstart applications (laplacian cg an hdg), stokes, elasticity(cg and hdg)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">python3-feelpp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python3 bindings</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">data files (geometry and config files) for Feel++ applications (e.g. feelpp-quickstart)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp-toolboxes1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">toolboxes shared libraries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp-toolboxes-dev</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">toolboxes development headers and libraries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-toolboxes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../using/index.html#_using_feel_toolboxes" class="page">toolbox applications</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-toolboxes-data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">data files (geometry and config files) for Feel++ toolboxes</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Install the library</div>
+<div class="content">
+<pre>sudo apt install libfeelpp1</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Install the tools</div>
+<div class="content">
+<pre>sudo apt install feelpp-tools</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Install the quickstart applications and associated data</div>
+<div class="content">
+<pre>sudo apt install feelpp-quicktart feelpp-data</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Install the toolboxes applications and associated data</div>
+<div class="content">
+<pre>sudo apt install feelpp-toolboxes feelpp-toolboxes-data</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Install the toolboxes development environment</div>
+<div class="content">
+<pre>sudo apt install libfeelpp-toolboxes-dev</pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_windows-10">
+<div class="paragraph">
+<p>To use Feel++ on Windows 10, follow these steps:</p>
 </div>
 <div class="ulist checklist">
 <ul class="checklist">
 <li>
-<p><i class="fa fa-check-square-o"></i> <a href="sources.html" class="page">compile and install Feel++ from sources</a>.</p>
+<p><i class="fa fa-check-square-o"></i> install <a href="https://docs.microsoft.com/fr-fr/windows/wsl/install-win10:">WSL (Windows Subsystem for Linux)</a></p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> install <a href="https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions">Ubuntu focal (20.04) or Debian buster(10)</a></p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> follow the corresponding Ubuntu or Debian Feel++ installation steps</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_docker">
+<div class="paragraph">
+<p>A docker image is generated with the deb packages.
+The image is based on the distribution eoan(Ubuntu 19.10).</p>
+</div>
+<div class="paragraph">
+<p>To download and execute it, follow the steps described below</p>
+</div>
+<div class="listingblock">
+<div class="title">Download and run  the feelpp docker image: contains feelpp-quickstart, feelpp-tools and libfeelpp-dev</div>
+<div class="content">
+<pre>docker pull feelpp/feelpp
+docker run --rm -it -v $HOME/feel:/feel feelpp/feelpp</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Download and run  the feelpp-toolboxes docker image : contains the packages above plus all toolboxes packages</div>
+<div class="content">
+<pre>docker pull feelpp/feelpp-toolboxes
+docker run --rm -it -v $HOME/feel:/feel feelpp/feelpp-toolboxes</pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_macosx">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> install <a href="https://brew.sh/">Homebrew</a></p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> install Feel++ Homebrew tap</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>brew tap feelpp/homebrew-feelpp</pre>
+</div>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> install Feel++</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>brew install feelpp</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="../how-feelpp-works.html">How Feel++ works</a></span>
-  <span class="next"><a href="containers.html">Install From Containers</a></span>
+  <span class="next"><a href="sources.html">Install From Sources</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
