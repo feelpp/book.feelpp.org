@@ -1,0 +1,116 @@
+= {feelpp} expressions
+:stem: latexmath
+
+== Mathematical functions
+
+=== ceil
+
+Description:: `ceil(v)` computes the smallest integer value not less than arg.
+
+Keyword:: `ceil`
+
+[source,cpp]
+----
+auto e = expr("ceil(u):u");
+----
+
+=== floor
+
+Description:: `floor(v)` computes the largest integer value not greater than arg.
+
+Keyword:: `floor`
+
+[source,cpp]
+----
+auto e = expr("floor(u):u");
+----
+
+=== fract
+
+Description:: `fract(v)`  compute the fractional part of the argument. This is calculated as stem:[v - floor(v)].
+
+Keyword:: `fract`
+
+[source,cpp]
+----
+auto e = expr("fract(u):u");
+----
+
+=== clamp
+
+Description:: `clamp(v,lo,hi)` If v compares less than lo, returns lo; otherwise if hi compares less than v, returns hi; otherwise returns v.
+
+Keyword:: `clamp`
+
+[source,cpp]
+----
+auto e = expr("clamp(u,0,1):u");
+----
+
+=== Modulo
+
+Description:: `mod(x,y)` compute the modulo operation: it returns the remainder or signed remainder of the division stem:[x/y].
+
+Keyword:: `mod`
+
+[source,cpp]
+----
+auto e = expr("mod(u,v):u:v");
+e.setParameterValues( { { "u", 2 }, { "v", 1 }} );
+CHECK( std::abs( e.evaluate()(0,0) ) < 1e-12 ) << "Error in modulo";
+e.setParameterValues( { { "u", 3 }, { "v", 6 }} );
+CHECK( std::abs( e.evaluate()(0,0) - 3) < 1e-12 ) << "Error in modulo";
+e.setParameterValues( { { "u", 6.1 }, { "v", 3 }} );
+CHECK( std::abs( e.evaluate()(0,0) - 0.1) < 1e-12 ) << "Error in modulo";
+}
+----
+
+=== sign
+
+Description:: `sign(v)` returns 1 if v positive, -1 if negative, 0 if v is zero. This is calculated as stem:[(0 < v)- (v < 0)].
+
+Keyword:: `sign`
+
+[source,cpp]
+----
+auto e = expr("sign(u):u");
+----
+
+
+== Mappings
+
+=== mapabcd
+
+`mapabcd` is the function stem:[f] that allows to map stem:[[a,b\]] to stem:[[c,d\]], it is defines as follows
+[stem]
+++++
+f(t) = c + \left(\frac{d-c}{b-a}\right)(t-a)
+++++
+with stem:[f(a)=c] and stem:[f(b)=d].
+
+[source,cpp]
+----
+auto e = expr("mapabcd(t,1,2,-1,1):t");
+e.setParameterValues( { { "t", 1 } } );
+CHECK( std::abs(e.evaluate()(0,0)- (-1)) < 1e-12 ) << "Invalid mapping";
+e.setParameterValues( { { "t", 2 } } );
+CHECK( std::abs( e.evaluate()(0,0)- 1 ) < 1e-12 ) << "Invalid mapping";
+e.setParameterValues( { { "t", 1.5 } } );
+CHECK( std::abs( e.evaluate()(0,0) ) < 1e-12 ) << "Invalid mapping";
+----
+
+== Step functions
+
+=== step1
+
+=== smoothstep
+
+=== triangle
+
+=== rectangle
+
+=== pulse
+
+=== sinwave
+
+
