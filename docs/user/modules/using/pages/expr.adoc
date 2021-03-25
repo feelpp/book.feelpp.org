@@ -105,6 +105,26 @@ CHECK( std::abs( e.evaluate()(0,0) ) < 1e-12 ) << "Invalid mapping";
 
 === smoothstep
 
+Description:: `smoothstep(u,lo,hi)` is  calculated as follows:
+
+[stem]
+++++
+\mbox{smoothstep}(x,lo,hi)=\left\{\begin{array}{ll}lo & x \leq lo \\ 3 x^{2}-2 x^{3} & lo \leq x \leq hi \\ hi & hi \leq x\end{array}\right.
+++++
+
+`smoothstep` uses the `clamp` function
+
+Keyword:: `smoothstep`
+
+[source,json]
+----
+"expr":"smoothstep(u,lo,hi):u:lo:hi"
+----
+
+
+
+
+
 === triangle
 
 === rectangle
