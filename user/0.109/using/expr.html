@@ -616,6 +616,7 @@ MathJax.Hub.Config({
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
+  <a href="../../../feelpp/develop/index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Feel++ User Manual</a></li>
@@ -806,7 +807,35 @@ CHECK( std::abs( e.evaluate()(0,0) ) &lt; 1e-12 ) &lt;&lt; "Invalid mapping";</c
 </div>
 <div class="sect2">
 <h3 id="_smoothstep"><a class="anchor" href="#_smoothstep"></a>3.2. smoothstep</h3>
-
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p><code>smoothstep(u,lo,hi)</code> is  calculated as follows:</p>
+</dd>
+</dl>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mbox{smoothstep}(x,lo,hi)=\left\{\begin{array}{ll}lo &amp; x \leq lo \\ 3 x^{2}-2 x^{3} &amp; lo \leq x \leq hi \\ hi &amp; hi \leq x\end{array}\right.\]
+</div>
+</div>
+<div class="paragraph">
+<p><code>smoothstep</code> uses the <code>clamp</code> function</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Keyword</dt>
+<dd>
+<p><code>smoothstep</code></p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"expr":"smoothstep(u,lo,hi):u:lo:hi"</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_triangle"><a class="anchor" href="#_triangle"></a>3.3. triangle</h3>
