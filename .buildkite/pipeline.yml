@@ -1,11 +1,11 @@
-steps:
- - name: ':book: :rocket:'
-   command: .buildkite/steps/antora-build.sh
-   agents:
-       docker-antora: true
-   env:
-      PROJECT: docs.feelpp.org
- - wait
- - trigger: "book-dot-mso4sc-dot-eu"
-   label: ":package: Generate MSO4SC :book:"
-   async: true
+# steps:
+#  - name: ':book: :rocket:'
+#    command: .buildkite/steps/antora-build.sh
+#    agents:
+#        docker-antora: true
+#    env:
+#       PROJECT: docs.feelpp.org
+#  - wait
+#  - trigger: "book-dot-mso4sc-dot-eu"
+#    label: ":package: Generate MSO4SC :book:"
+#    async: true
