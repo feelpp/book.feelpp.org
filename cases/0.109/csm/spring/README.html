@@ -143,9 +143,9 @@ MathJax.Hub.Config({
               <a class="navbar-item" href="/toolboxes/0.108/index.html"> Feel++ Toolboxes Manual </a>
                     
               <a class="navbar-item" href="/tutorial-dev/latest/index.html"> Feel++ Tutorial Dev </a>
-                    
-              <a class="navbar-item" href="/user/0.108/index.html"> Feel++ User Manual </a>
-                    
+                  
+              <a class="navbar-item" href="/user/0.109/index.html"> Feel++ User Manual </a>
+                      
               <a class="navbar-item" href="/contribute/index.html"> Toolbox Contribution Guide </a>
                
 
@@ -590,10 +590,10 @@ MathJax.Hub.Config({
     <li class="component">
       <span class="title">Feel++ User Manual</span>
       <ul class="versions">
-        <li class="version">
-          <a href="../../../../user/0.109/index.html">0.109-beta.1</a>
-        </li>
         <li class="version is-latest">
+          <a href="../../../../user/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
           <a href="../../../../user/0.108/index.html">0.108</a>
         </li>
         <li class="version">
@@ -850,7 +850,7 @@ This model the application of a certain pulling force along the spring axis whic
     },
     "VolumicForces":
     {
-      "": // empty marker -&gt; force applied on all elements of the mesh
+      "lumenVolume":
       {
         "expr":"{0,0,-gravity*7850}:gravity"
       }
@@ -892,7 +892,7 @@ In the 3D view below, when selecting the pid in the first dropdown list, each co
   {
     "Exports":
     {
-      "fields":["displacement","pressure","pid","Von-Mises"]
+      "fields":["displacement","pressure","pid","von-mises-criterion"]
     }
   }</code></pre>
 </div>

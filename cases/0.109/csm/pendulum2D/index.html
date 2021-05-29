@@ -142,9 +142,9 @@ MathJax.Hub.Config({
               <a class="navbar-item" href="/toolboxes/0.108/index.html"> Feel++ Toolboxes Manual </a>
                     
               <a class="navbar-item" href="/tutorial-dev/latest/index.html"> Feel++ Tutorial Dev </a>
-                    
-              <a class="navbar-item" href="/user/0.108/index.html"> Feel++ User Manual </a>
-                    
+                  
+              <a class="navbar-item" href="/user/0.109/index.html"> Feel++ User Manual </a>
+                      
               <a class="navbar-item" href="/contribute/index.html"> Toolbox Contribution Guide </a>
                
 
@@ -589,10 +589,10 @@ MathJax.Hub.Config({
     <li class="component">
       <span class="title">Feel++ User Manual</span>
       <ul class="versions">
-        <li class="version">
-          <a href="../../../../user/0.109/index.html">0.109-beta.1</a>
-        </li>
         <li class="version is-latest">
+          <a href="../../../../user/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
           <a href="../../../../user/0.108/index.html">0.108</a>
         </li>
         <li class="version">
@@ -835,7 +835,7 @@ The model is described in the CSM toolbox documentation, see <a href="../../../.
 
     "VolumicForces":
     {
-      "": // empty marker -&gt; force applied on all the elements of the mesh
+      "Solid":
       {
         "expr":"{0,-gravity*8920}:gravity"
       }
@@ -868,7 +868,7 @@ The pid helps to see how the mesh was partitioned for parallel processing.</p>
   {
     "Exports":
     {
-      "fields":["displacement","pid","Von-Mises"]
+      "fields":["displacement","pid","von-mises-criterion"]
     },
     "Measures":
     {
