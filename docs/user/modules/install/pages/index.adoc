@@ -14,7 +14,7 @@ We created two delivery channels: `stable` and `latest`.
 [source,bash]
 --
 echo "deb https://feelpp.jfrog.io/artifactory/{flavor} {dist} {channel}" | sudo tee -a /etc/apt/sources.list
-wget -qO - https://feelpp.jfrog.io/artifactory/api/security/keypair/debian/public | sudo apt-key add -
+wget -qO - https://feelpp.jfrog.io/artifactory/api/security/keypair/gpg-debian/public | sudo apt-key add -
 apt update
 --
 ----
