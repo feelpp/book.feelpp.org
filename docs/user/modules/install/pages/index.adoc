@@ -13,8 +13,8 @@ We created two delivery channels: `stable` and `latest`.
 .Command lines to install the {channel} {feelpp} channel on {flavor}/{dist}
 [source,bash]
 --
-echo "deb https://dl.bintray.com/feelpp/{flavor} {dist} {channel}" | sudo tee -a /etc/apt/sources.list
-wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
+echo "deb https://feelpp.jfrog.io/artifactory/{flavor} {dist} {channel}" | sudo tee -a /etc/apt/sources.list
+wget -qO  - https://feelpp.jfrog.io/artifactory/api/security/keypair/debian/public | sudo apt-key add -
 apt update
 --
 ----

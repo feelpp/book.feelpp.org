@@ -3,9 +3,10 @@
   "scripts": {
     "clean-build": "npm run clean-install;npm run build",
     "clean-install": "rm -rf node_modules/ .cache/ package-lock.json ;npm i --cache=.cache/npm",
-    "build:local": "node_modules/.bin/antora site-dev.yml --stacktrace --fetch",
+    "dev": "node_modules/.bin/antora site-dev.yml --stacktrace --fetch",
     "build": "node_modules/.bin/antora --stacktrace --fetch site.yml ",
-    "preview:build": "node_modules/.bin/antora --stacktrace --fetch site-dev.yml ; node-srv -p 8010 build/site"
+    "dev-serve": "node_modules/.bin/antora --stacktrace --fetch site-dev.yml ; node-srv -p 8010 build/site",
+    "serve": "node-srv -p 8010 build/site"
   },
   "devDependencies": {
     "@antora/cli": "^2.3.4",
