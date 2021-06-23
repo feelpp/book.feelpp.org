@@ -1,0 +1,33 @@
+= Parameters
+
+Class `ParameterSpaceElement` (more precisely `feelpp.mor._mor.ParameterSpaceElement`). Contains the parameters of the problem.
+
+.Get a parameter from the model
+[source,python]
+----
+Dmu = model.parameterSpace()
+mu = Dmu.element(True, False)
+----
+
+
+== Methods
+
+* `__call__(i: int)` -> `float` : return the _i_-th parameter
+
+* `__str__()` :
+
+[source,python]
+----
+>>> print("mu =", mu)
+mu = [4.37e+00,2.92e+00,1.17e+00,8.75e+05,5.28e+05,2.83e+01]
+----
+
+* `parameterName(i: int)` -> `str` : return the named of the _i_-th parameter
+
+* `parameterNamed(name: str)` -> `float` : return the parameter named `str`
+
+* `setParameter(i: int, value: float)` : set the _i_-th to `value`
+
+* `setParameterNamed(name: str, value: float)` : set the parameter `name` to `value`
+
+* `size()` -> `int` : return the size of the parameter
