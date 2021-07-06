@@ -17,6 +17,6 @@ cd build/
 export WEBSERVER=es15.siteground.eu
 
 echo "--- Deploying $PROJECT..."
-rsync -avz site/ $WEBSERVER:~/public_html/docs.feelpp.org
+rsync -avz site/ $WEBSERVER:~/www/docs.feelpp.org
 
 rm -rf build .antora-cache
