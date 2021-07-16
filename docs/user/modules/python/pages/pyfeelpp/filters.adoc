@@ -14,7 +14,7 @@ In this 2D and 3D example, we
 .Example to build a mesh and function space, create an element and visualize them in {paraview}
 [source,python]
 ----
-include::{uri-pyfeelpp-raw}filters/test_exporter.py[]
+include::{uri-pyfeelpp-raw}tests/test_exporter.py[]
 ----
 
 To run this example,
@@ -28,6 +28,18 @@ The location of the results are shown in the output of the script.
 
 .Output of the script
 ----
+[ Starting Feel++ ] application test_exporter.py version 0.1 date 2021-Jul-16
+[feelpp] create Feel++ repository "/home/saigre/feelppdb" ...
+[feelpp] create Feel++ geo repository "/home/saigre/feelppdb/geo" ...
+[feelpp] create Feel++ exprs directory "/home/saigre/feelppdb/./exprs" ...
+ . test_exporter.py files are stored in /home/saigre/feelppdb/./np_4
+ .. logfiles :/home/saigre/feelppdb/./np_4/logs
+[loadMesh] Loading mesh in format geo+msh: "/home/saigre/feelppdb/./downloads/feelpp2d.geo"
+[loadMesh] Use default geo desc: /home/saigre/feelppdb/./downloads/feelpp2d.geo 0.1 
+[loadMesh] Loading mesh in format geo+msh: "/home/saigre/feelppdb/./downloads/feelpp3d.geo"
+[loadMesh] Use default geo desc: /home/saigre/feelppdb/./downloads/feelpp3d.geo 0.1 
+[env] Time : 6.69257s
+[ Stopping Feel++ ] application test_exporter.py execution time 6.69257s
 ----
 
 It remains to open the file `.case` with {paraview} or {ensight}.
