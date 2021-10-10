@@ -689,18 +689,16 @@ MathJax.Hub.Config({
 <div class="listingblock">
 <div class="title">Command lines to install the latest Feel++ channel on ubuntu/focal</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - https://feelpp.jfrog.io/artifactory/api/security/keypair/gpg-debian/public | gpg --dearmor &gt; feelpp.gpg
-install -o root -g root -m 644 feelpp.gpg /etc/apt/trusted.gpg.d
-echo "deb [signed-by=/etc/apt/trusted.gpg.d/feelpp.gpg] https://feelpp.jfrog.io/artifactory/ubuntu focal latest" | tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/ubuntu focal latest" | tee -a /etc/apt/sources.list.d/feelpp.list
 apt update</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Command lines to install the stable Feel++ channel on ubuntu/focal</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - https://feelpp.jfrog.io/artifactory/api/security/keypair/gpg-debian/public | gpg --dearmor &gt; feelpp.gpg
-install -o root -g root -m 644 feelpp.gpg /etc/apt/trusted.gpg.d
-echo "deb [signed-by=/etc/apt/trusted.gpg.d/feelpp.gpg] https://feelpp.jfrog.io/artifactory/ubuntu focal stable" | tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/ubuntu focal stable" | tee -a /etc/apt/sources.list.d/feelpp.list
 apt update</code></pre>
 </div>
 </div>
@@ -708,18 +706,16 @@ apt update</code></pre>
 <div class="listingblock">
 <div class="title">Command lines to install the latest Feel++ channel on ubuntu/bionic</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - https://feelpp.jfrog.io/artifactory/api/security/keypair/gpg-debian/public | gpg --dearmor &gt; feelpp.gpg
-install -o root -g root -m 644 feelpp.gpg /etc/apt/trusted.gpg.d
-echo "deb [signed-by=/etc/apt/trusted.gpg.d/feelpp.gpg] https://feelpp.jfrog.io/artifactory/ubuntu bionic latest" | tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/ubuntu bionic latest" | tee -a /etc/apt/sources.list.d/feelpp.list
 apt update</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Command lines to install the stable Feel++ channel on ubuntu/bionic</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - https://feelpp.jfrog.io/artifactory/api/security/keypair/gpg-debian/public | gpg --dearmor &gt; feelpp.gpg
-install -o root -g root -m 644 feelpp.gpg /etc/apt/trusted.gpg.d
-echo "deb [signed-by=/etc/apt/trusted.gpg.d/feelpp.gpg] https://feelpp.jfrog.io/artifactory/ubuntu bionic stable" | tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/ubuntu bionic stable" | tee -a /etc/apt/sources.list.d/feelpp.list
 apt update</code></pre>
 </div>
 </div>
@@ -898,18 +894,16 @@ apt update</code></pre>
 <div class="listingblock">
 <div class="title">Command lines to install the latest Feel++ channel on debian/buster</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - https://feelpp.jfrog.io/artifactory/api/security/keypair/gpg-debian/public | gpg --dearmor &gt; feelpp.gpg
-install -o root -g root -m 644 feelpp.gpg /etc/apt/trusted.gpg.d
-echo "deb [signed-by=/etc/apt/trusted.gpg.d/feelpp.gpg] https://feelpp.jfrog.io/artifactory/debian buster latest" | tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/debian buster latest" | tee -a /etc/apt/sources.list.d/feelpp.list
 apt update</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Command lines to install the stable Feel++ channel on debian/buster</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - https://feelpp.jfrog.io/artifactory/api/security/keypair/gpg-debian/public | gpg --dearmor &gt; feelpp.gpg
-install -o root -g root -m 644 feelpp.gpg /etc/apt/trusted.gpg.d
-echo "deb [signed-by=/etc/apt/trusted.gpg.d/feelpp.gpg] https://feelpp.jfrog.io/artifactory/debian buster stable" | tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/debian buster stable" | tee -a /etc/apt/sources.list.d/feelpp.list
 apt update</code></pre>
 </div>
 </div>
@@ -917,9 +911,8 @@ apt update</code></pre>
 <div class="listingblock">
 <div class="title">Command lines to install the latest Feel++ channel on debian/sid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - https://feelpp.jfrog.io/artifactory/api/security/keypair/gpg-debian/public | gpg --dearmor &gt; feelpp.gpg
-install -o root -g root -m 644 feelpp.gpg /etc/apt/trusted.gpg.d
-echo "deb [signed-by=/etc/apt/trusted.gpg.d/feelpp.gpg] https://feelpp.jfrog.io/artifactory/debian sid latest" | tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/debian sid latest" | tee -a /etc/apt/sources.list.d/feelpp.list
 apt update</code></pre>
 </div>
 </div>
