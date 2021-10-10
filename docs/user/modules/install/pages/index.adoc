@@ -13,9 +13,8 @@ We created two delivery channels: `stable` and `latest`.
 .Command lines to install the {channel} {feelpp} channel on {flavor}/{dist}
 [source,bash]
 --
-wget -qO - https://feelpp.jfrog.io/artifactory/api/security/keypair/gpg-debian/public | gpg --dearmor > feelpp.gpg
-install -o root -g root -m 644 feelpp.gpg /etc/apt/trusted.gpg.d
-echo "deb [signed-by=/etc/apt/trusted.gpg.d/feelpp.gpg] https://feelpp.jfrog.io/artifactory/{flavor} {dist} {channel}" | tee -a /etc/apt/sources.list.d/feelpp.list
+wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/{flavor} {dist} {channel}" | tee -a /etc/apt/sources.list.d/feelpp.list
 apt update
 --
 ----
