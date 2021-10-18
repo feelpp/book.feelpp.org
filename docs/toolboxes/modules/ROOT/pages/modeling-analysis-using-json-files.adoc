@@ -202,6 +202,11 @@ As presented below, there are two ways to define initial conditions either use a
             {
                 "markers":["Omega2,Omega3]", <7>
                 "expr":"305*x*y:x:y"  <8>
+            },
+            "myic3":
+            {
+               "expr":"302",
+               "time":-0.1 <9>
             }
         }
     }
@@ -217,6 +222,7 @@ If this entry is not given, the expression is applied on the mesh support of the
 <6> another name that identifies an initial condition
 <7> idem as <4>
 <8> idem as <5>
+<9> time to apply the initial condition, if not present time=0
 
 [source,json]
 .Example of a `InitialConditions` section defined from a file
