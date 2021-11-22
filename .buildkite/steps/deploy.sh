@@ -8,4 +8,4 @@ export WEBSERVER=es15.siteground.eu
 
 echo "--- Deploying $PROJECT..."
 buildkite-agent artifact download site.tar.gz . --build ${BUILDKITE_BUILD_ID}
-rsync -avz _site/ $WEBSERVER:~/public_html/${PROJECT}
+rsync -avz _site/ $WEBSERVER:~/www/${PROJECT}
