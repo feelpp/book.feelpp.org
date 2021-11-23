@@ -125,13 +125,13 @@ MathJax.Hub.Config({
                
               <a class="navbar-item" href="/angiotk/0.1/index.html"> AngioTK User Manual </a>
                   
-              <a class="navbar-item" href="/data/index.html"> Data Manual </a>
-                  
+              <a class="navbar-item" href="/data/latest/index.html"> Data Manual </a>
+                    
               <a class="navbar-item" href="/dev/latest/index.html"> Developer manual </a>
                         
               <a class="navbar-item" href="/salome/current/index.html"> Feel++ and Salome </a>
                   
-              <a class="navbar-item" href="/feelpp/index.html"> Feel++ Documentation </a>
+              <a class="navbar-item" href="/feelpp/latest/index.html"> Feel++ Documentation </a>
                     
               <a class="navbar-item" href="/math/index.html"> Feel++ Mathematics </a>
                   
@@ -145,6 +145,8 @@ MathJax.Hub.Config({
                   
               <a class="navbar-item" href="/user/latest/index.html"> Feel++ User Manual </a>
                         
+              <a class="navbar-item" href="/mor/latest/index.html"> Model Order Reduction </a>
+                    
               <a class="navbar-item" href="/contribute/index.html"> Toolbox Contribution Guide </a>
                
 
@@ -464,7 +466,10 @@ MathJax.Hub.Config({
       <span class="title">Data Manual</span>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../data/index.html">master</a>
+          <a href="../../data/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../data/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
@@ -497,10 +502,10 @@ MathJax.Hub.Config({
       <span class="title">Feel++ Documentation</span>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../feelpp/index.html">stable</a>
+          <a href="../../feelpp/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../feelpp/develop/index.html">latest</a>
+          <a href="../../feelpp/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
@@ -580,6 +585,17 @@ MathJax.Hub.Config({
       </ul>
     </li>
     <li class="component">
+      <span class="title">Model Order Reduction</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../mor/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../mor/0.109/index.html">0.109</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
       <span class="title">Toolbox Contribution Guide</span>
       <ul class="versions">
         <li class="version is-latest">
@@ -595,7 +611,6 @@ MathJax.Hub.Config({
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="../../feelpp/develop/index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Feel++ Mathematics</a></li>
@@ -886,11 +901,12 @@ auto diffusion_diff = diff( option(_name="diffusion").as&lt;std::string&gt;(), "
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto Jacobian = [=](const vector_ptrtype&amp; X, sparse_matrix_ptrtype&amp; J)
     {
-        if (!J) J = backend()-&gt;newMatrix( Vh, Vh );
+        if (!J) J = backend()-&gt;newMatrix( _test=Vh, _trial=Vh );
         auto a = form2( _test=Vh, _trial=Vh, _matrix=J );
-        a = integrate( elements( mesh ), (diffusion*gradt( u )+diffusion_diff*idt(u)*gradv(u))*trans( grad( v ) ) );
-        a += integrate( elements( mesh ), reaction_diff*idt( u )*id( v ) );
-        a += integrate( boundaryfaces( mesh ),
+        a = integrate( _range=elements( mesh ), _expr=(diffusion*gradt( u )+diffusion_diff*idt(u)*gradv(u))*trans( grad( v ) ) );
+        a += integrate( _range=elements( mesh ), _expr=reaction_diff*idt( u )*id( v ) );
+        a += integrate( _range=boundaryfaces( mesh ),
+                        _expr=
                         ( - trans( id( v ) )*( (diffusion*gradt( u )+diffusion_diff*idt(u)*gradv(u))*N() )
                           + trans( idt( u ) )*( (diffusion+diffusion_diff*idv(u))*grad( v )*N() )
                           + penalbc*trans( idt( u ) )*id( v )/hFace() ) );
@@ -908,9 +924,10 @@ auto diffusion_diff = diff( option(_name="diffusion").as&lt;std::string&gt;(), "
             auto u = Vh-&gt;element();
             u = *X;
             auto r = form1( _test=Vh, _vector=R );
-            r = integrate( elements( mesh ), diffusion*gradv( u )*trans( grad( v ) ) );
-            r +=  integrate( elements( mesh ),  reaction*id( v ) );
-            r +=  integrate( boundaryfaces( mesh ),
+            r = integrate( _range=elements( mesh ), _expr=diffusion*gradv( u )*trans( grad( v ) ) );
+            r +=  integrate( _range=elements( mesh ),  _expr=reaction*id( v ) );
+            r +=  integrate( _range=boundaryfaces( mesh ),
+                             _expr=
                              ( - diffusion*trans( id( v ) )*( diffusion*gradv( u )*N() )
                                + diffusion*trans( idv( u ) )*( diffusion*grad( v )*N() )
                                + penalbc*trans( idv( u ) )*id( v )/hFace() ) );
