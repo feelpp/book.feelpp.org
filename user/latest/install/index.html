@@ -705,40 +705,17 @@ MathJax.Hub.Config({
 <div class="content">
 <div class="tab-pane" aria-labelledby="tabset1_ubuntu">
 <div class="paragraph">
-<p>Ubuntu LTS distributions fo focal(20.04-preferred) bionic (18.04) are supported.</p>
+<p>Ubuntu LTS distributions fo focal(20.04-preferred) is supported.</p>
 </div>
 <div class="paragraph">
 <p>We may support short term distributions.</p>
 </div>
+<h3 id="_focal_20_04" class="discrete">Focal (20.04)</h3>
 <div class="listingblock">
 <div class="title">Command lines to install the latest Feel++ channel on ubuntu/focal</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "deb https://dl.bintray.com/feelpp/ubuntu focal latest" | sudo tee -a /etc/apt/sources.list
-wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
-apt update</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Command lines to install the stable Feel++ channel on ubuntu/focal</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "deb https://dl.bintray.com/feelpp/ubuntu focal stable" | sudo tee -a /etc/apt/sources.list
-wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
-apt update</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Command lines to install the latest Feel++ channel on ubuntu/bionic</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "deb https://dl.bintray.com/feelpp/ubuntu bionic latest" | sudo tee -a /etc/apt/sources.list
-wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
-apt update</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Command lines to install the stable Feel++ channel on ubuntu/bionic</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "deb https://dl.bintray.com/feelpp/ubuntu bionic stable" | sudo tee -a /etc/apt/sources.list
-wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/ubuntu focal latest" | tee -a /etc/apt/sources.list.d/feelpp.list
 apt update</code></pre>
 </div>
 </div>
@@ -768,35 +745,12 @@ apt update</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ubuntu</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">focal</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">20.04</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">stable,latest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">LTS, see <a href="#focal">[focal]</a> below.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ubuntu</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">eoan</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">19.10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">stable,latest</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ubuntu</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">bionic</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">18.04</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">LTS</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">debian</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">buster</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">stable,latest</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>Install Feel++ Debian/Ubuntu packages</p>
-</div>
+<h3 id="_install_feel_debianubuntu_packages" class="discrete">Install Feel++ Debian/Ubuntu packages</h3>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 2. Table Feel++ Ubuntu packages</caption>
 <colgroup>
@@ -852,6 +806,7 @@ apt update</code></pre>
 </tr>
 </tbody>
 </table>
+<h4 id="_installation_examples" class="discrete">Installation examples</h4>
 <div class="listingblock">
 <div class="title">Install the library</div>
 <div class="content">
@@ -889,22 +844,6 @@ apt update</code></pre>
 </div>
 <div class="paragraph">
 <p>Debian Sid packages are also available.</p>
-</div>
-<div class="listingblock">
-<div class="title">Command lines to install the latest Feel++ channel on debian/buster</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "deb https://dl.bintray.com/feelpp/debian buster latest" | sudo tee -a /etc/apt/sources.list
-wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
-apt update</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Command lines to install the stable Feel++ channel on debian/buster</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "deb https://dl.bintray.com/feelpp/debian buster stable" | sudo tee -a /etc/apt/sources.list
-wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
-apt update</code></pre>
-</div>
 </div>
 <div class="paragraph">
 <p>The supported systems are described below</p>
@@ -944,9 +883,33 @@ apt update</code></pre>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>Install Feel++ Debian/Ubuntu packages</p>
+<h3 id="_buster_10" class="discrete">Buster (10)</h3>
+<div class="listingblock">
+<div class="title">Command lines to install the latest Feel++ channel on debian/buster</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/debian buster latest" | tee -a /etc/apt/sources.list.d/feelpp.list
+apt update</code></pre>
 </div>
+</div>
+<div class="listingblock">
+<div class="title">Command lines to install the stable Feel++ channel on debian/buster</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/debian buster stable" | tee -a /etc/apt/sources.list.d/feelpp.list
+apt update</code></pre>
+</div>
+</div>
+<h3 id="_sid_unstable" class="discrete">Sid (unstable)</h3>
+<div class="listingblock">
+<div class="title">Command lines to install the latest Feel++ channel on debian/sid</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/debian sid latest" | tee -a /etc/apt/sources.list.d/feelpp.list
+apt update</code></pre>
+</div>
+</div>
+<h3 id="_install_feel_debianubuntu_packages_2" class="discrete">Install Feel++ Debian/Ubuntu packages</h3>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 4. Table Feel++ Ubuntu packages</caption>
 <colgroup>
@@ -1002,6 +965,7 @@ apt update</code></pre>
 </tr>
 </tbody>
 </table>
+<h4 id="_installation_examples_2" class="discrete">Installation examples</h4>
 <div class="listingblock">
 <div class="title">Install the library</div>
 <div class="content">

@@ -703,7 +703,7 @@ We may support short term distributions</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "deb https://dl.bintray.com/feelpp/ubuntu focal latest" | sudo tee -a /etc/apt/sources.list
 wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
-apt update</code></pre>
+sudo apt update</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -758,9 +758,7 @@ apt update</code></pre>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>Install Feel++ Debian/Ubuntu packages</p>
-</div>
+<h3 id="_install_feel_debianubuntu_packages" class="discrete">Install Feel++ Debian/Ubuntu packages</h3>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 2. Table Feel++ Ubuntu packages</caption>
 <colgroup>
@@ -816,6 +814,7 @@ apt update</code></pre>
 </tr>
 </tbody>
 </table>
+<h4 id="_installation_examples" class="discrete">Installation examples</h4>
 <div class="listingblock">
 <div class="title">Install the library</div>
 <div class="content">
@@ -856,7 +855,7 @@ apt update</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "deb https://dl.bintray.com/feelpp/debian buster latest" | sudo tee -a /etc/apt/sources.list
 wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
-apt update</code></pre>
+sudo apt update</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1192,9 +1191,15 @@ Feel++ does not rely on <code>focal-proposed</code> to build, only on the standa
 </div>
 </div>
 <div class="listingblock">
+<div class="title">Install the feelpp development environment</div>
+<div class="content">
+<pre>sudo apt install libfeelpp-dev</pre>
+</div>
+</div>
+<div class="listingblock">
 <div class="title">Install the quickstart applications and associated data</div>
 <div class="content">
-<pre>sudo apt install feelpp-quicktart feelpp-data</pre>
+<pre>sudo apt install feelpp-quickstart feelpp-data</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -1206,7 +1211,7 @@ Feel++ does not rely on <code>focal-proposed</code> to build, only on the standa
 <div class="listingblock">
 <div class="title">Install the toolboxes development environment</div>
 <div class="content">
-<pre>sudo apt install libfeelpp-toolboxes-dev</pre>
+<pre>sudo apt install libfeelpp-toolboxes1-all-dev</pre>
 </div>
 </div>
 </div>
