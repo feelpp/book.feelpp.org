@@ -1122,6 +1122,11 @@ If the symbol is already defined inside the Parameters section, the alias symbol
             {
                 "markers":["Omega2,Omega3]", <i class="conum" data-value="7"></i><b>(7)</b>
                 "expr":"305*x*y:x:y"  <i class="conum" data-value="8"></i><b>(8)</b>
+            },
+            "myic3":
+            {
+               "expr":"302",
+               "time":-0.1 <i class="conum" data-value="9"></i><b>(9)</b>
             }
         }
     }
@@ -1163,6 +1168,10 @@ If this entry is not given, the expression is applied on the mesh support of the
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
 <td>idem as &lt;5&gt;</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>time to apply the initial condition, if not present time=0</td>
 </tr>
 </table>
 </div>
@@ -1208,6 +1217,11 @@ If this entry is not given, the expression is applied on the mesh support of the
 <td>the format of the file read (possible values are "default","hdf5","binary","text"). It&#8217;s an optional entry, the default value is choosen by Feel++ (it&#8217;s "hdf5" if Feel++ was compiled with a hdf5 library).</td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>When using, high order time discretization, we need more than \(t=t_0\) to initialize, we may also need \(t_0-\Delta t, t_0-2*\Delta t,...\).<br>
+If you give an expression dependant on <code>t</code>, it will be evaluated with the time needed by the time discretization.<br>
+If you give several initial condition for different <code>time</code>, we will use the first condition for which the time is not less than the time needed (if you give two conditions with <code>time=0</code> an <code>time=-1</code> and we need <code>t=0</code>, <code>t=-0.75</code> and <code>t=-1.5</code>, the first condition will be used for the first two times, and the second condition will be used for the last).</p>
 </div>
 </div>
 </div>
