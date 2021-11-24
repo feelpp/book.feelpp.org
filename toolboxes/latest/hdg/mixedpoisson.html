@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Feel++ Docs</title>
+    <title>Mixed Poisson :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/hdg/mixedpoisson.html">
     <link rel="prev" href="hdg_poisson.html">
     <link rel="next" href="hdg_coupledpoisson.html">
@@ -473,6 +473,9 @@ MathJax.Hub.Config({
     <a class="nav-link" href="hdg_coupledpoisson.html">Coupled Poisson Application</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="mixedcoupledpoisson.html">Coupled Poisson Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="hdg_elasticity.html">Elasticity Application</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -692,34 +695,10 @@ MathJax.Hub.Config({
   </div>
   <div class="content">
 <article class="doc">
+<h1 class="page">Mixed Poisson</h1>
 <div class="sect1">
-<h2 id="_mixed_poisson"><a class="anchor" href="#_mixed_poisson"></a>1. Mixed Poisson</h2>
+<h2 id="_models"><a class="anchor" href="#_models"></a>1. Models</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_notations_and_units"><a class="anchor" href="#_notations_and_units"></a>1.1. Notations and units</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Notation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Quantity</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(k\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">conductivity</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\Lambda\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">resistivity</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_equations"><a class="anchor" href="#_equations"></a>1.2. Equations</h3>
 <div class="paragraph">
 <p>Mixed Poisson equations are</p>
 </div>
@@ -732,280 +711,520 @@ MathJax.Hub.Config({
 </div>
 </div>
 <div class="paragraph">
-<p>completed by boundary conditions.</p>
+<p>completed by boundary conditions and where \(k\) represents the conductivity.</p>
 </div>
 <div class="paragraph">
-<p>The conductivity \(k\) can be non-linear. If it depends only on the primal variable \(p\), it is already handle by the model, in other cases, one needs to provide the corresponding expression.</p>
+<p>Those equations can represent several problem types, such as electrostatics problems or heat transfer problems.
+One can choose to use field names and material properties in the model file for a particular physic by using a MixedPoissonPhyics in the constructor of the toolbox.</p>
+</div>
+<div class="paragraph">
+<p>By default, no physic is used (MixedPoissonPhysics::None).
+Electric (MixedPoissonPhysics::Electric) and heat (MixedPoissonPhysics::Heat) are also available.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_materials"><a class="anchor" href="#_materials"></a>2. Materials</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Materials properties defined in the MixedPoisson toolbox with MixedPoissonPhysics::None</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">conductivity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cond</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">conductivity</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Materials properties defined in the MixedPoisson toolbox with MixedPoissonPhysics::Electric</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric-conductivity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sigma</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric conductivity</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Materials properties defined in the MixedPoisson toolbox with MixedPoissonPhysics::Heat</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thermal-conductivity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">k</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thermal conductivity</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fields_and_symbols_expressions"><a class="anchor" href="#_fields_and_symbols_expressions"></a>3. Fields and symbols expressions</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Fields available with MixedPoissonPhysics::None</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">potential</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the potential field</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">flux</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the flux field</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Symbols expressions with MixedPoissonPhysics::None</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">poisson_P</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(P\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the potential</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">poisson_grad_P_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{\partial p}{\partial x}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the first component of gradient of potential</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">poisson_grad_P_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{\partial p}{\partial y}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the second component of gradient of potential</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">poisson_grad_P_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{\partial p}{\partial z}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the third component of gradient of potential</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">poisson_dn_P</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\nabla p \cdot \boldsymbol{n}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the normal derivative of potential</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">poisson_F_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\boldsymbol{u}_x\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the x component of the flux</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">poisson_F_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\boldsymbol{u}_y\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the y component of the flux</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">poisson_F_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\boldsymbol{u}_z\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the z component of the flux</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. Fields available with MixedPoissonPhysics::Electric</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric-potential</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the electric potential field</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">current-density</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the current density field</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. Symbols expressions with MixedPoissonPhysics::Electric</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric_V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(V\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the potential</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric_grad_V_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{\partial V}{\partial x}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the first component of gradient of electric potential</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric_grad_V_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{\partial V}{\partial y}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the second component of gradient of electric potential</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric_grad_V_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{\partial V}{\partial z}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the third component of gradient of electric potential</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric_dn_V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\nabla V \cdot \boldsymbol{n}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the normal derivative of electric potential</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric_C_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\boldsymbol{j}_x\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the x component of the current density</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric_C_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\boldsymbol{j}_y\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the y component of the current density</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric_C_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\boldsymbol{j}_z\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the z component of the current density</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 8. Fields available with MixedPoissonPhysics::Heat</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">temperature</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the temperature field</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat-flux</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the heat flux field</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. Symbols expressions with MixedPoissonPhysics::Heat</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_T</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(T\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_grad_T_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{\partial T}{\partial x}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the first component of gradient of temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_grad_T_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{\partial T}{\partial y}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the second component of gradient of temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_grad_T_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{\partial T}{\partial z}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the third component of gradient of temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_dn_T</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\nabla T \cdot \boldsymbol{n}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the normal derivative of temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_F_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\boldsymbol{u}_x\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the x component of the heat flux</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_F_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\boldsymbol{u}_y\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the y component of the heat flux</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_F_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\boldsymbol{u}_z\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the z component of the heat flux</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>4. Boundary Conditions</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_dirichlet"><a class="anchor" href="#_dirichlet"></a>4.1. Dirichlet</h3>
+<div class="paragraph">
+<p>On the potential/electric-potential/temperature:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[P = g \quad \text{ on } \Gamma\]
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mixedpoisson_toolbox"><a class="anchor" href="#_mixedpoisson_toolbox"></a>1.3. MixedPoisson Toolbox</h3>
+<h3 id="_neumann"><a class="anchor" href="#_neumann"></a>4.2. Neumann</h3>
 <div class="paragraph">
-<p>The model is described in a json file which path is given by the option <code>mixedpoisson.model_json</code>.
-The construction of this file is detailed in the following sections.</p>
+<p>On the potential/electric-potential/temperature:</p>
 </div>
-<div class="sect3">
-<h4 id="_models"><a class="anchor" href="#_models"></a>1.3.1. Models</h4>
-<div class="paragraph">
-<p>The models are not considered for now.</p>
-</div>
-<div class="listingblock">
-<div class="title">Model section</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Models": { "equations":"hdg" }</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_materials"><a class="anchor" href="#_materials"></a>1.3.2. Materials</h4>
-<div class="paragraph">
-<p>The definition of the conductivity \(k\) depends on the material, it can be linear or non-linear.
-In the linear case, it is given in the material we work on by the keyword <code>cond</code> and in the non-linear case, by <code>condNL</code>.</p>
-</div>
-<div class="listingblock">
-<div class="title">Material section</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Materials":
-{
-    "&lt;marker&gt;":
-    {
-        "name": "copper",
-        "cond": "1",
-	"condNL": "2*p:p"
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The keywords <code>cond</code> and <code>condNL</code> can be changed respectively by the options <code>mixedpoisson.conductivity_json</code> and <code>mixedpoisson.conductivityNL_json</code>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>1.3.3. Boundary Conditions</h4>
-<div class="paragraph">
-<p>All boundary conditions are described in the same way</p>
-</div>
-<div class="listingblock">
-<div class="title">Listing : boundary conditions in json</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"BoundaryConditions":
-{
-    "&lt;field&gt;":
-    {
-        "&lt;bc_type&gt;":
-        {
-            "&lt;marker&gt;":
-            {
-                "&lt;option1&gt;":"&lt;value1&gt;",
-                "&lt;option2&gt;":"&lt;value2&gt;",
-                // ...
-            }
-        }
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Different types of boundary condition are available.</p>
-</div>
-<div class="sect4">
-<h5 id="_dirichlet_condition"><a class="anchor" href="#_dirichlet_condition"></a>Dirichlet condition</h5>
 <div class="stemblock">
 <div class="content">
-\[p = g_D\]
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Field</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Option</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>potential</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Dirichlet</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(g_D\)</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_neumann_condition"><a class="anchor" href="#_neumann_condition"></a>Neumann condition</h5>
-<div class="stemblock">
-<div class="content">
-\[-k\nabla p \cdot\boldsymbol{n} = g_N\]
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Field</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Option</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>potential</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Neumann</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(g_DN\) or \(-k\nabla p\)</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>The choice between \(g_DN\) or \(-k\nabla p\) is base on the dimension of the expression.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_robin_condition"><a class="anchor" href="#_robin_condition"></a>Robin condition</h5>
-<div class="stemblock">
-<div class="content">
-\[-k\nabla p \cdot\boldsymbol{n} + g_R^1 p = g_R^2\]
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Field</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Option</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>potential</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Robin</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr1</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(g_R^1\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>potential</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Robin</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr2</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(g_R^2\)</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_integral_boundary_condition"><a class="anchor" href="#_integral_boundary_condition"></a>Integral boundary condition</h5>
-<div class="stemblock">
-<div class="content">
-\[\int_{\Gamma_I} \boldsymbol{u}\cdot\boldsymbol{n} = g_I\]
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Field</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Option</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>flux</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Integral</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(g_I\)</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_source_terms"><a class="anchor" href="#_source_terms"></a>1.3.4. Source Terms</h4>
-<div class="paragraph">
-<p>The source terms \(f\) and \(\boldsymbol{g}\) are treated as boundary condtions.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Field</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Option</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>potential</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SourceTerm</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(g\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>flux</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SourceTerm</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\boldsymbol{f}\)</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_post_process"><a class="anchor" href="#_post_process"></a>1.3.5. Post Process</h4>
-<div class="paragraph">
-<p>Two fields can be exported, the potential \(p\) and the flux \(\boldsymbol{u}\).</p>
-</div>
-<div class="listingblock">
-<div class="title">Post Process section</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"PostProcess":
-{
-    "Exports":
-    {
-        "fields":["potential","flux"]
-    }
-}</code></pre>
-</div>
+\[-k \nabla P \cdot \boldsymbol{n} = g \quad \text{ on } \Gamma\]
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_create_applications"><a class="anchor" href="#_create_applications"></a>1.4. Create applications</h3>
+<h3 id="_robin"><a class="anchor" href="#_robin"></a>4.3. Robin</h3>
 <div class="paragraph">
-<p>In order to solve linear problem, an application should contain at least</p>
+<p>On the potential/electric-potential/temperature:</p>
 </div>
-<div class="listingblock">
-<div class="title">Minimal Linear case</div>
+<div class="stemblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">    typedef FeelModels::MixedPoisson&lt;FEELPP_DIM,FEELPP_ORDER&gt; mp_type;
-    auto MP = mp_type::New("mixedpoisson");
-    MP-&gt;init();
-    MP-&gt;assembleAll();
-    MP-&gt;solve();
-    MP-&gt;exportResults();</code></pre>
+\[-k \nabla P \cdot \boldsymbol{n} = h \left( T - g \right) \quad \text{ on } \Gamma\]
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integral"><a class="anchor" href="#_integral"></a>4.4. Integral</h3>
+<div class="paragraph">
+<p>On the flux/current-density/heat-flux:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\int_\Gamma \boldsymbol{u}\cdot\boldsymbol{n} = g \quad \text{ on } \Gamma\\
+|\Gamma|p - \int_\Gamma p = 0 \quad \text{ on } \Gamma\]
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_initial_conditions"><a class="anchor" href="#_initial_conditions"></a>5. Initial Conditions</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_postprocessing"><a class="anchor" href="#_postprocessing"></a>6. PostProcessing</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_exports"><a class="anchor" href="#_exports"></a>6.1. Exports</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. Fields allowed to be exported in the <code>fields</code> section with MixedPoissonPhysics::None are:</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">potential</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the potential field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">flux</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the flux field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the mesh partitioning</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all fields available</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 11. Fields allowed to be exported in the <code>fields</code> section with MixedPoissonPhysics::Electric are:</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric-potential</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the electric potential field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">current-density</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the current density flux</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the mesh partitioning</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all fields available</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 12. Fields allowed to be exported in the <code>fields</code> section with MixedPoissonPhysics::Heat are:</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">temperature</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the temperature field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat-flux</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the heat flux field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the mesh partitioning</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all fields available</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+All materials properties given in the section <a href="#_materials">Materials</a> can be also exported by specifying the name in the <code>fields</code> entry.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
