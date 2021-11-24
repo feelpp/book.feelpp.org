@@ -202,11 +202,6 @@ As presented below, there are two ways to define initial conditions either use a
             {
                 "markers":["Omega2,Omega3]", <7>
                 "expr":"305*x*y:x:y"  <8>
-            },
-            "myic3":
-            {
-               "expr":"302",
-               "time":-0.1 <9>
             }
         }
     }
@@ -222,7 +217,6 @@ If this entry is not given, the expression is applied on the mesh support of the
 <6> another name that identifies an initial condition
 <7> idem as <4>
 <8> idem as <5>
-<9> time to apply the initial condition, if not present time=0
 
 [source,json]
 .Example of a `InitialConditions` section defined from a file
@@ -248,9 +242,6 @@ If this entry is not given, the expression is applied on the mesh support of the
 <4> a file that represents a field saved (**WARNING** : must be compatible with the current mesh and partitioning)
 <5> the format of the file read (possible values are "default","hdf5","binary","text"). It's an optional entry, the default value is choosen by {feelpp} (it's "hdf5" if {feelpp} was compiled with a hdf5 library).  
 
-When using, high order time discretization, we need more than stem:[t=t_0] to initialize, we may also need stem:[t_0-\Delta t, t_0-2*\Delta t,...]. +
-If you give an expression dependant on `t`, it will be evaluated with the time needed by the time discretization. +
-If you give several initial condition for different `time`, we will use the first condition for which the time is not less than the time needed (if you give two conditions with `time=0` an `time=-1` and we need `t=0`, `t=-0.75` and `t=-1.5`, the first condition will be used for the first two times, and the second condition will be used for the last).
 
 == BoundaryConditions
 
