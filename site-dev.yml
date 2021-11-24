@@ -1,40 +1,45 @@
 site:
   title: Feel++ // Docs
   url: https://docs.feelpp.org
-  start_page: develop@feelpp::index.adoc
+  start_page: latest@feelpp::index.adoc
 content:
   sources:
   - url: ./
-    branches: [master,develop]
+    branches: [develop]
     start_path: docs/feelppdocs
+    tags:
+    - v0.109
   - url: ./
-    branches: master
+    branches: develop
     start_path: docs/user
     tags:
+    - v0.109
     - v0.108
 #    - v0.107
 #    - v0.106
 #    - v0.105
   - url: ./
-    branches: master
+    branches: develop
     start_path: docs/dev
     tags:
+    - v0.109
     - v0.108
 #    - v0.107
 #    - v0.106
 #    - v0.105
   - url: ./
-    branches: master
+    branches: develop
     start_path: docs/data
-#    tags:
-#    - v0.108
+    tags:
+    - v0.109
   - url: ./
     branches: master
     start_path: docs/math/
   - url: ./
-    branches: master
+    branches: develop
     start_path: docs/toolboxes
     tags:
+    - v0.109
     - v0.108
 #    - v0.107
 #    - v0.106
@@ -49,6 +54,11 @@ content:
 #  - url: ../toolbox
 #    branches: master
 #    start_path: contribute
+  - url: ./
+    branches: develop
+    start_path: docs/mor
+    tags:
+    - v0.109
 #  - url: ../angiotk
 #    branches: master
 #    start_path: docs
@@ -65,7 +75,6 @@ ui:
   supplemental_files: supplemental-ui
 asciidoc:
   attributes:
-    project_version: 0.108
     feelpp-git-tag: develop
     deploymentRoot: ""
     numbered: true
@@ -117,4 +126,5 @@ asciidoc:
     - ./lib/remote-include-processor
     - ./lib/tabs-block-extension
     - '@djencks/asciidoctor-template'
+#    - "@djencks/asciidoctor-tabset-block"
     - asciidoctor-kroki

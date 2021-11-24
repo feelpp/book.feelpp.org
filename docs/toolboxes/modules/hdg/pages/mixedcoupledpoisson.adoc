@@ -1,0 +1,60 @@
+= Coupled Mixed Poisson
+
+== Models
+
+The equations of the model are:
+
+[stem]
+++++
+\begin{align}
+\boldsymbol{u} + k\nabla p &= \boldsymbol{f}\\
+\frac{1}{M}\frac{\partial p}{\partial t} + \nabla\cdot \boldsymbol{u} &= g
+\end{align}
+++++
+
+coupled with a system of ODE:
+
+[stem]
+++++
+\begin{align}
+\frac{\partial \boldsymbol{y}}{\partial t} + \underline{\underline{A}}(\boldsymbol{y},t)\boldsymbol{y} = s(\boldsymbol{y},t) + b(\boldsymbol{y},t)
+\end{align}
+++++
+where stem:[\Pi_1\in \boldsymbol{y}] and the boundary condition:
+
+[stem]
+++++
+\int_\Gamma \boldsymbol{u}\cdot\boldsymbol{n} = \frac{P_I - \Pi_1}{R_b} \quad \text{ on } \Gamma\\
+|\Gamma|p - \int_\Gamma p = 0 \quad \text{ on } \Gamma
+++++
+with stem:[P_I = p_{|\Gamma}].
+
+Most of the configuration is the same as for the Mixed Poisson toolbox, except for the boundary condition where the coupling happens.
+
+== Boundary Conditions
+
+=== Coupling
+
+On the flux/current-density/heat-flux:
+
+[source,json]
+.Example of a Coupling boundary condition
+----
+"Coupling":
+{
+    "buffer":
+    {
+        "markers":"top", <1>
+        "capacitor": "Cbuffer.C", <2>
+        "resistor": "Rbuffer.R", <3>
+        "circuit": "$cfgdir/test3d0d_linear/test3d0d_linear.fmu", <4>
+        "buffer": "Pi_1.phi" <5>
+    }
+}
+----
+
+<1> marker for stem:[\Gamma]
+<2> name of the variable in the FMU for stem:[C_b]
+<3> name of the variable in the FMU for stem:[R_b]
+<4> path of the FMU
+<5> name of the variable in the FMU for stem:[\Pi_1]
