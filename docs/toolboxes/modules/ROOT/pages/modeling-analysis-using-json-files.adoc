@@ -40,6 +40,27 @@ Here is an example of this section for the `fluid` toolbox.
 <1> Section `Models` defined by the toolbox to define the main configuration and in particular the set of equations to be solved
 <2> toolbox specific option to define set of equations to be solved, read the toolbox manual to learn about the possible options.
 
+== Expressions
+
+Various json fields may hold mathematical expressions that will be evaluated by Feel{pp}. 
+There are reserved keywords that cannot be used as parameter or field names. 
+They are listed in the following table
+
+[[reserved-keywords]]
+.Table of reserved keywords
+|===
+| Keyword | Documentation | Example
+| `t` | current time | `"expt": "exp(t):t"`
+| `x`, `y`, `z`| the coordinates of the current point | `"foo":"sin(x+y+z):x:y:z"`
+| `nx`, `ny`, `nz` | the components of normal vector at the current point | `"foo":"sin(nx+nyy+nz):nx:ny:nz"`
+| `h` | smallest edge of the current convex | `"foo":"2*h:h"`
+| `meas` | measure of the current element | `"foo":"2*h/meas:h:meas"`
+| `emarker` | marker of the current element | `"foo":"2*h*(emarker==1)+ h*(emarker==2):h"`
+| `measPEN` | measure of the union of elements to which a vertex belongs (P1 Lagrange only)  |
+| `nPEN` | number of elements to which the current vertex belongs (P1 Lagrange only) | 
+|===
+
+
 == Parameters
 
 This section of the Model JSON file defines the parameters that may enter inside symbolic expressions (as symbols) used in the subsequent sections.
@@ -77,14 +98,7 @@ This section of the Model JSON file defines the parameters that may enter inside
 <11> interpolation type of the fit. Possible values are : `P0`, `P1`, `Spline`, `Akima`
 <12> expression used in order to read the fitted value
 
-[NOTE]
-====
-Some parameter names are reserved and consequently can't be used inside the `Parameters` section. This is case with
-
-* `t` : represent the current time
-* `x`, `y`, `z` : the cartesian coordinates
-* `nx`, `ny`, `nz` : the components of normal vector
-====
+NOTE:: the reserved keywords listed in the table <<reserved-keywords>> cannot be used to name parameters, they can only be used in expressions.
 
 == Materials
 
