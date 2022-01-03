@@ -3,10 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Multifluid Flow :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/multifluid/index.html">
-    <link rel="prev" href="../../../cases/latest/thermoelectric/README.html">
-    <link rel="next" href="theory.html">
+    <title>Coefficient Form PDEs toolbox examples :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/cases/latest/cfpdes/README.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">    
@@ -166,263 +164,44 @@ MathJax.Hub.Config({
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="toolboxes" data-version="latest">
+<div class="nav-container" data-component="cases" data-version="latest">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../index.html">Feel++ Toolboxes Manual</a></h3>
+    <h3 class="title"><a href="../index.html">Feel++ Toolbox Cases Guide</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../index.html">Feel++ Toolboxes</a>
+    <a class="nav-link" href="index.html">Coefficient Form PDEs</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../index.html#_introduction">Introduction</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../what-is-a-toolbox.html">What is a Toolbox</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../modeling-analysis-using-json-files.html">Modeling and Analysis using JSON files</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../parametrized-simulation-using-cfg-files.html">Parametrized Simulation using CFG files</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../index.html#_monophysics_toolboxes">Monophysics Toolboxes</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../index.html#_multiphysics_toolboxes">Multiphysics Toolboxes</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../index.html#_hybrid_discontinuous_methods_toolboxes">Hybrid Discontinuous Methods Toolboxes</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../cfpdes/index.html">Coefficient Form PDEs</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../cfpdes/introduction.html">Introduction</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../cfpdes/toolbox.html">Toolbox</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../../cases/latest/cfpdes/README.html">Cases and Benchmarks</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../heat/index.html">Heat Transfer</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../heat/introduction.html">Introduction</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../heat/units.html">Units and Notations</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../heat/theory.html">Theory</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../heat/glossary.html">Glossary</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../heat/toolbox.html">Toolbox</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../heat/heat.html">Application</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../../cases/latest/heat/README.html">Cases and Benchmarks</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../cfd/index.html">Computational Fluid Dynamics</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../cfd/fluid.html">Application</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../cfd/toolbox.html">Toolbox</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../cfd/toolbox.html#_models">Models</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../cfd/toolbox.html#_materials">Materials</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../cfd/toolbox.html#_boundary_conditions">Boundary Conditions</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../cfd/toolbox.html#_body_forces">Body Forces</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../cfd/toolbox.html#_post_processing">Post-Processing</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../cfd/toolbox.html#_stabilization_methods">Stabilisation methods</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../cfd/toolbox.html#_run_simulation">Running a CFD simulation</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../cfd/theory.html">Theory of Laminar Flows</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../cfd/theory.html#_notations">Notations</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../cfd/theory.html#_equations">Equations</a>
+    <a class="nav-link" href="heat/index.html#_heat">Heat</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../cfd/theory.html#_generalized_newtonian_fluid">Generalized Newtonian Fluid</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../cfd/theory-turbulence.html">Theory of Turbulent Flows</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../../cases/latest/cfd/README.html">Cases and Benchmarks</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../csm/index.html">Computational Solid Mechanics</a>
+    <a class="nav-link" href="heat/index.html#_benchmarks">Benchmarks</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../csm/solid.html">Application</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../csm/toolbox.html">Toolbox</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../csm/theory.html">Theory</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../../cases/latest/csm/README.html">Cases and Benchmarks</a>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="heat/ISO_10211_2007/index.html">ISO_10211_2007</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../electric/index.html">Electrostatics</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../electric/electric.html">Application</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../electric/toolbox.html">Toolbox</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../electric/theory.html">Theory</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../../cases/latest/electric/README.html">Cases and Benchmarks</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="heat/index.html#_cases">Cases</a>
   </li>
 </ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../fsi/index.html">Fluid Structure Interaction</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../fsi/fsi.html">Application</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../fsi/toolbox.html">Toolbox</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../fsi/theory.html">Theory</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../fsi/theory.html#definitions">Definitions</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../fsi/theory.html#ale_map">ALE Map</a>
+    <a class="nav-link" href="solid/index.html#_heat">Computational Solid Mechanics</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../fsi/theory.html#fsi_model">Fluid and Structure</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../fsi/theory.html#coupling_conditions">Coupling conditions</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../fsi/theory.html#discretization">Discretization</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../fsi/theory.html#coupling_strategies">Coupling Strategies</a>
+    <a class="nav-link" href="fluid/index.html#_heat">Computational Fluid Mechanics</a>
   </li>
 </ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../../cases/latest/fsi/README.html">Cases and Benchmarks</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../heatfluid/index.html">Heat Transfer and Fluids</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../heatfluid/heatfluid.html">Application</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../heatfluid/toolbox.html">Toolbox</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../heatfluid/theory.html">Theory</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../../cases/latest/heatfluid/README.html">Cases and Benchmarks</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../thermoelectric/index.html">Thermo-Electric</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../thermoelectric/theory.html">Theory</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../thermoelectric/toolbox.html">Toolbox</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../../cases/latest/thermoelectric/README.html">Cases and Benchmarks</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item is-current-page" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Multifluid flow</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="theory.html">Theory</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="toolbox.html">Toolbox</a>
   </li>
 </ul>
   </li>
@@ -430,63 +209,69 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Maxwell</span>
+    <a class="nav-link" href="../csm/README.html">Computational Solid Mechanics</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../maxwell/index.html">Introduction</a>
-  </li>
-  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../maxwell/Maxwell.html">Theory of Maxwell equations</a>
+    <a class="nav-link" href="../csm/README.html#_benchmarks">Benchmarks</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Strategy.html">Solution Strategy for Maxwell equations</a>
+    <a class="nav-link" href="../csm/TurekHron/README.html">Turek-Hron</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/solenoid/README.html">Solenoid</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/NAFEMS-le1/README.html">NAFEMS-le1</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/NAFEMS-le10/README.html">NAFEMS-le10</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/cantilever/README.html">Cantilever linear solver benchmark</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../maxwell/mqs/README.html">Maxwell quasi-static models</a>
+    <a class="nav-link" href="../csm/README.html#_cases">Cases</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/mqs/AV.html">\(A-V\) Formulation</a>
+    <a class="nav-link" href="../csm/cantilever/README.html">Cantilever</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/torsion-bar/README.html">Torsion Bar</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/rotating-winch/index.html">Rotating Winch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/ribs/index.html">Bracing with ribs</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/suspension/index.html">Suspension mechanics</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/sensor/index.html">Sensor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/sheet-rounding/index.html">Effect of sheet rounding</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/t-beam/index.html">T-Beam</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/vierendeel-truss/index.html">Vierendeel Truss</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/pendulum2D/index.html">Pendulum 2D</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/spring/README.html">Spring CSM</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#cases:maxwell:README.adoc">Cases and Benchmarks</a>
-  </li>
 </ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../hdg/index.html">Hybrid Discontinuous Methods</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../hdg/hdg_poisson.html">Poisson Application</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../hdg/mixedpoisson.html">Poisson Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../hdg/hdg_coupledpoisson.html">Coupled Poisson Application</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../hdg/mixedcoupledpoisson.html">Coupled Poisson Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../hdg/hdg_elasticity.html">Elasticity Application</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../hdg/mixedelasticity.html">Elasticity Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../hdg/theory.html">Theory of HdG methods</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#cases:hdg:README.adoc">Cases and Benchmarks</a>
   </li>
 </ul>
   </li>
@@ -494,21 +279,208 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../mso4sc/index.html">Feel++ Toolbox Cloud/HPC Web GUI</a>
+    <a class="nav-link" href="../cfd/README.html">Computational Fluid Mechanics</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../mso4sc/account.html">Create a MSO4SC Portal Account</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../cfd/README.html#_benchmarks">Benchmarks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../cfd/TurekHron/README.html">Turek-Hron</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../mso4sc/portal.html">Overview of the MSO4SC Portal</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../cfd/pipestokes/README.html">Stokes in a pipe</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../mso4sc/offer.html">Get Feel++ Apps</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../cfd/oscillating_cylinder/README.html">Oscillating Cylinder</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../mso4sc/run.html">Run Feel++ Apps</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../cfd/stokes_boundary_layer/README.html">Stokes Boundary Layer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../cfd/laminar_isothermal_backward_facing_step/README.html">Laminar, Isothermal Backward Facing Step</a>
   </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../cfd/README.html#_cases">Cases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../cfd/backwardstep/README.html">Backward Step</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../cfd/spring/README.html">Spring CFD</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../cfd/cyclone/README.html">Cyclone</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../heat/README.html">Heat Transfer</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../heat/README.html#_benchmarks">Benchmarks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../heat/ISO_10211_2007/README.html">ISO 10211:2007</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../heat/README.html#_cases">Cases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../heat/motor/README.html">Heat Transfer in a Car Motor</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../heat/2Dbuilding/README.html">2D Building</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../heat/3Dbuilding/README.html">3D Building</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../heat/opus/README.html">Cooling of electronic components</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../heatfluid/README.html">Heat &amp; Fluid</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Benchmarks</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../heatfluid/channel_flow_with_viscous_heating/README.html">Channel Flow with Viscous Heating</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../heatfluid/boundary_layer_development/README.html">Boundary Layer Development</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Cases</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../heatfluid/2Dbuilding_NS/README.html">2D Building with natural convection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../heatfluid/cabin/README.html">Aerothermal in an Airplane Cabin</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../heatfluid/TurekHron/README.html">Forced heat convection around a cylinder</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../heatfluid/naturalconvection/README.html">Natural heat convection in a cavity</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../heatfluid/pipestokesmass/README.html">Mass transport with a Stokes flow in a pipe</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fsi/README.html">Fluid Structure Interaction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fsi/README.html#_benchmarks">Benchmarks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fsi/TurekHron/README.html">Turek-Hron</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fsi/wavepressure2d/README.html">Wave Pressure 2d</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fsi/wavepressure3d/README.html">Wave Pressure 3d</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fsi/lid-driven-cavity/README.html">Lid Driven Cavity</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fsi/README.html#_cases">Cases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fsi/box/README.html">Box</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fsi/structure/README.html">Structure</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../electric/README.html">Electric</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../electric/rect/readme.html">BusBar</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../electric/quarterturn/readme.html">Quarter Turn</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../thermoelectric/README.html">Thermo-Electric</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../thermoelectric/quarterturn/readme.html">Quarter Turn</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../thermoelectric/electromagnet/README.html">ElectroMagnet</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../multifluid/index.html">Multifluid Flow</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../multifluid/drop2d/README.html">Drop 2d</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../multifluid/drop3d/README.html">Drop 3d</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../poisson/README.html">Generic HDG Poisson equation</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../poisson/usquare/README.html">Chessboard analytical solution</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../poisson/red/README.html">nMOS transistor</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../poisson/2Dchannel/README.html">Flow in a channel</a>
   </li>
 </ul>
   </li>
@@ -517,7 +489,7 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Feel++ Toolboxes Manual</span>
+    <span class="title">Feel++ Toolbox Cases Guide</span>
     <span class="version">latest</span>
   </div>
   <ul class="components">
@@ -592,25 +564,8 @@ MathJax.Hub.Config({
         </li>
       </ul>
     </li>
-    <li class="component">
-      <span class="title">Feel++ Toolbox Cases Guide</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../cases/latest/index.html">latest</a>
-        </li>
-        <li class="version">
-          <a href="../../../cases/0.109/index.html">0.109</a>
-        </li>
-        <li class="version">
-          <a href="../../../cases/0.108/index.html">0.108</a>
-        </li>
-        <li class="version">
-          <a href="../../../cases/0.107/index.html">0.107</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <span class="title">Feel++ Toolboxes Manual</span>
+      <span class="title">Feel++ Toolbox Cases Guide</span>
       <ul class="versions">
         <li class="version is-current">
           <a href="../index.html">latest</a>
@@ -623,6 +578,23 @@ MathJax.Hub.Config({
         </li>
         <li class="version">
           <a href="../../0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Toolboxes Manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../toolboxes/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../../toolboxes/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../../../toolboxes/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../toolboxes/0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
@@ -681,53 +653,69 @@ MathJax.Hub.Config({
   <a href="../../../feelpp/0.109/index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../index.html">Feel++ Toolboxes Manual</a></li>
-    <li><a href="index.html">Multifluid flow</a></li>
+    <li><a href="../index.html">Feel++ Toolbox Cases Guide</a></li>
+    <li><a href="README.html">Coefficient Form PDEs toolbox examples</a></li>
   </ul>
 </nav>
 <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
   <div class="version-menu">
-    <a class="version is-current" href="index.html">latest</a>
-    <a class="version" href="../../0.109/multifluid/index.html">0.109</a>
-    <a class="version" href="../../0.108/multifluid/index.html">0.108</a>
-    <a class="version" href="../../0.107/multifluid/index.html">0.107</a>
+    <a class="version is-current" href="README.html">latest</a>
+    <a class="version is-missing" href="../../0.109/index.html">0.109</a>
+    <a class="version is-missing" href="../../0.108/index.html">0.108</a>
+    <a class="version is-missing" href="../../0.107/index.html">0.107</a>
   </div>
 </div>
-  <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/toolboxes/modules/multifluid/pages/index.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/cfpdes/pages/README.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Multifluid Flow</h1>
-<div class="paragraph">
-<p>Welcome to the Multifluid toolbox</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Introduction pending
-</td>
-</tr>
-</table>
-</div>
+<h1 class="page">Coefficient Form PDEs toolbox examples</h1>
+<div class="sect1">
+<h2 id="_heat"><a class="anchor" href="#_heat"></a>1. Heat</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p><a href="theory.html" class="xref page">Theory</a></p>
+<p><a href="heat/index.html#_benchmarks" class="xref page">Benchmarks</a></p>
 </li>
 <li>
-<p><a href="toolbox.html" class="xref page">Toolbox</a></p>
+<p><a href="heat/index.html#_cases" class="xref page">Cases</a></p>
 </li>
 </ul>
 </div>
-<nav class="pagination">
-  <span class="prev"><a href="../../../cases/latest/thermoelectric/README.html">Cases and Benchmarks</a></span>
-  <span class="next"><a href="theory.html">Theory</a></span>
-</nav>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_computational_solid_mechanics"><a class="anchor" href="#_computational_solid_mechanics"></a>2. Computational Solid Mechanics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="solid/index.html#_benchmarks" class="xref page">Benchmarks</a></p>
+</li>
+<li>
+<p><a href="solid/index.html#_cases" class="xref page">Cases</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_computational_fluid_mechanics"><a class="anchor" href="#_computational_fluid_mechanics"></a>3. Computational Fluid Mechanics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="fluid/index.html#_benchmarks" class="xref page">Benchmarks</a></p>
+</li>
+<li>
+<p><a href="fluid/index.html#_cases" class="xref page">Cases</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
