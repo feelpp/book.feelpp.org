@@ -9,7 +9,7 @@
 --
 echo "deb https://dl.bintray.com/feelpp/{flavor} {dist} {channel}" | sudo tee -a /etc/apt/sources.list
 wget -qO - https://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
-apt update
+sudo apt update
 --
 ----
 
@@ -222,9 +222,14 @@ sudo apt install libfeelpp1
 sudo apt install feelpp-tools
 ----
 
+.Install the feelpp development environment
+----
+sudo apt install libfeelpp-dev
+----
+
 .Install the quickstart applications and associated data
 ----
-sudo apt install feelpp-quicktart feelpp-data
+sudo apt install feelpp-quickstart feelpp-data
 ----
 
 .Install the toolboxes applications and associated data
@@ -234,7 +239,7 @@ sudo apt install feelpp-toolboxes feelpp-toolboxes-data
 
 .Install the toolboxes development environment
 ----
-sudo apt install libfeelpp-toolboxes-dev
+sudo apt install libfeelpp-toolboxes1-all-dev
 ----
 
 == Docker Image

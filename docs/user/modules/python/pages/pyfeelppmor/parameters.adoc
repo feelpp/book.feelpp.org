@@ -1,0 +1,50 @@
+= Parameters
+
+Class `ParameterSpaceElement` (more precisely `feelpp.mor._mor.ParameterSpaceElement`). Contains the parameters of the problem.
+
+.Get a parameter from the model (see xref:pyfeelppmor/reducedbasis.adoc[this page])
+[source,python]
+----
+Dmu = model.parameterSpace()
+mu = Dmu.element(True, False)
+----
+
+
+== Methods
+
+* `__call__(i: int)` -> `float` : return the _i_-th parameter
+
+* `__str__()` :
+
+[source,python]
+----
+>>> print("mu =", mu)
+mu = [4.37e+00,2.92e+00,1.17e+00,8.75e+05,5.28e+05,2.83e+01]
+----
+
+* `parameterName(i: int)` -> `str` : return the named of the _i_-th parameter
+
+* `parameterNamed(name: str)` -> `float` : return the parameter named `str`
+
+* `setParameter(i: int, value: float)` : set the _i_-th to `value`
+
+* `setParameterNamed(name: str, value: float)` : set the parameter `name` to `value`
+
+* `setParameters(...)` : Overloaded function.
+    1. `setParameters(values: List[float])` : set the parameter to the given list, the argument shas to be in the same order as values are stored in the `ParameterSpaceElement`.
+    2. `setParameters(values: Dict[str, float])` : set the parameter to the given dict with values. Eg `mu.setParameters({hcoeff: 2, q_1: 18712.5})`.
+
+* `size()` -> `int` : return the size of the parameter
+
+* `view()` : displays the names of the parameters, associated to their values. Here is an example :
+
+[source, python]
+----
+>>> mu.view()
+hcoeff  3.77075
+k_1     2.36557
+k_2     1.79914
+q_1     18710.5
+q_2     166074
+vinconv 3.58235
+----
