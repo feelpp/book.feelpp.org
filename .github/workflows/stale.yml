@@ -19,9 +19,15 @@ jobs:
 
     steps:
     - uses: actions/stale@v3
+      id: stale
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         stale-issue-message: 'Stale issue message'
         stale-pr-message: 'Stale pull request message'
         stale-issue-label: 'no-issue-activity'
         stale-pr-label: 'no-pr-activity'
+        days-before-stale: 360
+        days-before-close: 400
+        exempt-issue-labels: 'blocked,must,should,keep'
+    - name: Print outputs
+      run: echo ${{ join(steps.stale.outputs.*, ',') }}
