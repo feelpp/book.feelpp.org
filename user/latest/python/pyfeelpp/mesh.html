@@ -663,29 +663,202 @@ MathJax.Hub.Config({
   <div class="content">
 <article class="doc">
 <h1 class="page">Creating a mesh</h1>
+<div class="sect1">
+<h2 id="_load_a_mesh_from_a_geo_or_msh_file"><a class="anchor" href="#_load_a_mesh_from_a_geo_or_msh_file"></a>1. Load a mesh from a <code>geo</code> or <code>msh</code> file</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>The <code>mesh</code> provides the Feel++ data structures in Python:</p>
+<p><code>feelpp.mesh(dim=2, geo=1, realdim=2, worldComm=None)</code> : create a mesh.
+The mesh is of topological dimension <code>dim</code>, in real dimension <code>realdim</code> with geometric order <code>geo</code>.
+The mesh is configured with a <code>WorldComm</code> which provides the parallel process layout.</p>
+</div>
+<div class="paragraph">
+<p>Keyword arguments:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Mesh information:</p>
+<p><code>dim</code> : the topological dimension (default: <code>2</code>)</p>
+</li>
+<li>
+<p><code>geo</code> : the geometrical order (default: <code>1</code>)</p>
+</li>
+<li>
+<p><code>realdim</code> : the real dimension (default: <code>2</code>)</p>
+</li>
+<li>
+<p><code>worldComm</code> : the parallel communicator for the mesh (default:  <code>Environment::worldCommPtr()</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>feelpp.load(m, path, size) &#8594; feelpp._mesh.Mesh_S1DG1R1</code> : load a mesh from a file</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>dimension()</code></p>
+<p><code>m</code> declared with the function <code>mesh</code> above</p>
 </li>
 <li>
-<p>average statistics on the mesh size</p>
+<p><code>path</code> (<code>string</code>) path to the geometry (with <code>geo</code> or <code>msh</code> format)</p>
+</li>
+<li>
+<p><code>size</code> (<code>float</code>) size of the meshed geometry (if it is not meshed yet)</p>
 </li>
 </ul>
 </div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">m = feelpp.mesh(dim=3, realdim=3)
+mesh = feelpp.load(m, "path/to/file", 0.1)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usage"><a class="anchor" href="#_usage"></a>2. Usage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>mesh</code> provides the Feel++ data structures in Python:
+The following methods are to use on the mesh object (<code>mesh</code> in the previous example) :</p>
+</div>
+<div class="sect2">
+<h3 id="_mesh_information"><a class="anchor" href="#_mesh_information"></a>2.1. Mesh information :</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>dimension(self) &#8594; int</code> : get topological dimension</p>
 </li>
 <li>
-<p>ranges: <code>elements</code>, <code>markedelements</code>, <code>faces</code>, <code>markedfaces</code>, <code>boundaryfaces</code></p>
+<p><code>hAverage(self) &#8594; float</code> : get the average edge length of the mesh</p>
+</li>
+<li>
+<p><code>hMax(self) &#8594; float</code> : get the maximum edge length of the mesh</p>
+</li>
+<li>
+<p><code>hMin(self) &#8594; float</code> : get the minimum edge length of the mesh</p>
+</li>
+<li>
+<p><code>measure(self, parallel: bool = True) &#8594; float</code> : get the measure of the mesh (which is equal to \(\int_\Omega 1\))</p>
+</li>
+<li>
+<p><code>measureBoundary(self) &#8594; float</code> : get the measure of the boundary of the mesh (which is equal to \(???\))</p>
+</li>
+<li>
+<p><code>numGlobalEdges(self) &#8594; int</code> : get the number of edges over the whole mesh, requires communication if the mesh is parallel</p>
+</li>
+<li>
+<p><code>numGlobalElements(self) &#8594; int</code> : get the number of elements over the whole mesh, requires communication if the mesh is parallel</p>
+</li>
+<li>
+<p><code>numGlobalFaces(self) &#8594; int</code> : get the number of faces over the whole mesh, requires communication if the mesh is parallel</p>
+</li>
+<li>
+<p><code>numGlobalPoints(self) &#8594; int</code> : get the number of points over the whole mesh, requires communication if the mesh is parallel</p>
+</li>
+<li>
+<p><code>realDimension(self) &#8594; int</code> : get real dimension</p>
+</li>
+<li>
+<p><code>updateMeasures(self) &#8594; None</code> : update the measures of the mesh</p>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_test_relation_between_meshes"><a class="anchor" href="#_test_relation_between_meshes"></a>2.2. Test relation between meshes :</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>isParentMeshOf(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) &#8594; bool</code> : is the mesh the parent mesh of another mesh</p>
+</li>
+<li>
+<p><code>isRelatedTo(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) &#8594; bool</code> : is the mesh related to another mesh</p>
+</li>
+<li>
+<p><code>isSiblingOf(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) &#8594; bool</code>: is the mesh a sibling of another mesh</p>
+</li>
+<li>
+<p><code>isSubMeshFrom(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) &#8594; bool</code> : is the mesh a sub mesh of another mesh</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_export_and_load_mesh_on_hdf5_format"><a class="anchor" href="#_export_and_load_mesh_on_hdf5_format"></a>2.3. Export and load mesh on <a href="#https://support.hdfgroup.org/HDF5/">HDF5 format</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>saveHDF5(self, name: str) &#8594; None</code> : save mesh to H5 file</p>
+</li>
+<li>
+<p><code>loadHDF5(self, name: str) &#8594; None</code> : load mesh from H5 file</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ranges"><a class="anchor" href="#_ranges"></a>3. Ranges</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>elements</code> : <code>feelpp.elements(mesh)</code> : get iterator over the elements of the mesh</p>
+</li>
+<li>
+<p><code>markedelements</code> :</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>feelpp.markedelements(mesh, tag: str)</code> : get iterator over the marked elements of the mesh</p>
+</li>
+<li>
+<p><code>feelpp.markedelements(mesh, marker: str)</code> :  return the range of elements of the mesh with marker</p>
+</li>
+<li>
+<p><code>feelpp.markedelements(mesh, markers: List[str])</code> : return the range of elements of the mesh with markers</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><code>faces</code> (???)</p>
+</li>
+<li>
+<p><code>markedfaces</code> :</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>feelpp.markedfaces(mesh, marker: str)</code> : return the range of facets of the mesh with marker</p>
+</li>
+<li>
+<p><code>markedfaces(mesh, markers: List[str])</code> : return the range of facets of the mesh with marker</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><code>boundaryfaces</code> : <code>feelpp.boundaryfaces(mesh)</code>: get iterator over the boundary faces of the mesh</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Example : compute integrals</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from feelpp.integrate  import integrate
+
+i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
+i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
+i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_complete_example"><a class="anchor" href="#_complete_example"></a>4. Complete example</h2>
+<div class="sectionbody">
 <div class="listingblock">
 <div class="title">Mesh data structure handling example</div>
 <div class="content">
@@ -724,6 +897,8 @@ def test_mesh(init_feelpp):
     feelpp.Environment.changeRepository(
         directory="pyfeelpp-tests/mesh/test_3d")
     run( feelpp.mesh(dim=3,realdim=3), geo['3'] )</code></pre>
+</div>
+</div>
 </div>
 </div>
 <nav class="pagination">
