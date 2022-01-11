@@ -1,0 +1,113 @@
+== Module `reducedbasis`
+
+=== Import
+
+NOTE: The work has not yet been merged in `develop`. To include the module at current state, you need to checkout the branch https://github.com/feelpp/feelpp/tree/feature/pyrb[`feature/pyrb`], and move to the directory https://github.com/feelpp/feelpp/tree/feature/pyrb/mor/pyfeelpp-mor/feelpp/mor[mor/pyfeelpp-mor/feelpp/mor].
+
+Line to import the module :
+
+[source, python]
+----
+from reducedbasis.reducedbasis import *
+----
+
+To set the environment, those module also need to be imported :
+
+[source, python]
+----
+import sys
+from feelpp.toolboxes.heat import *
+from feelpp.toolboxes.core import *
+from feelpp.mor import *
+import feelpp
+----
+
+
+=== Set the model
+
+To declare the objects, use these lines :
+
+[source,python]
+----
+DIM = 2
+heatBox=heat(dim=DIM,order=1)
+heatBox.init()
+model = toolboxmor(dim=DIM, time_dependent=False)
+model.setFunctionSpaces( Vh=heatBox.spaceTemperature())
+----
+
+- `DIM` is the dimension of the case (should be `2` or `3`)
+- `time_dependent` depends if the case is time-steady or time-dependant.
+
+Those functions define how the `DEIM` matrix and right-hand side are updated according to the parameter `mu`.
+[source,python]
+----
+def assembleDEIM(mu):
+    for i in range(0,mu.size()):
+        heatBox.addParameterInModelProperties(mu.parameterName(i),mu(i))
+    heatBox.updateParameterValues()
+    return heatBox.assembleRhs()
+
+def assembleMDEIM(mu):
+    for i in range(0,mu.size()):
+        heatBox.addParameterInModelProperties(mu.parameterName(i),mu(i))
+    heatBox.updateParameterValues()
+    return heatBox.assembleMatrix()
+
+model.setAssembleDEIM(fct=assembleDEIM)
+model.setAssembleMDEIM(fct=assembleMDEIM)
+model.initModel()
+----
+
+WARNING: When the function `assembleDEIM` is called, the value of the parameters of the object `heatBox` is updated.
+
+Creation of `DEIM` and `MDEIM` toolboxes, with the associated assembly functions.
+
+
+[source,python]
+----
+heatBoxDEIM=heat(dim=DIM,order=1)
+meshDEIM = model.getDEIMReducedMesh()
+heatBoxDEIM.setMesh(meshDEIM)
+heatBoxDEIM.init()
+
+def assembleOnlineDEIM(mu):
+    for i in range(0,mu.size()):
+        heatBoxDEIM.addParameterInModelProperties(mu.parameterName(i),mu(i))
+    heatBoxDEIM.updateParameterValues()
+    return heatBoxDEIM.assembleRhs()
+
+model.setOnlineAssembleDEIM(assembleOnlineDEIM)
+
+heatBoxMDEIM=heat(dim=DIM,order=1)
+meshMDEIM = model.getMDEIMReducedMesh()
+heatBoxMDEIM.setMesh(meshMDEIM)
+heatBoxMDEIM.init()
+
+def assembleOnlineMDEIM(mu):
+    for i in range(0,mu.size()):
+        heatBoxMDEIM.addParameterInModelProperties(mu.parameterName(i),mu(i))
+    heatBoxMDEIM.updateParameterValues()
+    return heatBoxMDEIM.assembleMatrix()
+
+model.setOnlineAssembleMDEIM(assembleOnlineMDEIM)
+----
+
+Then finalize the initialization :
+
+[soucre,python]
+----
+model.postInitModel()
+model.setInitialized(True)
+----
+
+
+=== Access to a parameter
+
+[source,python]
+----
+Dmu = model.parameterSpace()
+mu = Dmu.element(True, False)
+----
+
+See xref:parameters.adoc[the dedicated page] for the API of `ParameterSpaceElement`

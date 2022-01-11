@@ -9,6 +9,18 @@ The `core` module provides the basic data structures to
 
 == Setting up the {feelpp} Environment
 
+To set the environment, use this line :
+
+.Set the {feelpp} environment
+[source,python]
+----
+import feelpp
+import sys
+e = feelpp.Environment(sys.argv,config=feelpp.globalRepository("pyfeelpp-tests"))
+----
+
+NOTE: You can give argument to the environment using `sys.argv`, either by passing arguments to Python directly or by changing the list `sys.argv` by hand.
+
 .Start the {feelpp} environment, `test_core.py`
 [source,python]
 ----

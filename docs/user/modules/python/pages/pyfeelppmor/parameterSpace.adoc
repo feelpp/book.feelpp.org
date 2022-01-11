@@ -1,0 +1,25 @@
+= ParameterSpace
+
+Class `ParameterSpace` (more precisely `feelpp.mor._mor.ParameterSpace`). Space of the parameters of the problem.
+
+.Get a parameter from the model (see xref:pyfeelppmor/reducedbasis.adoc[this page])
+[source,python]
+----
+Dmu = model.parameterSpace()
+----
+
+
+== Methods
+
+
+* `element(broadcast: bool = True, apply_log: bool = False) -> feelpp.mor._mor.ParameterSpaceElement` : return a parameter from the space :
+    - `broadcast` : share the parameter to all processors
+    - `apply_log` : log random chosen parameter
+
+* `sampling() -> feelpp.mor._mor.ParameterSpaceSampling`
+
+
+
+== Static method
+
+* `create(arg0: int) -> feelpp.mor._mor.ParameterSpace` : return a `ParameterSpace` of a dimension `arg0`.

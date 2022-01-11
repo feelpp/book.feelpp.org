@@ -40,6 +40,27 @@ Here is an example of this section for the `fluid` toolbox.
 <1> Section `Models` defined by the toolbox to define the main configuration and in particular the set of equations to be solved
 <2> toolbox specific option to define set of equations to be solved, read the toolbox manual to learn about the possible options.
 
+== Expressions
+
+Various json fields may hold mathematical expressions that will be evaluated by Feel{pp}. 
+There are reserved keywords that cannot be used as parameter or field names. 
+They are listed in the following table
+
+[[reserved-keywords]]
+.Table of reserved keywords
+|===
+| Keyword | Documentation | Example
+| `t` | current time | `"expt": "exp(t):t"`
+| `x`, `y`, `z`| the coordinates of the current point | `"foo":"sin(x+y+z):x:y:z"`
+| `nx`, `ny`, `nz` | the components of normal vector at the current point | `"foo":"sin(nx+nyy+nz):nx:ny:nz"`
+| `h` | smallest edge of the current convex | `"foo":"2*h:h"`
+| `meas` | measure of the current element | `"foo":"2*h/meas:h:meas"`
+| `emarker` | marker of the current element | `"foo":"2*h*(emarker==1)+ h*(emarker==2):h"`
+| `measPEN` | measure of the union of elements to which a vertex belongs (P1 Lagrange only)  |
+| `nPEN` | number of elements to which the current vertex belongs (P1 Lagrange only) | 
+|===
+
+
 == Parameters
 
 This section of the Model JSON file defines the parameters that may enter inside symbolic expressions (as symbols) used in the subsequent sections.
@@ -77,14 +98,7 @@ This section of the Model JSON file defines the parameters that may enter inside
 <11> interpolation type of the fit. Possible values are : `P0`, `P1`, `Spline`, `Akima`
 <12> expression used in order to read the fitted value
 
-[NOTE]
-====
-Some parameter names are reserved and consequently can't be used inside the `Parameters` section. This is case with
-
-* `t` : represent the current time
-* `x`, `y`, `z` : the cartesian coordinates
-* `nx`, `ny`, `nz` : the components of normal vector
-====
+NOTE:: the reserved keywords listed in the table <<reserved-keywords>> cannot be used to name parameters, they can only be used in expressions.
 
 == Materials
 
@@ -202,6 +216,11 @@ As presented below, there are two ways to define initial conditions either use a
             {
                 "markers":["Omega2,Omega3]", <7>
                 "expr":"305*x*y:x:y"  <8>
+            },
+            "myic3":
+            {
+               "expr":"302",
+               "time":-0.1 <9>
             }
         }
     }
@@ -217,6 +236,7 @@ If this entry is not given, the expression is applied on the mesh support of the
 <6> another name that identifies an initial condition
 <7> idem as <4>
 <8> idem as <5>
+<9> time to apply the initial condition, if not present time=0
 
 [source,json]
 .Example of a `InitialConditions` section defined from a file
@@ -242,6 +262,9 @@ If this entry is not given, the expression is applied on the mesh support of the
 <4> a file that represents a field saved (**WARNING** : must be compatible with the current mesh and partitioning)
 <5> the format of the file read (possible values are "default","hdf5","binary","text"). It's an optional entry, the default value is choosen by {feelpp} (it's "hdf5" if {feelpp} was compiled with a hdf5 library).  
 
+When using, high order time discretization, we need more than stem:[t=t_0] to initialize, we may also need stem:[t_0-\Delta t, t_0-2*\Delta t,...]. +
+If you give an expression dependant on `t`, it will be evaluated with the time needed by the time discretization. +
+If you give several initial condition for different `time`, we will use the first condition for which the time is not less than the time needed (if you give two conditions with `time=0` an `time=-1` and we need `t=0`, `t=-0.75` and `t=-1.5`, the first condition will be used for the first two times, and the second condition will be used for the last).
 
 == BoundaryConditions
 
@@ -372,7 +395,7 @@ There are two subsection :
 <7> markers where the expression is applied
 <8> another expression
 <9> markers where the previous expression is applied
-<10> representation of the exported field `titi`. Possoble values are : `nodal` or `element` or both. This is an optional entry, the default value is nodal.
+<10> representation of the exported field `titi`. Possible values are : `nodal` or `element` or both. This is an optional entry, the default value is nodal.
 <11> export a field named `tutu`
 <12> an expression
 <13> representation of the exported field `tutu`
