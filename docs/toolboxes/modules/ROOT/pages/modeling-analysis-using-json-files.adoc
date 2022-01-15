@@ -5,6 +5,7 @@ The Model JSON (`.json`) files allow to configure a set of partial differential 
 * [x] <<Names,Names>>
 * [x] <<Models,Models>>
 * [x] <<Parameters,Parameters>>
+* [x] <<Meshes,Meshes>>
 * [x] <<Materials,Materials>>
 * [x] <<InitialConditions, Initial Conditions>>
 * [x] <<BoundaryConditions,Boundary conditions>>
@@ -99,6 +100,108 @@ This section of the Model JSON file defines the parameters that may enter inside
 <12> expression used in order to read the fitted value
 
 NOTE:: the reserved keywords listed in the table <<reserved-keywords>> cannot be used to name parameters, they can only be used in expressions.
+
+== Meshes
+
+The meshes section allow to define properties related to meshes used in toolboxes.
+In this json section, you can create one or several subsections with a name corresponding to an mesh identification (typically the keyword associated to a toolbox).
+For example, the next code snippet is defined wtih 3 names : `heat`, `fluid` and `heatfluid`
+
+.Example of Meshes section skeleton
+[source,json]
+----
+"Meshes":
+{
+    "heat":
+    {
+        // TO FILL, SEE BELOW
+    },
+    "fluid":
+    {
+        // TO FILL, SEE BELOW
+    },
+    "heatfluid":
+    {
+        // TO FILL, SEE BELOW
+    }
+}
+----
+
+In each subsection, mesh propreties and data will be defined. Currently, we can have
+
+* Import
+* DistanceToRange
+* Data
+
+
+=== Import section
+
+This section allow to define mesh importation properties. Generally, this is the keyword of the toolbox used.
+
+.Example of Meshes Import section
+[source,json]
+----
+"Meshes":
+{
+    "heat":
+    {
+        "Import":
+         {
+             "filename":"$cfgdir/thermo2dCase2.geo",
+             "hsize":0.001
+        }
+    }
+}
+----
+
+.Table of Meshes Import parameters
+|===
+| Option | Type | Documentation
+| `filename` | string | path of a mesh file or geo file
+| `hsize`| floating number | if a geo file is used, this parameter can modify the characteristic mesh size
+| `partition` | boolean | if a mesh file is used, set to true (or 1) will apply the mesh partitioning
+| `number-of-partition` | integer | number of partition applied with  the mesh partitioning (default value is the number of processus)
+|===
+
+
+=== DistanceToRange section
+
+The goal of DistanceToRange is to computed distance functions from a list of marked faces.
+These functions will be available in expression through symbols.
+
+For adding the computation of a distance function, you should defined a json object including the `markers` listing.
+The key of this json objet is a name given to the distance function.
+
+
+.Example of Meshes DistanceToRange section
+[source,json]
+----
+"Meshes":
+{
+   "heat":
+   {
+      "DistanceToRange":
+      {
+         "wall1":
+          {
+               "markers":["Floor","Ceiling","Hot_Wall","Cold_Wall"]
+          },
+         "wall2":
+          {
+               "markers":["Floor","Ceiling"]
+          }
+      }
+   }
+}
+----
+
+The example above will generate 2 new symbols called `meshes_heat_distanceToRange_wall1` and `meshes_heat_distanceToRange_wall2`.
+
+More generally, the symbols will be defined by `meshes_<mesh_id>_distanceToRange_<d2r_id>` avec `<mesh_id>` the mesh identification and `<d2r_id>` the name given to the distance function.
+
+=== Data section
+
+TODO
 
 == Materials
 
@@ -424,7 +527,7 @@ Currently, there is only the possibility to save the fields (finite element appr
 === Measures
 
 Several quantities can be computed after each time step for transient simulation or after the solve of a stationary simulation.
-The values computed are stored in a CSV file format and named <toolbox>.measures.csv.
+The values computed are stored in a CSV files format localized typically in directory named <toolbox>.measures.
 In the template of `PostProcess` section, `<measure type>` is the name given of a measure.
 In next subsection, we present some types of measure that are common for all toolbox. Other types of measure are available but depend on the toolbox used,
 and the description is given in the specific toolbox documentation.
@@ -437,7 +540,99 @@ The common measures are :
 
 ==== Points
 
-TODO
+This post process allow to evaluate some fields or expression over a set of points. Theses points can be defined explicitly or sampled over a geometry as a segment.
+
+===== From explicit coordinates
+
+[source,json]
+.Example of a `Point` measures
+----
+"Points":
+{
+    "pointD": <1>
+    {
+        "coord":"{2,0}", <2>
+        "fields":["displacement","pressure"], <3>
+        "expressions": <4>
+        {
+             "e1":"2*x+kappa:x:kappa", <5>
+             "e2":"solid_stress_P_11+solid_stress_P_22:solid_stress_P_11:solid_stress_P_11" <6>
+        }
+    }
+}
+----
+
+<1> the name given to a points evaluation context.
+<2> the coordinates expr of the point. This can be also a vector of coordinates.
+<3> which fields will be evaluated in this points evaluation context.
+<4> defined json section where some expressions will be evaluated in this points evaluation context.
+<5> an expression called `e1`.
+<6> another expression called `e2`.
+
+
+This example will generate 4 measures called : `Points_pointD_field_displacement`, `Points_pointD_expr_pressure`, `Points_pointD_expr_e1`, `Points_pointD_expr_e2`
+
+
+[NOTE]
+=================
+When `coord` value specify more than one point, an index is automatically added in the measures names generated. The format will be `Points_<point_name>_<point_index>_<type>_<eval_name>` with
+
+* `point_name` : the name given to a points evaluation context
+* `point_index` : the index of point in the list (starting form 0)
+* `type` : evaluation type is `field` or `expr`
+* `eval_name` : the name of the field or the expression
+=================
+
+===== From sampling a segment
+
+[source,json]
+.Example of a `Point` measures
+----
+"Points":
+{
+   "vertical_segment": <1>
+   {
+       "over_geometry": <2>
+       {
+           "segment": <3>
+           {
+              "point1":"{0.5,0}", <4>
+              "point2":"{0.5,1}", <5>
+              "n_points":100 <6>
+           }
+       }
+       "fields":"velocity", <7>
+       "include_coordinates":1, <8>
+       "output": <9>
+       {
+          "type":"table" <10>
+          //"name":"vertical_centerline"
+       }
+   }
+}
+----
+
+<1> the name given to a points evaluation context.
+<2> `over_geometry` is a keyword for specify a geometry in this subsection
+<3> the name of geometry here `segment`
+<4> coordinate expression of an extremity of this segment
+<5> coordinate expression of the other extremity of this segment
+<6> number of points sampled over the segment, by default points are equidistributed
+<7> which fields will be evaluated in this points evaluation context.
+<8> if true, this will export also the coordinates of each point
+<9> specifiy an output subsection in order to store this results in a specific csv file
+<10> the output type will be a table
+
+
+[NOTE]
+=================
+The output type can be `value` or `table`.
+
+* A value type correspond to put each measure in a specific column and we accumlate at each time for example by adding row.
+* A table type put in one column all evaluations of a field or an expression. We build one table (and thus one file) per time step.
+
+=================
+
 
 ==== Statistics
 
