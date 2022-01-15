@@ -717,6 +717,9 @@ MathJax.Hub.Config({
 <p><i class="fa fa-check-square-o"></i> <a href="#_parameters">Parameters</a></p>
 </li>
 <li>
+<p><i class="fa fa-check-square-o"></i> <a href="#_meshes">Meshes</a></p>
+</li>
+<li>
 <p><i class="fa fa-check-square-o"></i> <a href="#_materials">Materials</a></p>
 </li>
 <li>
@@ -957,7 +960,155 @@ They are listed in the following table</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_materials"><a class="anchor" href="#_materials"></a>5. Materials</h2>
+<h2 id="_meshes"><a class="anchor" href="#_meshes"></a>5. Meshes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The meshes section allow to define properties related to meshes used in toolboxes.
+In this json section, you can create one or several subsections with a name corresponding to an mesh identification (typically the keyword associated to a toolbox).
+For example, the next code snippet is defined wtih 3 names : <code>heat</code>, <code>fluid</code> and <code>heatfluid</code></p>
+</div>
+<div class="listingblock">
+<div class="title">Example of Meshes section skeleton</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Meshes":
+{
+    "heat":
+    {
+        // TO FILL, SEE BELOW
+    },
+    "fluid":
+    {
+        // TO FILL, SEE BELOW
+    },
+    "heatfluid":
+    {
+        // TO FILL, SEE BELOW
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In each subsection, mesh propreties and data will be defined. Currently, we can have</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Import</p>
+</li>
+<li>
+<p>DistanceToRange</p>
+</li>
+<li>
+<p>Data</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_import_section"><a class="anchor" href="#_import_section"></a>5.1. Import section</h3>
+<div class="paragraph">
+<p>This section allow to define mesh importation properties. Generally, this is the keyword of the toolbox used.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of Meshes Import section</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Meshes":
+{
+    "heat":
+    {
+        "Import":
+         {
+             "filename":"$cfgdir/thermo2dCase2.geo",
+             "hsize":0.001
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Table of Meshes Import parameters</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Option</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>filename</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">path of a mesh file or geo file</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hsize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">floating number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">if a geo file is used, this parameter can modify the characteristic mesh size</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>partition</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">if a mesh file is used, set to true (or 1) will apply the mesh partitioning</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number-of-partition</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of partition applied with  the mesh partitioning (default value is the number of processus)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_distancetorange_section"><a class="anchor" href="#_distancetorange_section"></a>5.2. DistanceToRange section</h3>
+<div class="paragraph">
+<p>The goal of DistanceToRange is to computed distance functions from a list of marked faces.
+These functions will be available in expression through symbols.</p>
+</div>
+<div class="paragraph">
+<p>For adding the computation of a distance function, you should defined a json object including the <code>markers</code> listing.
+The key of this json objet is a name given to the distance function.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of Meshes DistanceToRange section</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Meshes":
+{
+   "heat":
+   {
+      "DistanceToRange":
+      {
+         "wall1":
+          {
+               "markers":["Floor","Ceiling","Hot_Wall","Cold_Wall"]
+          },
+         "wall2":
+          {
+               "markers":["Floor","Ceiling"]
+          }
+      }
+   }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The example above will generate 2 new symbols called <code>meshes_heat_distanceToRange_wall1</code> and <code>meshes_heat_distanceToRange_wall2</code>.</p>
+</div>
+<div class="paragraph">
+<p>More generally, the symbols will be defined by <code>meshes_&lt;mesh_id&gt;_distanceToRange_&lt;d2r_id&gt;</code> avec <code>&lt;mesh_id&gt;</code> the mesh identification and <code>&lt;d2r_id&gt;</code> the name given to the distance function.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_data_section"><a class="anchor" href="#_data_section"></a>5.3. Data section</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_materials"><a class="anchor" href="#_materials"></a>6. Materials</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section of the Model JSON file defines material properties linking the Physical Entities in the mesh data structures to these properties.</p>
@@ -1136,7 +1287,7 @@ If the symbol is already defined inside the Parameters section, the alias symbol
 </div>
 </div>
 <div class="sect1">
-<h2 id="_initialconditions"><a class="anchor" href="#_initialconditions"></a>6. InitialConditions</h2>
+<h2 id="_initialconditions"><a class="anchor" href="#_initialconditions"></a>7. InitialConditions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section of the Model JSON file defines initial conditions. Depending on the type of model :</p>
@@ -1276,7 +1427,7 @@ If you give several initial condition for different <code>time</code>, we will u
 </div>
 </div>
 <div class="sect1">
-<h2 id="_boundaryconditions"><a class="anchor" href="#_boundaryconditions"></a>7. BoundaryConditions</h2>
+<h2 id="_boundaryconditions"><a class="anchor" href="#_boundaryconditions"></a>8. BoundaryConditions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section of the Model JSON file defines the boundary conditions.</p>
@@ -1372,7 +1523,7 @@ If you give several initial condition for different <code>time</code>, we will u
 </div>
 </div>
 <div class="sect1">
-<h2 id="_postprocessing"><a class="anchor" href="#_postprocessing"></a>8. PostProcessing</h2>
+<h2 id="_postprocessing"><a class="anchor" href="#_postprocessing"></a>9. PostProcessing</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section allows to define the output fields and quantities to be computed and saved for <em>e.g.</em> visualization.</p>
@@ -1404,7 +1555,7 @@ If you give several initial condition for different <code>time</code>, we will u
 </div>
 </div>
 <div class="sect2">
-<h3 id="_exports"><a class="anchor" href="#_exports"></a>8.1. Exports</h3>
+<h3 id="_exports"><a class="anchor" href="#_exports"></a>9.1. Exports</h3>
 <div class="paragraph">
 <p>The <code>Exports</code> section is implemented when you want to visualize some fields or mathematical expressions with ParaView software for example.
 There are two subsection :</p>
@@ -1508,7 +1659,7 @@ There are two subsection :</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_save"><a class="anchor" href="#_save"></a>8.2. Save</h3>
+<h3 id="_save"><a class="anchor" href="#_save"></a>9.2. Save</h3>
 <div class="paragraph">
 <p>The <code>Save</code> section is implemented when you want to store data using the Feel++ format.
 For example, It can be useful to have access to these data and use them in another application.
@@ -1541,10 +1692,10 @@ Currently, there is only the possibility to save the fields (finite element appr
 </div>
 </div>
 <div class="sect2">
-<h3 id="_measures"><a class="anchor" href="#_measures"></a>8.3. Measures</h3>
+<h3 id="_measures"><a class="anchor" href="#_measures"></a>9.3. Measures</h3>
 <div class="paragraph">
 <p>Several quantities can be computed after each time step for transient simulation or after the solve of a stationary simulation.
-The values computed are stored in a CSV file format and named &lt;toolbox&gt;.measures.csv.
+The values computed are stored in a CSV files format localized typically in directory named &lt;toolbox&gt;.measures.
 In the template of <code>PostProcess</code> section, <code>&lt;measure type&gt;</code> is the name given of a measure.
 In next subsection, we present some types of measure that are common for all toolbox. Other types of measure are available but depend on the toolbox used,
 and the description is given in the specific toolbox documentation.</p>
@@ -1566,13 +1717,193 @@ and the description is given in the specific toolbox documentation.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_points"><a class="anchor" href="#_points"></a>8.3.1. Points</h4>
+<h4 id="_points"><a class="anchor" href="#_points"></a>9.3.1. Points</h4>
 <div class="paragraph">
-<p>TODO</p>
+<p>This post process allow to evaluate some fields or expression over a set of points. Theses points can be defined explicitly or sampled over a geometry as a segment.</p>
+</div>
+<div class="sect4">
+<h5 id="_from_explicit_coordinates"><a class="anchor" href="#_from_explicit_coordinates"></a>From explicit coordinates</h5>
+<div class="listingblock">
+<div class="title">Example of a <code>Point</code> measures</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Points":
+{
+    "pointD": <i class="conum" data-value="1"></i><b>(1)</b>
+    {
+        "coord":"{2,0}", <i class="conum" data-value="2"></i><b>(2)</b>
+        "fields":["displacement","pressure"], <i class="conum" data-value="3"></i><b>(3)</b>
+        "expressions": <i class="conum" data-value="4"></i><b>(4)</b>
+        {
+             "e1":"2*x+kappa:x:kappa", <i class="conum" data-value="5"></i><b>(5)</b>
+             "e2":"solid_stress_P_11+solid_stress_P_22:solid_stress_P_11:solid_stress_P_11" <i class="conum" data-value="6"></i><b>(6)</b>
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the name given to a points evaluation context.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>the coordinates expr of the point. This can be also a vector of coordinates.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>which fields will be evaluated in this points evaluation context.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>defined json section where some expressions will be evaluated in this points evaluation context.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>an expression called <code>e1</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>another expression called <code>e2</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This example will generate 4 measures called : <code>Points_pointD_field_displacement</code>, <code>Points_pointD_expr_pressure</code>, <code>Points_pointD_expr_e1</code>, <code>Points_pointD_expr_e2</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When <code>coord</code> value specify more than one point, an index is automatically added in the measures names generated. The format will be <code>Points_&lt;point_name&gt;_&lt;point_index&gt;_&lt;type&gt;_&lt;eval_name&gt;</code> with</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>point_name</code> : the name given to a points evaluation context</p>
+</li>
+<li>
+<p><code>point_index</code> : the index of point in the list (starting form 0)</p>
+</li>
+<li>
+<p><code>type</code> : evaluation type is <code>field</code> or <code>expr</code></p>
+</li>
+<li>
+<p><code>eval_name</code> : the name of the field or the expression</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_from_sampling_a_segment"><a class="anchor" href="#_from_sampling_a_segment"></a>From sampling a segment</h5>
+<div class="listingblock">
+<div class="title">Example of a <code>Point</code> measures</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Points":
+{
+   "vertical_segment": <i class="conum" data-value="1"></i><b>(1)</b>
+   {
+       "over_geometry": <i class="conum" data-value="2"></i><b>(2)</b>
+       {
+           "segment": <i class="conum" data-value="3"></i><b>(3)</b>
+           {
+              "point1":"{0.5,0}", <i class="conum" data-value="4"></i><b>(4)</b>
+              "point2":"{0.5,1}", <i class="conum" data-value="5"></i><b>(5)</b>
+              "n_points":100 <i class="conum" data-value="6"></i><b>(6)</b>
+           }
+       }
+       "fields":"velocity", <i class="conum" data-value="7"></i><b>(7)</b>
+       "include_coordinates":1, <i class="conum" data-value="8"></i><b>(8)</b>
+       "output": <i class="conum" data-value="9"></i><b>(9)</b>
+       {
+          "type":"table" <i class="conum" data-value="10"></i><b>(10)</b>
+          //"name":"vertical_centerline"
+       }
+   }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the name given to a points evaluation context.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>over_geometry</code> is a keyword for specify a geometry in this subsection</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>the name of geometry here <code>segment</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>coordinate expression of an extremity of this segment</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>coordinate expression of the other extremity of this segment</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>number of points sampled over the segment, by default points are equidistributed</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>which fields will be evaluated in this points evaluation context.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>if true, this will export also the coordinates of each point</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>specifiy an output subsection in order to store this results in a specific csv file</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>the output type will be a table</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The output type can be <code>value</code> or <code>table</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A value type correspond to put each measure in a specific column and we accumlate at each time for example by adding row.</p>
+</li>
+<li>
+<p>A table type put in one column all evaluations of a field or an expression. We build one table (and thus one file) per time step.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_statistics"><a class="anchor" href="#_statistics"></a>8.3.2. Statistics</h4>
+<h4 id="_statistics"><a class="anchor" href="#_statistics"></a>9.3.2. Statistics</h4>
 <div class="paragraph">
 <p>The next table presents the several statistics that you can evaluate :</p>
 </div>
@@ -1720,7 +2051,7 @@ The result is not a scalar value but a vector or matrix. We store in the CSV fil
 </div>
 </div>
 <div class="sect3">
-<h4 id="_norm"><a class="anchor" href="#_norm"></a>8.3.3. Norm</h4>
+<h4 id="_norm"><a class="anchor" href="#_norm"></a>9.3.3. Norm</h4>
 <div class="paragraph">
 <p>The next table presents the several norms that you can evaluate :</p>
 </div>
@@ -1899,7 +2230,7 @@ As before, in the case of <code>H1</code> or <code>SemiH1</code> norm type, the 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_an_example"><a class="anchor" href="#_an_example"></a>9. An example</h2>
+<h2 id="_an_example"><a class="anchor" href="#_an_example"></a>10. An example</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
@@ -1987,7 +2318,7 @@ As before, in the case of <code>H1</code> or <code>SemiH1</code> norm type, the 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_the_generator_of_cases_by_using_the_index_definitions"><a class="anchor" href="#_the_generator_of_cases_by_using_the_index_definitions"></a>10. The generator of cases by using the index definitions</h2>
+<h2 id="_the_generator_of_cases_by_using_the_index_definitions"><a class="anchor" href="#_the_generator_of_cases_by_using_the_index_definitions"></a>11. The generator of cases by using the index definitions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Sometimes, it appears that a large part of a JSON section is duplicated many times and just a few words/letters of the syntax have changed.
@@ -2006,7 +2337,7 @@ it&#8217;s currently available in <code>PostProcess</code> or in <code>markers</
 </table>
 </div>
 <div class="sect2">
-<h3 id="_a_first_example"><a class="anchor" href="#_a_first_example"></a>10.1. A first example</h3>
+<h3 id="_a_first_example"><a class="anchor" href="#_a_first_example"></a>11.1. A first example</h3>
 <div class="paragraph">
 <p>We want to apply several post-processings of type <code>Statistics Measures</code> from an expression (always identical) on several mesh markers called <code>top</code>, <code>left</code>, <code>bottom</code> and <code>right</code>.
 The classic way is to write theses measures for each marker. This implies a lot of duplication as illustrated in the next snippet JSON :</p>
@@ -2076,7 +2407,7 @@ For this example of measures, an important thing is to be sure that the name of 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_a_second_example"><a class="anchor" href="#_a_second_example"></a>10.2. A second example</h3>
+<h3 id="_a_second_example"><a class="anchor" href="#_a_second_example"></a>11.2. A second example</h3>
 <div class="paragraph">
 <p>The previous case is a little bit restrictive because only one value can be associated for each case generated.
 However, we can put several values by cases by using an array of array.</p>
@@ -2176,7 +2507,7 @@ In summary, this example generates 4 cases :</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_cases_generated_by_cartesian_product"><a class="anchor" href="#_cases_generated_by_cartesian_product"></a>10.3. Cases generated by cartesian product</h3>
+<h3 id="_cases_generated_by_cartesian_product"><a class="anchor" href="#_cases_generated_by_cartesian_product"></a>11.3. Cases generated by cartesian product</h3>
 <div class="paragraph">
 <p>We can also generate a set of case by a cartesian product of an arbitrary number of indexes.
 For example, to generate several measures associated one-by-one with the following markers :
@@ -2304,7 +2635,7 @@ An arbitrary number of index can be put, but the ids should be contiguous and al
 </div>
 </div>
 <div class="sect2">
-<h3 id="_range_of_integers"><a class="anchor" href="#_range_of_integers"></a>10.4. Range of integers</h3>
+<h3 id="_range_of_integers"><a class="anchor" href="#_range_of_integers"></a>11.4. Range of integers</h3>
 <div class="paragraph">
 <p>A special syntax is designed to generate an index representing a range of integers.
 This sequence is defined by a start number, stop number (not include) and a progression step.
@@ -2341,7 +2672,7 @@ Therefore, we can rewrite the previous example with this syntax :</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the_markers_entry"><a class="anchor" href="#_the_markers_entry"></a>10.5. The <code>markers</code> entry</h3>
+<h3 id="_the_markers_entry"><a class="anchor" href="#_the_markers_entry"></a>11.5. The <code>markers</code> entry</h3>
 <div class="paragraph">
 <p>In many contexts (<code>Materials</code>, <code>BoundaryConditions</code>, <code>PostProcess</code>, &#8230;&#8203;), it&#8217;s necessary to give the names of mesh markers.
 Generally, an entry called <code>markers</code> should be filled.
@@ -2394,7 +2725,7 @@ If we want to generate the previous example, we can also write this JSON snippet
 </div>
 </div>
 <div class="sect2">
-<h3 id="_several_levels_of_indexes"><a class="anchor" href="#_several_levels_of_indexes"></a>10.6. Several levels of indexes</h3>
+<h3 id="_several_levels_of_indexes"><a class="anchor" href="#_several_levels_of_indexes"></a>11.6. Several levels of indexes</h3>
 <div class="paragraph">
 <p>It&#8217;s also possible to combine the index at several levels of properties.
 The important thing is to keep a contiguous progression of the indexes ids.
