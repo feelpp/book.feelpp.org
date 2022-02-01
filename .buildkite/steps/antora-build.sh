@@ -9,7 +9,7 @@ npm install
 echo "--- Build"
 npm run build
 echo "--- Deploy"
-rsync -avz --delete build/site/ $WEBSERVER:~/public_html/docs.feelpp.org
+rsync -avz --delete build/site/ $WEBSERVER:~/www/docs.feelpp.org
 
 #tar  --exclude='*.png' --exclude="*.jpg" --exclude="*.jpeg" -c -z -f site.tar.gz build
 #tar -c -z -f site.tar.gz build

@@ -9,10 +9,22 @@ The `core` module provides the basic data structures to
 
 == Setting up the {feelpp} Environment
 
+To set the environment, use this line :
+
+.Set the {feelpp} environment
+[source,python]
+----
+import feelpp
+import sys
+e = feelpp.Environment(sys.argv,config=feelpp.globalRepository("pyfeelpp-tests"))
+----
+
+NOTE: You can give argument to the environment using `sys.argv`, either by passing arguments to Python directly or by changing the list `sys.argv` by hand.
+
 .Start the {feelpp} environment, `test_core.py`
 [source,python]
 ----
-include::{uri-pyfeelpp-raw}core/test_core.py[]
+include::{uri-pyfeelpp-raw}tests/test_core.py[]
 ----
 //include::{uri-pyfeelpp-raw}core/test_core.py[]
 
@@ -36,7 +48,7 @@ mpiexec -n 4 python3 test_core.py --version
 
 [source,python]
 ----
-include::{uri-pyfeelpp-raw}core/test_remotedata.py[]
+include::{uri-pyfeelpp-raw}tests/test_remotedata.py[]
 ----
 
 To execute the previous example

@@ -71,22 +71,33 @@ See also link:CONTRIBUTING.adoc[how to write the book].
 
 {feelpp} uses https://docs.antora.org[Antora] to generate the website http://docs.feelpp.org.
 
-Once you have installed Antora, install the asciidoctor-plantuml package:
+
+[IMPORTANT]
+====
+Prerequisites : npm, curl
+
+You can install these dependencies on Ubuntu/Debian OS by executing :
 [source,sh]
 --
-npm i asciidoctor.js asciidoctor-plantuml
+sudo apt install npm curl
 --
-then follow the next steps to generate a local preview of the  website http://docs.feelpp.org.
+====
 
+Once you have installed prerequisites, follow the next steps to generate a local preview of the  website http://docs.feelpp.org.
 
 [source,sh]
 ----
 git clone https://github.com/feelpp/book.feelpp.org.git <1>
-cd book.feelpp.org <2>
-antora --pull antora-local-feelpp-doc.yml <3>
-serve build/site <4>
+git clone https://github.com/feelpp/toolbox.git <2>
+cd book.feelpp.org <3>
+npm install <4>
+./node_modules/@antora/cli/bin/antora --pull site-dev.yml <5>
+serve build/site <6>
 ----
 <1> clone the source for the website
-<2> go the toplevel directory
-<3> build a local preview of the website with Antora
-<4> start the node.ja webserver `serve`, see the https://docs.antora.org/antora/1.0/run-antora/#local-site-preview[docs].
+<2> clone the source for toolbox cases doc
+<3> go the toplevel directory
+<4> install antora and some other dependencies
+<5> build a local preview of the website with Antora
+<6> start the node.ja webserver `serve`, see the https://docs.antora.org/antora/1.0/run-antora/#local-site-preview[docs].
+

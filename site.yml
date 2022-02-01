@@ -1,26 +1,30 @@
 site:
   title: Feel++ Docs
   url: https://docs.feelpp.org
-  start_page: develop@feelpp::index.adoc
+  start_page: 0.109@feelpp::index.adoc
   keys:
     google_analytics: 'UA-65761593-1'
 content:
   sources:
   - url: https://github.com/feelpp/book.feelpp.org
-    branches: [master,develop]
+    branches: [develop]
     start_path: docs/feelppdocs
+    tags:
+    - v0.109
   - url: https://github.com/feelpp/book.feelpp.org
-    branches: [master]
+    branches: develop
     start_path: docs/user
     tags:
+    - v0.109
     - v0.108
     - v0.107
 #    - v0.106
 #    - v0.105
   - url: https://github.com/feelpp/book.feelpp.org
-    branches: master
+    branches: develop
     start_path: docs/dev
     tags:
+    - v0.109
     - v0.108
     - v0.107
 #    - v0.106
@@ -32,15 +36,18 @@ content:
     branches: master
     start_path: docs/
   - url: https://github.com/feelpp/book.feelpp.org
-    branches: master
+    branches: develop
     start_path: docs/data
+    tags:
+    - v0.109
   - url: https://github.com/feelpp/book.feelpp.org
-    branches: master
+    branches: develop
     start_path: docs/math
   - url: https://github.com/feelpp/book.feelpp.org
-    branches: master
+    branches: develop
     start_path: docs/toolboxes
     tags:
+    - v0.109
     - v0.108
     - v0.107
 #    - v0.106
@@ -48,6 +55,7 @@ content:
   - url: https://github.com/feelpp/toolbox
     branches: [master]
     tags:
+    - v0.109
     - v0.108
     - v0.107
 #    - v0.106
@@ -61,6 +69,11 @@ content:
   - url: https://github.com/feelpp/toolbox
     branches: master
     start_path: contribute
+  - url: https://github.com/feelpp/book.feelpp.org
+    branches: develop
+    start_path: docs/mor
+    tags:
+    - v0.109
   - url: https://github.com/feelpp/angiotk
     branches: master
     start_path: docs
@@ -68,11 +81,11 @@ content:
 #    branches: master
 #    start_path: docs/mso4sc
   - url: https://github.com/feelpp/book.feelpp.org
-    branches: master
+    branches: develop
     start_path: docs/salome/
-  - url: https://github.com/feelpp/book.feelpp.org
-    branches: mor-module
-    start_path: docs/mor/
+#  - url: https://github.com/feelpp/book.feelpp.org
+#    branches: mor-module
+#    start_path: docs/mor/
 
 ui:
   bundle:
@@ -83,7 +96,6 @@ asciidoc:
   attributes:
     page-pagination: ''
     kroki-fetch-diagram: true
-    project_version: 0.108
     feelpp-git-tag: develop
     deploymentRoot: ""
     numbered: true

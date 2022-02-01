@@ -1,15 +1,100 @@
 = Creating a mesh
 include::{partialsdir}/header-macros.adoc[]
 
-The `mesh` provides the {feelpp} data structures in Python:
 
-* Mesh information:
-** `dimension()`
-** average statistics on the mesh size
-* ranges: `elements`, `markedelements`, `faces`, `markedfaces`, `boundaryfaces`
+== Load a mesh from a `geo` or `msh` file
+
+`feelpp.mesh(dim=2, geo=1, realdim=2, worldComm=None)` : create a mesh.
+The mesh is of topological dimension `dim`, in real dimension `realdim` with geometric order `geo`.
+The mesh is configured with a `WorldComm` which provides the parallel process layout.
+
+Keyword arguments:
+
+* `dim` : the topological dimension (default: `2`)
+* `geo` : the geometrical order (default: `1`)
+* `realdim` : the real dimension (default: `2`)
+* `worldComm` : the parallel communicator for the mesh (default:  `Environment::worldCommPtr()`)
+
+
+`feelpp.load(m, path, size) -> feelpp._mesh.Mesh_S1DG1R1` : load a mesh from a file
+
+* `m` declared with the function `mesh` above
+* `path` (`string`) path to the geometry (with `geo` or `msh` format)
+* `size` (`float`) size of the meshed geometry (if it is not meshed yet)
+
+
+.Example
+[source,python]
+----
+m = feelpp.mesh(dim=3, realdim=3)
+mesh = feelpp.load(m, "path/to/file", 0.1)
+----
+
+
+== Usage
+
+The `mesh` provides the {feelpp} data structures in Python:
+The following methods are to use on the mesh object (`mesh` in the previous example) :
+
+=== Mesh information :
+
+
+* `dimension(self) -> int` : get topological dimension
+* `hAverage(self) -> float` : get the average edge length of the mesh
+* `hMax(self) -> float` : get the maximum edge length of the mesh
+* `hMin(self) -> float` : get the minimum edge length of the mesh
+* `measure(self, parallel: bool = True) -> float` : get the measure of the mesh (which is equal to stem:[\int_\Omega 1])
+* `measureBoundary(self) -> float` : get the measure of the boundary of the mesh (which is equal to stem:[???])
+* `numGlobalEdges(self) -> int` : get the number of edges over the whole mesh, requires communication if the mesh is parallel
+* `numGlobalElements(self) -> int` : get the number of elements over the whole mesh, requires communication if the mesh is parallel
+* `numGlobalFaces(self) -> int` : get the number of faces over the whole mesh, requires communication if the mesh is parallel
+* `numGlobalPoints(self) -> int` : get the number of points over the whole mesh, requires communication if the mesh is parallel
+* `realDimension(self) -> int` : get real dimension
+* `updateMeasures(self) -> None` : update the measures of the mesh
+
+=== Test relation between meshes :
+
+* `isParentMeshOf(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) -> bool` : is the mesh the parent mesh of another mesh
+* `isRelatedTo(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) -> bool` : is the mesh related to another mesh
+* `isSiblingOf(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) -> bool`: is the mesh a sibling of another mesh
+* `isSubMeshFrom(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) -> bool` : is the mesh a sub mesh of another mesh
+
+
+=== Export and load mesh on xref:https://support.hdfgroup.org/HDF5/[HDF5 format]
+
+* `saveHDF5(self, name: str) -> None` : save mesh to H5 file
+* `loadHDF5(self, name: str) -> None` : load mesh from H5 file
+
+
+
+== Ranges
+
+* `elements` : `feelpp.elements(mesh)` : get iterator over the elements of the mesh
+* `markedelements` :
+    1. `feelpp.markedelements(mesh, tag: str)` : get iterator over the marked elements of the mesh
+    2. `feelpp.markedelements(mesh, marker: str)` :  return the range of elements of the mesh with marker
+    3. `feelpp.markedelements(mesh, markers: List[str])` : return the range of elements of the mesh with markers
+* `faces` (???)
+* `markedfaces` :
+    1. `feelpp.markedfaces(mesh, marker: str)` : return the range of facets of the mesh with marker
+    2. `markedfaces(mesh, markers: List[str])` : return the range of facets of the mesh with marker
+* `boundaryfaces` : `feelpp.boundaryfaces(mesh)`: get iterator over the boundary faces of the mesh
+
+
+.Example : compute integrals
+[source,python]
+----
+from feelpp.integrate  import integrate
+
+i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
+i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
+i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")
+----
+
+== Complete example
 
 .Mesh data structure handling example
 [source,python]
 ----
-include::{uri-pyfeelpp-raw}mesh/test_mesh.py[]
+include::{uri-pyfeelpp-raw}tests/test_mesh.py[]
 ----

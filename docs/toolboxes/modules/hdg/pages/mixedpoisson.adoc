@@ -1,14 +1,6 @@
-== Mixed Poisson
+= Mixed Poisson
 
-=== Notations and units
-
-|===
-| Notation | Quantity
-|stem:[k]|conductivity
-|stem:[\Lambda]|resistivity
-|===
-
-=== Equations
+== Models
 
 Mixed Poisson equations are
 [stem]
@@ -18,159 +10,178 @@ Mixed Poisson equations are
 \nabla\cdot \boldsymbol{u} &= g
 \end{align}
 ++++
-completed by boundary conditions.
+completed by boundary conditions and where stem:[k] represents the conductivity.
 
-The conductivity stem:[k] can be non-linear. If it depends only on the primal variable stem:[p], it is already handle by the model, in other cases, one needs to provide the corresponding expression.
+Those equations can represent several problem types, such as electrostatics problems or heat transfer problems.
+One can choose to use field names and material properties in the model file for a particular physic by using a MixedPoissonPhyics in the constructor of the toolbox.
 
-=== MixedPoisson Toolbox
+By default, no physic is used (MixedPoissonPhysics::None).
+Electric (MixedPoissonPhysics::Electric) and heat (MixedPoissonPhysics::Heat) are also available.
 
-The model is described in a json file which path is given by the option `mixedpoisson.model_json`.
-The construction of this file is detailed in the following sections.
+== Materials
 
-==== Models
+.Materials properties defined in the MixedPoisson toolbox with MixedPoissonPhysics::None
+|===
+| Name | Symbol | Shape | Description
 
-The models are not considered for now.
+| conductivity | cond | scalar | conductivity
+|===
 
-[source,json]
-.Model section
-----
-"Models": { "equations":"hdg" }
-----
+.Materials properties defined in the MixedPoisson toolbox with MixedPoissonPhysics::Electric
+|===
+| Name | Symbol | Shape | Description
 
-==== Materials
+| electric-conductivity | sigma | scalar | electric conductivity
+|===
 
-The definition of the conductivity stem:[k] depends on the material, it can be linear or non-linear.
-In the linear case, it is given in the material we work on by the keyword `cond` and in the non-linear case, by `condNL`.
+.Materials properties defined in the MixedPoisson toolbox with MixedPoissonPhysics::Heat
+|===
+| Name | Symbol | Shape | Description
 
-[source,json]
-.Material section
-----
-"Materials":
-{
-    "<marker>":
-    {
-        "name": "copper",
-        "cond": "1",
-	"condNL": "2*p:p"
-    }
-}
-----
+| thermal-conductivity | k | scalar | thermal conductivity
+|===
 
-The keywords `cond` and `condNL` can be changed respectively by the options `mixedpoisson.conductivity_json` and `mixedpoisson.conductivityNL_json`.
+== Fields and symbols expressions
 
-==== Boundary Conditions
+.Fields available with MixedPoissonPhysics::None
+|===
+| Name | Description | Shape
 
-All boundary conditions are described in the same way
+| potential | the potential field | scalar
+| flux | the flux field | vectorial
+|===
 
-[source,json]
-.Listing : boundary conditions in json
-----
-"BoundaryConditions":
-{
-    "<field>":
-    {
-        "<bc_type>":
-        {
-            "<marker>":
-            {
-                "<option1>":"<value1>",
-                "<option2>":"<value2>",
-                // ...
-            }
-        }
-    }
-}
-----
+.Symbols expressions with MixedPoissonPhysics::None
+|===
+| Symbol | Expression | Description
 
-Different types of boundary condition are available.
+| poisson_P | stem:[P] | evaluate the potential
+| poisson_grad_P_0 | stem:[\frac{\partial p}{\partial x}] | evaluate the first component of gradient of potential
+| poisson_grad_P_1 | stem:[\frac{\partial p}{\partial y}] | evaluate the second component of gradient of potential
+| poisson_grad_P_2 | stem:[\frac{\partial p}{\partial z}] | evaluate the third component of gradient of potential
+| poisson_dn_P     | stem:[\nabla p \cdot \boldsymbol{n}] | evaluate the normal derivative of potential
+| poisson_F_0 | stem:[\boldsymbol{u}_x] | evaluate the x component of the flux
+| poisson_F_1 | stem:[\boldsymbol{u}_y] | evaluate the y component of the flux
+| poisson_F_2 | stem:[\boldsymbol{u}_z] | evaluate the z component of the flux
+|===
 
-===== Dirichlet condition
+.Fields available with MixedPoissonPhysics::Electric
+|===
+| Name | Description | Shape
+
+| electric-potential | the electric potential field | scalar
+| current-density | the current density field | vectorial
+|===
+
+.Symbols expressions with MixedPoissonPhysics::Electric
+|===
+| Symbol | Expression | Description
+
+| electric_V | stem:[V] | evaluate the potential
+| electric_grad_V_0 | stem:[\frac{\partial V}{\partial x}] | evaluate the first component of gradient of electric potential
+| electric_grad_V_1 | stem:[\frac{\partial V}{\partial y}] | evaluate the second component of gradient of electric potential
+| electric_grad_V_2 | stem:[\frac{\partial V}{\partial z}] | evaluate the third component of gradient of electric potential
+| electric_dn_V     | stem:[\nabla V \cdot \boldsymbol{n}] | evaluate the normal derivative of electric potential
+| electric_C_0 | stem:[\boldsymbol{j}_x] | evaluate the x component of the current density
+| electric_C_1 | stem:[\boldsymbol{j}_y] | evaluate the y component of the current density
+| electric_C_2 | stem:[\boldsymbol{j}_z] | evaluate the z component of the current density
+|===
+
+.Fields available with MixedPoissonPhysics::Heat
+|===
+| Name | Description | Shape
+
+| temperature | the temperature field | scalar
+| heat-flux | the heat flux field | vectorial
+|===
+
+.Symbols expressions with MixedPoissonPhysics::Heat
+|===
+| Symbol | Expression | Description
+
+| heat_T | stem:[T] | evaluate the temperature
+| heat_grad_T_0 | stem:[\frac{\partial T}{\partial x}] | evaluate the first component of gradient of temperature
+| heat_grad_T_1 | stem:[\frac{\partial T}{\partial y}] | evaluate the second component of gradient of temperature
+| heat_grad_T_2 | stem:[\frac{\partial T}{\partial z}] | evaluate the third component of gradient of temperature
+| heat_dn_T     | stem:[\nabla T \cdot \boldsymbol{n}] | evaluate the normal derivative of temperature
+| heat_F_0 | stem:[\boldsymbol{u}_x] | evaluate the x component of the heat flux
+| heat_F_1 | stem:[\boldsymbol{u}_y] | evaluate the y component of the heat flux
+| heat_F_2 | stem:[\boldsymbol{u}_z] | evaluate the z component of the heat flux
+|===
+
+== Boundary Conditions
+
+=== Dirichlet
+
+On the potential/electric-potential/temperature:
 
 [stem]
 ++++
-p = g_D
+P = g \quad \text{ on } \Gamma
 ++++
 
-|===
-| Field | Type | Option | Value
-| `potential` | `Dirichlet` | `expr` | stem:[g_D]
-|===
+=== Neumann
 
-===== Neumann condition
+On the potential/electric-potential/temperature:
 
 [stem]
 ++++
--k\nabla p \cdot\boldsymbol{n} = g_N
+-k \nabla P \cdot \boldsymbol{n} = g \quad \text{ on } \Gamma
 ++++
 
-|===
-| Field | Type | Option | Value
-| `potential` | `Neumann` | `expr` | stem:[g_DN] or stem:[-k\nabla p]
-|===
-The choice between stem:[g_DN] or stem:[-k\nabla p] is base on the dimension of the expression.
+=== Robin
 
-===== Robin condition
+On the potential/electric-potential/temperature:
 
 [stem]
 ++++
--k\nabla p \cdot\boldsymbol{n} + g_R^1 p = g_R^2
+-k \nabla P \cdot \boldsymbol{n} = h \left( T - g \right) \quad \text{ on } \Gamma
 ++++
 
-|===
-| Field | Type | Option | Value
-| `potential` | `Robin` | `expr1` | stem:[g_R^1]
-| `potential` | `Robin` | `expr2` | stem:[g_R^2]
-|===
+=== Integral
 
-===== Integral boundary condition
+On the flux/current-density/heat-flux:
 
 [stem]
 ++++
-\int_{\Gamma_I} \boldsymbol{u}\cdot\boldsymbol{n} = g_I
+\int_\Gamma \boldsymbol{u}\cdot\boldsymbol{n} = g \quad \text{ on } \Gamma\\
+|\Gamma|p - \int_\Gamma p = 0 \quad \text{ on } \Gamma
 ++++
 
+== Initial Conditions
+
+== PostProcessing
+
+=== Exports
+
+.Fields allowed to be exported in the `fields` section with MixedPoissonPhysics::None are:
 |===
-| Field | Type | Option | Value
-| `flux` | `Integral` | `expr` | stem:[g_I]
+| Name | Description
+
+| potential | the potential field
+| flux | the flux field
+| pid | the mesh partitioning
+| all | all fields available
 |===
 
-==== Source Terms
-
-The source terms stem:[f] and stem:[\boldsymbol{g}] are treated as boundary condtions.
-
+.Fields allowed to be exported in the `fields` section with MixedPoissonPhysics::Electric are:
 |===
-| Field | Type | Option | Value
-| `potential` | `SourceTerm` | `expr` | stem:[g]
-| `flux` | `SourceTerm` | `expr` | stem:[\boldsymbol{f}]
+| Name | Description
+
+| electric-potential | the electric potential field
+| current-density | the current density flux
+| pid | the mesh partitioning
+| all | all fields available
 |===
 
-==== Post Process
+.Fields allowed to be exported in the `fields` section with MixedPoissonPhysics::Heat are:
+|===
+| Name | Description
 
-Two fields can be exported, the potential stem:[p] and the flux stem:[\boldsymbol{u}].
+| temperature | the temperature field
+| heat-flux | the heat flux field
+| pid | the mesh partitioning
+| all | all fields available
+|===
 
-[source,json]
-.Post Process section
-----
-"PostProcess":
-{
-    "Exports":
-    {
-        "fields":["potential","flux"]
-    }
-}
-----
-
-=== Create applications
-
-In order to solve linear problem, an application should contain at least
-
-[source,cpp]
-.Minimal Linear case
-----
-    typedef FeelModels::MixedPoisson<FEELPP_DIM,FEELPP_ORDER> mp_type;
-    auto MP = mp_type::New("mixedpoisson");
-    MP->init();
-    MP->assembleAll();
-    MP->solve();
-    MP->exportResults();
-----
+NOTE: All materials properties given in the section <<Materials,Materials>> can be also exported by specifying the name in the `fields` entry.
