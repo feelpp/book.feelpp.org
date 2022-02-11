@@ -11,12 +11,26 @@ Dmu = model.parameterSpace()
 
 == Methods
 
+* `init(modelProperties)` : constructor using a model properties loaded from a JSON file (see xref:../pyfeelpptoolboxes/modelproperties.adoc[ModelProperties]).
+
 
 * `element(broadcast: bool = True, apply_log: bool = False) -> feelpp.mor._mor.ParameterSpaceElement` : return a parameter from the space :
     - `broadcast` : share the parameter to all processors
     - `apply_log` : log random chosen parameter
 
 * `sampling() -> feelpp.mor._mor.ParameterSpaceSampling`
+
+* `mumin() -> feelpp.mor._mor.ParameterSpaceElement` : return an element with the minimal values.
+
+* `mumax() -> feelpp.mor._mor.ParameterSpaceElement` : return an element with the maximal values.
+
+* `mubar() -> feelpp.mor._mor.ParameterSpaceElement` : return the element :stem[$\bar{\mu}}$] with the default values.
+
+* `dimension() -> int` : return the dimension of the space
+
+* `parameterNamed(name: str)` -> `float` : return the parameter named `str`
+
+* `parameterNames(name: str)` -> `list` : return the list of the name of the parameters
 
 
 
