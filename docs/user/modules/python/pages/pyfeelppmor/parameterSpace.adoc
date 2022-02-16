@@ -11,9 +11,6 @@ Dmu = model.parameterSpace()
 
 == Methods
 
-* `init(modelProperties)` : constructor using a model properties loaded from a JSON file (see xref:../pyfeelpptoolboxes/modelproperties.adoc[ModelProperties]).
-
-
 * `element(broadcast: bool = True, apply_log: bool = False) -> feelpp.mor._mor.ParameterSpaceElement` : return a parameter from the space :
     - `broadcast` : share the parameter to all processors
     - `apply_log` : log random chosen parameter
@@ -35,5 +32,15 @@ Dmu = model.parameterSpace()
 
 
 == Static method
+
+* `New(feelpp._models.ModelParameters, arg1: feelpp._core.WorldComm)`: constructor using a model parameters loaded from a JSON file (see xref:../pyfeelpptoolboxes/modelproperties.adoc[ModelParameters]).
+
+.Create a `parameterSpace` from `ModelParameters`
+[source,python]
+----
+modelParameters = heatBox.modelProperties().parameters()    # for instance
+Dmu = feelpp.mor._mor.ParameterSpace.New(modelParameters, feelpp.Environment.worldCommPtr())
+----
+
 
 * `create(arg0: int) -> feelpp.mor._mor.ParameterSpace` : return a `ParameterSpace` of a dimension `arg0`.
