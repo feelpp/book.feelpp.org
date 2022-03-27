@@ -11,15 +11,35 @@ Dmu = model.parameterSpace()
 
 == Methods
 
-
 * `element(broadcast: bool = True, apply_log: bool = False) -> feelpp.mor._mor.ParameterSpaceElement` : return a parameter from the space :
     - `broadcast` : share the parameter to all processors
     - `apply_log` : log random chosen parameter
 
 * `sampling() -> feelpp.mor._mor.ParameterSpaceSampling`
 
+* `mumin() -> feelpp.mor._mor.ParameterSpaceElement` : return an element with the minimal values.
+
+* `mumax() -> feelpp.mor._mor.ParameterSpaceElement` : return an element with the maximal values.
+fpp
+
+* `dimension() -> int` : return the dimension of the space
+
+* `parameterNamed(name: str)` -> `float` : return the parameter named `str`
+
+* `parameterNames(name: str)` -> `list` : return the list of the name of the parameters
+
 
 
 == Static method
+
+* `New(feelpp._models.ModelParameters, arg1: feelpp._core.WorldComm)`: constructor using a model parameters loaded from a JSON file (see xref:../pyfeelpptoolboxes/modelproperties.adoc[ModelParameters]).
+
+.Create a `parameterSpace` from `ModelParameters`
+[source,python]
+----
+modelParameters = heatBox.modelProperties().parameters()    # for instance
+Dmu = feelpp.mor._mor.ParameterSpace.New(modelParameters, feelpp.Environment.worldCommPtr())
+----
+
 
 * `create(arg0: int) -> feelpp.mor._mor.ParameterSpace` : return a `ParameterSpace` of a dimension `arg0`.
