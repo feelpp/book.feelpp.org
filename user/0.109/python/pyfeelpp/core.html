@@ -683,43 +683,7 @@ MathJax.Hub.Config({
 <div class="listingblock">
 <div class="title">Start the Feel++ environment, <code>test_core.py</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from mpi4py import MPI
-import feelpp 
-import sys
-import pytest
-
-
-
-def test_core(init_feelpp):
-    feelpp.Environment.changeRepository(directory="pyfeelpp-tests/core/test_core")
-    if feelpp.Environment.isMasterRank():
-        print("pid:",feelpp.Environment.worldComm().localRank() )
-        print("isMasterRank:", feelpp.Environment.isMasterRank())
-
-
-def test_mpi_bcast(init_feelpp):
-    feelpp.Environment.changeRepository(directory="pyfeelpp-tests/core/test_core_bcast")
-    
-    if feelpp.Environment.isMasterRank():
-        data={"key":"test"}
-    else:
-        data = None
-    data=feelpp.Environment.worldComm().localComm().bcast(data,root=0)
-    assert(data["key"] == "test")
-
-def test_mpi_numpy(init_feelpp):
-    import numpy as np
-    if feelpp.Environment.isMasterRank():
-        data = np.arange(100, dtype='i')
-    else:
-        data = np.empty(100, dtype='i')
-    feelpp.Environment.worldComm().to_comm().Bcast(data, root=0)
-    for i in range(100):
-        assert(data[i] == i)
-
-#def test_config_local(init_feelpp_config_local):
-#    feelpp.Environment.changeRepository(
-#        directory="pyfeelpp-tests/core/test_config_local")</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">404: Not Found</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -747,21 +711,7 @@ def test_mpi_numpy(init_feelpp):
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
-import sys
-import pytest
-
-#@pytest.mark.mpi
-def test_remotedata(init_feelpp):
-    feelpp.Environment.changeRepository(
-        directory="pyfeelpp-tests/core/test_remotedata")
-    rd = feelpp.RemoteData("github:{repo:feelpp,path:README.adoc}", worldComm=feelpp.Environment.worldCommPtr())
-
-    if rd.canDownload():
-        d=feelpp.Environment.downloadsRepository()
-        print("download data in ", d);
-        data=rd.download( d )
-        print("downloaded data:",data)</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">404: Not Found</code></pre>
 </div>
 </div>
 <div class="paragraph">
