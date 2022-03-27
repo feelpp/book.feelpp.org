@@ -411,6 +411,9 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../pyfeelpptoolboxes/index.html">pyFeel++ Toolboxes</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#pyfeelpptoobloxes/modelproperties.adoc">Model Properties</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../pyfeelpptoolboxes/heat.html">Heat Transfer</a>
   </li>
   <li class="nav-item" data-depth="3">
@@ -692,6 +695,22 @@ MathJax.Hub.Config({
 <li>
 <p><code>sampling() &#8594; feelpp.mor._mor.ParameterSpaceSampling</code></p>
 </li>
+<li>
+<p><code>mumin() &#8594; feelpp.mor._mor.ParameterSpaceElement</code> : return an element with the minimal values.</p>
+</li>
+<li>
+<p><code>mumax() &#8594; feelpp.mor._mor.ParameterSpaceElement</code> : return an element with the maximal values.
+fpp</p>
+</li>
+<li>
+<p><code>dimension() &#8594; int</code> : return the dimension of the space</p>
+</li>
+<li>
+<p><code>parameterNamed(name: str)</code> &#8594; <code>float</code> : return the parameter named <code>str</code></p>
+</li>
+<li>
+<p><code>parameterNames(name: str)</code> &#8594; <code>list</code> : return the list of the name of the parameters</p>
+</li>
 </ul>
 </div>
 </div>
@@ -699,6 +718,20 @@ MathJax.Hub.Config({
 <div class="sect1">
 <h2 id="_static_method"><a class="anchor" href="#_static_method"></a>2. Static method</h2>
 <div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>New(feelpp._models.ModelParameters, arg1: feelpp._core.WorldComm)</code>: constructor using a model parameters loaded from a JSON file (see <a href="../pyfeelpptoolboxes/modelproperties.html" class="xref page">ModelParameters</a>).</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Create a <code>parameterSpace</code> from <code>ModelParameters</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">modelParameters = heatBox.modelProperties().parameters()    # for instance
+Dmu = feelpp.mor._mor.ParameterSpace.New(modelParameters, feelpp.Environment.worldCommPtr())</code></pre>
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
