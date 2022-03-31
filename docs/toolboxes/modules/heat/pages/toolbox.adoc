@@ -2,6 +2,112 @@
 
 == Models
 
+The model used by default with the heat toolbox is represented by this equation
+
+[stem]
+++++
+\rho C_p \frac{\partial T}{\partial t} + \nabla \cdot \boldsymbol{q}= Q, \quad \text{ in } \Omega
+++++
+
+with the following properties :
+
+* stem:[q=-k \nabla T] is the conductive heat flux,
+* stem:[Q=0] is heat source by default equal to 0,
+* stem:[\Omega] the domain where the model is applied (.i.e. the materials).
+
+For a steady-state problem, the temperature does not change with time, and the first term disappears.
+
+=== Heat sources
+
+The source term stem:[Q] in the heat equation is used to model internal heat generation and absorption with positive and negative values respectively.
+
+For adding a heat source term in the model, a JSON key called `heat-sources` must be added and the JSON value associated can be
+
+* a string: explicit expression of stem:[Q],
+* a JSON object: setup one heat source,
+* an array of JSON object : stem:[Q] is composed of several heat sources.
+
+
+We also consider two ways for defined a heat source :
+
+* from an explicit expression of the heat source
+* from an expression of the heat rate stem:[P]. In this case, stem:[Q = P/V], where stem:[V] is the volume of the material belongs to this model.
+
+The setup of a heat source is defined from the properties listed in the next table.
+
+|===
+| Keyword | Description | Value Type | Default Value
+
+| `type`   | possible values : `heat-source`, `heat-rate`| string           | `heat-source`
+| `expr`   | expression with respect to the type used | string  |
+|===
+
+
+The term stem:[Q] can be also split into stem:[N] terms (for example due to the multiple physics). The term stem:[Q] can be written as stem:[Q=\sum_{i=1}^N Q_i].
+This setup can be done by using an array of JSON objects for the `heat-sources` entry. And each JSON object corresponds to the previous description of one heat source.
+
+
+[source,json]
+----
+"Models":{
+   "heat":
+      [{ <1>
+          "name":"heat1",
+          "materials":["mymatA","mymatB"],
+          "setup": {
+              "heat-sources": <2>
+                [{ <3>
+                    "type":"heat-source",
+                    "expr":"3"
+                },{ <4>
+                     "type":"heat-rate",
+                     "expr":"2*exp(t):t"
+                }]
+          }
+      },{ <5>
+           "name":"heat2",
+           "materials":["mymatC"],
+           "setup": {
+               "heat-sources": {  <6>
+                     "expr":"30"
+                }
+           }
+     }]
+}
+----
+<1> setup of first model called `heat1` on materials `mymatA` and `mymatB`
+<2> heat sources will be composed of 2 terms that we will call stem:[Q_1] and stem:[Q_2] (with stem:[Q=Q_1+Q_2])
+<3> we define stem:[Q_1=3]
+<4> we define stem:[Q_2=2*exp(t)/V] with stem:[V] the measure of materials `mymatA` and `mymatB`
+<5> setup of second model called `heat2` on materials `mymatC`
+<6> we define one heat source with stem:[Q=30]
+
+
+=== Convective heat transfert
+
+Modeling heat transfer in fluid requires taking into account the convective effect in the heat equation. The heat equation is written as :
+
+[stem]
+++++
+\rho C_p \frac{\partial T}{\partial t} + \underbrace{\rho C_p \boldsymbol{u} \cdot \nabla T}_{\text{new term}} + \nabla \cdot \mathbf{q}= Q, \quad \text{ in } \Omega
+++++
+
+with stem:[\boldsymbol{u}] the fluid velocity.
+
+For adding this feature to the model, a `convection` section should be added.
+The value can be a string corresponding to velocity expression.
+
+[source,json]
+----
+{
+  "Models":{
+    "heat":{
+       "setup": {
+          "convection":"{-30*(y+-0.7)*(y-0.5)*(y>0.5)*(y<0.7),0}:y"
+       }
+} } }
+----
+
 == Materials
 
 .Materials properties defined in the heat toolbox (symbols are given without components suffix)
@@ -52,7 +158,7 @@ T = g \quad \text{ on } \Gamma
 
 [stem]
 ++++
--k \nabla T \cdot \boldsymbol{n} = g \quad \text{ on } \Gamma
+k \nabla T \cdot \boldsymbol{n} = g \quad \text{ on } \Gamma
 ++++
 
 === Robin
@@ -107,10 +213,6 @@ NOTE: All materials properties given in the section <<Materials,Materials>> can 
 <3> surface markers 
 <4> direction : `inward` or `outward`
 <5> another
-
-==== Evaluation at points
-
-- temperature
 
 
 == Stabilization methods
