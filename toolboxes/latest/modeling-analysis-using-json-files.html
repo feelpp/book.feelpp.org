@@ -1542,34 +1542,35 @@ If the symbol is already defined inside the Parameters section, the alias symbol
 </ul>
 </div>
 <div class="paragraph">
-<p>As presented below, there are two ways to define initial conditions either use a mathematical expressions or a file.</p>
+<p>As shown below, there are two ways to define initial conditions: either by using mathematical expressions or by using a file.</p>
 </div>
 <div class="listingblock">
 <div class="title">Example of a <code>InitialConditions</code> defined from mathematical expressions</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"InitialConditions":
 {
-    "temperature": <i class="conum" data-value="1"></i><b>(1)</b>
-    {
-        "Expression": <i class="conum" data-value="2"></i><b>(2)</b>
-        {
-            "myic1": <i class="conum" data-value="3"></i><b>(3)</b>
-            {
-                "markers":"Omega1", <i class="conum" data-value="4"></i><b>(4)</b>
-                "expr":"293" <i class="conum" data-value="5"></i><b>(5)</b>
-            },
-            "myic2": <i class="conum" data-value="6"></i><b>(6)</b>
-            {
-                "markers":["Omega2,Omega3]", <i class="conum" data-value="7"></i><b>(7)</b>
-                "expr":"305*x*y:x:y"  <i class="conum" data-value="8"></i><b>(8)</b>
-            },
-            "myic3":
-            {
-               "expr":"302",
-               "time":-0.1 <i class="conum" data-value="9"></i><b>(9)</b>
-            }
-        }
-    }
+   "heat": { <i class="conum" data-value="1"></i><b>(1)</b>
+      "temperature": { <i class="conum" data-value="2"></i><b>(2)</b>
+          "Expression": <i class="conum" data-value="3"></i><b>(3)</b>
+          {
+              "myic1": <i class="conum" data-value="4"></i><b>(4)</b>
+              {
+                 "markers":"Omega1", <i class="conum" data-value="5"></i><b>(5)</b>
+                 "expr":"293" <i class="conum" data-value="6"></i><b>(6)</b>
+              },
+              "myic2": <i class="conum" data-value="7"></i><b>(7)</b>
+              {
+                 "markers":["Omega2","Omega3"], <i class="conum" data-value="8"></i><b>(8)</b>
+                 "expr":"305*x*y:x:y"  <i class="conum" data-value="9"></i><b>(9)</b>
+              },
+              "myic3":
+              {
+                  "expr":"302",
+                  "time":-0.1 <i class="conum" data-value="10"></i><b>(10)</b>
+              }
+          }
+      }
+   }
 }</code></pre>
 </div>
 </div>
@@ -1577,40 +1578,44 @@ If the symbol is already defined inside the Parameters section, the alias symbol
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>the field name of the toolbox to which the initial condition is associated</td>
+<td>the keyword of a toolbox</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>the type of boundary condition to apply, here <code>Expression</code></td>
+<td>the field name of the toolbox to which the initial condition is associated</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>a name that identifies an initial condition imposed on a field</td>
+<td>the type of boundary condition to apply, here <code>Expression</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>the name of marker (or a list of markers) where an expression is imposed as initial condition.
-The markers can represent any kind of entity (Elements/Faces/Edges/Points).
-If this entry is not given, the expression is applied on the mesh support of the field.</td>
+<td>a name that identifies an initial condition imposed on a field</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>an expression which is applied to the field</td>
+<td>the name of the marker (or a list of markers) where an expression is imposed as an initial condition.
+The markers can represent any kind of entity (Elements/Faces/Edges/Points).
+If this entry is not given, the expression is applied to the mesh support of the field.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>another name that identifies an initial condition</td>
+<td>an expression that is applied to the field</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>idem as &lt;4&gt;</td>
+<td>another name that identifies an initial condition</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>idem as &lt;5&gt;</td>
+<td>idem as &lt;4&gt;</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>idem as &lt;5&gt;</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
 <td>time to apply the initial condition, if not present time=0</td>
 </tr>
 </table>
@@ -1620,17 +1625,19 @@ If this entry is not given, the expression is applied on the mesh support of the
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"InitialConditions":
 {
-    "temperature": <i class="conum" data-value="1"></i><b>(1)</b>
-    {
-        "File": <i class="conum" data-value="2"></i><b>(2)</b>
-        {
-            "myic": <i class="conum" data-value="3"></i><b>(3)</b>
-            {
-                "filename":"$home/feel/toolboxes/heat/temperature.h5", <i class="conum" data-value="4"></i><b>(4)</b>
-                "format":"hdf5" <i class="conum" data-value="5"></i><b>(5)</b>
-            }
-        }
-    }
+   "heat":{ <i class="conum" data-value="1"></i><b>(1)</b>
+      "temperature": <i class="conum" data-value="2"></i><b>(2)</b>
+      {
+          "File": <i class="conum" data-value="3"></i><b>(3)</b>
+          {
+             "myic": <i class="conum" data-value="4"></i><b>(4)</b>
+             {
+                "filename":"$home/feel/toolboxes/heat/temperature.h5", <i class="conum" data-value="5"></i><b>(5)</b>
+                "format":"hdf5" <i class="conum" data-value="6"></i><b>(6)</b>
+             }
+          }
+      }
+   }
 }</code></pre>
 </div>
 </div>
@@ -1638,30 +1645,34 @@ If this entry is not given, the expression is applied on the mesh support of the
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>the field name of the toolbox to which the initail condition is associated</td>
+<td>the keyword of a toolbox</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>the type of boundary condition to apply, here <code>File</code></td>
+<td>the field name of the toolbox to which the initial condition is associated</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>a name that identifies an initial condition imposed on a field</td>
+<td>the type of boundary condition to apply, here <code>File</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>a file that represents a field saved (<strong>WARNING</strong> : must be compatible with the current mesh and partitioning)</td>
+<td>a name that identifies an initial condition imposed on a field</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>the format of the file read (possible values are "default","hdf5","binary","text"). It&#8217;s an optional entry, the default value is choosen by Feel++ (it&#8217;s "hdf5" if Feel++ was compiled with a hdf5 library).</td>
+<td>a file that represents a field saved (<strong>WARNING</strong> : must be compatible with the current mesh and partitioning)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>the format of the file read (possible values are "default","hdf5","binary","text"). It&#8217;s an optional entry, the default value is chosen by Feel++ (it&#8217;s "hdf5" if Feel++ was compiled with hdf5 library).</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
 <p>When using, high order time discretization, we need more than \(t=t_0\) to initialize, we may also need \(t_0-\Delta t, t_0-2*\Delta t,...\).<br>
-If you give an expression dependant on <code>t</code>, it will be evaluated with the time needed by the time discretization.<br>
-If you give several initial condition for different <code>time</code>, we will use the first condition for which the time is not less than the time needed (if you give two conditions with <code>time=0</code> an <code>time=-1</code> and we need <code>t=0</code>, <code>t=-0.75</code> and <code>t=-1.5</code>, the first condition will be used for the first two times, and the second condition will be used for the last).</p>
+If you give an expression dependent on <code>t</code>, it will be evaluated with the time needed by the time discretization.<br>
+If you give several initial conditions for different <code>time</code>, we will use the first condition for which the time is not less than the time needed (if you give two conditions with <code>time=0</code> and <code>time=-1</code> and we need <code>t=0</code>, <code>t=-0.75</code> and <code>t=-1.5</code>, the first condition will be used for the first two times, and the second condition will be used for the last).</p>
 </div>
 </div>
 </div>
