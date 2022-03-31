@@ -27,19 +27,163 @@ NOTE: These names are not used currently, but it should be the case in the futur
 
 == Models
 
-A section `Models` is present if the toolbox enables multiple physics, _i.e._ it allows to select the type of PDE/Model.
-In most toolboxes, this section is optional and a default model is enabled.
+The goal of section `Models` is to describe the models used by the toolbox (i.e. physical or mathematical model).
+These models will be attached to one or several materials defined in the Materials sections.
+This section is fully linked to the model, you need to refer to the related toolbox documentation.
+In the following, we will only describe the common parts to of models.
 
-Here is an example of this section for the `fluid` toolbox.
+
+=== Basic usage
+
+We start with this simple example composed of only one model :
+
 [source,json]
 ----
 "Models": <1>
 {
-   "equations":"Navier-Stokes" <2>
+  "heat":<2>
+  {
+     "name":"heatOnIron", <3>
+     "materials":"iron", <4>
+     "setup":{ /* TO FILL*/ } <5>
+  }
 }
 ----
-<1> Section `Models` defined by the toolbox to define the main configuration and in particular the set of equations to be solved
-<2> toolbox specific option to define set of equations to be solved, read the toolbox manual to learn about the possible options.
+<1> start section `Models` defined by the toolbox to define the main configuration and particularly the set of equations to be solved
+<2> toolbox keyword that allows identifying the kind of model
+<3> name of the model (this is an optional argument)
+<4> material names where this model is applied (value can be a string or an array of string)
+<5> JSON object where the model setup is defined (`setup` keyword can be substituted by `equation` or `equations`)
+
+NOTE: For some toolboxes, if the `setup` JSON object is not given then the model is still configured with default properties.
+
+NOTE: If the `materials` entry is not given then the model is applied to the whole domain (i.e. mesh).
+
+
+For a given type of model (i.e. toolbox keyword), you can define several models by passing an array of JSON objects.
+The snippet JSON below shows the definition of two heat models :
+
+[source,json]
+----
+"Models":
+{
+  "heat":<1>
+  [{
+     "name":"heatOnIron", <2>
+     "materials":"iron", <3>
+     "setup":{ /* TO FILL*/ }
+  },
+  {
+     "name":"heatOnCopper", <4>
+     "materials":"copper", <5>
+     "setup":{ /* TO FILL*/ }
+  }]
+}
+----
+<1> toolbox keyword
+<2> name given to `heat` model
+<3> name of material where the model `heatOnIron` is applied
+<4> name given to another `heat`model
+<5> name of material where the model `heatOnCopper` is applied
+
+
+[WARNING]
+====
+* For a given type of model, several models can't have the same name
+* For a given type of model, each model defined should have a null intersection between materials
+====
+
+
+=== Multiphysics
+
+In multiphysic context, ...
+
+=== Factorization
+
+When using several models, each linked to materials, some JSON parts can be redundant. The idea is to apply a JSON merge_patch from a common part into each specific part.
+
+For example, we consider this JSON section :
+
+[source,json]
+----
+"Models": {
+  "heat":[{ <1>
+     "name":"heat_PCB",
+     "materials":"PCB",
+     "setup":{
+        "unknown":{
+           "basis":"Pch1",
+           "name":"temperature",
+           "symbol":"T"
+        },
+        "coefficients":{
+           "c":"materials_PCB_k:materials_PCB_k"
+        }
+     }
+  },{ <2>
+      "name":"heat_AIR",
+      "materials":"AIR",
+      "setup":{
+         "unknown":{
+            "basis":"Pch1",
+            "name":"temperature",
+            "symbol":"T"
+         },
+         "coefficients":{
+            "c":"materials_AIR_k:materials_AIR_k",
+            "beta":"{0,(x-0.008)*(x-0.054)}:x"
+         }
+     }
+  }]
+}
+----
+<1> start JSON object of first model called `heat_PCB`
+<2> start JSON object of second model called `heat_AIR`
+
+In these two models, we can see that some parts of the JSON are identical. We can avoid this duplication by defining a common part.
+The previous example can be rewritten as :
+
+[source,json]
+----
+"Models": {
+  "heat":{
+     "common":{ <1>
+        "setup":{
+           "unknown":{
+              "basis":"Pch1",
+              "name":"temperature",
+              "symbol":"T"
+           }
+        }
+     },
+     "models":[{ <2>
+         "name":"heat_PCB",
+         "materials":"PCB",
+         "setup":{
+            "coefficients":{
+               "c":"materials_PCB_k:materials_PCB_k"
+            }
+         }
+       },{ <3>
+         "name":"heat_AIR",
+         "materials":"AIR",
+            "setup":{
+               "coefficients":{
+                  "c":"materials_AIR_k:materials_AIR_k",
+                  "beta":"{0,(x-0.008)*(x-0.054)}:x"
+               }
+            }
+       }]
+    }
+}
+----
+<1> start JSON object representing common part
+<2> start JSON object of first model called `heat_PCB`
+<3> start JSON object of second model called `heat_AIR`
+
+Each model will be set up by generating a JSON with a merge patch applied from the common part with the current JSON object of the model.
+Thanks to JSON merge patch properties, the value of the common part can be overridden.
+
 
 == Expressions
 
@@ -198,6 +342,10 @@ The key of this json objet is a name given to the distance function.
 The example above will generate 2 new symbols called `meshes_heat_distanceToRange_wall1` and `meshes_heat_distanceToRange_wall2`.
 
 More generally, the symbols will be defined by `meshes_<mesh_id>_distanceToRange_<d2r_id>` avec `<mesh_id>` the mesh identification and `<d2r_id>` the name given to the distance function.
+
+=== Fields section
+
+TODO
 
 === Data section
 
