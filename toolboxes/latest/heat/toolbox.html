@@ -703,7 +703,191 @@ MathJax.Hub.Config({
 <div class="sect1">
 <h2 id="_models"><a class="anchor" href="#_models"></a>1. Models</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>The model used by default with the heat toolbox is represented by this equation</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\rho C_p \frac{\partial T}{\partial t} + \nabla \cdot \boldsymbol{q}= Q, \quad \text{ in } \Omega\]
+</div>
+</div>
+<div class="paragraph">
+<p>with the following properties :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(q=-k \nabla T\) is the conductive heat flux,</p>
+</li>
+<li>
+<p>\(Q=0\) is heat source by default equal to 0,</p>
+</li>
+<li>
+<p>\(\Omega\) the domain where the model is applied (.i.e. the materials).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For a steady-state problem, the temperature does not change with time, and the first term disappears.</p>
+</div>
+<div class="sect2">
+<h3 id="_heat_sources"><a class="anchor" href="#_heat_sources"></a>1.1. Heat sources</h3>
+<div class="paragraph">
+<p>The source term \(Q\) in the heat equation is used to model internal heat generation and absorption with positive and negative values respectively.</p>
+</div>
+<div class="paragraph">
+<p>For adding a heat source term in the model, a JSON key called <code>heat-sources</code> must be added and the JSON value associated can be</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a string: explicit expression of \(Q\),</p>
+</li>
+<li>
+<p>a JSON object: setup one heat source,</p>
+</li>
+<li>
+<p>an array of JSON object : \(Q\) is composed of several heat sources.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We also consider two ways for defined a heat source :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>from an explicit expression of the heat source</p>
+</li>
+<li>
+<p>from an expression of the heat rate \(P\). In this case, \(Q = P/V\), where \(V\) is the volume of the material belongs to this model.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The setup of a heat source is defined from the properties listed in the next table.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Keyword</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">possible values : <code>heat-source</code>, <code>heat-rate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>heat-source</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expression with respect to the type used</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The term \(Q\) can be also split into \(N\) terms (for example due to the multiple physics). The term \(Q\) can be written as \(Q=\sum_{i=1}^N Q_i\).
+This setup can be done by using an array of JSON objects for the <code>heat-sources</code> entry. And each JSON object corresponds to the previous description of one heat source.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Models":{
+   "heat":
+      [{ <i class="conum" data-value="1"></i><b>(1)</b>
+          "name":"heat1",
+          "materials":["mymatA","mymatB"],
+          "setup": {
+              "heat-sources": <i class="conum" data-value="2"></i><b>(2)</b>
+                [{ <i class="conum" data-value="3"></i><b>(3)</b>
+                    "type":"heat-source",
+                    "expr":"3"
+                },{ <i class="conum" data-value="4"></i><b>(4)</b>
+                     "type":"heat-rate",
+                     "expr":"2*exp(t):t"
+                }]
+          }
+      },{ <i class="conum" data-value="5"></i><b>(5)</b>
+           "name":"heat2",
+           "materials":["mymatC"],
+           "setup": {
+               "heat-sources": {  <i class="conum" data-value="6"></i><b>(6)</b>
+                     "expr":"30"
+                }
+           }
+     }]
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>setup of first model called <code>heat1</code> on materials <code>mymatA</code> and <code>mymatB</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>heat sources will be composed of 2 terms that we will call \(Q_1\) and \(Q_2\) (with \(Q=Q_1+Q_2\))</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>we define \(Q_1=3\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>we define \(Q_2=2*exp(t)/V\) with \(V\) the measure of materials <code>mymatA</code> and <code>mymatB</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>setup of second model called <code>heat2</code> on materials <code>mymatC</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>we define one heat source with \(Q=30\)</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_convective_heat_transfert"><a class="anchor" href="#_convective_heat_transfert"></a>1.2. Convective heat transfert</h3>
+<div class="paragraph">
+<p>Modeling heat transfer in fluid requires taking into account the convective effect in the heat equation. The heat equation is written as :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\rho C_p \frac{\partial T}{\partial t} + \underbrace{\rho C_p \boldsymbol{u} \cdot \nabla T}_{\text{new term}} + \nabla \cdot \mathbf{q}= Q, \quad \text{ in } \Omega\]
+</div>
+</div>
+<div class="paragraph">
+<p>with \(\boldsymbol{u}\) the fluid velocity.</p>
+</div>
+<div class="paragraph">
+<p>For adding this feature to the model, a <code>convection</code> section should be added.
+The value can be a string corresponding to velocity expression.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "Models":{
+    "heat":{
+       "setup": {
+          "convection":"{-30*(y+-0.7)*(y-0.5)*(y&gt;0.5)*(y&lt;0.7),0}:y"
+       }
+} } }</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -843,7 +1027,7 @@ MathJax.Hub.Config({
 <h3 id="_neumann"><a class="anchor" href="#_neumann"></a>4.2. Neumann</h3>
 <div class="stemblock">
 <div class="content">
-\[-k \nabla T \cdot \boldsymbol{n} = g \quad \text{ on } \Gamma\]
+\[k \nabla T \cdot \boldsymbol{n} = g \quad \text{ on } \Gamma\]
 </div>
 </div>
 </div>
@@ -957,16 +1141,6 @@ All materials properties given in the section <a href="#_materials">Materials</a
 <td>another</td>
 </tr>
 </table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_evaluation_at_points"><a class="anchor" href="#_evaluation_at_points"></a>6.2.2. Evaluation at points</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>temperature</p>
-</li>
-</ul>
 </div>
 </div>
 </div>

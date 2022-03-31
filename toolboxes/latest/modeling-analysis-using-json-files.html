@@ -777,17 +777,26 @@ These names are not used currently, but it should be the case in the future.
 <h2 id="_models"><a class="anchor" href="#_models"></a>2. Models</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A section <code>Models</code> is present if the toolbox enables multiple physics, <em>i.e.</em> it allows to select the type of PDE/Model.
-In most toolboxes, this section is optional and a default model is enabled.</p>
+<p>The goal of section <code>Models</code> is to describe the models used by the toolbox (i.e. physical or mathematical model).
+These models will be attached to one or several materials defined in the Materials sections.
+This section is fully linked to the model, you need to refer to the related toolbox documentation.
+In the following, we will only describe the common parts to of models.</p>
 </div>
+<div class="sect2">
+<h3 id="_basic_usage"><a class="anchor" href="#_basic_usage"></a>2.1. Basic usage</h3>
 <div class="paragraph">
-<p>Here is an example of this section for the <code>fluid</code> toolbox.</p>
+<p>We start with this simple example composed of only one model :</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Models": <i class="conum" data-value="1"></i><b>(1)</b>
 {
-   "equations":"Navier-Stokes" <i class="conum" data-value="2"></i><b>(2)</b>
+  "heat":<i class="conum" data-value="2"></i><b>(2)</b>
+  {
+     "name":"heatOnIron", <i class="conum" data-value="3"></i><b>(3)</b>
+     "materials":"iron", <i class="conum" data-value="4"></i><b>(4)</b>
+     "setup":{ /* TO FILL*/ } <i class="conum" data-value="5"></i><b>(5)</b>
+  }
 }</code></pre>
 </div>
 </div>
@@ -795,13 +804,237 @@ In most toolboxes, this section is optional and a default model is enabled.</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Section <code>Models</code> defined by the toolbox to define the main configuration and in particular the set of equations to be solved</td>
+<td>start section <code>Models</code> defined by the toolbox to define the main configuration and particularly the set of equations to be solved</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>toolbox specific option to define set of equations to be solved, read the toolbox manual to learn about the possible options.</td>
+<td>toolbox keyword that allows identifying the kind of model</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>name of the model (this is an optional argument)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>material names where this model is applied (value can be a string or an array of string)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>JSON object where the model setup is defined (<code>setup</code> keyword can be substituted by <code>equation</code> or <code>equations</code>)</td>
 </tr>
 </table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For some toolboxes, if the <code>setup</code> JSON object is not given then the model is still configured with default properties.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the <code>materials</code> entry is not given then the model is applied to the whole domain (i.e. mesh).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For a given type of model (i.e. toolbox keyword), you can define several models by passing an array of JSON objects.
+The snippet JSON below shows the definition of two heat models :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Models":
+{
+  "heat":<i class="conum" data-value="1"></i><b>(1)</b>
+  [{
+     "name":"heatOnIron", <i class="conum" data-value="2"></i><b>(2)</b>
+     "materials":"iron", <i class="conum" data-value="3"></i><b>(3)</b>
+     "setup":{ /* TO FILL*/ }
+  },
+  {
+     "name":"heatOnCopper", <i class="conum" data-value="4"></i><b>(4)</b>
+     "materials":"copper", <i class="conum" data-value="5"></i><b>(5)</b>
+     "setup":{ /* TO FILL*/ }
+  }]
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>toolbox keyword</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>name given to <code>heat</code> model</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>name of material where the model <code>heatOnIron</code> is applied</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>name given to another `heat`model</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>name of material where the model <code>heatOnCopper</code> is applied</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>For a given type of model, several models can&#8217;t have the same name</p>
+</li>
+<li>
+<p>For a given type of model, each model defined should have a null intersection between materials</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_multiphysics"><a class="anchor" href="#_multiphysics"></a>2.2. Multiphysics</h3>
+<div class="paragraph">
+<p>In multiphysic context, &#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_factorization"><a class="anchor" href="#_factorization"></a>2.3. Factorization</h3>
+<div class="paragraph">
+<p>When using several models, each linked to materials, some JSON parts can be redundant. The idea is to apply a JSON merge_patch from a common part into each specific part.</p>
+</div>
+<div class="paragraph">
+<p>For example, we consider this JSON section :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Models": {
+  "heat":[{ <i class="conum" data-value="1"></i><b>(1)</b>
+     "name":"heat_PCB",
+     "materials":"PCB",
+     "setup":{
+        "unknown":{
+           "basis":"Pch1",
+           "name":"temperature",
+           "symbol":"T"
+        },
+        "coefficients":{
+           "c":"materials_PCB_k:materials_PCB_k"
+        }
+     }
+  },{ <i class="conum" data-value="2"></i><b>(2)</b>
+      "name":"heat_AIR",
+      "materials":"AIR",
+      "setup":{
+         "unknown":{
+            "basis":"Pch1",
+            "name":"temperature",
+            "symbol":"T"
+         },
+         "coefficients":{
+            "c":"materials_AIR_k:materials_AIR_k",
+            "beta":"{0,(x-0.008)*(x-0.054)}:x"
+         }
+     }
+  }]
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>start JSON object of first model called <code>heat_PCB</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>start JSON object of second model called <code>heat_AIR</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In these two models, we can see that some parts of the JSON are identical. We can avoid this duplication by defining a common part.
+The previous example can be rewritten as :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Models": {
+  "heat":{
+     "common":{ <i class="conum" data-value="1"></i><b>(1)</b>
+        "setup":{
+           "unknown":{
+              "basis":"Pch1",
+              "name":"temperature",
+              "symbol":"T"
+           }
+        }
+     },
+     "models":[{ <i class="conum" data-value="2"></i><b>(2)</b>
+         "name":"heat_PCB",
+         "materials":"PCB",
+         "setup":{
+            "coefficients":{
+               "c":"materials_PCB_k:materials_PCB_k"
+            }
+         }
+       },{ <i class="conum" data-value="3"></i><b>(3)</b>
+         "name":"heat_AIR",
+         "materials":"AIR",
+            "setup":{
+               "coefficients":{
+                  "c":"materials_AIR_k:materials_AIR_k",
+                  "beta":"{0,(x-0.008)*(x-0.054)}:x"
+               }
+            }
+       }]
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>start JSON object representing common part</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>start JSON object of first model called <code>heat_PCB</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>start JSON object of second model called <code>heat_AIR</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Each model will be set up by generating a JSON with a merge patch applied from the common part with the current JSON object of the model.
+Thanks to JSON merge patch properties, the value of the common part can be overridden.</p>
+</div>
 </div>
 </div>
 </div>
@@ -1100,7 +1333,13 @@ The key of this json objet is a name given to the distance function.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_data_section"><a class="anchor" href="#_data_section"></a>5.3. Data section</h3>
+<h3 id="_fields_section"><a class="anchor" href="#_fields_section"></a>5.3. Fields section</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_data_section"><a class="anchor" href="#_data_section"></a>5.4. Data section</h3>
 <div class="paragraph">
 <p>TODO</p>
 </div>
