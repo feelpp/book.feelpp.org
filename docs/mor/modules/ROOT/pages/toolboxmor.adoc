@@ -1,0 +1,214 @@
+= ToolboxMor
+
+ToolboxMor is a class aiming to ease the use of the model order reduction framework of Feel++.
+Usually, you would need to define a class which would handle the initialization of the model, its affine decomposition and possibly the use of the EIM methods.
+ToolboxMor handles all the necessary methods and the user only needs to give two methods: one which will assemble the matrix for a given parameter, and one which will assemble the right hand side for a given parameter.
+
+There is currently two main drawbacks, it does not work for non-linear problem and it does not work for problem where the function space is a product.
+
+== Creating a model from scratch
+
+First, the class is templated by the type of the function space used:
+[,cpp]
+----
+using space_type = Pch_t<mesh_type, 1>;
+using rb_model_type = ToolboxMor<space_type>;
+----
+The first argument of the constructor is the name used to store the database.
+Then we need to set the function space used:
+[,cpp]
+----
+auto Xh = space_type::New(mesh);
+auto model = std::make_shared<rb_model_type>("mymodel");
+model->setFunctionSpace(Xh);
+----
+After that, we just need to set the assembly functions for the matrix and the right hand side, and initialize the model:
+[,cpp]
+----
+using deim_function_type = typename rb_model_type::deim_function_type;
+using mdeim_function_type = typename rb_model_type::mdeim_function_type;
+
+deim_function_type assembleDEIM = [&Xh,&u](parameter_type const& mu) {
+    auto l = form1(_test=Xh);
+    l = integrate(_range=elements(support(Xh)), _expr=mu[0]*id(u) );
+    return l.vectorPtr();
+}
+mdeim_function_type assembleDEIM = [&Xh,&u](parameter_type const& mu) {
+    auto m = form2(_trial=Xh, _test=Xh);
+    m = integrate(_range=elements(support(Xh)), _expr=mu[1]*inner(id(u),idt(u)) );
+    return m.matrixPtr();
+}
+
+model->setAssembleDEIM(assembleDEIM);
+model->setAssembleMDEIM(assembleMDEIM);
+model->initModel();
+---- 
+This will compute the affine decomposition of the right hand side and the matrix by using the discrete version of EIM.
+For the online phase, we need to assemble the matrix and the rhs on the reduced mesh produced by the discrete version of EIM.
+[,cpp]
+----
+auto XhDEIM = space_type::New(model->getDEIMReducedMesh());
+auto uDEIM = XhDEIM->element();
+deim_function_type assembleOnlineDEIM = [&XhDEIM,&uDEIM](parameter_type const& mu) {
+    auto l = form1(_test=XhDEIM);
+    l = integrate(_range=elements(support(XhDEIM)), _expr=mu[0]*id(uDEIM) );
+    return l.vectorPtr();
+}
+auto XhMDEIM = space_type::New(model->getMDEIMReducedMesh());
+auto uMDEIM = XhMDEIM->element();
+mdeim_function_type assembleOnlineMDEIM = [&XhMDEIM,&uMDEIM](parameter_type const& mu) {
+    auto m = form2(_trial=XhMDEIM, _test=XhMDEIM);
+    m = integrate(_range=elements(support(XhMDEIM)), _expr=mu[1]*inner(id(uMDEIM),idt(uMDEIM)) );
+    return m.matrixPtr();
+}
+model->setOnlineAssembleDEIM(assembleOnlineDEIM);
+model->setOnlineAssembleMDEIM(assembleOnlineMDEIM);
+model->postInitModel();
+model->setInitialized(true);
+----
+Once that is done, the model is ready to compute the reduced basis.
+[,cpp]
+----
+using crb_model_type = CRBModel<rb_model_type>;
+using crb_type = CRB<crb_model_type>;
+crb_model_ptrtype crbModel = std::make_shared<crb_model_type>(model);
+crb_ptrtype crb = crb_type::New("mymodel", crbModel, crb::stage::offline);
+crb->offline();
+----
+Note that the first argument of the New method of CRB must match the argument given to the constructor of ToolboxMor.
+
+== Creating a model from a toolbox
+
+=== Using a DeimMorModel
+
+It is possible to use a DeimMorModel to simplify considerably the setup of ToolboxMor when we want to use a Toolbox for the assembly.
+Let's say we have a toolbox:
+[,cpp]
+----
+auto heatBox = heat_tb_type::New(_prefix="heat");
+heatBox->init();
+----
+We can use the DeimMorModelToolbox class to let ToolboxMor do most of the steps presented in the previous section.
+[,cpp]
+----
+rb_model_ptrtype model = std::make_shared<rb_model_type>("mymodel");
+auto heatBoxModel = DeimMorModelToolbox<heat_tb_type>::New(heatBox);
+model->initToolbox(heatBoxModel);
+----
+And then, we can already launch the offline phase of CRB.
+
+=== Without DeimMorModel
+
+If we don't want to use DeimMorModel, we can still create ourself the assembly functions:
+[,cpp]
+----
+auto rhs = heatBox->algebraicFactory()->rhs()->clone();
+auto mat = heatBox->algebraicFactory()->matrix();
+deim_function_type assembleDEIM =
+    [&heatBox,&rhs,&mat](parameter_type const& mu)
+        {
+            for( int i = 0; i < mu.size(); ++i )
+                heatBox->addParameterInModelProperties(mu.parameterName(i), mu(i));
+            heatBox->updateParameterValues();
+            rhs->zero();
+            heatBox->algebraicFactory()->applyAssemblyLinear( heatBox->algebraicBlockVectorSolution()->vectorMonolithic(), mat, rhs, {"ignore-assembly.lhs"} );
+            return rhs;
+        };
+mdeim_function_type assembleMDEIM =
+    [&heatBox,&rhs,&mat](parameter_type const& mu)
+        {
+            for( int i = 0; i < mu.size(); ++i )
+                heatBox->addParameterInModelProperties(mu.parameterName(i), mu(i));
+            heatBox->updateParameterValues();
+            mat->zero();
+            heatBox->algebraicFactory()->applyAssemblyLinear( heatBox->algebraicBlockVectorSolution()->vectorMonolithic(), mat, rhs, {"ignore-assembly.rhs"} );
+            return mat;
+        };
+----
+
+== Configuration
+
+The configuration is made through some options in the config file and from a json file. +
+The options are:
+
+toolboxmor.filename::
+The path to the json file
+toolboxmor.trainset-deim-size::
+The size of the trainset if EIM for the right hand side
+toolboxmor.trainset-mdeim-size::
+The size of the trainset if EIM for the matrix
+
+The json handles the definition of the parameters and the outputs.
+
+=== Parameters
+
+The parameters should be in a section CRBParameters and each have a minimum and maximum value:
+[,json]
+----
+"CRBParameters":
+{
+    "myparam1":
+    {
+        "min":1,
+        "max":3.5
+    },
+    "myotherparam":
+    {
+        "min":-2e2,
+        "max":4e2
+    }
+}
+----
+Parameters without min or max value are ignored.
+
+=== Outputs
+
+The outputs should be in a section CRBOutputs and each have a type.
+There is 4 types available:
+
+* mean
+* integrate
+* sensor
+* point
+
+[,json]
+----
+"CRBOutputs":
+{
+    "myfirstoutput":
+    {
+        "type":"mean",
+        "markers":["mymarker1","mymarker2"],
+        "expr":"crb_u:crb_u",
+        "topodim":3
+    },
+    "integrateoutput":
+    {
+        "type":"integrate",
+        "markers":"othermarker",
+        "expr":"myparam1*crb_dn_u:myparam1:crb_dn_u",
+        "topodim":2
+    },
+    "sensor1":
+    {
+        "type":"sensor",
+        "coord":[0.5,0.1,1],
+        "radius":0.01
+    },
+    "pointA":
+    {
+        "type":"point",
+        "coord":[1,0.2,0.5]
+    }
+}
+----
+The `type` entry is mandatory for all outputs, then each entry presented here are mandatory for each type of output except for the `expr` entry.
+By default, the `expr` entry is `crb_u:crb_u` which is the identity of the field of interest. +
+The symbols availables in the expression are:
+
+* the names of the parameters
+* `crb_u`: the identity of the field
+* `crb_grad_u_0`: the first component of the gradient of the field
+* `crb_grad_u_1`: the second component of the gradient of the field
+* `crb_grad_u_2`: the third component of the gradient of the field
+* `crb_dn_u`: the normal derivative of the field
