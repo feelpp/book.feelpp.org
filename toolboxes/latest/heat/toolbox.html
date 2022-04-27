@@ -803,30 +803,41 @@ This setup can be done by using an array of JSON objects for the <code>heat-sour
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Models":{
-   "heat":
-      [{ <i class="conum" data-value="1"></i><b>(1)</b>
-          "name":"heat1",
-          "materials":["mymatA","mymatB"],
-          "setup": {
-              "heat-sources": <i class="conum" data-value="2"></i><b>(2)</b>
-                [{ <i class="conum" data-value="3"></i><b>(3)</b>
-                    "type":"heat-source",
-                    "expr":"3"
-                },{ <i class="conum" data-value="4"></i><b>(4)</b>
-                     "type":"heat-rate",
-                     "expr":"2*exp(t):t"
-                }]
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "Models": {
+    "heat": [
+      { <i class="conum" data-value="1"></i><b>(1)</b>
+        "name": "heat1",
+        "materials": [
+          "mymatA",
+          "mymatB"
+        ],
+        "setup": {
+          "heat-sources": [ <i class="conum" data-value="2"></i><b>(2)</b>
+            { <i class="conum" data-value="3"></i><b>(3)</b>
+              "type": "heat-source",
+              "expr": "3"
+            },
+            { <i class="conum" data-value="4"></i><b>(4)</b>
+              "type": "heat-rate",
+              "expr": "2*exp(t):t"
+            }
+          ]
+        }
+      },
+      { <i class="conum" data-value="5"></i><b>(5)</b>
+        "name": "heat2",
+        "materials": [
+          "mymatC"
+        ],
+        "setup": {
+          "heat-sources": { <i class="conum" data-value="6"></i><b>(6)</b>
+            "expr": "30"
           }
-      },{ <i class="conum" data-value="5"></i><b>(5)</b>
-           "name":"heat2",
-           "materials":["mymatC"],
-           "setup": {
-               "heat-sources": {  <i class="conum" data-value="6"></i><b>(6)</b>
-                     "expr":"30"
-                }
-           }
-     }]
+        }
+      }
+    ]
+  }
 }</code></pre>
 </div>
 </div>
@@ -879,12 +890,14 @@ The value can be a string corresponding to velocity expression.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-  "Models":{
-    "heat":{
-       "setup": {
-          "convection":"{-30*(y+-0.7)*(y-0.5)*(y&gt;0.5)*(y&lt;0.7),0}:y"
-       }
-} } }</code></pre>
+  "Models": {
+    "heat": {
+      "setup": {
+        "convection": "{-30*(y+-0.7)*(y-0.5)*(y&gt;0.5)*(y&lt;0.7),0}:y"
+      }
+    }
+  }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1016,27 +1029,266 @@ The value can be a string corresponding to velocity expression.</p>
 <h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>4. Boundary Conditions</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_dirichlet"><a class="anchor" href="#_dirichlet"></a>4.1. Dirichlet</h3>
+<h3 id="_temperature_imposed"><a class="anchor" href="#_temperature_imposed"></a>4.1. Temperature imposed</h3>
 <div class="stemblock">
 <div class="content">
 \[T = g \quad \text{ on } \Gamma\]
 </div>
 </div>
+<div class="paragraph">
+<p>JSON keywords : <code>temperature</code>, <code>temperature_imposed</code></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. JSON properties of boundary condition temperature imposed</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mesh marker where the BC is applied</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code>, <code>JSON</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name given to the BC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expression of <code>g</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "BoundaryConditions": {
+    "heat": { <i class="conum" data-value="1"></i><b>(1)</b>
+      "temperature": { <i class="conum" data-value="2"></i><b>(2)</b>
+        "bc1": { <i class="conum" data-value="3"></i><b>(3)</b>
+          "markers": "gamma1", <i class="conum" data-value="4"></i><b>(4)</b>
+          "expr": "293-10*(y-1)*(y+1):y" <i class="conum" data-value="5"></i><b>(5)</b>
+        },
+        "bc2": { <i class="conum" data-value="6"></i><b>(6)</b>
+          "expr": "293+0.38*t:t"
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the toolbox identity</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>JSON keyword for defining this kind of boundary condition</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>name given to a boundary condition of type temperature imposed</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>marker names where the boundary condition is applied</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>the expression of the temperature imposed</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>another boundary condition of type temperature imposed where the marker used will be the name (i.e. <code>bc2</code>)</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The temperature imposed can be applied on all kind of marked entities (elements,faces,edges,points)
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_neumann"><a class="anchor" href="#_neumann"></a>4.2. Neumann</h3>
+<h3 id="_heat_flux"><a class="anchor" href="#_heat_flux"></a>4.2. Heat flux</h3>
 <div class="stemblock">
 <div class="content">
 \[k \nabla T \cdot \boldsymbol{n} = g \quad \text{ on } \Gamma\]
 </div>
 </div>
+<div class="paragraph">
+<p>JSON keywords : <code>heat_flux</code>, <code>flux</code></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. JSON properties of boundary condition heat flux</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mesh marker where the BC is applied</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code>, <code>JSON</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name given to the BC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expression of <code>g</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "BoundaryConditions": {
+    "heat": {
+      "flux": {
+        "bc1": {
+          "markers": [
+            "MarkerNeumann_1",
+            "MarkerNeumann_2"
+          ],
+          "expr": "34*t:t"
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The expression given to the heat flux boundary condition can depend on the unknown (i.e. any symbols depending on the temperature).
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_robin"><a class="anchor" href="#_robin"></a>4.3. Robin</h3>
+<h3 id="_convective_heat_flux"><a class="anchor" href="#_convective_heat_flux"></a>4.3. Convective heat flux</h3>
 <div class="stemblock">
 <div class="content">
 \[-k \nabla T \cdot \boldsymbol{n} = h \left( T - g \right) \quad \text{ on } \Gamma\]
 </div>
+</div>
+<div class="paragraph">
+<p>JSON keywords : <code>convective_heat_flux</code></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. JSON properties of boundary condition convective heat flux</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mesh marker where the BC is applied</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code>, <code>JSON</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name given to the BC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>h</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expression of <code>h</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Text</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expression of <code>g</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "BoundaryConditions": {
+    "heat": {
+      "convective_heat_flux": {
+        "bc1": {
+          "h": "16",
+          "Text": "287"
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The expressions given to the convective heat flux boundary condition can depend on the unknown but the automatic differentiation is not implemented here, so the jacobian will be inexact if a Newton solver is used.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -1053,7 +1305,7 @@ The value can be a string corresponding to velocity expression.</p>
 <div class="sect2">
 <h3 id="_exports"><a class="anchor" href="#_exports"></a>6.1. Exports</h3>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Fields allowed to be exported in the <code>fields</code> section are:</caption>
+<caption class="title">Table 7. Fields allowed to be exported in the <code>fields</code> section are:</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1103,18 +1355,19 @@ All materials properties given in the section <a href="#_materials">Materials</a
 <div class="listingblock">
 <div class="title">Example of a <code>Parameters</code> section</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Normal-Heat-Flux": <i class="conum" data-value="1"></i><b>(1)</b>
-{
-    "bottom": <i class="conum" data-value="2"></i><b>(2)</b>
-    {
-        "markers":["bottom1,bottom2"], <i class="conum" data-value="3"></i><b>(3)</b>
-        "direction":"inward" <i class="conum" data-value="4"></i><b>(4)</b>
-     },
-     "top": <i class="conum" data-value="5"></i><b>(5)</b>
-     {
-         "direction":"inward"
-     },
-
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "Normal-Heat-Flux": { <i class="conum" data-value="1"></i><b>(1)</b>
+    "bottom": { <i class="conum" data-value="2"></i><b>(2)</b>
+      "markers": [ <i class="conum" data-value="3"></i><b>(3)</b>
+        "bottom1",
+        "bottom2"
+      ],
+      "direction": "inward" <i class="conum" data-value="4"></i><b>(4)</b>
+    },
+    "top": { <i class="conum" data-value="5"></i><b>(5)</b>
+      "direction": "inward"
+    }
+  }
 }</code></pre>
 </div>
 </div>
@@ -1130,7 +1383,7 @@ All materials properties given in the section <a href="#_materials">Materials</a
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>surface markers</td>
+<td>surface markers where the measure is computed</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -1138,7 +1391,7 @@ All materials properties given in the section <a href="#_materials">Materials</a
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>another</td>
+<td>another measure applied on surface marker called top (because when markers is no present, the name is used as marker name)</td>
 </tr>
 </table>
 </div>
