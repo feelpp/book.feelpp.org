@@ -25,7 +25,7 @@ You should be familiar with job creation and job submission before going further
 
 === Using singularity container
 
-Singularity is officially ready on the cluster. 
+Singularity is officially ready on the cluster.
 The document is here https://hpc.pages.unistra.fr/singularity/singularity.html
 
 [source,shell]
@@ -36,7 +36,7 @@ mpirun singularity run <feelpp image>  <2>
 <1> load the singularity module
 <2> use singularity to run the feelpp image
 
-The document of feelpp singularity images is here xref:user:ROOT:install/containers.adoc[Feel++ singularity container].
+The document of feelpp singularity images is here xref:user:install:containers.adoc[Feel++ singularity container].
 
 NOTE: To use the container on multi-nodes, be aware that performance may depend on network interfaces.
 In particular, pay attention to `infiniband` and `omnipath` (the drivers are already packaged in our containers).
@@ -74,10 +74,10 @@ module load mesh/gmsh-3.0.1.g63
 module load compilers/intel17
 module load compilers/clang5
 module load mpi/openmpi-2.0.2.gcc63
-module load languages/python-3.5.0                                           
+module load languages/python-3.5.0
 ----
 
-NOTE: If Feel++ does not compile using these modules, please post an 
+NOTE: If Feel++ does not compile using these modules, please post an
 link:https://github.com/feelpp/book.feelpp.org/issues[issue on github].
 
 An example of a cmake command to use :
