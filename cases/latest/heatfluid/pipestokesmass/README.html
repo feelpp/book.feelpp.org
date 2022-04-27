@@ -497,16 +497,16 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../poisson/README.html">Generic HDG Poisson equation</a>
+    <a class="nav-link" href="../../hdg/README.html">Generic HDG Poisson equation</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../poisson/usquare/README.html">Chessboard analytical solution</a>
+    <a class="nav-link" href="../../hdg/usquare/README.html">Chessboard analytical solution</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../poisson/red/README.html">nMOS transistor</a>
+    <a class="nav-link" href="../../hdg/red/README.html">nMOS transistor</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../poisson/2Dchannel/README.html">Flow in a channel</a>
+    <a class="nav-link" href="../../hdg/2Dchannel/README.html">Flow in a channel</a>
   </li>
 </ul>
   </li>
@@ -977,59 +977,53 @@ parameters of this test-case.</p>
 <li>
 <p>On \(\Gamma_{in}\), an inflow Dirichlet condition :
 \( \boldsymbol{C}_f=C_{in} \)</p>
-<div class="literalblock">
-<div class="content">
-<pre>----
-    "BoundaryConditions":
-   {
-       "velocity":
-       {
-           "Dirichlet":
-           {
-               "inlet":
-               {
-                  "expr":"{D*y*(height-y),0}:y:height:D"
-               },
-               "wall1":
-               {
-                   "expr":"{0,0}"
-               },
-               "wall2":
-               {
-                   "expr":"{0,0}"
-               }
-           }
-       },
-       "fluid":
-       {
-           "outlet":
-           {
-               "outlet":
-               {
-                   "expr":"0"
-               }
-           }
-       },
-       "temperature":
-       {
-           "Dirichlet":
-           {
-               "inlet":
-               {
-                   "expr":"300*(y&gt;0.15)*(y&lt;0.5)+(293.15*(y&lt;(0.15-1e-9)))+(293.15*(y&gt;(0.5-1e-9))):y"
-               }
-           }
-       }
-   }</pre>
-</div>
+</li>
+</ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre></pre>
+<pre>     "BoundaryConditions":
+    {
+        "velocity":
+        {
+            "Dirichlet":
+            {
+                "inlet":
+                {
+                   "expr":"{D*y*(height-y),0}:y:height:D"
+                },
+                "wall1":
+                {
+                    "expr":"{0,0}"
+                },
+                "wall2":
+                {
+                    "expr":"{0,0}"
+                }
+            }
+        },
+        "fluid":
+        {
+            "outlet":
+            {
+                "outlet":
+                {
+                    "expr":"0"
+                }
+            }
+        },
+        "temperature":
+        {
+            "Dirichlet":
+            {
+                "inlet":
+                {
+                    "expr":"300*(y&gt;0.15)*(y&lt;0.5)+(293.15*(y&lt;(0.15-1e-9)))+(293.15*(y&gt;(0.5-1e-9))):y"
+                }
+            }
+        }
+    }</pre>
 </div>
-</div>
-</li>
-</ul>
 </div>
 </div>
 <div class="sect2">

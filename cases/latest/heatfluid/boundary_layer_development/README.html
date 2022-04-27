@@ -497,16 +497,16 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../poisson/README.html">Generic HDG Poisson equation</a>
+    <a class="nav-link" href="../../hdg/README.html">Generic HDG Poisson equation</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../poisson/usquare/README.html">Chessboard analytical solution</a>
+    <a class="nav-link" href="../../hdg/usquare/README.html">Chessboard analytical solution</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../poisson/red/README.html">nMOS transistor</a>
+    <a class="nav-link" href="../../hdg/red/README.html">nMOS transistor</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../poisson/2Dchannel/README.html">Flow in a channel</a>
+    <a class="nav-link" href="../../hdg/2Dchannel/README.html">Flow in a channel</a>
   </li>
 </ul>
   </li>
@@ -718,7 +718,9 @@ this benchmark has been published by NAFEMS, it is being implemented/tested usin
 </div>
 </div>
 </div>
-<h1 id="_introduction" class="sect0"><a class="anchor" href="#_introduction"></a>Introduction</h1>
+<div class="sect1">
+<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The boundary layer is the area of the viscous flow near the wall where the fluid velocity changes from the wall velocity (which is zero for a stationary wall to the free stream velocity ( \(u_{\infty}\) ).
 This means that friction forces that oppose the free stream motion of the fluid are confined to this relatively thin layer.
@@ -728,8 +730,10 @@ As such, the boundary layer is characterized by large flow gradients.</p>
 <p>The development of a convective boundary layer over a flat plate is a mathematically well-defined problem for which an analytical approximation exists.
 The present case describes the development of the momentum as well as the thermal boundary layer over an isothermal plate. The solution of the problem allows calculation of the wall friction and the heat transfer between the wall and the fluid flow.</p>
 </div>
+</div>
+</div>
 <div class="sect1">
-<h2 id="_objectives"><a class="anchor" href="#_objectives"></a>1. Objectives</h2>
+<h2 id="_objectives"><a class="anchor" href="#_objectives"></a>2. Objectives</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The laminar flow case examines the extent of numerical diffusion associated with discretisation of the convection terms in the momentum and energy equations.
@@ -741,7 +745,7 @@ The introduced numerical error is manifested by the accelerated growth of the mo
 </div>
 </div>
 <div class="sect1">
-<h2 id="_geometry"><a class="anchor" href="#_geometry"></a>2. Geometry</h2>
+<h2 id="_geometry"><a class="anchor" href="#_geometry"></a>3. Geometry</h2>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
@@ -770,7 +774,7 @@ The introduced numerical error is manifested by the accelerated growth of the mo
 </div>
 </div>
 <div class="sect1">
-<h2 id="_case_definition"><a class="anchor" href="#_case_definition"></a>3. Case Definition</h2>
+<h2 id="_case_definition"><a class="anchor" href="#_case_definition"></a>4. Case Definition</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -789,7 +793,7 @@ The introduced numerical error is manifested by the accelerated growth of the mo
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fluid_properties"><a class="anchor" href="#_fluid_properties"></a>4. Fluid Properties</h2>
+<h2 id="_fluid_properties"><a class="anchor" href="#_fluid_properties"></a>5. Fluid Properties</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The following fluid material properties shall be used:</p>
@@ -816,7 +820,7 @@ The introduced numerical error is manifested by the accelerated growth of the mo
 </div>
 </div>
 <div class="sect1">
-<h2 id="_initial_conditions"><a class="anchor" href="#_initial_conditions"></a>5. Initial Conditions</h2>
+<h2 id="_initial_conditions"><a class="anchor" href="#_initial_conditions"></a>6. Initial Conditions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Steady-state problem, initial conditions can be arbitrary.</p>
@@ -824,7 +828,7 @@ The introduced numerical error is manifested by the accelerated growth of the mo
 </div>
 </div>
 <div class="sect1">
-<h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>6. Boundary Conditions</h2>
+<h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>7. Boundary Conditions</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -854,7 +858,7 @@ The introduced numerical error is manifested by the accelerated growth of the mo
 </div>
 </div>
 <div class="sect1">
-<h2 id="_output"><a class="anchor" href="#_output"></a>7. Output</h2>
+<h2 id="_output"><a class="anchor" href="#_output"></a>8. Output</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The exact and closed-form solution for the velocity \((u)\) and the temperature \((T)\) distribution across the boundary layer does not exist.</p>
@@ -901,7 +905,7 @@ They should include the results obtained with the CFD simulations and the analyt
 </div>
 </div>
 <div class="sect1">
-<h2 id="_simulation"><a class="anchor" href="#_simulation"></a>8. Simulation</h2>
+<h2 id="_simulation"><a class="anchor" href="#_simulation"></a>9. Simulation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The geometry file is available on Github <a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/heatfluid/examples/boundlayer/boundlayer.geo">here</a>.</p>
@@ -942,7 +946,7 @@ In the repository, you can find a geo file in 3D of the geomerty, but it isn&#82
 </div>
 </div>
 <div class="sect1">
-<h2 id="_results"><a class="anchor" href="#_results"></a>9. Results</h2>
+<h2 id="_results"><a class="anchor" href="#_results"></a>10. Results</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Heat fluid over times</caption>
@@ -970,6 +974,11 @@ In the repository, you can find a geo file in 3D of the geomerty, but it isn&#82
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><span class="image"><img src="../_images/boundary_layer_development/res_temp.png" alt="res temp"></span></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="sect1">
 <h2 id="_references"><a class="anchor" href="#_references"></a>References</h2>
@@ -987,11 +996,6 @@ In the repository, you can find a geo file in 3D of the geomerty, but it isn&#82
 </li>
 </ul>
 </div>
-</div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 <nav class="pagination">

@@ -3,34 +3,20 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Darcy flow through a channel :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/cases/latest/poisson/2Dchannel/README.html">
-    <link rel="prev" href="../red/README.html">
+    <title>Mixed Poisson Toolbox :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/cases/latest/hdg/README.html">
+    <link rel="prev" href="../multifluid/drop3d/README.html">
+    <link rel="next" href="usquare/README.html">
     <meta name="generator" content="Antora 3.0.0">
-    <link rel="stylesheet" href="../../../../_/css/site.css">
-<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
+    <link rel="stylesheet" href="../../../_/css/site.css">
+<link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">    
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
-<script src="../../../../_/js/vendor/tabs-block-extension.js"></script>
-<script src="../../../../_/js/vendor/tabs-block-behavior.js"></script>
+<script src="../../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../../_/js/vendor/tabs-block-behavior.js"></script>
 
 
-    <script type="text/javascript" src="../../../../_/js/vendor/visu-vtk.js"></script>
 
-    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script type="text/javascript">
-        function feelpp_unpack(rows, key) {
-           return rows.map(function(row) { return row[key] });
-        }
-          function feelpp_add_redimensionable_plot(plot) {
-            var oldResize = window.onresize;
-            window.onresize = function() {
-              if(typeof oldResize === 'function')
-                oldResize();
-              Plotly.Plots.resize(plot);
-            };
-          }
-      </script>
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -163,16 +149,16 @@ MathJax.Hub.Config({
         </div>
         <div class="navbar-item">
           <a class="navbar-brand" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ">
-            <img src="../../../../_/img/slack.png" alt="slack" style="width:30px;"></a>
+            <img src="../../../_/img/slack.png" alt="slack" style="width:30px;"></a>
         </div>
         <div class="navbar-item">
           <a class="navbar-brand"  href="http://docs.feelpp.org">
-            <img src="../../../../_/img/logoFeelpp.png" alt="Feel++" style="width:60px;">
+            <img src="../../../_/img/logoFeelpp.png" alt="Feel++" style="width:60px;">
           </a>
         </div>
         <div class="navbar-item">
           <a class="navbar-brand"  href="http://www.cemosis.fr">
-            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis" style="width:60px;">
+            <img src="../../../_/img/logoCemosisTransparent.png" alt="Cemosis" style="width:60px;">
           </a>
         </div>
       </div>
@@ -185,37 +171,37 @@ MathJax.Hub.Config({
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../../index.html">Feel++ Toolbox Cases Guide</a></h3>
+    <h3 class="title"><a href="../index.html">Feel++ Toolbox Cases Guide</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../cfpdes/index.html">Coefficient Form PDEs</a>
+    <a class="nav-link" href="../cfpdes/index.html">Coefficient Form PDEs</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../cfpdes/heat/index.html#_heat">Heat</a>
+    <a class="nav-link" href="../cfpdes/heat/index.html#_heat">Heat</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../cfpdes/heat/index.html#_benchmarks">Benchmarks</a>
+    <a class="nav-link" href="../cfpdes/heat/index.html#_benchmarks">Benchmarks</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../cfpdes/heat/ISO_10211_2007/index.html">ISO_10211_2007</a>
+    <a class="nav-link" href="../cfpdes/heat/ISO_10211_2007/index.html">ISO_10211_2007</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../cfpdes/heat/index.html#_cases">Cases</a>
+    <a class="nav-link" href="../cfpdes/heat/index.html#_cases">Cases</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../cfpdes/solid/index.html#_heat">Computational Solid Mechanics</a>
+    <a class="nav-link" href="../cfpdes/solid/index.html#_heat">Computational Solid Mechanics</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../cfpdes/fluid/index.html#_heat">Computational Fluid Mechanics</a>
+    <a class="nav-link" href="../cfpdes/fluid/index.html#_heat">Computational Fluid Mechanics</a>
   </li>
 </ul>
   </li>
@@ -225,65 +211,65 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../csm/README.html">Computational Solid Mechanics</a>
+    <a class="nav-link" href="../csm/README.html">Computational Solid Mechanics</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../csm/README.html#_benchmarks">Benchmarks</a>
+    <a class="nav-link" href="../csm/README.html#_benchmarks">Benchmarks</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/TurekHron/README.html">Turek-Hron</a>
+    <a class="nav-link" href="../csm/TurekHron/README.html">Turek-Hron</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/solenoid/README.html">Solenoid</a>
+    <a class="nav-link" href="../csm/solenoid/README.html">Solenoid</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/NAFEMS-le1/README.html">NAFEMS-le1</a>
+    <a class="nav-link" href="../csm/NAFEMS-le1/README.html">NAFEMS-le1</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/NAFEMS-le10/README.html">NAFEMS-le10</a>
+    <a class="nav-link" href="../csm/NAFEMS-le10/README.html">NAFEMS-le10</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/cantilever/README.html">Cantilever linear solver benchmark</a>
+    <a class="nav-link" href="../csm/cantilever/README.html">Cantilever linear solver benchmark</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../csm/README.html#_cases">Cases</a>
+    <a class="nav-link" href="../csm/README.html#_cases">Cases</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/cantilever/README.html">Cantilever</a>
+    <a class="nav-link" href="../csm/cantilever/README.html">Cantilever</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/torsion-bar/README.html">Torsion Bar</a>
+    <a class="nav-link" href="../csm/torsion-bar/README.html">Torsion Bar</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/rotating-winch/index.html">Rotating Winch</a>
+    <a class="nav-link" href="../csm/rotating-winch/index.html">Rotating Winch</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/ribs/index.html">Bracing with ribs</a>
+    <a class="nav-link" href="../csm/ribs/index.html">Bracing with ribs</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/suspension/index.html">Suspension mechanics</a>
+    <a class="nav-link" href="../csm/suspension/index.html">Suspension mechanics</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/sensor/index.html">Sensor</a>
+    <a class="nav-link" href="../csm/sensor/index.html">Sensor</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/sheet-rounding/index.html">Effect of sheet rounding</a>
+    <a class="nav-link" href="../csm/sheet-rounding/index.html">Effect of sheet rounding</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/t-beam/index.html">T-Beam</a>
+    <a class="nav-link" href="../csm/t-beam/index.html">T-Beam</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/vierendeel-truss/index.html">Vierendeel Truss</a>
+    <a class="nav-link" href="../csm/vierendeel-truss/index.html">Vierendeel Truss</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/pendulum2D/index.html">Pendulum 2D</a>
+    <a class="nav-link" href="../csm/pendulum2D/index.html">Pendulum 2D</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/spring/README.html">Spring CSM</a>
+    <a class="nav-link" href="../csm/spring/README.html">Spring CSM</a>
   </li>
 </ul>
   </li>
@@ -295,41 +281,41 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../cfd/README.html">Computational Fluid Mechanics</a>
+    <a class="nav-link" href="../cfd/README.html">Computational Fluid Mechanics</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../cfd/README.html#_benchmarks">Benchmarks</a>
+    <a class="nav-link" href="../cfd/README.html#_benchmarks">Benchmarks</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../cfd/TurekHron/README.html">Turek-Hron</a>
+    <a class="nav-link" href="../cfd/TurekHron/README.html">Turek-Hron</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../cfd/pipestokes/README.html">Stokes in a pipe</a>
+    <a class="nav-link" href="../cfd/pipestokes/README.html">Stokes in a pipe</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../cfd/oscillating_cylinder/README.html">Oscillating Cylinder</a>
+    <a class="nav-link" href="../cfd/oscillating_cylinder/README.html">Oscillating Cylinder</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../cfd/stokes_boundary_layer/README.html">Stokes Boundary Layer</a>
+    <a class="nav-link" href="../cfd/stokes_boundary_layer/README.html">Stokes Boundary Layer</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../cfd/laminar_isothermal_backward_facing_step/README.html">Laminar, Isothermal Backward Facing Step</a>
+    <a class="nav-link" href="../cfd/laminar_isothermal_backward_facing_step/README.html">Laminar, Isothermal Backward Facing Step</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../cfd/README.html#_cases">Cases</a>
+    <a class="nav-link" href="../cfd/README.html#_cases">Cases</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../cfd/backwardstep/README.html">Backward Step</a>
+    <a class="nav-link" href="../cfd/backwardstep/README.html">Backward Step</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../cfd/spring/README.html">Spring CFD</a>
+    <a class="nav-link" href="../cfd/spring/README.html">Spring CFD</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../cfd/cyclone/README.html">Cyclone</a>
+    <a class="nav-link" href="../cfd/cyclone/README.html">Cyclone</a>
   </li>
 </ul>
   </li>
@@ -339,32 +325,32 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../heat/README.html">Heat Transfer</a>
+    <a class="nav-link" href="../heat/README.html">Heat Transfer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../heat/README.html#_benchmarks">Benchmarks</a>
+    <a class="nav-link" href="../heat/README.html#_benchmarks">Benchmarks</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../heat/ISO_10211_2007/README.html">ISO 10211:2007</a>
+    <a class="nav-link" href="../heat/ISO_10211_2007/README.html">ISO 10211:2007</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../heat/README.html#_cases">Cases</a>
+    <a class="nav-link" href="../heat/README.html#_cases">Cases</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../heat/motor/README.html">Heat Transfer in a Car Motor</a>
+    <a class="nav-link" href="../heat/motor/README.html">Heat Transfer in a Car Motor</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../heat/2Dbuilding/README.html">2D Building</a>
+    <a class="nav-link" href="../heat/2Dbuilding/README.html">2D Building</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../heat/3Dbuilding/README.html">3D Building</a>
+    <a class="nav-link" href="../heat/3Dbuilding/README.html">3D Building</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../heat/opus/README.html">Cooling of electronic components</a>
+    <a class="nav-link" href="../heat/opus/README.html">Cooling of electronic components</a>
   </li>
 </ul>
   </li>
@@ -374,17 +360,17 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../heatfluid/README.html">Heat &amp; Fluid</a>
+    <a class="nav-link" href="../heatfluid/README.html">Heat &amp; Fluid</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Benchmarks</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heatfluid/channel_flow_with_viscous_heating/README.html">Channel Flow with Viscous Heating</a>
+    <a class="nav-link" href="../heatfluid/channel_flow_with_viscous_heating/README.html">Channel Flow with Viscous Heating</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heatfluid/boundary_layer_development/README.html">Boundary Layer Development</a>
+    <a class="nav-link" href="../heatfluid/boundary_layer_development/README.html">Boundary Layer Development</a>
   </li>
 </ul>
   </li>
@@ -393,19 +379,19 @@ MathJax.Hub.Config({
     <span class="nav-text">Cases</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heatfluid/2Dbuilding_NS/README.html">2D Building with natural convection</a>
+    <a class="nav-link" href="../heatfluid/2Dbuilding_NS/README.html">2D Building with natural convection</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heatfluid/cabin/README.html">Aerothermal in an Airplane Cabin</a>
+    <a class="nav-link" href="../heatfluid/cabin/README.html">Aerothermal in an Airplane Cabin</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heatfluid/TurekHron/README.html">Forced heat convection around a cylinder</a>
+    <a class="nav-link" href="../heatfluid/TurekHron/README.html">Forced heat convection around a cylinder</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heatfluid/naturalconvection/README.html">Natural heat convection in a cavity</a>
+    <a class="nav-link" href="../heatfluid/naturalconvection/README.html">Natural heat convection in a cavity</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heatfluid/pipestokesmass/README.html">Mass transport with a Stokes flow in a pipe</a>
+    <a class="nav-link" href="../heatfluid/pipestokesmass/README.html">Mass transport with a Stokes flow in a pipe</a>
   </li>
 </ul>
   </li>
@@ -415,83 +401,35 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../fsi/README.html">Fluid Structure Interaction</a>
+    <a class="nav-link" href="../fsi/README.html">Fluid Structure Interaction</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../fsi/README.html#_benchmarks">Benchmarks</a>
+    <a class="nav-link" href="../fsi/README.html#_benchmarks">Benchmarks</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fsi/TurekHron/README.html">Turek-Hron</a>
+    <a class="nav-link" href="../fsi/TurekHron/README.html">Turek-Hron</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fsi/wavepressure2d/README.html">Wave Pressure 2d</a>
+    <a class="nav-link" href="../fsi/wavepressure2d/README.html">Wave Pressure 2d</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fsi/wavepressure3d/README.html">Wave Pressure 3d</a>
+    <a class="nav-link" href="../fsi/wavepressure3d/README.html">Wave Pressure 3d</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fsi/lid-driven-cavity/README.html">Lid Driven Cavity</a>
+    <a class="nav-link" href="../fsi/lid-driven-cavity/README.html">Lid Driven Cavity</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../fsi/README.html#_cases">Cases</a>
+    <a class="nav-link" href="../fsi/README.html#_cases">Cases</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fsi/box/README.html">Box</a>
+    <a class="nav-link" href="../fsi/box/README.html">Box</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fsi/structure/README.html">Structure</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../electric/README.html">Electric</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../electric/rect/readme.html">BusBar</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../electric/quarterturn/readme.html">Quarter Turn</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../thermoelectric/README.html">Thermo-Electric</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../thermoelectric/quarterturn/readme.html">Quarter Turn</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../thermoelectric/electromagnet/README.html">ElectroMagnet</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../maxwell/README.html">Maxwell</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../maxwell/README.html#_cases">Cases</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../maxwell/Inductor/readme.html">Inductor</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../maxwell/Harmonic/readme.html">Harmonic</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../maxwell/Torus/readme.html">Torus</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../maxwell/Tws/readme.html">Tws</a>
+    <a class="nav-link" href="../fsi/structure/README.html">Structure</a>
   </li>
 </ul>
   </li>
@@ -499,28 +437,76 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../multifluid/index.html">Multifluid Flow</a>
+    <a class="nav-link" href="../electric/README.html">Electric</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../multifluid/drop2d/README.html">Drop 2d</a>
+    <a class="nav-link" href="../electric/rect/readme.html">BusBar</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../multifluid/drop3d/README.html">Drop 3d</a>
+    <a class="nav-link" href="../electric/quarterturn/readme.html">Quarter Turn</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../README.html">Generic HDG Poisson equation</a>
+    <a class="nav-link" href="../thermoelectric/README.html">Thermo-Electric</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../usquare/README.html">Chessboard analytical solution</a>
+    <a class="nav-link" href="../thermoelectric/quarterturn/readme.html">Quarter Turn</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../red/README.html">nMOS transistor</a>
+    <a class="nav-link" href="../thermoelectric/electromagnet/README.html">ElectroMagnet</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="README.html">Flow in a channel</a>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../maxwell/README.html">Maxwell</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../maxwell/README.html#_cases">Cases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../maxwell/Inductor/readme.html">Inductor</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../maxwell/Harmonic/readme.html">Harmonic</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../maxwell/Torus/readme.html">Torus</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../maxwell/Tws/readme.html">Tws</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../multifluid/index.html">Multifluid Flow</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../multifluid/drop2d/README.html">Drop 2d</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../multifluid/drop3d/README.html">Drop 3d</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="README.html">Generic HDG Poisson equation</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="usquare/README.html">Chessboard analytical solution</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="red/README.html">nMOS transistor</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="2Dchannel/README.html">Flow in a channel</a>
   </li>
 </ul>
   </li>
@@ -537,7 +523,7 @@ MathJax.Hub.Config({
       <span class="title">AngioTK User Manual</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../../angiotk/0.1/index.html">0.1</a>
+          <a href="../../../angiotk/0.1/index.html">0.1</a>
         </li>
       </ul>
     </li>
@@ -545,10 +531,10 @@ MathJax.Hub.Config({
       <span class="title">Data Manual</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../../data/latest/index.html">latest</a>
+          <a href="../../../data/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../../data/0.109/index.html">0.109</a>
+          <a href="../../../data/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
@@ -556,16 +542,16 @@ MathJax.Hub.Config({
       <span class="title">Developer manual</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../../dev/latest/index.html">latest</a>
+          <a href="../../../dev/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../../dev/0.109/index.html">0.109</a>
+          <a href="../../../dev/0.109/index.html">0.109</a>
         </li>
         <li class="version">
-          <a href="../../../../dev/0.108/index.html">0.108</a>
+          <a href="../../../dev/0.108/index.html">0.108</a>
         </li>
         <li class="version">
-          <a href="../../../../dev/0.107/index.html">0.107</a>
+          <a href="../../../dev/0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
@@ -573,7 +559,7 @@ MathJax.Hub.Config({
       <span class="title">Feel++ and Salome</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../../salome/current/index.html">current</a>
+          <a href="../../../salome/current/index.html">current</a>
         </li>
       </ul>
     </li>
@@ -581,10 +567,10 @@ MathJax.Hub.Config({
       <span class="title">Feel++ Documentation</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../../feelpp/latest/index.html">latest</a>
+          <a href="../../../feelpp/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../../feelpp/0.109/index.html">0.109</a>
+          <a href="../../../feelpp/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
@@ -592,7 +578,7 @@ MathJax.Hub.Config({
       <span class="title">Feel++ Mathematics</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../../math/index.html">master</a>
+          <a href="../../../math/index.html">master</a>
         </li>
       </ul>
     </li>
@@ -600,7 +586,7 @@ MathJax.Hub.Config({
       <span class="title">Feel++ MyProject</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../../myproject/1.0.0/index.html">1.0.0</a>
+          <a href="../../../myproject/1.0.0/index.html">1.0.0</a>
         </li>
       </ul>
     </li>
@@ -608,16 +594,16 @@ MathJax.Hub.Config({
       <span class="title">Feel++ Toolbox Cases Guide</span>
       <ul class="versions">
         <li class="version is-current">
-          <a href="../../index.html">latest</a>
+          <a href="../index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../0.109/index.html">0.109</a>
+          <a href="../../0.109/index.html">0.109</a>
         </li>
         <li class="version">
-          <a href="../../../0.108/index.html">0.108</a>
+          <a href="../../0.108/index.html">0.108</a>
         </li>
         <li class="version">
-          <a href="../../../0.107/index.html">0.107</a>
+          <a href="../../0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
@@ -625,16 +611,16 @@ MathJax.Hub.Config({
       <span class="title">Feel++ Toolboxes Manual</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../../toolboxes/latest/index.html">latest</a>
+          <a href="../../../toolboxes/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../../toolboxes/0.109/index.html">0.109</a>
+          <a href="../../../toolboxes/0.109/index.html">0.109</a>
         </li>
         <li class="version">
-          <a href="../../../../toolboxes/0.108/index.html">0.108</a>
+          <a href="../../../toolboxes/0.108/index.html">0.108</a>
         </li>
         <li class="version">
-          <a href="../../../../toolboxes/0.107/index.html">0.107</a>
+          <a href="../../../toolboxes/0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
@@ -642,7 +628,7 @@ MathJax.Hub.Config({
       <span class="title">Feel++ Tutorial Dev</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../../tutorial-dev/latest/index.html">latest</a>
+          <a href="../../../tutorial-dev/latest/index.html">latest</a>
         </li>
       </ul>
     </li>
@@ -650,16 +636,16 @@ MathJax.Hub.Config({
       <span class="title">Feel++ User Manual</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../../user/latest/index.html">latest</a>
+          <a href="../../../user/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../../user/0.109/index.html">0.109</a>
+          <a href="../../../user/0.109/index.html">0.109</a>
         </li>
         <li class="version">
-          <a href="../../../../user/0.108/index.html">0.108</a>
+          <a href="../../../user/0.108/index.html">0.108</a>
         </li>
         <li class="version">
-          <a href="../../../../user/0.107/index.html">0.107</a>
+          <a href="../../../user/0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
@@ -667,10 +653,10 @@ MathJax.Hub.Config({
       <span class="title">Model Order Reduction</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../../mor/latest/index.html">latest</a>
+          <a href="../../../mor/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../../mor/0.109/index.html">0.109</a>
+          <a href="../../../mor/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
@@ -678,7 +664,7 @@ MathJax.Hub.Config({
       <span class="title">Toolbox Contribution Guide</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../../contribute/index.html">master</a>
+          <a href="../../../contribute/index.html">master</a>
         </li>
       </ul>
     </li>
@@ -690,161 +676,95 @@ MathJax.Hub.Config({
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="../../../../feelpp/0.109/index.html" class="home-link"></a>
+  <a href="../../../feelpp/0.109/index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../../index.html">Feel++ Toolbox Cases Guide</a></li>
-    <li><a href="../README.html">Generic HDG Poisson equation</a></li>
-    <li><a href="README.html">Flow in a channel</a></li>
+    <li><a href="../index.html">Feel++ Toolbox Cases Guide</a></li>
+    <li><a href="README.html">Generic HDG Poisson equation</a></li>
   </ul>
 </nav>
 <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
   <div class="version-menu">
     <a class="version is-current" href="README.html">latest</a>
-    <a class="version" href="../../../0.109/poisson/2Dchannel/README.html">0.109</a>
-    <a class="version" href="../../../0.108/poisson/2Dchannel/README.html">0.108</a>
-    <a class="version" href="../../../0.107/poisson/2Dchannel/README.html">0.107</a>
+    <a class="version is-missing" href="../../0.109/index.html">0.109</a>
+    <a class="version is-missing" href="../../0.108/index.html">0.108</a>
+    <a class="version is-missing" href="../../0.107/index.html">0.107</a>
   </div>
 </div>
-  <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/poisson/pages/2Dchannel/README.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/hdg/pages/README.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Darcy flow through a channel</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>This example can be found from [CL07].</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_running_the_case"><a class="anchor" href="#_running_the_case"></a>1. Running the case</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The command line to run this case is :</p>
-</div>
-<div id="command-line" class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpirun -np 4 feelpp_toolbox_mixed-poisson-model --case "github:{repo:toolbox,path:examples/modules/poisson/examples/2Dchannel}"</code></pre>
-</div>
-</div>
-<button class="btn" data-clipboard-target="#command-line">
-Copy command line to clipboard
-</button>
-<button class="btn" data-clipboard-text="github:{repo:toolbox,path:examples/modules/poisson/examples/2Dchannel}">
-Copy case option to clipboard
-</button>
-</div>
+<h1 class="page">Mixed Poisson Toolbox</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_benchmarks">1. Benchmarks</a>
+<ul class="sectlevel2">
+<li><a href="#_unit_square">1.1. Unit Square</a></li>
+</ul>
+</li>
+<li><a href="#_examples">2. Examples</a>
+<ul class="sectlevel2">
+<li><a href="#_red_floating_gate_nmos_transistor">2.1. RED: floating-gate nMOS transistor</a></li>
+<li><a href="#_unit_square_testcases_chessboard_and_shower">2.2. Unit Square testcases : chessboard and shower</a></li>
+<li><a href="#_darcy_flow_through_porous_2d_channel">2.3. Darcy flow through porous 2D channel</a></li>
+</ul>
+</li>
+</ul>
 </div>
 <div class="sect1">
-<h2 id="_input_parameters"><a class="anchor" href="#_input_parameters"></a>2. Input parameters</h2>
+<h2 id="_benchmarks"><a class="anchor" href="#_benchmarks"></a>1. Benchmarks</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_unit_square"><a class="anchor" href="#_unit_square"></a>1.1. <a href="usquare/README.html" class="xref page">Unit Square</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
+<col style="width: 75%;">
 </colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Notation</th>
-<th class="tableblock halign-left valign-top">Quantity</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Unit</th>
-</tr>
-</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\kappa_1\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Permeability of \(\Omega_1\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(m^2Pa^{-1}s^{-1}\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\kappa_2\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Permeability of \(\Omega_2\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">idem</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">idem</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><a class="image" href=""><img src="_images/usquare/velocitymap.png" alt="USQUARE velocity" width="100%"></a></span></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_model_toolbox"><a class="anchor" href="#_model_toolbox"></a>3. Model &amp; toolbox</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>We consider a \(100\times100\) square channeled with two poorly porous panes.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/2Dchannel/channel.png" alt="channel"></span></p>
-</div>
-<div class="paragraph">
-<p>The top and bottom boundaries \(\Gamma_{wall}\) are labelled <code>wall</code>, the left inlet \(\Gamma_{left}\) is <code>left</code> and the right outlet \(\Gamma_{right}\) is <code>right</code>. The main porous domain is <code>omega1</code> while the panes are labeled <code>omega2</code>. The interface is labeled <code>interface</code>.</p>
-</div>
-<div class="paragraph">
-<p>This example runs within the <code>mixed-poisson</code> toolbox.</p>
-</div>
-</div>
 </div>
 <div class="sect1">
-<h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>4. Boundary conditions</h2>
+<h2 id="_examples"><a class="anchor" href="#_examples"></a>2. Examples</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>We impose a Neumann no-flow condition on the <code>wall</code> and Dirichlet conditions on the inlet and outlet :</p>
+<div class="sect2">
+<h3 id="_red_floating_gate_nmos_transistor"><a class="anchor" href="#_red_floating_gate_nmos_transistor"></a>2.1. <a href="red/README.html" class="xref page">RED: floating-gate nMOS transistor</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><a class="image" href=""><img src="_images/red/potential+arrow.png" alt="RED potential" width="100%"></a></span></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="stemblock">
-<div class="content">
-\[\left\{\begin{array}{ll}
-    p=1&amp;\text{on }\Gamma_{left}\\
-    p=0&amp;\text{on }\Gamma_{right}\\
-    \underline u\cdot\underline n=0&amp;\text{on }\Gamma_{wall}
-\end{array}\right.\]
+<div class="sect2">
+<h3 id="_unit_square_testcases_chessboard_and_shower"><a class="anchor" href="#_unit_square_testcases_chessboard_and_shower"></a>2.2. <a href="usquare/README.html" class="xref page">Unit Square testcases : chessboard and shower</a></h3>
+
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_configuration_geometry"><a class="anchor" href="#_configuration_geometry"></a>5. Configuration &amp; geometry</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><a href="https://github.com/feelpp/toolbox/blob/example-15-porous2Dchannel-poisson/examples/modules/poisson/examples/2Dchannel/channel.geo">GEO file</a></p>
-</div>
-<div class="paragraph">
-<p><a href="https://github.com/feelpp/toolbox/blob/example-15-porous2Dchannel-poisson/examples/modules/poisson/examples/2Dchannel/channel.cfg">CFG file</a></p>
-</div>
-<div class="paragraph">
-<p><a href="https://github.com/feelpp/toolbox/blob/example-15-porous2Dchannel-poisson/examples/modules/poisson/examples/2Dchannel/channel.json">JSON file</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_output"><a class="anchor" href="#_output"></a>6. Output</h2>
-<div class="sectionbody">
-<div class="stretchy-wrapper-16_9">
-<div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
-</div>
-<script type="text/javascript">
-feelppVtkJs.createSceneImporter( vtkVisuSection1, {
-                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5b30b1b7b0e9570499f671d7/download",
-                                 objects: { "object":[ { scene:"Export.case (1)",name:"velocity magnitude field" }, { scene:"Export.case",name:"pressure field" }, {scene:"Glyph1",name:"flux field"} ] }
-                                 } );
-</script>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_reference"><a class="anchor" href="#_reference"></a>7. Reference</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>[CL07] M. R. Correa, A. F. D. Loula, <em>Stabilized velocity post-processings for Darcy flow in heterogeneous porous media</em>, Commun. Numer. Meth. Engng 2007; 23:461–489</p>
+<div class="sect2">
+<h3 id="_darcy_flow_through_porous_2d_channel"><a class="anchor" href="#_darcy_flow_through_porous_2d_channel"></a>2.3. <a href="2Dchannel/README.html" class="xref page">Darcy flow through porous 2D channel</a></h3>
+
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../red/README.html">nMOS transistor</a></span>
+  <span class="prev"><a href="../multifluid/drop3d/README.html">Drop 3d</a></span>
+  <span class="next"><a href="usquare/README.html">Chessboard analytical solution</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -861,7 +781,7 @@ feelppVtkJs.createSceneImporter( vtkVisuSection1, {
       <div class="col">
         <div class="footer-logo">
           <a href="https://www.cemosis.fr" class="icon">
-            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+            <img src="../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
           </a>
         </div>
       </div>
@@ -921,12 +841,12 @@ feelppVtkJs.createSceneImporter( vtkVisuSection1, {
     </div>
   </div>
 </footer>
-<script src="../../../../_/js/site.js"></script>
-<script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../../../_/js/vendor/fontawesome.js"></script>
-<script async src="../../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
 
-<script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">
+<script async id="search-script" src="../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../_/css/vendor/docsearch.css">
 </script>
 
   </body>
