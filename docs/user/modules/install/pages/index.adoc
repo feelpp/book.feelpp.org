@@ -14,8 +14,8 @@ We created two delivery channels: `stable` and `latest`.
 [source,bash]
 --
 wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
-echo "deb http://apt.feelpp.org/{flavor} {dist} {channel}" | tee -a /etc/apt/sources.list.d/feelpp.list
-apt update
+echo "deb http://apt.feelpp.org/{flavor} {dist} {channel}" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+sudo apt update
 --
 ----
 
