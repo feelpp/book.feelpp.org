@@ -752,14 +752,14 @@ We call this generic form by Coefficient Form PDE and the coefficients are</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Coefficients of each equation can be defined by an expression that depends of the current unknown or with unknowns of others equations.
+Coefficients of each equation can be defined by an expression that depends of the current unknown or unknowns of other equations.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
 <p>The unknown of each PDEs can be defined as a scalar function (\(u:\mathbb{R}^n \longrightarrow \mathbb{R}\)) or a vectorial function (\(u:\mathbb{R}^n \longrightarrow \mathbb{R}^n\)).
-But we need to respect some constraint on the coefficient shape as describe in the next table.</p>
+We need also to respect some constraint on the coefficient shape as described in the next table.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Shape required by the coefficients</caption>
@@ -830,7 +830,7 @@ But we need to respect some constraint on the coefficient shape as describe in t
 <p>Dirichlet :</p>
 </li>
 <li>
-<p>Neumann : generic version (can depend on unknown)</p>
+<p>Neumann : generic version which can depend on the unknowns</p>
 </li>
 <li>
 <p>Robin :</p>
@@ -863,7 +863,40 @@ But we need to respect some constraint on the coefficient shape as describe in t
 <div class="sect1">
 <h2 id="_stabilized_finite_element"><a class="anchor" href="#_stabilized_finite_element"></a>5. Stabilized finite element</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>Given a <code>cfpdes</code> equation  named <code>eq</code>, SUPG and GaLS can be used as stabilisation methods.
+To enable them use, in the command-line or <code>.cfg</code> file, the option <code>cfpdes.eq.stabilitsation=1</code> and define the stabilisation type <code>cfpdes.eq.stabilitsation.type=gls #supg#unusual-gls #gls</code></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Stabilisation methods</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">type</th>
+<th class="tableblock halign-left valign-top"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gls</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">default option</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>supg</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>unusual-gls</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Examples are available <a href="https://github.com/feelpp/feelpp/tree/develop/toolboxes/coefficientformpdes/cases/adr">here</a></p>
+</div>
 </div>
 </div>
 <nav class="pagination">
