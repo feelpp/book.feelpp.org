@@ -49,30 +49,41 @@ This setup can be done by using an array of JSON objects for the `heat-sources` 
 
 [source,json]
 ----
-"Models":{
-   "heat":
-      [{ <1>
-          "name":"heat1",
-          "materials":["mymatA","mymatB"],
-          "setup": {
-              "heat-sources": <2>
-                [{ <3>
-                    "type":"heat-source",
-                    "expr":"3"
-                },{ <4>
-                     "type":"heat-rate",
-                     "expr":"2*exp(t):t"
-                }]
+{
+  "Models": {
+    "heat": [
+      { <1>
+        "name": "heat1",
+        "materials": [
+          "mymatA",
+          "mymatB"
+        ],
+        "setup": {
+          "heat-sources": [ <2>
+            { <3>
+              "type": "heat-source",
+              "expr": "3"
+            },
+            { <4>
+              "type": "heat-rate",
+              "expr": "2*exp(t):t"
+            }
+          ]
+        }
+      },
+      { <5>
+        "name": "heat2",
+        "materials": [
+          "mymatC"
+        ],
+        "setup": {
+          "heat-sources": { <6>
+            "expr": "30"
           }
-      },{ <5>
-           "name":"heat2",
-           "materials":["mymatC"],
-           "setup": {
-               "heat-sources": {  <6>
-                     "expr":"30"
-                }
-           }
-     }]
+        }
+      }
+    ]
+  }
 }
 ----
 <1> setup of first model called `heat1` on materials `mymatA` and `mymatB`
@@ -100,12 +111,14 @@ The value can be a string corresponding to velocity expression.
 [source,json]
 ----
 {
-  "Models":{
-    "heat":{
-       "setup": {
-          "convection":"{-30*(y+-0.7)*(y-0.5)*(y>0.5)*(y<0.7),0}:y"
-       }
-} } }
+  "Models": {
+    "heat": {
+      "setup": {
+        "convection": "{-30*(y+-0.7)*(y-0.5)*(y>0.5)*(y<0.7),0}:y"
+      }
+    }
+  }
+}
 ----
 
 == Materials
@@ -147,26 +160,128 @@ The value can be a string corresponding to velocity expression.
 
 == Boundary Conditions
 
-=== Dirichlet
+=== Temperature imposed
 
 [stem]
 ++++
 T = g \quad \text{ on } \Gamma
 ++++
 
-=== Neumann
+JSON keywords : `temperature`, `temperature_imposed`
+
+.JSON properties of boundary condition temperature imposed
+|===
+| Property | Description | Value Type | Is Optional | Default Value
+
+| `markers` | mesh marker where the BC is applied | `string`, `array of string`, `JSON`  | yes  | name given to the BC
+| `expr`    | expression of `g` | `string`, `number`  | false |
+|===
+
+
+[source,json]
+----
+{
+  "BoundaryConditions": {
+    "heat": { <1>
+      "temperature": { <2>
+        "bc1": { <3>
+          "markers": "gamma1", <4>
+          "expr": "293-10*(y-1)*(y+1):y" <5>
+        },
+        "bc2": { <6>
+          "expr": "293+0.38*t:t"
+        }
+      }
+    }
+  }
+}
+----
+<1> the toolbox identity
+<2> JSON keyword for defining this kind of boundary condition
+<3> name given to a boundary condition of type temperature imposed
+<4> marker names where the boundary condition is applied
+<5> the expression of the temperature imposed
+<6> another boundary condition of type temperature imposed where the marker used will be the name (i.e. `bc2`)
+
+NOTE: The temperature imposed can be applied on all kind of marked entities (elements,faces,edges,points)
+
+=== Heat flux
 
 [stem]
 ++++
 k \nabla T \cdot \boldsymbol{n} = g \quad \text{ on } \Gamma
 ++++
 
-=== Robin
+JSON keywords : `heat_flux`, `flux`
+
+.JSON properties of boundary condition heat flux
+|===
+| Property | Description | Value Type | Is Optional | Default Value
+
+| `markers` | mesh marker where the BC is applied | `string`, `array of string`, `JSON`  | yes  | name given to the BC
+| `expr`    | expression of `g` | `string`, `number`  | false |
+|===
+
+
+[source,json]
+----
+{
+  "BoundaryConditions": {
+    "heat": {
+      "flux": {
+        "bc1": {
+          "markers": [
+            "MarkerNeumann_1",
+            "MarkerNeumann_2"
+          ],
+          "expr": "34*t:t"
+        }
+      }
+    }
+  }
+}
+----
+
+NOTE: The expression given to the heat flux boundary condition can depend on the unknown (i.e. any symbols depending on the temperature).
+
+=== Convective heat flux
 
 [stem]
 ++++
 -k \nabla T \cdot \boldsymbol{n} = h \left( T - g \right) \quad \text{ on } \Gamma
 ++++
+
+JSON keywords : `convective_heat_flux`
+
+.JSON properties of boundary condition convective heat flux
+|===
+| Property | Description | Value Type | Is Optional | Default Value
+
+| `markers` | mesh marker where the BC is applied | `string`, `array of string`, `JSON`  | yes  | name given to the BC
+| `h`       | expression of `h` | `string`, `number`  | false |
+| `Text`    | expression of `g` | `string`, `number`  | false |
+|===
+
+
+[source,json]
+----
+{
+  "BoundaryConditions": {
+    "heat": {
+      "convective_heat_flux": {
+        "bc1": {
+          "h": "16",
+          "Text": "287"
+        }
+      }
+    }
+  }
+}
+----
+
+
+NOTE: The expressions given to the convective heat flux boundary condition can depend on the unknown but the automatic differentiation is not implemented here, so the jacobian will be inexact if a Newton solver is used.
+
 
 == Initial Conditions
 
@@ -193,26 +308,27 @@ NOTE: All materials properties given in the section <<Materials,Materials>> can 
 [source,json]
 .Example of a `Parameters` section
 ----
-"Normal-Heat-Flux": <1>
 {
-    "bottom": <2>
-    {
-        "markers":["bottom1,bottom2"], <3>
-        "direction":"inward" <4>
-     },
-     "top": <5>
-     {
-         "direction":"inward"
-     },
-
+  "Normal-Heat-Flux": { <1>
+    "bottom": { <2>
+      "markers": [ <3>
+        "bottom1",
+        "bottom2"
+      ],
+      "direction": "inward" <4>
+    },
+    "top": { <5>
+      "direction": "inward"
+    }
+  }
 }
 ----
 
 <1> kind of measure
 <2> name of measure
-<3> surface markers 
+<3> surface markers where the measure is computed
 <4> direction : `inward` or `outward`
-<5> another
+<5> another measure applied on surface marker called top (because when markers is no present, the name is used as marker name)
 
 
 == Stabilization methods
