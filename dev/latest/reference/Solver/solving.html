@@ -511,7 +511,46 @@ MathJax.Hub.Config({
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">Unresolved include directive in modules/reference/pages/Solver/solving.adoc - include::example$mylaplacian.cpp[]</code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">int main(int argc, char**argv )
+{
+    // initialize feel++
+    using namespace Feel;
+    Environment env( _argc=argc, _argv=argv,
+                     _about=about(_name="mylaplacian",
+                                  _author="Feel++ Consortium",
+                                  _email="feelpp-devel@feelpp.org"));
+    // create mesh
+    auto mesh = unitSquare();
+
+    // function space
+    auto Vh = Pch&lt;1&gt;( mesh );
+    auto u = Vh-&gt;element();
+    auto v = Vh-&gt;element();
+
+    // left hand side
+    auto a = form2( _trial=Vh, _test=Vh );
+    a = integrate(_range=elements(mesh),
+                  _expr=gradt(u)*trans(grad(v)) );
+
+    // right hand side
+    auto l = form1( _test=Vh );
+    l = integrate(_range=elements(mesh),
+                  _expr=id(v));
+
+    // tagB::marker_on[]
+    // apply the boundary condition
+    a+=on(_range=boundaryfaces(mesh), _rhs=l, _element=u,
+          _expr=expr(soption("functions.alpha")) );
+
+    // solve the equation \f$ a(u,v) = l(v) \f$
+    a.solve(_rhs=l,_solution=u);
+    // end:marker_solve[]
+
+    // export results
+    auto e = exporter( _mesh=mesh );
+    e-&gt;add( "u", u );
+    e-&gt;save();
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
