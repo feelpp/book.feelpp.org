@@ -309,7 +309,7 @@ MathJax.Hub.Config({
     <a class="nav-link" href="laplacian/index.html">Laplacien</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#user:ROOT:laplacian.adoc">Numerical Experiments</a>
+    <a class="nav-link" href="../../user/latest/cpp/laplacian.html">Numerical Experiments</a>
   </li>
 </ul>
   </li>
@@ -695,107 +695,141 @@ En pratique, on aura le plus souvent \(m=0, 1, 2.\)
 </div>
 <div class="stemblock">
 <div class="content">
-\[--
-\|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-v_h\|_m \quad \forall v_h\in V_h
---
-
-NOTE: Cette majoration est aussi appelée Lemme de Céa
-
-On peut l’appliquer dans le cas particulier où stem:[v_h=\pi_h u], ce qui donne
-
-[env.equation#eq:cea2]
---
-\|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-\pi_h u\|_m
---
-
-[[etape-2-décomposition-sur-les-éléments]]
-=== Etape 2: Décomposition sur les éléments
-
-On a, avec des notations évidentes :
-[stem]\]
+\[\|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-v_h\|_m \quad \forall v_h\in V_h\]
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Cette majoration est aussi appelée Lemme de Céa
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>On peut l’appliquer dans le cas particulier où \(v_h=\pi_h u\), ce qui donne</p>
+</div>
+<div id="eq:cea2" class="stemblock">
+<div class="content">
+\[\|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-\pi_h u\|_m\]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="etape-2-décomposition-sur-les-éléments"><a class="anchor" href="#etape-2-décomposition-sur-les-éléments"></a>2.2. Etape 2: Décomposition sur les éléments</h3>
+<div class="paragraph">
+<p>On a, avec des notations évidentes :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{array}{lll}
+{\|u-\pi_h u\|_m^2 }&amp; = &amp;{\sum_{K\in{\cal T}_h} \|u-\pi_h u\|_{m,K}^2 }\\
+&amp; = &amp; {\sum_{K\in{\cal T}_h} \sum_{l=0}^m |u-\pi_h u|_{l,K}^2}
+\end{array}\]
 </div>
 </div>
 <div class="paragraph">
-<p>\begin{array}{lll}
-{\|u-\pi_h u\|<em>m^2 }&amp; = &amp;{\sum</em>{K\in{\cal T}_h} \|u-\pi_h u\|<em>{m,K}^2 }\\
-&amp; = &amp; {\sum</em>{K\in{\cal T}_h} \sum_{l=0}^m |u-\pi_h u|_{l,K}^2}
-\end{array}</p>
+<p>Le calcul est donc ramené à un calcul sur chaque élément, pour toutes les semi-normes \(|.|_{l,K},\; l=0,\ldots,m\).</p>
 </div>
-Le calcul est donc ramené à un calcul sur chaque élément, pour toutes les semi-normes stem:[|.|_{l,K},\; l=0,\ldots,m].
-
-[[etape-3-passage-à-lélément-de-référence]]
-=== Etape 3: Passage à l’élément de référence
-
-[env.theorem#thr1]
---
-Soit stem:[K] un élément quelconque de stem:[{\cal T}_h], et stem:[\hat{K}] l’élément de référence.
-
-Soit stem:[F] la transformation affine de stem:[\hat{K}] vers stem:[K] :
-[[eq:majref]]
-[stem]
-<div class="paragraph">
-<p>\forall v\in H^l(K), \qquad |\hat{v}|<em>{l,\hat{K}} \le C(l,n)\; \|B\|^l_2 \; |\hbox{det} B|^{-1/2} \, |v|</em>{l,K}</p>
 </div>
---
-
-Nous avons le corollaire suivant du théorème <<thr1>>
-[env.corollary]
---
-On a de même :
-[[eq:majref2]]
-[stem]
-<div class="paragraph">
-<p>\forall v\in H^l(K), \qquad |v|<em>{l,K}  \le C(l,n)\; \|B<sup>{-1}\|</sup>l_2 \; |\mathrm{det} B|^{1/2} \; |\hat{v}|</em>{l,\hat{K}}</p>
-</div>
---
-
-
-==== Preuve du théorème <<thr1>>
-
-Ce théorème se montre comme suit.
-Il s’agit là en fait d’un simple résultat de changement de variable dans une intégrale.
-
-Soit stem:[v] une fonction stem:[l] fois différentiable au point stem:[x].
-
-On note stem:[D^l v(x)] sa dérivée stem:[l^{\text{\tiny ème}}] au sens de Fréchet au point stem:[x].
-
-Il s’agit donc d’une forme stem:[l]-linéaire symétrique sur stem:[\RR^n].
-
-On notera stem:[D^l v(x).(\xi_1,\ldots,\xi_l)] sa valeur pour stem:[l] vecteurs stem:[\xi_i\in\RR^n] (stem:[1\le i \le l]).
-
-Reprenons les notations de la section <<sec:sobolev>>.
-
-stem:[\alpha=(\alpha_1,\ldots,\alpha_n)] désigne un multi-entier, et on note stem:[|\alpha|=\alpha_1+\cdots+\alpha_n]. On a alors :
-[stem]
-<div class="paragraph">
-<p>|v|<em>{l,K}^2 = \int</em>{x\in K} \sum_{|\alpha|=l}\left\|\partial^{|\alpha|}v (x)\right\|^2 dx</p>
-</div>
-et
-[stem]
-<div class="paragraph">
-<p>\partial^{|\alpha|}v (x) = D^{|\alpha|}v(x).(\underbrace{e_1,\ldots,e_1}_{\alpha_1 \text{{\tiny fois}}}, \ldots , \underbrace{e_n,\ldots,e_n}_{\alpha_n \text{{\tiny fois}}})</p>
-</div>
-où stem:[(e_1,\ldots,e_n)] désigne la base canonique de stem:[\RR^n].
-
-Alors, en posant :
-[stem]
-<div class="paragraph">
-<p>\|D^l v(x)\| = \sup_{\xi_1,\ldots,\xi_l \in \left(\RR<sup>{\ast}\right)</sup>n} \; \frac{D^l v(x).(\xi_1,\ldots,\xi_l)}{|\xi_1| \ldots |\xi_l|}\qquad ,</p>
-</div>
-on déduit qu’il existe des constantes stem:[\gamma_1] et stem:[\gamma_2] dépendant uniquement de stem:[n] et stem:[l] (donc en particulier indépendantes de stem:[v]) telles que
-[[eq:maj1]]
-[stem]
-<div class="paragraph">
-<p>\gamma_1 \; |v|<em>{l,K} \le \left( \int</em>{x\in K} \| D^l v(x)\|^2 \, dx\right)^{1/2} \le \gamma_2 \; |v|_{l,K}</p>
-</div>
-Par ailleurs, si l’on utilise le changement de variable stem:[x=F(\hat{x})=B\hat{x}+b] dans stem:[D^l v(x)], il vient :
-
-[stem]
-<div class="openblock">
+<div class="sect2">
+<h3 id="etape-3-passage-à-lélément-de-référence"><a class="anchor" href="#etape-3-passage-à-lélément-de-référence"></a>2.3. Etape 3: Passage à l’élément de référence</h3>
+<div id="thr1" class="openblock env theorem">
 <div class="content">
 <div class="paragraph">
-<p>\forall \xi_1,\ldots,\xi_l \in \RR^n,\qquad D^l \hat{v}(\hat{x}).(\xi_1,\ldots,\xi_l) = D^l v(x).(B\xi_1,\ldots,B\xi_l)</p>
+<p>Soit \(K\) un élément quelconque de \({\cal T}_h\), et \(\hat{K}\) l’élément de référence.</p>
 </div>
+<div class="paragraph">
+<p>Soit \(F\) la transformation affine de \(\hat{K}\) vers \(K\) :</p>
+</div>
+<div id="eq:majref" class="stemblock">
+<div class="content">
+\[\forall v\in H^l(K), \qquad |\hat{v}|_{l,\hat{K}} \le C(l,n)\; \|B\|^l_2 \; |\hbox{det} B|^{-1/2} \, |v|_{l,K}\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Nous avons le corollaire suivant du théorème <a href="#thr1">[thr1]</a></p>
+</div>
+<div class="openblock env corollary">
+<div class="content">
+<div class="paragraph">
+<p>On a de même :</p>
+</div>
+<div id="eq:majref2" class="stemblock">
+<div class="content">
+\[\forall v\in H^l(K), \qquad |v|_{l,K}  \le C(l,n)\; \|B^{-1}\|^l_2 \; |\mathrm{det} B|^{1/2} \; |\hat{v}|_{l,\hat{K}}\]
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_preuve_du_théorème_thr1"><a class="anchor" href="#_preuve_du_théorème_thr1"></a>2.3.1. Preuve du théorème <a href="#thr1">[thr1]</a></h4>
+<div class="paragraph">
+<p>Ce théorème se montre comme suit.
+Il s’agit là en fait d’un simple résultat de changement de variable dans une intégrale.</p>
+</div>
+<div class="paragraph">
+<p>Soit \(v\) une fonction \(l\) fois différentiable au point \(x\).</p>
+</div>
+<div class="paragraph">
+<p>On note \(D^l v(x)\) sa dérivée \(l^{\text{\tiny ème}}\) au sens de Fréchet au point \(x\).</p>
+</div>
+<div class="paragraph">
+<p>Il s’agit donc d’une forme \(l\)-linéaire symétrique sur \(\RR^n\).</p>
+</div>
+<div class="paragraph">
+<p>On notera \(D^l v(x).(\xi_1,\ldots,\xi_l)\) sa valeur pour \(l\) vecteurs \(\xi_i\in\RR^n\) (\(1\le i \le l\)).</p>
+</div>
+<div class="paragraph">
+<p>Reprenons les notations de la section <a href="#sec:sobolev">[sec:sobolev]</a>.</p>
+</div>
+<div class="paragraph">
+<p>\(\alpha=(\alpha_1,\ldots,\alpha_n)\) désigne un multi-entier, et on note \(|\alpha|=\alpha_1+\cdots+\alpha_n\). On a alors :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[|v|_{l,K}^2 = \int_{x\in K} \sum_{|\alpha|=l}\left\|\partial^{|\alpha|}v (x)\right\|^2 dx\]
+</div>
+</div>
+<div class="paragraph">
+<p>et</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\partial^{|\alpha|}v (x) = D^{|\alpha|}v(x).(\underbrace{e_1,\ldots,e_1}_{\alpha_1 \text{{\tiny fois}}}, \ldots , \underbrace{e_n,\ldots,e_n}_{\alpha_n \text{{\tiny fois}}})\]
+</div>
+</div>
+<div class="paragraph">
+<p>où \((e_1,\ldots,e_n)\) désigne la base canonique de \(\RR^n\).</p>
+</div>
+<div class="paragraph">
+<p>Alors, en posant :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\|D^l v(x)\| = \sup_{\xi_1,\ldots,\xi_l \in \left(\RR^{\ast}\right)^n} \; \frac{D^l v(x).(\xi_1,\ldots,\xi_l)}{|\xi_1| \ldots |\xi_l|}\qquad ,\]
+</div>
+</div>
+<div class="paragraph">
+<p>on déduit qu’il existe des constantes \(\gamma_1\) et \(\gamma_2\) dépendant uniquement de \(n\) et \(l\) (donc en particulier indépendantes de \(v\)) telles que</p>
+</div>
+<div id="eq:maj1" class="stemblock">
+<div class="content">
+\[\gamma_1 \; |v|_{l,K} \le \left( \int_{x\in K} \| D^l v(x)\|^2 \, dx\right)^{1/2} \le \gamma_2 \; |v|_{l,K}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Par ailleurs, si l’on utilise le changement de variable \(x=F(\hat{x})=B\hat{x}+b\) dans \(D^l v(x)\), il vient :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\forall \xi_1,\ldots,\xi_l \in \RR^n,\qquad D^l \hat{v}(\hat{x}).(\xi_1,\ldots,\xi_l) = D^l v(x).(B\xi_1,\ldots,B\xi_l)\]
 </div>
 </div>
 <div class="paragraph">
@@ -803,33 +837,32 @@ Par ailleurs, si l’on utilise le changement de variable stem:[x=F(\hat{x})=B\h
 </div>
 <div class="stemblock">
 <div class="content">
-\[--
-\|D^l \hat{v}(\hat{x})\| \le \|B\|^l\; \|D^l v(x)\|
---
-Or, stem:[D^l v(x) = D^l v(F(\hat{x}))]. Donc
-
-[env.equation#eq:maj2]
---
-\int_{\hat{x}\in \hat{K}}\|D^l \hat{v}(\hat{x})\|^2 \; d\hat{x} \le \|B\|^{2l}\; \int_{\hat{x}\in \hat{K}} \|D^l v(F(\hat{x}))\|^2 \; d\hat{x}
-= \|B\|^{2l}\; |\hbox{det }B|^{-1} \int_{x\in K} \|D^l v(x)\|^2 \; dx
---
-
-En minorant et majorant (&lt;&lt;eq:maj2&gt;&gt;) grâce à la (&lt;&lt;eq:maj1,majoration&gt;&gt;), on obtient :
-[stem]\]
+\[\|D^l \hat{v}(\hat{x})\| \le \|B\|^l\; \|D^l v(x)\|\]
 </div>
 </div>
-<div class="openblock">
-<div class="content">
 <div class="paragraph">
-<p>\gamma^2_1 \; |\hat{v}|^2_{l,\hat{K}} \le \|B\|^{2l}\; |\hbox{det }B|^{-1} \gamma^2_2 \; |v|^2_{l,K}</p>
+<p>Or, \(D^l v(x) = D^l v(F(\hat{x}))\). Donc</p>
 </div>
+<div id="eq:maj2" class="stemblock">
+<div class="content">
+\[\int_{\hat{x}\in \hat{K}}\|D^l \hat{v}(\hat{x})\|^2 \; d\hat{x} \le \|B\|^{2l}\; \int_{\hat{x}\in \hat{K}} \|D^l v(F(\hat{x}))\|^2 \; d\hat{x}
+= \|B\|^{2l}\; |\hbox{det }B|^{-1} \int_{x\in K} \|D^l v(x)\|^2 \; dx\]
+</div>
+</div>
+<div class="paragraph">
+<p>En minorant et majorant (<a href="#eq:maj2">[eq:maj2]</a>) grâce à la (<a href="#eq:maj1">majoration</a>), on obtient :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\gamma^2_1 \; |\hat{v}|^2_{l,\hat{K}} \le \|B\|^{2l}\; |\hbox{det }B|^{-1} \gamma^2_2 \; |v|^2_{l,K}\]
 </div>
 </div>
 <div class="paragraph">
 <p>d’où le résultat de (<a href="#eq:majref">majoration du théorème</a>) ce qui conclut la preuve de <a href="#thr1">[thr1]</a> \(\blacksquare\)</p>
 </div>
+</div>
 <div class="sect3">
-<h4 id="estimation-de-b"><a class="anchor" href="#estimation-de-b"></a>2.1.1. Estimation de \(\|B\|\)</h4>
+<h4 id="estimation-de-b"><a class="anchor" href="#estimation-de-b"></a>2.3.2. Estimation de \(\|B\|\)</h4>
 <div class="paragraph">
 <p>Soit \(h_K\) le diamètre de \(K\), c’est à dire le maximum des distances euclidiennes entre deux points de \(K\).</p>
 </div>
@@ -841,203 +874,288 @@ En minorant et majorant (&lt;&lt;eq:maj2&gt;&gt;) grâce à la (&lt;&lt;eq:maj1,
 </div>
 <div class="stemblock">
 <div class="content">
-\[--
-\|B\| = \sup_{x\ne 0} \frac{\|Bx\|}{\|x\|} = \sup_{\|x\|=\hat{\rho}} \frac{\|Bx\|}{\hat{\rho}}
---
-
-
-Soit stem:[x] un vecteur de stem:[\RR^n] tel que stem:[\|x\|=\hat{\rho}].
-
-Par définition de stem:[\hat{\rho}], il existe deux points stem:[\hat{y}] et stem:[\hat{z}] de stem:[\hat{K}] tels que stem:[x=\hat{y}-\hat{z}].
-
-Alors stem:[Bx=B\hat{y}-B\hat{z}=F(\hat{y})-F(\hat{z})=y-z] avec stem:[y] et stem:[z] appartenant à stem:[K].
-
-Par définition de stem:[h_K], stem:[\|y-z\| \le h_K].
-Donc stem:[\|Bx\| \le h_K].
-
-En reportant dans la définition de stem:[\|B\|], on obtient donc :
-[eq:kk1]
-[stem]\]
+\[\|B\| = \sup_{x\ne 0} \frac{\|Bx\|}{\|x\|} = \sup_{\|x\|=\hat{\rho}} \frac{\|Bx\|}{\hat{\rho}}\]
 </div>
 </div>
 <div class="paragraph">
-<p>\|B\| \le \frac{h_K}{\hat{\rho}}</p>
+<p>Soit \(x\) un vecteur de \(\RR^n\) tel que \(\|x\|=\hat{\rho}\).</p>
 </div>
-Et on a évidemment de même :
-[[eq:kk2]]
-[stem]
 <div class="paragraph">
-<p>\|B^{-1}\| \le \frac{\hat{h}}{\rho_K}</p>
+<p>Par définition de \(\hat{\rho}\), il existe deux points \(\hat{y}\) et \(\hat{z}\) de \(\hat{K}\) tels que \(x=\hat{y}-\hat{z}\).</p>
 </div>
-[[etape-4-majoration-sur-lélément-de-référence]]
-=== Etape 4: Majoration sur l’élément de référence
-
-Le résultat principal est le suivant :
-[[thr2]]
-.Théorème
-****
-Soient stem:[l] et stem:[k] deux entiers tels que stem:[0\le l \le k+1].
-Si stem:[\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))] laisse stem:[P_k(\hat{K})] invariant (c’est à dire vérifie stem:[\forall \hat{p}\in P_k(\hat{K}), \hat{\pi}\hat{p}=\hat{p}]), alors
-
-[[eq:majref0]]
-[stem]
 <div class="paragraph">
-<p>\exists C(\hat{K},\hat{\pi}) ,\;  \forall \hat{v} \in H^{k+1}(\hat{K}), \; |\hat{v}-\hat{\pi}\hat{v}|<em>{l,\hat{K}} \le C |\hat{v}|</em>{k+1,\hat{K}}</p>
+<p>Alors \(Bx=B\hat{y}-B\hat{z}=F(\hat{y})-F(\hat{z})=y-z\) avec \(y\) et \(z\) appartenant à \(K\).</p>
 </div>
-****
-
-==== Preuve du théorème <<thr2>>
-
-On montre ce résultat comme suit:
-
-stem:[\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))], et donc stem:[I-\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))] car stem:[l\le k+1].
-
-Et donc
-
-[stem]
 <div class="paragraph">
-<p>|\hat{v}-\hat{\pi}\hat{v}|<em>{l,\hat{K}} \le \|I-\hat{\pi}\|</em>{\mathcal{L}(H<sup>{k+1}(\hat{K}),H</sup>l(\hat{K}))}\; \|\hat{v}\|_{k+1,\hat{K}}</p>
+<p>Par définition de \(h_K\), \(\|y-z\| \le h_K\).
+Donc \(\|Bx\| \le h_K\).</p>
 </div>
-On utilise maintenant l’invariance de stem:[P_k(\hat{K})]:
-
-On aura donc démontré le théorème si l’on montre que
-[stem]
 <div class="paragraph">
-<p>\exists C,\; \forall \hat{v}\in H^{k+1}(\hat{K}) \;  \inf_{\hat{p}\in P_k(\hat{K})} \|\hat{v}+\hat{p}\|<em>{k+1,\hat{K}} \le C |\hat{v}|</em>{k+1,\hat{K}}</p>
+<p>En reportant dans la définition de \(\|B\|\), on obtient donc :</p>
 </div>
-Soit stem:[(f_i)_{i=0,\ldots,k}] une base du dual de stem:[P_k(\hat{K})].
-
-D’après le théorème d’Hahn-Banach, il existe des formes linéaires continues sur stem:[H^{k+1}(\hat{K})], que
-l’on notera encore stem:[f_i], et qui prolongent les stem:[f_i].
-
-En particulier, si stem:[\hat{p}\in P_k(\hat{K})] vérifie stem:[f_i(\hat{p})=0,\, (i=0,\ldots,k)], alors
-stem:[\hat{p}=0].
-
-Nous allons montrer que
-[[eqref2]]
-[stem]
-<div class="paragraph">
-<p>\exists C, \, \forall \hat{v}\in H^{k+1}(\hat{K}), \; \|\hat{v}\|<em>{k+1,\hat{K}} \le C \left\{ |\hat{v}|</em>{k+1,\hat{K}} + \sum_{i=0}^k |f_i(\hat{v})| \right\}</p>
-</div>
-NOTE: On aura le résultat souhaité en appliquant (<<eqref2>>) à stem:[\hat{v}+\hat{q}], avec stem:[\hat{q}] tel que stem:[f_i(\hat{q})=f_i(-\hat{v})].
-
-On montre la relation (<<eqref2>>) par l’absurde comme suit:
-
-Si <<eqref2>> n’est pas vraie, alors il existe une suite de fonctions stem:[\hat{v}_n] de stem:[H^{k+1}(\hat{K})] telles que :
-
-[stem]
-<div class="literalblock">
+<div class="stemblock">
 <div class="content">
-<pre> \|\hat{v}_n\|_{k+1,\hat{K}} =1, \;\;
-|\hat{v}_n|_{k+1,\hat{K}} \longrightarrow 0,\; \hbox{ et } \forall i \;  f_i(\hat{v}_n)\longrightarrow 0</pre>
+\[\|B\| \le \frac{h_K}{\hat{\rho}}\]
 </div>
 </div>
-Par complétude de stem:[H^{k+1}(\hat{K})], on extrait une sous-suite convergente vers stem:[\hat{v} \in H^{k+1}(\hat{K})].
-
-Mais stem:[|\hat{v}_n|_{k+1,\hat{K}} \longrightarrow 0].
-
-Donc stem:[\hat{v} \in P_k(\hat{K})] et stem:[f_i(\hat{v})=0].
-
-D’où une contradiction. stem:[\blacksquare].
-
-[[etape-5-assemblage-des-majorations-locales]]
-=== Etape 5: Assemblage des majorations locales
-
-[[majoration-sur-un-élément-quelconque]]
-==== Majoration sur un élément quelconque
-
-En rassemblant les résultats précédents, on peut établir une majoration sur un élément quelconque stem:[K] du maillage.
-
-On a :
-[stem]
 <div class="paragraph">
-<p>\begin{array}{rclr}
-|v-\pi_K v|<em>{l,K} &amp; \le &amp; C(l,n)\; \|B<sup>{-1}\|</sup>l\; |\hbox{det }B|^{1/2} \; |\hat{v}-\hat{\pi}\hat{v}|</em>{l,\hat{K}}&amp;\hbox{d&#8217;après (<a href="#eq:majref2">[eq:majref2]</a>)} \\
- &amp; \le &amp; C(l,n)\; \|B<sup>{-1}\|</sup>l\; |\hbox{det }B|^{1/2} \; C(\hat{K},\hat{\pi})\; |\hat{v}|<em>{k+1,\hat{K}} &amp;\hbox{d&#8217;après (<a href="#eq:majref0">[eq:majref0]</a>)}\\
-&amp; \le &amp; C(l,n)\; \|B<sup>{-1}\|</sup>l\; |\hbox{det }B|^{1/2} \; C(\hat{K},\hat{\pi})\; C(k+1,n) \; \|B\|^{k+1} |\hbox{det }B|^{-1/2}\; |v|</em>{k+1,K}
-&amp; \hbox{d&#8217;après (<a href="#eq:majref">[eq:majref]</a>)}\\
-&amp; \le &amp; C(l,n)\; \frac{\hat{h}<sup>l}{\rho_K</sup>l} \;  \; C(\hat{K},\hat{\pi})\; C(k+1,n) \; \frac{h_K<sup>{k+1}}{\hat{\rho}</sup>{k+1}} \; |v|_{k+1,K} &amp; \hbox{d&#8217;après (<a href="#eq:kk1">[eq:kk1]</a>) et (<a href="#eq:kk2">[eq:kk2]</a>)}\\
-\end{array}</p>
+<p>Et on a évidemment de même :</p>
 </div>
-D’où finalement :
-
-[[eqmajloc]]
-[stem]
-<div class="paragraph">
-<p>|v-\pi_K v|<em>{l,K}  \le  \hat{C}(\hat{\pi},\hat{K},l,k,n)\; \frac{h_K<sup>{k+1}}{\rho_K</sup>l} \;   |v|</em>{k+1,K}</p>
+<div id="eq:kk2" class="stemblock">
+<div class="content">
+\[\|B^{-1}\| \le \frac{\hat{h}}{\rho_K}\]
 </div>
-NOTE: Il est important de remarquer à ce niveau que stem:[\hat{C}] est indépendant de stem:[K].
-
-[[assemblage-des-résultats-locaux]]
-==== Assemblage des résultats locaux
-
-On va maintenant reprendre la majoration (<<eqmajloc>>) pour tous les éléments du maillage et toutes les valeurs de stem:[l=0,\ldots,m].
-
-On va définir deux quantités représentatives du maillage :
-
-* stem:[h\quad] tel que stem:[h_K \le h, \; \forall K\in {\cal T}_h\qquad] (diamètre maximum des éléments)
-
-* stem:[\sigma\quad] tel que stem:[{\frac{h_K}{\rho_K}} \le \sigma, \; \forall K\in {\cal T}_h\qquad] (caractérise l’aplatissement des éléments)
-
-On a
-[stem]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="etape-4-majoration-sur-lélément-de-référence"><a class="anchor" href="#etape-4-majoration-sur-lélément-de-référence"></a>2.4. Etape 4: Majoration sur l’élément de référence</h3>
 <div class="paragraph">
-<p>\begin{array}{rcl}
+<p>Le résultat principal est le suivant :</p>
+</div>
+<div id="thr2" class="sidebarblock">
+<div class="content">
+<div class="title">Théorème</div>
+<div class="paragraph">
+<p>Soient \(l\) et \(k\) deux entiers tels que \(0\le l \le k+1\).
+Si \(\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))\) laisse \(P_k(\hat{K})\) invariant (c’est à dire vérifie \(\forall \hat{p}\in P_k(\hat{K}), \hat{\pi}\hat{p}=\hat{p}\)), alors</p>
+</div>
+<div id="eq:majref0" class="stemblock">
+<div class="content">
+\[\exists C(\hat{K},\hat{\pi}) ,\;  \forall \hat{v} \in H^{k+1}(\hat{K}), \; |\hat{v}-\hat{\pi}\hat{v}|_{l,\hat{K}} \le C |\hat{v}|_{k+1,\hat{K}}\]
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_preuve_du_théorème_théorème"><a class="anchor" href="#_preuve_du_théorème_théorème"></a>2.4.1. Preuve du théorème <a href="#thr2">Théorème</a></h4>
+<div class="paragraph">
+<p>On montre ce résultat comme suit:</p>
+</div>
+<div class="paragraph">
+<p>\(\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))\), et donc \(I-\hat{\pi} \in {\cal L}(H^{k+1}(\hat{K}),H^l(\hat{K}))\) car \(l\le k+1\).</p>
+</div>
+<div class="paragraph">
+<p>Et donc</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[|\hat{v}-\hat{\pi}\hat{v}|_{l,\hat{K}} \le \|I-\hat{\pi}\|_{\mathcal{L}(H^{k+1}(\hat{K}),H^l(\hat{K}))}\; \|\hat{v}\|_{k+1,\hat{K}}\]
+</div>
+</div>
+<div class="paragraph">
+<p>On utilise maintenant l’invariance de \(P_k(\hat{K})\):</p>
+</div>
+<div class="paragraph">
+<p>On aura donc démontré le théorème si l’on montre que</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\exists C,\; \forall \hat{v}\in H^{k+1}(\hat{K}) \;  \inf_{\hat{p}\in P_k(\hat{K})} \|\hat{v}+\hat{p}\|_{k+1,\hat{K}} \le C |\hat{v}|_{k+1,\hat{K}}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Soit \((f_i)_{i=0,\ldots,k}\) une base du dual de \(P_k(\hat{K})\).</p>
+</div>
+<div class="paragraph">
+<p>D’après le théorème d’Hahn-Banach, il existe des formes linéaires continues sur \(H^{k+1}(\hat{K})\), que
+l’on notera encore \(f_i\), et qui prolongent les \(f_i\).</p>
+</div>
+<div class="paragraph">
+<p>En particulier, si \(\hat{p}\in P_k(\hat{K})\) vérifie \(f_i(\hat{p})=0,\, (i=0,\ldots,k)\), alors
+\(\hat{p}=0\).</p>
+</div>
+<div class="paragraph">
+<p>Nous allons montrer que</p>
+</div>
+<div id="eqref2" class="stemblock">
+<div class="content">
+\[\exists C, \, \forall \hat{v}\in H^{k+1}(\hat{K}), \; \|\hat{v}\|_{k+1,\hat{K}} \le C \left\{ |\hat{v}|_{k+1,\hat{K}} + \sum_{i=0}^k |f_i(\hat{v})| \right\}\]
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+On aura le résultat souhaité en appliquant (<a href="#eqref2">[eqref2]</a>) à \(\hat{v}+\hat{q}\), avec \(\hat{q}\) tel que \(f_i(\hat{q})=f_i(-\hat{v})\).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>On montre la relation (<a href="#eqref2">[eqref2]</a>) par l’absurde comme suit:</p>
+</div>
+<div class="paragraph">
+<p>Si <a href="#eqref2">[eqref2]</a> n’est pas vraie, alors il existe une suite de fonctions \(\hat{v}_n\) de \(H^{k+1}(\hat{K})\) telles que :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[ \|\hat{v}_n\|_{k+1,\hat{K}} =1, \;\;
+|\hat{v}_n|_{k+1,\hat{K}} \longrightarrow 0,\; \hbox{ et } \forall i \;  f_i(\hat{v}_n)\longrightarrow 0\]
+</div>
+</div>
+<div class="paragraph">
+<p>Par complétude de \(H^{k+1}(\hat{K})\), on extrait une sous-suite convergente vers \(\hat{v} \in H^{k+1}(\hat{K})\).</p>
+</div>
+<div class="paragraph">
+<p>Mais \(|\hat{v}_n|_{k+1,\hat{K}} \longrightarrow 0\).</p>
+</div>
+<div class="paragraph">
+<p>Donc \(\hat{v} \in P_k(\hat{K})\) et \(f_i(\hat{v})=0\).</p>
+</div>
+<div class="paragraph">
+<p>D’où une contradiction. \(\blacksquare\).</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="etape-5-assemblage-des-majorations-locales"><a class="anchor" href="#etape-5-assemblage-des-majorations-locales"></a>2.5. Etape 5: Assemblage des majorations locales</h3>
+<div class="sect3">
+<h4 id="majoration-sur-un-élément-quelconque"><a class="anchor" href="#majoration-sur-un-élément-quelconque"></a>2.5.1. Majoration sur un élément quelconque</h4>
+<div class="paragraph">
+<p>En rassemblant les résultats précédents, on peut établir une majoration sur un élément quelconque \(K\) du maillage.</p>
+</div>
+<div class="paragraph">
+<p>On a :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{array}{rclr}
+|v-\pi_K v|_{l,K} &amp; \le &amp; C(l,n)\; \|B^{-1}\|^l\; |\hbox{det }B|^{1/2} \; |\hat{v}-\hat{\pi}\hat{v}|_{l,\hat{K}}&amp;\hbox{d'après (&lt;&lt;eq:majref2&gt;&gt;)} \\
+ &amp; \le &amp; C(l,n)\; \|B^{-1}\|^l\; |\hbox{det }B|^{1/2} \; C(\hat{K},\hat{\pi})\; |\hat{v}|_{k+1,\hat{K}} &amp;\hbox{d'après (&lt;&lt;eq:majref0&gt;&gt;)}\\
+&amp; \le &amp; C(l,n)\; \|B^{-1}\|^l\; |\hbox{det }B|^{1/2} \; C(\hat{K},\hat{\pi})\; C(k+1,n) \; \|B\|^{k+1} |\hbox{det }B|^{-1/2}\; |v|_{k+1,K}
+&amp; \hbox{d'après (&lt;&lt;eq:majref&gt;&gt;)}\\
+&amp; \le &amp; C(l,n)\; \frac{\hat{h}^l}{\rho_K^l} \;  \; C(\hat{K},\hat{\pi})\; C(k+1,n) \; \frac{h_K^{k+1}}{\hat{\rho}^{k+1}} \; |v|_{k+1,K} &amp; \hbox{d'après (&lt;&lt;eq:kk1&gt;&gt;) et (&lt;&lt;eq:kk2&gt;&gt;)}\\
+\end{array}\]
+</div>
+</div>
+<div class="paragraph">
+<p>D’où finalement :</p>
+</div>
+<div id="eqmajloc" class="stemblock">
+<div class="content">
+\[|v-\pi_K v|_{l,K}  \le  \hat{C}(\hat{\pi},\hat{K},l,k,n)\; \frac{h_K^{k+1}}{\rho_K^l} \;   |v|_{k+1,K}\]
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Il est important de remarquer à ce niveau que \(\hat{C}\) est indépendant de \(K\).
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="assemblage-des-résultats-locaux"><a class="anchor" href="#assemblage-des-résultats-locaux"></a>2.5.2. Assemblage des résultats locaux</h4>
+<div class="paragraph">
+<p>On va maintenant reprendre la majoration (<a href="#eqmajloc">[eqmajloc]</a>) pour tous les éléments du maillage et toutes les valeurs de \(l=0,\ldots,m\).</p>
+</div>
+<div class="paragraph">
+<p>On va définir deux quantités représentatives du maillage :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(h\quad\) tel que \(h_K \le h, \; \forall K\in {\cal T}_h\qquad\) (diamètre maximum des éléments)</p>
+</li>
+<li>
+<p>\(\sigma\quad\) tel que \({\frac{h_K}{\rho_K}} \le \sigma, \; \forall K\in {\cal T}_h\qquad\) (caractérise l’aplatissement des éléments)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>On a</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{array}{rcl}
 \|v-\pi_K v\|^2_{m,K} &amp; = &amp; \sum_{l=0}^m |v-\pi_K v|^2_{l,K} \\
  &amp; \le &amp; \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\;
- \left(\frac{h_K<sup>{k+1}}{\rho_K</sup>l}\right)^2 \;   |v|^2_{k+1,K}\qquad\hbox{d&#8217;apr\`es (\ref{eqmajloc})}\\
- &amp; \le &amp; \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\; \left\{\left(\frac{h_K}{\rho_K}\right)^l\; h_K^{m-l}\; h_K<sup>{k+1-m}\right\}</sup>2 \;   |v|^2_{k+1,K}\\
+ \left(\frac{h_K^{k+1}}{\rho_K^l}\right)^2 \;   |v|^2_{k+1,K}\qquad\hbox{d'apr\`es (\ref{eqmajloc})}\\
+ &amp; \le &amp; \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\; \left\{\left(\frac{h_K}{\rho_K}\right)^l\; h_K^{m-l}\; h_K^{k+1-m}\right\}^2 \;   |v|^2_{k+1,K}\\
  &amp; \le &amp; \left\{ \sum_{l=0}^m \hat{C}^2(\hat{\pi},\hat{K},l,k,n)\; \sigma^{2l} h^{2m-2l} \right\} \; \left[ h^{k+1-m}\; |v|_{k+1,K} \right]^2
- \end{array}</p>
+ \end{array}\]
 </div>
-Le terme entre accolades ne tend ni vers 0 ni vers l’infini quand stem:[h] tend vers 0.
-
-D’où :
-[stem]
-<div class="paragraph">
-<p>\|v-\pi_K v\|<em>{m,K} \le \hat{C}'(\hat{\pi},\hat{K},l,k,n,\sigma,h)\; h^{k+1-m}\; |v|</em>{k+1,K}</p>
 </div>
-En sommant ensuite sur tous les éléments du maillage :
-
-[stem]
 <div class="paragraph">
-<p>\begin{array}{rcl}
+<p>Le terme entre accolades ne tend ni vers 0 ni vers l’infini quand \(h\) tend vers 0.</p>
+</div>
+<div class="paragraph">
+<p>D’où :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\|v-\pi_K v\|_{m,K} \le \hat{C}'(\hat{\pi},\hat{K},l,k,n,\sigma,h)\; h^{k+1-m}\; |v|_{k+1,K}\]
+</div>
+</div>
+<div class="paragraph">
+<p>En sommant ensuite sur tous les éléments du maillage :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{array}{rcl}
 \|v-\pi_h v\|^2_{m} &amp; = &amp; \sum_{K\in {\cal T}_h} \|v-\pi_K v\|^2_{m,K} \\
  &amp; \le &amp; \sum_{K\in {\cal T}_h} \left[ \hat{C}'(\hat{\pi},\hat{K},l,k,n,\sigma,h)\; h^{k+1-m} \; |v|_{k+1,K} \right]^2
-\end{array}</p>
+\end{array}\]
 </div>
-On obtient finalement :
-
-[[eqmajfinal]]
-[stem]
+</div>
 <div class="paragraph">
-<p>\|v-\pi_h v\|<em>{m} \le C(\mathcal{T}_h,m,k,n) \; h^{k+1-m}\; |v|</em>{k+1}</p>
+<p>On obtient finalement :</p>
 </div>
-[[résultat-final]]
-=== Résultat final
-
-En reportant (<<eqmajfinal>>) dans (<<eq:cea2>>), on obtient le résultat
-final classique de majoration d’erreur :
-
-[[eqmajfinal2]]
-[stem]
+<div id="eqmajfinal" class="stemblock">
+<div class="content">
+\[\|v-\pi_h v\|_{m} \le C(\mathcal{T}_h,m,k,n) \; h^{k+1-m}\; |v|_{k+1}\]
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="résultat-final"><a class="anchor" href="#résultat-final"></a>2.6. Résultat final</h3>
 <div class="paragraph">
-<p>\|u-u_h\|<em>{m} \le \mathcal{C} \; h^{k+1-m}\; |u|</em>{k+1}</p>
+<p>En reportant (<a href="#eqmajfinal">[eqmajfinal]</a>) dans (<a href="#eq:cea2">[eq:cea2]</a>), on obtient le résultat
+final classique de majoration d’erreur :</p>
 </div>
-[[quelques-commentaires]]
-== Quelques commentaires
-
-Une utilisation fréquente de (<<eqmajfinal2>>) a lieu dans le cas stem:[m=1].
-Alors si l’espace de polynômes stem:[P_k(\hat{K})\subset H^1(\hat{K})] (ce qui est toujours le cas) et si stem:[\hat{\pi}] est bien défini sur stem:[H^{k+1}(\hat{K})], on a :
-
-[stem]
+<div id="eqmajfinal2" class="stemblock">
+<div class="content">
+\[\|u-u_h\|_{m} \le \mathcal{C} \; h^{k+1-m}\; |u|_{k+1}\]
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quelques-commentaires"><a class="anchor" href="#quelques-commentaires"></a>3. Quelques commentaires</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>\mbox{si }u\in H^{k+1}(\Omega),\quad \|u-u_h\|<em>1 \le \mathcal{C} \; h^k \; |u|</em>{k+1}</p>
+<p>Une utilisation fréquente de (<a href="#eqmajfinal2">[eqmajfinal2]</a>) a lieu dans le cas \(m=1\).
+Alors si l’espace de polynômes \(P_k(\hat{K})\subset H^1(\hat{K})\) (ce qui est toujours le cas) et si \(\hat{\pi}\) est bien défini sur \(H^{k+1}(\hat{K})\), on a :</p>
 </div>
-NOTE: Si le domaine stem:[\Omega] n’est pas polygonal, la majoration précédente n’est plus valable.
+<div class="stemblock">
+<div class="content">
+\[\mbox{si }u\in H^{k+1}(\Omega),\quad \|u-u_h\|_1 \le \mathcal{C} \; h^k \; |u|_{k+1}\]
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Si le domaine \(\Omega\) n’est pas polygonal, la majoration précédente n’est plus valable.
   On peut alors établir d’autres majorations du même type – se référer par exemple à cite:[raviartthomast1983].
   De même, si les calculs d’intégrales ne sont pas faits exactement mais à l’aide d’une intégration numérique, une erreur supplémentaire doit être prise en compte, qui conduit à une nouvelle majoration d’erreur – voir là-aussi par exemple cite:[raviartthomast1983].
-</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>

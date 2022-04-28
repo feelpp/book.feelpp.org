@@ -311,7 +311,7 @@ MathJax.Hub.Config({
     <a class="nav-link" href="laplacian/index.html">Laplacien</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#user:ROOT:laplacian.adoc">Numerical Experiments</a>
+    <a class="nav-link" href="../../user/latest/cpp/laplacian.html">Numerical Experiments</a>
   </li>
 </ul>
   </li>
@@ -1491,7 +1491,7 @@ l’<em>opérateur d’interpolation local</em> comme</p>
 <div class="paragraph">
 <p>Alors il existe une constante \(c\) independente de \(K\) telle que \(\forall v \in H^{k+1}(K)\) et pour tout \(m \in \{0,...,k+1\}\),</p>
 </div>
-<div id="eq:32" class="stemblock">
+<div id="eq:32b" class="stemblock">
 <div class="content">
 \[  |v - \Ilag{K}(v)|_{m,K} \leq  c h^{k+1-m} \omega_K^m |v|_{k+1,K}\]
 </div>
@@ -1773,38 +1773,6 @@ Les résultats sont identiques à ceux du theorème <a href="#thr:15">Théorèm
 <div class="paragraph">
 <p>Construisons une famille de maillage \(\{\calTh\}_{h &gt;0}\), par exemple \(h\in \{0.4, 0.2, 0.1, 0.05\}\) et calculons l’erreur entre le calcul exact de l’aire \(\pi\) et le calcul numérique \(\int_{\Omega^1_h} 1\) et \(\int_{\Omega^2_h} 1\) respectivement.</p>
 </div>
-<div class="paragraph">
-<p>Le listing suivant présente le code C++ pour effectuer cela</p>
-</div>
-<div class="listingblock">
-<div class="title">Calcul de l&#8217;aire d&#8217;un cercle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">Unresolved include directive in modules/fem/pages/ch-ef-lagrange.adoc - include::example$/isoparam/circle.cpp[]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>La table <a href="#tab:circle">Convergence de l&#8217;approximation \(P_1\) et \(P_2\)</a> présente les erreurs d’approximation et la figure <a href="#fig:circle">[fig:circle]</a> présente les courbes de convergence en échelle log-log ainsi que les pentes associées à ces courbes.</p>
-</div>
-<div class="paragraph">
-<p>On s’attend d’après le théorème <a href="#eq:62">[eq:62]</a> appliqué à des pentes à l’élément fini géométrique.</p>
-</div>
-<table id="tab:circle" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Convergence de l&#8217;approximation \(P_1\) et \(P_2\)</caption>
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Unresolved include directive in modules/fem/pages/ch-ef-lagrange.adoc - include::example$/isoparam/circle.csv[]</th>
-</tr>
-</thead>
-</table>
-<div class="paragraph">
-<p>La table <a href="#tab:circle">toto</a> présente les résultats de convergence.</p>
-</div>
-<div class="paragraph">
-<p>On observe un phénomène de super-convergence pour le cas \(\Omega^2_h\), on obtient un ordre de convergence \(4\) et nous devrions obtenir \(3\).</p>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -1939,7 +1907,7 @@ FunctionSpace&lt;Mesh&lt;Hypercube&lt;d, k_geo&gt; &gt;, bases&lt;Lagrange&lt;k&
 <div class="paragraph">
 <p>On va construire une base de \(V_h\) en associant à chaque ddl \(a_i\) un vecteur de la base. On définit ainsi les <strong>fonctions de base globales</strong> \(\varphi_i\) (\(i=1,\ldots,N_h\)) par</p>
 </div>
-<div id="eq:28" class="stemblock">
+<div id="eq:28b" class="stemblock">
 <div class="title">Fonctions de base globales</div>
 <div class="content">
 \[{\varphi_i}_{|K_j} \in P_j, \quad j=1,\ldots,N_e  \mbox{ et } \varphi_i(a_j)=\delta_{ij},  1\le i,j \le N_h\]

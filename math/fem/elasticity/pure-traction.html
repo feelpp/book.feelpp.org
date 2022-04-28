@@ -311,7 +311,7 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../laplacian/index.html">Laplacien</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#user:ROOT:laplacian.adoc">Numerical Experiments</a>
+    <a class="nav-link" href="../../../user/latest/cpp/laplacian.html">Numerical Experiments</a>
   </li>
 </ul>
   </li>
@@ -607,12 +607,14 @@ MathJax.Hub.Config({
 <div id="pure-traction" class="sidebarblock">
 <div class="content">
 <div class="title">Problème: traction pure</div>
-<div class="paragraph">
-<p>\begin{align}
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
 \nabla \cdot \stresst{\disp{d}} + \mathbf{f} = \mathbf{0} &amp; \quad \mbox{ in } \Omega \\
 \stresst{\disp{d}} = \lambda (\nabla \cdot \disp{d}) \Id + \mu (\nabla \disp{d} + \nabla \disp{d}^T) &amp; \quad \mbox{ in } \Omega\\
 \stresst{\disp{d}} \normal = \mathbf{g} &amp; \quad \mbox{ on } \partial \Omega
-\end{align}</p>
+\end{align}\]
+</div>
 </div>
 </div>
 </div>
@@ -804,7 +806,6 @@ La formulation du problème de <a href="#pure-traction">traction pure</a> s&#821
 <p>Afin de traiter le déplacement rigide, on propose d&#8217;utiliser la posssibilé du framework de résolution algébrique d&#8217;avoir la connaissance du noyau (<em>i.e</em> \(\cal{R}\)).
 Ce faisant une solution  est obtenue, sans contrôle du déplacement rigide, il suffit ensuite de retrancher \(\int_\Omega \disp{d}\) et \(\int_\Omega \nabla \times \disp{d}\) à cette solution pour obtenir celle en \(V_N\).</p>
 </div>
-
 </td>
 </tr>
 </table>
