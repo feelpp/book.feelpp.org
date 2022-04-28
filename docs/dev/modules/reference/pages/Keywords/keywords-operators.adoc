@@ -10,11 +10,11 @@ You can use the usual operations and logical operators.
 |`*` |stem:[ f*g]|tensor product
 |`/` |stem:[ f/g]|tensor tensor division  (stem:[g] scalar field)
 |`<` |stem:[ f<g]|element wise less
-|`<=` |stem:[ f<=g]|element wise less or equal
+|`<=` |stem:[ f\leq g]|element wise less or equal
 |`>` |stem:[ f>g]|element wise greater
-|`>=` |stem:[ f>=g]|element wise greater or equal
+|`>=` |stem:[ f \geq g]|element wise greater or equal
 |`==` |stem:[ f==g]|element wise equal
-|`!=` |stem:[ f!=g]|element wise not equal
+|`!=` |stem:[ f \neq g]|element wise not equal
 |`-` |stem:[ -g]|element wise unary minus
 |`&&` |stem:[ f] and stem:[g]|element wise logical and
 |`\|\|` |stem:[ f] or stem:[g]|element wise logical or
@@ -30,9 +30,10 @@ Feel++ finit element language use _test_ and _trial_ functions. Keywords are dif
 
 Suppose that stem:[ f \in X_h ] reads
 
-\[
+[stem]
+++++
 f=\sum_{i=0}^{\mathcal{N}} f_i \phi_i
-\]
+++++
 
 where stem:[ X_h = \mathrm{span}\{ \phi_i, i=1,\ldots,\mathcal{N}\} ]
 is a finite element space.
@@ -60,7 +61,7 @@ is a finite element space.
 |`tracev(f)`| stem:[ \mathrm{trace}( f ) ] | trace of  matrix field stem:[ f ]   | 0 |  stem:[ 1 \times 1  ] stem:[ m=p=d ]
 |`normal(f)`| stem:[ f \cdot \overrightarrow{N}  ] | normal component of test function   | rankstem:[(f(\overrightarrow{x}))-1]|
 |`normalt(f)`| stem:[ f \cdot \overrightarrow{N}  ] | normal component of trial function   | rankstem:[(f(\overrightarrow{x}))-1]|
-|`normalv(f)`| stem:[ f \cdot \overrightarrow{N}  ] | normal component of function stem:[ f ]   | rankstem:[(f(\overrightarrow{x}))-1]|  
+|`normalv(f)`| stem:[ f \cdot \overrightarrow{N}  ] | normal component of function stem:[ f ]   | rankstem:[(f(\overrightarrow{x}))-1]|
 |`dn(f)`| stem:[ \nabla f \cdot \overrightarrow{N} ] | normal derivative of test function  |0 |stem:[ 1 \times 1 ] stem:[ m=p=1 ]
 |`dn(f)`| stem:[ \nabla f \  \overrightarrow{N} ] | normal derivative of test function  |1 |stem:[ m \times 1 ] stem:[p=1 ]
 |`dnt(f)`| stem:[ \nabla f \cdot \overrightarrow{N} ] | normal derivative of trial function  |0 |stem:[ 1 \times1 ] stem:[m=p=1]
