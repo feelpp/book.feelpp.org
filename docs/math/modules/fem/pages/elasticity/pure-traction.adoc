@@ -5,11 +5,14 @@ Le problème de traction pure en élasticité linéaire s'exprime sous la forme 
 [[pure-traction]]
 .Problème: traction pure
 ****
+[stem]
+++++
 \begin{align}
 \nabla \cdot \stresst{\disp{d}} + \mathbf{f} = \mathbf{0} & \quad \mbox{ in } \Omega \\
 \stresst{\disp{d}} = \lambda (\nabla \cdot \disp{d}) \Id + \mu (\nabla \disp{d} + \nabla \disp{d}^T) & \quad \mbox{ in } \Omega\\
 \stresst{\disp{d}} \normal = \mathbf{g} & \quad \mbox{ on } \partial \Omega
 \end{align}
+++++
 ****
 
 Le choix naturel d'espace fonctionel est stem:[[H^1(\Omega)\]^3] pour la solution et les fonctions tests.
@@ -22,6 +25,7 @@ On cherche stem:[\disp{d} \in [H^1(\Omega)\]^3] telle que
 ++++
 a(\disp{d},\disp{v}) = \int_\Omega f \cdot \disp{v} + \int_{\partial \Omega} \disp{g} \cdot \normal \quad  \forall v \in [H^1(\Omega)]^3
 ++++
+
 la forme stem:[a] a été définie dans  la xref:elasticity/mixed.adoc[formulation mixte].
 ****
 
@@ -34,6 +38,7 @@ Pour s'en convaincre, introduisons l'ensemble
 ++++
 \cal{R} = \left\{ \disp{d} \in [H^1 (\Omega)]^3; \disp{d}(x) = \tau + \omega \times \disp{x} \right\}
 ++++
+
 où stem:[\tau] et stem:[\omega] sont des vecteurs de stem:[\RR^3] et stem:[\times] est le produit vectoriel dans stem:[\RR^3].
 Une fonction de stem:[\cal{R}] est appelée champ de _déplacement rigide_ car il correspond à un movement de translation et de rotation de stem:[\Omega].
 ====
@@ -45,6 +50,7 @@ L'équivalence suivante est vérifiée
 ++++
 \disp{d} \in \cal{R} \iff \forall \disp{v} \in [H^1 (\Omega)]^3, a(\disp{d},\disp{v})=0
 ++++
+
 ****
 .Preuve
 ****
@@ -109,12 +115,12 @@ On introduit l'espace
 ++++
 V^k_h = \left\{ \disp{v}_h \in [C^0(\Omega)]^3; \forall K \in \cal{T}_h, \disp{v}_h \circ \varphi^{\mathrm{geo}}_K \in [\hat{P}]^3 \right\}
 ++++
+
 [NOTE]
 .Traitement du déplacement rigide
 ====
 Afin de traiter le déplacement rigide, on propose d'utiliser la posssibilé du framework de résolution algébrique d'avoir la connaissance du noyau (_i.e_ stem:[\cal{R}]).
 Ce faisant une solution  est obtenue, sans contrôle du déplacement rigide, il suffit ensuite de retrancher stem:[\int_\Omega \disp{d}] et stem:[\int_\Omega \nabla \times \disp{d}] à cette solution pour obtenir celle en stem:[V_N].
-++++
 ====
 
 Le problème discret s'écrit:

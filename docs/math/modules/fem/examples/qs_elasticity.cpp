@@ -117,7 +117,7 @@ int main(int argc, char**argv )
     }
     // end::solver[]
 
-    // end::exporter[]
+    // tag::exporter[]
     tic();
     auto e = exporter( _mesh=mesh );
     e->addRegions();
