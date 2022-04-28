@@ -701,7 +701,7 @@ MathJax.Hub.Config({
 <h1 class="page">Stokes flow in a pipe</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel2">
+<ul class="sectlevel1">
 <li><a href="#_running_the_model">1. Running the model</a></li>
 <li><a href="#_data_files">2. Data files</a>
 <ul class="sectlevel2">
@@ -725,12 +725,13 @@ MathJax.Hub.Config({
 </li>
 </ul>
 </div>
-<div class="sect2">
-<h3 id="_running_the_model"><a class="anchor" href="#_running_the_model"></a>1. Running the model</h3>
+<div class="sect1">
+<h2 id="_running_the_model"><a class="anchor" href="#_running_the_model"></a>1. Running the model</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The command line to run this pipestokes case</p>
 </div>
-<div id="command-line" class="listingblock">
+<div id="command-line-first" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpirun -np 4 feelpp_toolbox_fluid --case "github:{repo:toolbox,path:examples/modules/cfd/examples/pipestokes/case_original}"</code></pre>
 </div>
@@ -766,6 +767,7 @@ Copy case option to clipboard
 <div class="listingblock">
 <div class="content">
 <pre> --json-editions Parameters.height:n</pre>
+</div>
 </div>
 </div>
 </div>
@@ -1349,7 +1351,7 @@ we calculate D(u)</p>
 <div class="paragraph">
 <p>The command line to run this case is</p>
 </div>
-<div id="command-line" class="listingblock">
+<div id="command-line-second" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpirun -np 4 feelpp_toolbox_fluid --case "github:{repo:toolbox,path:examples/modules/cfd/examples/pipestokes/case_corrections/dirichlet}"</code></pre>
 </div>
@@ -1381,7 +1383,7 @@ we calculate D(u)</p>
 <div class="paragraph">
 <p>The command line to run this case is</p>
 </div>
-<div id="command-line" class="listingblock">
+<div id="command-line-third" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpirun -np 4 feelpp_toolbox_fluid --case "github:{repo:toolbox,path:examples/modules/cfd/examples/pipestokes/case_corrections/pression}"</code></pre>
 </div>
