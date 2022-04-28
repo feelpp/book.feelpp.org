@@ -241,6 +241,9 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../Spaces/functionspace.html">FunctionSpace</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Spaces/projection.html">Projection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../Spaces/interpolation.html">Interpolation</a>
   </li>
   <li class="nav-item" data-depth="3">
@@ -525,15 +528,16 @@ back to the section <a href="#../Mesh/README.adoc">Mesh</a>.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_integrals"><a class="anchor" href="#_integrals"></a>1. Integrals</h3>
+<div class="sect1">
+<h2 id="_integrals"><a class="anchor" href="#_integrals"></a>1. Integrals</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Feel++ provide the integrate() function to define integral expressions
 which can be used to compute integrals, define linear and bi-linear
 forms.</p>
 </div>
-<div class="sect3">
-<h4 id="_interface"><a class="anchor" href="#_interface"></a>1.1. Interface</h4>
+<div class="sect2">
+<h3 id="_interface"><a class="anchor" href="#_interface"></a>1.1. Interface</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  integrate( _range, _expr, _quad, _geomap );</code></pre>
@@ -655,8 +659,8 @@ Starting from v0.105, quadratures are built at runtime and no more at compile ti
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="_example"><a class="anchor" href="#_example"></a>1.2. Example</h4>
+<div class="sect2">
+<h3 id="_example"><a class="anchor" href="#_example"></a>1.2. Example</h3>
 <div class="paragraph">
 <p>From <code>doc/manual/tutorial/dar.cpp</code></p>
 </div>
@@ -713,8 +717,10 @@ Starting from v0.105, quadratures are built at runtime and no more at compile ti
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_computing_my_first_integrals"><a class="anchor" href="#_computing_my_first_integrals"></a>2. Computing my first Integrals</h3>
+</div>
+<div class="sect1">
+<h2 id="_computing_my_first_integrals"><a class="anchor" href="#_computing_my_first_integrals"></a>2. Computing my first Integrals</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>This part explains how to integrate on a mesh with Feel++ (source
 <code>doc/manual/tutorial/myintegrals.cpp</code> ).</p>
@@ -772,8 +778,10 @@ main( int argc, char** argv )
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_mean_value_of_a_function"><a class="anchor" href="#_mean_value_of_a_function"></a>3. Mean value of a function</h3>
+</div>
+<div class="sect1">
+<h2 id="_mean_value_of_a_function"><a class="anchor" href="#_mean_value_of_a_function"></a>3. Mean value of a function</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Let \(f\) a bounded function on domain \(\Omega\). You can evaluate the mean value of a function thanks to the <code>mean()</code> function :</p>
 </div>
@@ -782,8 +790,8 @@ main( int argc, char** argv )
 \[\bar{f}=\frac{1}{|\Omega|}\int_\Omega f=\frac{1}{\int_\Omega 1}\int_\Omega f\]
 </div>
 </div>
-<div class="sect3">
-<h4 id="_interface_2"><a class="anchor" href="#_interface_2"></a>3.1. Interface</h4>
+<div class="sect2">
+<h3 id="_interface_2"><a class="anchor" href="#_interface_2"></a>3.1. Interface</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  mean( _range, _expr, _quad, _geomap );</code></pre>
@@ -830,8 +838,161 @@ main( int argc, char** argv )
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_example_2"><a class="anchor" href="#_example_2"></a>3.2. Example</h3>
+<div class="listingblock">
+<div class="title">Stokes example using <code>mean</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">int main(int argc, char**argv )
+{
+    Environment env( _argc=argc, _argv=argv,
+                     _about=about(_name="mystokes",
+                                  _author="Feel++ Consortium",
+                                  _email="feelpp-devel@feelpp.org"));
+
+    // create the mesh
+    auto mesh = loadMesh(_mesh=new Mesh&lt;Simplex&lt; 2 &gt; &gt; );
+
+
+    // function space
+    auto Vh = THch&lt;2&gt;( mesh );
+
+    // element U=(u,p) in Vh
+    auto U = Vh-&gt;element();
+    auto u = U.element&lt;0&gt;();
+    auto p = U.element&lt;1&gt;();
+
+    // left hand side
+    auto a = form2( _trial=Vh, _test=Vh );
+    a = integrate(_range=elements(mesh),
+                  _expr=trace(gradt(u)*trans(grad(u))) );
+
+    a+= integrate(_range=elements(mesh),
+                  _expr=-div(u)*idt(p)-divt(u)*id(p));
+
+    auto syms = symbols&lt;2&gt;();
+    auto u1 = parse( option(_name="functions.alpha").as&lt;std::string&gt;(), syms );
+    auto u2 = parse( option(_name="functions.beta").as&lt;std::string&gt;(), syms );
+    matrix u_exact = matrix(2,1);
+    u_exact = u1,u2;
+    auto p_exact = parse( option(_name="functions.gamma").as&lt;std::string&gt;(), syms );
+	auto f = -laplacian( u_exact, syms ) + grad( p_exact, syms ).transpose();
+    LOG(INFO) &lt;&lt; "rhs : " &lt;&lt; f;
+
+    // right hand side
+    auto l = form1( _test=Vh );
+    l = integrate(_range=elements(mesh),
+                  _expr=trans(expr&lt;2,1,5&gt;( f, syms ))*id(u));
+    a+=on(_range=boundaryfaces(mesh), _rhs=l, _element=u,
+          _expr=expr&lt;2,1,5&gt;(u_exact,syms));
+
+    // solve a(u,v)=l(v)
+    a.solve(_rhs=l,_solution=U);
+
+    double mean_p = mean(_range=elements(mesh),_expr=idv(p))(0,0);
+    double mean_p_exact = mean(_range=elements(mesh),_expr=expr(p_exact,syms))(0,0);
+    double l2error_u = normL2( _range=elements(mesh), _expr=idv(u)-expr&lt;2,1,5&gt;( u_exact, syms ) );
+    double l2error_p = normL2( _range=elements(mesh), _expr=idv(p)-mean_p-(expr( p_exact, syms )-mean_p_exact) );
+    LOG(INFO) &lt;&lt; "L2 error norm u: " &lt;&lt; l2error_u;
+    LOG(INFO) &lt;&lt; "L2 error norm p: " &lt;&lt; l2error_p;
+
+    // save results
+    auto e = exporter( _mesh=mesh );
+    e-&gt;add( "u", u );
+    e-&gt;add( "p", p );
+    e-&gt;save();
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_norms"><a class="anchor" href="#_norms"></a>4. Norms</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let \(f\) a bounded function on domain \(\Omega\).</p>
+</div>
+<div class="sect2">
+<h3 id="_l2_norms"><a class="anchor" href="#_l2_norms"></a>4.1. L<sup>2</sup> norms</h3>
+<div class="paragraph">
+<p>Let \(f \in L^2(\Omega)\) you can evaluate the \(L^2\) norm using the <code>normL2()</code> function:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\parallel f\parallel_{L^2(\Omega)}=\sqrt{\int_\Omega |f|^2}\]
+</div>
+</div>
 <div class="sect3">
-<h4 id="_example_2"><a class="anchor" href="#_example_2"></a>3.2. Example</h4>
+<h4 id="_interface_3"><a class="anchor" href="#_interface_3"></a>4.1.1. Interface</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  normL2( _range, _expr, _quad, _geomap );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or squared norm:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  normL2Squared( _range, _expr, _quad, _geomap );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Required parameters:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>_range</code> = domain of integration</p>
+</li>
+<li>
+<p><code>_expr</code>  = mesurable function</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Optional parameters:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>_quad</code>  = quadrature to use.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Default = <code>_Q&lt;integer&gt;()</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>_geomap</code>  = type of geometric mapping.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Default = <code>GEOMAP_OPT</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_3"><a class="anchor" href="#_example_3"></a>4.1.2. Example</h4>
+<div class="paragraph">
+<p>From <code>doc/manual/laplacian/laplacian.cpp</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  double L2error =normL2( _range=elements( mesh ),
+                          _expr=( idv( u )-g ) );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From <code>doc/manual/stokes/stokes.cpp</code></p>
+</div>
 <div class="listingblock">
 <div class="title">Stokes example using <code>mean</code></div>
 <div class="content">
@@ -899,100 +1060,7 @@ main( int argc, char** argv )
 </div>
 </div>
 <div class="sect2">
-<h3 id="_norms"><a class="anchor" href="#_norms"></a>4. Norms</h3>
-<div class="paragraph">
-<p>Let \(f\) a bounded function on domain \(\Omega\).</p>
-</div>
-<div class="sect3">
-<h4 id="_l2_norms"><a class="anchor" href="#_l2_norms"></a>4.1. L<sup>2</sup> norms</h4>
-<div class="paragraph">
-<p>Let \(f \in L^2(\Omega)\) you can evaluate the \(L^2\) norm using the <code>normL2()</code> function:</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\parallel f\parallel_{L^2(\Omega)}=\sqrt{\int_\Omega |f|^2}\]
-</div>
-</div>
-<div class="sect4">
-<h5 id="_interface_3"><a class="anchor" href="#_interface_3"></a>Interface</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  normL2( _range, _expr, _quad, _geomap );</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>or squared norm:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  normL2Squared( _range, _expr, _quad, _geomap );</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Required parameters:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>_range</code> = domain of integration</p>
-</li>
-<li>
-<p><code>_expr</code>  = mesurable function</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Optional parameters:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>_quad</code>  = quadrature to use.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Default = <code>_Q&lt;integer&gt;()</code></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><code>_geomap</code>  = type of geometric mapping.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Default = <code>GEOMAP_OPT</code></p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_3"><a class="anchor" href="#_example_3"></a>Example</h5>
-<div class="paragraph">
-<p>From <code>doc/manual/laplacian/laplacian.cpp</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  double L2error =normL2( _range=elements( mesh ),
-                          _expr=( idv( u )-g ) );</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>From <code>doc/manual/stokes/stokes.cpp</code></p>
-</div>
-<div class="listingblock">
-<div class="title">Stokes example using <code>mean</code></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">Unresolved include directive in modules/reference/pages/Integrals/norms.adoc - include::../../../../codes/mystokes.cpp[]</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_h1_norm"><a class="anchor" href="#_h1_norm"></a>4.2. H^1 norm</h4>
+<h3 id="_h1_norm"><a class="anchor" href="#_h1_norm"></a>4.2. H^1 norm</h3>
 <div class="paragraph">
 <p>In the same idea, you can evaluate the H1 norm or semi norm, for any function \(f \in H^1(\Omega)\):</p>
 </div>
@@ -1009,8 +1077,8 @@ main( int argc, char** argv )
 <p>where \(*\) is the scalar product \(\cdot\) when \(f\) is a scalar
 field and the frobenius scalar product \(:\) when \(f\) is a vector field.</p>
 </div>
-<div class="sect4">
-<h5 id="_interface_4"><a class="anchor" href="#_interface_4"></a>Interface</h5>
+<div class="sect3">
+<h4 id="_interface_4"><a class="anchor" href="#_interface_4"></a>4.2.1. Interface</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  normH1( _range, _expr, _grad_expr, _quad, _geomap );</code></pre>
@@ -1071,8 +1139,8 @@ field and the frobenius scalar product \(:\) when \(f\) is a vector field.</p>
 <p>normH1() returns a float containing the H^1 norm.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_example_4"><a class="anchor" href="#_example_4"></a>Example</h5>
+<div class="sect3">
+<h4 id="_example_4"><a class="anchor" href="#_example_4"></a>4.2.2. Example</h4>
 <div class="paragraph">
 <p>With expression:</p>
 </div>
@@ -1100,8 +1168,8 @@ field and the frobenius scalar product \(:\) when \(f\) is a vector field.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_linfty_norm"><a class="anchor" href="#_linfty_norm"></a>4.3. \(L^\infty\) norm</h4>
+<div class="sect2">
+<h3 id="_linfty_norm"><a class="anchor" href="#_linfty_norm"></a>4.3. \(L^\infty\) norm</h3>
 <div class="paragraph">
 <p>You can evaluate the infinity norm using the normLinf() function:</p>
 </div>
@@ -1110,8 +1178,8 @@ field and the frobenius scalar product \(:\) when \(f\) is a vector field.</p>
 \[\parallel f \parallel_\infty=\sup_\Omega(|f|)\]
 </div>
 </div>
-<div class="sect4">
-<h5 id="_interface_5"><a class="anchor" href="#_interface_5"></a>Interface</h5>
+<div class="sect3">
+<h4 id="_interface_5"><a class="anchor" href="#_interface_5"></a>4.3.1. Interface</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  normLinf( _range, _expr, _pset, _geomap );</code></pre>
@@ -1170,8 +1238,8 @@ returned data structure provides the following interface</p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_example_5"><a class="anchor" href="#_example_5"></a>Example</h5>
+<div class="sect3">
+<h4 id="_example_5"><a class="anchor" href="#_example_5"></a>4.3.2. Example</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  auto uMax = normLinf( _range=elements(mesh),
@@ -1179,6 +1247,7 @@ returned data structure provides the following interface</p>
                         _pset=_Q&lt;5&gt;() );
   std::cout &lt;&lt; "maximum value : " &lt;&lt; uMax.value() &lt;&lt; std::endl
             &lt;&lt;  "         arg : " &lt;&lt; uMax.arg() &lt;&lt; std::endl;</code></pre>
+</div>
 </div>
 </div>
 </div>

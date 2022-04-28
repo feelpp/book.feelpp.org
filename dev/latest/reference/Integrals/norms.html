@@ -241,6 +241,9 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../Spaces/functionspace.html">FunctionSpace</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Spaces/projection.html">Projection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../Spaces/interpolation.html">Interpolation</a>
   </li>
   <li class="nav-item" data-depth="3">
@@ -500,13 +503,14 @@ MathJax.Hub.Config({
   </div>
   <div class="content">
 <article class="doc">
-<div class="sect2">
-<h3 id="_norms"><a class="anchor" href="#_norms"></a>1. Norms</h3>
+<div class="sect1">
+<h2 id="_norms"><a class="anchor" href="#_norms"></a>1. Norms</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Let \(f\) a bounded function on domain \(\Omega\).</p>
 </div>
-<div class="sect3">
-<h4 id="_l2_norms"><a class="anchor" href="#_l2_norms"></a>1.1. L<sup>2</sup> norms</h4>
+<div class="sect2">
+<h3 id="_l2_norms"><a class="anchor" href="#_l2_norms"></a>1.1. L<sup>2</sup> norms</h3>
 <div class="paragraph">
 <p>Let \(f \in L^2(\Omega)\) you can evaluate the \(L^2\) norm using the <code>normL2()</code> function:</p>
 </div>
@@ -515,8 +519,8 @@ MathJax.Hub.Config({
 \[\parallel f\parallel_{L^2(\Omega)}=\sqrt{\int_\Omega |f|^2}\]
 </div>
 </div>
-<div class="sect4">
-<h5 id="_interface"><a class="anchor" href="#_interface"></a>Interface</h5>
+<div class="sect3">
+<h4 id="_interface"><a class="anchor" href="#_interface"></a>1.1.1. Interface</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  normL2( _range, _expr, _quad, _geomap );</code></pre>
@@ -571,8 +575,8 @@ MathJax.Hub.Config({
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_example"><a class="anchor" href="#_example"></a>Example</h5>
+<div class="sect3">
+<h4 id="_example"><a class="anchor" href="#_example"></a>1.1.2. Example</h4>
 <div class="paragraph">
 <p>From <code>doc/manual/laplacian/laplacian.cpp</code></p>
 </div>
@@ -588,13 +592,71 @@ MathJax.Hub.Config({
 <div class="listingblock">
 <div class="title">Stokes example using <code>mean</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">Unresolved include directive in modules/reference/pages/Integrals/norms.adoc - include::../../../../codes/mystokes.cpp[]</code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">int main(int argc, char**argv )
+{
+    Environment env( _argc=argc, _argv=argv,
+                     _about=about(_name="mystokes",
+                                  _author="Feel++ Consortium",
+                                  _email="feelpp-devel@feelpp.org"));
+
+    // create the mesh
+    auto mesh = loadMesh(_mesh=new Mesh&lt;Simplex&lt; 2 &gt; &gt; );
+
+
+    // function space
+    auto Vh = THch&lt;2&gt;( mesh );
+
+    // element U=(u,p) in Vh
+    auto U = Vh-&gt;element();
+    auto u = U.element&lt;0&gt;();
+    auto p = U.element&lt;1&gt;();
+
+    // left hand side
+    auto a = form2( _trial=Vh, _test=Vh );
+    a = integrate(_range=elements(mesh),
+                  _expr=trace(gradt(u)*trans(grad(u))) );
+
+    a+= integrate(_range=elements(mesh),
+                  _expr=-div(u)*idt(p)-divt(u)*id(p));
+
+    auto syms = symbols&lt;2&gt;();
+    auto u1 = parse( option(_name="functions.alpha").as&lt;std::string&gt;(), syms );
+    auto u2 = parse( option(_name="functions.beta").as&lt;std::string&gt;(), syms );
+    matrix u_exact = matrix(2,1);
+    u_exact = u1,u2;
+    auto p_exact = parse( option(_name="functions.gamma").as&lt;std::string&gt;(), syms );
+	auto f = -laplacian( u_exact, syms ) + grad( p_exact, syms ).transpose();
+    LOG(INFO) &lt;&lt; "rhs : " &lt;&lt; f;
+
+    // right hand side
+    auto l = form1( _test=Vh );
+    l = integrate(_range=elements(mesh),
+                  _expr=trans(expr&lt;2,1,5&gt;( f, syms ))*id(u));
+    a+=on(_range=boundaryfaces(mesh), _rhs=l, _element=u,
+          _expr=expr&lt;2,1,5&gt;(u_exact,syms));
+
+    // solve a(u,v)=l(v)
+    a.solve(_rhs=l,_solution=U);
+
+    double mean_p = mean(_range=elements(mesh),_expr=idv(p))(0,0);
+    double mean_p_exact = mean(_range=elements(mesh),_expr=expr(p_exact,syms))(0,0);
+    double l2error_u = normL2( _range=elements(mesh), _expr=idv(u)-expr&lt;2,1,5&gt;( u_exact, syms ) );
+    double l2error_p = normL2( _range=elements(mesh), _expr=idv(p)-mean_p-(expr( p_exact, syms )-mean_p_exact) );
+    LOG(INFO) &lt;&lt; "L2 error norm u: " &lt;&lt; l2error_u;
+    LOG(INFO) &lt;&lt; "L2 error norm p: " &lt;&lt; l2error_p;
+
+    // save results
+    auto e = exporter( _mesh=mesh );
+    e-&gt;add( "u", u );
+    e-&gt;add( "p", p );
+    e-&gt;save();
+}</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_h1_norm"><a class="anchor" href="#_h1_norm"></a>1.2. H^1 norm</h4>
+<div class="sect2">
+<h3 id="_h1_norm"><a class="anchor" href="#_h1_norm"></a>1.2. H^1 norm</h3>
 <div class="paragraph">
 <p>In the same idea, you can evaluate the H1 norm or semi norm, for any function \(f \in H^1(\Omega)\):</p>
 </div>
@@ -611,8 +673,8 @@ MathJax.Hub.Config({
 <p>where \(*\) is the scalar product \(\cdot\) when \(f\) is a scalar
 field and the frobenius scalar product \(:\) when \(f\) is a vector field.</p>
 </div>
-<div class="sect4">
-<h5 id="_interface_2"><a class="anchor" href="#_interface_2"></a>Interface</h5>
+<div class="sect3">
+<h4 id="_interface_2"><a class="anchor" href="#_interface_2"></a>1.2.1. Interface</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  normH1( _range, _expr, _grad_expr, _quad, _geomap );</code></pre>
@@ -673,8 +735,8 @@ field and the frobenius scalar product \(:\) when \(f\) is a vector field.</p>
 <p>normH1() returns a float containing the H^1 norm.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_example_2"><a class="anchor" href="#_example_2"></a>Example</h5>
+<div class="sect3">
+<h4 id="_example_2"><a class="anchor" href="#_example_2"></a>1.2.2. Example</h4>
 <div class="paragraph">
 <p>With expression:</p>
 </div>
@@ -702,8 +764,8 @@ field and the frobenius scalar product \(:\) when \(f\) is a vector field.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_linfty_norm"><a class="anchor" href="#_linfty_norm"></a>1.3. \(L^\infty\) norm</h4>
+<div class="sect2">
+<h3 id="_linfty_norm"><a class="anchor" href="#_linfty_norm"></a>1.3. \(L^\infty\) norm</h3>
 <div class="paragraph">
 <p>You can evaluate the infinity norm using the normLinf() function:</p>
 </div>
@@ -712,8 +774,8 @@ field and the frobenius scalar product \(:\) when \(f\) is a vector field.</p>
 \[\parallel f \parallel_\infty=\sup_\Omega(|f|)\]
 </div>
 </div>
-<div class="sect4">
-<h5 id="_interface_3"><a class="anchor" href="#_interface_3"></a>Interface</h5>
+<div class="sect3">
+<h4 id="_interface_3"><a class="anchor" href="#_interface_3"></a>1.3.1. Interface</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  normLinf( _range, _expr, _pset, _geomap );</code></pre>
@@ -772,8 +834,8 @@ returned data structure provides the following interface</p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_example_3"><a class="anchor" href="#_example_3"></a>Example</h5>
+<div class="sect3">
+<h4 id="_example_3"><a class="anchor" href="#_example_3"></a>1.3.2. Example</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  auto uMax = normLinf( _range=elements(mesh),
@@ -781,6 +843,7 @@ returned data structure provides the following interface</p>
                         _pset=_Q&lt;5&gt;() );
   std::cout &lt;&lt; "maximum value : " &lt;&lt; uMax.value() &lt;&lt; std::endl
             &lt;&lt;  "         arg : " &lt;&lt; uMax.arg() &lt;&lt; std::endl;</code></pre>
+</div>
 </div>
 </div>
 </div>
