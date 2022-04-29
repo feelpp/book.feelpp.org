@@ -635,7 +635,7 @@ MathJax.Hub.Config({
 </td>
 <td class="content">
 In the finite element method we have often to compute integrals using change of variables of the type
-\(\int_K Hu(x)\; dx\), where \(H\) is an operator (gradient, laplacian, &#8230;&#8203;). You then have to use to be careful when applying the change of variables.
+]\int_K Hu(x)\; dx], where \(H\) is an operator (gradient, laplacian, &#8230;&#8203;). You then have to use to be careful when applying the change of variables.
 </td>
 </tr>
 </table>
@@ -711,11 +711,11 @@ y &amp; = &amp; c\hat{x} + d\hat{y} + f
 <h2 id="_some_change_of_variable_formulas"><a class="anchor" href="#_some_change_of_variable_formulas"></a>1. Some change of variable formulas</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Denote \(f: K \mapsto \mathbb{R}\) and \(\hat{f}: \hat{K} \mapsto \mathbb{R}\) such that \(\hat{f} = f \circ F\) and
-\(\mathbf{F}: K \mapsto \mathbb{R}^d\) and \(\mathbf{\hat{F}}: \hat{K} \mapsto \mathbb{R}^d\) such that \(\hat{\mathbf{F}} = \mathbf{F} \circ \chi^e\).</p>
+<p>Denote \(f: K \mapsto \mathbb{R}\) and \(\hat{f}: \hat{K} \mapsto \mathbb{R}\) such that \(\hat{f} = f \circ \chi^e\) and
+]\mathbf{F}: K \mapsto \mathbb{R}^d] and \(\mathbf{\hat{F}}: \hat{K} \mapsto \mathbb{R}^d\) such that \(\hat{\mathbf{F}} = \mathbf{F} \circ \chi^e\).</p>
 </div>
 <div class="paragraph">
-<p>Moreover denote  \(\mathbf{n}\) the local outward normal to \(\Omega\) and \(\mathbf{n}^{st}\) the local outward normal to \(\hat{\Omega}\).</p>
+<p>Moreover denote  \(\mathbf{n}\) the local outward normal to \(\Omega\) and \(\mathbf{n}\) the local outward normal to \(\hat{\Omega}\).</p>
 </div>
 <div class="paragraph">
 <p>we have the following relations</p>
@@ -727,9 +727,20 @@ y &amp; = &amp; c\hat{x} + d\hat{y} + f
 
 \int_{K}\ \nabla f\ dx\ &amp;=\ \int_{\hat{K}} \Big(\nabla^{\text{st}} \underbrace{\hat{f}(\xi)}_{f \circ \chi^e(\xi)} B^e(\xi)\Big) J^e( \xi )\ d \xi\\
 
-\int_{\partial K}\ f( x )\ dx &amp;= \int_{\partial \hat{K}} \hat{f}(\xi)\  \| B^e(\xi)^T \ \mathbf{n^{\text{st}}}(\xi) \|\ J^e( \xi )\ d \xi\\
+\int_{\partial K}\ f( x )\ dx &amp;= \int_{\partial \hat{K}} \hat{f}(\xi)\  \| B^e(\xi) \ \mathbf{n^{\text{st}}}(\xi) \|\ J^e( \xi )\ d \xi\\
 
-\int_{\partial K}\ \mathbf{F}( x )\ \cdot\ \mathbf{n}(x) dx &amp; = \int_{\partial \hat{K}} \mathbf{\hat{F}}( \xi )\  \cdot \Big(B^e(\xi)^T \ \mathbf{n^{\text{st}}}(\xi) \Big) \ J^e( \xi )\ d \xi
+\int_{\partial K}\ \mathbf{F}( x )\ \cdot\ \mathbf{n}(x) dx &amp; = \int_{\partial \hat{K}} \mathbf{\hat{F}}( \xi )\  \cdot \Big(B^e(\xi) \ \mathbf{n^{\text{st}}}(\xi) \Big) \ J^e( \xi )\ d \xi
+\end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+B^e(\xi) &amp;=  ( \nabla \chi^e(\xi) )^{-T}
+J^e( \xi ) &amp;= \det ( \nabla \chi^e(\xi) )
 \end{aligned}\]
 </div>
 </div>
