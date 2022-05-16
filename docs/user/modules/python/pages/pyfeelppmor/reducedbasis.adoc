@@ -141,6 +141,8 @@ This part can be run in parallel.
     [--time-dependant={True | False}]
 ----
 
+[[parameters]]
+.Parameters
 [cols="1,1,1"]
 |===
 |Name|Description|Default value
@@ -181,6 +183,7 @@ WARNING: The time-dependant case it net yet functionnal...
 === Algorithms
 
 
+.Algorithms
 [cols='1,2,5']
 |===
 |Value|Algorithm|Description
@@ -214,6 +217,30 @@ Here is a description of the generated files :
     - `mubar` : Values of stem:[\bar{\mu}]
 
 2. A `h5` file, containing all the matrices used in the online part (of « small » size).
+
+
+=== Documentation for developpers
+
+The function to call to generate the basis is `generatebasis` :
+
+[source, python]
+----
+import feelpp.mor.generate_basis as g               # import the module
+g.generatebasis(worldcomm=worldcomm, config=config) # run the script
+----
+
+Where :
+
+1. `worldcomm` is a pointer to the MPI communicator. This argument is optionnal. If none (or `None`) is given, the function will get the communicaotr from `feelpp.Environment`.
+
+2. `config` is an object of type `g.generateBasisConfig`. It contains the paramters used by the script to generate the application.
+
+[source, python]
+----
+config = generateBasisConfig(dim, config_file, time_dependant, odir, case, algo, size, tol)
+----
+
+The description and the default values of those parameters are descirbed <<parameters,above>>.
 
 == Online part
 
