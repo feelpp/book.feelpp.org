@@ -120,11 +120,11 @@ See xref:pyfeelppmor/parameters.adoc[the dedicated page] for the API of `Paramet
 
 
 
-= Usage of Feelpp / Mor
+== Usage of Feelpp / Mor
 
-== Offline part
+=== Offline part
 
-=== Usage
+==== Usage
 
 This part can be run in parallel.
 
@@ -180,7 +180,7 @@ WARNING: The time-dependant case it net yet functionnal...
 
 
 [[Algorithms]]
-=== Algorithms
+==== Algorithms
 
 
 .Algorithms
@@ -205,7 +205,7 @@ WARNING: The time-dependant case it net yet functionnal...
 WARNING: For now, the computation of error bound is only valid when the decomposition is coercive (_i.e._ stem:[A(\mu)=\displaystyle\sum_{q}\beta_A(\mu)A^q], with stem:[\beta_A(\mu)\geqslant 0])
 
 [[offline]]
-=== Exported files
+==== Exported files
 
 Here is a description of the generated files :
 
@@ -219,7 +219,7 @@ Here is a description of the generated files :
 2. A `h5` file, containing all the matrices used in the online part (of « small » size).
 
 
-=== Documentation for developpers
+==== Documentation for developpers
 
 The function to call to generate the basis is `generatebasis` :
 
@@ -242,9 +242,11 @@ config = generateBasisConfig(dim, config_file, time_dependant, odir, case, algo,
 
 The description and the default values of those parameters are descirbed <<parameters,above>>.
 
-== Online part
+If `odir` contains `$name`, this expression will be replaced by the _name_ of the case, defined by concatenation `{case}-np_{nproc}`, where `case` is the name of the case given in the configuration, and `nproc` is the number of processors where the simulation is run.
 
-=== Load the generated basis
+=== Online part
+
+==== Load the generated basis
 
 The following pieces of code can be unsed in a sequential script, or even in a notebook for vizualisation.
 
@@ -346,7 +348,7 @@ basis.loadReducedBasis('<path-to-json-file>/reducedbasis.json', model) <1>
 <1> Path to the json file, generated in the <<offline, offline stage>>.
 
 
-=== Run online computations
+==== Run online computations
 
 The space of parameters can be retreived with this line
 
