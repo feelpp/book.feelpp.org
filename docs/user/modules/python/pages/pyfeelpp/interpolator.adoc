@@ -1,0 +1,27 @@
+= Interpolator
+include::{partialsdir}/header-macros.adoc[]
+
+== Import the package
+
+[source,python]
+----
+from feelpp.interpolation import *
+----
+
+
+== Create an interpolator
+
+[source, python]
+----
+I = interpolator(_domain = <space domain>,
+                 _image = <space domain>,
+                 _range = <range of elements>)
+----
+
+* `_domain` : function space to interpolate
+
+* `_image` : function space where `_domain` is to be interpolated
+
+* `_range` :
+
+For instance for a toolbox `tb`, the function space can be accessed with `tb.funcitonSpace`

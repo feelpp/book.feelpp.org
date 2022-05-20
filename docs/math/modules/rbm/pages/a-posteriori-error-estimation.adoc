@@ -1,0 +1,376 @@
+[[sec:post-error-estim]]
+= A Posteriori Error Estimation
+:toc: left
+:toclevels: 3
+:stem: latexmath
+Christophe Prud'homme
+
+[[motivations-preliminaries]]
+== Motivations & Preliminaries
+
+=== « Truth » Problem statement
+
+Let stem:[\mu \in \mathcal{D}^{\mu}], evaluate stem:[\displaystyle s (\mu) = \ell (u (\mu))] where stem:[u (\mu) \in X] satisfies stem:[a (u (\mu), v; \mu ) = f (v), \quad \forall \: v \in X].
+
+Assumptions :
+
+* linearity, coercivity, continuity
+* affine parameter dependence; and
+* compliance: stem:[\ell=f], stem:[a] symmetric
+
+=== Reduced Basis Sample and Space
+
+Parameter Samples: stem:[S_N  = \{ \mu_1 \in \mathcal{D}^{\mu}, \ldots, \mu_N \in \mathcal{D}^{\mu} \}\quad 1 \leq N \leq N_{\mathrm{max}}], with stem:[S_1 \subset S_2 \ldots S_{N_\mathrm{max}-1} \subset S_{N_\mathrm{max}} \subset \mathcal{D}^\mu].
+
+Lagrangian Hierarchical Space stem:[W_N  =  {\rm span} \: \{ \xi^n \equiv \underbrace{ u (\mu^n)}_{u^{\mathcal{N}} (\mu^n)}, n = 1, \ldots, N \}], with stem:[W_1 \subset W_2 \ldots \subset W_{N_\mathrm{max}} \subset X^{\mathcal{N}} \subset{X}]
+
+=== Reduced basis approximation
+
+Given stem:[\mu \in \mathcal{D}^{\mu} ] evaluate stem:[s_N (\mu) =  f(u_N (\mu);\mu)]
+where stem:[u_N (\mu) \in  X_N] satisfies stem:[a (u_N (\mu), v; \mu)  =  f(v;\mu), \ \forall \: v \in X_N].
+
+Recall:
+
+* RB Space: stem:[X_N=« \text{Gram-Schmidt} »(W_N)]
+* stem:[u_N(\mu)] unique (coercivity, continuity, linear dependence)
+
+=== Coercivity and Continuity Constants
+
+We assume stem:[a] coercive and continuous
+
+Recall that
+
+* _coercivity constant_ stem:[(0 < ) \alpha(\mu) \equiv \inf_{v\in X}\dfrac{a(v,v;\mu)}{||v||^2_X}],
+* _continuity constant_ stem:[\gamma(\mu) \equiv \sup_{w\in X} \sup_{v\in X}\dfrac{a(w,v;\mu)}{\|w\|_X \|v\|_X} ( < \infty)]
+
+Affine dependence and parametric coercivity We assume that stem:[a: X\times X \times \mathcal{D} \rightarrow
+  \mathbb{R}] is
+
+* *affine* : stem:[a(u,v;\mu) = \displaystyle\sum_{q=1}^{Q_a} \Theta^q_a(\mu)\ a^q( u, v ),\, \forall u,v \in X]
+* and *paraletrically coercive* : stem:[\Theta^q_a(\mu) > 0\quad \forall \mu \in \mathcal{D}, \, 1 \leq q \leq Q_a] and stem:[a^q(u,v) \geq 0\quad \forall u,v \in X, \, 1 \leq q \leq Q_a]
+
+=== Inner Products and Norms
+
+* _energy inner product_ and associated norm (parameter dependant) 
+[stem]
+++++
+\begin{aligned}
+    (((w,v)))_\mu &=  a(w,v;\mu) &\ \forall u,v \in X\\
+    |||v|||_\mu &=  \sqrt{a(v,v;\mu)} &\ \forall v \in X
+\end{aligned}
+++++
+
+
+* stem:[X]-inner product and associated norm (parameter independant)
+
+[stem]
+++++
+\begin{aligned}
+    (w,v)_X &=  (((w,v)))_{\bar{\mu}} \ (\equiv a(w,v;\bar{\mu})) &\ \forall u,v \in X\\
+    ||v||_X &=  |||v|||_{\bar{\mu}} \ (\equiv \sqrt{a(v,v;\bar{\mu})}) & \ \forall v \in X
+\end{aligned}
+++++
+
+[[bound-theorems]]
+== Bound theorems
+
+=== Questions
+
+* What is the accuracy of stem:[u_N(\mu)] and stem:[s_N(\mu)] ? Online
+
+[stem]
+++++
+\begin{aligned}
+  \|u(\mu)-u_N(\mu)\|_X &\leq \epsilon_{\mathrm{tol}}, \quad \forall \mu \in
+  \mathcal{D}^\mu\\
+  |s(\mu)-s_N(\mu)\|_X &\leq \epsilon^s_{\mathrm{tol}}, \quad \forall \mu \in \mathcal{D}^\mu\\
+\end{aligned}
+++++
+* What is the best value for stem:[N] ? Offline/Online
+** stem:[N] too large stem:[\Rightarrow] computational inefficiency
+** stem:[N] too small stem:[\Rightarrow] unacceptable error
+* How should we build stem:[S_N] ? is there an optimal construction ? Offline
+** Good approximation of the manifold stem:[\mathcal{M}] through the RB space, but
+** need for well conditioned RB matrices
+
+=== A Posteriori Error Estimation: Requirements
+
+We shall develop the following error bounds stem:[\Delta_N(\mu)] and stem:[\Delta^s_N(\mu)] with the following properties
+
+* Rigorous : stem:[1 \leq N \leq N_{\mathrm{max}}], 
+[stem]
+++++
+\begin{aligned}
+      \|u(\mu)-u_N(\mu)\|_X &\leq \Delta_N(\mu), \quad \forall \mu \in \mathcal{D}^\mu\\
+      |s(\mu)-s_N(\mu)| &\leq \Delta^s_N(\mu), \quad \forall \mu \in \mathcal{D}^\mu
+\end{aligned}
+++++
+* reasonably sharp stem:[1 \leq N \leq N_{\mathrm{max}}]
+[stem]
+++++
+\begin{gathered}
+  \frac{\Delta_N(\mu)}{\|u(\mu)-u_N(\mu)\|_X} \leq C,\\
+  \frac{\Delta^s_N(\mu)}{|s(\mu)-s_N(\mu)|} \leq C,\\C\approx 1
+\end{gathered}
+++++
+* efficient : Online cost depend only on stem:[Q] and stem:[N] _and not stem:[\mathcal{N}]_.
+
+=== stem:[u_N(\mu)] : Error equation and residual dual norm
+
+Given our RB approximation stem:[u_N(\mu)], we have stem:[e(\mu) \equiv u(\mu)  - u_N(\mu)] that satisfies stem:[a( e(\mu), v; \mu ) \ = \ r( u_N(\mu), v; \mu ), \forall v \in X], where stem:[r( u_N(\mu), v; \mu ) = f(v) - a( u_N(\mu), v; \mu )] is the residual. We have then from coercivity and the definitions above that 
+
+[stem]
+++++
+||e(\mu)||_{X} \ \leq\ \dfrac{||r( u_N(\mu), v; \mu )||_{X'}}{\alpha(\mu)}\ =\ \dfrac{\varepsilon_N(\mu)}{\alpha(\mu)}
+++++
+
+
+=== Dual norm of the residual
+
+.Proposition
+--
+Given stem:[\mu \in \mathcal{D}^\mu], the dual norm of stem:[r(u_N(\mu),\cdot;\mu)] is defined as follows
+
+[stem]
+++++
+\begin{aligned}
+      ||r(u_N(\mu),\cdot;\mu)||_{X'} & \equiv \sup_{v\in X}
+      \frac{r(u_N(\mu),v;\mu)}{||v||_X}\\
+      & = ||\hat{e}(\mu)||_X
+    \end{aligned}
+++++
+where stem:[\hat{e}(\mu)\in X] satisfies stem:[(\hat{e}(\mu),v)_X = r(u_N(\mu),v;\mu)]
+--
+
+The error residual equation can then be rewritten stem:[a( e(\mu), v; \mu ) \ = (\hat{e}(\mu),v)_X, \quad \forall v \in X]
+
+=== stem:[u_N(\mu)] : Definitions of energy error bounds and effectivity
+
+Given stem:[\alpha_\mathrm{LB}(\mu)] a nonnegative lower bound of stem:[\alpha(\mu)]: 
+[stem]
+++++
+\alpha(\mu)\geq {\alpha_{{\mathrm{LB}}}}(\mu)\geq \epsilon_{\alpha} \alpha(\mu), \epsilon_{\alpha} \in ]0,1[,\, \forall \mu \in \mathcal{D}^\mu
+++++
+
+Denote stem:[\varepsilon_N(\mu) = \|\hat{e}(\mu)\|_X = \|r(u_N(\mu),v;\mu\|_{X'}]
+
+
+.Definition : _Energy error bound_
+--
+[stem]
+++++
+\Delta^{\mathrm{en}}_N(\mu) \ \equiv \ \frac{\varepsilon_N(\mu)}{\sqrt{{\alpha_{{\mathrm{LB}}}}(\mu)}}
+++++
+--
+
+.Definition : _Effectivity_
+--
+[stem]
+++++
+\eta^{\mathrm{en}}_N(\mu) \ \equiv \ \frac{\Delta^{\mathrm{en}}_N(\mu)}{|||e(\mu)|||_\mu}
+++++
+--
+
+
+.Proposition : Energy error bound
+--
+[stem]
+++++
+1 \ \leq\ \eta^{\mathrm{en}}_N(\mu) \ \leq \sqrt{\frac{{\gamma_{{\mathrm{UB}}}}(\mu)}{{\alpha_{{\mathrm{LB}}}}(\mu)}}, \quad 1 \leq N \leq N_{\max}, \quad \forall \mu\ \in \ \mathcal{D}^\mu
+++++
+--
+
+
+
+*Remarks :*
+
+* Rigorous : Left inequality ensures rigorous upper bound measured in stem:[||\cdot||_{X}] , i.e. stem:[||e(\mu)||_{X} \leq \Delta_N(\mu),\ \forall \mu \in \mathcal{D}^\mu]
+* Sharp : Right inequality states that stem:[\Delta_N(\mu)] overestimates the « true » error by at most stem:[\gamma(\mu) / {\alpha_{{\mathrm{LB}}}}(\mu)]
+* for stem:[a] paralmetrically coercive and symmetric
+
+[stem]
+++++
+\theta^{\bar{\mu}} \equiv
+        \frac{\Theta^{\max,\bar{\mu}}_a(\mu)}{\Theta^{\min,\bar{\mu}}_a(\mu)}
+        = \frac{\gamma_{\mathrm{ub}}(\mu)}{\alpha_{\mathrm{lb}}(\mu)}
+++++
+
+=== stem:[s_N(\mu)] : output error bounds
+
+.Proposition : Output error bound
+--
+[stem]
+++++
+1 \ \leq\ \eta^s_N(\mu)  \ \leq \dfrac{{\gamma_{{\mathrm{UB}}}}(\mu)}{{\alpha_\mathrm{LB}}(\mu)}, \quad 1 \leq N \leq N_{\max}, \quad \forall \mu\ \in \ \mathcal{D}^\mu
+++++
+where stem:[\Delta^s_N (\mu) = {\Delta_N^{\mathrm{en}}}(\mu)^2] and stem:[\eta^s_N(\mu)\equiv \frac{\Delta^s_N(\mu)}{s(\mu)-s_N(\mu)}]
+--
+
+
+Rapid convergence of the error in the output : Note that the error in the output vanishes quadratically
+
+=== Relative output error bounds
+
+We define
+
+* the _relative output error bound_ stem:[\Delta^{s,rel}_N (\mu) \equiv \frac{\|\hat{e}(\mu)\|^2_X}{
+          \alpha_\mathrm{lb}(\mu) s_N(\mu)}= \frac{\Delta_N^{\mathrm{en}}(\mu)^2}{s_N(\mu)}]
+* the _relative output effectivity_ stem:[\eta^{s,rel}_N(\mu)\equiv \frac{\Delta^{s,rel}_N(\mu)}{s(\mu)-s_N(\mu)/s(\mu)}]
+
+.Proposition : Relative output error bound
+--
+[stem]
+++++
+1 \ \leq\ \eta^{s,rel}_N(\mu)  \ \leq 2 \frac{{\gamma_{{\mathrm{UB}}}}(\mu)}{{\alpha_{{\mathrm{LB}}}}(\mu)}, \quad 1 \leq N \leq N_{\max}, \quad \forall \mu\ \in \ \mathcal{D}^\mu
+++++
+
+for stem:[\Delta^{s,rel}_N \leq 1]
+--
+
+
+=== stem:[X]-norm error bounds
+
+We define
+
+* the _relative output error bound_ stem:[\Delta_N (\mu) \equiv \frac{\|\hat{e}(\mu)\|_X}{\alpha_\mathrm{lb}(\mu)}]
+* the _relative output effectivity_ stem:[\eta_N(\mu)\equiv \frac{\Delta_N(\mu)}{\|e(\mu)\|_X}]
+
+
+.Proposition : Relative output error bound
+--
+[stem]
+++++
+1 \ \leq\ \eta_N(\mu)  \ \leq \frac{{\gamma_{{\mathrm{UB}}}}(\mu)}{{\alpha_{{\mathrm{LB}}}}(\mu)}, \quad 1 \leq N \leq N_{\max}, \quad \forall \mu\ \in \ \mathcal{D}^\mu
+++++
+--
+
+=== Remarks on error bounds
+
+* The error bounds are rigorous upper bounds for the reduced basis error for any stem:[N = 1,\ldots,N_{max}] and for all stem:[\mu \in \mathcal{D}].
+* The upper bounds for the effectivities are
+** independent of stem:[N] , and
+** independent of stem:[\mathcal{N}] if stem:[\alpha_{\mathrm{lb}}(\mu)] only depends on stem:[\mu], and are thus stable with respect to RB and FEM refinement.
+* Results for energy norm (and stem:[X]-norm) bound directly extend to noncompliant (& nonsymmetric) problems
+** if we choose an appropriate definition for the energy (and stem:[X]) norm
+
+
+[[offline-online-decomposition]]
+== Offline-Online decomposition
+
+Denote stem:[\hat{e}(\mu)\in X] stem:[||\hat{e}(\mu)||_X = \varepsilon_N(\mu) = ||r(u_N(\mu),\cdot;\mu)||_X] such that stem:[(\hat{e}(\mu),v)_X = -r(u_N(\mu),v;\mu), \quad \forall v \in X].
+
+And recall that stem:[-r(u_N(\mu),v;\mu) = f(v) - \displaystyle\sum_{q=1}^Q \sum_{n=1}^N\ \Theta^q(\mu)\ {u_N}_n(\mu)\ a^q( \zeta_n,v), \quad \forall v\ \in\ X]
+
+* It follows next that stem:[\hat{e}(\mu)\in X] satisfies
+
+[stem]
+++++
+(\hat{e}(\mu),v)_X = f(v) - \displaystyle\sum_{q=1}^Q \sum_{n=1}^N\ \Theta^q(\mu)\ {u_N}_n(\mu)\ a^q( \zeta_n,v), \quad \forall v\ \in\ X
+++++
+
+* Observe then that the rhs is the _sum_ of products of parameter dependent functions and parameter independent linear functionals, thus invoking linear superposition
+
+[stem]
+++++
+\hat{e}(\mu)\ = \ \mathcal{C} - \sum_{q=1}^Q \sum_{n=1}^N\ \Theta^q(\mu)\ {u_N}_n(\mu)\ \mathcal{L}^q_n
+++++
+
+where
+
+* stem:[\mathcal{C} \in X] satisfies stem:[(\mathcal{C},v) = f(v), \forall v \in X]
+* stem:[\mathcal{L} \in X] satisfies stem:[(\mathcal{L}^q_n,v)_X = -a^q(\zeta_n,v), \forall v \in X, \, 1 \leq n \leq N, 1 \leq q \leq Q] which are parameter independent problems
+
+=== Error bounds
+
+From a previous equation, we get
+
+[[eq:rbellipticlinear_error:37]]
+.Error bound decomposition
+[stem]
+++++
+||\hat{e}(\mu)||_X^2 = (\mathcal{C},\mathcal{C})_X + \sum_{q=1}^Q \sum_{n=1}^N\ \Theta^q(\mu)\ {u_N}_n(\mu)\ \displaystyle \left( 2 ( \mathcal{C}, \mathcal{L}^q_n)_X + \sum_{q'=1}^{Q'} \sum_{n'=1}^{N'}\  \Theta^{q'}(\mu)\ {u_N}_{n'}(\mu)\  ( \mathcal{L}^{q}_{n}, \mathcal{L}^{q'}_{n'})_X \right)
+++++
+
+
+Remark In (<<eq:rbellipticlinear_error:37,Error bound decomposition>>), stem:[||\hat{e}(\mu)||_X^2] is the sum of products of
+
+* parameter dependant (simple/known) functions and
+* parameter independant inner-product,
+
+the offline-online for the error bounds is now clear.
+
+=== Steps and complexity
+
+Offline :
+
+* Solve for stem:[\mathcal{C}] and stem:[\mathcal{L}^q_n,\ 1 \leq n \leq N,\ 1 \leq q \leq Q]
+* Form and save stem:[(\mathcal{C},\mathcal{C})_X], stem:[( \mathcal{C},
+      \mathcal{L}^q_n)_X] and stem:[( \mathcal{L}^{q}_{n}, \mathcal{L}^{q'}_{n'})_X], stem:[1 \leq n,n' \leq N,\ 1 \leq q, q' \leq Q]
+
+Online :
+
+* Given a new stem:[\mu \in \mathcal{D}^\mu]
+* Evaluate the sum stem:[||\hat{e}(\mu)||_X^2] (<<eq:rbellipticlinear_error:37,Error bound decomposition>>) in terms of stem:[\Theta^q(\mu)] and stem:[{u_N}_n(\mu)]
+* Complexity in stem:[O(Q^2 N^2)] independent of stem:[\mathcal{N}]
+
+[[sec:post-error-estim-1]]
+== Sampling strategy: a Greedy algorithm
+
+=== Offline-Online Scenarii
+
+*Offline :* Given a tolerance stem:[\tau], build stem:[S_N] and stem:[W_N] such that stem:[\forall \ \mu\ \in \mathcal{P} \equiv \mathcal{D}^{\mu} \ , \ \Delta_N(\mu) < \tau]
+
+*Online :* Given stem:[\mu] and a tolerance stem:[\tau], find stem:[N^*] and thus stem:[s_{N^*}(\mu)] such that stem:[N^* = \operatorname{arg\ max}_N\ \left( \Delta_{N}(\mu) < \tau \right)],
+or given stem:[\mu] and a max execution time stem:[T], find stem:[N^*] and thus stem:[s_{N^*}(\mu)] s.uch that stem:[N^* = \operatorname{arg\ min}_N\ \left( \Delta_{N}(\mu) \mbox{ and execution time } < T   \right)]
+
+=== stem:[S_N] and stem:[W_N] Generation Strategies
+
+Offline Generation
+
+.Offline Generation
+--
+* *Input :* a tolerance stem:[\epsilon], set stem:[N = 0] and stem:[S_0 = \emptyset]
+* While stem:[\Delta_N^{\mathrm{max}}> \epsilon]
+** stem:[N = N+1]
+** If N == 1; then Pick ((log-)randomly) stem:[\mu_1 \in \mathcal{D}^\mu]
+** Build stem:[S_N:= \{ \mu_N \} \cup S_{N-1}]
+** Build stem:[W_N:= \{ \xi = u(\mu_N) \} \cup W_{N-1}]
+** Compute stem:[\Delta_N^{\mathrm{max}}:= \mathrm{max}_{\mu \in \mathcal{D}^\mu}\, \Delta_N(\mu)]
+** stem:[\mu^{N+1} := \operatorname{arg\ max}_{\mu\in\mathcal{D}^\mu} \Delta_N(\mu)]
+* End While
+--
+
+*Condition number :* recall that the stem:[\zeta_n] are orthonormalizes, this ensures that the condition number will stay bounded by stem:[\gamma(\mu)/\alpha(\mu)].
+
+
+=== Online Algorithm I
+
+.stem:[\mu] adaptive online
+--
+* *Input :* stem:[\mu \in \mathcal{D}^\mu]
+* Compute stem:[(s_{N^{*}}(\mu), \Delta_{N^{*}}(\mu))] such that stem:[\Delta_{N^{*}}(\mu) < \tau.]
+* stem:[N = 2]
+* While stem:[\Delta_N(\mu) > \tau]
+** Compute stem:[(s_N(\mu), \Delta_N(\mu))] using stem:[(S_N,W_N)]
+** stem:[N = N * 2] use the (very) fast convergence properties of RB
+* End While
+--
+
+=== Online Algorithm II
+
+.Offline
+--
+* While stem:[i \leqslant \mathrm{Imax} \gg 1]
+** Pick log-randomly stem:[\mu \in \mathcal{D}^\mu]
+** Store in table stem:[\mathcal{T}, \Delta_N(\mu)] if _worst case_ for stem:[N=1,..., {N^{\mathrm{max}}}]
+** stem:[i = i + 1]
+* End While
+--
+
+
+.Online Algorithm II – stem:[\mu] adaptive online – worst case
+--
+* Given stem:[\mu \in \mathcal{D}^\mu], compute stem:[(s_{N^{*}}(\mu), \Delta_{N^{*}}(\mu))] such that stem:[\Delta_{N^{*}}(\mu) < \tau.]
+* stem:[N^{*} := \mathrm{arg} \mathrm{max}_{\mathcal{T}}\, {\Delta_N(\mu) \, < \, \tau}]
+* Use stem:[W_{N^{*}}] to compute stem:[(s_{N^{*}}(\mu),\Delta_{N^{*}}(\mu))]
+--
