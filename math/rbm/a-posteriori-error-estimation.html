@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Reduced Basis Methods :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/math/rbm/index.html">
+    <title>A Posteriori Error Estimation :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/math/rbm/a-posteriori-error-estimation.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../../_/css/site.css">
 <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">    
@@ -587,282 +587,506 @@ MathJax.Hub.Config({
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Feel++ Mathematics</a></li>
-    <li><a href="index.html">Reduced Basis Methods</a></li>
+    <li><a href="a-posteriori-error-estimation.html">A Posteriori Error Estimation</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/math/modules/rbm/pages/index.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/math/modules/rbm/pages/a-posteriori-error-estimation.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Reduced Basis Methods</h1>
+<h1 class="page">A Posteriori Error Estimation</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#model-order-reduction">1. Model Order Reduction</a>
+<li><a href="#motivations-preliminaries">1. Motivations &amp; Preliminaries</a>
 <ul class="sectlevel2">
-<li><a href="#definition">1.1. Definition</a>
-<ul class="sectlevel3">
-<li><a href="#_problem_statement">1.1.1. Problem statement</a></li>
+<li><a href="#_truth_problem_statement">1.1. « Truth » Problem statement</a></li>
+<li><a href="#_reduced_basis_sample_and_space">1.2. Reduced Basis Sample and Space</a></li>
+<li><a href="#_reduced_basis_approximation">1.3. Reduced basis approximation</a></li>
+<li><a href="#_coercivity_and_continuity_constants">1.4. Coercivity and Continuity Constants</a></li>
+<li><a href="#_inner_products_and_norms">1.5. Inner Products and Norms</a></li>
 </ul>
 </li>
-<li><a href="#motivation">1.2. Motivation</a></li>
-<li><a href="#methodologies">1.3. Methodologies</a></li>
-<li><a href="#summary">1.4. Summary</a></li>
-</ul>
-</li>
-<li><a href="#reduced-basis-method">2. Reduced Basis Method</a>
+<li><a href="#bound-theorems">2. Bound theorems</a>
 <ul class="sectlevel2">
-<li><a href="#problem-statement">2.1. Problem Statement</a>
-<ul class="sectlevel3">
-<li><a href="#_problem_statement_2">2.1.1. Problem statement</a></li>
-<li><a href="#_key_observation">2.1.2. Key Observation</a></li>
-<li><a href="#_general_problem_statement">2.1.3. General Problem Statement</a></li>
+<li><a href="#_questions">2.1. Questions</a></li>
+<li><a href="#_a_posteriori_error_estimation_requirements">2.2. A Posteriori Error Estimation: Requirements</a></li>
+<li><a href="#_u_nmu_error_equation_and_residual_dual_norm">2.3. \(u_N(\mu)\) : Error equation and residual dual norm</a></li>
+<li><a href="#_dual_norm_of_the_residual">2.4. Dual norm of the residual</a></li>
+<li><a href="#_u_nmu_definitions_of_energy_error_bounds_and_effectivity">2.5. \(u_N(\mu)\) : Definitions of energy error bounds and effectivity</a></li>
+<li><a href="#_s_nmu_output_error_bounds">2.6. \(s_N(\mu)\) : output error bounds</a></li>
+<li><a href="#_relative_output_error_bounds">2.7. Relative output error bounds</a></li>
+<li><a href="#_x_norm_error_bounds">2.8. \(X\)-norm error bounds</a></li>
+<li><a href="#_remarks_on_error_bounds">2.9. Remarks on error bounds</a></li>
 </ul>
 </li>
-<li><a href="#_key_ingredients">2.2. Key ingredients</a>
-<ul class="sectlevel3">
-<li><a href="#_approximation">2.2.1. Approximation</a></li>
-<li><a href="#_a_posteriori_error_estimation">2.2.2. A posteriori error estimation</a></li>
-<li><a href="#_offline_online_decomposition">2.2.3. Offline-Online decomposition</a></li>
-<li><a href="#_greedy_algorithm">2.2.4. Greedy Algorithm</a></li>
+<li><a href="#offline-online-decomposition">3. Offline-Online decomposition</a>
+<ul class="sectlevel2">
+<li><a href="#_error_bounds">3.1. Error bounds</a></li>
+<li><a href="#_steps_and_complexity">3.2. Steps and complexity</a></li>
 </ul>
 </li>
-<li><a href="#summary-1">2.3. Summary</a>
-<ul class="sectlevel3">
-<li><a href="#_reduced_basis_opportunities_computational_opportunities">2.3.1. Reduced Basis Opportunities Computational Opportunities</a></li>
-<li><a href="#_reduced_basis_relevance">2.3.2. Reduced Basis Relevance</a></li>
-<li><a href="#_reduced_basis_challenges">2.3.3. Reduced Basis Challenges</a></li>
-<li><a href="#_reduced_basis_outline">2.3.4. Reduced Basis Outline</a></li>
-</ul>
-</li>
+<li><a href="#sec:post-error-estim-1">4. Sampling strategy: a Greedy algorithm</a>
+<ul class="sectlevel2">
+<li><a href="#_offline_online_scenarii">4.1. Offline-Online Scenarii</a></li>
+<li><a href="#_s_n_and_w_n_generation_strategies">4.2. \(S_N\) and \(W_N\) Generation Strategies</a></li>
+<li><a href="#_online_algorithm_i">4.3. Online Algorithm I</a></li>
+<li><a href="#_online_algorithm_ii">4.4. Online Algorithm II</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="sect1">
-<h2 id="model-order-reduction"><a class="anchor" href="#model-order-reduction"></a>1. Model Order Reduction</h2>
+<h2 id="motivations-preliminaries"><a class="anchor" href="#motivations-preliminaries"></a>1. Motivations &amp; Preliminaries</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="definition"><a class="anchor" href="#definition"></a>1.1. Definition</h3>
-<div class="sect3">
-<h4 id="_problem_statement"><a class="anchor" href="#_problem_statement"></a>1.1.1. Problem statement</h4>
+<h3 id="_truth_problem_statement"><a class="anchor" href="#_truth_problem_statement"></a>1.1. « Truth » Problem statement</h3>
 <div class="paragraph">
-<p>Goal : Replicate input-output behavior of large-scale system \(\Sigma\) over a certain (restricted) range of</p>
+<p>Let \(\mu \in \mathcal{D}^{\mu}\), evaluate \(\displaystyle s (\mu) = \ell (u (\mu))\) where \(u (\mu) \in X\) satisfies \(a (u (\mu), v; \mu ) = f (v), \quad \forall \: v \in X\).</p>
+</div>
+<div class="paragraph">
+<p>Assumptions :</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>forcing inputs and</p>
+<p>linearity, coercivity, continuity</p>
 </li>
 <li>
-<p>parameter inputs</p>
+<p>affine parameter dependence; and</p>
+</li>
+<li>
+<p>compliance: \(\ell=f\), \(a\) symmetric</p>
 </li>
 </ul>
 </div>
-<div id="fig-problem-statement" class="imageblock">
+</div>
+<div class="sect2">
+<h3 id="_reduced_basis_sample_and_space"><a class="anchor" href="#_reduced_basis_sample_and_space"></a>1.2. Reduced Basis Sample and Space</h3>
+<div class="paragraph">
+<p>Parameter Samples: \(S_N  = \{ \mu_1 \in \mathcal{D}^{\mu}, \ldots, \mu_N \in \mathcal{D}^{\mu} \}\quad 1 \leq N \leq N_{\mathrm{max}}\), with \(S_1 \subset S_2 \ldots S_{N_\mathrm{max}-1} \subset S_{N_\mathrm{max}} \subset \mathcal{D}^\mu\).</p>
+</div>
+<div class="paragraph">
+<p>Lagrangian Hierarchical Space \(W_N  =  {\rm span} \: \{ \xi^n \equiv \underbrace{ u (\mu^n)}_{u^{\mathcal{N}} (\mu^n)}, n = 1, \ldots, N \}\), with \(W_1 \subset W_2 \ldots \subset W_{N_\mathrm{max}} \subset X^{\mathcal{N}} \subset{X}\)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reduced_basis_approximation"><a class="anchor" href="#_reduced_basis_approximation"></a>1.3. Reduced basis approximation</h3>
+<div class="paragraph">
+<p>Given \(\mu \in \mathcal{D}^{\mu} \) evaluate \(s_N (\mu) =  f(u_N (\mu);\mu)\)
+where \(u_N (\mu) \in  X_N\) satisfies \(a (u_N (\mu), v; \mu)  =  f(v;\mu), \ \forall \: v \in X_N\).</p>
+</div>
+<div class="paragraph">
+<p>Recall:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>RB Space: \(X_N=« \text{Gram-Schmidt} »(W_N)\)</p>
+</li>
+<li>
+<p>\(u_N(\mu)\) unique (coercivity, continuity, linear dependence)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_coercivity_and_continuity_constants"><a class="anchor" href="#_coercivity_and_continuity_constants"></a>1.4. Coercivity and Continuity Constants</h3>
+<div class="paragraph">
+<p>We assume \(a\) coercive and continuous</p>
+</div>
+<div class="paragraph">
+<p>Recall that</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>coercivity constant</em> \((0 &lt; ) \alpha(\mu) \equiv \inf_{v\in X}\dfrac{a(v,v;\mu)}{||v||^2_X}\),</p>
+</li>
+<li>
+<p><em>continuity constant</em> \(\gamma(\mu) \equiv \sup_{w\in X} \sup_{v\in X}\dfrac{a(w,v;\mu)}{\|w\|_X \|v\|_X} ( &lt; \infty)\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Affine dependence and parametric coercivity We assume that \(a: X\times X \times \mathcal{D} \rightarrow
+  \mathbb{R}\) is</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>affine</strong> : \(a(u,v;\mu) = \displaystyle\sum_{q=1}^{Q_a} \Theta^q_a(\mu)\ a^q( u, v ),\, \forall u,v \in X\)</p>
+</li>
+<li>
+<p>and <strong>paraletrically coercive</strong> : \(\Theta^q_a(\mu) &gt; 0\quad \forall \mu \in \mathcal{D}, \, 1 \leq q \leq Q_a\) and \(a^q(u,v) \geq 0\quad \forall u,v \in X, \, 1 \leq q \leq Q_a\)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_inner_products_and_norms"><a class="anchor" href="#_inner_products_and_norms"></a>1.5. Inner Products and Norms</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><em>energy inner product</em> and associated norm (parameter dependant)</p>
+</li>
+</ul>
+</div>
+\begin{aligned}
+    (((w,v)))_\mu &=  a(w,v;\mu) &\ \forall u,v \in X\\
+    |||v|||_\mu &=  \sqrt{a(v,v;\mu)} &\ \forall v \in X
+\end{aligned}
+<div class="ulist">
+<ul>
+<li>
+<p>\(X\)-inner product and associated norm (parameter independant)</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
 <div class="content">
-<img src="_images/problem_statement.png" alt="problem statement" width="50%">
+\[\begin{aligned}
+    (w,v)_X &amp;=  (((w,v)))_{\bar{\mu}} \ (\equiv a(w,v;\bar{\mu})) &amp;\ \forall u,v \in X\\
+    ||v||_X &amp;=  |||v|||_{\bar{\mu}} \ (\equiv \sqrt{a(v,v;\bar{\mu})}) &amp; \ \forall v \in X
+\end{aligned}\]
 </div>
-<div class="title">Figure 1. Problem statement</div>
-</div>
-<div class="paragraph">
-<p>Given large-scale system \(\Sigma_\mathcal{N}\) of dimension \(\mathcal{N}\), find a reduced order model \(\Sigma_N\) of dimension \(N &lt;&lt; \mathcal{N}\) such that: The approximation error is small, i.e., there exists a global error bound such that :</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>\(\|u(\mu) - u_N (\mu)\| \leq \varepsilon_{\mathrm{des}}\), and \(|s(\mu) - s_N (\mu)| \leq \varepsilon^s_{\mathrm{des}} , \forall \mu \in D^{\mu}\).</p>
-</li>
-<li>
-<p>Stability (and passivity) is preserved.</p>
-</li>
-<li>
-<p>The procedure is computationally stable and efficient.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="motivation"><a class="anchor" href="#motivation"></a>1.2. Motivation</h3>
-<div class="paragraph">
-<p>Generalized Inverse Problem :</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Given PDE(\(\mu\)) constraints, find value(s) of parameter \(\mu\) which:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(OPT) minimizes (or maximizes) some functional;</p>
-</li>
-<li>
-<p>(EST) agrees with measurements;</p>
-</li>
-<li>
-<p>(CON) makes the system behave in a desired manner;</p>
-</li>
-<li>
-<p>or some combination of the above</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Full solution computationally very expensive due to a repeated evaluation for many different values of \(\mu\)</p>
-</li>
-<li>
-<p>Goal: <strong>Low average cost</strong> or <strong>real-time online response</strong>.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="methodologies"><a class="anchor" href="#methodologies"></a>1.3. Methodologies</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Reduced Basis Methods</p>
-</li>
-<li>
-<p>Proper Orthogonal Decomposition</p>
-</li>
-<li>
-<p>Balanced Truncation</p>
-</li>
-<li>
-<p>Krylov Subspace Methods</p>
-</li>
-<li>
-<p>Proper Generalized Decomposition</p>
-</li>
-<li>
-<p>Modal Decomposition</p>
-</li>
-<li>
-<p>Physical model reduction</p>
-</li>
-<li>
-<p>&#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Disclaimer on Model Order Reduction Techniques</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>They <strong>Do not</strong> replace your favorite discretization scheme (e.g. FE, FV, FD), but instead are build upon and supplement these schemes.</p>
-</li>
-<li>
-<p>They <strong>are not</strong> useful if you are interested in a single high-fidelity solution of your high-dimensional problem, but instead if you are interested in the many-query or real-time context.</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="summary"><a class="anchor" href="#summary"></a>1.4. Summary</h3>
-<div class="paragraph">
-<p>Many problems in computational engineering require many or real-time evaluations of PDE(\(\mu\))-induced + input-output relationships.</p>
-</div>
-<div class="paragraph">
-<p>Model order reduction techniques enable certified, real-time calculation + of outputs of PDE(\(\mu\)) + for parameter estimation, optimization, and control.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="reduced-basis-method"><a class="anchor" href="#reduced-basis-method"></a>2. Reduced Basis Method</h2>
+<h2 id="bound-theorems"><a class="anchor" href="#bound-theorems"></a>2. Bound theorems</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="problem-statement"><a class="anchor" href="#problem-statement"></a>2.1. Problem Statement</h3>
-<div class="paragraph">
-<p>A model order reduction technique that allows efficient and reliable reducedorder approximations for a large class of parametrized partial differentialequations (PDEs) in real-time or in the limit of many queries.</p>
-</div>
+<h3 id="_questions"><a class="anchor" href="#_questions"></a>2.1. Questions</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Comparison to other model reduction techniques:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Parametrized problems(material, constants, geometry,&#8230;&#8203;)</p>
-</li>
-<li>
-<p>A posteriori error estimation</p>
-</li>
-<li>
-<p>Offline-online decomposition</p>
-</li>
-<li>
-<p>Greedy algorithm (to construct reduced basis space)</p>
+<p>What is the accuracy of \(u_N(\mu)\) and \(s_N(\mu)\) ? Online</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p>Motivation :</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Efficient solution of optimization and optimal control problems governed by parametrized PDEs.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="sect3">
-<h4 id="_problem_statement_2"><a class="anchor" href="#_problem_statement_2"></a>2.1.1. Problem statement</h4>
-<div class="paragraph">
-<p>Given a parameter \(\underbrace{\mu}_{\text{parameter}} \in \underbrace{D^\mu}_\text{parameter domain}\), evaluate \(\underbrace{s(\mu)}_\text{output} = L(\mu)^T \underbrace{u(\mu)}_\text{field variable}\) where \(u(\mu)\in\underbrace{X}_\text{FE space}\) satisfies a PDE \(A(\mu) u(\mu) = f(\mu)\).</p>
-</div>
-<div class="paragraph">
-<p>Difficulties :</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Need to solve \(\textit{PDE}_{FE}(\mu)\) numerous times at different values of \(\mu\),</p>
-</li>
-<li>
-<p>Finite element space \(X\) has a large dimension \(\mathcal{N}\).</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_key_observation"><a class="anchor" href="#_key_observation"></a>2.1.2. Key Observation</h4>
-<div id="fig-rb-scheme" class="imageblock">
+<div class="stemblock">
 <div class="content">
-<img src="_images/RB-scheme.png" alt="RB scheme" width="50%">
+\[\begin{aligned}
+  \|u(\mu)-u_N(\mu)\|_X &amp;\leq \epsilon_{\mathrm{tol}}, \quad \forall \mu \in
+  \mathcal{D}^\mu\\
+  |s(\mu)-s_N(\mu)\|_X &amp;\leq \epsilon^s_{\mathrm{tol}}, \quad \forall \mu \in \mathcal{D}^\mu\\
+\end{aligned}\]
 </div>
-<div class="title">Figure 2. Reduced Basis Method</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What is the best value for \(N\) ? Offline/Online</p>
+<div class="ulist">
+<ul>
+<li>
+<p>\(N\) too large \(\Rightarrow\) computational inefficiency</p>
+</li>
+<li>
+<p>\(N\) too small \(\Rightarrow\) unacceptable error</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>How should we build \(S_N\) ? is there an optimal construction ? Offline</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Good approximation of the manifold \(\mathcal{M}\) through the RB space, but</p>
+</li>
+<li>
+<p>need for well conditioned RB matrices</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_general_problem_statement"><a class="anchor" href="#_general_problem_statement"></a>2.1.3. General Problem Statement</h4>
+<div class="sect2">
+<h3 id="_a_posteriori_error_estimation_requirements"><a class="anchor" href="#_a_posteriori_error_estimation_requirements"></a>2.2. A Posteriori Error Estimation: Requirements</h3>
 <div class="paragraph">
-<p>Given a system \(\Sigma_\mathcal{N}\) of large dimension N,</p>
+<p>We shall develop the following error bounds \(\Delta_N(\mu)\) and \(\Delta^s_N(\mu)\) with the following properties</p>
 </div>
-<div id="gen-prob-fe" class="imageblock">
+<div class="ulist">
+<ul>
+<li>
+<p>Rigorous : \(1 \leq N \leq N_{\mathrm{max}}\),</p>
+</li>
+</ul>
+</div>
+\begin{aligned}
+      \|u(\mu)-u_N(\mu)\|_X &\leq \Delta_N(\mu), \quad \forall \mu \in \mathcal{D}^\mu\\
+      |s(\mu)-s_N(\mu)| &\leq \Delta^s_N(\mu), \quad \forall \mu \in \mathcal{D}^\mu
+\end{aligned}
+<div class="ulist">
+<ul>
+<li>
+<p>reasonably sharp \(1 \leq N \leq N_{\mathrm{max}}\)</p>
+</li>
+</ul>
+</div>
+\begin{gathered}
+  \frac{\Delta_N(\mu)}{\|u(\mu)-u_N(\mu)\|_X} \leq C,\\
+  \frac{\Delta^s_N(\mu)}{|s(\mu)-s_N(\mu)|} \leq C,\\C\approx 1
+\end{gathered}
+<div class="ulist">
+<ul>
+<li>
+<p>efficient : Online cost depend only on \(Q\) and \(N\) <em>and not \(\mathcal{N}\)</em>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_u_nmu_error_equation_and_residual_dual_norm"><a class="anchor" href="#_u_nmu_error_equation_and_residual_dual_norm"></a>2.3. \(u_N(\mu)\) : Error equation and residual dual norm</h3>
+<div class="paragraph">
+<p>Given our RB approximation \(u_N(\mu)\), we have \(e(\mu) \equiv u(\mu)  - u_N(\mu)\) that satisfies \(a( e(\mu), v; \mu ) \ = \ r( u_N(\mu), v; \mu ), \forall v \in X\), where \(r( u_N(\mu), v; \mu ) = f(v) - a( u_N(\mu), v; \mu )\) is the residual. We have then from coercivity and the definitions above that</p>
+</div>
+<div class="stemblock">
 <div class="content">
-<img src="_images/gen-prob-fe.png" alt="gen prob fe" width="50%">
+\[||e(\mu)||_{X} \ \leq\ \dfrac{||r( u_N(\mu), v; \mu )||_{X'}}{\alpha(\mu)}\ =\ \dfrac{\varepsilon_N(\mu)}{\alpha(\mu)}\]
 </div>
-<div class="title">Figure 3. Reduced Basis Method</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dual_norm_of_the_residual"><a class="anchor" href="#_dual_norm_of_the_residual"></a>2.4. Dual norm of the residual</h3>
+<div class="openblock">
+<div class="title">Proposition</div>
+<div class="content">
+<div class="paragraph">
+<p>Given \(\mu \in \mathcal{D}^\mu\), the dual norm of \(r(u_N(\mu),\cdot;\mu)\) is defined as follows</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+      ||r(u_N(\mu),\cdot;\mu)||_{X'} &amp; \equiv \sup_{v\in X}
+      \frac{r(u_N(\mu),v;\mu)}{||v||_X}\\
+      &amp; = ||\hat{e}(\mu)||_X
+    \end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\hat{e}(\mu)\in X\) satisfies \((\hat{e}(\mu),v)_X = r(u_N(\mu),v;\mu)\)</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The error residual equation can then be rewritten \(a( e(\mu), v; \mu ) \ = (\hat{e}(\mu),v)_X, \quad \forall v \in X\)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_u_nmu_definitions_of_energy_error_bounds_and_effectivity"><a class="anchor" href="#_u_nmu_definitions_of_energy_error_bounds_and_effectivity"></a>2.5. \(u_N(\mu)\) : Definitions of energy error bounds and effectivity</h3>
+<div class="paragraph">
+<p>Given \(\alpha_\mathrm{LB}(\mu)\) a nonnegative lower bound of \(\alpha(\mu)\):</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\alpha(\mu)\geq {\alpha_{{\mathrm{LB}}}}(\mu)\geq \epsilon_{\alpha} \alpha(\mu), \epsilon_{\alpha} \in ]0,1[,\, \forall \mu \in \mathcal{D}^\mu\]
+</div>
+</div>
+<div class="paragraph">
+<p>Denote \(\varepsilon_N(\mu) = \|\hat{e}(\mu)\|_X = \|r(u_N(\mu),v;\mu\|_{X'}\)</p>
+</div>
+<div class="openblock">
+<div class="title">Definition : <em>Energy error bound</em></div>
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[\Delta^{\mathrm{en}}_N(\mu) \ \equiv \ \frac{\varepsilon_N(\mu)}{\sqrt{{\alpha_{{\mathrm{LB}}}}(\mu)}}\]
+</div>
+</div>
+</div>
+</div>
+<div class="openblock">
+<div class="title">Definition : <em>Effectivity</em></div>
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[\eta^{\mathrm{en}}_N(\mu) \ \equiv \ \frac{\Delta^{\mathrm{en}}_N(\mu)}{|||e(\mu)|||_\mu}\]
+</div>
+</div>
+</div>
+</div>
+<div class="openblock">
+<div class="title">Proposition : Energy error bound</div>
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[1 \ \leq\ \eta^{\mathrm{en}}_N(\mu) \ \leq \sqrt{\frac{{\gamma_{{\mathrm{UB}}}}(\mu)}{{\alpha_{{\mathrm{LB}}}}(\mu)}}, \quad 1 \leq N \leq N_{\max}, \quad \forall \mu\ \in \ \mathcal{D}^\mu\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Remarks :</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Rigorous : Left inequality ensures rigorous upper bound measured in \(||\cdot||_{X}\) , i.e. \(||e(\mu)||_{X} \leq \Delta_N(\mu),\ \forall \mu \in \mathcal{D}^\mu\)</p>
+</li>
+<li>
+<p>Sharp : Right inequality states that \(\Delta_N(\mu)\) overestimates the « true » error by at most \(\gamma(\mu) / {\alpha_{{\mathrm{LB}}}}(\mu)\)</p>
+</li>
+<li>
+<p>for \(a\) paralmetrically coercive and symmetric</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\theta^{\bar{\mu}} \equiv
+        \frac{\Theta^{\max,\bar{\mu}}_a(\mu)}{\Theta^{\min,\bar{\mu}}_a(\mu)}
+        = \frac{\gamma_{\mathrm{ub}}(\mu)}{\alpha_{\mathrm{lb}}(\mu)}\]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_s_nmu_output_error_bounds"><a class="anchor" href="#_s_nmu_output_error_bounds"></a>2.6. \(s_N(\mu)\) : output error bounds</h3>
+<div class="openblock">
+<div class="title">Proposition : Output error bound</div>
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[1 \ \leq\ \eta^s_N(\mu)  \ \leq \dfrac{{\gamma_{{\mathrm{UB}}}}(\mu)}{{\alpha_\mathrm{LB}}(\mu)}, \quad 1 \leq N \leq N_{\max}, \quad \forall \mu\ \in \ \mathcal{D}^\mu\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\Delta^s_N (\mu) = {\Delta_N^{\mathrm{en}}}(\mu)^2\) and \(\eta^s_N(\mu)\equiv \frac{\Delta^s_N(\mu)}{s(\mu)-s_N(\mu)}\)</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Rapid convergence of the error in the output : Note that the error in the output vanishes quadratically</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_relative_output_error_bounds"><a class="anchor" href="#_relative_output_error_bounds"></a>2.7. Relative output error bounds</h3>
+<div class="paragraph">
+<p>We define</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the <em>relative output error bound</em> \(\Delta^{s,rel}_N (\mu) \equiv \frac{\|\hat{e}(\mu)\|^2_X}{
+\alpha_\mathrm{lb}(\mu) s_N(\mu)}= \frac{\Delta_N^{\mathrm{en}}(\mu)^2}{s_N(\mu)}\)</p>
+</li>
+<li>
+<p>the <em>relative output effectivity</em> \(\eta^{s,rel}_N(\mu)\equiv \frac{\Delta^{s,rel}_N(\mu)}{s(\mu)-s_N(\mu)/s(\mu)}\)</p>
+</li>
+</ul>
+</div>
+<div class="openblock">
+<div class="title">Proposition : Relative output error bound</div>
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[1 \ \leq\ \eta^{s,rel}_N(\mu)  \ \leq 2 \frac{{\gamma_{{\mathrm{UB}}}}(\mu)}{{\alpha_{{\mathrm{LB}}}}(\mu)}, \quad 1 \leq N \leq N_{\max}, \quad \forall \mu\ \in \ \mathcal{D}^\mu\]
+</div>
+</div>
+<div class="paragraph">
+<p>for \(\Delta^{s,rel}_N \leq 1\)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_x_norm_error_bounds"><a class="anchor" href="#_x_norm_error_bounds"></a>2.8. \(X\)-norm error bounds</h3>
+<div class="paragraph">
+<p>We define</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the <em>relative output error bound</em> \(\Delta_N (\mu) \equiv \frac{\|\hat{e}(\mu)\|_X}{\alpha_\mathrm{lb}(\mu)}\)</p>
+</li>
+<li>
+<p>the <em>relative output effectivity</em> \(\eta_N(\mu)\equiv \frac{\Delta_N(\mu)}{\|e(\mu)\|_X}\)</p>
+</li>
+</ul>
+</div>
+<div class="openblock">
+<div class="title">Proposition : Relative output error bound</div>
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[1 \ \leq\ \eta_N(\mu)  \ \leq \frac{{\gamma_{{\mathrm{UB}}}}(\mu)}{{\alpha_{{\mathrm{LB}}}}(\mu)}, \quad 1 \leq N \leq N_{\max}, \quad \forall \mu\ \in \ \mathcal{D}^\mu\]
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_remarks_on_error_bounds"><a class="anchor" href="#_remarks_on_error_bounds"></a>2.9. Remarks on error bounds</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The error bounds are rigorous upper bounds for the reduced basis error for any \(N = 1,\ldots,N_{max}\) and for all \(\mu \in \mathcal{D}\).</p>
+</li>
+<li>
+<p>The upper bounds for the effectivities are</p>
+<div class="ulist">
+<ul>
+<li>
+<p>independent of \(N\) , and</p>
+</li>
+<li>
+<p>independent of \(\mathcal{N}\) if \(\alpha_{\mathrm{lb}}(\mu)\) only depends on \(\mu\), and are thus stable with respect to RB and FEM refinement.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Results for energy norm (and \(X\)-norm) bound directly extend to noncompliant (&amp; nonsymmetric) problems</p>
+<div class="ulist">
+<ul>
+<li>
+<p>if we choose an appropriate definition for the energy (and \(X\)) norm</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="offline-online-decomposition"><a class="anchor" href="#offline-online-decomposition"></a>3. Offline-Online decomposition</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Denote \(\hat{e}(\mu)\in X\) \(||\hat{e}(\mu)||_X = \varepsilon_N(\mu) = ||r(u_N(\mu),\cdot;\mu)||_X\) such that \((\hat{e}(\mu),v)_X = -r(u_N(\mu),v;\mu), \quad \forall v \in X\).</p>
+</div>
+<div class="paragraph">
+<p>And recall that \(-r(u_N(\mu),v;\mu) = f(v) - \displaystyle\sum_{q=1}^Q \sum_{n=1}^N\ \Theta^q(\mu)\ {u_N}_n(\mu)\ a^q( \zeta_n,v), \quad \forall v\ \in\ X\)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It follows next that \(\hat{e}(\mu)\in X\) satisfies</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[(\hat{e}(\mu),v)_X = f(v) - \displaystyle\sum_{q=1}^Q \sum_{n=1}^N\ \Theta^q(\mu)\ {u_N}_n(\mu)\ a^q( \zeta_n,v), \quad \forall v\ \in\ X\]
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Observe then that the rhs is the <em>sum</em> of products of parameter dependent functions and parameter independent linear functionals, thus invoking linear superposition</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\hat{e}(\mu)\ = \ \mathcal{C} - \sum_{q=1}^Q \sum_{n=1}^N\ \Theta^q(\mu)\ {u_N}_n(\mu)\ \mathcal{L}^q_n\]
+</div>
 </div>
 <div class="paragraph">
 <p>where</p>
@@ -870,325 +1094,221 @@ MathJax.Hub.Config({
 <div class="ulist">
 <ul>
 <li>
-<p>\(u(\mu, t) \in \mathbb{R}^{\mathcal{N}}\), the state</p>
+<p>\(\mathcal{C} \in X\) satisfies \((\mathcal{C},v) = f(v), \forall v \in X\)</p>
 </li>
 <li>
-<p>\(s(\mu, t)\), the outputs of interest</p>
-</li>
-<li>
-<p>\(g(t)\), the forcing or control inputs</p>
+<p>\(\mathcal{L} \in X\) satisfies \((\mathcal{L}^q_n,v)_X = -a^q(\zeta_n,v), \forall v \in X, \, 1 \leq n \leq N, 1 \leq q \leq Q\) which are parameter independent problems</p>
 </li>
 </ul>
 </div>
+<div class="sect2">
+<h3 id="_error_bounds"><a class="anchor" href="#_error_bounds"></a>3.1. Error bounds</h3>
 <div class="paragraph">
-<p>are functions of</p>
+<p>From a previous equation, we get</p>
+</div>
+<div id="eq:rbellipticlinear_error:37" class="stemblock">
+<div class="title">Error bound decomposition</div>
+<div class="content">
+\[||\hat{e}(\mu)||_X^2 = (\mathcal{C},\mathcal{C})_X + \sum_{q=1}^Q \sum_{n=1}^N\ \Theta^q(\mu)\ {u_N}_n(\mu)\ \displaystyle \left( 2 ( \mathcal{C}, \mathcal{L}^q_n)_X + \sum_{q'=1}^{Q'} \sum_{n'=1}^{N'}\  \Theta^{q'}(\mu)\ {u_N}_{n'}(\mu)\  ( \mathcal{L}^{q}_{n}, \mathcal{L}^{q'}_{n'})_X \right)\]
+</div>
+</div>
+<div class="paragraph">
+<p>Remark In (<a href="#eq:rbellipticlinear_error:37">Error bound decomposition</a>), \(||\hat{e}(\mu)||_X^2\) is the sum of products of</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>\(\mu \in D\), the parameter inputs</p>
+<p>parameter dependant (simple/known) functions and</p>
 </li>
 <li>
-<p>\(t\), time</p>
+<p>parameter independant inner-product,</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>and the matrices \(M\), \(A\), \(B\), and \(L\) also depend on \(\mu\).</p>
+<p>the offline-online for the error bounds is now clear.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_steps_and_complexity"><a class="anchor" href="#_steps_and_complexity"></a>3.2. Steps and complexity</h3>
+<div class="paragraph">
+<p>Offline :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Solve for \(\mathcal{C}\) and \(\mathcal{L}^q_n,\ 1 \leq n \leq N,\ 1 \leq q \leq Q\)</p>
+</li>
+<li>
+<p>Form and save \((\mathcal{C},\mathcal{C})_X\), \(( \mathcal{C},
+\mathcal{L}^q_n)_X\) and \(( \mathcal{L}^{q}_{n}, \mathcal{L}^{q'}_{n'})_X\), \(1 \leq n,n' \leq N,\ 1 \leq q, q' \leq Q\)</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Construct a reduced order system \(\Sigma_N\) of dimension \(N \ll \mathcal{N}\),</p>
+<p>Online :</p>
 </div>
-<div id="gen-prob-rb" class="imageblock">
+<div class="ulist">
+<ul>
+<li>
+<p>Given a new \(\mu \in \mathcal{D}^\mu\)</p>
+</li>
+<li>
+<p>Evaluate the sum \(||\hat{e}(\mu)||_X^2\) (<a href="#eq:rbellipticlinear_error:37">Error bound decomposition</a>) in terms of \(\Theta^q(\mu)\) and \({u_N}_n(\mu)\)</p>
+</li>
+<li>
+<p>Complexity in \(O(Q^2 N^2)\) independent of \(\mathcal{N}\)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sec:post-error-estim-1"><a class="anchor" href="#sec:post-error-estim-1"></a>4. Sampling strategy: a Greedy algorithm</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_offline_online_scenarii"><a class="anchor" href="#_offline_online_scenarii"></a>4.1. Offline-Online Scenarii</h3>
+<div class="paragraph">
+<p><strong>Offline :</strong> Given a tolerance \(\tau\), build \(S_N\) and \(W_N\) such that \(\forall \ \mu\ \in \mathcal{P} \equiv \mathcal{D}^{\mu} \ , \ \Delta_N(\mu) &lt; \tau\)</p>
+</div>
+<div class="paragraph">
+<p><strong>Online :</strong> Given \(\mu\) and a tolerance \(\tau\), find \(N^*\) and thus \(s_{N^*}(\mu)\) such that \(N^* = \operatorname{arg\ max}_N\ \left( \Delta_{N}(\mu) &lt; \tau \right)\),
+or given \(\mu\) and a max execution time \(T\), find \(N^*\) and thus \(s_{N^*}(\mu)\) s.uch that \(N^* = \operatorname{arg\ min}_N\ \left( \Delta_{N}(\mu) \mbox{ and execution time } &lt; T   \right)\)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_s_n_and_w_n_generation_strategies"><a class="anchor" href="#_s_n_and_w_n_generation_strategies"></a>4.2. \(S_N\) and \(W_N\) Generation Strategies</h3>
+<div class="paragraph">
+<p>Offline Generation</p>
+</div>
+<div class="openblock">
+<div class="title">Offline Generation</div>
 <div class="content">
-<img src="_images/gen-prob-rb.png" alt="gen prob rb" width="50%">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Input :</strong> a tolerance \(\epsilon\), set \(N = 0\) and \(S_0 = \emptyset\)</p>
+</li>
+<li>
+<p>While \(\Delta_N^{\mathrm{max}}&gt; \epsilon\)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>\(N = N+1\)</p>
+</li>
+<li>
+<p>If N == 1; then Pick ((log-)randomly) \(\mu_1 \in \mathcal{D}^\mu\)</p>
+</li>
+<li>
+<p>Build \(S_N:= \{ \mu_N \} \cup S_{N-1}\)</p>
+</li>
+<li>
+<p>Build \(W_N:= \{ \xi = u(\mu_N) \} \cup W_{N-1}\)</p>
+</li>
+<li>
+<p>Compute \(\Delta_N^{\mathrm{max}}:= \mathrm{max}_{\mu \in \mathcal{D}^\mu}\, \Delta_N(\mu)\)</p>
+</li>
+<li>
+<p>\(\mu^{N+1} := \operatorname{arg\ max}_{\mu\in\mathcal{D}^\mu} \Delta_N(\mu)\)</p>
+</li>
+</ul>
 </div>
-<div class="title">Figure 4. Reduced Basis Method</div>
+</li>
+<li>
+<p>End While</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="paragraph">
-<p>where \(u_N(\mu) \in \mathbb{R}^N\) is the reduced state.</p>
+<p><strong>Condition number :</strong> recall that the \(\zeta_n\) are orthonormalizes, this ensures that the condition number will stay bounded by \(\gamma(\mu)/\alpha(\mu)\).</p>
 </div>
-<div class="paragraph">
-<p>We start by considering \(\dot{u} = 0\)</p>
 </div>
-<div class="paragraph">
-<p><strong>Full Model</strong></p>
+<div class="sect2">
+<h3 id="_online_algorithm_i"><a class="anchor" href="#_online_algorithm_i"></a>4.3. Online Algorithm I</h3>
+<div class="openblock">
+<div class="title">\(\mu\) adaptive online</div>
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Input :</strong> \(\mu \in \mathcal{D}^\mu\)</p>
+</li>
+<li>
+<p>Compute \((s_{N^{*}}(\mu), \Delta_{N^{*}}(\mu))\) such that \(\Delta_{N^{*}}(\mu) &lt; \tau.\)</p>
+</li>
+<li>
+<p>\(N = 2\)</p>
+</li>
+<li>
+<p>While \(\Delta_N(\mu) &gt; \tau\)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Compute \((s_N(\mu), \Delta_N(\mu))\) using \((S_N,W_N)\)</p>
+</li>
+<li>
+<p>\(N = N * 2\) use the (very) fast convergence properties of RB</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p>\(\begin{align}
-          A(\mu) u(\mu)&amp; = &amp; F(\mu)\\
-          s(\mu)&amp;=&amp;L^T(\mu) u(\mu)
-        \end{align}\)</p>
+</li>
+<li>
+<p>End While</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p><strong>Reduced Model</strong></p>
-</div>
-<div class="paragraph">
-<p>\(\begin{align}
-          A_N(\mu) u_N(\mu)&amp; = &amp; F_N(\mu)\\
-          s_N(\mu)&amp;=&amp;L^T_N(\mu) u_N(\mu)
-        \end{align}\)</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_key_ingredients"><a class="anchor" href="#_key_ingredients"></a>2.2. Key ingredients</h3>
-<div class="sect3">
-<h4 id="_approximation"><a class="anchor" href="#_approximation"></a>2.2.1. Approximation</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Take « snapshots » at different \(\mu\)-values: \(u(\mu_i), i = 1
-\ldots N\), and let \(Z_N=[\xi_1,\ldots,\xi_N] \in \mathbb{R}^{\mathcal{N}\times N}\) where the basis/test functions, \(\xi_i\) « \(=\) » \(u(\mu_i)\), are orthonormalized</p>
-</li>
-<li>
-<p>For any new \(\mu\), approximate \(u\) by a linear combination of the \(\xi_i\) \(u(\mu) \approx \sum_{i=1}^N u_{N,i}(\mu) \xi_i = Z_N u_N(\mu)\) determined by Galerkin projection, i.e.,</p>
-</li>
-</ul>
-</div>
-<div class="stemblock">
+<h3 id="_online_algorithm_ii"><a class="anchor" href="#_online_algorithm_ii"></a>4.4. Online Algorithm II</h3>
+<div class="openblock">
+<div class="title">Offline</div>
 <div class="content">
-\[\begin{align*}
-\underbrace{Z_N^T A(\mu) Z_N}_{=:A_N(\mu)}u_N(\mu) &amp;= \underbrace{Z_N^TF(\mu)}_{=:F_N(\mu)}\\
-s_N(\mu) &amp;= \underbrace{L^T(\mu)Z_N}_{=:L_N^T(\mu)}u_N(\mu)
-\end{align*}\]
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_a_posteriori_error_estimation"><a class="anchor" href="#_a_posteriori_error_estimation"></a>2.2.2. A posteriori error estimation</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>Assume well-posedness; \(A(\mu)\) positive and definite with a minimal eigenvalue \(\alpha_a :=\lambda_1 &gt;0\), where \(A \xi=\lambda X \xi\) and \(X\) corresponds to the \(X\)-inner product, \((v, v)_X = \|v\|_X^2\)</p>
+<p>While \(i \leqslant \mathrm{Imax} \gg 1\)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pick log-randomly \(\mu \in \mathcal{D}^\mu\)</p>
 </li>
 <li>
-<p>Let \(\underbrace{e_N = u - Z_N\ u_N}_{\text{error}}\) , and \(\underbrace{r = F - A\ Z_N\ u_N}_{\text{residual}}, \forall \mu \in D^\mu\), so that \(A(\mu) e_N (\mu) = r(\mu)\)</p>
+<p>Store in table \(\mathcal{T}, \Delta_N(\mu)\) if <em>worst case</em> for \(N=1,..., {N^{\mathrm{max}}}\)</p>
 </li>
 <li>
-<p>Then (LAX-MILGRAM) for any \(\mu \in D^\mu\), \(\|u(\mu)- Z_N u_N(\mu)  \|_X \leq
-\frac{\|r(\mu)\|_{X'}}{\alpha_{LB}(\mu)} =: \Delta_N(\mu)\), \(|s(\mu)-s_N(\mu)| \leq \|L\|_{X'} \Delta_N(\mu) =: \Delta^s_N(\mu)\) where \(\alpha_{LB}(\mu)\) is a lower bound to \(\alpha_a(\mu)\), and \(\|r\|_{X'}=r^T X^{-1} r\).</p>
+<p>\(i = i + 1\)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>End While</p>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_offline_online_decomposition"><a class="anchor" href="#_offline_online_decomposition"></a>2.2.3. Offline-Online decomposition</h4>
-<div class="paragraph">
-<p><em>How do we compute \(u_N\), \(s_N\), \(\Delta_N^s\) for any \(\mu\) efficiently online ?</em></p>
 </div>
-<div class="paragraph">
-<p>We assue \(A(\mu) = \displaystyle\sum_{q=1}^Q \theta^q(\mu)A^q\) where</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>\(\theta^q(\mu)\) are parameter depandent coefficients,</p>
-</li>
-<li>
-<p>\(A^q\) are parameter independent matrices</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>so that \(A_N(\mu) = Z_N^T A(\mu)Z_N = \displaystyle \sum_{q=1}^Q \theta^q(\mu)\underbrace{Z_N^T A^q Z_N}_\text{parameter independant}\)</p>
-</div>
-<div class="paragraph">
-<p>Since all required quantities can be decomposed in this manner, we can split the process in two phases :</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>OFFLINE :</strong> Form and store \(\mu\)-independant quantities at cost \(O(\mathcal{N})\),</p>
-</li>
-<li>
-<p>ONLINE : For any \(\mu\in D^\mu\), compute approximation and error obunds at cost \(O(QN^2+N^3)\) and \(O(Q^2N^2)\).</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_greedy_algorithm"><a class="anchor" href="#_greedy_algorithm"></a>2.2.4. Greedy Algorithm</h4>
-<div class="paragraph">
-<p><em>How do we choose the sample points \(\mu_i\) (snapshots) optimally ?</em></p>
-</div>
-<div class="paragraph">
-<p>Given \(Z_{N=2} « = » [u(\mu_1), u(\mu_2)]\), we choos \(\mu_{N+1}\) as follows</p>
-</div>
-<div class="stemblock">
+<div class="openblock">
+<div class="title">Online Algorithm II – \(\mu\) adaptive online – worst case</div>
 <div class="content">
-\[\mu_{N+1} = \mathrm{argmax}_{\mu\in D^\text{train}}\dfrac{\Delta_N(\mu)}{\Vert u_N(\mu)\Vert_X}\]
-</div>
-</div>
-<div class="paragraph">
-<p>and \(Z_{N+1} := [u(\mu_1),\cdots, u(\mu_{N+1})\).</p>
-</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Key : \(\Delta_N(\mu)\) is <em>sharp</em> and <em>inexpensive</em> to compute (online)</p>
+<p>Given \(\mu \in \mathcal{D}^\mu\), compute \((s_{N^{*}}(\mu), \Delta_{N^{*}}(\mu))\) such that \(\Delta_{N^{*}}(\mu) &lt; \tau.\)</p>
 </li>
 <li>
-<p>Error bound gives « optimal » samples, so we get a good approximation \(u_N(\mu)\).</p>
+<p>\(N^{*} := \mathrm{arg} \mathrm{max}_{\mathcal{T}}\, {\Delta_N(\mu) \, &lt; \, \tau}\)</p>
+</li>
+<li>
+<p>Use \(W_{N^{*}}\) to compute \((s_{N^{*}}(\mu),\Delta_{N^{*}}(\mu))\)</p>
 </li>
 </ul>
 </div>
-<div id="greedy-proc" class="imageblock">
-<div class="content">
-<img src="_images/greedy-procedure.png" alt="greedy procedure" width="50%">
-</div>
-<div class="title">Figure 5. Greedy algorithm</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="summary-1"><a class="anchor" href="#summary-1"></a>2.3. Summary</h3>
-<div class="sect3">
-<h4 id="_reduced_basis_opportunities_computational_opportunities"><a class="anchor" href="#_reduced_basis_opportunities_computational_opportunities"></a>2.3.1. Reduced Basis Opportunities Computational Opportunities</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>We restrict our attention to the typically smooth and low-dimensional manifold induced by the parametric dependence.<br>
-\(\Rightarrow\) Dimension reduction</p>
-</li>
-<li>
-<p>We accept greatly increased offline cost in exchange for greatly decreased online cost.<br>
-\(\Rightarrow\) Real-time and/or many-query context</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_reduced_basis_relevance"><a class="anchor" href="#_reduced_basis_relevance"></a>2.3.2. Reduced Basis Relevance</h4>
-<div class="paragraph">
-<p>Real-Time Context (control,\(\ldots\)):
-\(\begin{align}
-    \mu &amp; \rightarrow &amp; s_N(\mu), \Delta^s_N(\mu)  &amp; \\
-    t_0 \text{(« input »)} &amp; &amp; &amp; t_0+\delta t_{\mathrm{comp}} (\text{« response »})
-    \end{align}\)</p>
-</div>
-<div class="paragraph">
-<p>Many-Query Context (design,\(\ldots\)):
-\(\begin{align}
-    \mu_j  &amp; \rightarrow &amp; s_N(\mu_j), \Delta^s_N(\mu_j),\quad
-    j=1\ldots J  \\
-    t_0  &amp; &amp; t_0+\delta t_{\mathrm{comp}} J\quad (J \rightarrow \infty)
-    \end{align}\)</p>
-</div>
-<div class="paragraph">
-<p>\(\Rightarrow\) Low parginal (real-time) and/or low average (many-query) cost.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_reduced_basis_challenges"><a class="anchor" href="#_reduced_basis_challenges"></a>2.3.3. Reduced Basis Challenges</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>A Posteriori error estimation</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Rigorous error bounds for outputs of interest</p>
-</li>
-<li>
-<p>Lower bounds to the stability « constants »</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Offline-online computational procedures</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Full decoupling of finite element and reduced basis spaces</p>
-</li>
-<li>
-<p>A posteriori error estimation</p>
-</li>
-<li>
-<p>Nonaffine and nonlinear problems</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Effective sampling strategies</p>
-<div class="ulist">
-<ul>
-<li>
-<p>High parameter dimensions</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_reduced_basis_outline"><a class="anchor" href="#_reduced_basis_outline"></a>2.3.4. Reduced Basis Outline</h4>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Affine Elliptic Problems</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(non)symmetric, (non)compliant, (non)coercive</p>
-</li>
-<li>
-<p>(Convection)-diffusion, linear elasticity, Helmholtz</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Affine Parabolic Problems</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(Convection)-diffusion equation</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Nonaffine and Nonlinear Problems</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Nonaffine parameter dependence, nonpolynomial nonlinearities</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Reduced Basis (RB) Method for Fluid Flow</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Saddle-Point Problems (Stokes)</p>
-</li>
-<li>
-<p>Navier-Stokes Equations</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Applications</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Parameter Optimization and Estimation (Inverse Problems)</p>
-</li>
-<li>
-<p>Optimal Control</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
 </div>
 </div>
 </div>

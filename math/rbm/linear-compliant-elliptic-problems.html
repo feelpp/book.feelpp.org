@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Linear Compliant Elliptic Problems :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/math/rbm/linear-compliant-elliptic-problems.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">    
+<script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
+
+<script src="../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../_/js/vendor/tabs-block-behavior.js"></script>
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true, 
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+
+  TeX: {
+      Macros: {
+      RR: "{\\mathbb R}",
+      NN: "{\\mathbb N}",
+      Nso: "{N_{\\mathrm{so}}}",
+      Nma: "{N_{\\mathrm{ma}}}",
+      Nno: "{N_{\\mathrm{no}}}",
+      Ne: "{N_{\\mathrm{e}}}",
+      Ilag: ["{\\mathcal{I}^{\\mathrm{lag}}_{#1}}",1],
+      calTh: "{\\mathcal{T}_h}",
+      Ck: ["{\\mathcal{C}^{#1}}",1],
+      Pk: ["{\\mathcal{P}^{#1}}",1],
+      Qk: ["{\\mathcal{Q}^{#1}}",1],
+      Pch: ["{P^{#1}_{c,h}}",1],
+      Pcho: ["{P^{#1}_{c,h,0}}",1],
+      Qch: ["{Q^{#1}_{c,h}}",1],
+      Ich: ["{\\mathcal{I}^{#1}_{c,h}#2}",2],
+      poly: ["{\\mathbb{#1}}",1],
+      nf: "{n_f}",
+      ngeo: "{n_{\\mathrm{geo}}}",
+      geo: "{\\mathrm{geo}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      dim: ["{\\operatorname{dim}(#1)}",1],
+      opdim: "{\\operatorname{dim}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      poly: ["{\\mathbb{#1}",1],
+      R: ["{\\mathbb{R}^{#1}}",1],
+      set: ["{\\left\\{#1\\right\\}}",1],
+      diam: "{\\operatorname{diam}}",
+      jump: ["{[\\![ #1 ]\\!]}",1],
+      Next: "{\\mathrm{n}}",
+      essinf: "{\\operatorname{ess}\\, \\operatorname{inf}}",
+      tr: "{\\operatorname{tr}}",
+      Id: "{\\mathcal{I}}",
+      disp: ["{\\mathbf{#1}}",1],
+      stresst: ["{\\mathbf{\\sigma(#1)}}",1],
+      deformt: ["{\\mathbf{\\varepsilon(#1)}}",1],
+      domain: "{\\Omega}",
+      prect: ["{\\left\\(#1\\right\\)}",1],
+      ds: "",
+      bold: ["{\\bf #1}",1],
+      p: "{\\mathrm{p}}",
+      q:"{\\mathbf{q}}",
+      n:"{\\mathbf{n}}",
+      T:"{\\mathcal{T}}",
+      F:"{\\mathcal{F}}",
+      P:"{\\mathcal{P}}",
+      v:"{\\mathbf{v}}"
+  },
+  extensions: ["mhchem.js"] }
+});
+</script>
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML'>
+</script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
+<script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
+
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+         <!--  <a href="https://book.feelpp.org">Feel++ documentation</a> -->
+           <a href="https://docs.feelpp.org">Feel++ Docs</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://docs.feelpp.org">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Docs</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Latest Version</strong></div>
+
+            <!-- this code allow to manage ordering of navbar item -->
+                                                                                                                        
+
+            <hr class="navbar-divider">
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Feel++</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>GitHub</strong></div>
+            <a class="navbar-item" href="http://github.com/feelpp/feelpp">GitHub Repository</a>
+            <a class="navbar-item" href="http://github.com/feelpp/feelpp/issues">GitHub Issue Tracker</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Documentation</strong></div>
+            <a class="navbar-item" href="http://docs.feelpp.org/user/">User Manual</a>
+            <a class="navbar-item" href="http://docs.feelpp.org/dev/">Developer Manual</a>
+            <a class="navbar-item" href="http://docs.feelpp.org/toolbox/">Toolbox Manual</a>
+            
+          </div>
+        </div>
+        <div class="primary-action">
+            <form class="navbar-item search">
+              <input type="text" placeholder="Search Feel++ Docs" class="query" id="search-query">
+              <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ">
+            <img src="../../_/img/slack.png" alt="slack" style="width:30px;"></a>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="http://docs.feelpp.org">
+            <img src="../../_/img/logoFeelpp.png" alt="Feel++" style="width:60px;">
+          </a>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="http://www.cemosis.fr">
+            <img src="../../_/img/logoCemosisTransparent.png" alt="Cemosis" style="width:60px;">
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="math" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Feel++ Mathematics</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Notations</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../calculus/index.html">Calculus</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../calculus/vectorial.html">Calcul Vectoriel</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../calculus/change_of_variable.html">Change of variables in integrals</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../calculus/integral_theorems.html">Integral theorems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../calculus/forms.html">Formes Différentielles</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../analyse-fonctionnelle/index.html">Analyse Fonctionnelle</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../analyse-fonctionnelle/index.html#normes-et-produits-scalaires">Normes et produits scalaires</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../analyse-fonctionnelle/index.html#espaces-fonctionnels">Espaces fonctionnels</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../analyse-fonctionnelle/index.html#sec:notion-de-derivee">Dérivée Généralisée</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../analyse-fonctionnelle/index.html#espaces-de-sobolev">Espaces de Sobolev</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../analyse-fonctionnelle/lemma.html">Lemma</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/index.html">Méthode des éléments finis</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/index.html">Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/index.html#formulation-variationelle">Formulation Variationelle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/index.html#formulation-générale">Formulation Générale</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/index.html#théorème-de-lax-milgram">Théorème de Lax-Milgram</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/index.html#approximation-interne">Approximation Interne</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/index.html#sec:overview">Principe général de la méthode des éléments finis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/index.html#sec:retour-a-lexemple">Retour à l’exemple 1-D</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html">Élement fini de Lagrange</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#unisolvance">Unisolvance</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#sec:lagrange">Élement fini de Lagrange</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#exemples-déléments-finis-de-lagrange">Exemples d&#8217;éléments finis de Lagrange</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#famille-affine-déléments-finis">Famille affine d’éléments finis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#sec:maillages">Maillages</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#sec:espace">Espaces élément fini de Lagrange</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#sec:interp-iso-param">Approximation iso-paramétrique</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#sec:feelpp">Feel++</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#sec:glob">Du problème global aux éléments locaux</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#exercices">Exercices</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/ch-problemes-coercifs.html">Problèmes Coercifs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/laplacian/index.html">Laplacien</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../user/latest/cpp/laplacian.html">Numerical Experiments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/advection-diffusion/index.html">Advection-Diffusion</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/elasticity/index.html">Élasticité Linéaire</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/elasticity/mixed.html">Problème mixte</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/elasticity/pure-traction.html">Problème de traction pure</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/elasticity/implementation.html">Implementation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/elasticity/numerical-experiments.html">Numerical Experiments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/coercivity-loss.html">Perte de coercivité</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/advection-diffusion/dominant-advection.html">Advection-Diffusion avec advection dominante</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/elasticity/incompressibility.html">Incompressibilité en élasticité</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html">Problèmes Mixtes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_model_problems">Model Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_saddle_point_problems">Saddle Point Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_finite_element_approximation">Finite Element Approximation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_mixed_finite_element_for_stokes">Mixed Finite Element for Stokes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_variational_formulation_for_stokes">Variational Formulation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_finite_element_approximation_for_stokes">Finite Element Approximation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_bad_finite_elements_for_stokes">Bad Finite Elements</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_mini_element">Mini-Element</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_taylor_hood_element">Taylor-Hood Element</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_test_cases">Test Cases for Stokes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/darcy.html">Flow through porous medium : Darcy&#8217;s law</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/coupling_darcystokes.html">The Darcy-Stokes coupled problem</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fem/nonlinear.html">Nonlinear problems</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../hdg/index.html">HDG Methods</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../hdg/diffusion-reaction/index.html">Diffusion-Reaction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../hdg/diffusion-reaction/verification.html">verification</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Feel++ Mathematics</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">AngioTK User Manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../angiotk/0.1/index.html">0.1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Data Manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../data/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../data/0.109/index.html">0.109</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Developer manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../dev/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../dev/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../../dev/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../dev/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ and Salome</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../salome/current/index.html">current</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Documentation</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../feelpp/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../feelpp/0.109/index.html">0.109</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Feel++ Mathematics</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="../index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ MyProject</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../myproject/1.0.0/index.html">1.0.0</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Toolbox Cases Guide</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../cases/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../cases/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../../cases/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../cases/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Toolboxes Manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../toolboxes/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../toolboxes/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../../toolboxes/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../toolboxes/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ Tutorial Dev</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../tutorial-dev/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Feel++ User Manual</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../user/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../user/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../../user/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../user/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Model Order Reduction</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../mor/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../mor/0.109/index.html">0.109</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Toolbox Contribution Guide</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../contribute/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../feelpp/0.109/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Feel++ Mathematics</a></li>
+    <li><a href="linear-compliant-elliptic-problems.html">Linear Compliant Elliptic Problems</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/math/modules/rbm/pages/linear-compliant-elliptic-problems.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Linear Compliant Elliptic Problems</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#notations-definitions-problem-statement-example">1. Notations, Definitions, Problem Statement, Example</a>
+<ul class="sectlevel2">
+<li><a href="#inner-product-spaces">1.1. Inner Product Spaces</a>
+<ul class="sectlevel3">
+<li><a href="#_definitions">1.1.1. Definitions</a></li>
+<li><a href="#_norm">1.1.2. Norm</a></li>
+<li><a href="#_cartesian_product_space">1.1.3. Cartesian Product Space</a></li>
+</ul>
+</li>
+<li><a href="#linear-and-bilinear-forms">1.2. Linear and Bilinear Forms</a>
+<ul class="sectlevel3">
+<li><a href="#_linear_forms">1.2.1. Linear Forms</a></li>
+<li><a href="#_dual_spaces">1.2.2. Dual Spaces</a></li>
+<li><a href="#_bilinear_forms">1.2.3. Bilinear Forms</a></li>
+<li><a href="#_parametric_linear_and_bilinear_forms">1.2.4. Parametric Linear and Bilinear Forms</a></li>
+<li><a href="#_parametric_linear_and_bilinear_forms_2">1.2.5. Parametric Linear and Bilinear Forms</a></li>
+<li><a href="#_coercivity_eigenproblem">1.2.6. Coercivity EigenProblem</a></li>
+<li><a href="#_parameter_affine_dependence">1.2.7. Parameter affine Dependence</a></li>
+<li><a href="#_parametric_coercivity">1.2.8. Parametric Coercivity</a></li>
+</ul>
+</li>
+<li><a href="#classes-of-functions">1.3. Classes of Functions</a>
+<ul class="sectlevel3">
+<li><a href="#_scalar_and_vector_fields">1.3.1. Scalar and Vector Fields</a></li>
+<li><a href="#_multi_index_derivative">1.3.2. Multi-Index Derivative</a></li>
+<li><a href="#_function_spaces">1.3.3. Function Spaces</a></li>
+<li><a href="#_lebesgue_spaces">1.3.4. Lebesgue Spaces</a></li>
+<li><a href="#_hilbert_space">1.3.5. Hilbert Space</a></li>
+<li><a href="#_special_most_important_cases">1.3.6. Special (most important) cases</a></li>
+<li><a href="#_projection">1.3.7. Projection</a></li>
+</ul>
+</li>
+<li><a href="#notations">1.4. Notations</a>
+<ul class="sectlevel3">
+<li><a href="#_notations">1.4.1. Notations</a></li>
+<li><a href="#_definitions_2">1.4.2. Definitions</a></li>
+</ul>
+</li>
+<li><a href="#problem-statement-1">1.5. Problem Statement</a>
+<ul class="sectlevel3">
+<li><a href="#_hypothesis_reference_geometry">1.5.1. Hypothesis: Reference Geometry</a></li>
+<li><a href="#_hypothesis_continuity_stability_compliance">1.5.2. Hypothesis: Continuity, stability, compliance</a></li>
+<li><a href="#_hypothesis_affine_dependence_in_the_parameter">1.5.3. Hypothesis: Affine dependence in the parameter</a></li>
+<li><a href="#_inner_products_and_norms">1.5.4. Inner Products and Norms</a></li>
+<li><a href="#_coercivity_and_continuity_constants">1.5.5. Coercivity and Continuity Constants</a></li>
+<li><a href="#_truth_fem_approximation">« Truth » FEM Approximation</a></li>
+<li><a href="#_purpose">1.5.6. Purpose</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec:reduc-basis-appr">2. Reduced Basis Approximation</a>
+<ul class="sectlevel2">
+<li><a href="#_reduced_basis_objectives">2.1. Reduced Basis Objectives</a></li>
+<li><a href="#_rapid_convergence">2.2. Rapid Convergence</a></li>
+<li><a href="#_reliability_and_sharpness">2.3. Reliability and Sharpness</a></li>
+<li><a href="#_efficiency">2.4. Efficiency</a></li>
+<li><a href="#_parametric_manifold_mathcalmmathcaln">2.5. Parametric Manifold \(\mathcal{M}^\mathcal{N}\)</a></li>
+<li><a href="#_low_dimension_manifold">2.6. Low-Dimension Manifold</a></li>
+<li><a href="#_spaces_bases">2.7. Spaces &amp; Bases</a>
+<ul class="sectlevel3">
+<li><a href="#_taylor_hermite">2.7.1. Taylor &amp; Hermite</a></li>
+<li><a href="#_orthogonal_basis">2.7.2. Orthogonal Basis</a></li>
+</ul>
+</li>
+<li><a href="#_formulation_linear_compliant_case_a_galerkin_method">2.8. Formulation (Linear Compliant Case): a Galerkin method</a>
+<ul class="sectlevel3">
+<li><a href="#_galerkin_projection">2.8.1. Galerkin Projection</a></li>
+<li><a href="#_optimality">2.8.2. Optimality</a></li>
+<li><a href="#_offline_online_decomposition">2.8.3. Offline-online decomposition</a></li>
+<li><a href="#_matrix_form">2.8.4. Matrix form</a></li>
+<li><a href="#_complexity_analysis">2.8.5. Complexity analysis</a></li>
+<li><a href="#_condition_number">2.8.6. Condition number</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="notations-definitions-problem-statement-example"><a class="anchor" href="#notations-definitions-problem-statement-example"></a>1. Notations, Definitions, Problem Statement, Example</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="inner-product-spaces"><a class="anchor" href="#inner-product-spaces"></a>1.1. Inner Product Spaces</h3>
+<div class="sect3">
+<h4 id="_definitions"><a class="anchor" href="#_definitions"></a>1.1.1. Definitions</h4>
+<div class="paragraph">
+<p>A space \(Z\) is a <em>linear</em> or <em>vector space</em> if, for any \(\alpha \in
+    \mathbb{R}\) , \(w,v \in Z\), \(\alpha w+v \in Z\)</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+\(\mathbb{R}\) denotes the real numbers, and \(\mathbb{N}\) and \(\mathbb{C}\) shall denote the natural and complex numbers, respectively.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>An <em>inner product space</em> (or <em>Hilbert space</em>) \(Z\) is a linear space equipped with</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>an inner product \((w,v)_Z, \forall w,v \in Z\), and</p>
+</li>
+<li>
+<p>induced norm \(\|w\|_Z = (w,w)_Z, \forall w \in Z\).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Inner Product : An <em>inner product</em> \(w,v \in Z \rightarrow (w,v)_Z \in \mathbb{R}\) has to satisfy</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Bilinearity</em> :</p>
+<div class="ulist">
+<ul>
+<li>
+<p>\((\alpha w+v,z)_Z =\alpha(w,z)_Z +(v,z)_Z \forall \alpha\in R,w,v,z\in Z\)</p>
+</li>
+<li>
+<p>\((z,\alpha w+v)_Z =\alpha(z,w)_Z +(z,v)_Z, \forall \alpha\in R, w,v,z\in Z \)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Symmetry</em> : \((w,v)_Z = (v,w)_Z, \forall w,v \in Z\)</p>
+</li>
+<li>
+<p><em>Positivity</em> :</p>
+<div class="ulist">
+<ul>
+<li>
+<p>\((w,w)_Z &gt;0, \forall w \in Z, w \neq 0\)</p>
+</li>
+<li>
+<p>\((w,w)_Z =0\) only if \(w=0\)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Cauchy-Schwarz inequality: \((w,v)_Z \leq \|w\|_Z\|v\|_Z,\forall w, v \in Z\)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_norm"><a class="anchor" href="#_norm"></a>1.1.2. Norm</h4>
+<div class="paragraph">
+<p>A <em>norm</em> is a map \(\| \cdot \| : Z \rightarrow \mathbb{R}\) such that</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(\|w\|_Z &gt; 0\quad \forall w\in Z,w\neq 0,\)</p>
+</li>
+<li>
+<p>\(\|\alpha w\|_Z = |\alpha |\|w\|_Z\quad \forall \alpha \in
+\mathbb{R},\ \forall w\in Z, \)</p>
+</li>
+<li>
+<p>\(\|w+v\|_Z \leq \|w\|_Z +\|v\|_Z\quad \forall w\in Z,\ \forall v\in Z.\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Equivalence of norms \(\| \cdot \|_Z\) and \(\| \cdot \|_Y\) : there exist positive constants \(C_1\), \(C_2\) such that \(C_1\|v\|_Z \leq \|v\|_Y \leq C_2\|v\|_Z\).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cartesian_product_space"><a class="anchor" href="#_cartesian_product_space"></a>1.1.3. Cartesian Product Space</h4>
+<div class="paragraph">
+<p>Given two inner product spaces \(Z_1\) and \(Z_2\), we define \(Z = Z_1 \times Z_2  \equiv  \{(w_1,w_2)\ | \ w_1 \in  Z_1,\ w_2 \in  Z_2\}\) and given \(w = (w_1,w_2) \in  Z, v = (v_1,v_2) \in  Z\), we define \(w + v  \equiv  (w_1 + v_1, w_2 + v_2).\).</p>
+</div>
+<div class="paragraph">
+<p>We also equip \(Z\) with the inner product \((w,v)_Z =(w_1,v_1)_{Z_1} +(w_2,v_2)_{Z_2}\) and induced norm \(\|w\|_Z = (w,w)_Z\).</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="linear-and-bilinear-forms"><a class="anchor" href="#linear-and-bilinear-forms"></a>1.2. Linear and Bilinear Forms</h3>
+<div class="sect3">
+<h4 id="_linear_forms"><a class="anchor" href="#_linear_forms"></a>1.2.1. Linear Forms</h4>
+<div class="paragraph">
+<p>A functional \(g : Z \rightarrow  \mathbb{R}\) is a <em>linear functional</em> if, for any \(\alpha   \in  \mathbb{R}, w,
+  v  \in  Z\) \(g(\alpha w + v) = \alpha g(w) + g(v)\)</p>
+</div>
+<div class="paragraph">
+<p>A linear form is <em>bounded</em>, or <em>continuous</em>, over \(Z\) if \(|g(v)| \leq  C \|v\|_Z, \forall v \in  Z,\) for some finite real constant \(C\).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dual_spaces"><a class="anchor" href="#_dual_spaces"></a>1.2.2. Dual Spaces</h4>
+<div class="paragraph">
+<p>Given \(Z\), we define the <em>dual space</em> \(Z'\) as the space of all bounded linear functionals over \(Z\). We associate to \(Z'\) the dual norm \(\|g\|_{Z'} = \displaystyle\sup_{v \in Z} \frac{g(v)}{\|v\|_Z} , \forall g \in Z'\).</p>
+</div>
+<div class="paragraph">
+<p>For any \(g \in Z'\), there exists a unique \(w_g \in Z\) such that \((w_g, v)_Z =g(v), \forall v \in Z\).</p>
+</div>
+<div class="paragraph">
+<p>It directly follows that \(\|g\|_{Z'} = \|w_g\|_Z\)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bilinear_forms"><a class="anchor" href="#_bilinear_forms"></a>1.2.3. Bilinear Forms</h4>
+<div class="paragraph">
+<p>A form \(b:Z_1 \times Z_2 \rightarrow \mathbb{R} \) is <em>bilinear</em> if, for any \(\alpha \in R\),</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(b(\alpha w + v,z) = \alpha b(w,z) + b(v,z), \forall w,v \in  Z_1,
+z \in  Z_2 \)</p>
+</li>
+<li>
+<p>\(b(z,\alpha w + v) =\alpha b(z,w) + b(z,v), \forall z \in  Z_1, w,v \in  Z_2\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The bilinear form \(b : Z \times Z \rightarrow \mathbb{R}\) is</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>symmetric</em>, if \(b(w,v) = b(v,w),\)</p>
+</li>
+<li>
+<p><em>skew-symmetric</em>, if \(b(w,v) = -b(v,w),\)</p>
+</li>
+<li>
+<p><em>positive definite</em>, if \(b(v,v) \geq  0\text{ , with equality only for } v = 0.\)</p>
+</li>
+<li>
+<p><em>positive semidefinite</em>, if \(b(v,v) \geq  0, \forall v  \in  Z.\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We also define, for a general bilinear form \(b : Z \times Z \rightarrow \mathbb{R}\), the</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>symmetric part</em> as \(b_S(w,v) = 1/2 (b(w,v) + b(v,w)), \forall w,v \in Z;\)</p>
+</li>
+<li>
+<p>the <em>skew-symmetric part</em> as \(b_{SS}(w,v) = 1/2 (b(w,v) - b(v,w)), \forall w,v \in Z.\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The bilinear form \(b : Z \times Z \rightarrow \mathbb{R}\) is</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>coercive</em> over \(Z\) if \(\alpha \equiv \inf_{w\in Z} \frac{b(w,w)}{\|w\|^2_Z}\) is positive;</p>
+</li>
+<li>
+<p><em>continuous</em> over \(Z\) if \(\gamma \equiv \sup_{w\in Z}  \sup_{v\in Z} \frac{b(w, v)}{\|w\|_Z \|v\|_Z}\) is finite.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_parametric_linear_and_bilinear_forms"><a class="anchor" href="#_parametric_linear_and_bilinear_forms"></a>1.2.4. Parametric Linear and Bilinear Forms</h4>
+<div class="paragraph">
+<p>We introduce</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(D  \subset  \mathbb{R}^P\) : closed bounded parameter domain;</p>
+</li>
+<li>
+<p>\(\mu = (\mu_1,\ldots,\mu_P)  \in  D\) : parameter vector.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We shall say that</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(g:Z\times D\rightarrow \mathbb{R}\) is a <em>parametric linear form</em> if, for all \(\mu  \in  D, g( \cdot ; \mu) : Z \rightarrow  \mathbb{R}\) is a linear form;</p>
+</li>
+<li>
+<p>\(b:Z\times Z\times D\rightarrow \mathbb{R}\) is a <em>parametric bilinear form</em> if,for all \(\mu  \in  D, b( \cdot ,  \cdot ; \mu) : Z \times  Z \rightarrow  \mathbb{R}\) is a bilinear form.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Concepts of symmetry directly extend to the parametric case.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_parametric_linear_and_bilinear_forms_2"><a class="anchor" href="#_parametric_linear_and_bilinear_forms_2"></a>1.2.5. Parametric Linear and Bilinear Forms</h4>
+<div class="paragraph">
+<p>The parametric bilinear form \(b : Z \times Z \times D \rightarrow
+  \mathbb{R}\) is</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>coercive</em> over Z if \(\alpha(\mu) \equiv  \inf_{w \in Z} \frac{b(w,w;\mu)}{\|w\|^2_Z}\) is positive for all \(\mu  \in  D\);</p>
+</li>
+<li>
+<p><em>continuous</em> over \(Z\) if \(\gamma(\mu)\equiv  \sup_{w \in Z} \sup_{v \in Z} \frac{b(w, v; \mu)}{\|w\|_Z\|v\|_Z}\) is finite for all \(\mu  \in  D.\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We also define</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+(0 &lt;) \alpha _0 &amp; \equiv  \min_{\mu \in D} \alpha (\mu)\\
+\gamma_0 &amp; \equiv \max_{\mu \in D} \gamma (\mu) (&lt; \infty ).
+    \end{align}\]
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_coercivity_eigenproblem"><a class="anchor" href="#_coercivity_eigenproblem"></a>1.2.6. Coercivity EigenProblem</h4>
+<div class="paragraph">
+<p>We have \(\alpha (\mu) \equiv  \inf_{w \in Z} \frac{b_S(w,w;\mu)}{\|w\|^2_Z}\)</p>
+</div>
+<div class="paragraph">
+<p>THe associated generalized eigenproblem is :</p>
+</div>
+<div class="paragraph">
+<p>Given \(\mu  \in  D\), find \((\chi^{co},\nu^{co})_i(\mu)  \in  Z \times
+\mathbb{R}, 1 \leq  i \leq  \dim(Z),\) such that \(b_S(\chi_i^{co}(\mu), v; \mu) = \nu_i^{co}(\mu)(\chi_i^{co}(\mu), v)_Z\) and \(\|\chi_i^{co}(\mu)\|_Z=1\).</p>
+</div>
+<div class="paragraph">
+<p>Let \(\nu_1^{co}(\mu) \leq  \nu_2^{co}(\mu) \leq  \ldots \leq  \nu_{\dim{Z}}^{co} (\mu)\) and \(b\) coercive, then \(\alpha (\mu) = \nu_1^{co}(\mu) &gt; 0.\)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_parameter_affine_dependence"><a class="anchor" href="#_parameter_affine_dependence"></a>1.2.7. Parameter affine Dependence</h4>
+<div class="paragraph">
+<p>We assume \(g(v;\mu)= \displaystyle\sum_{q=1}^{Q_g} \theta^q_g(\mu)g^q(v), \forall v \in Z,\) where, for \(1 \leq  q \leq  Q_g\) (finite),</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>parameter-dependant functions \(\theta^q_g : D
+\rightarrow  \mathbb{R}\),</p>
+</li>
+<li>
+<p>parameter-independant forms \(g^q : Z \rightarrow  \mathbb{R};\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>and \(b(w,v;\mu)= \displaystyle\sum_{q=1}^{Q_b} \theta^q_b(\mu) b^q(w,v),\quad \forall
+w,v \in Z,\) where, for \(1 \leq  q \leq  Q_b\) (finite),</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>parameter-dependant functions \(\theta^q_b : D \rightarrow  \mathbb{R}\),</p>
+</li>
+<li>
+<p>parameter-independant forms \(b^q : Z \times  Z \rightarrow  \mathbb{R}\).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_parametric_coercivity"><a class="anchor" href="#_parametric_coercivity"></a>1.2.8. Parametric Coercivity</h4>
+<div class="paragraph">
+<p>The coercive bilinear form \(b : Z \times Z \times D \rightarrow
+\mathbb{R}\) \(b(w,v;\mu)= \displaystyle\sum_{q=1}^{Q_b} \theta^q_b(\mu) b^q(w,v),\quad \forall
+w,v \in Z,\) is <em>parametrically corecive</em> if \(c\equiv  b_S\) is affine \(c(w,v;\mu)= \displaystyle\sum_{q=1}^{Q_c} \theta^q_c(\mu) c^q(w,v),\quad \forall
+w,v \in Z,\) and satisfies and</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(\theta^q_c(\mu)&gt;0, \forall \mu \in D, 1\leq q\leq Q_c,\)</p>
+</li>
+<li>
+<p>\(c^q(v,v)\geq 0,\forall v \in Z, 1\leq q\leq Q_c.\)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="classes-of-functions"><a class="anchor" href="#classes-of-functions"></a>1.3. Classes of Functions</h3>
+<div class="sect3">
+<h4 id="_scalar_and_vector_fields"><a class="anchor" href="#_scalar_and_vector_fields"></a>1.3.1. Scalar and Vector Fields</h4>
+<div class="paragraph">
+<p>We consider (real)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>scalar-valued field variables (e.g., temperature, pressure) \(w : \Omega  \rightarrow  \mathbb{R}^{d=1}\)</p>
+</li>
+<li>
+<p>vector-valued field variables (e.g., displacement, velocity) \(\mathbf{w} : \Omega  \rightarrow \mathbb{R}^d\) , where \(\mathbf{w}(x) = (w_1(x), \ldots , w_d (x));\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(\Omega  \in \mathbb{R}^d, d=1, 2, \text{or } 3\) is an open bounded domain</p>
+</li>
+<li>
+<p>\(x = (x_1,...,x_d)  \in  \Omega \);</p>
+</li>
+<li>
+<p>\(\Omega\) has Lipschitz continuous boundary \(\partial \Omega\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>And we define the canonical basis vectors as \(e_i, 1 \leq  i \leq  d.\)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_multi_index_derivative"><a class="anchor" href="#_multi_index_derivative"></a>1.3.2. Multi-Index Derivative</h4>
+<div class="paragraph">
+<p>Given a scalar (or one component of a vector)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>field \(w : \Omega  \rightarrow  \mathbb{R}\) (SPATIAL DERIVATIVE)</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[(D^{\sigma} w)(x) = \frac{\partial^\sigma w}{\partial x_1^{\sigma_1} ...\partial x_d^{\sigma d}}\]
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>parametric field \(w : \Omega  \times  D \rightarrow  \mathbb{R}\) (SENSITIVITY DERIVATIVE)</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[(D_{\sigma} w)(x) = \frac{\partial^\sigma w}{\partial \mu_1^{\sigma_1} ...\partial \mu_d^{\sigma d}}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(\sigma  = (\sigma_1,\ldots,\sigma_d)\), \(\sigma_i, 1 \leq  i \leq  d\), non-negative integers;</p>
+</li>
+<li>
+<p>\(|\sigma| = \sum_{j=1}^{d} \sigma_j\) is the order of the derivative; and</p>
+</li>
+<li>
+<p>\(I^{d,n}\) is set of all index vectors \(\sigma   \in  N^d_0\) such that \(|\sigma | \leq  n.\)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_function_spaces"><a class="anchor" href="#_function_spaces"></a>1.3.3. Function Spaces</h4>
+<div class="paragraph">
+<p>Let \(m  \in  N_0\), the space \(C^m(\Omega )\) is defined as \(C^m(\Omega )\equiv  \{w | D^\sigma w  \in  C^0(\Omega ), \forall \sigma   \in  I^{d,m}\},\) and \(C^0(\Omega )\) is the space of continuous functions over \(\Omega \in  \mathbb{R}^d\).</p>
+</div>
+<div class="paragraph">
+<p>We denote by \(C^\infty (\Omega )\) the space of functions \(w\) for which \(D^\sigma\) exists and is continuous for any order \(|\sigma |.\)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_lebesgue_spaces"><a class="anchor" href="#_lebesgue_spaces"></a>1.3.4. Lebesgue Spaces</h4>
+<div class="paragraph">
+<p>We define, for \(1 \leq  p &lt; \infty\), the <em>Lebesgue space</em> \(L^p(\Omega
+)\) as \(L^p(\Omega )\equiv \{  w \text{ measurable } | \|w\|_{L^p(\Omega )} &lt; \infty\}\) where</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(\|w\|_{L^p(\Omega )} \equiv  \left( \int_\Omega |w|^pdx\right)^{1/p} , 1\leq p&lt;\infty,\)</p>
+</li>
+<li>
+<p>\(\|w\|_{L^\infty (\Omega )} \equiv \mathrm{ess} \sup_{x\in\Omega} |w(x)|, p = \infty .\)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_hilbert_space"><a class="anchor" href="#_hilbert_space"></a>1.3.5. Hilbert Space</h4>
+<div class="paragraph">
+<p>Let \(m  \in  \mathbb{N}_0\), the space \(H^m(\Omega )\) is then defined as \(H^m(\Omega )\equiv  \{w | D^\sigma w  \in   L^2(\Omega ), \forall \sigma   \in  I^{d,m}\},\) with associated inner product \((w,v)_{H^m(\Omega )}\equiv \displaystyle\sum_{\sigma  \in I^{d,m}}\int_\Omega  D^\sigma w D^\sigma v dx,\) and induced norm \(\|w\|_{H^m(\Omega )} \equiv   \sqrt{(w, w)_{H^m(\Omega )}}.\)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_special_most_important_cases"><a class="anchor" href="#_special_most_important_cases"></a>1.3.6. Special (most important) cases</h4>
+<div class="paragraph">
+<p>Since we only consider second-order PDEs, we require mostly</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(L^2(\Omega )  = H^0(\Omega )\): Lebesgue Space \(p = 2\)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>\((w,v)_{L^2(\Omega)} = \int_\Omega w v \quad \forall w, v  \in  L^2(\Omega )\)</p>
+</li>
+<li>
+<p>\(\|w\|_{L^2(\Omega)} = \sqrt{(w,w)_{L^2(\Omega)}} \forall w  \in  L^2(\Omega ),\)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>\(\Rightarrow\) Space of all functions \(w : \Omega  \rightarrow
+\mathbb{R}\) square-integrable over \(\Omega\) .</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(H^1(\Omega)\) \(H^1(\Omega ) \equiv \{w \in L^2(\Omega )| \frac{\partial w}{ \partial xi}  \in L^2(\Omega ), 1\leq i\leq d\}\) with inner product and induced norm \((w,v)_{H^1(\Omega )}  \equiv \int_\Omega \nabla w  \cdot   \nabla v
++ wv\quad \forall w,v  \in  H^1(\Omega ),\), \(\|w\|_{H^1(\Omega )}  \equiv \sqrt{(w,w)_{H^1(\Omega)}}\quad \forall w  \in  H^1(\Omega ),\) and seminorm \(|w|_{H^1(\Omega )} \equiv \int_\Omega  \nabla w  \cdot   \nabla
+w,\quad \forall w  \in  H^1(\Omega ).\)</p>
+</li>
+<li>
+<p>the space \(H_0^1(\Omega )\) \(H^1_0(\Omega) \equiv \{v \in H^1(\Omega )|v_{|\partial \Omega}=0 \}\) where \(v = 0\) on the boundary \(\partial \Omega .\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note that, for any \(v  \in  H_0^1(\Omega )\), we have \(C_{PF} \|v\|_{H^1(\Omega )} \leq  |v|_{H^1(\Omega )} \leq  \|v\|_{H^1(\Omega )},\) and thus \(\|v\|_{H^1(\Omega)} = 0 \, \Rightarrow v = 0\) \(\Rightarrow |v|_{H^1(\Omega )}\) constitutes a norm for \(v  \in
+H_0^1(\Omega ).\)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_projection"><a class="anchor" href="#_projection"></a>1.3.7. Projection</h4>
+<div class="paragraph">
+<p>Given Hilbert Spaces \(Y\) and \(Z \subset  Y\) , the projection, \(\Pi  : Y \rightarrow  Z\), of \(y \in Y\) onto \(Z\) is defined as</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[(\Pi y,v)_Y = (y,v)_Y , \forall v  \in  Z\]
+</div>
+</div>
+<div class="paragraph">
+<p>Properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Orthogonality: \((y - \Pi y, v)_Y = 0\)</p>
+</li>
+<li>
+<p>Idempotence: \(\Pi (\Pi y) = \Pi y\)</p>
+</li>
+<li>
+<p>Best Approximation \(\|y-\Pi y\|^2_Y = \inf_{v \in Z} \|y-v\|^2_Y, \, \)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Given an orthonormal basis \(\{ \varphi_i\}_{i=1, N = \dim(Z)}\), then \(\Pi y= \sum_{i=1}^{\dim(Z)}  ( \varphi_i,y)_Y  \varphi_i, \forall y \in Y\)</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="notations"><a class="anchor" href="#notations"></a>1.4. Notations</h3>
+<div class="sect3">
+<h4 id="_notations"><a class="anchor" href="#_notations"></a>1.4.1. Notations</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>\((\cdot)^\mathcal{N}\) finite element approximation</p>
+</li>
+<li>
+<p>\((\cdot)_N\) reduced basis approximation</p>
+</li>
+<li>
+<p>\(\mu\) input parameter (physical, geometrical,&#8230;&#8203;)</p>
+</li>
+<li>
+<p>\(s(t;\mu) \approx s^\mathcal{N}(t;\mu)\approx s_N(t;\mu) \) output approximations</p>
+</li>
+<li>
+<p>\(\mu \rightarrow s(t;\mu)\) input-output relationship</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_definitions_2"><a class="anchor" href="#_definitions_2"></a>1.4.2. Definitions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>\(\Omega \subset \mathbb{R}^d\) spatial domain</p>
+</li>
+<li>
+<p>\(\mu\) \(P\)-uplet</p>
+</li>
+<li>
+<p>\(\mathcal{D}^\mu \subset \mathbb{R}^P \) parameter space</p>
+</li>
+<li>
+<p>\(s\) output, \(\ell, f\) functionals</p>
+</li>
+<li>
+<p>\(u\) field variable</p>
+</li>
+<li>
+<p>\(X\) function space \(H^1_0(\Omega)^\nu \subset X \subset H^1(\Omega)^\nu\) (\(\nu=1\) for simplicity)<br>
+\((\cdot,\cdot)_X\) scalar product and \(\|\cdot\|_X\) norm associated to \(X\)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="problem-statement-1"><a class="anchor" href="#problem-statement-1"></a>1.5. Problem Statement</h3>
+<div class="paragraph">
+<p>The formal problem statement reads: Given \(\mu \in \mathcal{D}^\mu\), evaluate \(s(\mu)  = \ell(u(\mu);\mu)\) where \(u(x;\mu) \in X\) satisfies \(a(u(\mu), v; \mu ) = f(v; \mu), \quad \forall v \in X\)</p>
+</div>
+<div class="paragraph">
+<p>We consider first the case of linear affine compliant elliptic problem and then complexify.</p>
+</div>
+<div class="sect3">
+<h4 id="_hypothesis_reference_geometry"><a class="anchor" href="#_hypothesis_reference_geometry"></a>1.5.1. Hypothesis: Reference Geometry</h4>
+<div class="paragraph">
+<p>In these notes \(\Omega\) is considered</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To apply the reduced basis methodology exposed later, we need to setup a reference spatial domain \(\Omega_{\mathrm{ref}}\)</p>
+</li>
+<li>
+<p>We introduce an affine mapping \(\mathcal{T}(\cdot;\mu) : \Omega (\equiv
+\Omega_{\mathrm{ref}} = \Omega_o(\bar{\mu}))
+\rightarrow \Omega_o(\mu)\) such that \(a(u,v;\mu) = a_o(u_o \circ \mathcal{T}_\mu,v_o \circ \mathcal{T}_\mu;\mu)\)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_hypothesis_continuity_stability_compliance"><a class="anchor" href="#_hypothesis_continuity_stability_compliance"></a>1.5.2. Hypothesis: Continuity, stability, compliance</h4>
+<div class="paragraph">
+<p>We consider the following \(\mu-\)PDE</p>
+</div>
+<div class="paragraph">
+<p>\(a(\cdot,\cdot;\mu)\) is :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>bilinear</p>
+</li>
+<li>
+<p>symmetric</p>
+</li>
+<li>
+<p>continuous</p>
+</li>
+<li>
+<p>coercive (\(\forall \mu \in \mathcal{D}^\mu\))</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>\(f(\cdot;\mu), \ell(\cdot;\mu)\) are :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>linear</p>
+</li>
+<li>
+<p>bounded (\(\forall \mu \in \mathcal{D}^\mu\))</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>and in particular, to start, the compliant case</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(a\) symmetric</p>
+</li>
+<li>
+<p>\(f(\cdot;\mu) = \ell(\cdot;\mu)\quad \forall \mu \in \mathcal{D}^\mu\)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_hypothesis_affine_dependence_in_the_parameter"><a class="anchor" href="#_hypothesis_affine_dependence_in_the_parameter"></a>1.5.3. Hypothesis: Affine dependence in the parameter</h4>
+<div class="paragraph">
+<p>We require for the RB methodology \(a(u,v;\mu) = \displaystyle\sum_{q=1}^{Q_a} \Theta^q_a(\mu)\ a^q( u, v )\) where for \(q=1,...,Q_a\)</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align*}
+\theta^q_a : &amp; \mathcal{D}^\mu \to \mathbb{R} &amp; \mu\text{-dependant functions}\\
+a^q :&amp; X \times X \rightarrow \mathbb{R} &amp; \mu\text{-independent bilinear forms}
+\end{align*}\]
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Remark :</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>similar decomposition is required for \(\ell(v;\mu)\) and \(f(v;\mu)\), and denote \(Q_\ell\) and \(Q_f\) the corresponding number of terms</p>
+</li>
+<li>
+<p>applicable to a large class of problems including geometric variations</p>
+</li>
+<li>
+<p>can be relaxed (see non affine/non linear problems)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_inner_products_and_norms"><a class="anchor" href="#_inner_products_and_norms"></a>1.5.4. Inner Products and Norms</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><em>energy inner product</em> and associated norm (parameter dependant) \(\begin{aligned}
+  (((w,v)))_\mu &amp;=  a(w,v;\mu) &amp;\ \forall u,v \in X\\
+  |||v|||_\mu &amp;=  \sqrt{a(v,v;\mu)} &amp;\ \forall v \in X
+\end{aligned}\)</p>
+</li>
+<li>
+<p>\(X\)-inner product and associated norm (parameter independant) \(\begin{aligned}
+  (w,v)_X &amp;=  (((w,v)))_{\bar{\mu}} \ (\equiv a(w,v;\bar{\mu})) &amp;\ \forall u,v \in X\\
+  ||v||_X &amp;=  |||v|||_{\bar{\mu}} \ (\equiv \sqrt{a(v,v;\bar{\mu})}) &amp; \ \forall v \in X
+\end{aligned}\)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_coercivity_and_continuity_constants"><a class="anchor" href="#_coercivity_and_continuity_constants"></a>1.5.5. Coercivity and Continuity Constants</h4>
+<div class="paragraph">
+<p>We assume \(a\) coercive and continuous</p>
+</div>
+<div class="paragraph">
+<p>Recall that</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>coercitivy constant \((0 &lt; ) \alpha(\mu) \equiv \inf_{v\in X}\frac{a(v,v;\mu)}{||v||^2_X}\)</p>
+</li>
+<li>
+<p>continuity constant \(\gamma(\mu) \equiv \sup_{w\in X} \sup_{v\in X}\frac{a(w,v;\mu)}{\|w\|_X
+\|v\|_X} ( &lt; \infty)\)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_truth_fem_approximation"><a class="anchor" href="#_truth_fem_approximation"></a>« Truth » FEM Approximation</h4>
+<div class="paragraph">
+<p>Let \(\mu \in \mathcal{D}^{\mu}\), evaluate \(\displaystyle s^{\mathcal{N}} (\mu) = \ell (u^{\mathcal{N}} (\mu))\), where \(u^{\mathcal{N}} (\mu) \in X^{\mathcal{N}}\) satisfies \(a (u^{\mathcal{N}} (\mu), v; \mu ) = f (v), \quad \forall \: v \in X^{\mathcal{N}}\).
+Here \(X^{\mathcal{N}} \subset X\) is a <em>truth</em> finite element approximation of dimension \(\mathcal{N}\gg 1\) equiped with an inner product \((\cdot,\cdot)_X\) and induced norm \(||\cdot||_X\). Denote also \(X'\) and associated norm \(\ell \in X',\qquad\displaystyle ||\ell||_{X'} \equiv \operatorname{sup}_{v\in X}\frac{\ell(v)}{||v||_X}\).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_purpose"><a class="anchor" href="#_purpose"></a>1.5.6. Purpose</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Equate \(u(\mu)\) and \(u_{\mathcal{N}}(\mu)\) in the sense that \(||u(\mu)-u_{\mathcal{N}}(\mu)||_X \leq \mathrm{tol}\quad\forall \mu \in \mathcal{D}^\mu\)</p>
+</li>
+<li>
+<p>Build the reduced basis approximation using the FEM approximation</p>
+</li>
+<li>
+<p>Measure the error associated with the reduced basis approximation relative to the FEM approximation</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>\(\Rightarrow u^{\mathcal{N}} (\mu)\) is a calculable surrogate for \(u(\mu).\) \(\|u(\mu)-u^\mathcal{N}(\mu)\|_{X} \leq
+\underbrace{\|u(\mu)-u^\mathcal{N}(\mu)\|_{X}}_{\leq \varepsilon^\mathcal{N}} + \underbrace{\|u^\mathcal{N}(\mu)-u^N(\mu)\|_X}_{\varepsilon_{\mathrm{tol,min}}}\)</p>
+</div>
+<div class="paragraph">
+<p>with \(\varepsilon^\mathcal{N} \ll \varepsilon_{\mathrm{tol,min}}\)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sec:reduc-basis-appr"><a class="anchor" href="#sec:reduc-basis-appr"></a>2. Reduced Basis Approximation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_reduced_basis_objectives"><a class="anchor" href="#_reduced_basis_objectives"></a>2.1. Reduced Basis Objectives</h3>
+<div class="paragraph">
+<p>For any given accuracy \(\epsilon\), evaluate</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mu \in \mathcal{D}^\mu\mapsto s_N(\mu) (\approx s^\mathcal{N}(\mu)) \text{ and } \Delta^s_N(\mu)\qquad\text{Accuracy}\]
+</div>
+</div>
+<div class="paragraph">
+<p>that probably achieves the desired accuracy</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[|s^\mathcal{N}(\mu)-s_N(\mu)| \leq \Delta^s_N(\mu) \leq \epsilon \qquad\text{Reliability}\]
+</div>
+</div>
+<div class="paragraph">
+<p>for a very low cost \(t_{\text{comp}}\) Efficiency<br></p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\textbf{Independant}\text{ of} \mathcal{N} \text{ as } \mathcal{N} \rightarrow \infty \qquad\text{Efficiency}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(t_{\text{comp}}\) is the time to perform the input-output relationship \(\mu \mapsto (s_N(\mu),\Delta^s_N(\mu))\).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rapid_convergence"><a class="anchor" href="#_rapid_convergence"></a>2.2. Rapid Convergence</h3>
+<div class="paragraph">
+<p>Build a rapidly convergent approximation of \(s_N(\mu) \in \mathbb{R}\) and \(u_N(\mu) \in X^N \subset  X^{\mathcal{N}} \subset X\) such that for all \(\mu\), we have \(s_N(\mu) \rightarrow s^{\mathcal{N}}(\mu)\) and \(u_N(\mu) \rightarrow u^{\mathcal{N}}(\mu)\) rapidly as \(N = \operatorname{dim}{X_N} \rightarrow \infty (= 10-200)\) (and of \(\mathcal{N}\))</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reliability_and_sharpness"><a class="anchor" href="#_reliability_and_sharpness"></a>2.3. Reliability and Sharpness</h3>
+<div class="paragraph">
+<p>Provide <em>a posteriori</em> error bound \(\Delta_N(\mu)\) and \(\Delta^s_N(\mu)\) :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[1 (\text{rigor}) \leq \dfrac{\Delta_N(\mu)}{\|u^{\mathcal{N}}(\mu)
+      - u_N(\mu)\|_X} \leq \ E (\text{sharpness})\]
+</div>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[1 (\text{rigor}) \leq \frac{\Delta^s_N(\mu)}{|s^{\mathcal{N}}(\mu)
+      - s_N(\mu)|} \leq \ E (\text{sharpness})\]
+</div>
+</div>
+<div class="paragraph">
+<p>for all \(N = 1 \ldots N_{\text{max}}\) and \(\mu \in \mathcal{D}^\mu\).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_efficiency"><a class="anchor" href="#_efficiency"></a>2.4. Efficiency</h3>
+<div class="paragraph">
+<p>Develop a two stage strategy : Offline/Online</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Offline</dt>
+<dd>
+<p>very expensive pre-processing, we have typically that for a given \(\mu \in \mathcal{D}^\mu\) \(t^{\text{offline}}_{\text{comp}} \gg t^{\mu\rightarrow s^{\mathcal{N}}(\mu)}_{\text{comp}}\)</p>
+</dd>
+<dt class="hdlist1">Online</dt>
+<dd>
+<p>very rapid convergent certified reduced basis input-output relationship \(t^{\text{online}}_{\text{comp}} \text{ independent of } \mathcal{N}\)</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>\(\mathcal{N}\) may/should be chosen conservatively.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_parametric_manifold_mathcalmmathcaln"><a class="anchor" href="#_parametric_manifold_mathcalmmathcaln"></a>2.5. Parametric Manifold \(\mathcal{M}^\mathcal{N}\)</h3>
+<div class="paragraph">
+<p>We assume</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the form \(a\) is continuous and coercive (or inf-sup stable),</p>
+</li>
+<li>
+<p>affine-dependence,</p>
+</li>
+<li>
+<p>the \(\theta^q(\mu), 1 \leq q \leq Q\), are smooth (i.e., \(\theta^q \in C^\infty(\mathcal{D})\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>then \(\mathcal{M}^\mathcal{N} = \{ u^\mathcal{N}(\mu),\, \mu \in \mathcal{D}\}\) is a smooth \(P\)-dimensional manifold in \(X^\mathcal{N}\), since \(\| D_\sigma y^\mathcal{N}(\mu) \| \leq C_\sigma \forall \mu \in
+    \mathcal{D}\), for any order \(|\sigma| \in \mathbb{N}_{+0}\)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_low_dimension_manifold"><a class="anchor" href="#_low_dimension_manifold"></a>2.6. Low-Dimension Manifold</h3>
+<div class="paragraph">
+<p>To approximate \(u(\mu)\) and thus \(s(\mu)\), we need not represent all functions in \(Y\). We need only approximate functions in low dimensional manifole \(W = \{ u(\mu)\in Y; \mu\in \mathcal{D}^\mu\}\).</p>
+</div>
+<div class="paragraph">
+<p>We construct the approximation space \(W_N = \{u(\mu^i)\in Y, (\mu^i)_{i=1...N} \subset \mathcal{D}^\mu\}\)</p>
+</div>
+<div id="manifold" class="imageblock">
+<div class="content">
+<img src="_images/manifold.png" alt="manifold" width="50%">
+</div>
+<div class="title">Figure 1. Construction of the manifold</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_spaces_bases"><a class="anchor" href="#_spaces_bases"></a>2.7. Spaces &amp; Bases</h3>
+<div class="paragraph">
+<p>We define the RB approximation space \(X_N =\operatorname*{span}\{\xi^n, 1 \leq n \leq N \},\, 1 \leq N \leq N_{max}\) with linearly independent basis functions \(\xi^n \in X,\, 1 \leq n \leq N_{max}\). We thus obtain \(X_N \subset X, \, \operatorname{dim}(X_N) = N,\, 1 \leq N \leq N_{max}\) and \(X_1 \subset X_2 \subset \ldots X_{N_{max}} (\subset X)\).</p>
+</div>
+<div class="paragraph">
+<p>We denote non-hierarchical RB spaces as \(X^{nh}_N, 1 \leq N \leq
+Nmax\) \(X^{nh}_N \subset X, \, \operatorname{dim}(X^{nh}_N) = N,\, 1 \leq N \leq N_{max}\)</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameter Samples :</strong> \(S_N  = \{ \mu_1 \in \mathcal{D}^{\mu}, \ldots, \mu_N \in \mathcal{D}^{\mu} \}\quad 1 \leq N \leq N_{\mathrm{max}}\), with \(S_1 \subset S_2 \ldots S_{N_\mathrm{max}-1} \subset S_{N_\mathrm{max}} \subset \mathcal{D}^\mu\)</p>
+</div>
+<div class="paragraph">
+<p><strong>Lagrangian Hierarchical Space :</strong> \(W_N  =  {\rm span} \: \{ \xi^n \equiv \underbrace{ u (\mu^n)}_{u^{\mathcal{N}} (\mu^n)}, n = 1, \ldots, N \}\), with \(W_1 \subset W_2 \ldots \subset W_{N_\mathrm{max}} \subset X^{\mathcal{N}} \subset{X}\)</p>
+</div>
+<div class="paragraph">
+<p>Sampling strategies?</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Equidistributed points in \(\mathcal{D}^\mu\)(curse of dimensionality)</p>
+</li>
+<li>
+<p>Log-random distributed points in \(\mathcal{D}^\mu\)</p>
+</li>
+<li>
+<p>See later for more efficient, adaptive strategies</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_taylor_hermite"><a class="anchor" href="#_taylor_hermite"></a>2.7.1. Taylor &amp; Hermite</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Taylor reduced basis spaces: \(W^{Taylor}_N = \operatorname*{span}\{D_\sigma u(\mu), \forall \sigma \in I^{P,N-1}    \}, 1 \leq N \leq N_{max}\), field variable and sensitivity derivatives at one point in \(\mathcal{D}\).</p>
+</li>
+<li>
+<p>Hermite reduced basis spaces: \(W^{Hermite}_N « = » W^{Lagrangian}_N \cup W^{Taylor}_N\) field variable and sensitivity derivatives at several points in \(\mathcal{D}\)</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We will exclusively use Lagrangian RB spaces in this page.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_orthogonal_basis"><a class="anchor" href="#_orthogonal_basis"></a>2.7.2. Orthogonal Basis</h4>
+<div class="paragraph">
+<p>Given \(\xi^n = u(\mu^n), 1 \leq n \leq N_\text{max}\) (Lagrange case) we construct the basis set \(\{\zeta^n, 1 \leq n \leq N_\text{max}\}\), from</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Gram-Schmidt algoritmh</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Input:</strong> \(\xi^n = u(\mu^n), 1 \leq n \leq N_\text{max}\)</p>
+</li>
+<li>
+<p>Set \(\zeta^1 := \dfrac{\xi^1}{\Vert\xi^1\Vert}_X\)</p>
+</li>
+<li>
+<p><strong>for</strong> \(n=2\) to \(N_\text{max}\) <strong>do:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>\(z^n = \xi^n - \displaystyle\sum_{m=1}^{n-1} (\xi^n,\zeta^m)_X \zeta^m\)</p>
+</li>
+<li>
+<p>\(\zeta^n = \dfrac{z^n}{\Vert z^n\Vert}_X\)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong> end for </strong></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+\((\zeta^n,\zeta^m)_X =  \delta_{nm}, 1 \leq n,m \leq N_\text{max}\)
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Given reduced basis space \(X_N  =  {\rm span} \: \{ \zeta^n,  n = 1, \ldots, N \}, 1 \leq N
+    \leq N_{max}\) we can express any \(w_N \in X_N\) as \(w_N = \displaystyle\sum_{k=1}^N {w_N}_n \zeta^n\) for unique \({w_N}_n \in \mathbb{R}, 1 \leq n \leq N\).</p>
+</div>
+<div class="paragraph">
+<p>Reduced basis « matrices » \(Z_N \in \mathbb{R}^{\mathcal{N}\times N} , 1
+\leq N \leq N_{max}:\) \(Z_N=[\zeta^1,\zeta^2,...,\zeta^N],  1 \leq N \leq N_{max}\) where, from orthogonality, \(Z^T_{N_{max}} X Z^T_{N_{max}} =
+I_{N_{max}}\), and \(I_M\) is the Identity matrix in \(\mathbb{R}^{M\times M}\).</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_formulation_linear_compliant_case_a_galerkin_method"><a class="anchor" href="#_formulation_linear_compliant_case_a_galerkin_method"></a>2.8. Formulation (Linear Compliant Case): a Galerkin method</h3>
+<div class="sect3">
+<h4 id="_galerkin_projection"><a class="anchor" href="#_galerkin_projection"></a>2.8.1. Galerkin Projection</h4>
+<div class="paragraph">
+<p>Given \(\mu \in \mathcal{D}^{\mu}\) evaluate</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[s_N (\mu) =  f(u_N (\mu);\mu)]\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(u_N (\mu) \in  X_N\) satisfies</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[a (u_N (\mu), v; \mu)  =  f(v;\mu), \ \forall \: v \in X_N\]
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_optimality"><a class="anchor" href="#_optimality"></a>2.8.2. Optimality</h4>
+<div class="paragraph">
+<p>For any \(\mu \in \mathcal{D}^\mu\), we have the following optimality results (thanks to Galerkin)</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+    |||u(\mu) - u_N(\mu)|||_{\mu} &amp;= \inf_{v_N \in X_N} |||u(\mu) - v_N(\mu)|||_\mu,\\
+    ||u(\mu) - u_N(\mu)||_X &amp;\leq \sqrt{\dfrac{\gamma(\mu)}{\alpha(\mu)}} \inf_{v_N \in X_N} ||u(\mu) -    v_N(\mu)||_X,\\
+  \end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+    s(\mu)-s_N(\mu) &amp;= |||u(\mu) - u_N(\mu)|||^2_\mu,\\
+    &amp;= \inf_{v_N \in X_N} |||u(\mu) - v_N(\mu)|||^2_\mu,
+  \end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>and finally \(0 \leq s(\mu)-s_N(\mu) \leq \gamma(\mu)\inf_{v_N \in X_N} ||u(\mu) - v_N(\mu)||^2_X\)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_offline_online_decomposition"><a class="anchor" href="#_offline_online_decomposition"></a>2.8.3. Offline-online decomposition</h4>
+<div class="paragraph">
+<p>Expand our RB approximations</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[u_N(\mu)\ = \sum_{j=1}^N\ {u_N}_j(\mu)\ \zeta_j\]
+</div>
+</div>
+<div class="paragraph">
+<p>Express \(s_N(\mu)\)</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\displaystyle s_N(\mu) = \displaystyle\sum_{j=1}^N {u_N}_j(\mu)\ \left( \sum_{q=1}^{Q_f}\ \Theta^q_f(\mu)\ f^q(\zeta_j)\right)\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \({u_N}_i(\mu), 1 \leq i \leq N\)  satisfies</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[    \sum_{j=1}^N \left( \sum_{q=1}^{Q_a}\ \Theta^q_a(\mu)\ a^q( \zeta_i, \zeta_{j})  \right) {u_N}_j(\mu) = \sum_{q=1}^{Q_f}\ \Theta^q_f(\mu)\ f^q(\zeta_i)\]
+</div>
+</div>
+<div class="paragraph">
+<p>for \(1 \leq i \leq N\)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_matrix_form"><a class="anchor" href="#_matrix_form"></a>2.8.4. Matrix form</h4>
+<div class="paragraph">
+<p>Solve \(\underline{A}_N (\mu) \: \underline{u}_N (\mu) = \underline{F}_N\)</p>
+</div>
+<div class="paragraph">
+<p>where</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+      (A_N)_{i \: j} (\mu) &amp;= \sum_{q=1}^{Q_a}\ \Theta^q_a(\mu)\ a^q( \zeta_i, \zeta_{j})
+      &amp; \quad 1 \leq i,j \leq N\\
+      F_{N \: i} &amp;=  \sum_{q=1}^{Q_f}\ \Theta^q_f(\mu) f^q (\zeta_i)
+      &amp; \quad 1 \leq i \leq N
+\end{aligned}\]
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_complexity_analysis"><a class="anchor" href="#_complexity_analysis"></a>2.8.5. Complexity analysis</h4>
+<div class="paragraph">
+<p>Offline: independent of \(\mu\)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Solve: \(N\) FEM system depending on \(\mathcal{N}\)</p>
+</li>
+<li>
+<p>Form and store: \(f^q (\zeta_i)\)</p>
+</li>
+<li>
+<p>Form and store: \(a^q( \zeta_i, \zeta_{j})\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Online: independent of \(\mathcal{N}\)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Given a new \(\mu \in \mathcal{D}^\mu\)</p>
+</li>
+<li>
+<p>Form and solve \(A_N(\mu)\) : \(O(Q N^2)\) and \(O(N^3)\)</p>
+</li>
+<li>
+<p>Compute \(s_N(\mu)\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Online: \(N &lt;&lt; \mathcal{N}\) Online we realize often orders of magnitude computational economies relative to FEM in the context of many \(\mu\)-queries.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_condition_number"><a class="anchor" href="#_condition_number"></a>2.8.6. Condition number</h4>
+<div class="paragraph">
+<p><strong>Proposition :</strong> Thanks to the orthonormalization of the basis function, we have that the condition number of \(A_N(\mu)\) is bounded by the ratio \(\dfrac{\gamma(\mu)}{\alpha(\mu)}\).</p>
+</div>
+<div class="paragraph">
+<p><strong><em>Proof :</em></strong>
+* Write the Rayleigh Quotient \(\dfrac{v_N^T A_N(\mu) v_N}{v_N^T v_N}, \quad \forall v_N \in \mathbb{R}^N\)
+* Express \(v_N = \sum_{n=1}^N v_{N_n} \zeta^n\)
+* Use coercivity, continuity and orthonormality.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="sharethis-inline-share-buttons"></div>
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.cemosis.fr" class="icon">
+            <img src="../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.cemosis.fr" target="_blank" rel="noopener">Projects Documentation</a></li>
+          <li><a href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">Forums(Slack)</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://www.cemosis.fr" target="_blank" rel="noopener">Cemosis</a></li>
+          <li><a href="https://www.cemosis.fr/news" target="_blank" rel="noopener">News</a></li>
+          <li><a href="https://www.cemosis.fr/projects" target="_blank" rel="noopener">Projects</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.feelpp.org" target="_blank" rel="noopener">Feel++ Documentation</a></li>
+          <li><a href="http://docs.feelpp.org/user/">Get Started</a></li>
+          <li><a href="http://docs.feelpp.org/user//install/distributions/">Downloads</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="facebook" class="cls-1" d="M29,0H3A2.652,2.652,0,0,0,0,3V29a2.652,2.652,0,0,0,3,3H16V18H12V14h4V12a6.452,6.452,0,0,1,6-6h4v4H22a2.151,2.151,0,0,0-2,2v2h6l-1,4H20V32h9a2.652,2.652,0,0,0,3-3V3A2.652,2.652,0,0,0,29,0Z"/></svg>
+            <a href="https://www.facebook.com/cemosis.fr" class="icon">
+            Facebook
+            </a>
+          </li>
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32.1 26.1"> <path id="twitter" class="cls-1" d="M32,7.1a11.836,11.836,0,0,1-3.8,1,6.462,6.462,0,0,0,2.9-3.6,12.606,12.606,0,0,1-4.2,1.6A6.492,6.492,0,0,0,22.1,4a6.594,6.594,0,0,0-6.6,6.6,7.719,7.719,0,0,0,.2,1.5A18.458,18.458,0,0,1,2.2,5.2a6.294,6.294,0,0,0-.9,3.3A6.765,6.765,0,0,0,4.2,14a6.109,6.109,0,0,1-3-.8v.1a6.543,6.543,0,0,0,5.3,6.4,4.678,4.678,0,0,1-1.7.2,4.869,4.869,0,0,1-1.2-.1,6.679,6.679,0,0,0,6.1,4.6,12.917,12.917,0,0,1-8.2,2.8,9.151,9.151,0,0,1-1.6-.1,18.438,18.438,0,0,0,10.1,3c12.1,0,18.7-10,18.7-18.7v-.8A13.336,13.336,0,0,0,32,7.2Z" transform="translate(0.1 -4)"/></svg>
+            <a href="https://twitter.com/cemosis" class="icon">
+              Twitter
+            </a>
+          </li>
+          <li>
+          <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="linkedin" class="cls-1" d="M29,0H3A3.076,3.076,0,0,0,0,3V29a3.009,3.009,0,0,0,3,3H29a2.946,2.946,0,0,0,3-3V3A3.009,3.009,0,0,0,29,0ZM12,26H8V12h4ZM10,10a2,2,0,1,1,2-2A2.006,2.006,0,0,1,10,10ZM26,26H22V18a2,2,0,0,0-4,0v8H14V12h4v2.5c.8-1.1,2.1-2.5,3.5-2.5A4.736,4.736,0,0,1,26,17Z"/></svg>
+              <a href="https://www.linkedin.com/company/cemosis" class="icon">
+             Linkedin
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <div class="footer-terms-copyright">
+          <span>© 2022 Cemosis, Université de Strasbourg</span>
+      </div>
+      <div class="footer-terms-links">
+        <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>
+        <a href="https://www.cemosis.fr/privacy-policy">Privacy Policy</a>
+        <a href="https://www.cemosis.fr/cookie-policy">Cookie Policy</a>
+        <a href="https://www.cemosis.fr/support-policy">Support Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+
+<script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">
+</script>
+
+  </body>
+</html>
