@@ -477,7 +477,35 @@ Events that can execute an adaptation of the mesh :
 
 ==== Setup of event `each_time_step`
 
+Currently, only `frequency` property, it should be an integer.
+
 ==== Setup multiples mesh adaptations
+
+[source,json]
+----
+{
+  "MeshAdaptation": [
+    {
+      "metric": "mymetric1:mymetric1",
+      "events": {
+        "after_init": {}
+      }
+    },
+    {
+      "metric": "mymetric2:mymetric2",
+      "required_markers": [
+        "wall1",
+        "wall2"
+      ],
+      "events": {
+        "each_time_step": {
+          "frequency": 4
+        }
+      }
+    }
+  ]
+}
+----
 
 
 == Materials
