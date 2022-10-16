@@ -700,6 +700,13 @@ MathJax.Hub.Config({
   <div class="content">
 <article class="doc">
 <h1 class="page">Sensor</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="../_attachments/sensor/index.ipynb" class="xref attachment">&gt; Download this page as notebook</a></p>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
@@ -709,20 +716,37 @@ MathJax.Hub.Config({
 <div class="paragraph">
 <p>A <strong>strain gauge</strong> is a device used to measure strain on an object. The most common type of strain gauge consists of an insulating flexible backing which supports a metallic foil pattern. The gauge is attached to the object by a suitable adhesive. As the object is deformed, the foil is deformed, causing its electrical resistance to change. This resistance change, usually measured using a Wheatstone bridge, is related to the strain by the quantity known as the <em>gauge factor</em>.</p>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/sensor/image1.png" alt="image" width="209" height="225"></span><span class="image"><img src="../_images/sensor/image2.png" alt="e3.png" width="155" height="209"></span><span class="image"><img src="../_images/sensor/image3.png" alt="e2.png" width="212" height="202"></span></p>
+<div class="imageblock left">
+<div class="content">
+<img src="../_images/sensor/image1.png" alt="image1" width="200" height="200">
+</div>
+<div class="title">Figure 1. CAD representation of a strain gauge</div>
+</div>
+<div class="imageblock middle">
+<div class="content">
+<img src="../_images/sensor/image2.png" alt="image2" width="200" height="200">
+</div>
+<div class="title">Figure 2. Representation of a strain gauge</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="../_images/sensor/image3.png" alt="image3" width="200" height="200">
+</div>
+<div class="title">Figure 3. Strain gauge</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_running_the_case"><a class="anchor" href="#_running_the_case"></a>2. Running the case</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_command_line"><a class="anchor" href="#_command_line"></a>2.1. Command line</h3>
 <div class="paragraph">
 <p>The command line to run this case is</p>
 </div>
 <div id="command-line" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpirun -np 4 feelpp_toolbox_solid --case "github:{repo:toolbox,path:examples/modules/csm/examples/sensor}"</code></pre>
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">!mpirun -np 4 feelpp_toolbox_solid --case "github:{repo:toolbox,path:examples/modules/csm/examples/sensor}"</code></pre>
 </div>
 </div>
 <button class="btn" data-clipboard-target="#command-line">
@@ -742,6 +766,28 @@ The report of the execution of the command above is available <a href="solid.inf
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_python_interface"><a class="anchor" href="#_python_interface"></a>2.2. Python interface</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from feelpp import *
+from feelpp.toolboxes.core import *
+from feelpp.toolboxes.solid import *
+
+# create the application
+# create a feelppdb subdirectory where the results are stored
+app = Environment(['feelpp_toolbox_solid'], opts= toolboxes_options("solid"),config=localRepository(""))
+app.setConfigFile("../../examples/sensor/capteur.cfg")
+s = solid(dim=3)
+# get displacement and von-mises measures from the model
+ok,meas=simulate(s)
+if ok:
+  # export in paraview format
+  s.exportResults()</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -772,8 +818,13 @@ The report of the execution of the command above is available <a href="solid.inf
 <div class="paragraph">
 <p>The finished geometry (Creo) and the meshed model (Gmsh):</p>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/sensor/image4.png" alt="5.png" width="302" height="268"></span><span class="image"><img src="../_images/sensor/image5.png" alt="6.png" width="302" height="279"></span></p>
+<div class="paragraph thumb left">
+<div class="title">CAD representation of a strain gauge</div>
+<p><span class="image"><img src="../_images/sensor/image4.png" alt="thumb" width="302" height="268"></span></p>
+</div>
+<div class="paragraph thumb right">
+<div class="title">Mesh representation of a strain gauge</div>
+<p><span class="image"><img src="../_images/sensor/image5.png" alt="thumb" width="302" height="279"></span></p>
 </div>
 </div>
 </div>
@@ -788,13 +839,13 @@ The report of the execution of the command above is available <a href="solid.inf
 <div class="ulist">
 <ul>
 <li>
-<p>\(E = 205 GPa -&gt; 205e3 N/mm^2^\)</p>
+<p>\(E = 205 GPa -&gt; 205e3 N/mm^2\)</p>
 </li>
 <li>
 <p>\(nu = 0.3\)</p>
 </li>
 <li>
-<p>\(rho = 7850 kg/m^3^ -&gt; 7850e-9 kg/mm^3^\)</p>
+<p>\(rho = 7850 kg/m^3 -&gt; 7850e-9 kg/mm^3\)</p>
 </li>
 </ul>
 </div>
@@ -804,8 +855,17 @@ The report of the execution of the command above is available <a href="solid.inf
 <div class="paragraph">
 <p>The object is fixed in the middle. Holes have opposite sinusodal forces.</p>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/sensor/image6.png" alt="Képernyőfelvétel (834).png" width="306" height="283"></span><span class="image"><img src="../_images/sensor/image7.png" alt="7.png" width="287" height="283"></span></p>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/sensor/image6.png" alt="thumb" width="306" height="283">
+</div>
+<div class="title">Figure 4. CAD representation of a strain gauge</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/sensor/image7.png" alt="thumb" width="287" height="283">
+</div>
+<div class="title">Figure 5. Mesh representation of a strain gauge</div>
 </div>
 </div>
 </div>
@@ -824,6 +884,16 @@ The result were run in time (half whole period, but on the pictures can be seen 
 </td>
 </tr>
 </table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import pandas as pd
+df=pd.DataFrame(meas)
+print(df.head())
+
+# prepare for plotting
+import plotly.graph_objects as go</code></pre>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_displacement"><a class="anchor" href="#_displacement"></a>6.1. Displacement</h3>
@@ -856,6 +926,16 @@ The result were run in time (half whole period, but on the pictures can be seen 
 </tr>
 </tbody>
 </table>
+<div class="listingblock">
+<div class="title">Plot the max of the displacement over time</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">fig = go.Figure()
+fig.add_trace(go.Scatter(x=df["time"], y=df["Statistics_disp_max"], name="max disp"))
+fig.add_trace(go.Scatter(x=df["time"], y=df["Statistics_disp_min"], name="min disp"))
+fig.update_layout(legend_title_text='Max displacement over time')
+fig.show()</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_von_mises_criterions"><a class="anchor" href="#_von_mises_criterions"></a>6.2. Von-Mises Criterions</h3>
@@ -891,9 +971,32 @@ The result were run in time (half whole period, but on the pictures can be seen 
 <div class="paragraph">
 <p>On the displacement and stress diagrams, it can be clearly seen that this object is perfectly suited as a sensor.</p>
 </div>
+<div class="listingblock">
+<div class="title">Plot the max of the von-mises criterion over time</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">fig = go.Figure()
+fig.add_trace(go.Scatter(x=df["time"], y=df["Statistics_von-mises_max"],name="max"))
+fig.add_trace(go.Scatter(x=df["time"], y=df["Statistics_von-mises_min"],name="min"))
+fig.add_trace(go.Scatter(x=df["time"], y=df["Statistics_von-mises_mean"],name="mean"))
+fig.update_layout(legend_title_text='Von-Mises min,mean and max over time')
+fig.show()</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_3d_model"><a class="anchor" href="#_3d_model"></a>6.3. 3D Model</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+this section is available only in html, it is not supported in jupyter notebooks. It displays the 3D model of the object.
+</td>
+</tr>
+</table>
+</div>
 <div class="stretchy-wrapper-16_9">
 <div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
 </div>
