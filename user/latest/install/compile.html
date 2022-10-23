@@ -732,23 +732,24 @@ For beginners, you can skip this section and go directly to <a href="#containers
 <p>Feel++ does not allow in-source <code>cmake</code>, the build must be done in separate directory.</p>
 </div>
 <div class="listingblock">
-<div class="title">Create a build directory</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mkdir build
-$ cd build</code></pre>
-</div>
-</div>
-<div class="listingblock">
 <div class="title">Configure Feel++</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ CXX=clang++ ../feelpp/configure -r</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ cmake --preset default <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>configure the default preset in <code>build/default</code>.</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="title">Compile the Feel++ library, its tools and a few examples</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ make  <i class="conum" data-value="1"></i><b>(1)</b>
-$ make install <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ cmake --build --preset default  <i class="conum" data-value="1"></i><b>(1)</b>
+$ make --build --preset default -t install <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -759,7 +760,7 @@ $ make install <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>install Feel++</td>
+<td>compile and install Feel++, the option <code>-t</code> allows to set a target to build</td>
 </tr>
 </table>
 </div>
@@ -770,7 +771,14 @@ $ make install <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-you can speed up the make process by passing the option <code>-j&lt;N&gt;</code> where <code>N</code> is the number of concurrent <code>make</code> sub-processes. It compiles <code>N</code> files at a time and respect dependencies. For example <code>-j4</code> compiles 4 C++ files at a time.
+<div class="paragraph">
+<p>You can speed up the make process by passing the option <code>-j&lt;N&gt;</code> where <code>N</code> is the number of concurrent <code>make</code> sub-processes. It compiles <code>N</code> files at a time and respect dependencies. For example <code>-j4</code> compiles 4 C++ files at a time.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ cmake --build --preset default -j4</pre>
+</div>
+</div>
 </td>
 </tr>
 </table>
@@ -799,6 +807,84 @@ Be aware that Feel++ consumes memory. The Feel++ library compile with 2Go of RAM
 <pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">$ cd feelpp/quickstart
 $ mpirun -np 4 feelpp_qs_laplacian_2d --case laplacian/feelpp2d</code></pre>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_targets"><a class="anchor" href="#_targets"></a>1.1. Targets</h3>
+<div class="paragraph">
+<p>Here is a list of targets you might be interested in</p>
+</div>
+<div class="paragraph">
+<p>To compile a specific target use the following command line</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ cmake --build --preset default -t &lt;target&gt;</pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Target</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Feel++ core library</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp_mesh_partitioner</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="../using/tools/mesh_partitioner.html" class="xref page">&gt; documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp_toolbox_coefficientformpdes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="#using:toolboxes/cfpdes.adoc" class="xref unresolved">&gt; documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp_toolbox_electric</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="../using/toolboxes/electric.html" class="xref page">&gt; documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp_toolbox_fluid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="../using/toolboxes/fluid.html" class="xref page">&gt; documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp_toolbox_fsi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="../using/toolboxes/fsi.html" class="xref page">&gt; documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp_toolbox_hdg_coupledpoisson</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="../using/toolboxes/hdg_coupledpoisson.html" class="xref page">&gt; documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp_toolbox_hdg_elasticity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="../using/toolboxes/hdg_elasticity.html" class="xref page">&gt; documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp_toolbox_hdg_poisson</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="../using/toolboxes/hdg_poisson.html" class="xref page">&gt; documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp_toolbox_heat</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="../using/toolboxes/heat.html" class="xref page">&gt; documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp_toolbox_heatfluid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="../using/toolboxes/heatfluid.html" class="xref page">&gt; documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp_toolbox_solid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="../using/toolboxes/solid.html" class="xref page">&gt; documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp_toolbox_thermoelectric</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="../using/toolboxes/thermoelectric.html" class="xref page">&gt; documentation</a></p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
