@@ -698,6 +698,9 @@ MathJax.Hub.Config({
 <p><a id="tabset1_debian"></a>Debian</p>
 </li>
 <li>
+<p><a id="tabset1_fedora"></a>Fedora</p>
+</li>
+<li>
 <p><a id="tabset1_windows-10"></a>Windows 10</p>
 </li>
 <li>
@@ -921,6 +924,38 @@ sudo apt update</code></pre>
 echo "deb http://apt.feelpp.org/debian/sid sid latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
 sudo apt update</code></pre>
 </div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_fedora">
+<div class="paragraph">
+<p>Feel++ is not yet packaged for Fedora.
+However</p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> it is possible to compile it from source for Fedora:36 and Fedora:37</p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> a docker image containing Feel++ development environment is available for both systems</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-36 (stable)</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-37 (beta)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>see <a href="compile.html" class="xref page">how to build Feel++ from sources</a>.</p>
 </div>
 <h3 id="_install_feel_debianubuntu_packages_2" class="discrete">Install Feel++ Debian/Ubuntu packages</h3>
 <table class="tableblock frame-all grid-all stretch">
