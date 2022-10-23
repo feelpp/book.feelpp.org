@@ -85,8 +85,25 @@ par::[debian,buster,latest]
 par::[debian,sid,latest]
 
 
+--
+Fedora::
++
+--
 
+{feelpp} is not yet packaged for Fedora. 
+However 
+ 
+- [x] it is possible to compile it from source for Fedora:36 and Fedora:37
+- [x] a docker image containing {feelpp} development environment is available for both systems
 
+ $ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-36 (stable) 
+
+or 
+
+ $ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-37 (beta)
+
+see xref:compile.adoc[how to build {feelpp} from sources].
+  
 
 include::partial$install-deb.adoc[]
 --
