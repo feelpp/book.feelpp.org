@@ -1,7 +1,38 @@
 = {feelpp} expressions
 :stem: latexmath
 
-== Mathematical functions
+== Using Mathematical expressions
+
+Mathematical expressions are described as strings in {cpp}, python or json files.
+An expression is composed of symbols and operations acting on them.
+
+Available standard operations and functions are : 
+
+* `+, -, *, /` addition, substraction, multiplication and division respectively
+* `^` given two real numbers `x` and `y`, `x^y` compute `x`` to the power `y`
+* `log`
+* `exp`
+* `sin`
+* `cos`
+* `tan`
+* `asin`
+* `acos`
+* `atan`
+* `sinh`
+* `cosh`
+* `tanh`
+* `asinh`
+* `acosh`
+* `atanh`
+* `atan2`
+* `sqrt`
+* `mod`: given integers `x` and `y`, compute `mod(x,y)` 
+* `min`, `max`: given 2 real numbers `x` and `y`, `min(x,y)`  and `max(x,y)`  compute the minimum and maximym respectively.
+* `lgamma`: Evaluation of `lgamma(x)`, the natural logarithm of the Gamma function.
+* `tgamma`: Evaluation of `tgamma(x)`, the true Gamma function.
+
+
+== Additional Mathematical functions
 
 === ceil
 
@@ -9,10 +40,32 @@ Description:: `ceil(v)` computes the smallest integer value not less than arg.
 
 Keyword:: `ceil`
 
+Math::
+
+Given real number stem:[x], integer stem:[m] and the set of integers stem:[\mathbb{Z}], ceil can be defined by the equation
+
+[stem]
+++++
+\lceil x \rceil=\min \{m\in\mathbb{Z}\mid m\ge x\}.
+++++
+
+[cols="a,a"]
+|===
+| 
+.{cpp} example
 [source,cpp]
 ----
 auto e = expr("ceil(u):u");
 ----
+|
+.json example
+[source,cpp]
+----
+"expr":"ceil(u):u";
+----
+
+|===
+
 
 === floor
 
@@ -20,10 +73,29 @@ Description:: `floor(v)` computes the largest integer value not greater than arg
 
 Keyword:: `floor`
 
+Math:: Given real number stem:[x], integer stem:[m] and the set of integers stem:[\mathbb{Z}], floor can be defined by the equation
+
+[stem]
+++++
+\lfloor x \rfloor=\max \{m\in\mathbb{Z}\mid m\le x\},
+++++
+
+[cols="a,a"]
+|===
+| 
+.{cpp} example
 [source,cpp]
 ----
 auto e = expr("floor(u):u");
 ----
+|
+.json example
+[source,cpp]
+----
+"expr":"floor(u):u";
+----
+|===
+
 
 === fract
 
@@ -31,10 +103,37 @@ Description:: `fract(v)`  compute the fractional part of the argument. This is c
 
 Keyword:: `fract`
 
+Math:: The fractional part is the *sawtooth function*, denoted by stem:[\{x\}] for real stem:[x] and defined by the formula
+
+[stem]
+++++
+\{x\} = x - \lfloor x \rfloor
+++++
+
+For all stem:[x], we have
+[stem]
+++++
+0 \leq \{ x \} < 1
+++++
+
+
+[cols="a,a"]
+|===
+| 
+.{cpp} example
 [source,cpp]
 ----
 auto e = expr("fract(u):u");
 ----
+|
+.json example
+[source,cpp]
+----
+"expr":"fract(u):u";
+----
+|===
+
+
 
 === clamp
 
@@ -42,10 +141,22 @@ Description:: `clamp(v,lo,hi)` If v compares less than lo, returns lo; otherwise
 
 Keyword:: `clamp`
 
+[cols="a,a"]
+|===
+| 
+.{cpp} example
 [source,cpp]
 ----
 auto e = expr("clamp(u,0,1):u");
 ----
+|
+.json example
+[source,cpp]
+----
+"expr":"clamp(u,0,1):u";
+----
+|===
+
 
 === Modulo
 
@@ -101,7 +212,42 @@ CHECK( std::abs( e.evaluate()(0,0) ) < 1e-12 ) << "Invalid mapping";
 
 == Step functions
 
+A function stem:[f\colon \mathbb{R} \rightarrow \mathbb{R}] is called a *step function* if it can be written as 
+[stem]
+++++
+f(x) = \sum\limits_{i=0}^n \alpha_i \chi_{A_i}(x), \mbox{ for all real numbers } x.
+++++
+where stem:[n\ge 0], stem:[\alpha_i] are real numbers, stem:[A_i] are intervals, and stem:[\chi_A] is the *indicator function* of stem:[A]:
+[stem]
+++++
+\chi_A(x) = \begin{cases}
+  1 & \text{if } x \in A \\
+  0 & \text{if } x \notin A \\
+ \end{cases}
+++++
+
 === step1
+
+Description:: `step1(u,edge)` return 0 is `u` is strictly less than `edge`, 1 otherwise.
+
+Keyword:: `step1`
+
+[cols="a,a"]
+|===
+| 
+.{cpp} example
+[source,cpp]
+----
+auto e = expr("step1(u,edge):u:edge");
+----
+|
+.json example
+[source,cpp]
+----
+"expr":"step1(u,edge):u:edge";
+----
+|===
+
 
 === smoothstep
 
@@ -116,16 +262,27 @@ Description:: `smoothstep(u,lo,hi)` is  calculated as follows:
 
 Keyword:: `smoothstep`
 
-[source,json]
+[cols="a,a"]
+|===
+| 
+.{cpp} example
+[source,cpp]
+----
+auto e = expr("smoothstep(u,lo,hi):u:lo:hi");
+----
+|
+.json example
+[source,cpp]
 ----
 "expr":"smoothstep(u,lo,hi):u:lo:hi"
 ----
-
+|===
 
 
 
 
 === triangle
+
 
 === rectangle
 
