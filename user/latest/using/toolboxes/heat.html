@@ -7,7 +7,7 @@
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/using/toolboxes/heat.html">
     <link rel="prev" href="fsi.html">
     <link rel="next" href="heatfluid.html">
-    <meta name="generator" content="Antora 3.1.1">
+    <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
@@ -552,10 +552,10 @@ MathJax.Hub.Config({
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../../myproject/1.0.0/index.html">Feel++ MyProject</a>
+      <a class="title" href="../../../../template_project/1.0.3/index.html">Feel++ Templace Project</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../../myproject/1.0.0/index.html">1.0.0</a>
+          <a href="../../../../template_project/1.0.3/index.html">1.0.3</a>
         </li>
       </ul>
     </li>
@@ -685,7 +685,10 @@ MathJax.Hub.Config({
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre>feelpp_toolbox_heat --case &lt;directory to model case&gt;
+<pre>feelpp_toolbox_heat
+  [--heat.filename  &lt;path to .json specification file&gt;]
+  [--config-file &lt;path to .cfg file]
+  [--case &lt;directory to model case&gt;]
   [--case.dim 3]
   [--case.discretization P1]
   [--heat.ksp-monitor=&lt;0,1&gt;]
@@ -703,7 +706,7 @@ MathJax.Hub.Config({
 <h2 id="_description"><a class="anchor" href="#_description"></a>3. DESCRIPTION</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>feelpp_toolbox_heat is an application which can run heat transfer model defined by a set of files : a geometry or mesh, a config file(<code>.cfg</code>) and  a model file(<code>.json</code>)</p>
+<p>feelpp_toolbox_heat is an application which can run heat transfer model defined by a set of files : a geometry or mesh, a config file(<code>.cfg</code>) and  a model file(<code>.json</code>)</p>
 </div>
 <div class="paragraph">
 <p>The execution steps are as follows:</p>
@@ -762,6 +765,12 @@ MathJax.Hub.Config({
 <td class="tableblock halign-left valign-top"><p class="tableblock">P1,P2,P3</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat.filename</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">path to the .json specification case file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>no default value</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>required from user</strong></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">heat.ksp-monitor</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">monitor the Krylov Subspace iterations</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
@@ -809,7 +818,7 @@ MathJax.Hub.Config({
 <dl>
 <dt class="hdlist1">NOTE</dt>
 <dd>
-<p>0 as option value means that the option is not enable, 1 means it is enabled.</p>
+<p>0 as option value means that the option is not enabled, 1 means it is enabled.</p>
 </dd>
 </dl>
 </div>
@@ -820,12 +829,12 @@ MathJax.Hub.Config({
 <h2 id="_examples"><a class="anchor" href="#_examples"></a>4. EXAMPLES</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We are now using the <code>feelpp/feelpp-toolboxes:latest</code> docker images as described in <a href="http://docs.feelpp.org/user/0.108/install/containers/#_docker" class="bare">docs.feelpp.org/user/0.108/install/containers/#_docker</a> to demonstrate feelpp_toolbox_heat usage.</p>
+<p>We are now using the <code>feelpp/feelpp-toolboxes:latest</code> docker images as described in <a href="http://docs.feelpp.org/user/0.110.0-rc.5/install/containers/#_docker" class="bare">docs.feelpp.org/user/0.110.0-rc.5/install/containers/#_docker</a> to demonstrate feelpp_toolbox_heat usage.</p>
 </div>
 <div class="listingblock">
 <div class="title">Starting the docker <code>feelpp/feelpp-toolboxes:latest</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">docker run --rm -ti -v $HOME/feel:/feel feelpp/feelpp-toolboxes</code></pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">docker run --rm -ti -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-toolboxes:v0.110.0-rc.5</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -865,7 +874,7 @@ feelpp/feelpp-toolboxes <i class="conum" data-value="5"></i><b>(5)</b></code></p
 <div class="listingblock">
 <div class="title">Example of a command line to execute feelpp_toolbox_heat</div>
 <div class="content">
-<pre>mpirun --bind-to core -np 10 feelpp_toolbox_heat --case "github:{path:toolboxes/heat/Building/ThermalBridgesENISO10211}"</pre>
+<pre>mpirun --bind-to core -np 10 feelpp_toolbox_heat --case "github:{path:toolboxes/heat/cases/Building/ThermalBridgesENISO10211}"</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -874,7 +883,7 @@ feelpp/feelpp-toolboxes <i class="conum" data-value="5"></i><b>(5)</b></code></p
 <pre>mpirun --bind-to core <i class="conum" data-value="1"></i><b>(1)</b>
   -np 10 <i class="conum" data-value="2"></i><b>(2)</b>
   <i class="conum" data-value="3"></i><b>(3)</b>
-  --case "github:{path:toolboxes/heat/Building/ThermalBridgesENISO10211}" <i class="conum" data-value="4"></i><b>(4)</b></pre>
+  --case "github:{path:toolboxes/heat/cases/Building/ThermalBridgesENISO10211}" <i class="conum" data-value="4"></i><b>(4)</b></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -906,7 +915,7 @@ feelpp/feelpp-toolboxes <i class="conum" data-value="5"></i><b>(5)</b></code></p
 <p>locally in /usr/share/feelpp/data/testcases/toolboxes/heat.</p>
 </li>
 <li>
-<p>on-line <a href="http://docs.feelpp.org/cases/0.108/heat/README" class="bare">docs.feelpp.org/cases/0.108/heat/README</a></p>
+<p>on-line <a href="http://docs.feelpp.org/cases/latest/heat/README" class="bare">docs.feelpp.org/cases/latest/heat/README</a></p>
 </li>
 </ul>
 </div>
@@ -919,15 +928,15 @@ feelpp/feelpp-toolboxes <i class="conum" data-value="5"></i><b>(5)</b></code></p
 <dl>
 <dt class="hdlist1">Feel++ Docs</dt>
 <dd>
-<p><a href="http://docs.feelpp.org/toolboxes/0.108/" class="bare">docs.feelpp.org/toolboxes/0.108/</a></p>
+<p><a href="http://docs.feelpp.org/toolboxes/latest/" class="bare">docs.feelpp.org/toolboxes/latest/</a></p>
 </dd>
 <dt class="hdlist1">Feel++ Cases for feelpp_toolbox_heat</dt>
 <dd>
-<p><a href="http://docs.feelpp.org/cases/0.108/heat/README" class="bare">docs.feelpp.org/cases/0.108/heat/README</a></p>
+<p><a href="http://docs.feelpp.org/cases/latest/heat/README" class="bare">docs.feelpp.org/cases/latest/heat/README</a></p>
 </dd>
 <dt class="hdlist1">Feel++ Toolbox Docs for feelpp_toolbox_heat</dt>
 <dd>
-<p><a href="http://docs.feelpp.org/toolboxes/0.108/heat/" class="bare">docs.feelpp.org/toolboxes/0.108/heat/</a></p>
+<p><a href="http://docs.feelpp.org/toolboxes/latest/heat/" class="bare">docs.feelpp.org/toolboxes/latest/heat/</a></p>
 </dd>
 </dl>
 </div>
@@ -941,12 +950,12 @@ feelpp/feelpp-toolboxes <i class="conum" data-value="5"></i><b>(5)</b></code></p
 <dt class="hdlist1">Feel++ Mesh Partitioner</dt>
 <dd>
 <p>Mesh partitioner for Feel++ Toolboxes
-<a href="http://docs.feelpp.org/user/0.108/using/mesh_partitioner/" class="bare">docs.feelpp.org/user/0.108/using/mesh_partitioner/</a></p>
+<a href="http://docs.feelpp.org/user/latest/using/mesh_partitioner/" class="bare">docs.feelpp.org/user/latest/using/mesh_partitioner/</a></p>
 </dd>
 <dt class="hdlist1">Feel++ Remote Tool</dt>
 <dd>
 <p>Access remote data(model cases, meshes) on Github and Girder in Feel++ applications.
-<a href="http://docs.feelpp.org/user/0.108/using/remotedata/" class="bare">docs.feelpp.org/user/0.108/using/remotedata/</a></p>
+<a href="http://docs.feelpp.org/user/latest/using/remotedata/" class="bare">docs.feelpp.org/user/latest/using/remotedata/</a></p>
 </dd>
 </dl>
 </div>

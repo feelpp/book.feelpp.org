@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Feel++ Docs</title>
+    <title>feelpp_toolbox_coefficientformpdes(1) :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/using/toolboxes/coefficientformpdes.html">
-    <meta name="generator" content="Antora 3.1.1">
+    <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
@@ -550,10 +550,10 @@ MathJax.Hub.Config({
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../../myproject/1.0.0/index.html">Feel++ MyProject</a>
+      <a class="title" href="../../../../template_project/1.0.3/index.html">Feel++ Templace Project</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../../myproject/1.0.0/index.html">1.0.0</a>
+          <a href="../../../../template_project/1.0.3/index.html">1.0.3</a>
         </li>
       </ul>
     </li>
@@ -645,6 +645,10 @@ MathJax.Hub.Config({
 <button class="nav-toggle"></button>
   <a href="../../../../feelpp/0.109/index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Feel++ User Manual</a></li>
+    <li><a href="coefficientformpdes.html">feelpp_toolbox_coefficientformpdes(1)</a></li>
+  </ul>
 </nav>
 <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
@@ -663,8 +667,304 @@ MathJax.Hub.Config({
 </aside>
 
 <article class="doc">
+<h1 class="page">feelpp_toolbox_coefficientformpdes(1)</h1>
+<div class="sect1">
+<h2 id="_name"><a class="anchor" href="#_name"></a>1. NAME</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>404: Not Found</p>
+<p>feelpp_toolbox_coefficientformpdes - Coefficient Form PDEs toolbox application</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>2. SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>feelpp_toolbox_coefficientformpdes
+  [--coefficientformpdes.filename  &lt;path to .json specification file&gt;]
+  [--config-file &lt;path to .cfg file]
+  [--case &lt;directory to model case&gt;]
+  [--case.dim 3]
+  [--case.discretization P1]
+  [--coefficientformpdes.ksp-monitor=&lt;0,1&gt;]
+  [--coefficientformpdes.ksp-view=&lt;0,1&gt;]
+  [--coefficientformpdes.ksp-type=&lt;see below&gt;]
+  [--coefficientformpdes.pc-view=&lt;0,1&gt;]
+  [--coefficientformpdes.pc-type=&lt;see below&gt;]
+  [--coefficientformpdes.snes-monitor=&lt;0,1&gt;]
+  [--coefficientformpdes.ksp-type=&lt;see below&gt;]</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_description"><a class="anchor" href="#_description"></a>3. DESCRIPTION</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>feelpp_toolbox_coefficientformpdes is an application which can run Coefficient Form PDEs model defined by a set of files : a geometry or mesh, a config file(<code>.cfg</code>) and  a model file(<code>.json</code>)</p>
+</div>
+<div class="paragraph">
+<p>The execution steps are as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>load the model</p>
+</li>
+<li>
+<p>load the mesh</p>
+</li>
+<li>
+<p>setup model (materials, initial and boundary condition)</p>
+</li>
+<li>
+<p>execute the steady or unsteady simulation</p>
+</li>
+<li>
+<p>post-process the results, viewable in paraview or ensight</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_options"><a class="anchor" href="#_options"></a>3.1. Options</h3>
+<div class="paragraph">
+<p>feelpp_toolbox_coefficientformpdes requires some options.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Table of command-line feelpp_toolbox_coefficientformpdes options</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Possible Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">case.dim</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dimension of problem</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">case.discretization</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">discretization of problem</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P1,P2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">coefficientformpdes.filename</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">path to the .json specification case file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>no default value</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>required from user</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">coefficientformpdes.ksp-monitor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">monitor the Krylov Subspace iterations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">coefficientformpdes.ksp-view</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">view the Krylov Subspace structure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">coefficientformpdes.ksp-type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">change the Krylov Subspace method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gmres</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.mcs.anl.gov/petsc/documentation/linearsolvertable.html">see PETSc documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">coefficientformpdes.pc-view</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">view the Krylov Subspace structure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">coefficientformpdes.pc-type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">change the Krylov Subspace strategy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>lu</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.mcs.anl.gov/petsc/documentation/linearsolvertable.html">see PETSc documentation</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">coefficientformpdes.snes-monitor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">if applicable, monitor the non-linear solver iterations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">coefficientformpdes.snes-type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">if applicable, change the non-linear solver iterations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>newtonls</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/SNES/SNESType.html">see PETSc documentation</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">NOTE</dt>
+<dd>
+<p>0 as option value means that the option is not enabled, 1 means it is enabled.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_examples"><a class="anchor" href="#_examples"></a>4. EXAMPLES</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We are now using the <code>feelpp/feelpp-toolboxes:latest</code> docker images as described in <a href="http://docs.feelpp.org/user/0.110.0-rc.5/install/containers/#_docker" class="bare">docs.feelpp.org/user/0.110.0-rc.5/install/containers/#_docker</a> to demonstrate feelpp_toolbox_coefficientformpdes usage.</p>
+</div>
+<div class="listingblock">
+<div class="title">Starting the docker <code>feelpp/feelpp-toolboxes:latest</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">docker run --rm -ti -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-toolboxes:v0.110.0-rc.5</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Explanations about the command line</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">docker run <i class="conum" data-value="1"></i><b>(1)</b>
+--rm <i class="conum" data-value="2"></i><b>(2)</b>
+-ti <i class="conum" data-value="3"></i><b>(3)</b>
+-v $HOME/feel:/feel <i class="conum" data-value="4"></i><b>(4)</b>
+feelpp/feelpp-toolboxes <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>run docker executable</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>remove container from docker once execution is done</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>run in interactive mode and enter the docker container</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>mount <code>$HOME/feel</code> on host to <code>/feel/</code> in docker: the results will be exported there</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>the docker container to execute, by default it uses the <code>latest</code> tag</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">Example of a command line to execute feelpp_toolbox_coefficientformpdes</div>
+<div class="content">
+<pre>mpirun --bind-to core -np 10 feelpp_toolbox_coefficientformpdes --case "github:{path:toolboxes/coefficientformpdes/cases/bratu}"</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Explantion of the command line to execute feelpp_toolbox_coefficientformpdes</div>
+<div class="content">
+<pre>mpirun --bind-to core <i class="conum" data-value="1"></i><b>(1)</b>
+  -np 10 <i class="conum" data-value="2"></i><b>(2)</b>
+  <i class="conum" data-value="3"></i><b>(3)</b>
+  --case "github:{path:toolboxes/coefficientformpdes/cases/bratu}" <i class="conum" data-value="4"></i><b>(4)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>execute in parallel using MPI with processes bound to cores</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>execute in parallel usisng 10 processes</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>the name of the toolbox application</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>case directory containing the model files (geometry, config and json). This case file is available remotely on github.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Other test cases can be found</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>locally in /usr/share/feelpp/data/testcases/toolboxes/coefficientformpdes.</p>
+</li>
+<li>
+<p>on-line <a href="http://docs.feelpp.org/cases/latest/coefficientformpdes/README" class="bare">docs.feelpp.org/cases/latest/coefficientformpdes/README</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_resources"><a class="anchor" href="#_resources"></a>5. RESOURCES</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Feel++ Docs</dt>
+<dd>
+<p><a href="http://docs.feelpp.org/toolboxes/latest/" class="bare">docs.feelpp.org/toolboxes/latest/</a></p>
+</dd>
+<dt class="hdlist1">Feel++ Cases for feelpp_toolbox_coefficientformpdes</dt>
+<dd>
+<p><a href="http://docs.feelpp.org/cases/latest/coefficientformpdes/README" class="bare">docs.feelpp.org/cases/latest/coefficientformpdes/README</a></p>
+</dd>
+<dt class="hdlist1">Feel++ Toolbox Docs for feelpp_toolbox_coefficientformpdes</dt>
+<dd>
+<p><a href="http://docs.feelpp.org/toolboxes/latest/coefficientformpdes/" class="bare">docs.feelpp.org/toolboxes/latest/coefficientformpdes/</a></p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_see_also"><a class="anchor" href="#_see_also"></a>6. SEE ALSO</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Feel++ Mesh Partitioner</dt>
+<dd>
+<p>Mesh partitioner for Feel++ Toolboxes
+<a href="http://docs.feelpp.org/user/latest/using/mesh_partitioner/" class="bare">docs.feelpp.org/user/latest/using/mesh_partitioner/</a></p>
+</dd>
+<dt class="hdlist1">Feel++ Remote Tool</dt>
+<dd>
+<p>Access remote data(model cases, meshes) on Github and Girder in Feel++ applications.
+<a href="http://docs.feelpp.org/user/latest/using/remotedata/" class="bare">docs.feelpp.org/user/latest/using/remotedata/</a></p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_copying"><a class="anchor" href="#_copying"></a>7. COPYING</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Copyright (C) 2020 Feel++ Consortium.<br>
+Free use of this software is granted under the terms of the GPLv3 License.</p>
+</div>
+</div>
 </div>
 </article>
   </div>
