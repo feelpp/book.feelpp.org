@@ -671,7 +671,7 @@ MathJax.Hub.Config({
 <article class="doc">
 <h1 class="page">Get Feel++</h1>
 <div class="paragraph">
-<p>Feel++ can be installed on Windows 10, Debian/Ubuntu systems and MacOSX.</p>
+<p>Feel++ can be installed on Windows 10, Debian/Ubuntu systems.</p>
 </div>
 <div class="paragraph">
 <p>We created two delivery channels: <code>stable</code> and <code>latest</code>.</p>
@@ -693,18 +693,6 @@ MathJax.Hub.Config({
 <ul>
 <li>
 <p><a id="tabset1_ubuntu"></a>Ubuntu</p>
-</li>
-<li>
-<p><a id="tabset1_debian"></a>Debian</p>
-</li>
-<li>
-<p><a id="tabset1_fedora"></a>Fedora</p>
-</li>
-<li>
-<p><a id="tabset1_windows-10"></a>Windows 10</p>
-</li>
-<li>
-<p><a id="tabset1_docker"></a>Docker</p>
 </li>
 </ul>
 </div>
@@ -772,7 +760,24 @@ sudo apt update</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Feel++ is also compiled regularly on the latest Ubuntu distribition, currently Kinetic (22.10), see <a href="compile.html" class="xref page">how to build Feel++ from sources</a>.</p>
+</div>
+<div class="literalblock">
+<div class="title">Ubuntu Kinetic (22.10)</div>
+<div class="content">
+<pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:ubuntu-22.10</pre>
+</div>
+</div>
+<div class="exampleblock">
+<div class="content">
 <h3 id="_install_feel_debianubuntu_packages" class="discrete">Install Feel++ Debian/Ubuntu packages</h3>
+<div class="paragraph">
+<p>We describe here the installation of the debian packages for LTS distributions.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 2. Table Feel++ Ubuntu packages</caption>
 <colgroup>
@@ -871,8 +876,15 @@ sudo apt update</code></pre>
 <pre>sudo apt install --reinstall 'libfeelpp*'</pre>
 </div>
 </div>
+<div class="openblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Debian</dt>
+</dl>
 </div>
-<div class="tab-pane" aria-labelledby="tabset1_debian">
+</div>
+</div>
 <div class="paragraph">
 <p>Debian LTS distributions bullseye(11) is supported.</p>
 </div>
@@ -916,17 +928,34 @@ echo "deb http://apt.feelpp.org/debian/buster buster latest" | sudo tee -a /etc/
 sudo apt update</code></pre>
 </div>
 </div>
-<h3 id="_sid_unstable" class="discrete">Sid (unstable)</h3>
-<div class="listingblock">
-<div class="title">Command lines to install the latest Feel++ channel on debian/sid</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Feel++ is also compiled regularly on the latest Debian distribitions testing and unstable (sid). See <a href="compile.html" class="xref page">how to build Feel++ from sources</a>.</p>
+</div>
+<div class="literalblock">
+<div class="title">Debian testing</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
-echo "deb http://apt.feelpp.org/debian/sid sid latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
-sudo apt update</code></pre>
+<pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:debian-testing</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="title">Debian unstable (sid)</div>
+<div class="content">
+<pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:debian-sid</pre>
+</div>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="openblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Fedora</dt>
+</dl>
 </div>
 </div>
 </div>
-<div class="tab-pane" aria-labelledby="tabset1_fedora">
 <div class="paragraph">
 <p>Feel++ is not yet packaged for Fedora.
 However</p>
@@ -960,6 +989,9 @@ However</p>
 <p>see <a href="compile.html" class="xref page">how to build Feel++ from sources</a>.</p>
 </div>
 <h3 id="_install_feel_debianubuntu_packages_2" class="discrete">Install Feel++ Debian/Ubuntu packages</h3>
+<div class="paragraph">
+<p>We describe here the installation of the debian packages for LTS distributions.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 4. Table Feel++ Ubuntu packages</caption>
 <colgroup>
@@ -1058,8 +1090,15 @@ However</p>
 <pre>sudo apt install --reinstall 'libfeelpp*'</pre>
 </div>
 </div>
+<div class="openblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Windows 10</dt>
+</dl>
 </div>
-<div class="tab-pane" aria-labelledby="tabset1_windows-10">
+</div>
+</div>
 <div class="paragraph">
 <p>To use Feel++ on Windows 10, follow these steps:</p>
 </div>
@@ -1076,8 +1115,15 @@ However</p>
 </li>
 </ul>
 </div>
+<div class="openblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Docker</dt>
+</dl>
 </div>
-<div class="tab-pane" aria-labelledby="tabset1_docker">
+</div>
+</div>
 <div class="paragraph">
 <p>A docker image is generated with the deb packages.
 The image is based on the LTS distribution Ubuntu Focal 20.04.</p>
@@ -1098,6 +1144,10 @@ docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:focal</pre>
 <pre>docker pull ghcr.io/feelpp/feelpp-dev:focal
 docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-dev:focal</pre>
 </div>
+</div>
+<div class="openblock">
+<div class="content">
+
 </div>
 </div>
 </div>
