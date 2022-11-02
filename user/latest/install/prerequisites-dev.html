@@ -693,7 +693,80 @@ Difficulty: <span class="image"><img src="../_images/tools/difficulty_advanced.s
 </div>
 </div>
 <div class="sect1">
-<h2 id="_compilers"><a class="anchor" href="#_compilers"></a>1. Compilers</h2>
+<h2 id="_system_environments"><a class="anchor" href="#_system_environments"></a>1. System Environments</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Feel++ is compiled and tested on various systems:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Table of linux operating systems</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Flavor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compiler</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Notes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ubuntu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20.04</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">clang</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Docker images and packages available</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ubuntu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">22.04</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">clang</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Docker images and packages available</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ubuntu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">22.10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">clang</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scheduled build once per week</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debian</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">clang</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Docker images and packages available</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debian</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">testing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">clang</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scheduled build once per week</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debian</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unstable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">clang</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scheduled build once per week</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fedora</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">36</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">clang</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scheduled build once per week</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fedora</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">37</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">clang</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scheduled build once per week</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_compilers"><a class="anchor" href="#_compilers"></a>2. Compilers</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Feel++ uses C++17 compilers such as GCC8 and Clang (\(\geq 5\)).</p>
@@ -714,7 +787,7 @@ We don&#8217;t use yet C++17 standard library features</p>
 </table>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Table C++ compilers and standard libraries combinations</caption>
+<caption class="title">Table 2. Table C++ compilers and standard libraries combinations</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -731,19 +804,19 @@ We don&#8217;t use yet C++17 standard library features</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Clang++</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt;= 9</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">libstdc&#43;&#43; 7</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Clang++</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt;= 9</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">libc&#43;&#43; (corresponding clang version)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">G++</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt;=11</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">libstdc&#43;&#43; 7</p></td>
 </tr>
 </tbody>
@@ -771,7 +844,7 @@ Clang++ is the preferred compiler by far for Feel++, it compiles much faster and
 <p>A few applications are not built with GCC, GCC ICEs (Internal Compiler Error) on them.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. List of applications disabled with GCC</caption>
+<caption class="title">Table 3. List of applications disabled with GCC</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -794,23 +867,25 @@ Clang++ is the preferred compiler by far for Feel++, it compiles much faster and
 </div>
 </div>
 <div class="sect1">
-<h2 id="_required_tools_and_libraries"><a class="anchor" href="#_required_tools_and_libraries"></a>2. Required tools and libraries</h2>
+<h2 id="_required_tools_and_libraries"><a class="anchor" href="#_required_tools_and_libraries"></a>3. Required tools and libraries</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Other than C++17 compilers, Feel++ requires only a few tools and libraries, namely CMake, Boost C++ libraries and an MPI implementation such as open-mpi or mpich. The table below provides information regarding the minimum and maximum version supported. A&#8201;&#8212;&#8201;means it has not necessarily been tested with the latest version but we do not expect any issues. Note that for MPI, an implementation with MPI-IO support would be best.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Table required tools to compile Feel++</caption>
+<caption class="title">Table 4. Table required tools to compile Feel++</caption>
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Name</th>
 <th class="tableblock halign-left valign-top">Minimum Version</th>
+<th class="tableblock halign-left valign-top">Recommended Version</th>
 <th class="tableblock halign-left valign-top">Maximum Version</th>
 <th class="tableblock halign-left valign-top">Notes</th>
 </tr>
@@ -819,6 +894,7 @@ Clang++ is the preferred compiler by far for Feel++, it compiles much faster and
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cmake.org/">CMake</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3.13.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt;= 3.21</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -826,18 +902,21 @@ Clang++ is the preferred compiler by far for Feel++, it compiles much faster and
 <td class="tableblock halign-left valign-top"><p class="tableblock">MPI</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.open-mpi.org/">OpenMPI</a> or <a href="https://www.mpich.org/">MPICH</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.boost.org/">Boost</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1.61</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.70</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt;= 1.70</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boost C++ libraries</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.python.org/">Python Interpreter</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt;= 3.8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Version 2 has never been tested</p></td>
 </tr>
 </tbody>
@@ -845,13 +924,13 @@ Clang++ is the preferred compiler by far for Feel++, it compiles much faster and
 </div>
 </div>
 <div class="sect1">
-<h2 id="_recommended_libraries"><a class="anchor" href="#_recommended_libraries"></a>3. Recommended libraries</h2>
+<h2 id="_recommended_libraries"><a class="anchor" href="#_recommended_libraries"></a>4. Recommended libraries</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Here is a list of libraries that we recommend to use jointly with Feel++.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Table optional external libraries</caption>
+<caption class="title">Table 5. Table optional external libraries</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -888,7 +967,7 @@ Clang++ is the preferred compiler by far for Feel++, it compiles much faster and
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://gmsh.info/">Gmsh</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.8.7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4.4.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -908,13 +987,13 @@ Clang++ is the preferred compiler by far for Feel++, it compiles much faster and
 </div>
 </div>
 <div class="sect1">
-<h2 id="_recommended_tools"><a class="anchor" href="#_recommended_tools"></a>4. Recommended tools</h2>
+<h2 id="_recommended_tools"><a class="anchor" href="#_recommended_tools"></a>5. Recommended tools</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Here is a list of tools that we recommend to use jointly with Feel++.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Table of recommended tools</caption>
+<caption class="title">Table 6. Table of recommended tools</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -988,13 +1067,13 @@ Clang++ is the preferred compiler by far for Feel++, it compiles much faster and
 </div>
 </div>
 <div class="sect1">
-<h2 id="_suggested_tools"><a class="anchor" href="#_suggested_tools"></a>5. Suggested tools</h2>
+<h2 id="_suggested_tools"><a class="anchor" href="#_suggested_tools"></a>6. Suggested tools</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Here is a list of tools that we suggest to use jointly with Feel++.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Table of suggested tools</caption>
+<caption class="title">Table 7. Table of suggested tools</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1047,7 +1126,7 @@ Clang++ is the preferred compiler by far for Feel++, it compiles much faster and
 </div>
 </div>
 <div class="sect1">
-<h2 id="_whats_next"><a class="anchor" href="#_whats_next"></a>6. What&#8217;s next?</h2>
+<h2 id="_whats_next"><a class="anchor" href="#_whats_next"></a>7. What&#8217;s next?</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>

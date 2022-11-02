@@ -694,6 +694,18 @@ MathJax.Hub.Config({
 <li>
 <p><a id="tabset1_ubuntu"></a>Ubuntu</p>
 </li>
+<li>
+<p><a id="tabset1_debian"></a>Debian</p>
+</li>
+<li>
+<p><a id="tabset1_fedora"></a>Fedora</p>
+</li>
+<li>
+<p><a id="tabset1_windows-10"></a>Windows 10</p>
+</li>
+<li>
+<p><a id="tabset1_docker"></a>Docker</p>
+</li>
 </ul>
 </div>
 <div class="content">
@@ -760,9 +772,14 @@ sudo apt update</code></pre>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Other Ubuntu systems</div>
 <div class="paragraph">
 <p>Feel++ is also compiled regularly on the latest Ubuntu distribition, currently Kinetic (22.10), see <a href="compile.html" class="xref page">how to build Feel++ from sources</a>.</p>
 </div>
@@ -772,8 +789,10 @@ sudo apt update</code></pre>
 <pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:ubuntu-22.10</pre>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
+</td>
+</tr>
+</table>
+</div>
 <h3 id="_install_feel_debianubuntu_packages" class="discrete">Install Feel++ Debian/Ubuntu packages</h3>
 <div class="paragraph">
 <p>We describe here the installation of the debian packages for LTS distributions.</p>
@@ -876,15 +895,8 @@ sudo apt update</code></pre>
 <pre>sudo apt install --reinstall 'libfeelpp*'</pre>
 </div>
 </div>
-<div class="openblock">
-<div class="content">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Debian</dt>
-</dl>
 </div>
-</div>
-</div>
+<div class="tab-pane" aria-labelledby="tabset1_debian">
 <div class="paragraph">
 <p>Debian LTS distributions bullseye(11) is supported.</p>
 </div>
@@ -928,8 +940,14 @@ echo "deb http://apt.feelpp.org/debian/buster buster latest" | sudo tee -a /etc/
 sudo apt update</code></pre>
 </div>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Other Debian systems</div>
 <div class="paragraph">
 <p>Feel++ is also compiled regularly on the latest Debian distribitions testing and unstable (sid). See <a href="compile.html" class="xref page">how to build Feel++ from sources</a>.</p>
 </div>
@@ -945,48 +963,9 @@ sudo apt update</code></pre>
 <pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:debian-sid</pre>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div class="openblock">
-<div class="content">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Fedora</dt>
-</dl>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Feel++ is not yet packaged for Fedora.
-However</p>
-</div>
-<div class="ulist checklist">
-<ul class="checklist">
-<li>
-<p><i class="fa fa-check-square-o"></i> it is possible to compile it from source for Fedora:36 and Fedora:37</p>
-</li>
-<li>
-<p><i class="fa fa-check-square-o"></i> a docker image containing Feel++ development environment is available for both systems</p>
-</li>
-</ul>
-</div>
-<div class="literalblock">
-<div class="title">Fedora 36(stable)</div>
-<div class="content">
-<pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-36</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>or</p>
-</div>
-<div class="literalblock">
-<div class="title">Fedora 37(beta)</div>
-<div class="content">
-<pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-37</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>see <a href="compile.html" class="xref page">how to build Feel++ from sources</a>.</p>
+</td>
+</tr>
+</table>
 </div>
 <h3 id="_install_feel_debianubuntu_packages_2" class="discrete">Install Feel++ Debian/Ubuntu packages</h3>
 <div class="paragraph">
@@ -1090,15 +1069,42 @@ However</p>
 <pre>sudo apt install --reinstall 'libfeelpp*'</pre>
 </div>
 </div>
-<div class="openblock">
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_fedora">
+<div class="paragraph">
+<p>Feel++ is not yet packaged for Fedora.
+However</p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> it is possible to compile it from source for Fedora:36 and Fedora:37</p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> a docker image containing Feel++ development environment is available for both systems</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="title">Fedora 36(stable)</div>
 <div class="content">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Windows 10</dt>
-</dl>
+<pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-36</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>or</p>
 </div>
+<div class="literalblock">
+<div class="title">Fedora 37(beta)</div>
+<div class="content">
+<pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-37</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>see <a href="compile.html" class="xref page">how to build Feel++ from sources</a>.</p>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_windows-10">
 <div class="paragraph">
 <p>To use Feel++ on Windows 10, follow these steps:</p>
 </div>
@@ -1108,22 +1114,117 @@ However</p>
 <p><i class="fa fa-check-square-o"></i> install <a href="https://docs.microsoft.com/fr-fr/windows/wsl/install-win10:">WSL (Windows Subsystem for Linux)</a></p>
 </li>
 <li>
-<p><i class="fa fa-check-square-o"></i> install <a href="https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions">Ubuntu focal (20.04) or Debian buster(10)</a></p>
+<p><i class="fa fa-check-square-o"></i> install <a href="https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions">Ubuntu focal (20.04) Ubuntu jammy(22.04) or Debian bullseye(11)</a></p>
 </li>
 <li>
 <p><i class="fa fa-check-square-o"></i> follow the corresponding Ubuntu or Debian Feel++ installation steps</p>
 </li>
 </ul>
 </div>
-<div class="openblock">
+<h3 id="_install_feel_debianubuntu_packages_3" class="discrete">Install Feel++ Debian/Ubuntu packages</h3>
+<div class="paragraph">
+<p>We describe here the installation of the debian packages for LTS distributions.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Table Feel++ Ubuntu packages</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">shared libraries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp-dev</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">development headers and libraries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-tools</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../using/index.html#_using_feel_tools" class="xref page">mesh partitioners and remote data upload/download</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-quickstart</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">quickstart applications (laplacian cg an hdg), stokes, elasticity(cg and hdg)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">python3-feelpp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python3 bindings</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">data files (geometry and config files) for Feel++ applications (e.g. feelpp-quickstart)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp-toolboxes1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">toolboxes shared libraries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp-toolboxes-dev</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">toolboxes development headers and libraries</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-toolboxes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../using/index.html#_using_feel_toolboxes" class="xref page">toolbox applications</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-toolboxes-data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">data files (geometry and config files) for Feel++ toolboxes</p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_installation_examples_3" class="discrete">Installation examples</h4>
+<div class="listingblock">
+<div class="title">Install the library</div>
 <div class="content">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Docker</dt>
-</dl>
+<pre>sudo apt install libfeelpp1</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Install the tools</div>
+<div class="content">
+<pre>sudo apt install feelpp-tools</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Install the quickstart applications and associated data</div>
+<div class="content">
+<pre>sudo apt install feelpp-quickstart feelpp-data</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Install the toolboxes applications and associated data</div>
+<div class="content">
+<pre>sudo apt install feelpp-toolboxes feelpp-toolboxes-data</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Install the toolboxes development environment</div>
+<div class="content">
+<pre>sudo apt install libfeelpp-toolboxes-dev</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Reinstall the runtime environment feelpp, the toolboxes and the python3 packages</div>
+<div class="content">
+<pre>sudo apt install --reinstall 'feelpp-*' 'libfeelpp1' 'python3-feelpp-*'</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Reinstall the development environment for feelpp and the toolboxes</div>
+<div class="content">
+<pre>sudo apt install --reinstall 'libfeelpp*'</pre>
 </div>
 </div>
 </div>
+<div class="tab-pane" aria-labelledby="tabset1_docker">
 <div class="paragraph">
 <p>A docker image is generated with the deb packages.
 The image is based on the LTS distribution Ubuntu Focal 20.04.</p>
@@ -1144,10 +1245,6 @@ docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:focal</pre>
 <pre>docker pull ghcr.io/feelpp/feelpp-dev:focal
 docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-dev:focal</pre>
 </div>
-</div>
-<div class="openblock">
-<div class="content">
-
 </div>
 </div>
 </div>
