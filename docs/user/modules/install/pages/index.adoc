@@ -1,6 +1,6 @@
 = Get {feelpp}
 
-{feelpp} can be installed on Windows 10, Debian/Ubuntu systems and MacOSX.
+{feelpp} can be installed on Windows 10, Debian/Ubuntu systems.
 
 We created two delivery channels: `stable` and `latest`.
 
@@ -51,6 +51,15 @@ The supported systems are described below
 
 |===
 
+[NOTE]
+.Other Ubuntu systems
+======
+{feelpp} is also compiled regularly on the latest Ubuntu distribition, currently Kinetic (22.10), see xref:compile.adoc[how to build {feelpp} from sources].
+
+.Ubuntu Kinetic (22.10)
+ $ docker run --rm -it ghcr.io/feelpp/feelpp-env:ubuntu-22.10
+======
+
 include::partial$install-deb.adoc[]
 --
 Debian::
@@ -79,12 +88,20 @@ par::[debian,buster,latest]
 
 //par::[debian,buster,stable]
 
-[discrete]
-=== Sid (unstable)
 
-par::[debian,sid,latest]
+[NOTE]
+.Other Debian systems
+======
+{feelpp} is also compiled regularly on the latest Debian distribitions testing and unstable (sid). See xref:compile.adoc[how to build {feelpp} from sources].
 
+.Debian testing
+ $ docker run --rm -it ghcr.io/feelpp/feelpp-env:debian-testing
 
+.Debian unstable (sid)
+ $ docker run --rm -it ghcr.io/feelpp/feelpp-env:debian-sid
+======
+
+include::partial$install-deb.adoc[]
 --
 Fedora::
 +
@@ -105,9 +122,7 @@ or
  $ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-37 
 
 see xref:compile.adoc[how to build {feelpp} from sources].
-  
 
-include::partial$install-deb.adoc[]
 --
 Windows 10::
 +
@@ -115,9 +130,10 @@ Windows 10::
 To use {feelpp} on Windows 10, follow these steps:
 
  * [x] install https://docs.microsoft.com/fr-fr/windows/wsl/install-win10:[WSL (Windows Subsystem for Linux)]
- * [x] install https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions[Ubuntu focal (20.04) or Debian buster(10)]
+ * [x] install https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions[Ubuntu focal (20.04) Ubuntu jammy(22.04) or Debian bullseye(11)]
  * [x] follow the corresponding Ubuntu or Debian {feelpp} installation steps
 
+include::partial$install-deb.adoc[]
 --
 Docker::
 +
