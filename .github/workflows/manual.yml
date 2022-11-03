@@ -1,12 +1,18 @@
-name: Build and Deploy
-on:
-  push:
-    branches: [ master,develop ]
-  repository_dispatch:
-    types:
-      - toolbox-update-trigger
+name: Manual CI
+run-name: "Build ${{ github.ref_name }}"
+on: workflow_dispatch
 
 jobs:
+
+  activate:
+    runs-on: ubuntu-latest
+    if: |
+      github.repository == 'feelpp/book.feelpp.org' &&
+      !startsWith(github.event.head_commit.message, 'Release ') &&
+      !contains(github.event.head_commit.message, 'ci skip')
+    steps:
+    - run: echo ok go
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -26,3 +32,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: build/site # The folder the action should deploy.
+          
