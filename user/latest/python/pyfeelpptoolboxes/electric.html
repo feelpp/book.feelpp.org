@@ -673,19 +673,25 @@ MathJax.Hub.Config({
   <div class="dropdown-content">
 
 
+        <a href="#" title="Download Jupyter Notebook" data-toggle="tooltip" data-placement="left">
+         .ipynb <i class="fas fa-file"></i>
+        </a>
+
+
           <a onclick="print(this)"  class="headerbtn"  data-toggle="tooltip" data-placement="left" title="Print to PDF">
               .pdf <i class="fas fa-file-pdf"></i>
           </a>
 
   </div>
-</div>  
+</div>
+  
 <div class="dropdown">
   <button class="dropbtn" aria-label="Github">
     <i class="fab fa-github"></i>
   </button>
   <div class="dropdown-content">
 
-    <a href="">Open repository <i class="fab fa-github"></i></a>
+    <a href="https://github.com/feelpp/book.feelpp.org">Open repository <i class="fab fa-github"></i></a>
     
   <a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/user/modules/python/pages/pyfeelpptoolboxes/electric.adoc">Edit this Page <i class="fas fa-edit"></i></a>
 
@@ -719,37 +725,11 @@ title="Fullscreen mode"
 <article class="doc">
 <h1 class="page">Fluid</h1>
 <div class="listingblock">
-<div class="title">Fluid</div>
+<div class="title">Electric</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import core
-import mesh
-import sys,time
-from modelcore import *
-
-e=core.Environment(sys.argv,opts=toolboxes_options("fluid"))
-
-import discr
-import exporter
-import ts
-from fluid import *
-
-f=Fluid_P2P1G1("fluid")
-f.init()
-f.printAndSaveInfo()
-if f.isStationary():
-    f.solve()
-    f.exportResults()
-else:
-    if not f.doRestart():
-        f.exportResults( f.timeInitial() )
-    while not f.timeStepBase().isFinished():
-        if f.worldComm().isMasterRank():
-            print("============================================================\n")
-            print("time simulation: ", f.time(), "s \n")
-            print("============================================================\n")
-        f.solve()
-        f.exportResults()
-        f.updateTimeStep()</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from feelpp import *
+from feelpp.toolboxes.core import *
+from feelpp.toolboxes.electric import *</code></pre>
 </div>
 </div>
 <nav class="pagination">
