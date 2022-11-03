@@ -488,6 +488,7 @@ MathJax.Hub.Config({
     <li><a href="bdf.html">BDF</a></li>
   </ul>
 </nav>
+
 <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">0.109</button>
   <div class="version-menu">
@@ -497,8 +498,52 @@ MathJax.Hub.Config({
     <a class="version" href="../../../0.107/reference/Time/bdf.html">0.107</a>
   </div>
 </div>
-  <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/blob/v0.109/docs/dev/modules/reference/pages/Time/bdf.adoc">Edit this Page</a></div>
+  
+<div class="dropdown">
+  <button class="dropbtn" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <div class="dropdown-content">
+
+
+          <a onclick="print(this)"  class="headerbtn"  data-toggle="tooltip"data-placement="left" title="Print to PDF">
+              .pdf <i class="fas fa-file-pdf"></i>
+          </a>
+
   </div>
+</div>  
+<div class="dropdown">
+  <button class="dropbtn" aria-label="Github">
+    <i class="fab fa-github"></i>
+  </button>
+  <div class="dropdown-content">
+
+    
+
+  <a href="https://github.com/feelpp/book.feelpp.org/blob/v0.109/docs/dev/modules/reference/pages/Time/bdf.adoc">Edit this Page <i class="fas fa-edit"></i></a>
+
+    <a href="https://github.com/feelpp/book.feelpp.org/issues/new">Open issue <i class="fas fa-lightbulb"></i></a>
+
+
+  </div>
+</div>
+
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+</div>
+
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
@@ -824,6 +869,7 @@ Here are some results using Paraview and the Feel++ <a href="../exporter.html" c
 </footer>
 <script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
 
+
 <script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
 <script async src="../../../../_/js/vendor/fontawesome.js"></script>
 <script async src="../../../../_/js/vendor/highlight.js"></script>
@@ -831,5 +877,21 @@ Here are some results using Paraview and the Feel++ <a href="../exporter.html" c
 <script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">
 </script>
 
-  </body>
+
+<script type="text/javascript">
+function toggleFullScreen() {
+   var doc = window.document;
+   var docEl = doc.documentElement;
+
+   var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+   var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+   if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+       requestFullScreen.call(docEl);
+   }
+   else {
+       cancelFullScreen.call(doc);
+   }
+}
+</script>  </body>
 </html>

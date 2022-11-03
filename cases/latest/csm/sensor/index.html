@@ -687,6 +687,7 @@ MathJax.Hub.Config({
     <li><a href="index.html">Sensor</a></li>
   </ul>
 </nav>
+
 <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
   <div class="version-menu">
@@ -696,8 +697,57 @@ MathJax.Hub.Config({
     <a class="version" href="../../../0.107/csm/sensor/index.html">0.107</a>
   </div>
 </div>
-  <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/csm/pages/sensor/index.adoc">Edit this Page</a></div>
+  
+<div class="dropdown">
+  <button class="dropbtn" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <div class="dropdown-content">
+
+
+        <a href="../../attachments/sensor/index.ipynb">
+         .ipynb <i class="fas fa-file"></i>
+        </a>
+
+
+          <a onclick="print(this)"  class="headerbtn"  data-toggle="tooltip"data-placement="left" title="Print to PDF">
+              .pdf <i class="fas fa-file-pdf"></i>
+          </a>
+
   </div>
+</div>  
+<div class="dropdown">
+  <button class="dropbtn" aria-label="Github">
+    <i class="fab fa-github"></i>
+  </button>
+  <div class="dropdown-content">
+
+    
+
+  <a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/csm/pages/sensor/index.adoc">Edit this Page <i class="fas fa-edit"></i></a>
+
+    <a href="https://github.com/feelpp/book.feelpp.org/issues/new">Open issue <i class="fas fa-lightbulb"></i></a>
+
+
+  </div>
+</div>
+
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+</div>
+
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
@@ -721,17 +771,17 @@ MathJax.Hub.Config({
 <div class="paragraph">
 <p>A <strong>strain gauge</strong> is a device used to measure strain on an object. The most common type of strain gauge consists of an insulating flexible backing which supports a metallic foil pattern. The gauge is attached to the object by a suitable adhesive. As the object is deformed, the foil is deformed, causing its electrical resistance to change. This resistance change, usually measured using a Wheatstone bridge, is related to the strain by the quantity known as the <em>gauge factor</em>.</p>
 </div>
-<div class="dlist grid has-emblems">
+<div class="dlist grid">
 <dl>
-<dt class="hdlist1"><span class="emblem">CAD representation of a strain gauge</span></dt>
+<dt class="hdlist1">CAD representation of a strain gauge</dt>
 <dd>
 <p><span class="image"><img src="../_images/sensor/image1.png" alt="image1" width="200" height="200"></span></p>
 </dd>
-<dt class="hdlist1"><span class="emblem">Representation of a strain gauge</span></dt>
+<dt class="hdlist1">Representation of a strain gauge</dt>
 <dd>
 <p><span class="image"><img src="../_images/sensor/image2.png" alt="image2" width="200" height="200"></span></p>
 </dd>
-<dt class="hdlist1"><span class="emblem">Strain gauge</span></dt>
+<dt class="hdlist1">Strain gauge</dt>
 <dd>
 <p><span class="image"><img src="../_images/sensor/image3.png" alt="image3" width="200" height="200"></span></p>
 </dd>
@@ -821,13 +871,13 @@ if ok:
 <div class="paragraph">
 <p>The finished geometry (Creo) and the meshed model (Gmsh):</p>
 </div>
-<div class="dlist grid has-emblems">
+<div class="dlist grid">
 <dl>
-<dt class="hdlist1"><span class="emblem">CAD representation of a strain gauge</span></dt>
+<dt class="hdlist1">CAD representation of a strain gauge</dt>
 <dd>
 <p><span class="image"><img src="../_images/sensor/image4.png" alt="thumb" width="302" height="268"></span></p>
 </dd>
-<dt class="hdlist1"><span class="emblem">Mesh representation of a strain gauge</span></dt>
+<dt class="hdlist1">Mesh representation of a strain gauge</dt>
 <dd>
 <p><span class="image"><img src="../_images/sensor/image5.png" alt="thumb" width="302" height="279"></span></p>
 </dd>
@@ -862,13 +912,13 @@ if ok:
 <div class="paragraph">
 <p>The object is fixed in the middle. Holes have opposite sinusodal forces.</p>
 </div>
-<div class="dlist grid has-emblems">
+<div class="dlist grid">
 <dl>
-<dt class="hdlist1"><span class="emblem">CAD representation of a strain gauge</span></dt>
+<dt class="hdlist1">CAD representation of a strain gauge</dt>
 <dd>
 <p><span class="image"><img src="../_images/sensor/image6.png" alt="thumb" width="306" height="283"></span></p>
 </dd>
-<dt class="hdlist1"><span class="emblem">CMesh representation of a strain gauge</span></dt>
+<dt class="hdlist1">Mesh representation of a strain gauge</dt>
 <dd>
 <p><span class="image"><img src="../_images/sensor/image7.png" alt="thumb" width="287" height="283"></span></p>
 </dd>
@@ -1083,6 +1133,7 @@ feelppVtkJs.createSceneImporter( vtkVisuSection1, {
 </footer>
 <script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
 
+
 <script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
 <script async src="../../../../_/js/vendor/fontawesome.js"></script>
 <script async src="../../../../_/js/vendor/highlight.js"></script>
@@ -1090,5 +1141,21 @@ feelppVtkJs.createSceneImporter( vtkVisuSection1, {
 <script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">
 </script>
 
-  </body>
+
+<script type="text/javascript">
+function toggleFullScreen() {
+   var doc = window.document;
+   var docEl = doc.documentElement;
+
+   var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+   var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+   if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+       requestFullScreen.call(docEl);
+   }
+   else {
+       cancelFullScreen.call(doc);
+   }
+}
+</script>  </body>
 </html>
