@@ -9,7 +9,6 @@ for i in $(find $dir -name "*.adoc" | grep pages ); do
         mkdir -p jupyter/$dir
         echo "generating jupyter/$dir/$(basename $ipynb .adoc).ipynb..."
         pwd
-        ls node_modules/.bin
-        node_modules/.bin/asciidoctor -r asciidoctor-jupyter -b jupyter $i -o jupyter/$dir/$(basename $ipynb .adoc).ipynb
+        npx asciidoctor -r asciidoctor-jupyter -b jupyter $i -o jupyter/$dir/$(basename $ipynb .adoc).ipynb
     fi; 
 done

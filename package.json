@@ -3,9 +3,9 @@
   "scripts": {
     "clean-build": "npm run clean-install;npm run build",
     "clean-install": "rm -rf node_modules/ .cache/ package-lock.json ;npm i --cache=.cache/npm",
-    "dev": "node_modules/.bin/antora site-dev.yml --stacktrace --fetch",
+    "dev": "npx antora site-dev.yml --stacktrace --fetch",
     "version": "node_modules/.bin/antora --version",
-    "build": "node_modules/.bin/antora --stacktrace --fetch site.yml ",
+    "build": "npx antora --stacktrace --fetch site.yml ",
     "dev-serve": "node_modules/.bin/antora --stacktrace --fetch site-dev.yml ; node-srv -p 8010 build/site",
     "serve": "node-srv -p 8010 build/site"
   },
