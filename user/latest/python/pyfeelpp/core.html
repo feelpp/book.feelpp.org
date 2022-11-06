@@ -674,6 +674,11 @@ MathJax.Hub.Config({
   <div class="dropdown-content">
 
 
+        <a href="../_attachments/pyfeelpp/core.ipynb" title="Download Jupyter Notebook" data-toggle="tooltip" data-placement="left">
+         .ipynb <i class="fas fa-file"></i>
+        </a>
+
+
           <a onclick="print(this)"  class="headerbtn"  data-toggle="tooltip" data-placement="left" title="Print to PDF">
               .pdf <i class="fas fa-file-pdf"></i>
           </a>
@@ -744,50 +749,46 @@ title="Fullscreen mode"
 <h2 id="_setting_up_the_feel_environment"><a class="anchor" href="#_setting_up_the_feel_environment"></a>1. Setting up the Feel++ Environment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To set the environment, use this line :</p>
+<p>To set Feel++ environment, we create an environment and set the associated repository for the results.
+A Feel++ environment can be created only once.
+The repository can be global with respect to <code>$HOME/.feelppconfig</code> <code>globalroot</code> setting  or local with respect to the current directory.</p>
 </div>
 <div class="listingblock">
-<div class="title">Set the Feel++ environment</div>
+<div class="title">Set the Feel++ environment with local repository</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp as fpp
 import sys
-e = feelpp.Environment(sys.argv,config=feelpp.globalRepository("pyfeelpp-tests"))</code></pre>
+app = fpp.Environment(["myapp"],config=fpp.localRepository(""))</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You can give argument to the environment using <code>sys.argv</code>, either by passing arguments to Python directly or by changing the list <code>sys.argv</code> by hand.
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="title">Start the Feel++ environment, <code>test_core.py</code></div>
+<details class="result">
+<summary class="title">Results</summary>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">404: Not Found</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To execute the previous example</p>
-</div>
 <div class="listingblock">
-<div class="title">Execute the script above on 4 parallel processes</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpiexec -n 4 python3 test_core.py</code></pre>
+<pre>[ Starting Feel++ ] application myapp version 0.1 date 2022-Nov-04
+[feelpp] create Feel++ root repository: /scratch/jupyter/feelppdb
+
+[feelpp] create Feel++ geo repository: /scratch/jupyter/feelppdb/geo
+
+[feelpp] create Feel++ results directory: /scratch/jupyter/feelppdb/np_1
+
+[feelpp] create Feel++ expressions directory: /scratch/jupyter/feelppdb/exprs
+
+[feelpp] create Feel++ logs directory: /scratch/jupyter/feelppdb/np_1/logs
+
+ . myapp files are stored in /scratch/jupyter/feelppdb/np_1
+ .. logfiles :/scratch/jupyter/feelppdb/np_1/logs</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Command line options can be passed to the python script</p>
 </div>
+</details>
 <div class="listingblock">
-<div class="title">get the version of pyfeelpp and Feel++</div>
+<div class="title">Query the app about the current environment</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpiexec -n 4 python3 test_core.py --version</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">print("pid:",app.worldComm().localRank() )
+print("isMasterRank:",app.isMasterRank() )
+print("is parallel: ",app.isParallel() )</code></pre>
 </div>
 </div>
 </div>
@@ -795,36 +796,40 @@ You can give argument to the environment using <code>sys.argv</code>, either by 
 <div class="sect1">
 <h2 id="_downloading_data"><a class="anchor" href="#_downloading_data"></a>2. Downloading data</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Feel++ can query data on GitHub and Girder.</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">404: Not Found</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">readme=fpp.download( "github:{repo:feelpp,path:README.adoc}", worldComm=app.worldCommPtr() )[0]
+
+print("downloaded Feel++ README.adoc from Github: ",readme)</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To execute the previous example</p>
+<p>The code will get the file <code>README.adoc</code> from the toplevel Feel++ github directory downloaded</p>
+</div>
+<div class="paragraph">
+<p>A bit more interesting example</p>
 </div>
 <div class="listingblock">
-<div class="title">Execute the script above on 4 parallel processes</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpiexec -n 4 python3 test_remotedata.py</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">acsv=fpp.download( "github:{repo:feelpp,path:toolboxes/fluid/cases/moving_body/gravity/cylinder_under_gravity/curve_comparison.csv}", worldComm=app.worldCommPtr() )[0]
+import pandas as pd
+df = pd.read_csv(acsv, sep=",")
+df.columns = df.columns.str.replace(' ', '')
+print(df.head())
+
+# prepare for plotting
+import plotly.graph_objects as go
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=df["TIME"], y=df["Y_CM"], name="y displacement"))
+fig.update_layout(legend_title_text='y-displacement over time of a falling disk in a fluid')
+fig.show()</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and get the file <code>README.adoc</code> from the toplevel Feel++ github directory downloaded</p>
-</div>
-<div class="listingblock">
-<div class="title">Download remote file on <a href="https://github.com/feelpp/feelpp/" class="bare">github.com/feelpp/feelpp/</a> repository</div>
-<div class="content">
-<pre>Welcome to PyFeel++
-version: 0.106.0-beta.2
-[ Starting Feel++ ] application test_remotedata.py version 0.1 date 2018-Sep-18
- . test_remotedata.py files are stored in /feel/test_remotedata.py/np_1
- .. logfiles :/feel/test_remotedata.py/np_1/logs
-download data in  /feel/test_remotedata.py/downloads
-downloaded data: ['/feel/test_remotedata.py/downloads/README.adoc']
-[env] Time : 1.39421s
-[ Stopping Feel++ ] application test_remotedata.py execution time 1.39421s</pre>
-</div>
+<p>The code will download a csv file from the Feel++ github repository and plot the data using the <code>plotly</code> library.</p>
 </div>
 </div>
 </div>
