@@ -976,14 +976,46 @@ sudo apt update</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">LTS</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debian</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">testing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">testing</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debian</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unstable</p></td>
+</tr>
 </tbody>
 </table>
 <h3 id="_bullseye_11" class="discrete">Bullseye (11)</h3>
 <div class="listingblock">
-<div class="title">Command lines to install the latest Feel++ channel on debian/buster</div>
+<div class="title">Command lines to install the latest Feel++ channel on debian/bullseye</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
-echo "deb http://apt.feelpp.org/debian/buster buster latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+echo "deb http://apt.feelpp.org/debian/bullseye bullseye latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+sudo apt update</code></pre>
+</div>
+</div>
+<h3 id="_testing_testing" class="discrete">Testing (testing)</h3>
+<div class="listingblock">
+<div class="title">Command lines to install the latest Feel++ channel on debian/testing</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/debian/testing testing latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+sudo apt update</code></pre>
+</div>
+</div>
+<h3 id="_sid_unstable" class="discrete">Sid (unstable)</h3>
+<div class="listingblock">
+<div class="title">Command lines to install the latest Feel++ channel on debian/sid</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/debian/sid sid latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
 sudo apt update</code></pre>
 </div>
 </div>
