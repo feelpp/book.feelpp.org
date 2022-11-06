@@ -1,5 +1,6 @@
 = Initializing {feelpp}
-include::{partialsdir}/header-macros.adoc[]
+include::user:ROOT:partial$header-macros.adoc[]
+:page-jupyter: true
 
 The `core` module provides the basic data structures to
 
@@ -9,67 +10,77 @@ The `core` module provides the basic data structures to
 
 == Setting up the {feelpp} Environment
 
-To set the environment, use this line :
+To set {feelpp} environment, we create an environment and set the associated repository for the results. 
+A {feelpp} environment can be created only once. 
+The repository can be global with respect to `$HOME/.feelppconfig` `globalroot` setting  or local with respect to the current directory.
 
-.Set the {feelpp} environment
+.Set the {feelpp} environment with local repository
 [source,python]
 ----
-import feelpp
+import feelpp as fpp
 import sys
-e = feelpp.Environment(sys.argv,config=feelpp.globalRepository("pyfeelpp-tests"))
+app = fpp.Environment(["myapp"],config=fpp.localRepository(""))
 ----
 
-NOTE: You can give argument to the environment using `sys.argv`, either by passing arguments to Python directly or by changing the list `sys.argv` by hand.
+.Results
+[%collapsible.result]
+====
+----
+[ Starting Feel++ ] application myapp version 0.1 date 2022-Nov-04
+[feelpp] create Feel++ root repository: /scratch/jupyter/feelppdb
 
-.Start the {feelpp} environment, `test_core.py`
+[feelpp] create Feel++ geo repository: /scratch/jupyter/feelppdb/geo
+
+[feelpp] create Feel++ results directory: /scratch/jupyter/feelppdb/np_1
+
+[feelpp] create Feel++ expressions directory: /scratch/jupyter/feelppdb/exprs
+
+[feelpp] create Feel++ logs directory: /scratch/jupyter/feelppdb/np_1/logs
+
+ . myapp files are stored in /scratch/jupyter/feelppdb/np_1
+ .. logfiles :/scratch/jupyter/feelppdb/np_1/logs
+----
+====
+
+
+.Query the app about the current environment
 [source,python]
 ----
-include::{uri-pyfeelpp-raw}tests/test_core.py[]
-----
-//include::{uri-pyfeelpp-raw}core/test_core.py[]
-
-To execute the previous example
-
-.Execute the script above on 4 parallel processes
-[source,sh]
-----
-mpiexec -n 4 python3 test_core.py
-----
-
-Command line options can be passed to the python script
-
-.get the version of pyfeelpp and {feelpp}
-[source,sh]
-----
-mpiexec -n 4 python3 test_core.py --version
+print("pid:",app.worldComm().localRank() )
+print("isMasterRank:",app.isMasterRank() )
+print("is parallel: ",app.isParallel() )
 ----
 
 == Downloading data
 
+{feelpp} can query data on GitHub and Girder.
+
 [source,python]
 ----
-include::{uri-pyfeelpp-raw}tests/test_remotedata.py[]
+readme=fpp.download( "github:{repo:feelpp,path:README.adoc}", worldComm=app.worldCommPtr() )[0]
+
+print("downloaded Feel++ README.adoc from Github: ",readme)
 ----
 
-To execute the previous example
+The code will get the file `README.adoc` from the toplevel {feelpp} github directory downloaded
 
-.Execute the script above on 4 parallel processes
-[source,sh]
+A bit more interesting example 
+
+[source,python]
 ----
-mpiexec -n 4 python3 test_remotedata.py
+acsv=fpp.download( "github:{repo:feelpp,path:toolboxes/fluid/cases/moving_body/gravity/cylinder_under_gravity/curve_comparison.csv}", worldComm=app.worldCommPtr() )[0]
+import pandas as pd
+df = pd.read_csv(acsv, sep=",")
+df.columns = df.columns.str.replace(' ', '')
+print(df.head())
+
+# prepare for plotting
+import plotly.graph_objects as go
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=df["TIME"], y=df["Y_CM"], name="y displacement"))
+fig.update_layout(legend_title_text='y-displacement over time of a falling disk in a fluid')
+fig.show()
 ----
 
-and get the file `README.adoc` from the toplevel {feelpp} github directory downloaded
+The code will download a csv file from the {feelpp} github repository and plot the data using the `plotly` library.
 
-.Download remote file on {uri-github-feelpp} repository
-----
-Welcome to PyFeel++
-version: 0.106.0-beta.2
-[ Starting Feel++ ] application test_remotedata.py version 0.1 date 2018-Sep-18
- . test_remotedata.py files are stored in /feel/test_remotedata.py/np_1
- .. logfiles :/feel/test_remotedata.py/np_1/logs
-download data in  /feel/test_remotedata.py/downloads
-downloaded data: ['/feel/test_remotedata.py/downloads/README.adoc']
-[env] Time : 1.39421s
-[ Stopping Feel++ ] application test_remotedata.py execution time 1.39421s
-----
