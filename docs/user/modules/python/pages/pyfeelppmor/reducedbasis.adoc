@@ -4,74 +4,163 @@ include::user:ROOT:partial$header-macros.adoc[]
 
 == Import
 
-NOTE: The work has not yet been merged in `develop`. To include the module at current state, you need to checkout the branch https://github.com/feelpp/feelpp/tree/feature/pyrb[`feature/pyrb`], and move to the directory https://github.com/feelpp/feelpp/tree/feature/pyrb/mor/pyfeelpp-mor/feelpp/mor[mor/pyfeelpp-mor/feelpp/mor].
+NOTE: The work has not yet been merged in `develop`. To include the module at current state, you need to checkout the branch https://github.com/feelpp/feelpp/tree/feature/pyrb[`feature/pyrb`].
 
 Line to import the module :
 
 [source, python]
 ----
-from reducedbasis.reducedbasis import *
+import feelpp.mor.reducedbasis.reducedbasis_timeOffline as mor_rb
 ----
+
+NOTE: This import load the module for offline generation, associated to the time-dependent case. For the time-independent case, you can import `feelpp.mor.reducedbasis.reducedbasisOffline` instead.
 
 To set the environment, those module also need to be imported :
 
 [source, python]
 ----
-import sys
+import sys, os
 from feelpp.toolboxes.heat import *
-from feelpp.toolboxes.core import *
-from feelpp.mor import *
+import feelpp.toolboxes.core as core
+from feelpp.operators import mass
+import feelpp.mor as mor
 import feelpp
+----
+
+
+== Set the environment
+
+[source, python]
+----
+config = feelpp.globalRepository("reducedbasis")
+sys.argv = ["reducedbasis"]
+o = core.toolboxes_options("heat")
+o.add(mor.makeToolboxMorOptions())
+
+e = feelpp.Environment(sys.argv, opts=o, config=config)
 ----
 
 
 == Set the model
 
-To declare the objects, use these lines :
+Set the parameters nedded to the model :
+- `config_file` : path to the cfg file
+- `dim` : the dimension of the case
+- `order` : the order of discretization (`1` for stem:[\mathbb{P}_1], `2` for stem:[\mathbb{P}_2])
+- `time_dependant` : is the case stationnary or transient ? (for now always to `False`)
+- `name` : name of the CRB case
 
 [source,python]
 ----
-DIM = 2
-heatBox=heat(dim=DIM,order=1)
+config_file = "thermal-fin.cfg"
+dim = 2
+order = 1
+time_dependant = False
+name = "thermalfin-2d"
+----
+
+[source,python]
+----
+cfg = feelpp.readCfg(config_file)
+feelpp.Environment.setConfigFile(config_file)
+----
+
+
+[source,python]
+----
+model_path = feelpp.Environment.expand(cfg['heat']['filename'])
+j = feelpp.readJson(model_path)
+try:
+    j.pop('PostProcess')
+except KeyError as e:
+    print(f"There was no section {e} in the model")
+----
+
+
+Now we load the crb parameters, the path has to be set as the option `toolboxmor.filename` in the cfg file.
+
+[source,python]
+----
+crb_model_file = feelpp.Environment.expand(cfg['toolboxmor']['filename'])
+crb_model_file
+----
+
+[source,python]
+----
+crb_model_properties = mor.CRBModelProperties(worldComm=feelpp.Environment.worldCommPtr())
+crb_model_properties.setup(crb_model_file)
+crb_model_outputs = crb_model_properties.outputs()
+
+output_names = []
+for n, _ in crb_model_outputs:
+    output_names.append(n)
+
+print(f"Outputs of the models are {output_names}")
+----
+
+
+== Set the toolboxes
+
+[source,python]
+----
+heatBox = heat(dim=dim, order=order)
 heatBox.init()
-model = toolboxmor(dim=DIM, time_dependent=False)
-model.setFunctionSpaces( Vh=heatBox.spaceTemperature())
 ----
 
-- `DIM` is the dimension of the case (should be `2` or `3`)
-- `time_dependent` depends if the case is time-steady or time-dependant.
+The parameter `default_parameter` is defined in the section `Parameters` of the JSON file.
 
-Those functions define how the `DEIM` matrix and right-hand side are updated according to the parameter `mu`.
-[source,python]
+[source, python]
 ----
+modelParameters = heatBox.modelProperties().parameters()
+default_parameter = modelParameters.toParameterValues()
+default_parameter.view()
+----
+
+[%collapsible.result]
+.Results
+====
+----
+TODO : display results
+----
+====
+
+[source, python]
+----
+model = mor.toolboxmor(name=name, dim=dim, time_dependent=time_dependant)
+model.setFunctionSpaces( Vh=heatBox.spaceTemperature() )
+
 def assembleDEIM(mu):
     for i in range(0,mu.size()):
-        heatBox.addParameterInModelProperties(mu.parameterName(i),mu(i))
+        heatBox.addParameterInModelProperties(mu.parameterName(i), mu(i))
     heatBox.updateParameterValues()
     return heatBox.assembleRhs()
 
 def assembleMDEIM(mu):
     for i in range(0,mu.size()):
-        heatBox.addParameterInModelProperties(mu.parameterName(i),mu(i))
+        heatBox.addParameterInModelProperties(mu.parameterName(i), mu(i))
     heatBox.updateParameterValues()
     return heatBox.assembleMatrix()
 
 model.setAssembleDEIM(fct=assembleDEIM)
 model.setAssembleMDEIM(fct=assembleMDEIM)
+
 model.initModel()
 ----
 
-WARNING: When the function `assembleDEIM` is called, the value of the parameters of the object `heatBox` is updated.
-
-Creation of `DEIM` and `MDEIM` toolboxes, with the associated assembly functions.
-
-
-[source,python]
+Set the toolboxes associated to the reduced meshes :
+[source, python]
 ----
-heatBoxDEIM=heat(dim=DIM,order=1)
+heatBoxDEIM = heat(dim=dim, order=order)
+heatBoxDEIM.setModelProperties(j)
 meshDEIM = model.getDEIMReducedMesh()
 heatBoxDEIM.setMesh(meshDEIM)
 heatBoxDEIM.init()
+
+heatBoxMDEIM = heat(dim=dim, order=order)
+heatBoxMDEIM.setModelProperties(j)
+meshMDEIM = model.getMDEIMReducedMesh()
+heatBoxMDEIM.setMesh(meshMDEIM)
+heatBoxMDEIM.init()
 
 def assembleOnlineDEIM(mu):
     for i in range(0,mu.size()):
@@ -79,37 +168,157 @@ def assembleOnlineDEIM(mu):
     heatBoxDEIM.updateParameterValues()
     return heatBoxDEIM.assembleRhs()
 
-model.setOnlineAssembleDEIM(assembleOnlineDEIM)
-
-heatBoxMDEIM=heat(dim=DIM,order=1)
-meshMDEIM = model.getMDEIMReducedMesh()
-heatBoxMDEIM.setMesh(meshMDEIM)
-heatBoxMDEIM.init()
-
 def assembleOnlineMDEIM(mu):
     for i in range(0,mu.size()):
         heatBoxMDEIM.addParameterInModelProperties(mu.parameterName(i),mu(i))
     heatBoxMDEIM.updateParameterValues()
     return heatBoxMDEIM.assembleMatrix()
 
+model.setOnlineAssembleDEIM(assembleOnlineDEIM)
 model.setOnlineAssembleMDEIM(assembleOnlineMDEIM)
-----
 
-Then finalize the initialization :
-
-[soucre,python]
-----
 model.postInitModel()
 model.setInitialized(True)
 ----
 
+== Offline generation
 
-== Access to a parameter
+Information about the parameter space stem:[D^\mu]
 
-[source,python]
+[source, python]
 ----
 Dmu = model.parameterSpace()
-mu = Dmu.element(True, False)
+print(Dmu.parameterNames())
+print(Dmu.mumin())
+print(Dmu.mumax())
 ----
 
-See xref:pyfeelppmor/parameters.adoc[the dedicated page] for the API of `ParameterSpaceElement`
+[%collapsible.result]
+.Results
+====
+----
+TODO : display results
+----
+====
+
+[source, python]
+----
+mubar = Dmu.element(True, False)
+mubar.setParameters(default_parameter)
+print("mubar =")
+mubar.view()
+----
+
+[%collapsible.result]
+.Results
+====
+----
+TODO : display results
+----
+====
+
+Get affine decomposition stem:[A(\mu) = \displaystyle\sum_q \beta^q_A(\mu) A^q], stem:[F(\mu)=\displaystyle\sum_p \beta_F^p(\mu) F^(\mu)].
+To use the matrices and vector in the class, we need to convert themn to `petsc4py` objects, using the functions `convertToPetscMat` and `convertToPetscVec`.
+
+[source, python]
+----
+affineDecomposition = model.getAffineDecomposition()
+Aq_ = affineDecomposition[0]
+Fq_ = affineDecomposition[1]
+
+Aq = mor_rb.convertToPetscMat(Aq_[0])
+Fq = []
+for f in Fq_:
+    Fq.append(mor_rb.convertToPetscVec(f[0]))
+
+print("Aq", Aq)
+print("Fq", Fq)
+----
+
+[%collapsible.result]
+.Results
+====
+----
+TODO : display results
+----
+====
+
+Now we create the object `reduced_basis`.
+
+[source, python]
+----
+rb = mor_rb.reducedbasisOffline(Aq=Aq, Fq=Fq, model=model, mubar=mubar,
+                output_names=output_names, use_dual_norm=False)
+----
+
+[%collapsible.result]
+.Results
+====
+----
+TODO : display results
+----
+====
+
+Generation of the basis, using the greedy algorithm.
+
+[source, python]
+----
+Ntrain = 1000
+s = Dmu.sampling()
+s.sampling(Ntrain, "random")
+Xi_train = s.getVector()
+----
+
+[source, python]
+----
+mu_0 = Dmu.element()
+rb.greedy(mu_0, Xi_train, eps_tol=1e-4)
+----
+
+[%collapsible.result]
+.Results
+====
+----
+TODO : display results
+----
+====
+
+Compute offline errors :
+
+[source, python]
+----
+rb.computeOfflineErrorRhs()
+rb.computeOfflineError()
+----
+
+== Online phase
+
+[source, python]
+----
+mu = Dmu.element()
+mu.view()
+----
+
+[%collapsible.result]
+.Results
+====
+----
+TODO : display results
+----
+====
+
+The function `getSolutions` returns the solutions of the model and the reduced model, the parameter `k` gives the index of the output wanted, `-1` standing for the compliant output.
+
+[source, python]
+----
+rb.getSolutions(mu, k=0)
+----
+
+[%collapsible.result]
+.Results
+====
+----
+TODO : display results
+----
+====
+
