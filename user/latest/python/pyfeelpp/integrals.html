@@ -3,18 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Feel++ for Python :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/user/latest/python/index.html">
-    <link rel="prev" href="../cpp/laplacian.html">
-    <link rel="next" href="pyfeelpp/index.html">
+    <title>Compute Integrals :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/user/latest/python/pyfeelpp/integrals.html">
+    <link rel="prev" href="discr.html">
+    <link rel="next" href="filters.html">
     <meta name="keywords" content="Feel++, partial differential equations, finite element method,">
     <meta name="generator" content="Antora 3.1.2">
-    <link rel="stylesheet" href="../../../_/css/site.css">
-<link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">    
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
-<script src="../../../_/js/vendor/tabs-block-extension.js"></script>
-<script src="../../../_/js/vendor/tabs-block-behavior.js"></script>
+<script src="../../../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../../../_/js/vendor/tabs-block-behavior.js"></script>
 
 
 
@@ -97,7 +97,7 @@ MathJax.Hub.Config({
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
 <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
-<script>var uiRootPath = '../../../_'</script>
+<script>var uiRootPath = '../../../../_'</script>
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
   </head>
@@ -151,16 +151,16 @@ MathJax.Hub.Config({
         </div>
         <div class="navbar-item">
           <a class="navbar-brand" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ">
-            <img src="../../../_/img/slack.png" alt="slack" style="width:30px;"></a>
+            <img src="../../../../_/img/slack.png" alt="slack" style="width:30px;"></a>
         </div>
         <div class="navbar-item">
           <a class="navbar-brand"  href="http://docs.feelpp.org">
-            <img src="../../../_/img/logoFeelpp.png" alt="Feel++" style="width:60px;">
+            <img src="../../../../_/img/logoFeelpp.png" alt="Feel++" style="width:60px;">
           </a>
         </div>
         <div class="navbar-item">
           <a class="navbar-brand"  href="http://www.cemosis.fr">
-            <img src="../../../_/img/logoCemosisTransparent.png" alt="Cemosis" style="width:60px;">
+            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis" style="width:60px;">
           </a>
         </div>
       </div>
@@ -173,97 +173,36 @@ MathJax.Hub.Config({
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../index.html">Feel++ User Manual</a></h3>
+    <h3 class="title"><a href="../../index.html">Feel++ User Manual</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../index.html">Introduction</a>
+    <a class="nav-link" href="../../index.html">Introduction</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../index.html#feelpp">What is Feel++?</a>
+    <a class="nav-link" href="../../index.html#feelpp">What is Feel++?</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../index.html#purpose">What is the purpose of this manual ?</a>
+    <a class="nav-link" href="../../index.html#purpose">What is the purpose of this manual ?</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../index.html#scope">What is the scope of this manual?</a>
+    <a class="nav-link" href="../../index.html#scope">What is the scope of this manual?</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../index.html#target">Who is this book for?</a>
+    <a class="nav-link" href="../../index.html#target">Who is this book for?</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../index.html#discuss">Where to discuss about this manual</a>
+    <a class="nav-link" href="../../index.html#discuss">Where to discuss about this manual</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../index.html#contribute">How to contribute to this manual</a>
+    <a class="nav-link" href="../../index.html#contribute">How to contribute to this manual</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../how-feelpp-works.html">How Feel++ works</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../install/index.html">Get Feel++</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../install/sources.html">Install From Sources</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../install/prerequisites-dev.html">Programming Environment</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../install/linux.html">Linux</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../install/linux.html#_ubuntu">Ubuntu</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../install/linux.html#_debian">Debian</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../install/mac.html">Mac</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../install/mac.html#xcode">Xcode</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../install/mac.html#homebrew">Homebrew</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../install/mac.html#MacPorts">MacPort</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../install/windows.html">Windows</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../install/compiling-external-projects.html">Compiling Third Party Software</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../install/compile.html">Compiling</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../install/test.html">Testing</a>
-  </li>
-</ul>
-  </li>
-</ul>
+    <a class="nav-link" href="../../how-feelpp-works.html">How Feel++ works</a>
   </li>
 </ul>
   </li>
@@ -271,38 +210,99 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../using/index.html">Using Feel++</a>
+    <a class="nav-link" href="../../install/index.html">Get Feel++</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../using/docker.html">Starting Feel++ with Docker</a>
+    <a class="nav-link" href="../../install/sources.html">Install From Sources</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/docker.html#installation">Installation</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../install/prerequisites-dev.html">Programming Environment</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../install/linux.html">Linux</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../install/linux.html#_ubuntu">Ubuntu</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../install/linux.html#_debian">Debian</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../install/mac.html">Mac</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../install/mac.html#xcode">Xcode</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../install/mac.html#homebrew">Homebrew</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../install/mac.html#MacPorts">MacPort</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../install/windows.html">Windows</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../install/compiling-external-projects.html">Compiling Third Party Software</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/docker.html#usage">Usage</a>
+    <a class="nav-link" href="../../install/compile.html">Compiling</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../install/test.html">Testing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../using/index.html">Using Feel++</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../using/docker.html">Starting Feel++ with Docker</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/docker.html#installation">Installation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/docker.html#usage">Usage</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../using/expr.html">Using mathematical expressions</a>
+    <a class="nav-link" href="../../using/expr.html">Using mathematical expressions</a>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Using Feel++ Tools</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/tools/remotedata.html">Remote Data</a>
+    <a class="nav-link" href="../../using/tools/remotedata.html">Remote Data</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/tools/mesh_partitioner.html">Mesh Partitioner</a>
+    <a class="nav-link" href="../../using/tools/mesh_partitioner.html">Mesh Partitioner</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/tools/mesh_exporter.html">Mesh Exporter</a>
+    <a class="nav-link" href="../../using/tools/mesh_exporter.html">Mesh Exporter</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/tools/fmu.html">FMI FMU</a>
+    <a class="nav-link" href="../../using/tools/fmu.html">FMI FMU</a>
   </li>
 </ul>
   </li>
@@ -311,34 +311,34 @@ MathJax.Hub.Config({
     <span class="nav-text">Using Feel++ Toolboxes</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/toolboxes/fluid.html">Computational Fluid Mechanics</a>
+    <a class="nav-link" href="../../using/toolboxes/fluid.html">Computational Fluid Mechanics</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/toolboxes/solid.html">Computational Solid Mechanics</a>
+    <a class="nav-link" href="../../using/toolboxes/solid.html">Computational Solid Mechanics</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/toolboxes/fsi.html">Fluid Structure Interaction</a>
+    <a class="nav-link" href="../../using/toolboxes/fsi.html">Fluid Structure Interaction</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/toolboxes/heat.html">Heat Transfer</a>
+    <a class="nav-link" href="../../using/toolboxes/heat.html">Heat Transfer</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/toolboxes/heatfluid.html">Heat Transfer and Fluid</a>
+    <a class="nav-link" href="../../using/toolboxes/heatfluid.html">Heat Transfer and Fluid</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/toolboxes/electric.html">Electric</a>
+    <a class="nav-link" href="../../using/toolboxes/electric.html">Electric</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/toolboxes/thermoelectric.html">Thermo-Electric</a>
+    <a class="nav-link" href="../../using/toolboxes/thermoelectric.html">Thermo-Electric</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/toolboxes/hdg_poisson.html">HDG Poisson</a>
+    <a class="nav-link" href="../../using/toolboxes/hdg_poisson.html">HDG Poisson</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/toolboxes/hdg_elasticity.html">HDG Elasticity</a>
+    <a class="nav-link" href="../../using/toolboxes/hdg_elasticity.html">HDG Elasticity</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../using/toolboxes/hdg_coupledpoisson.html">HDG Coupled Poisson</a>
+    <a class="nav-link" href="../../using/toolboxes/hdg_coupledpoisson.html">HDG Coupled Poisson</a>
   </li>
 </ul>
   </li>
@@ -350,36 +350,36 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../cpp/index.html">Using Feel++ in C++</a>
+    <a class="nav-link" href="../../cpp/index.html">Using Feel++ in C++</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../cpp/laplacian.html">Minimal application</a>
+    <a class="nav-link" href="../../cpp/laplacian.html">Minimal application</a>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../cpp/laplacian.html">Laplacian quickstart application</a>
+    <a class="nav-link" href="../../cpp/laplacian.html">Laplacian quickstart application</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../cpp/laplacian.html#_variational_formulation">Variational Formulation</a>
+    <a class="nav-link" href="../../cpp/laplacian.html#_variational_formulation">Variational Formulation</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../cpp/laplacian.html#_conforming_approximation">Conforming Approximation</a>
+    <a class="nav-link" href="../../cpp/laplacian.html#_conforming_approximation">Conforming Approximation</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../cpp/laplacian.html#_feel_implementation">Feel++ implementation</a>
+    <a class="nav-link" href="../../cpp/laplacian.html#_feel_implementation">Feel++ implementation</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../cpp/laplacian.html#_testcases">Test cases</a>
+    <a class="nav-link" href="../../cpp/laplacian.html#_testcases">Test cases</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../cpp/laplacian.html#_circle">Circle</a>
+    <a class="nav-link" href="../../cpp/laplacian.html#_circle">Circle</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../cpp/laplacian.html#_feelpp2d">Feelpp2d</a>
+    <a class="nav-link" href="../../cpp/laplacian.html#_feelpp2d">Feelpp2d</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../cpp/laplacian.html#_feelpp3d">Feelpp3d</a>
+    <a class="nav-link" href="../../cpp/laplacian.html#_feelpp3d">Feelpp3d</a>
   </li>
 </ul>
   </li>
@@ -391,70 +391,70 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Using Feel++ in Python</a>
+    <a class="nav-link" href="../index.html">Using Feel++ in Python</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="pyfeelpp/index.html">pyFeel++</a>
+    <a class="nav-link" href="index.html">pyFeel++</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelpp/core.html">Initializing Feel++</a>
+    <a class="nav-link" href="core.html">Initializing Feel++</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelpp/mesh.html">Creating a mesh</a>
+    <a class="nav-link" href="mesh.html">Creating a mesh</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelpp/expr.html">Manipulating Expressions</a>
+    <a class="nav-link" href="expr.html">Manipulating Expressions</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelpp/discr.html">Creating a function space and interpolating</a>
+    <a class="nav-link" href="discr.html">Creating a function space and interpolating</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="integrals.html">Computing integrals</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelpp/integrals.html">Computing integrals</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelpp/filters.html">Exporting results for visualisation</a>
+    <a class="nav-link" href="filters.html">Exporting results for visualisation</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="pyfeelpptoolboxes/index.html">pyFeel++ Toolboxes</a>
+    <a class="nav-link" href="../pyfeelpptoolboxes/index.html">pyFeel++ Toolboxes</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelpptoolboxes/modelproperties.html">Model Properties</a>
+    <a class="nav-link" href="../pyfeelpptoolboxes/modelproperties.html">Model Properties</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelpptoolboxes/heat.html">Heat Transfer</a>
+    <a class="nav-link" href="../pyfeelpptoolboxes/heat.html">Heat Transfer</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelpptoolboxes/electric.html">Electrostatic</a>
+    <a class="nav-link" href="../pyfeelpptoolboxes/electric.html">Electrostatic</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelpptoolboxes/fluid.html">Fluid Mechanics</a>
+    <a class="nav-link" href="../pyfeelpptoolboxes/fluid.html">Fluid Mechanics</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelpptoolboxes/solid.html">Solid Mechanics</a>
+    <a class="nav-link" href="../pyfeelpptoolboxes/solid.html">Solid Mechanics</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="pyfeelppmor/index.html">pyFeel++ MOR</a>
+    <a class="nav-link" href="../pyfeelppmor/index.html">pyFeel++ MOR</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelppmor/parameters.html">Parameters</a>
+    <a class="nav-link" href="../pyfeelppmor/parameters.html">Parameters</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelppmor/parameterSpace.html">Parameter space</a>
+    <a class="nav-link" href="../pyfeelppmor/parameterSpace.html">Parameter space</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelppmor/petscDouble.html">PETSc vector and matrix</a>
+    <a class="nav-link" href="../pyfeelppmor/petscDouble.html">PETSc vector and matrix</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="pyfeelppmor/reducedbasis.html">Python module <code>reducedbasis</code></a>
+    <a class="nav-link" href="../pyfeelppmor/reducedbasis.html">Python module <code>reducedbasis</code></a>
   </li>
 </ul>
   </li>
@@ -465,25 +465,25 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../conclusion/index.html">What&#8217;s Next?</a>
+    <a class="nav-link" href="../../conclusion/index.html">What&#8217;s Next?</a>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../feelpp/latest/acknowledgments.html">Acknowledgments</a>
+    <a class="nav-link" href="../../../../feelpp/latest/acknowledgments.html">Acknowledgments</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../feelpp/latest/acknowledgments.html#_funding">Funding</a>
+    <a class="nav-link" href="../../../../feelpp/latest/acknowledgments.html#_funding">Funding</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../feelpp/latest/acknowledgments.html#_contributors">Contributors</a>
+    <a class="nav-link" href="../../../../feelpp/latest/acknowledgments.html#_contributors">Contributors</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../feelpp/latest/consortium.html">Consortium</a>
+    <a class="nav-link" href="../../../../feelpp/latest/consortium.html">Consortium</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../conclusion/glossary.html">Glossary</a>
+    <a class="nav-link" href="../../conclusion/glossary.html">Glossary</a>
   </li>
 </ul>
   </li>
@@ -497,151 +497,151 @@ MathJax.Hub.Config({
   </div>
   <ul class="components">
     <li class="component">
-      <a class="title" href="../../../angiotk/0.1/index.html">AngioTK User Manual</a>
+      <a class="title" href="../../../../angiotk/0.1/index.html">AngioTK User Manual</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../angiotk/0.1/index.html">0.1</a>
+          <a href="../../../../angiotk/0.1/index.html">0.1</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../data/latest/index.html">Data Manual</a>
+      <a class="title" href="../../../../data/latest/index.html">Data Manual</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../data/latest/index.html">latest</a>
+          <a href="../../../../data/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../data/0.109/index.html">0.109</a>
+          <a href="../../../../data/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../dev/latest/index.html">Developer manual</a>
+      <a class="title" href="../../../../dev/latest/index.html">Developer manual</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../dev/latest/index.html">latest</a>
+          <a href="../../../../dev/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../dev/0.109/index.html">0.109</a>
+          <a href="../../../../dev/0.109/index.html">0.109</a>
         </li>
         <li class="version">
-          <a href="../../../dev/0.108/index.html">0.108</a>
+          <a href="../../../../dev/0.108/index.html">0.108</a>
         </li>
         <li class="version">
-          <a href="../../../dev/0.107/index.html">0.107</a>
+          <a href="../../../../dev/0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../salome/current/index.html">Feel++ and Salome</a>
+      <a class="title" href="../../../../salome/current/index.html">Feel++ and Salome</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../salome/current/index.html">current</a>
+          <a href="../../../../salome/current/index.html">current</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../feelpp/latest/index.html">Feel++ Documentation</a>
+      <a class="title" href="../../../../feelpp/latest/index.html">Feel++ Documentation</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../feelpp/latest/index.html">latest</a>
+          <a href="../../../../feelpp/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../feelpp/0.109/index.html">0.109</a>
+          <a href="../../../../feelpp/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../math/index.html">Feel++ Mathematics</a>
+      <a class="title" href="../../../../math/index.html">Feel++ Mathematics</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../math/index.html">master</a>
+          <a href="../../../../math/index.html">master</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../template_project/1.0.3/index.html">Feel++ Templace Project</a>
+      <a class="title" href="../../../../template_project/1.0.3/index.html">Feel++ Templace Project</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../template_project/1.0.3/index.html">1.0.3</a>
+          <a href="../../../../template_project/1.0.3/index.html">1.0.3</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../cases/latest/index.html">Feel++ Toolbox Cases Guide</a>
+      <a class="title" href="../../../../cases/latest/index.html">Feel++ Toolbox Cases Guide</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../cases/latest/index.html">latest</a>
+          <a href="../../../../cases/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../cases/0.109/index.html">0.109</a>
+          <a href="../../../../cases/0.109/index.html">0.109</a>
         </li>
         <li class="version">
-          <a href="../../../cases/0.108/index.html">0.108</a>
+          <a href="../../../../cases/0.108/index.html">0.108</a>
         </li>
         <li class="version">
-          <a href="../../../cases/0.107/index.html">0.107</a>
+          <a href="../../../../cases/0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../toolboxes/latest/index.html">Feel++ Toolboxes Manual</a>
+      <a class="title" href="../../../../toolboxes/latest/index.html">Feel++ Toolboxes Manual</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../toolboxes/latest/index.html">latest</a>
+          <a href="../../../../toolboxes/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../toolboxes/0.109/index.html">0.109</a>
+          <a href="../../../../toolboxes/0.109/index.html">0.109</a>
         </li>
         <li class="version">
-          <a href="../../../toolboxes/0.108/index.html">0.108</a>
+          <a href="../../../../toolboxes/0.108/index.html">0.108</a>
         </li>
         <li class="version">
-          <a href="../../../toolboxes/0.107/index.html">0.107</a>
+          <a href="../../../../toolboxes/0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../tutorial-dev/latest/index.html">Feel++ Tutorial Dev</a>
+      <a class="title" href="../../../../tutorial-dev/latest/index.html">Feel++ Tutorial Dev</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../tutorial-dev/latest/index.html">latest</a>
+          <a href="../../../../tutorial-dev/latest/index.html">latest</a>
         </li>
       </ul>
     </li>
     <li class="component is-current">
-      <a class="title" href="../index.html">Feel++ User Manual</a>
+      <a class="title" href="../../index.html">Feel++ User Manual</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">latest</a>
+          <a href="../../index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../0.109/index.html">0.109</a>
+          <a href="../../../0.109/index.html">0.109</a>
         </li>
         <li class="version">
-          <a href="../../0.108/index.html">0.108</a>
+          <a href="../../../0.108/index.html">0.108</a>
         </li>
         <li class="version">
-          <a href="../../0.107/index.html">0.107</a>
+          <a href="../../../0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../mor/latest/index.html">Model Order Reduction</a>
+      <a class="title" href="../../../../mor/latest/index.html">Model Order Reduction</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../mor/latest/index.html">latest</a>
+          <a href="../../../../mor/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../mor/0.109/index.html">0.109</a>
+          <a href="../../../../mor/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../contribute/index.html">Toolbox Contribution Guide</a>
+      <a class="title" href="../../../../contribute/index.html">Toolbox Contribution Guide</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../contribute/index.html">master</a>
+          <a href="../../../../contribute/index.html">master</a>
         </li>
       </ul>
     </li>
@@ -653,21 +653,23 @@ MathJax.Hub.Config({
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="../../../feelpp/0.109/index.html" class="home-link"></a>
+  <a href="../../../../feelpp/0.109/index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../index.html">Feel++ User Manual</a></li>
-    <li><a href="index.html">Using Feel++ in Python</a></li>
+    <li><a href="../../index.html">Feel++ User Manual</a></li>
+    <li><a href="../index.html">Using Feel++ in Python</a></li>
+    <li><a href="index.html">pyFeel++</a></li>
+    <li><a href="integrals.html">Computing integrals</a></li>
   </ul>
 </nav>
 
 <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
   <div class="version-menu">
-    <a class="version is-current" href="index.html">latest</a>
-    <a class="version" href="../../0.109/python/index.html">0.109</a>
-    <a class="version" href="../../0.108/python/index.html">0.108</a>
-    <a class="version" href="../../0.107/python/index.html">0.107</a>
+    <a class="version is-current" href="integrals.html">latest</a>
+    <a class="version is-missing" href="../../../0.109/index.html">0.109</a>
+    <a class="version is-missing" href="../../../0.108/index.html">0.108</a>
+    <a class="version is-missing" href="../../../0.107/index.html">0.107</a>
   </div>
 </div>
   
@@ -676,6 +678,11 @@ MathJax.Hub.Config({
     <i class="fas fa-download"></i>
   </button>
   <div class="dropdown-content">
+
+
+        <a href="../_attachments/pyfeelpp/integrals.ipynb" title="Download Jupyter Notebook" data-toggle="tooltip" data-placement="left">
+         .ipynb <i class="fas fa-file"></i>
+        </a>
 
 
           <a onclick="print(this)"  class="headerbtn"  data-toggle="tooltip" data-placement="left" title="Print to PDF">
@@ -693,7 +700,7 @@ MathJax.Hub.Config({
 
     <a href="https://github.com/feelpp/book.feelpp.org">Open repository <i class="fab fa-github"></i></a>
     
-  <a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/user/modules/python/pages/index.adoc">Edit this Page <i class="fas fa-edit"></i></a>
+  <a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/user/modules/python/pages/pyfeelpp/integrals.adoc">Edit this Page <i class="fas fa-edit"></i></a>
 
     <a href="https://github.com/feelpp/book.feelpp.org/issues/new">Open issue <i class="fas fa-lightbulb"></i></a>
 
@@ -723,25 +730,86 @@ title="Fullscreen mode"
 </aside>
 
 <article class="doc">
-<h1 class="page">Feel++ for Python</h1>
+<h1 class="page">Compute Integrals</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>As of Feel++ provides a Python package, called pyFeel++ to solve PDE and use the toolbox framework.</p>
+<p>We start with setting the Feel++ environment and loading the Feel++ library.</p>
 </div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-pyFeel++ is setup with Python3
-</td>
-</tr>
-</table>
+<div class="listingblock">
+<div class="title">Set the Feel++ environment with local repository</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
+import sys
+app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_integral_of_a_function"><a class="anchor" href="#_integral_of_a_function"></a>1. Integral of a function</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>\(\int_{\Omega} f(x) dx\) is the integral of the function \(f\) over the domain \(\Omega\). The domain \(\Omega\) is a subset of \(\mathbb{R}^n\) and \(f\) is a function defined on \(\Omega\).
+The domain \(\Omega\) is discretized as a mesh \(\mathcal{T}\) and the function \(f\) may be approximated by a finite element function \(\hat{f}\).
+The integral is approximated by the sum of the integrals over the elements of the mesh \(\mathcal{T}\).
+The integral over each element is computed using a quadrature formula.</p>
+</div>
+<div class="paragraph">
+<p>We first load a mesh</p>
+</div>
+<div class="listingblock">
+<div class="title">Load a mesh \(\mathcal{T}\)</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">geo=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+print("geo file: {}".format(geo))
+mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then we can define functions \(f\) and compute the integral of \(f\) over the mesh \(\mathcal{T}\).</p>
+</div>
+<div class="listingblock">
+<div class="title">Compute integrals</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from feelpp.integrate  import integrate
+
+i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
+i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
+i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")
+print("i1 = {}, i2 = {}, i3 = {}".format(i1,i2,i3))</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>i1 = [3.24282386], i2 = [149.465], i3 = [0.]</pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>2. Next steps</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> <a href="discr.html" class="xref page">Manipulate function and function spaces</a></p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> <a href="#">Compute integrals</a></p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../cpp/laplacian.html">Minimal application</a></span>
-  <span class="next"><a href="pyfeelpp/index.html">pyFeel++</a></span>
+  <span class="prev"><a href="discr.html">Creating a function space and interpolating</a></span>
+  <span class="next"><a href="filters.html">Exporting results for visualisation</a></span>
 </nav>
 </article>
   </div>
@@ -754,7 +822,7 @@ pyFeel++ is setup with Python3
       <div class="col">
         <div class="footer-logo">
           <a href="https://www.cemosis.fr" class="icon">
-            <img src="../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
           </a>
         </div>
       </div>
@@ -814,14 +882,14 @@ pyFeel++ is setup with Python3
     </div>
   </div>
 </footer>
-<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
 
 
-<script async src="../../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../../_/js/vendor/fontawesome.js"></script>
-<script async src="../../../_/js/vendor/highlight.js"></script>
+<script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
 
-<script async id="search-script" src="../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../_/css/vendor/docsearch.css">
+<script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">
 </script>
 
 
