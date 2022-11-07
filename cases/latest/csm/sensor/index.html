@@ -837,7 +837,7 @@ app = Environment(['feelpp_toolbox_solid'], opts= toolboxes_options("solid"),con
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">sensorcfg=feelpp.download("github:{repo:toolbox,path:examples/modules/csm/examples/sensor/}", worldComm=app.worldCommPtr())[0] <i class="conum" data-value="1"></i><b>(1)</b>
-sensorcfg+='/capteur.cfg' <i class="conum" data-value="2"></i><b>(2)</b>
+sensorcfg+='/sensor.cfg' <i class="conum" data-value="2"></i><b>(2)</b>
 if os.path.exists(sensorcfg): <i class="conum" data-value="3"></i><b>(3)</b>
   app.setConfigFile(sensorcfg) <i class="conum" data-value="4"></i><b>(4)</b>
   s = solid(dim=3) <i class="conum" data-value="5"></i><b>(5)</b>
@@ -888,11 +888,11 @@ if os.path.exists(sensorcfg): <i class="conum" data-value="3"></i><b>(3)</b>
 <pre>[ Starting Feel++ ] application feelpp_toolbox_solid version 0.1 date 2022-Nov-07
  . feelpp_toolbox_solid files are stored in /scratch/jupyter/feelppdb/np_1
  .. logfiles :/scratch/jupyter/feelppdb/np_1/logs
-Reading /scratch/jupyter/feelppdb/downloads/sensor/capteur.cfg...
+Reading /scratch/jupyter/feelppdb/downloads/sensor/sensor.cfg...
 solid(3,1)
-[modelProperties] Loading Model Properties : "/scratch/jupyter/feelppdb/downloads/sensor/capteur.json"
-[loadMesh] Loading Gmsh compatible mesh: "/scratch/jupyter/feelppdb/downloads/solid/meshes/capteur.msh"
-[loadMesh] Loading Gmsh compatible mesh: "/scratch/jupyter/feelppdb/downloads/solid/meshes/capteur.msh" done
+[modelProperties] Loading Model Properties : "/scratch/jupyter/feelppdb/downloads/sensor/sensor.json"
+[loadMesh] Loading Gmsh compatible mesh: "/scratch/jupyter/feelppdb/downloads/solid/meshes/sensor.msh"
+[loadMesh] Loading Gmsh compatible mesh: "/scratch/jupyter/feelppdb/downloads/solid/meshes/sensor.msh" done
 ============================================================
 
 time simulation: 0.05s/0.61s with step: 0.05
@@ -949,10 +949,10 @@ time simulation: 0.44999999999999996s/0.61s with step: 0.05</pre>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/csm/examples/sensor/capteur.cfg">CFG file</a> - [<a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/csm/examples/sensor/capteur.cfg">Edit the file</a>]</p>
+<p><a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/csm/examples/sensor/sensor.cfg">CFG file</a> - [<a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/csm/examples/sensor/sensor.cfg">Edit the file</a>]</p>
 </li>
 <li>
-<p><a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/csm/examples/sensor/capteur.json">JSON file</a> - [<a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/csm/examples/sensor/capteur.json">Edit the file</a>]</p>
+<p><a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/csm/examples/sensor/sensor.json">JSON file</a> - [<a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/csm/examples/sensor/sensor.json">Edit the file</a>]</p>
 </li>
 </ul>
 </div>
