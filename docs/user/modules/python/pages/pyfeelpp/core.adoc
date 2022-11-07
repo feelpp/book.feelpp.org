@@ -22,8 +22,9 @@ import sys
 app = fpp.Environment(["myapp"],config=fpp.localRepository(""))
 ----
 
-.Results
+
 [%collapsible.result]
+.Results
 ====
 ----
 [ Starting Feel++ ] application myapp version 0.1 date 2022-Nov-04
@@ -51,6 +52,16 @@ print("isMasterRank:",app.isMasterRank() )
 print("is parallel: ",app.isParallel() )
 ----
 
+[%collapsible.result]
+.Results
+====
+----
+pid: 0
+isMasterRank: True
+is parallel:  False
+----
+====
+
 == Downloading data
 
 {feelpp} can query data on GitHub and Girder.
@@ -62,9 +73,17 @@ readme=fpp.download( "github:{repo:feelpp,path:README.adoc}", worldComm=app.worl
 print("downloaded Feel++ README.adoc from Github: ",readme)
 ----
 
+[%collapsible.result]
+.Results
+====
+----
+downloaded Feel++ README.adoc from Github:  /scratch/jupyter/feelppdb/downloads/README.adoc
+----
+====
+
 The code will get the file `README.adoc` from the toplevel {feelpp} github directory downloaded
 
-A bit more interesting example 
+A bit more interesting example: the following code will download a csv file from the {feelpp} github repository and plot the data using the `plotly` library.
 
 [source,python]
 ----
@@ -73,18 +92,43 @@ import pandas as pd <2>
 df = pd.read_csv(acsv, sep=",") <3>
 df.columns = df.columns.str.replace(' ', '')
 print(df.head())
-
-# prepare for plotting
-import plotly.graph_objects as go <4>
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=df["TIME"], y=df["Y_CM"], name="y displacement"))
-fig.update_layout(legend_title_text='y-displacement over time of a falling disk in a fluid')
-fig.show()
 ----
 <1> download the file `curve_comparison.csv` from the {feelpp} github repository `toolboxes/fluid/cases/moving_body/gravity/cylinder_under_gravity/curve_comparison.csv`
 <2> use the `pandas` library to read the csv file
 <3> read the csv file and remove the spaces in the column names
-<4> use the `plotly` library to plot the data
 
-The code will download a csv file from the {feelpp} github repository and plot the data using the `plotly` library.
+[%collapsible.result]
+.Results
+====
+----
+       TIME      Y_CM
+0  0.001538  3.991736
+1  0.013846  3.983471
+2  0.022432  3.959772
+3  0.030984  3.925082
+4  0.038925  3.881016
+----
+====
 
+We can now use plotly to plot the data
+
+[source,python]
+----
+import plotly.express as px
+fig = px.scatter(df,x="TIME", y="Y_CM", title="y-displacement of the center of mass(CM) of the cylinder",labels={"TIME":"t (s)","Y_CM":r'y-displacement (m)'})
+fig.show()
+----
+
+[%collapsible.result]
+.Results
+====
+.Plot the stem:[displacement] of the cylinder over time
+image::core-ydisp.png[]
+====
+
+
+=== Next steps
+
+- [x] Manipulate expressions
+- [x] Manipulate meshes
+- [x] Manipulate functions and function spaces
