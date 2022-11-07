@@ -791,6 +791,18 @@ print("isMasterRank:",app.isMasterRank() )
 print("is parallel: ",app.isParallel() )</code></pre>
 </div>
 </div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>pid: 0
+isMasterRank: True
+is parallel:  False</pre>
+</div>
+</div>
+</div>
+</details>
 </div>
 </div>
 <div class="sect1">
@@ -806,11 +818,21 @@ print("is parallel: ",app.isParallel() )</code></pre>
 print("downloaded Feel++ README.adoc from Github: ",readme)</code></pre>
 </div>
 </div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>downloaded Feel++ README.adoc from Github:  /scratch/jupyter/feelppdb/downloads/README.adoc</pre>
+</div>
+</div>
+</div>
+</details>
 <div class="paragraph">
 <p>The code will get the file <code>README.adoc</code> from the toplevel Feel++ github directory downloaded</p>
 </div>
 <div class="paragraph">
-<p>A bit more interesting example</p>
+<p>A bit more interesting example: the following code will download a csv file from the Feel++ github repository and plot the data using the <code>plotly</code> library.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -818,14 +840,7 @@ print("downloaded Feel++ README.adoc from Github: ",readme)</code></pre>
 import pandas as pd <i class="conum" data-value="2"></i><b>(2)</b>
 df = pd.read_csv(acsv, sep=",") <i class="conum" data-value="3"></i><b>(3)</b>
 df.columns = df.columns.str.replace(' ', '')
-print(df.head())
-
-# prepare for plotting
-import plotly.graph_objects as go <i class="conum" data-value="4"></i><b>(4)</b>
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=df["TIME"], y=df["Y_CM"], name="y displacement"))
-fig.update_layout(legend_title_text='y-displacement over time of a falling disk in a fluid')
-fig.show()</code></pre>
+print(df.head())</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -842,14 +857,59 @@ fig.show()</code></pre>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>read the csv file and remove the spaces in the column names</td>
 </tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>use the <code>plotly</code> library to plot the data</td>
-</tr>
 </table>
 </div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>       TIME      Y_CM
+0  0.001538  3.991736
+1  0.013846  3.983471
+2  0.022432  3.959772
+3  0.030984  3.925082
+4  0.038925  3.881016</pre>
+</div>
+</div>
+</div>
+</details>
 <div class="paragraph">
-<p>The code will download a csv file from the Feel++ github repository and plot the data using the <code>plotly</code> library.</p>
+<p>We can now use plotly to plot the data</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import plotly.express as px
+fig = px.scatter(df,x="TIME", y="Y_CM", title="y-displacement of the center of mass(CM) of the cylinder",labels={"TIME":"t (s)","Y_CM":r'y-displacement (m)'})
+fig.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/core-ydisp.png" alt="core ydisp">
+</div>
+<div class="title">Figure 1. Plot the \(displacement\) of the cylinder over time</div>
+</div>
+</div>
+</details>
+<div class="sect2">
+<h3 id="_next_steps"><a class="anchor" href="#_next_steps"></a>2.1. Next steps</h3>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> Manipulate expressions</p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> Manipulate meshes</p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> Manipulate functions and function spaces</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
