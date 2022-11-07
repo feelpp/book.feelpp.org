@@ -741,7 +741,7 @@ title="Fullscreen mode"
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The work has not yet been merged in <code>develop</code>. To include the module at current state, you need to checkout the branch <a href="https://github.com/feelpp/feelpp/tree/feature/pyrb"><code>feature/pyrb</code></a>, and move to the directory <a href="https://github.com/feelpp/feelpp/tree/feature/pyrb/mor/pyfeelpp-mor/feelpp/mor">mor/pyfeelpp-mor/feelpp/mor</a>.
+The work has not yet been merged in <code>develop</code>. To include the module at current state, you need to checkout the branch <a href="https://github.com/feelpp/feelpp/tree/feature/pyrb"><code>feature/pyrb</code></a>.
 </td>
 </tr>
 </table>
@@ -751,91 +751,168 @@ The work has not yet been merged in <code>develop</code>. To include the module 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from reducedbasis.reducedbasis import *</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp.mor.reducedbasis.reducedbasis_timeOffline as mor_rb</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This import load the module for offline generation, associated to the time-dependent case. For the time-independent case, you can import <code>feelpp.mor.reducedbasis.reducedbasisOffline</code> instead.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>To set the environment, those module also need to be imported :</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import sys
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import sys, os
 from feelpp.toolboxes.heat import *
-from feelpp.toolboxes.core import *
-from feelpp.mor import *
+import feelpp.toolboxes.core as core
+from feelpp.operators import mass
+import feelpp.mor as mor
 import feelpp</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_set_the_model"><a class="anchor" href="#_set_the_model"></a>2. Set the model</h2>
+<h2 id="_set_the_environment"><a class="anchor" href="#_set_the_environment"></a>2. Set the environment</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">config = feelpp.globalRepository("reducedbasis")
+sys.argv = ["reducedbasis"]
+o = core.toolboxes_options("heat")
+o.add(mor.makeToolboxMorOptions())
+
+e = feelpp.Environment(sys.argv, opts=o, config=config)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_set_the_model"><a class="anchor" href="#_set_the_model"></a>3. Set the model</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To declare the objects, use these lines :</p>
+<p>Set the parameters nedded to the model :
+- <code>config_file</code> : path to the cfg file
+- <code>dim</code> : the dimension of the case
+- <code>order</code> : the order of discretization (<code>1</code> for \(\mathbb{P}_1\), <code>2</code> for \(\mathbb{P}_2\))
+- <code>time_dependant</code> : is the case stationnary or transient ? (for now always to <code>False</code>)
+- <code>name</code> : name of the CRB case</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">DIM = 2
-heatBox=heat(dim=DIM,order=1)
-heatBox.init()
-model = toolboxmor(dim=DIM, time_dependent=False)
-model.setFunctionSpaces( Vh=heatBox.spaceTemperature())</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">config_file = "thermal-fin.cfg"
+dim = 2
+order = 1
+time_dependant = False
+name = "thermalfin-2d"</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>DIM</code> is the dimension of the case (should be <code>2</code> or <code>3</code>)</p>
-</li>
-<li>
-<p><code>time_dependent</code> depends if the case is time-steady or time-dependant.</p>
-</li>
-</ul>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">cfg = feelpp.readCfg(config_file)
+feelpp.Environment.setConfigFile(config_file)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">model_path = feelpp.Environment.expand(cfg['heat']['filename'])
+j = feelpp.readJson(model_path)
+try:
+    j.pop('PostProcess')
+except KeyError as e:
+    print(f"There was no section {e} in the model")</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Those functions define how the <code>DEIM</code> matrix and right-hand side are updated according to the parameter <code>mu</code>.</p>
+<p>Now we load the crb parameters, the path has to be set as the option <code>toolboxmor.filename</code> in the cfg file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def assembleDEIM(mu):
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">crb_model_file = feelpp.Environment.expand(cfg['toolboxmor']['filename'])
+crb_model_file</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">crb_model_properties = mor.CRBModelProperties(worldComm=feelpp.Environment.worldCommPtr())
+crb_model_properties.setup(crb_model_file)
+crb_model_outputs = crb_model_properties.outputs()
+
+output_names = []
+for n, _ in crb_model_outputs:
+    output_names.append(n)
+
+print(f"Outputs of the models are {output_names}")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_set_the_toolboxes"><a class="anchor" href="#_set_the_toolboxes"></a>4. Set the toolboxes</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">heatBox = heat(dim=dim, order=order)
+heatBox.init()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The parameter <code>default_parameter</code> is defined in the section <code>Parameters</code> of the JSON file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">modelParameters = heatBox.modelProperties().parameters()
+default_parameter = modelParameters.toParameterValues()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">model = mor.toolboxmor(name=name, dim=dim, time_dependent=time_dependant)
+model.setFunctionSpaces( Vh=heatBox.spaceTemperature() )
+
+def assembleDEIM(mu):
     for i in range(0,mu.size()):
-        heatBox.addParameterInModelProperties(mu.parameterName(i),mu(i))
+        heatBox.addParameterInModelProperties(mu.parameterName(i), mu(i))
     heatBox.updateParameterValues()
     return heatBox.assembleRhs()
 
 def assembleMDEIM(mu):
     for i in range(0,mu.size()):
-        heatBox.addParameterInModelProperties(mu.parameterName(i),mu(i))
+        heatBox.addParameterInModelProperties(mu.parameterName(i), mu(i))
     heatBox.updateParameterValues()
     return heatBox.assembleMatrix()
 
 model.setAssembleDEIM(fct=assembleDEIM)
 model.setAssembleMDEIM(fct=assembleMDEIM)
+
 model.initModel()</code></pre>
 </div>
 </div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-When the function <code>assembleDEIM</code> is called, the value of the parameters of the object <code>heatBox</code> is updated.
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
-<p>Creation of <code>DEIM</code> and <code>MDEIM</code> toolboxes, with the associated assembly functions.</p>
+<p>Set the toolboxes associated to the reduced meshes :</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">heatBoxDEIM=heat(dim=DIM,order=1)
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">heatBoxDEIM = heat(dim=dim, order=order)
+heatBoxDEIM.setModelProperties(j)
 meshDEIM = model.getDEIMReducedMesh()
 heatBoxDEIM.setMesh(meshDEIM)
 heatBoxDEIM.init()
+
+heatBoxMDEIM = heat(dim=dim, order=order)
+heatBoxMDEIM.setModelProperties(j)
+meshMDEIM = model.getMDEIMReducedMesh()
+heatBoxMDEIM.setMesh(meshMDEIM)
+heatBoxMDEIM.init()
 
 def assembleOnlineDEIM(mu):
     for i in range(0,mu.size()):
@@ -843,44 +920,232 @@ def assembleOnlineDEIM(mu):
     heatBoxDEIM.updateParameterValues()
     return heatBoxDEIM.assembleRhs()
 
-model.setOnlineAssembleDEIM(assembleOnlineDEIM)
-
-heatBoxMDEIM=heat(dim=DIM,order=1)
-meshMDEIM = model.getMDEIMReducedMesh()
-heatBoxMDEIM.setMesh(meshMDEIM)
-heatBoxMDEIM.init()
-
 def assembleOnlineMDEIM(mu):
     for i in range(0,mu.size()):
         heatBoxMDEIM.addParameterInModelProperties(mu.parameterName(i),mu(i))
     heatBoxMDEIM.updateParameterValues()
     return heatBoxMDEIM.assembleMatrix()
 
-model.setOnlineAssembleMDEIM(assembleOnlineMDEIM)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then finalize the initialization :</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>model.postInitModel()
-model.setInitialized(True)</pre>
+model.setOnlineAssembleDEIM(assembleOnlineDEIM)
+model.setOnlineAssembleMDEIM(assembleOnlineMDEIM)
+
+model.postInitModel()
+model.setInitialized(True)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_access_to_a_parameter"><a class="anchor" href="#_access_to_a_parameter"></a>3. Access to a parameter</h2>
+<h2 id="_offline_generation"><a class="anchor" href="#_offline_generation"></a>5. Offline generation</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Information about the parameter space \(D^\mu\)</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">Dmu = model.parameterSpace()
-mu = Dmu.element(True, False)</code></pre>
+print(Dmu.parameterNames())
+print(Dmu.mumin())
+print(Dmu.mumax())</code></pre>
 </div>
 </div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>['Bi'    ,'k_1'   ,'k_2'   ,'k_3'   ,'k_4']
+[1.00e-02,1.00e-01,1.00e-01,1.00e-01,1.00e-01]
+[1.00e+00,1.00e+01,1.00e+01,1.00e+01,1.00e+01]</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">mubar = Dmu.element(True, False)
+mubar.setParameters(default_parameter)
+print("mubar =")
+mubar.view()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>mubar =
+Bi	0.01
+k_1	0.1
+k_2	0.1
+k_3	0.1
+k_4	0.1</pre>
+</div>
+</div>
+</div>
+</details>
 <div class="paragraph">
-<p>See <a href="parameters.html" class="xref page">the dedicated page</a> for the API of <code>ParameterSpaceElement</code></p>
+<p>Get affine decomposition \(A(\mu) = \displaystyle\sum_q \beta^q_A(\mu) A^q\), \(F(\mu)=\displaystyle\sum_p \beta_F^p(\mu) F^(\mu)\).
+To use the matrices and vector in the class, we need to convert themn to <code>petsc4py</code> objects, using the functions <code>convertToPetscMat</code> and <code>convertToPetscVec</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">affineDecomposition = model.getAffineDecomposition()
+Aq_ = affineDecomposition[0]
+Fq_ = affineDecomposition[1]
+
+Aq = mor_rb.convertToPetscMat(Aq_[0])
+Fq = []
+for f in Fq_:
+    Fq.append(mor_rb.convertToPetscVec(f[0]))
+
+print("Aq", Aq)
+print("Fq", Fq)</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>Aq [&lt;petsc4py.PETSc.Mat object at 0x7f5f693abba0&gt;, &lt;petsc4py.PETSc.Mat object at 0x7f5f7000d210&gt;, &lt;petsc4py.PETSc.Mat object at 0x7f5f693fd3f0&gt;, &lt;petsc4py.PETSc.Mat object at 0x7f5f693fd3a0&gt;, &lt;petsc4py.PETSc.Mat object at 0x7f5f693fd210&gt;, &lt;petsc4py.PETSc.Mat object at 0x7f5f693fd260&gt;]
+Fq [[&lt;petsc4py.PETSc.Vec object at 0x7f5f693fd350&gt;], [&lt;petsc4py.PETSc.Vec object at 0x7f5f693fd2b0&gt;], [&lt;petsc4py.PETSc.Vec object at 0x7f5f693fd1c0&gt;]]</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>Now we create the object <code>reduced_basis</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">rb = mor_rb.reducedbasisOffline(Aq=Aq, Fq=Fq, model=model, mubar=mubar,
+                output_names=output_names, use_dual_norm=False)</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>[reducedbasis] Online rb initialized
+[slepc4py] number of (smaller) eigenvalues computed : 16
+[reducedbasis] Constant of coercivity : 0.9999999999999977
+[slepc4py] number of eigenvalues computed : 16
+[reducedbasis] Constant of continuity : 1.0000000000000018
+[reducedbasis] Offline rb initialized</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>Generation of the basis, using the greedy algorithm.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">Ntrain = 1000
+s = Dmu.sampling()
+s.sampling(Ntrain, "random")
+Xi_train = s.getVector()</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">mu_0 = Dmu.element()
+rb.greedy(mu_0, Xi_train, eps_tol=1e-6)</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>[reducedBasis] Start greedy algorithm
+[reducedBasis] Computing betas: 100%|█████████████████████████████████████████████████| 999/999 [00:25&lt;00:00, 39.91it/s]
+[reducedBasis] Offline generation of the basis: 100%|█████████████████████████████████████| 1/1 [00:00&lt;00:00, 32.94it/s]
+[reducedBasis] Gram-Schmidt orthonormalization done after 1 step
+[reducedBasis] Greedy, step 1: 100%|████████████████████████████████████████████████| 999/999 [00:00&lt;00:00, 3301.45it/s]
+[reducedBasis] Greedy algo, N=1, Δ=2.735059e-06 (tol=1.000000e-06) µ=[2.17e-01,8.67e+00,7.04e+00,4.51e+00,8.96e-01]
+[reducedBasis] Gram-Schmidt orthonormalization done after 1 step
+[reducedBasis] Greedy, step 2: 100%|████████████████████████████████████████████████| 998/998 [00:00&lt;00:00, 3034.75it/s]
+[reducedBasis] Greedy algo, N=2, Δ=5.947858e-07 (tol=1.000000e-06) µ=[4.39e-01,4.62e+00,4.23e-01,9.22e+00,4.94e-01]
+[reducedBasis] End greedy algorithm</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>Compute offline errors :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">rb.computeOfflineErrorRhs()
+rb.computeOfflineError()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_online_phase"><a class="anchor" href="#_online_phase"></a>6. Online phase</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">mu = Dmu.element()
+mu.view()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>Bi	0.851312
+k_1	8.50443
+k_2	0.687991
+k_3	8.1523
+k_4	3.47058</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>The function <code>getSolutions</code> returns the solutions of the model and the reduced model, the parameter <code>k</code> gives the index of the output wanted, <code>-1</code> standing for the compliant output.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">rb.getSolutions(mu, k=0)</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>(array([1.75329542e-03, 8.16719018e-10]), 3.2730508127626815e-06)</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>We can compare it to the finite element solution :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">rb.getSolutionsFE(mu, k=0)</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>(&lt;petsc4py.PETSc.Vec at 0x7f5f3d97eac0&gt;, 3.273050812763351e-06)</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>The two functions <code>getSolutions</code> (resp. <code>getSolutionsFE</code>) return the solution \(u_N(\mu)\) (resp. \(u(\mu)\)) and the value of the output \(s_N^k(\mu)\) (res. \(s^k(\mu)\)).</p>
 </div>
 </div>
 </div>
