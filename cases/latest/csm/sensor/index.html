@@ -817,6 +817,9 @@ The report of the execution of the command above is available <a href="solid.inf
 </div>
 <div class="sect2">
 <h3 id="_python_interface"><a class="anchor" href="#_python_interface"></a>2.2. Python interface</h3>
+<div class="paragraph">
+<p>We start with the Feel++ environment.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from feelpp import *
@@ -825,16 +828,115 @@ from feelpp.toolboxes.solid import *
 
 # create the application
 # create a feelppdb subdirectory where the results are stored
-app = Environment(['feelpp_toolbox_solid'], opts= toolboxes_options("solid"),config=localRepository(""))
-app.setConfigFile("../../examples/sensor/capteur.cfg")
-s = solid(dim=3)
-# get displacement and von-mises measures from the model
-ok,meas=simulate(s)
-if ok:
-  # export in paraview format
-  s.exportResults()</code></pre>
+app = Environment(['feelpp_toolbox_solid'], opts= toolboxes_options("solid"),config=localRepository(""))</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Next we download the study configuration and simulate it</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">sensorcfg=feelpp.download("github:{repo:toolbox,path:examples/modules/csm/examples/sensor/}", worldComm=app.worldCommPtr())[0] <i class="conum" data-value="1"></i><b>(1)</b>
+sensorcfg+='/capteur.cfg' <i class="conum" data-value="2"></i><b>(2)</b>
+if os.path.exists(sensorcfg): <i class="conum" data-value="3"></i><b>(3)</b>
+  app.setConfigFile(sensorcfg) <i class="conum" data-value="4"></i><b>(4)</b>
+  s = solid(dim=3) <i class="conum" data-value="5"></i><b>(5)</b>
+  # get displacement and von-mises measures from the model
+  ok,meas=simulate(s) <i class="conum" data-value="6"></i><b>(6)</b>
+  if ok:
+    # export in paraview format
+    s.exportResults() <i class="conum" data-value="7"></i><b>(7)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>download the configuration file</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>add the configuration file to the study</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>check if the configuration file exists</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>set the configuration file</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>create the solid mechanics model</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>simulate the model and get the resulting measures from the PostProcessing section</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>export the results</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>[ Starting Feel++ ] application feelpp_toolbox_solid version 0.1 date 2022-Nov-07
+ . feelpp_toolbox_solid files are stored in /scratch/jupyter/feelppdb/np_1
+ .. logfiles :/scratch/jupyter/feelppdb/np_1/logs
+Reading /scratch/jupyter/feelppdb/downloads/sensor/capteur.cfg...
+solid(3,1)
+[modelProperties] Loading Model Properties : "/scratch/jupyter/feelppdb/downloads/sensor/capteur.json"
+[loadMesh] Loading Gmsh compatible mesh: "/scratch/jupyter/feelppdb/downloads/solid/meshes/capteur.msh"
+[loadMesh] Loading Gmsh compatible mesh: "/scratch/jupyter/feelppdb/downloads/solid/meshes/capteur.msh" done
+============================================================
+
+time simulation: 0.05s/0.61s with step: 0.05
+============================================================
+
+ 0 solid SNES Function norm 4.324537e+02
+ 1 solid SNES Function norm 3.894843e+02
+  Linear solve converged due to CONVERGED_RTOL iterations 9
+ 2 solid SNES Function norm 3.511776e+02
+  Linear solve converged due to CONVERGED_RTOL iterations 9
+ 3 solid SNES Function norm 3.103868e+02
+  Linear solve converged due to CONVERGED_RTOL iterations 9
+ 4 solid SNES Function norm 2.657841e+02
+  Linear solve converged due to CONVERGED_RTOL iterations 9
+ 5 solid SNES Function norm 2.165992e+02
+  Linear solve converged due to CONVERGED_RTOL iterations 9
+ 6 solid SNES Function norm 1.624799e+02
+  Linear solve converged due to CONVERGED_RTOL iterations 9
+ 7 solid SNES Function norm 1.621619e+02
+  Linear solve converged due to CONVERGED_RTOL iterations 9
+ 8 solid SNES Function norm 6.411767e-03
+  Linear solve converged due to CONVERGED_RTOL iterations 11
+ 9 solid SNES Function norm 6.553165e-06
+  Linear solve converged due to CONVERGED_RTOL iterations 10
+ 10 solid SNES Function norm 9.171302e-10
+  Linear solve converged due to CONVERGED_RTOL iterations 12
+============================================================
+
+time simulation: 0.1s/0.61s with step: 0.05
+============================================================
+
+ 0 solid SNES Function norm 4.056531e+02
+ 1 solid SNES Function norm 3.653160e+02
+  Linear solve converged due to CONVERGED_RTOL iterations 9
+ 2 solid SNES Function norm 3.265140e+02
+  Linear solve converged due to CONVERGED_RTOL iterations 9
+ 3 solid SNES Function norm 2.843344e+02
+...
+
+time simulation: 0.44999999999999996s/0.61s with step: 0.05</pre>
+</div>
+</div>
+</div>
+</details>
 </div>
 </div>
 </div>
@@ -946,6 +1048,36 @@ print(df.head())
 import plotly.graph_objects as go</code></pre>
 </div>
 </div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>Paraview files are in /scratch/jupyter/feelppdb/np_1/np_1/solid.exports
+   Statistics_disp_max  Statistics_disp_mean_0  Statistics_disp_mean_1  \
+0             0.000000                0.000000                0.000000
+1             0.423963                0.000030                0.000024
+2             0.823267                0.000058                0.000047
+3             1.147965                0.000077                0.000067
+4             1.425199                0.000096                0.000084
+
+   Statistics_disp_mean_2  Statistics_disp_min  Statistics_von-mises_max  \
+0                0.000000             0.000000                  0.000000
+1               -0.000017            -0.424049                986.291965
+2               -0.000033            -0.823410               1926.227644
+3               -0.000046            -1.148120               2715.268042
+4               -0.000058            -1.425366               3380.035626
+
+   Statistics_von-mises_mean  Statistics_von-mises_min  time
+0                   0.000000                  0.000000  0.00
+1                  76.661865                  0.000664  0.05
+2                 149.031439                  0.003552  0.10
+3                 208.581334                  0.002816  0.15
+4                 259.019382                  0.004327  0.20</pre>
+</div>
+</div>
+</div>
+</details>
 <div class="sect2">
 <h3 id="_displacement"><a class="anchor" href="#_displacement"></a>6.1. Displacement</h3>
 <div class="dlist grid">
@@ -982,6 +1114,14 @@ fig.update_layout(legend_title_text='Max displacement over time')
 fig.show()</code></pre>
 </div>
 </div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="../_images/sensor/minmaxdisp.png" alt="minmaxdisp"></span></p>
+</div>
+</div>
+</details>
 </div>
 <div class="sect2">
 <h3 id="_von_mises_criterions"><a class="anchor" href="#_von_mises_criterions"></a>6.2. Von-Mises Criterions</h3>
@@ -1023,6 +1163,14 @@ fig.update_layout(legend_title_text='Von-Mises min,mean and max over time')
 fig.show()</code></pre>
 </div>
 </div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="../_images/sensor/minmaxvonmises.png" alt="minmaxvonmises"></span></p>
+</div>
+</div>
+</details>
 </div>
 <div class="sect2">
 <h3 id="_3d_model"><a class="anchor" href="#_3d_model"></a>6.3. 3D Model</h3>
