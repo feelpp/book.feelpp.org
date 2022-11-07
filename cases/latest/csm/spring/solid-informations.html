@@ -3,10 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Spring :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/cases/latest/csm/spring/README.html">
-    <link rel="prev" href="../pendulum2D/index.html">
-    <link rel="next" href="../../cfd/README.html">
+    <title>Toolbox : solid :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/cases/latest/csm/spring/solid-informations.html">
     <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
@@ -16,7 +14,6 @@
 <script src="../../../../_/js/vendor/tabs-block-behavior.js"></script>
 
 
-    <script type="text/javascript" src="../../../../_/js/vendor/visu-vtk.js"></script>
 
 
 <script type="text/x-mathjax-config">
@@ -270,7 +267,7 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../pendulum2D/index.html">Pendulum 2D</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="3">
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="README.html">Spring CSM</a>
   </li>
 </ul>
@@ -682,19 +679,17 @@ MathJax.Hub.Config({
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../../index.html">Feel++ Toolbox Cases Guide</a></li>
-    <li><a href="../README.html">Computational Solid Mechanics</a></li>
-    <li><a href="../README.html#_cases">Cases</a></li>
-    <li><a href="README.html">Spring CSM</a></li>
+    <li><a href="solid-informations.html">Toolbox : solid</a></li>
   </ul>
 </nav>
 
 <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
   <div class="version-menu">
-    <a class="version is-current" href="README.html">latest</a>
-    <a class="version" href="../../../0.109/csm/spring/README.html">0.109</a>
-    <a class="version" href="../../../0.108/csm/spring/README.html">0.108</a>
-    <a class="version" href="../../../0.107/csm/spring/README.html">0.107</a>
+    <a class="version is-current" href="solid-informations.html">latest</a>
+    <a class="version is-missing" href="../../../0.109/index.html">0.109</a>
+    <a class="version is-missing" href="../../../0.108/index.html">0.108</a>
+    <a class="version is-missing" href="../../../0.107/index.html">0.107</a>
   </div>
 </div>
   
@@ -720,7 +715,7 @@ MathJax.Hub.Config({
 
     <a href="https://github.com/feelpp/toolbox">Open repository <i class="fab fa-github"></i></a>
     
-  <a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/csm/pages/spring/README.adoc">Edit this Page <i class="fas fa-edit"></i></a>
+  <a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/csm/pages/spring/solid-informations.adoc">Edit this Page <i class="fas fa-edit"></i></a>
 
     <a href="https://github.com/feelpp/book.feelpp.org/issues/new">Open issue <i class="fas fa-lightbulb"></i></a>
 
@@ -750,116 +745,95 @@ title="Fullscreen mode"
 </aside>
 
 <article class="doc">
-<h1 class="page">Spring</h1>
-<div id="toc" class="toc">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_description">1. Description</a></li>
-<li><a href="#_running_the_case">2. Running the case</a></li>
-<li><a href="#_data_files">3. Data files</a></li>
-<li><a href="#_geometry">4. Geometry</a></li>
-<li><a href="#_input_parameters">5. Input parameters</a>
-<ul class="sectlevel2">
-<li><a href="#_model_toolbox">5.1. Model &amp; Toolbox</a></li>
-<li><a href="#_materials">5.2. Materials</a></li>
-<li><a href="#_boundary_conditions">5.3. Boundary conditions</a></li>
-</ul>
-</li>
-<li><a href="#_results">6. Results</a>
-<ul class="sectlevel2">
-<li><a href="#_pictures">6.1. Pictures</a></li>
-<li><a href="#_3d_viewer">6.2. 3D viewer</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="sect1">
-<h2 id="_description"><a class="anchor" href="#_description"></a>1. Description</h2>
+<h1 class="page">Toolbox : solid</h1>
+<div id="preamble">
 <div class="sectionbody">
-<div class="paragraph">
-<p>In this example, we simulate the extension of a steel coil spring.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_running_the_case"><a class="anchor" href="#_running_the_case"></a>2. Running the case</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The command line to run this case is</p>
-</div>
-<div id="command-line" class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpirun -np 4 feelpp_toolbox_solid --case "github:{repo:toolbox,path:examples/modules/csm/examples/spring}"</code></pre>
-</div>
-</div>
-<button class="btn" data-clipboard-target="#command-line">
-Copy command line to clipboard
-</button>
-<button class="btn" data-clipboard-text="github:{repo:toolbox,path:examples/modules/csm/examples/spring}">
-Copy case option to clipboard
-</button>
-<div class="admonitionblock note">
-<table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
 <tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The report of the execution of the command above is available <a href="solid-informations.html" class="xref page">here</a>.
-</td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">prefix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">keyword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">root repository</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/home/congo/feelppdb/toolboxes/solid/spring/np_1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of processus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
-</div>
 <div class="sect1">
-<h2 id="_data_files"><a class="anchor" href="#_data_files"></a>3. Data files</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The case data files are available in Github <a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/csm/examples/spring/">here</a>:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/csm/examples/spring/spring.json">JSON file</a> - [<a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/csm/examples/spring/spring.json">Edit the file</a>]</p>
-</li>
-<li>
-<p><a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/csm/examples/spring/spring.cfg">CFG file</a> - [<a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/csm/examples/spring/spring.cfg">Edit the file</a>]</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_geometry"><a class="anchor" href="#_geometry"></a>4. Geometry</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The geometry consists of a 7-turn coil spring.
-The spring is 4.5cm long and its radius is 1cm.
-The wire&#8217;s radius is 1mm.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/spring/spring_mesh.png" alt="50%"></span></p>
-</div>
-<div class="paragraph">
-<p>The mesh is available on <a href="https://girder.math.unistra.fr/api/v1/file/5b03dfcbb0e957402704806d/download">Girder</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_input_parameters"><a class="anchor" href="#_input_parameters"></a>5. Input parameters</h2>
+<h2 id="_physics"><a class="anchor" href="#_physics"></a>1. Physics</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_model_toolbox"><a class="anchor" href="#_model_toolbox"></a>5.1. Model &amp; Toolbox</h3>
-<div class="paragraph">
-<p>The model used is the linear elasticity described in the CSM toolbox, see <a href="../../../../toolboxes/latest/csm/index.html" class="xref page">Computational Solid Dynamics</a></p>
+<h3 id="_solid"><a class="anchor" href="#_solid"></a>1.1. solid</h3>
+<div class="sect3">
+<h4 id="_solid_2"><a class="anchor" href="#_solid_2"></a>1.1.1. solid</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">modeling</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Equation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Elasticity</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect4">
+<h5 id="_body_forces"><a class="anchor" href="#_body_forces"></a>Body Forces</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bodyforce0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">{0,0,-7850*gravity}</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_materials"><a class="anchor" href="#_materials"></a>5.2. Materials</h3>
-<div class="paragraph">
-<p>The coil spring is entirely made of steel.</p>
-</div>
+<div class="sect4">
+<h5 id="_parameters"><a class="anchor" href="#_parameters"></a>Parameters</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -871,183 +845,764 @@ The wire&#8217;s radius is 1mm.</p>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Value</th>
-<th class="tableblock halign-left valign-top">Unit</th>
-<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+<th class="tableblock halign-left valign-top">Components</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(E_s\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Young&#8217;s modulus</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(210 \times 10^6\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(kg.m^{-1}.s^{-2}\)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bodyforce0_bodyforce</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">{0,0,-7850*gravity}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">physics_solid_solid_bodyforce0_bodyforce</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial [3]</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Indices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">physics_solid_solid_bodyforce0_bodyforce_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\nu_s\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Poisson&#8217;s ration</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(0.33\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(dimensionless\)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">physics_solid_solid_bodyforce0_bodyforce_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\rho_s\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">density</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(7850\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(kg/m^3\)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">physics_solid_solid_bodyforce0_bodyforce_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,0</p></td>
+</tr>
+</tbody>
+</table></div></td>
 </tr>
 </tbody>
 </table>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Materials":
-{
-  "lumenVolume":
-  {
-    //#acier : http://www.simulationmateriaux.com/ComportementMecanique/comportement_mecanique_Liste_modules_de_Young.php
-    "name":"steel",
-    "E":"210e6", // [kg.m^{-1}.s^{-2}] (Young's modulus)
-    "nu":"0.33", // dimensionless
-    "rho":"7850" // [kg/m^3]
-  }
-},</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We also need gravity:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Parameters":
-{
-  "dispImposed":
-  {
-    "value":"8e-3" // [m]
-  },
-  "gravity":
-  {
-    "value":"9.80665" // [m.s^{-2}]
-  }
-},</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>5.3. Boundary conditions</h3>
-<div class="paragraph">
-<p>The top and bottom ends of the spring are were the boundary conditions are applied.
-More precisely, we apply boundary conditions on the corresponding surfaces.
-We also apply gravity as a volumic force on the whole domain.</p>
-</div>
-<div class="sect3">
-<h4 id="_top_end"><a class="anchor" href="#_top_end"></a>5.3.1. Top end</h4>
-<div class="paragraph">
-<p>We apply a Dirichlet boundary condition here: the spring is considered attached to a fixed body on this surface.
-This means the displacement is zero on this surface.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_bottom_end"><a class="anchor" href="#_bottom_end"></a>5.3.2. Bottom end</h4>
-<div class="paragraph">
-<p>On this end, we also impose the displacement, but this time it is non-zero.
-This model the application of a certain pulling force along the spring axis which stretches it by 8mm.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_volumic_force"><a class="anchor" href="#_volumic_force"></a>5.3.3. Volumic force</h4>
-<div class="paragraph">
-<p>Gravity is applied as a volumic force on all the elements of the mesh.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"BoundaryConditions":
-{
-  "solid":
-  {
-    "displacement":
-    {
-      "markerBottom":{ "expr":"{0,0,-dispImposed}:dispImposed" }, // imposed displacement -&gt; pulled down end of the spring
-      "markerTop":{ "expr":"{0,0,0}" } // imposed displacement (zero) -&gt; fixed end of the spring
-    }
-  }
-},</code></pre>
-</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_results"><a class="anchor" href="#_results"></a>6. Results</h2>
+<h2 id="_physics2"><a class="anchor" href="#_physics2"></a>2. Physics2</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>The fields of interest are the displacement, the von Mises yield criterion and the parallel process id (pid).
-The pid helps to see how the mesh was partitioned for parallel processing.
-In the 3D view below, when selecting the pid in the first dropdown list, each color corresponds to a subdomain assigned to and processed by a CPU core.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">  "Parameters":
-  {
-    "dispImposed":
-    {
-      "value":"8e-3" // [m]
-    },
-    "gravity":
-    {
-      "value":"9.80665" // [m.s^{-2}]
-    }
-  },</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">  "PostProcess":
-  {
-    "solid":
-    {
-      "Exports":
-      {
-        "fields":["displacement","pressure","pid","von-mises-criterion"]
-      }
-    }
-  }</code></pre>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_pictures"><a class="anchor" href="#_pictures"></a>6.1. Pictures</h3>
-<div class="paragraph">
-<p>In the following pictures, displacement is expressed in \(m\). The von Mises yield criterion in dimensionless.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/spring/spring_displacement.png" alt="50%"></span>
-<span class="image"><img src="../_images/spring/spring_von_mises.png" alt="50%"></span></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3d_viewer"><a class="anchor" href="#_3d_viewer"></a>6.2. 3D viewer</h3>
-<div class="admonitionblock important">
-<table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
 <tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-Missing vtkjs&#8230;&#8203;
-</td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">time mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stationary</p></td>
 </tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_materials_properties"><a class="anchor" href="#_materials_properties"></a>3. Materials Properties</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of materials</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_material_lumenvolume"><a class="anchor" href="#_material_lumenvolume"></a>3.1. Material : lumenVolume</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+<th class="tableblock halign-left valign-top">Components</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lame-first-parameter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-materials_lumenVolume_nu*(-1+2*materials_lumenVolume_nu)<sup>(-1)<strong>materials_lumenVolume_E</strong>(1+materials_lumenVolume_nu)</sup>(-1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">materials_lumenVolume_lambdaLame</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lame-second-parameter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1/2*materials_lumenVolume_E*(1+materials_lumenVolume_nu)^(-1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">materials_lumenVolume_muLame</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Poisson-ratio</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.33</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">materials_lumenVolume_nu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Young-modulus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.1E8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">materials_lumenVolume_E</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bulk-modulus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1/3*materials_lumenVolume_E*(-1+2*materials_lumenVolume_nu)^(-1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">materials_lumenVolume_K</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">density</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7850</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">materials_lumenVolume_rho</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>4. Boundary Conditions</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_displacement_imposed"><a class="anchor" href="#_displacement_imposed"></a>4.1. Displacement Imposed</h3>
+<div class="sect3">
+<h4 id="_markerbottom"><a class="anchor" href="#_markerbottom"></a>4.1.1. markerBottom</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">elimination</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">{0,0,-dispImposed}</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">markers</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">markerBottom</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_markertop"><a class="anchor" href="#_markertop"></a>4.1.2. markerTop</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">elimination</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">{0,0,0}</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">markers</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">markerTop</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
 </div>
 </div>
-<nav class="pagination">
-  <span class="prev"><a href="../pendulum2D/index.html">Pendulum 2D</a></span>
-  <span class="next"><a href="../../cfd/README.html">Computational Fluid Mechanics</a></span>
-</nav>
+<div class="sect1">
+<h2 id="_meshes"><a class="anchor" href="#_meshes"></a>5. Meshes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_mesh_solid"><a class="anchor" href="#_mesh_solid"></a>5.1. Mesh : solid</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Discretization</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/Mesh/solid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">filename</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/home/congo/feelppdb/toolboxes/solid/spring/np_1/solid.mesh.json</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="_import_configuration"><a class="anchor" href="#_import_configuration"></a>5.1.1. Import configuration</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mesh-filename</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/home/congo/feelppdb/toolboxes/solid/spring/downloads/solid/meshes/spring.msh</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">generate-partitioning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number-of-partition</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_discretization"><a class="anchor" href="#_discretization"></a>5.1.2. Discretization</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dim</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">h_average</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6.739259e-04</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">h_max</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.967197e-04</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">h_min</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.157271e-04</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n_edges</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">70457</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n_elements</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">47323</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n_faces</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">104586</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n_partition</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n_points</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13195</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">real_dim</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">shape</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simplex_3_1_3</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_function_spaces"><a class="anchor" href="#_function_spaces"></a>6. Function Spaces</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_displacement"><a class="anchor" href="#_displacement"></a>6.1. Displacement</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mesh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/Mesh/solid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nSpace</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="_basis"><a class="anchor" href="#_basis"></a>6.1.1. Basis</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">is_continuous</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nComponents</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nComponents1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nComponents2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nLocalDof</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lagrange</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">shape</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_dof_table"><a class="anchor" href="#_dof_table"></a>6.1.2. Dof Table</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nDof</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">39585</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fields"><a class="anchor" href="#_fields"></a>7. Fields</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_displacement_2"><a class="anchor" href="#_displacement_2"></a>7.1. displacement</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">base symbol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">s</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">function space</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/FunctionSpace/object-0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">displacement</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">prefix symbol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+<th class="tableblock halign-left valign-top">Components</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">eval of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">idv(.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial [3]</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Indices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_s_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_s_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_s_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,0</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">norm2 of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">norm2(.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_s_magnitude</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">grad of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gradv(.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tensor2 [3x3]</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Indices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_00</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_02</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_22</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,2</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">normal derivative of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dnv(.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_dn_s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial [3]</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Indices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_dn_s_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_dn_s_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_dn_s_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,0</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">curl of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">curlv(.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_curl_s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial [3]</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Indices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_curl_s_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_curl_s_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_curl_s_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,0</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">norm2 of curl of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">norm2(curlv(.))</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_curl_s_magnitude</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">div of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">divv(.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_div_s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_algebraic_solver"><a class="anchor" href="#_algebraic_solver"></a>8. Algebraic Solver</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_backend"><a class="anchor" href="#_backend"></a>8.1. Backend</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">prefix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">petsc</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_ksp"><a class="anchor" href="#_ksp"></a>8.2. KSP</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">atol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e-50</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dtol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e+05</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reuse-prec</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rtol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e-08</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gmres</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_snes"><a class="anchor" href="#_snes"></a>8.3. SNES</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">atol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e-50</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">500</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reuse-jac</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rtol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e-08</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e-08</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_ksp_in_snes"><a class="anchor" href="#_ksp_in_snes"></a>8.4. KSP in SNES</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reuse-prec</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rtol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e-05</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_pc"><a class="anchor" href="#_pc"></a>8.5. PC</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gamg</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </article>
   </div>
 </main>
