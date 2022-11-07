@@ -113,16 +113,8 @@ The parameter `default_parameter` is defined in the section `Parameters` of the 
 ----
 modelParameters = heatBox.modelProperties().parameters()
 default_parameter = modelParameters.toParameterValues()
-default_parameter.view()
 ----
 
-[%collapsible.result]
-.Results
-====
-----
-TODO : display results
-----
-====
 
 [source, python]
 ----
@@ -197,7 +189,9 @@ print(Dmu.mumax())
 .Results
 ====
 ----
-TODO : display results
+['Bi'    ,'k_1'   ,'k_2'   ,'k_3'   ,'k_4']
+[1.00e-02,1.00e-01,1.00e-01,1.00e-01,1.00e-01]
+[1.00e+00,1.00e+01,1.00e+01,1.00e+01,1.00e+01]
 ----
 ====
 
@@ -213,7 +207,12 @@ mubar.view()
 .Results
 ====
 ----
-TODO : display results
+mubar =
+Bi	0.01
+k_1	0.1
+k_2	0.1
+k_3	0.1
+k_4	0.1
 ----
 ====
 
@@ -239,7 +238,8 @@ print("Fq", Fq)
 .Results
 ====
 ----
-TODO : display results
+Aq [<petsc4py.PETSc.Mat object at 0x7f5f693abba0>, <petsc4py.PETSc.Mat object at 0x7f5f7000d210>, <petsc4py.PETSc.Mat object at 0x7f5f693fd3f0>, <petsc4py.PETSc.Mat object at 0x7f5f693fd3a0>, <petsc4py.PETSc.Mat object at 0x7f5f693fd210>, <petsc4py.PETSc.Mat object at 0x7f5f693fd260>]
+Fq [[<petsc4py.PETSc.Vec object at 0x7f5f693fd350>], [<petsc4py.PETSc.Vec object at 0x7f5f693fd2b0>], [<petsc4py.PETSc.Vec object at 0x7f5f693fd1c0>]]
 ----
 ====
 
@@ -255,7 +255,12 @@ rb = mor_rb.reducedbasisOffline(Aq=Aq, Fq=Fq, model=model, mubar=mubar,
 .Results
 ====
 ----
-TODO : display results
+[reducedbasis] Online rb initialized
+[slepc4py] number of (smaller) eigenvalues computed : 16
+[reducedbasis] Constant of coercivity : 0.9999999999999977
+[slepc4py] number of eigenvalues computed : 16
+[reducedbasis] Constant of continuity : 1.0000000000000018
+[reducedbasis] Offline rb initialized
 ----
 ====
 
@@ -272,14 +277,23 @@ Xi_train = s.getVector()
 [source, python]
 ----
 mu_0 = Dmu.element()
-rb.greedy(mu_0, Xi_train, eps_tol=1e-4)
+rb.greedy(mu_0, Xi_train, eps_tol=1e-6)
 ----
 
 [%collapsible.result]
 .Results
 ====
 ----
-TODO : display results
+[reducedBasis] Start greedy algorithm
+[reducedBasis] Computing betas: 100%|█████████████████████████████████████████████████| 999/999 [00:25<00:00, 39.91it/s]
+[reducedBasis] Offline generation of the basis: 100%|█████████████████████████████████████| 1/1 [00:00<00:00, 32.94it/s]
+[reducedBasis] Gram-Schmidt orthonormalization done after 1 step
+[reducedBasis] Greedy, step 1: 100%|████████████████████████████████████████████████| 999/999 [00:00<00:00, 3301.45it/s]
+[reducedBasis] Greedy algo, N=1, Δ=2.735059e-06 (tol=1.000000e-06) µ=[2.17e-01,8.67e+00,7.04e+00,4.51e+00,8.96e-01]
+[reducedBasis] Gram-Schmidt orthonormalization done after 1 step
+[reducedBasis] Greedy, step 2: 100%|████████████████████████████████████████████████| 998/998 [00:00<00:00, 3034.75it/s]
+[reducedBasis] Greedy algo, N=2, Δ=5.947858e-07 (tol=1.000000e-06) µ=[4.39e-01,4.62e+00,4.23e-01,9.22e+00,4.94e-01]
+[reducedBasis] End greedy algorithm
 ----
 ====
 
@@ -303,7 +317,11 @@ mu.view()
 .Results
 ====
 ----
-TODO : display results
+Bi	0.851312
+k_1	8.50443
+k_2	0.687991
+k_3	8.1523
+k_4	3.47058
 ----
 ====
 
@@ -318,7 +336,23 @@ rb.getSolutions(mu, k=0)
 .Results
 ====
 ----
-TODO : display results
+(array([1.75329542e-03, 8.16719018e-10]), 3.2730508127626815e-06)
 ----
 ====
 
+We can compare it to the finite element solution :
+
+[source, python]
+----
+rb.getSolutionsFE(mu, k=0)
+----
+
+[%collapsible.result]
+.Results
+====
+----
+(<petsc4py.PETSc.Vec at 0x7f5f3d97eac0>, 3.273050812763351e-06)
+----
+====
+
+The two functions `getSolutions` (resp. `getSolutionsFE`) return the solution stem:[u_N(\mu)] (resp. stem:[u(\mu)]) and the value of the output stem:[s_N^k(\mu)] (res. stem:[s^k(\mu)]).
