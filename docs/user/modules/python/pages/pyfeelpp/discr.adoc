@@ -1,7 +1,9 @@
-= Creating a function space and interpolating
+= Manipulating functions and function spaces
 include::user:ROOT:partial$header-macros.adoc[]
 :page-jupyter: true
 
+We start with setting the {feelpp} environment and loading the {feelpp} library.
+We download a 2D and 3D geometry from the {feelpp} github repository.
 
 [source,python]
 ----
@@ -26,6 +28,15 @@ print(" . 3D geometry file: {}".format(geo['3']))
  . 3D geometry file: /scratch/jupyter/feelppdb/downloads/feelpp3d.geo
 ---- 
 ====
+
+== Notations
+
+The domain stem:[\Omega] is discretized using a mesh of triangles or tetrahedra. 
+Scalar functions stem:[f \Omega \rightarrow \mathbb{R}] are defined on the mesh and are represented by a finite element space.
+
+
+== Scalar function spaces
+
 
 [source,python]
 .2D mesh and function space example
