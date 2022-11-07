@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Creating a function space and interpolating :: Feel++ Docs</title>
+    <title>Manipulating functions and function spaces :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/python/pyfeelpp/discr.html">
     <link rel="prev" href="expr.html">
     <link rel="next" href="integrals.html">
@@ -409,7 +409,7 @@ MathJax.Hub.Config({
     <a class="nav-link" href="expr.html">Manipulating Expressions</a>
   </li>
   <li class="nav-item is-current-page" data-depth="3">
-    <a class="nav-link" href="discr.html">Creating a function space and interpolating</a>
+    <a class="nav-link" href="discr.html">Manipulating functions and function spaces</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="integrals.html">Computing integrals</a>
@@ -659,7 +659,7 @@ MathJax.Hub.Config({
     <li><a href="../../index.html">Feel++ User Manual</a></li>
     <li><a href="../index.html">Using Feel++ in Python</a></li>
     <li><a href="index.html">pyFeel++</a></li>
-    <li><a href="discr.html">Creating a function space and interpolating</a></li>
+    <li><a href="discr.html">Manipulating functions and function spaces</a></li>
   </ul>
 </nav>
 
@@ -730,7 +730,13 @@ title="Fullscreen mode"
 </aside>
 
 <article class="doc">
-<h1 class="page">Creating a function space and interpolating</h1>
+<h1 class="page">Manipulating functions and function spaces</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>We start with setting the Feel++ environment and loading the Feel++ library.
+We download a 2D and 3D geometry from the Feel++ github repository.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
@@ -758,6 +764,20 @@ print(" . 3D geometry file: {}".format(geo['3']))</code></pre>
 </div>
 </div>
 </details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_notations"><a class="anchor" href="#_notations"></a>1. Notations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The domain \(\Omega\) is discretized using a mesh of triangles or tetrahedra.
+Scalar functions \(f \Omega \rightarrow \mathbb{R}\) are defined on the mesh and are represented by a finite element space.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_scalar_function_spaces"><a class="anchor" href="#_scalar_function_spaces"></a>2. Scalar function spaces</h2>
+<div class="sectionbody">
 <div class="listingblock">
 <div class="title">2D mesh and function space example</div>
 <div class="content">
@@ -822,6 +842,8 @@ Xh nLocalDofWithoutGhost:  21739</pre>
 </div>
 </div>
 </details>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="expr.html">Manipulating Expressions</a></span>
   <span class="next"><a href="integrals.html">Computing integrals</a></span>
