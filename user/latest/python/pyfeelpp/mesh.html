@@ -7,6 +7,7 @@
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/python/pyfeelpp/mesh.html">
     <link rel="prev" href="core.html">
     <link rel="next" href="discr.html">
+    <meta name="keywords" content="Feel++, partial differential equations, finite element method,">
     <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
@@ -673,6 +674,11 @@ MathJax.Hub.Config({
   <div class="dropdown-content">
 
 
+        <a href="../_attachments/pyfeelpp/mesh.ipynb" title="Download Jupyter Notebook" data-toggle="tooltip" data-placement="left">
+         .ipynb <i class="fas fa-file"></i>
+        </a>
+
+
           <a onclick="print(this)"  class="headerbtn"  data-toggle="tooltip" data-placement="left" title="Print to PDF">
               .pdf <i class="fas fa-file-pdf"></i>
           </a>
@@ -719,6 +725,21 @@ title="Fullscreen mode"
 
 <article class="doc">
 <h1 class="page">Creating a mesh</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>We start with setting the Feel++ environment and loading the Feel++ library.</p>
+</div>
+<div class="listingblock">
+<div class="title">Set the Feel++ environment with local repository</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
+import sys
+app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))</code></pre>
+</div>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_load_a_mesh_from_a_geo_or_msh_file"><a class="anchor" href="#_load_a_mesh_from_a_geo_or_msh_file"></a>1. Load a mesh from a <code>geo</code> or <code>msh</code> file</h2>
 <div class="sectionbody">
@@ -765,10 +786,54 @@ The mesh is configured with a <code>WorldComm</code> which provides the parallel
 <div class="listingblock">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">m = feelpp.mesh(dim=3, realdim=3)
-mesh = feelpp.load(m, "path/to/file", 0.1)</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">geo=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+print("geo file: {}".format(geo))
+mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)</code></pre>
 </div>
 </div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>[ Starting Feel++ ] application myapp version 0.1 date 2022-Nov-07
+ . myapp files are stored in /scratch/jupyter/feelppdb/np_1
+ .. logfiles :/scratch/jupyter/feelppdb/np_1/logs
+Output exceeds the size limit. Open the full output data in a text editor
+geo file: /scratch/jupyter/feelppdb/downloads/feelpp2d.geo
+[loadMesh] Loading mesh in format geo+msh: "/scratch/jupyter/feelppdb/downloads/feelpp2d.geo"
+[loadMesh] Use default geo desc: /scratch/jupyter/feelppdb/downloads/feelpp2d.geo 0.1
+Info    : Reading 'feelpp2d.geo'...
+Info    : Done reading 'feelpp2d.geo'
+Info    : Meshing 1D...
+Info    : [  0%] Meshing curve 1 (Line)
+Info    : [ 10%] Meshing curve 2 (Line)
+Info    : [ 10%] Meshing curve 3 (Line)
+Info    : [ 10%] Meshing curve 4 (Line)
+Info    : [ 10%] Meshing curve 5 (Line)
+Info    : [ 10%] Meshing curve 6 (Line)
+Info    : [ 10%] Meshing curve 7 (Line)
+Info    : [ 20%] Meshing curve 8 (Line)
+Info    : [ 20%] Meshing curve 9 (Line)
+Info    : [ 20%] Meshing curve 10 (Line)
+Info    : [ 20%] Meshing curve 11 (Line)
+Info    : [ 20%] Meshing curve 12 (Line)
+Info    : [ 20%] Meshing curve 13 (Line)
+Info    : [ 20%] Meshing curve 14 (Line)
+Info    : [ 30%] Meshing curve 15 (Line)
+Info    : [ 30%] Meshing curve 16 (Line)
+Info    : [ 30%] Meshing curve 17 (Line)
+Info    : [ 30%] Meshing curve 18 (Line)
+Info    : [ 30%] Meshing curve 19 (Line)
+...
+Info    : Done meshing 2D (Wall 0.106645s, CPU 0.106853s)
+Info    : 2867 nodes 5812 elements
+Info    : Writing 'feelpp2d.msh'...
+Info    : Done writing 'feelpp2d.msh'</pre>
+</div>
+</div>
+</div>
+</details>
 </div>
 </div>
 <div class="sect1">
@@ -820,6 +885,39 @@ The following methods are to use on the mesh object (<code>mesh</code> in the pr
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Here is an example of how to use the mesh information:</p>
+</div>
+<div class="listingblock">
+<div class="title">Query the mesh information</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">print("dimention: {}".format(mesh.dimension()))
+print("number of elements: {}".format(mesh.numGlobalElements()))
+print("number of faces: {}".format(mesh.numGlobalFaces()))
+print("hmin: {}".format(mesh.hMin()))
+print("havg: {}".format(mesh.hAverage()))
+print("hmax: {}".format(mesh.hMax()))
+print("measure: {}".format(mesh.measure()))
+print("measure of boundary: {}".format(mesh.measureBoundary()))</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>dimention: 2
+number of elements: 5134
+number of faces: 8006
+hmin: 0.0763352613189128
+havg: 0.10274873094289755
+hmax: 0.13695416558140516
+measure: 20.79999999999997
+measure of boundary: 1497.0959239128888</pre>
+</div>
+</div>
+</div>
+</details>
 </div>
 <div class="sect2">
 <h3 id="_test_relation_between_meshes"><a class="anchor" href="#_test_relation_between_meshes"></a>2.2. Test relation between meshes :</h3>
@@ -851,6 +949,12 @@ The following methods are to use on the mesh object (<code>mesh</code> in the pr
 <p><code>loadHDF5(self, name: str) &#8594; None</code> : load mesh from H5 file</p>
 </li>
 </ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">mesh.saveHDF5("mesh.h5")
+mesh.loadHDF5("mesh.h5")</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -900,6 +1004,31 @@ The following methods are to use on the mesh object (<code>mesh</code> in the pr
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>A first example with ranges:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">r = feelpp.elements(mesh)
+print("mesh elts:", feelpp.nelements(r))
+r = feelpp.boundaryfaces(mesh)
+print("mesh boundary faces:", feelpp.nelements(r))</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>mesh elts: 5134
+mesh boundary faces: 610</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>A second more interesting example with ranges uses integrate to compute integrals of expressions over the mesh:</p>
+</div>
 <div class="listingblock">
 <div class="title">Example : compute integrals</div>
 <div class="content">
@@ -907,19 +1036,34 @@ The following methods are to use on the mesh object (<code>mesh</code> in the pr
 
 i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
 i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
-i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")</code></pre>
+i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")
+print("i1 = {}, i2 = {}, i3 = {}".format(i1,i2,i3))</code></pre>
 </div>
 </div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>i1 = [3.24282386], i2 = [149.465], i3 = [0.]</pre>
+</div>
+</div>
+</div>
+</details>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_complete_example"><a class="anchor" href="#_complete_example"></a>4. Complete example</h2>
+<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>4. Next steps</h2>
 <div class="sectionbody">
-<div class="listingblock">
-<div class="title">Mesh data structure handling example</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">Unresolved directive in mesh.adoc - include::{uri-pyfeelpp-raw}tests/test_mesh.py[]</code></pre>
-</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> <a href="#discr.adoc" class="xref unresolved">Manipulate functions and function spaces</a></p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> Export to paraview</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
