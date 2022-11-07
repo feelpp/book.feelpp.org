@@ -68,19 +68,23 @@ A bit more interesting example
 
 [source,python]
 ----
-acsv=fpp.download( "github:{repo:feelpp,path:toolboxes/fluid/cases/moving_body/gravity/cylinder_under_gravity/curve_comparison.csv}", worldComm=app.worldCommPtr() )[0]
-import pandas as pd
-df = pd.read_csv(acsv, sep=",")
+acsv=fpp.download( "github:{repo:feelpp,path:toolboxes/fluid/cases/moving_body/gravity/cylinder_under_gravity/curve_comparison.csv}", worldComm=app.worldCommPtr() )[0] <1>
+import pandas as pd <2>
+df = pd.read_csv(acsv, sep=",") <3>
 df.columns = df.columns.str.replace(' ', '')
 print(df.head())
 
 # prepare for plotting
-import plotly.graph_objects as go
+import plotly.graph_objects as go <4>
 fig = go.Figure()
 fig.add_trace(go.Scatter(x=df["TIME"], y=df["Y_CM"], name="y displacement"))
 fig.update_layout(legend_title_text='y-displacement over time of a falling disk in a fluid')
 fig.show()
 ----
+<1> download the file `curve_comparison.csv` from the {feelpp} github repository `toolboxes/fluid/cases/moving_body/gravity/cylinder_under_gravity/curve_comparison.csv`
+<2> use the `pandas` library to read the csv file
+<3> read the csv file and remove the spaces in the column names
+<4> use the `plotly` library to plot the data
 
 The code will download a csv file from the {feelpp} github repository and plot the data using the `plotly` library.
 
