@@ -747,7 +747,237 @@ app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))</code></pr
 </div>
 </div>
 <div class="sect1">
-<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>1. Next steps</h2>
+<h2 id="_create_and_evaluate_expressions"><a class="anchor" href="#_create_and_evaluate_expressions"></a>1. Create and evaluate expressions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An expression is a mathematical expression that can be evaluated at a given point and depend on multiple variables.
+It can be a scalar, a vectorial or a matricial expression.
+The expression can be created from a string.
+The expression can be then evaluated at a given point.</p>
+</div>
+<div class="sect2">
+<h3 id="_scalar_expression"><a class="anchor" href="#_scalar_expression"></a>1.1. Scalar expression</h3>
+<div class="listingblock">
+<div class="title">Create a scalar expression abd evaluate the expression at a given point (1,2)</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">expr = feelpp.expr("x+y:x:y") <i class="conum" data-value="1"></i><b>(1)</b>
+expr.evaluate({"x":1,"y":2}) <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create a scalar expression from a string, the symbols are listed at the end of the string using <code>:</code> as separator.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Evaluate the expression at the point (1,2), it returns a array with one element.</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>array([3.])</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>The expression can also be evaluated at a set of points.</p>
+</div>
+<div class="listingblock">
+<div class="title">Evaluate the expression at a set of points</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">expr.setParameterValues({"y":2}) <i class="conum" data-value="1"></i><b>(1)</b>
+import numpy as np
+x=np.linspace(0,1,10) <i class="conum" data-value="2"></i><b>(2)</b>
+expr.evaluate("x",x) <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Set the value of the parameter <code>y</code> to 2</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Create a numpy array with 10 points between 0 and 1</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Evaluate the expression at the 10 equidistributed points between 0 and 1, it returns a array with two elements.</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>array([2.        , 2.11111111, 2.22222222, 2.33333333, 2.44444444,
+       2.55555556, 2.66666667, 2.77777778, 2.88888889, 3.        ])</pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect2">
+<h3 id="_vectorial_expression"><a class="anchor" href="#_vectorial_expression"></a>1.2. Vectorial expression</h3>
+<div class="listingblock">
+<div class="title">Create a vectorial expression abd evaluate the expression at a given point (1,2)</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">expr = feelpp.expr("x+y:x:y") <i class="conum" data-value="1"></i><b>(1)</b>
+expr.evaluate({"x":1,"y":2}) <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create a vectorial expression from a string, the symbols are listed at the end of the string using <code>:</code> as separator.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Evaluate the expression at the point (1,2), it returns a array with two elements.</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>array([1., 3.])</pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect2">
+<h3 id="_matricial_expression"><a class="anchor" href="#_matricial_expression"></a>1.3. Matricial expression</h3>
+<div class="listingblock">
+<div class="title">Create a matricial expression abd evaluate the expression at a given point (1,2)</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">expr = feelpp.expr("x+y:x:y") <i class="conum" data-value="1"></i><b>(1)</b>
+expr.evaluate({"x":1,"y":2}) <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create a matricial expression from a string, the symbols are listed at the end of the string using <code>:</code> as separator.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Evaluate the expression at the point (1,2), it returns a array with four elements.</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>array([[1., 3.],
+       [3., 5.]])</pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_differentiation"><a class="anchor" href="#_differentiation"></a>2. Differentiation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The member functions <code>diff</code> and <code>diff2</code> allows to compute the first and second symbolic derivatives of a function. The first argument is the symbol with respect to which the derivative is computed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">ex=feelpp.expr("a*sin(x):x:a")
+ex.setParameterValues({"a":1})
+exd = ex.diff("x") <i class="conum" data-value="1"></i><b>(1)</b>
+exd2 = ex.diff2("x") <i class="conum" data-value="2"></i><b>(2)</b>
+exda = ex.diff("a") <i class="conum" data-value="3"></i><b>(3)</b>
+exdax = ex.diff("a").diff("x") <i class="conum" data-value="4"></i><b>(4)</b>
+x=np.linspace(0,2*math.pi,200)
+print(f"   ex: {ex}")
+print(f"  exd: {exd}")
+print(f" exd2: {exd2}")
+print(f" exda: {exda}")
+print(f"exdaa: {exdax}")</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>First derivative with respect to <code>x</code>\(\frac{\partial \cdot }{\partial x}\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Second derivative with respect to <code>x</code>\(\frac{\partial^2 \cdot }{\partial^2 x}\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>First derivative with respect to <code>a</code> \(\frac{\partial \cdot }{\partial a}\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>First derivative with respect to <code>a</code> and then with respect to <code>x</code> \(\frac{\partial^2 \cdot}{\partial x \partial a}\)</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>   ex: sin(x)*a
+  exd: a*cos(x)
+ exd2: -sin(x)*a
+ exda: sin(x)
+exdax: cos(x)</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>Now let&#8217;s plot the expression and its derivative.
+The first and last are the same.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import plotly.graph_objects as go
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=x, y=ex.evaluate("x",x), name="sin(x)"))
+fig.add_trace(go.Scatter(x=x, y=exd.evaluate("x",x), name="cos(x)"))
+fig.add_trace(go.Scatter(x=x, y=exd2.evaluate("x",x), name="-sin(x)"))
+fig.add_trace(go.Scatter(x=x, y=exda.evaluate("x",x), name="sin(x)"))
+fig.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/pyfeelpp/plot-expr-diff.png" alt="plot expr diff">
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>3. Next steps</h2>
 <div class="sectionbody">
 <div class="ulist checklist">
 <ul class="checklist">
