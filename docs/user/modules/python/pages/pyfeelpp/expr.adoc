@@ -157,6 +157,196 @@ fig.show()
 image::pyfeelpp/plot-expr-diff.png[]
 ====
 
+
+== Special functions
+
+The {feelpp} library provides a set of special functions that can be used in expressions.
+
+=== function with multiple parameters
+
+[source,python]
+----
+ex=fpp.expr("sin(w*x+b):x:w:b")
+ex.setParameterValues({"w":2*math.pi,"b":0.5})
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="sin",labels={"x":"x","y":r'y'})
+fig.show()
+----
+
+[%collapsible.result]
+.Results
+====
+image::pyfeelpp/plot-expr-sin.png[]
+====
+
+=== clamp
+
+The function `clamp` allows to clamp a value between two bounds.
+
+[source,python]
+----
+ex=fpp.expr("clamp(sin(w*x+b),-0.3,0.4):x:w:b")
+ex.setParameterValues({"w":2*math.pi,"b":0.5})
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="f",labels={"x":"x","y":r'y'})
+fig.show()
+----
+
+[%collapsible.result]
+.Results
+====
+image::pyfeelpp/plot-clamp.png[]
+====
+
+
+=== mapabcd
+
+The function `mapabcd` allows to map a value from a given interval to another interval. The first argument is the value to map, the second and third arguments are the lower and upper bounds of the interval to map from, the fourth and fifth arguments are the lower and upper bounds of the interval to map to.
+
+[source,python]
+----
+ex=fpp.expr("mapabcd(x,-1,1,0,1):x")
+x=np.linspace(-1,1,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="f",labels={"x":"x","y":r'y'})
+fig.show()
+----
+
+[%collapsible.result]
+.Results
+====
+image::pyfeelpp/plot-mapabcd.png[]
+====
+
+=== step1
+
+The function `step1` is a step function that is equal to 1 if the argument is greater than 0 and 0 otherwise.
+
+[source,python]
+----
+ex=fpp.expr("step1(x,2):x")
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="step1",labels={"x":"x","y":r'y'})
+fig.show()
+----
+
+[%collapsible.result]
+.Results
+====
+image::pyfeelpp/plot-step1.png[]
+====
+
+=== smoothstep
+
+The smoothstep function is a smooth approximation of the step function.
+
+[source,python]
+----
+ex=fpp.expr("smoothstep(sin(x),0,0.5):x")
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="smoothstep",labels={"x":"x","y":r'y'})
+fig.show()
+----
+
+[%collapsible.result]
+.Results
+====
+image::pyfeelpp/plot-smoothstep.png[]
+====
+
+
+=== pulse
+
+The pulse function is defined as
+stem:[\text{pulse}(x)=\begin{cases} 1 & \text{if } x\in[0,1\] \\ 0 & \text{otherwise} \end{cases}]
+[source,python]
+----
+ex=fpp.expr("pulse(x,0,1,2):x")
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="rectangle pulse(0,1,2)",labels={"x":"x","y":r'y'})
+fig.show()
+----
+
+[%collapsible.result]
+.Results
+====
+image::pyfeelpp/plot-pulse.png[]
+====
+
+=== rectangle
+
+The rectangle function is defined as
+stem:[\text{rectangle}(x)=\begin{cases} 1 & \text{if } x\in[0,1\] \\ 0 & \text{otherwise} \end{cases}]
+[source,python]
+----
+ex=fpp.expr("rectangle(x,0,1):x")
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="rectangle rectangle(0,1)",labels={"x":"x","y":r'y'})
+fig.show()
+----
+
+[%collapsible.result]
+.Results
+====
+image::pyfeelpp/plot-rectangle.png[]
+====
+
+=== triangle
+
+The triangle function is defined as
+stem:[\text{triangle}(x)=1-\left|\chi_{[a,b\]} \left(-1+2\frac{x-a}{b-a} \right) \right\| \], \quad x\in[a,b\]]
+
+
+[source,python]
+----
+ex=fpp.expr("triangle(x,0,1):x")
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="rectangle triangle(0,1)",labels={"x":"x","y":r'y'})
+fig.show()
+----
+
+[%collapsible.result]
+.Results
+====
+image::pyfeelpp/plot-triangle.png[]
+====
+
+
+=== sinwave
+
+The `sinwave` function is a periodic function with a given period and amplitude.
+
+[source,python]
+----
+ex=fpp.expr("sinewave(x,2,0.5):x")
+x=np.linspace(0,2*math.pi,200)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="sinewave(4*pi*x+0.5)",labels={"x":"x","y":r'y'})
+fig.show()
+----
+
+[%collapsible.result]
+.Results
+====
+image::pyfeelpp/plot-sinewave.png[]
+====
+
 == Next steps
 
 - [x] xref:pyfeelpp/discr.adoc[Manipulate function and function spaces]
