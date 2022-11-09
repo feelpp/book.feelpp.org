@@ -977,7 +977,251 @@ fig.show()</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>3. Next steps</h2>
+<h2 id="_special_functions"><a class="anchor" href="#_special_functions"></a>3. Special functions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Feel++ library provides a set of special functions that can be used in expressions.</p>
+</div>
+<div class="sect2">
+<h3 id="_function_with_multiple_parameters"><a class="anchor" href="#_function_with_multiple_parameters"></a>3.1. function with multiple parameters</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">ex=fpp.expr("sin(w*x+b):x:w:b")
+ex.setParameterValues({"w":2*math.pi,"b":0.5})
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="sin",labels={"x":"x","y":r'y'})
+fig.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/pyfeelpp/plot-expr-sin.png" alt="plot expr sin">
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect2">
+<h3 id="_clamp"><a class="anchor" href="#_clamp"></a>3.2. clamp</h3>
+<div class="paragraph">
+<p>The function <code>clamp</code> allows to clamp a value between two bounds.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">ex=fpp.expr("clamp(sin(w*x+b),-0.3,0.4):x:w:b")
+ex.setParameterValues({"w":2*math.pi,"b":0.5})
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="f",labels={"x":"x","y":r'y'})
+fig.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/pyfeelpp/plot-clamp.png" alt="plot clamp">
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect2">
+<h3 id="_mapabcd"><a class="anchor" href="#_mapabcd"></a>3.3. mapabcd</h3>
+<div class="paragraph">
+<p>The function <code>mapabcd</code> allows to map a value from a given interval to another interval. The first argument is the value to map, the second and third arguments are the lower and upper bounds of the interval to map from, the fourth and fifth arguments are the lower and upper bounds of the interval to map to.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">ex=fpp.expr("mapabcd(x,-1,1,0,1):x")
+x=np.linspace(-1,1,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="f",labels={"x":"x","y":r'y'})
+fig.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/pyfeelpp/plot-mapabcd.png" alt="plot mapabcd">
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect2">
+<h3 id="_step1"><a class="anchor" href="#_step1"></a>3.4. step1</h3>
+<div class="paragraph">
+<p>The function <code>step1</code> is a step function that is equal to 1 if the argument is greater than 0 and 0 otherwise.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">ex=fpp.expr("step1(x,2):x")
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="step1",labels={"x":"x","y":r'y'})
+fig.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/pyfeelpp/plot-step1.png" alt="plot step1">
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect2">
+<h3 id="_smoothstep"><a class="anchor" href="#_smoothstep"></a>3.5. smoothstep</h3>
+<div class="paragraph">
+<p>The smoothstep function is a smooth approximation of the step function.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">ex=fpp.expr("smoothstep(sin(x),0,0.5):x")
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="smoothstep",labels={"x":"x","y":r'y'})
+fig.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/pyfeelpp/plot-smoothstep.png" alt="plot smoothstep">
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect2">
+<h3 id="_pulse"><a class="anchor" href="#_pulse"></a>3.6. pulse</h3>
+<div class="paragraph">
+<p>The pulse function is defined as
+\(\text{pulse}(x)=\begin{cases} 1 &amp; \text{if } x\in[0,1] \\ 0 &amp; \text{otherwise} \end{cases}\)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">ex=fpp.expr("pulse(x,0,1,2):x")
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="rectangle pulse(0,1,2)",labels={"x":"x","y":r'y'})
+fig.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/pyfeelpp/plot-pulse.png" alt="plot pulse">
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect2">
+<h3 id="_rectangle"><a class="anchor" href="#_rectangle"></a>3.7. rectangle</h3>
+<div class="paragraph">
+<p>The rectangle function is defined as
+\(\text{rectangle}(x)=\begin{cases} 1 &amp; \text{if } x\in[0,1] \\ 0 &amp; \text{otherwise} \end{cases}\)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">ex=fpp.expr("rectangle(x,0,1):x")
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="rectangle rectangle(0,1)",labels={"x":"x","y":r'y'})
+fig.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/pyfeelpp/plot-rectangle.png" alt="plot rectangle">
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect2">
+<h3 id="_triangle"><a class="anchor" href="#_triangle"></a>3.8. triangle</h3>
+<div class="paragraph">
+<p>The triangle function is defined as
+\(\text{triangle}(x)=1-\left|\chi_{[a,b]} \left(-1+2\frac{x-a}{b-a} \right) \right\| ], \quad x\in[a,b]\)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">ex=fpp.expr("triangle(x,0,1):x")
+x=np.linspace(0,2*math.pi,100)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="rectangle triangle(0,1)",labels={"x":"x","y":r'y'})
+fig.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/pyfeelpp/plot-triangle.png" alt="plot triangle">
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect2">
+<h3 id="_sinwave"><a class="anchor" href="#_sinwave"></a>3.9. sinwave</h3>
+<div class="paragraph">
+<p>The <code>sinwave</code> function is a periodic function with a given period and amplitude.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">ex=fpp.expr("sinewave(x,2,0.5):x")
+x=np.linspace(0,2*math.pi,200)
+y=ex.evaluate("x",x)
+
+fig = px.line(x=x, y=y, title="sinewave(4*pi*x+0.5)",labels={"x":"x","y":r'y'})
+fig.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/pyfeelpp/plot-sinewave.png" alt="plot sinewave">
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>4. Next steps</h2>
 <div class="sectionbody">
 <div class="ulist checklist">
 <ul class="checklist">
