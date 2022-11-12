@@ -828,11 +828,14 @@ expr.evaluate("x",x) <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 <div class="sect2">
 <h3 id="_vectorial_expression"><a class="anchor" href="#_vectorial_expression"></a>1.2. Vectorial expression</h3>
+<div class="paragraph">
+<p>We start with an expression that depends on two variables <code>x</code> and <code>y</code> and create a vectorial expression with the expression <code>x</code> and <code>y</code>.</p>
+</div>
 <div class="listingblock">
 <div class="title">Create a vectorial expression abd evaluate the expression at a given point (1,2)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">expr = feelpp.expr("x+y:x:y") <i class="conum" data-value="1"></i><b>(1)</b>
-expr.evaluate({"x":1,"y":2}) <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">expr21 = feelpp.expr("{x,y}:x:y",row=2,col=1) <i class="conum" data-value="1"></i><b>(1)</b>
+expr21.evaluate({"x":1,"y":2}) <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -852,7 +855,38 @@ expr.evaluate({"x":1,"y":2}) <i class="conum" data-value="2"></i><b>(2)</b></cod
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre>array([1., 3.])</pre>
+<pre>array([1., 2.])</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>Now we turn to a vectorial expression with 3 components.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">expr31 = feelpp.expr("{x,y,z+x}:x:y:z",row=3,col=1) <i class="conum" data-value="1"></i><b>(1)</b>
+expr31.evaluate({"x":1,"y":2,"z":10}) <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create a vectorial expression from a string, the symbols are listed at the end of the string using <code>:</code> as separator.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Evaluate the expression at the point (1,2,10), it returns a array with three elements.</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>array([ 1.,  2., 11.])</pre>
 </div>
 </div>
 </div>
@@ -860,11 +894,14 @@ expr.evaluate({"x":1,"y":2}) <i class="conum" data-value="2"></i><b>(2)</b></cod
 </div>
 <div class="sect2">
 <h3 id="_matricial_expression"><a class="anchor" href="#_matricial_expression"></a>1.3. Matricial expression</h3>
+<div class="paragraph">
+<p>We start with a 2x2 matricial expression.</p>
+</div>
 <div class="listingblock">
 <div class="title">Create a matricial expression abd evaluate the expression at a given point (1,2)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">expr = feelpp.expr("x+y:x:y") <i class="conum" data-value="1"></i><b>(1)</b>
-expr.evaluate({"x":1,"y":2}) <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">expr22 = feelpp.expr("{x+y,x,y,y-x}:x:y", row=2, col=2)  <i class="conum" data-value="1"></i><b>(1)</b>
+expr22.evaluate({"x":1,"y":2}) <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -884,8 +921,41 @@ expr.evaluate({"x":1,"y":2}) <i class="conum" data-value="2"></i><b>(2)</b></cod
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre>array([[1., 3.],
-       [3., 5.]])</pre>
+<pre>array([[3., 1.],
+       [2., 1.]])</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>We now turn to a 3x3 matricial expression.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">expr33 = feelpp.expr("{x,y,z,x-y,y-y,z+x+y,z,y,x}:x:y:z",row=3,col=3) <i class="conum" data-value="1"></i><b>(1)</b>
+expr33.evaluate({"x":1,"y":2,"z":3}) <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create a matricial expression from a string, the symbols are listed at the end of the string using <code>:</code> as separator.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Evaluate the expression at the point (1,2,3), it returns a array with nine elements.</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>array([[ 1.,  2.,  3.],
+       [-1.,  0.,  6.],
+       [ 3.,  2.,  1.]])</pre>
 </div>
 </div>
 </div>
@@ -974,6 +1044,70 @@ fig.show()</code></pre>
 </div>
 </div>
 </details>
+<div class="sect2">
+<h3 id="_derivative_of_a_vectorial_expression"><a class="anchor" href="#_derivative_of_a_vectorial_expression"></a>2.1. Derivative of a vectorial expression</h3>
+<div class="paragraph">
+<p>Here is an example of a vectorial expression and its derivative with respect to <code>x</code> and <code>y</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">expr21 = feelpp.expr("{x^3,x*y^2}:x:y", row=2, col=1)  <i class="conum" data-value="1"></i><b>(1)</b>
+print("d(x,y)/dx = ",expr21.diff("x")) <i class="conum" data-value="2"></i><b>(2)</b>
+print("d(x,y)/dy = ", expr21.diff("y")) <i class="conum" data-value="3"></i><b>(3)</b>
+print("d2(x,y)/dxdy = ", expr21.diff("x").diff("y")) <i class="conum" data-value="4"></i><b>(4)</b>
+print("d2(x,y)/dydx = ", expr21.diff("y").diff("x"))   <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create a vectorial expression from a string, the symbols are listed at the end of the string using <code>:</code> as separator.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>First derivative with respect to <code>x</code>\(\frac{\partial \cdot }{\partial x}\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>First derivative with respect to <code>y</code>\(\frac{\partial \cdot }{\partial y}\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>First derivative with respect to <code>x</code> and then with respect to <code>y</code> \(\frac{\partial^2 \cdot}{\partial x \partial y}\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>First derivative with respect to <code>y</code> and then with respect to <code>x</code> \(\frac{\partial^2 \cdot}{\partial y \partial x}\)</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>d(x,y)/dx =  [[3*x^2],[y^2]]
+d(x,y)/dy =  [[0],[2*x*y]]
+d2(x,y)/dxdy =  [[0],[2*y]]
+d2(x,y)/dydx =  [[0],[2*y]]</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+similar results are obtained for matricia expressions.
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
