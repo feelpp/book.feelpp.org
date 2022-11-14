@@ -7,7 +7,6 @@
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/python/pyfeelpp/filters.html">
     <link rel="prev" href="integrals.html">
     <link rel="next" href="../pyfeelpptoolboxes/index.html">
-    <meta name="keywords" content="Feel++, partial differential equations, finite element method,">
     <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
@@ -680,6 +679,11 @@ MathJax.Hub.Config({
   <div class="dropdown-content">
 
 
+        <a href="../_attachments/pyfeelpp/filters.ipynb" title="Download Jupyter Notebook" data-toggle="tooltip" data-placement="left">
+         .ipynb <i class="fas fa-file"></i>
+        </a>
+
+
           <a onclick="print(this)"  class="headerbtn"  data-toggle="tooltip" data-placement="left" title="Print to PDF">
               .pdf <i class="fas fa-file-pdf"></i>
           </a>
@@ -735,6 +739,9 @@ title="Fullscreen mode"
 <div class="ulist checklist">
 <ul class="checklist">
 <li>
+<p><i class="fa fa-check-square-o"></i> initiate the Feel++ environment</p>
+</li>
+<li>
 <p><i class="fa fa-check-square-o"></i> download a mesh description from <a href="https://github.com/feelpp/feelpp/" class="bare">github.com/feelpp/feelpp/</a></p>
 </li>
 <li>
@@ -754,43 +761,113 @@ title="Fullscreen mode"
 <div class="listingblock">
 <div class="title">Example to build a mesh and function space, create an element and visualize them in ParaView</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">404: Not Found</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
+import sys
+app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>To run this example,</p>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The Feel++ environment is initiated with the name of the application and the path to the local repository where the results will be stored.</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpiexec -n 4 python3 test_exporter.py</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) <i class="conum" data-value="1"></i><b>(1)</b>
+Xh=feelpp.functionSpace(mesh=mesh,space="Pch",order=1) <i class="conum" data-value="2"></i><b>(2)</b>
+P0h=feelpp.functionSpace(mesh=mesh,space="Pdh",order=0) <i class="conum" data-value="3"></i><b>(3)</b>
+u=Xh.element() <i class="conum" data-value="4"></i><b>(4)</b>
+u.on(range=feelpp.elements(mesh), expr=feelpp.expr("sin(2*pi*x)*cos(pi*y):x:y")) <i class="conum" data-value="5"></i><b>(5)</b>
+e = feelpp.exporter(mesh=mesh)  <i class="conum" data-value="6"></i><b>(6)</b>
+e.addScalar("a_scalar", 1.) <i class="conum" data-value="7"></i><b>(7)</b>
+e.addP1c("u",u) <i class="conum" data-value="8"></i><b>(8)</b>
+e.addP0d("pid",feelpp.pid( P0h )) <i class="conum" data-value="9"></i><b>(9)</b>
+e.save()   <i class="conum" data-value="10"></i><b>(10)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The mesh is loaded from the <a href="https://github.com/feelpp/feelpp/" class="bare">github.com/feelpp/feelpp/</a> repository</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The function space \(X_h\) is built from the mesh \(mesh\) and the space \(Pch\) and order \(1\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The function space \(P0_h\) is built from the mesh \(mesh\) and the space \(Pdh\) and order \(0\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The element \(u\) is built from the function space \(X_h\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The element \(u\) is interpolated with the expression \({sin(2*pi*x)*cos(pi*y)}:x:y\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>The exporter is built from the mesh \(mesh\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>The scalar \(a_scalar\) is added to the exporter \(e\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>The element \(u\) is added to the exporter \(e\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>The element \(pid\) is added to the exporter \(e\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>The exporter \(e\) is saved to the disk</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>[loadMesh] Loading mesh in format geo+msh: "/Users/prudhomm/Downloads/feelppdb/downloads/feelpp2d.geo"
+[loadMesh] Use default geo desc: /Users/prudhomm/Downloads/feelppdb/downloads/feelpp2d.geo 0.1</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>The results are stored in the directory <code>feelppdb`</code> and can be visualized with <a href="https://paraview.org">ParaView</a> or EnSight.</p>
 </div>
 <div class="paragraph">
-<p>The location of the results are shown in the output of the script.</p>
+<p>INFO: The file <code>exports/ensightgold/myapp/myapp.case</code> can be opened directly in ParaView or EnSight to visualize the mesh and the fields.</p>
 </div>
 <div class="listingblock">
-<div class="title">Output of the script</div>
 <div class="content">
-<pre>[ Starting Feel++ ] application test_exporter.py version 0.1 date 2021-Jul-16
-[feelpp] create Feel++ repository "/home/saigre/feelppdb" ...
-[feelpp] create Feel++ geo repository "/home/saigre/feelppdb/geo" ...
-[feelpp] create Feel++ exprs directory "/home/saigre/feelppdb/./exprs" ...
- . test_exporter.py files are stored in /home/saigre/feelppdb/./np_4
- .. logfiles :/home/saigre/feelppdb/./np_4/logs
-[loadMesh] Loading mesh in format geo+msh: "/home/saigre/feelppdb/./downloads/feelpp2d.geo"
-[loadMesh] Use default geo desc: /home/saigre/feelppdb/./downloads/feelpp2d.geo 0.1
-[loadMesh] Loading mesh in format geo+msh: "/home/saigre/feelppdb/./downloads/feelpp3d.geo"
-[loadMesh] Use default geo desc: /home/saigre/feelppdb/./downloads/feelpp3d.geo 0.1
-[env] Time : 6.69257s
-[ Stopping Feel++ ] application test_exporter.py execution time 6.69257s</pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">!ls exports/ensightgold/myapp
+!paraview exports/ensightgold/myapp/myapp.case</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>It remains to open the file <code>.case</code> with ParaView or EnSight.</p>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>myapp-1.sos          myapp.geo.0001       myapp.u.scl.0001
+myapp-paraview-1.sos myapp.pid.scl.0001
+myapp.case           myapp.timeset</pre>
 </div>
-<div class="paragraph">
-<p>It should look like this</p>
 </div>
+</div>
+</details>
 <nav class="pagination">
   <span class="prev"><a href="integrals.html">Computing integrals</a></span>
   <span class="next"><a href="../pyfeelpptoolboxes/index.html">pyFeel++ Toolboxes</a></span>
