@@ -776,7 +776,8 @@ app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) <i class="
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">app.setLogVerbosityLevel(0) <i class="conum" data-value="0"></i><b>(0)</b>
+geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) <i class="conum" data-value="1"></i><b>(1)</b>
 Xh=feelpp.functionSpace(mesh=mesh,space="Pch",order=1) <i class="conum" data-value="2"></i><b>(2)</b>
 P0h=feelpp.functionSpace(mesh=mesh,space="Pdh",order=0) <i class="conum" data-value="3"></i><b>(3)</b>
@@ -793,42 +794,46 @@ e.save()   <i class="conum" data-value="10"></i><b>(10)</b></code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The mesh is loaded from the <a href="https://github.com/feelpp/feelpp/" class="bare">github.com/feelpp/feelpp/</a> repository</td>
+<td>The verbosity level is set to 0 (only <code>VLOG(level)</code> with <code>level &#8656; 0</code> are displayed)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The function space \(X_h\) is built from the mesh \(mesh\) and the space \(Pch\) and order \(1\)</td>
+<td>The mesh is loaded from the <a href="https://github.com/feelpp/feelpp/" class="bare">github.com/feelpp/feelpp/</a> repository</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The function space \(P0_h\) is built from the mesh \(mesh\) and the space \(Pdh\) and order \(0\)</td>
+<td>The function space \(X_h\) is built from the mesh \(mesh\) and the space \(Pch\) and order \(1\)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The element \(u\) is built from the function space \(X_h\)</td>
+<td>The function space \(P0_h\) is built from the mesh \(mesh\) and the space \(Pdh\) and order \(0\)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>The element \(u\) is interpolated with the expression \({sin(2*pi*x)*cos(pi*y)}:x:y\)</td>
+<td>The element \(u\) is built from the function space \(X_h\)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>The exporter is built from the mesh \(mesh\)</td>
+<td>The element \(u\) is interpolated with the expression \({sin(2*pi*x)*cos(pi*y)}:x:y\)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>The scalar \(a_scalar\) is added to the exporter \(e\)</td>
+<td>The exporter is built from the mesh \(mesh\)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>The element \(u\) is added to the exporter \(e\)</td>
+<td>The scalar \(a_scalar\) is added to the exporter \(e\)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="9"></i><b>9</b></td>
-<td>The element \(pid\) is added to the exporter \(e\)</td>
+<td>The element \(u\) is added to the exporter \(e\)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>The element \(pid\) is added to the exporter \(e\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
 <td>The exporter \(e\) is saved to the disk</td>
 </tr>
 </table>
@@ -852,8 +857,7 @@ e.save()   <i class="conum" data-value="10"></i><b>(10)</b></code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">!ls exports/ensightgold/myapp
-!paraview exports/ensightgold/myapp/myapp.case</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">!ls exports/ensightgold/myapp</code></pre>
 </div>
 </div>
 <details class="result">
