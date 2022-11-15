@@ -24,6 +24,7 @@ app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) # <1>
 
 [source,python]
 ----
+app.setLogVerbosityLevel(0) # <0>
 geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) # <1>
 Xh=feelpp.functionSpace(mesh=mesh,space="Pch",order=1) # <2>
@@ -36,6 +37,7 @@ e.addP1c("u",u) # <8>
 e.addP0d("pid",feelpp.pid( P0h )) # <9>
 e.save()   # <10>
 ----
+<0> The verbosity level is set to 0 (only `VLOG(level)` with `level <= 0` are displayed)
 <1> The mesh is loaded from the {uri-github-feelpp} repository
 <2> The function space stem:[X_h] is built from the mesh stem:[mesh] and the space stem:[Pch] and order stem:[1]
 <3> The function space stem:[P0_h] is built from the mesh stem:[mesh] and the space stem:[Pdh] and order stem:[0]
@@ -64,7 +66,6 @@ INFO: The file `exports/ensightgold/myapp/myapp.case` can be opened directly in 
 [source,python]
 ----
 !ls exports/ensightgold/myapp
-!paraview exports/ensightgold/myapp/myapp.case
 ----
 [%collapsible.result]
 .Results
