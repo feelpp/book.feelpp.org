@@ -27,24 +27,168 @@ NOTE: These names are not used currently, but it should be the case in the futur
 
 == Models
 
-A section `Models` is present if the toolbox enables multiple physics, _i.e._ it allows to select the type of PDE/Model.
-In most toolboxes, this section is optional and a default model is enabled.
+The goal of section `Models` is to describe the models used by the toolbox (i.e. physical or mathematical model).
+These models will be attached to one or several materials defined in the Materials sections.
+This section is fully linked to the model, you need to refer to the related toolbox documentation.
+In the following, we will only describe the common parts to of models.
 
-Here is an example of this section for the `fluid` toolbox.
+
+=== Basic usage
+
+We start with this simple example composed of only one model :
+
 [source,json]
 ----
 "Models": <1>
 {
-   "equations":"Navier-Stokes" <2>
+  "heat":<2>
+  {
+     "name":"heatOnIron", <3>
+     "materials":"iron", <4>
+     "setup":{ /* TO FILL*/ } <5>
+  }
 }
 ----
-<1> Section `Models` defined by the toolbox to define the main configuration and in particular the set of equations to be solved
-<2> toolbox specific option to define set of equations to be solved, read the toolbox manual to learn about the possible options.
+<1> start section `Models` defined by the toolbox to define the main configuration and particularly the set of equations to be solved
+<2> toolbox keyword that allows identifying the kind of model
+<3> name of the model (this is an optional argument)
+<4> material names where this model is applied (value can be a string or an array of string)
+<5> JSON object where the model setup is defined (`setup` keyword can be substituted by `equation` or `equations`)
+
+NOTE: For some toolboxes, if the `setup` JSON object is not given then the model is still configured with default properties.
+
+NOTE: If the `materials` entry is not given then the model is applied to the whole domain (i.e. mesh).
+
+
+For a given type of model (i.e. toolbox keyword), you can define several models by passing an array of JSON objects.
+The snippet JSON below shows the definition of two heat models :
+
+[source,json]
+----
+"Models":
+{
+  "heat":<1>
+  [{
+     "name":"heatOnIron", <2>
+     "materials":"iron", <3>
+     "setup":{ /* TO FILL*/ }
+  },
+  {
+     "name":"heatOnCopper", <4>
+     "materials":"copper", <5>
+     "setup":{ /* TO FILL*/ }
+  }]
+}
+----
+<1> toolbox keyword
+<2> name given to `heat` model
+<3> name of material where the model `heatOnIron` is applied
+<4> name given to another `heat`model
+<5> name of material where the model `heatOnCopper` is applied
+
+
+[WARNING]
+====
+* For a given type of model, several models can't have the same name
+* For a given type of model, each model defined should have a null intersection between materials
+====
+
+
+=== Multiphysics
+
+In multiphysic context, ...
+
+=== Factorization
+
+When using several models, each linked to materials, some JSON parts can be redundant. The idea is to apply a JSON merge_patch from a common part into each specific part.
+
+For example, we consider this JSON section :
+
+[source,json]
+----
+"Models": {
+  "heat":[{ <1>
+     "name":"heat_PCB",
+     "materials":"PCB",
+     "setup":{
+        "unknown":{
+           "basis":"Pch1",
+           "name":"temperature",
+           "symbol":"T"
+        },
+        "coefficients":{
+           "c":"materials_PCB_k:materials_PCB_k"
+        }
+     }
+  },{ <2>
+      "name":"heat_AIR",
+      "materials":"AIR",
+      "setup":{
+         "unknown":{
+            "basis":"Pch1",
+            "name":"temperature",
+            "symbol":"T"
+         },
+         "coefficients":{
+            "c":"materials_AIR_k:materials_AIR_k",
+            "beta":"{0,(x-0.008)*(x-0.054)}:x"
+         }
+     }
+  }]
+}
+----
+<1> start JSON object of first model called `heat_PCB`
+<2> start JSON object of second model called `heat_AIR`
+
+In these two models, we can see that some parts of the JSON are identical. We can avoid this duplication by defining a common part.
+The previous example can be rewritten as :
+
+[source,json]
+----
+"Models": {
+  "heat":{
+     "common":{ <1>
+        "setup":{
+           "unknown":{
+              "basis":"Pch1",
+              "name":"temperature",
+              "symbol":"T"
+           }
+        }
+     },
+     "models":[{ <2>
+         "name":"heat_PCB",
+         "materials":"PCB",
+         "setup":{
+            "coefficients":{
+               "c":"materials_PCB_k:materials_PCB_k"
+            }
+         }
+       },{ <3>
+         "name":"heat_AIR",
+         "materials":"AIR",
+            "setup":{
+               "coefficients":{
+                  "c":"materials_AIR_k:materials_AIR_k",
+                  "beta":"{0,(x-0.008)*(x-0.054)}:x"
+               }
+            }
+       }]
+    }
+}
+----
+<1> start JSON object representing common part
+<2> start JSON object of first model called `heat_PCB`
+<3> start JSON object of second model called `heat_AIR`
+
+Each model will be set up by generating a JSON with a merge patch applied from the common part with the current JSON object of the model.
+Thanks to JSON merge patch properties, the value of the common part can be overridden.
+
 
 == Expressions
 
-Various json fields may hold mathematical expressions that will be evaluated by Feel{pp}. 
-There are reserved keywords that cannot be used as parameter or field names. 
+Various json fields may hold mathematical expressions that will be evaluated by Feel{pp}.
+There are reserved keywords that cannot be used as parameter or field names.
 They are listed in the following table
 
 [[reserved-keywords]]
@@ -58,7 +202,7 @@ They are listed in the following table
 | `meas` | measure of the current element | `"foo":"2*h/meas:h:meas"`
 | `emarker` | marker of the current element | `"foo":"2*h*(emarker==1)+ h*(emarker==2):h"`
 | `measPEN` | measure of the union of elements to which a vertex belongs (P1 Lagrange only)  |
-| `nPEN` | number of elements to which the current vertex belongs (P1 Lagrange only) | 
+| `nPEN` | number of elements to which the current vertex belongs (P1 Lagrange only) |
 |===
 
 
@@ -91,7 +235,7 @@ This section of the Model JSON file defines the parameters that may enter inside
 <3> defines a new parameter `alpha` and its associated expression. This expression depends on another symbol, here the parameter `ubar`. The symbol defined by this new parameter is also called `alpha`.
 <4> defines a new parameter `beta` and its associated expression. Here the expression is vector of dimension 2. Consequently, symbols generated by this new parameter are `beta_0` and `beta_1` (Currently we cannot use a vector as a symbol).
 <5> defines a new parameter `chi` and its associated expression
-<6> defines a new parameter `pIn` and its definition is given in the subsection below 
+<6> defines a new parameter `pIn` and its definition is given in the subsection below
 <7> the type of parameter is fit
 <8> the filename of a csv file used for the fitting
 <9> column name of csv file used in abscissa
@@ -110,28 +254,29 @@ For example, the next code snippet is defined wtih 3 names : `heat`, `fluid` and
 .Example of Meshes section skeleton
 [source,json]
 ----
-"Meshes":
 {
-    "heat":
-    {
-        // TO FILL, SEE BELOW
+  "Meshes": {
+    "heat": {
+      // TO FILL, SEE BELOW
     },
-    "fluid":
-    {
-        // TO FILL, SEE BELOW
+    "fluid": {
+      // TO FILL, SEE BELOW
     },
-    "heatfluid":
-    {
-        // TO FILL, SEE BELOW
+    "heatfluid": {
+      // TO FILL, SEE BELOW
     }
+  }
 }
 ----
 
 In each subsection, mesh propreties and data will be defined. Currently, we can have
 
 * Import
+* Fields
 * DistanceToRange
 * Data
+* MeshMotion
+* MeshAdaptation
 
 
 === Import section
@@ -141,16 +286,15 @@ This section allow to define mesh importation properties. Generally, this is the
 .Example of Meshes Import section
 [source,json]
 ----
-"Meshes":
 {
-    "heat":
-    {
-        "Import":
-         {
-             "filename":"$cfgdir/thermo2dCase2.geo",
-             "hsize":0.001
-        }
+  "Meshes": {
+    "heat": {
+      "Import": {
+        "filename": "$cfgdir/thermo2dCase2.geo",
+        "hsize": 0.001
+      }
     }
+  }
 }
 ----
 
@@ -172,26 +316,35 @@ These functions will be available in expression through symbols.
 For adding the computation of a distance function, you should defined a json object including the `markers` listing.
 The key of this json objet is a name given to the distance function.
 
+The optional parameter `max_distance` is used to compute distance only for smallest distance less than this value.
+This parameter is expressed by a number or an string expression (expression should be evaluable).
+
 
 .Example of Meshes DistanceToRange section
 [source,json]
 ----
-"Meshes":
 {
-   "heat":
-   {
-      "DistanceToRange":
-      {
-         "wall1":
-          {
-               "markers":["Floor","Ceiling","Hot_Wall","Cold_Wall"]
-          },
-         "wall2":
-          {
-               "markers":["Floor","Ceiling"]
-          }
+  "Meshes": {
+    "heat": {
+      "DistanceToRange": {
+        "wall1": {
+          "markers": [
+            "Floor",
+            "Ceiling",
+            "Hot_Wall",
+            "Cold_Wall"
+          ]
+        },
+        "wall2": {
+          "markers": [
+            "Floor",
+            "Ceiling"
+          ],
+          "max_distance":"0.3*u:u"
+        }
       }
-   }
+    }
+  }
 }
 ----
 
@@ -199,9 +352,218 @@ The example above will generate 2 new symbols called `meshes_heat_distanceToRang
 
 More generally, the symbols will be defined by `meshes_<mesh_id>_distanceToRange_<d2r_id>` avec `<mesh_id>` the mesh identification and `<d2r_id>` the name given to the distance function.
 
+Also, some normalized fields can be generated by using the next methods.
+We denote by stem:[f] the distance function computed and stem:[g] a normalization of stem:[f].
+
+* Min-Max :
+
+[stem]
+++++
+g(f)=a+\frac{\left(f-min(f)\right)\left(b-a\right)}{max(f)-min(f)}
+++++
+
+with reals stem:[a] and stem:[b] (should verify stem:[a<b]) specifying the range of values (default stem:[[0,1]]).
+
+* Mean :
+
+[stem]
+++++
+g(f)=\frac{f-average(f)}{max(f)-min(f)}
+++++
+
+.Example 1 of DistanceToRange normalisation setup
+[source,json]
+----
+{
+  "DistanceToRange": {
+    "walls": {
+      "markers": [
+        "wall1",
+        "wall2"
+      ],
+      "normalization": [
+        "min_max",
+        "mean"
+      ]
+    }
+  }
+}
+----
+The previous snippet JSON will generate two normalizations of the distance function by using :
+* min_max method with default range stem:[\left[0,1\rifht]] : generated symbol is `meshes_<mesh_id>_distanceToRange_walls_normalized_min_max`.
+* mean method : generated symbol is `meshes_<mesh_id>_distanceToRange_walls_normalized_mean`.
+
+.Example 2 of DistanceToRange normalisation setup
+[source,json]
+----
+{
+  "normalization": {
+    "type": "min_max",
+    "range": [1,2]
+  }
+}
+----
+The previous snippet JSON will generated one normalization Min-Max of the distance function on interval stem:[\left[1,2\rifht]].
+
+
+.Example 3 of DistanceToRange normalisation setup
+[source,json]
+----
+{
+  "normalization": [
+    {
+      "type": "min_max",
+      "name": "mm0",
+      "range": [1,2]
+    },
+    {
+      "type": "min_max",
+      "name": "mm1",
+      "range": ["4","5"]
+    },
+    {
+      "type": "mean"
+    }
+  ]
+}
+----
+
+The previous snippet JSON will generate the 3 symbols representing 3 normalizations of the distance function :
+`meshes_<mesh_id>_distanceToRange_walls_normalized_mm0`, `meshes_<mesh_id>_distanceToRange_walls_normalized_mm1` and `meshes_<mesh_id>_distanceToRange_walls_normalized_mean`.
+
+
+
+=== Fields section
+
+TODO
+
 === Data section
 
 TODO
+
+=== MeshMotion
+
+TODO
+
+=== MeshAdaptation
+
+During the simulation process, the mesh can be adapated when some events happen. The mesh will be adapted according to a metric provide by the user.
+Some constraints can be also defined as required entities.
+
+==== Metric
+
+The metric is given throw the JSON key `metric`.
+The value is a string corresponding to a symbolic expression (currently only scalar).
+
+==== Constraints
+
+If some entities to the current mesh are required in the adapted mesh, the JSON should contain a key-value entry with the key `required_markers`.
+The value can be a string or a string array corresponding to the marker names of these entities.
+
+
+==== Events
+
+Events that can execute an adaptation of the mesh :
+
+* `after_import`: just after the mesh has been imported (WARNING, should not be used if some data (as an initial condition) are defined on the initial mesh).
+* `after_init` : when the toolbox is initialized.
+* `each_time_step`: after each time step, if a boolean condition is verified (freq, times...), the mesh adaption is performed.
+
+
+.Example of Meshes MeshAdaptation section
+[source,json]
+----
+{
+  "MeshAdaptation": {
+    "metric": "mymetric:mymetric", <1>
+    "required_markers": "wall", <2>
+    "events": { <3>
+      "after_import": {},
+      "after_init": {},
+      "each_time_step": {
+        "frequency": 4
+      }
+    }
+  }
+}
+----
+<1> the metric given as an expression
+<2> constraint of required markers
+<3> defines the events after_import and each_time_step
+
+
+==== Setup of event `each_time_step`
+
+Currently, only `frequency` property, it should be an integer.
+
+==== Setup multiples mesh adaptations
+
+[source,json]
+----
+{
+  "MeshAdaptation": [
+    {
+      "metric": "mymetric1:mymetric1",
+      "events": {
+        "after_init": {}
+      }
+    },
+    {
+      "metric": "mymetric2:mymetric2",
+      "required_markers": [
+        "wall1",
+        "wall2"
+      ],
+      "events": {
+        "each_time_step": {
+          "frequency": 4
+        }
+      }
+    }
+  ]
+}
+----
+
+==== Advanced remesher setup
+
+A JSON section called `setup` can be added for customize the remesher configuration. This section can contains the next properties :
+
+.Table of advanced remesher parameters
+|===
+| Option | Type | Documentation
+| `verbose` | integer | [-1..10], Tune level of verbosity (-1 is no verbose)
+| `debug` | boolean | Turn on/off debug mode
+| `hmin` | real |
+| `hmax` | reals |
+| `nosizreq` | integer |
+| `hgradreq` | integer |
+| `nosurf` | integer |
+| `opnbdy` | integer |
+| `angle` | integer |
+| `hausd` | real |
+|===
+
+.Example with advanced remesher setup
+[source,json]
+----
+{
+  "MeshAdaptation": {
+    "metric": "mymetric1:mymetric1",
+    "required_markers": [
+      "wall1",
+      "wall2"
+    ],
+    "events": {
+      "after_init": {}
+    },
+    "setup": {
+      "verbose": -1,
+      "opnbdy": 1
+    }
+  }
+}
+----
+
 
 == Materials
 
@@ -226,7 +588,7 @@ This section of the Model JSON file defines material properties linking the Phys
             "markers":"marker3",
             "rho":"3.3e7",
             "k":"1.0e2"
-        }       
+        }
     }
 ----
 <1> gives the name of a material.
@@ -299,75 +661,80 @@ This section of the Model JSON file defines initial conditions. Depending on the
 * if we use a transient model, it corresponds to the initial conditions of the time scheme applied
 * if we use a steady model, it corresponds to the initial guess given to the solver
 
-As presented below, there are two ways to define initial conditions either use a mathematical expressions or a file.
+As shown below, there are two ways to define initial conditions: either by using mathematical expressions or by using a file.
 
 [source,json]
 .Example of a `InitialConditions` defined from mathematical expressions
 ----
 "InitialConditions":
 {
-    "temperature": <1>
-    {
-        "Expression": <2>
-        {
-            "myic1": <3>
-            {
-                "markers":"Omega1", <4>
-                "expr":"293" <5>
-            },
-            "myic2": <6>
-            {
-                "markers":["Omega2,Omega3]", <7>
-                "expr":"305*x*y:x:y"  <8>
-            },
-            "myic3":
-            {
-               "expr":"302",
-               "time":-0.1 <9>
-            }
-        }
-    }
+   "heat": { <1>
+      "temperature": { <2>
+          "Expression": <3>
+          {
+              "myic1": <4>
+              {
+                 "markers":"Omega1", <5>
+                 "expr":"293" <6>
+              },
+              "myic2": <7>
+              {
+                 "markers":["Omega2","Omega3"], <8>
+                 "expr":"305*x*y:x:y"  <9>
+              },
+              "myic3":
+              {
+                  "expr":"302",
+                  "time":-0.1 <10>
+              }
+          }
+      }
+   }
 }
 ----
-<1> the field name of the toolbox to which the initial condition is associated
-<2> the type of boundary condition to apply, here `Expression`
-<3> a name that identifies an initial condition imposed on a field
-<4> the name of marker (or a list of markers) where an expression is imposed as initial condition.
+<1> the keyword of a toolbox
+<2> the field name of the toolbox to which the initial condition is associated
+<3> the type of boundary condition to apply, here `Expression`
+<4> a name that identifies an initial condition imposed on a field
+<5> the name of the marker (or a list of markers) where an expression is imposed as an initial condition.
 The markers can represent any kind of entity (Elements/Faces/Edges/Points).
-If this entry is not given, the expression is applied on the mesh support of the field.
-<5> an expression which is applied to the field 
-<6> another name that identifies an initial condition
-<7> idem as <4>
-<8> idem as <5>
-<9> time to apply the initial condition, if not present time=0
+If this entry is not given, the expression is applied to the mesh support of the field.
+<6> an expression that is applied to the field
+<7> another name that identifies an initial condition
+<8> idem as <4>
+<9> idem as <5>
+<10> time to apply the initial condition, if not present time=0
 
 [source,json]
 .Example of a `InitialConditions` section defined from a file
 ----
 "InitialConditions":
 {
-    "temperature": <1>
-    {
-        "File": <2>
-        {
-            "myic": <3>
-            {
-                "filename":"$home/feel/toolboxes/heat/temperature.h5", <4>
-                "format":"hdf5" <5>
-            }
-        }
-    }
+   "heat":{ <1>
+      "temperature": <2>
+      {
+          "File": <3>
+          {
+             "myic": <4>
+             {
+                "filename":"$home/feel/toolboxes/heat/temperature.h5", <5>
+                "format":"hdf5" <6>
+             }
+          }
+      }
+   }
 }
 ----
-<1> the field name of the toolbox to which the initail condition is associated
-<2> the type of boundary condition to apply, here `File`
-<3> a name that identifies an initial condition imposed on a field
-<4> a file that represents a field saved (**WARNING** : must be compatible with the current mesh and partitioning)
-<5> the format of the file read (possible values are "default","hdf5","binary","text"). It's an optional entry, the default value is choosen by {feelpp} (it's "hdf5" if {feelpp} was compiled with a hdf5 library).  
+<1> the keyword of a toolbox
+<2> the field name of the toolbox to which the initial condition is associated
+<3> the type of boundary condition to apply, here `File`
+<4> a name that identifies an initial condition imposed on a field
+<5> a file that represents a field saved (**WARNING** : must be compatible with the current mesh and partitioning)
+<6> the format of the file read (possible values are "default","hdf5","binary","text"). It's an optional entry, the default value is chosen by {feelpp} (it's "hdf5" if {feelpp} was compiled with hdf5 library).
 
 When using, high order time discretization, we need more than stem:[t=t_0] to initialize, we may also need stem:[t_0-\Delta t, t_0-2*\Delta t,...]. +
-If you give an expression dependant on `t`, it will be evaluated with the time needed by the time discretization. +
-If you give several initial condition for different `time`, we will use the first condition for which the time is not less than the time needed (if you give two conditions with `time=0` an `time=-1` and we need `t=0`, `t=-0.75` and `t=-1.5`, the first condition will be used for the first two times, and the second condition will be used for the last).
+If you give an expression dependent on `t`, it will be evaluated with the time needed by the time discretization. +
+If you give several initial conditions for different `time`, we will use the first condition for which the time is not less than the time needed (if you give two conditions with `time=0` and `time=-1` and we need `t=0`, `t=-0.75` and `t=-1.5`, the first condition will be used for the first two times, and the second condition will be used for the last).
 
 == BoundaryConditions
 
@@ -505,7 +872,7 @@ There are two subsection :
 
 === Save
 
-The `Save` section is implemented when you want to store data using the {feelpp} format. 
+The `Save` section is implemented when you want to store data using the {feelpp} format.
 For example, It can be useful to have access to these data and use them in another application.
 Currently, there is only the possibility to save the fields (finite element approximation).
 [source,json]
@@ -600,7 +967,7 @@ When `coord` value specify more than one point, an index is automatically added 
               "point2":"{0.5,1}", <5>
               "n_points":100 <6>
            }
-       }
+       },
        "fields":"velocity", <7>
        "include_coordinates":1, <8>
        "output": <9>
@@ -685,7 +1052,7 @@ We use the `field` entry for a finite element field and `expr` for symbolic expr
 `field` and `expr` can not be used simultaneously.
 
 
-All expressions can depend on specifics symbols related to the toolboxes used. For example, in the heat toolboxes : 
+All expressions can depend on specifics symbols related to the toolboxes used. For example, in the heat toolboxes :
 [source,json]
 ----
 "expr":"2*heat_T+3*x:heat_T:x"
@@ -705,8 +1072,8 @@ NOTE: In the `mean` and `integrate` Statistics, the quadrature order is automati
 In this case, the `quad` entry has no effect.
 
 
-The expression can be a scalar, a vector or a matrix. However, there is a particularity in the case of `mean` or `integrate` statistics with non-scalar expression. 
-The result is not a scalar value but a vector or matrix. We store in the CSV file each entry of this vector/matrix. 
+The expression can be a scalar, a vector or a matrix. However, there is a particularity in the case of `mean` or `integrate` statistics with non-scalar expression.
+The result is not a scalar value but a vector or matrix. We store in the CSV file each entry of this vector/matrix.
 
 
 ==== Norm
@@ -759,7 +1126,7 @@ The next source code shows an example of Norm section with two norm computations
 
 NOTE: with the `H1-error` or `SemiH1-error` norm, the gradient of the solution must be given with  `grad_solution` entry. Probably this input should be automatically deduced in the near future.
 
-Several norms can be computed by listing it in the type section : 
+Several norms can be computed by listing it in the type section :
 [source,json]
 ----
 "type":["L2-error","H1-error","SemiH1-error"],
@@ -781,7 +1148,7 @@ NOTE: As before, in the case of `H1` or `SemiH1` norm type, the `grad_expr` entr
 "grad_expr":"{2*y,2*x}:x:y"
 ----
 
-All expressions can depend on specifics symbols related to the toolboxes used. For example, in the heat toolboxes : 
+All expressions can depend on specifics symbols related to the toolboxes used. For example, in the heat toolboxes :
 [source,json]
 ----
 "expr":"2*heat_T+3*x:heat_T:x"
@@ -836,7 +1203,7 @@ The quadrature order used in the norm computed can be also given if an analytica
 <11> coordinates of the point
 <12> fields to be computed at the point coordinate
 
-Here is a   xref:examples:csm:rotating-winch/index.adoc[biele example] from the Toolbox examples.
+Here is a   xref:cases:csm:rotating-winch/index.adoc[biele example] from the Toolbox examples.
 
 
 == The generator of cases by using the index definitions
@@ -882,7 +1249,7 @@ The classic way is to write theses measures for each marker. This implies a lot 
     }
  }
 ----
- 
+
 The generic section that will generate exactly the same measures is :
 
 [source,json]
@@ -1014,7 +1381,7 @@ We can also use the array of array format for giving several values in a index :
     }
 }
 ----
-We retrieve here the symbol %2_1% and %2_2% because the index2 is build as an array of array. 
+We retrieve here the symbol %2_1% and %2_2% because the index2 is build as an array of array.
 
 [cols="1,2,2,2",separator=;]
 |===

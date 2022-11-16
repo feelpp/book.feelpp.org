@@ -490,7 +490,7 @@ and thus the associated stem:[X_h], stem:[M_h] do not satisfy the condition.
 ==== Finite element stem:[\poly{P}_1/\poly{P}_1]: spurious mode
 
 We can construct in that case a function stem:[q_h^*] on a uniform grid which is equal alternatively -1, 0, +1 at the vertices of the mesh, then
-[[eq:chmixte:27]]
+[[eq:chmixte:27b]]
 [stem]
 ++++
 \forall v_h \in [P^1_{c,h}]^d, \quad \int_\Omega q^*_h \nabla \cdot v_h = 0
@@ -549,7 +549,7 @@ and introduce
     M_h &=& P^1_{c,h}
 \end{aligned}
 ++++
-[[lem:3]]
+[[lem:2]]
 .lemma
 ****
 The spaces stem:[X_h] and stem:[M_h \cap L^2_0(\Omega)] satisfy the compatibility condition  uniformly in stem:[h].
@@ -614,14 +614,14 @@ Introduce
 The spaces stem:[X_h] and stem:[M_h \cap L^2_0(\Omega)] satisfy the compatibility condition  uniformly in stem:[h].
 ****
 
-[[thr:chmixte:3]]
+[[thr:chmixte:4]]
 .Theorem
 ****
 Suppose that stem:[(u,p)], solution of problem <<prob:chmixte:1>>, is smooth enough, ie. stem:[u \in [H^3(\Omega)\]^d \cap [H_0^1(\Omega)\]^d] and stem:[p\in H^2(\Omega)     \cap L_0^2(\Omega)].
 
 Then there exists a constant stem:[c] such that for all stem:[h >0]
 
-[[eq:chmixte:40]]
+[[eq:chmixte:40b]]
 [stem]
 ++++
   \| u- u_h \|_{1,\Omega} + \|p-p_h\|_{0,\Omega} \leq c h^2 (\|u\|_{3,\Omega} + \|p\|_{2,\Omega})
@@ -653,7 +653,7 @@ On Hypercubes
         \end{aligned}
 ++++
 We then have
-[[eq:chmixte:40]]
+[[eq:chmixte:40c]]
 [stem]
 ++++
 \|u-u_h\|_{0,\Omega} + h ( \| u- u_h \|_{1,\Omega} + \|p-p_h\|_{0,\Omega} ) \leq c h^{k+1} (\|u\|_{k+1,\Omega} +\|p\|_{k,\Omega})

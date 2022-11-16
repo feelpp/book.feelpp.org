@@ -1,10 +1,10 @@
 // -*- mode: adoc -*-
 
-=== Norms
+== Norms
 
 Let stem:[f] a bounded function on domain stem:[\Omega].
 
-==== L^2^ norms
+=== L^2^ norms
 
 Let stem:[f \in L^2(\Omega)] you can evaluate the stem:[L^2] norm using the `normL2()` function:
 
@@ -13,7 +13,7 @@ Let stem:[f \in L^2(\Omega)] you can evaluate the stem:[L^2] norm using the `nor
 \parallel f\parallel_{L^2(\Omega)}=\sqrt{\int_\Omega |f|^2}
 ++++
 
-===== Interface
+==== Interface
 
 [source,cpp]
 ----
@@ -43,7 +43,7 @@ Optional parameters:
 
    - Default = `GEOMAP_OPT`
 
-===== Example
+==== Example
 
 From `doc/manual/laplacian/laplacian.cpp`
 
@@ -58,11 +58,11 @@ From `doc/manual/stokes/stokes.cpp`
 .Stokes example using `mean`
 [source,cpp]
 ----
-include::../../../../codes/mystokes.cpp[tag=main]
+include::example$mystokes.cpp[tag=main]
 ----
 
 
-====  H^1 norm
+===  H^1 norm
 
 In the same idea, you can evaluate the H1 norm or semi norm, for any function stem:[f \in H^1(\Omega)]:
 
@@ -78,7 +78,7 @@ In the same idea, you can evaluate the H1 norm or semi norm, for any function st
 where stem:[*] is the scalar product stem:[\cdot] when stem:[f] is a scalar
 field and the frobenius scalar product stem:[:] when stem:[f] is a vector field.
 
-===== Interface
+==== Interface
 
 [source,cpp]
 ----
@@ -112,7 +112,7 @@ Optional parameters:
 
 normH1() returns a float containing the $$H^1$$ norm.
 
-===== Example
+==== Example
 
 With expression:
 
@@ -137,7 +137,7 @@ With test or trial function `u`
                   _grad_expr=(gradv(u)-trans(gradg)) );
 ----
 
-==== stem:[L^\infty] norm
+=== stem:[L^\infty] norm
 
 You can evaluate the infinity norm using the normLinf() function:
 
@@ -146,7 +146,7 @@ You can evaluate the infinity norm using the normLinf() function:
 \parallel f \parallel_\infty=\sup_\Omega(|f|)
 ++++
 
-===== Interface
+==== Interface
 
 [source,cpp]
 ----
@@ -178,7 +178,7 @@ returned data structure provides the following interface
 
 * `arg()`: coordinates of the point where the function is maximum
 
-===== Example
+==== Example
 
 [source,cpp]
 ----

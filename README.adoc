@@ -59,7 +59,6 @@ have. You can ask a question or signal an issue at the Gitter {feelpp} salon.
 https://gitter.im/feelpp/feelpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge[
 image:https://badges.gitter.im/Join%20Chat.svg[Join the chat at https://gitter.im/feelpp/feelpp]]
 
-
 == Contribute to this documentation
 
 You can http://docs.feelpp.org/docs/stable/#_how_to_contribute[contribute] to improve this documentation on
@@ -87,17 +86,17 @@ Once you have installed prerequisites, follow the next steps to generate a local
 
 [source,sh]
 ----
-git clone https://github.com/feelpp/book.feelpp.org.git <1>
-git clone https://github.com/feelpp/toolbox.git <2>
-cd book.feelpp.org <3>
-npm install <4>
-./node_modules/@antora/cli/bin/antora --pull site-dev.yml <5>
-serve build/site <6>
+git clone https://github.com/feelpp/book.feelpp.org.git # <1>
+git clone https://github.com/feelpp/toolbox.git # <2>
+cd book.feelpp.org # <3>
+npm install # <4>
+npm run dev # <5>
+npm run serve # <6>
 ----
 <1> clone the source for the website
 <2> clone the source for toolbox cases doc
 <3> go the toplevel directory
 <4> install antora and some other dependencies
 <5> build a local preview of the website with Antora
-<6> start the node.ja webserver `serve`, see the https://docs.antora.org/antora/1.0/run-antora/#local-site-preview[docs].
+<6> start the node.js webserver `serve`, see the https://docs.antora.org/antora/1.0/run-antora/#local-site-preview[docs].
 

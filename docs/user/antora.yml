@@ -8,3 +8,16 @@ nav:
 - modules/cpp/nav.adoc
 - modules/python/nav.adoc
 - modules/conclusion/nav.adoc
+asciidoc:
+  attributes:    
+    y: icon:check[role="green"]
+    n: icon:times[role="red"]
+    c: icon:file-text-o[role="blue"]
+ext:
+  collector:
+    - run: 
+        command: ./generate-jupyter.sh docs/user/modules/python
+      scan:
+        dir: jupyter/
+        files: '**/*.ipynb'
+        base: modules/python/attachments/

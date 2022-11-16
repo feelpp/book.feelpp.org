@@ -536,7 +536,7 @@ Soit stem:[h_K] le diamètre de stem:[K] et stem:[\rho_K] le diamètre de la plu
 
 Alors il existe une constante stem:[c] independente de stem:[K] telle que stem:[\forall v \in H^{k+1}(K)] et pour tout stem:[m \in \{0,...,k+1\}],
 
-[[eq:32]]
+[[eq:32b]]
 [stem]
 ++++
   |v - \Ilag{K}(v)|_{m,K} \leq  c h^{k+1-m} \omega_K^m |v|_{k+1,K}
@@ -743,27 +743,27 @@ Nous allons vérifier sur un exemple à l’erreur d’approximation de l’él�
 
 Construisons une famille de maillage stem:[\{\calTh\}_{h >0}], par exemple stem:[h\in \{0.4, 0.2, 0.1, 0.05\}] et calculons l’erreur entre le calcul exact de l’aire stem:[\pi] et le calcul numérique stem:[\int_{\Omega^1_h} 1] et stem:[\int_{\Omega^2_h} 1] respectivement.
 
-Le listing suivant présente le code C++ pour effectuer cela
-[source,cpp]
-.Calcul de l'aire d'un cercle
---
-include::{examplesdir}/isoparam/circle.cpp[tag=isoparam,indent=0]
---
+// Le listing suivant présente le code C++ pour effectuer cela
+// [source,cpp]
+// .Calcul de l'aire d'un cercle
+// --
+// include::{examplesdir}/isoparam/circle.cpp[tag=isoparam,indent=0]
+// --
 
-La table <<tab:circle>> présente les erreurs d’approximation et la figure <<fig:circle>> présente les courbes de convergence en échelle log-log ainsi que les pentes associées à ces courbes.
+// La table <<tab:circle>> présente les erreurs d’approximation et la figure <<fig:circle>> présente les courbes de convergence en échelle log-log ainsi que les pentes associées à ces courbes.
 
-On s’attend d’après le théorème <<eq:62>> appliqué à des pentes à l’élément fini géométrique.
+// On s’attend d’après le théorème <<eq:62>> appliqué à des pentes à l’élément fini géométrique.
 
-[[tab:circle]]
-[format="csv", options="header"]
-.Convergence de l'approximation stem:[P_1] et stem:[P_2]
-|===
-include::{examplesdir}/isoparam/circle.csv[]
-|===
+// [[tab:circle]]
+// [format="csv", options="header"]
+// .Convergence de l'approximation stem:[P_1] et stem:[P_2]
+// |===
+// include::{examplesdir}/isoparam/circle.csv[]
+// |===
 
-La table <<tab:circle,toto>> présente les résultats de convergence.
+// La table <<tab:circle,toto>> présente les résultats de convergence.
 
-On observe un phénomène de super-convergence pour le cas stem:[\Omega^2_h], on obtient un ordre de convergence stem:[4] et nous devrions obtenir stem:[3].
+// On observe un phénomène de super-convergence pour le cas stem:[\Omega^2_h], on obtient un ordre de convergence stem:[4] et nous devrions obtenir stem:[3].
 
 
 [[sec:feel]]
@@ -832,7 +832,7 @@ Le problème approché se ramène donc à la détermination des valeurs de stem:
 
 On va construire une base de stem:[V_h] en associant à chaque ddl stem:[a_i] un vecteur de la base. On définit ainsi les *fonctions de base globales* stem:[\varphi_i] (stem:[i=1,\ldots,N_h]) par
 
-[[eq:28]]
+[[eq:28b]]
 [stem]
 .Fonctions de base globales
 ++++

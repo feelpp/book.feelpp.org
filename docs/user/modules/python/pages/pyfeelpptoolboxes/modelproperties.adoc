@@ -1,0 +1,147 @@
+= Model Properties
+
+
+== Class `ModelProperties`
+
+This class gathers the properties of the model, that can be set from a JSON file.
+
+* `__init__(filename: str = '', directoryLibExpr: str = '', worldComm: feelpp._core.WorldComm, prefix: str = '') -> None` : initialize `ModelProperties`.
+* `materials() -> feelpp._models.ModelMaterials` : get the materials of the model (see section <<Class `ModelMaterials`,below>>).
+* `parameters(self: feelpp._models.ModelProperties) -> feelpp._models.ModelParameters` : get parameters of the model (see <<Class `ModelParameters`,below>>).
+
+
+
+If a model is already loaded in the environment, for example with a toolbox `heatBox`, a way to get the instance of `ModelProperties` is
+
+[source, python]
+----
+m = heatBox.modelProperties()
+----
+
+
+== Class `ModelMaterials`
+
+This class gathers the different materials present in the model.
+
+* `__getitem__(str) -> feelpp._models.ModelMaterial` : returns the <<Class `ModelMaterial`,`ModelMaterial`>> named `str`. If `mo` is the instance of `ModelMaterials`, the material `s` is called with the command `mo[s]`.
+
+* `__init__(self: feelpp._models.ModelMaterials, worldComm: feelpp._core.WorldComm) -> None`
+
+* `__iter__() -> iterator` : returns an iterator on the matrials (for a `for` loop for instance : `for mat in mo: ...`)
+
+* `__len__() -> int` : returns the number of materials in the model.
+
+* `__str__() -> str` : print the list of materials of the model
+
+* `at(arg0: str) -> feelpp._models.ModelMaterial` : `mo.at(s)` is equivalent to `mo[s]`.
+
+* `clear(self: Dict[str, feelpp._models.ModelMaterial]) -> None`
+
+* `items() -> iterator` : equivalent to `__getitem__`
+ 
+* `setParameterValues(arg0: Dict[str, float]) -> None`
+
+
+== Class `ModelMaterial`
+
+* `__getitem__(self: feelpp._models.ModelMaterial, arg0: str) -> str`
+ 
+* `__init__(self: feelpp._models.ModelMaterial) -> None`
+
+* `__str__(self: feelpp._models.ModelMaterial) -> str`
+
+* `getString(self: feelpp._models.ModelMaterial, arg0: str) -> str` : returns the string from key if the value is a string
+
+* `hasProperty(self: feelpp._models.ModelMaterial, arg0: str) -> bool`
+ : returns ``True`` of the property exists, ``False`` otherwise
+
+* `hasPropertyConstant(self: feelpp._models.ModelMaterial, arg0: str) -> bool` : returns ``True`` if the property exists and is constant, ``False`` otherwise
+
+* `hasPropertyScalar(self: feelpp._models.ModelMaterial, arg0: str) -> bool` : returns ``True`` if the property exists and is a scalar expression, ``False`` otherwise
+
+* `propertyConstant(self: feelpp._models.ModelMaterial, arg0: str) -> float` : return the value of the constant property
+
+* `setParameterValues(self: feelpp._models.ModelMaterial, arg0: Dict[str, float]) -> None` : set parameter values from a map of string/double pairs
+
+* `setProperty(self: feelpp._models.ModelMaterial, arg0: str, arg1: str) -> None` : set a property to an expression. The expression can involve symbols, see the documentation.
+
+Example of usage of the functions described above :
+[source, python]
+----
+>>> m = heatBox.modelProperties()
+>>> mos = m.materials()
+>>> mo = mo['Marker']
+>>> print(mo)
+Post
+ . markers: Post 
+ . physics: 
+ . properties: 
+   {Cp, 1.4e+06}
+   {Cp, 1400000.000000}
+   {k, k_0:k_0}
+   {rho, 1}
+   {rho, 1.000000}
+>>> mo.hasProperty('Cp')
+`True`
+>>> mo.hasProertry('kappa')
+`False`
+>>>
+>>> mo.setProperty('Cp', 'Cp_param:Cp_param')
+>>> mm['Cp']
+'Cp_param:Cp_param'
+----
+
+
+== Class `ModelParameters`
+
+This class gathers all the parameters used in the model.
+
+* `__init__(self: feelpp._models.ModelParameters, worldComm: feelpp._core.WorldComm) -> None`
+
+* `__iter__() -> iterator`
+
+* `__len__() -> int`
+
+* `__str__() -> str`
+
+* `at(arg0: str) -> feelpp._models.ModelParameter`
+
+* `clear(self: Dict[str, feelpp._models.ModelParameter]) -> None`
+
+* `setParameterValues(arg0: Dict[str, float]) -> None` : set parameter values from a map of string/double pairs
+
+* `toParameterValues(self: feelpp._models.ModelParameters) -> Dict[str, float]` : get a dictionary from the map of parameter values
+
+
+== Class `ModelParameter`
+
+* `__init__(self: feelpp._models.ModelParameter) -> None`
+
+* `__str__(self: feelpp._models.ModelParameter) -> str`
+
+* `description(self: feelpp._models.ModelParameter) -> str` : get description
+
+* `hasFitInterpolator(self: feelpp._models.ModelParameter) -> bool` : return `True` if the parameter has a fit interpolator, `False` otherwise
+
+* `hasMinMax(self: feelpp._models.ModelParameter) -> bool` : check if the parameter has min and max values
+
+* `max(self: feelpp._models.ModelParameter) -> float` : get maximal value
+
+* `min(self: feelpp._models.ModelParameter) -> float` : get minimal value
+
+NOTE: For the two last functions, if a parameter has no max or min, the returned valued will be `0`.
+
+
+* `name(self: feelpp._models.ModelParameter) -> str` name of the parameter
+
+* `setMax(self: feelpp._models.ModelParameter, arg0: float) -> None` : set maximal value
+
+* `setMin(self: feelpp._models.ModelParameter, arg0: float) -> None` : set minimal value
+
+* `setParameterValues(self: feelpp._models.ModelParameter, arg0: Dict[str, float]) -> None` : set parameter values from a map of string/double pairs
+
+* `setValue(self: feelpp._models.ModelParameter, arg0: float) -> None` : set value of the parameter
+
+* `type(self: feelpp._models.ModelParameter) -> str` : type of the parameter: value, expression, fit
+
+* `value(self: feelpp._models.ModelParameter) -> float` : value of the parameter

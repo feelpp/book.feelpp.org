@@ -1,0 +1,57 @@
+= Compute Integrals
+include::user:ROOT:partial$header-macros.adoc[]
+:page-jupyter: true
+
+We start with setting the {feelpp} environment and loading the {feelpp} library.
+
+.Set the {feelpp} environment with local repository
+[source,python]
+----
+import feelpp 
+import sys
+app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))
+
+----
+
+== Integral of a function
+
+stem:[\int_{\Omega} f(x) dx] is the integral of the function stem:[f] over the domain stem:[\Omega]. The domain stem:[\Omega] is a subset of stem:[\mathbb{R}^n] and stem:[f] is a function defined on stem:[\Omega]. 
+The domain stem:[\Omega] is discretized as a mesh stem:[\mathcal{T}] and the function stem:[f] may be approximated by a finite element function stem:[\hat{f}]. 
+The integral is approximated by the sum of the integrals over the elements of the mesh stem:[\mathcal{T}]. 
+The integral over each element is computed using a quadrature formula.
+
+We first load a mesh
+
+.Load a mesh stem:[\mathcal{T}]
+[source,python]
+----
+geo=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+print("geo file: {}".format(geo))
+mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)
+----
+
+Then we can define functions stem:[f] and compute the integral of stem:[f] over the mesh stem:[\mathcal{T}].
+
+[source,python]
+.Compute integrals
+----
+from feelpp.integrate  import integrate
+
+i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
+i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
+i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")
+print("i1 = {}, i2 = {}, i3 = {}".format(i1,i2,i3))
+----
+
+[%collapsible.result]
+.Results
+====
+----
+i1 = [3.24282386], i2 = [149.465], i3 = [0.]
+----
+====
+
+== Next steps
+
+- [x] xref:pyfeelpp/discr.adoc[Manipulate function and function spaces]
+- [x] xref:pyfeelpp/integrals.adoc[Compute integrals]

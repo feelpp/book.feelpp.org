@@ -5,30 +5,32 @@
 Christophe Prud'homme
 
 [[model-order-reduction]]
-= Model Order Reduction
+== Model Order Reduction
 
 [[definition]]
-== Definition
+=== Definition
 
-Problem statement
+==== Problem statement
 
-Goal Replicate input-output behavior of large-scale system stem:[\Sigma] over a certain (restricted) range of
+Goal : Replicate input-output behavior of large-scale system stem:[\Sigma] over a certain (restricted) range of
 
 * forcing inputs and
 * parameter inputs
 
-image:Slides/rbm/course-rom-definition.png[image]
+[[fig-problem-statement]]
+.Problem statement
+image::problem_statement.png[width=50%]
 
-Problem statement Given large-scale system stem:[\Sigma_\mathcal{N}] of dimension stem:[\mathcal{N}], find a reduced order model stem:[\Sigma_N] of dimension stem:[N << \mathcal{N}] such that: The approximation error is small, i.e., there exists a global error bound such that
+Given large-scale system stem:[\Sigma_\mathcal{N}] of dimension stem:[\mathcal{N}], find a reduced order model stem:[\Sigma_N] of dimension stem:[N << \mathcal{N}] such that: The approximation error is small, i.e., there exists a global error bound such that :
 
 * stem:[\|u(\mu) - u_N (\mu)\| \leq \varepsilon_{\mathrm{des}}], and stem:[|s(\mu) - s_N (\mu)| \leq \varepsilon^s_{\mathrm{des}} , \forall \mu \in D^{\mu}].
 * Stability (and passivity) is preserved.
 * The procedure is computationally stable and efficient.
 
 [[motivation]]
-== Motivation
+=== Motivation
 
-Generalized Inverse Problem
+Generalized Inverse Problem :
 
 * Given PDE(stem:[\mu]) constraints, find value(s) of parameter stem:[\mu] which:
 ** (OPT) minimizes (or maximizes) some functional;
@@ -36,12 +38,12 @@ Generalized Inverse Problem
 ** (CON) makes the system behave in a desired manner;
 ** or some combination of the above
 * Full solution computationally very expensive due to a repeated evaluation for many different values of stem:[\mu]
-* Goal: or
+* Goal: **Low average cost** or **real-time online response**.
+
 
 [[methodologies]]
-== Methodologies
+=== Methodologies
 
-Methodologies
 
 * Reduced Basis Methods
 * Proper Orthogonal Decomposition
@@ -52,11 +54,17 @@ Methodologies
 * Physical model reduction
 * ...
 
-Disclaimer Model Order Reduction Techniques
 
-* replace your favorite discretization scheme (e.g. FE, FV, FD), but instead are build upon and supplement these schemes.
-* useful if you are interested in a single high-fidelity solution of your high-dimensional problem, but instead if you are interested in the many-query or real-time context.
+[WARNING]
+====
+Disclaimer on Model Order Reduction Techniques
 
+* They **Do not** replace your favorite discretization scheme (e.g. FE, FV, FD), but instead are build upon and supplement these schemes.
+* They **are not** useful if you are interested in a single high-fidelity solution of your high-dimensional problem, but instead if you are interested in the many-query or real-time context.
+====
+
+
+////
 [[some-examples]]
 = Some Examples
 
@@ -175,41 +183,57 @@ Objective 2 : Reliable
 ** Certified bounds
 ** Reach material limits
 
+////
+
 [[summary]]
-== Summary
+=== Summary
 
-Summary Many problems in computational engineering require
+Many problems in computational engineering require many or real-time evaluations of PDE(stem:[\mu])-induced + input-output relationships.
 
-many or real-time evaluations of PDE(stem:[\mu])-induced +
-input-output relationships.
+Model order reduction techniques enable certified, real-time calculation + of outputs of PDE(stem:[\mu]) + for parameter estimation, optimization, and control.
 
-Model order reduction techniques enable
 
-certified, real-time calculation +
-of outputs of PDE(stem:[\mu]) +
-for parameter estimation, optimization, and control.
 
 [[reduced-basis-method]]
-= Reduced Basis Method
+== Reduced Basis Method
 
 [[problem-statement]]
-== Problem Statement
+=== Problem Statement
 
-The Reduced Basis Method
+A model order reduction technique that allows efficient and reliable reducedorder approximations for a large class of parametrized partial differentialequations (PDEs) in real-time or in the limit of many queries.
 
-* <2-> Comparison to other model reduction techniques:
+* Comparison to other model reduction techniques:
 ** Parametrized problems(material, constants, geometry,...)
 ** A posteriori error estimation
 ** Offline-online decomposition
 ** Greedy algorithm (to construct reduced basis space)
-* <3-> Motivation:
+* Motivation :
 ** Efficient solution of optimization and optimal control problems governed by parametrized PDEs.
 
-Problem Statement
+==== Problem statement
 
-The Main Idea - Key Observation
+Given a parameter stem:[\underbrace{\mu}_{\text{parameter}} \in \underbrace{D^\mu}_\text{parameter domain}], evaluate stem:[\underbrace{s(\mu)}_\text{output} = L(\mu)^T \underbrace{u(\mu)}_\text{field variable}] where stem:[u(\mu)\in\underbrace{X}_\text{FE space}] satisfies a PDE stem:[A(\mu) u(\mu) = f(\mu)].
 
-General Problem Statement Given a system stem:[\Sigma_\mathcal{N}] of large dimension N, image:Slides/rbm/gen-prob-fe.png[image] where
+Difficulties :
+
+* Need to solve stem:[\textit{PDE}_{FE}(\mu)] numerous times at different values of stem:[\mu],
+* Finite element space stem:[X] has a large dimension stem:[\mathcal{N}].
+
+==== Key Observation
+
+[[fig-rb-scheme]]
+.Reduced Basis Method
+image::RB-scheme.png[width=50%]
+
+==== General Problem Statement
+
+Given a system stem:[\Sigma_\mathcal{N}] of large dimension N,
+
+[[gen-prob-fe]]
+.Reduced Basis Method
+image::gen-prob-fe.png[width=50%]
+
+where
 
 * stem:[u(\mu, t) \in \mathbb{R}^{\mathcal{N}}], the state
 * stem:[s(\mu, t)], the outputs of interest
@@ -220,75 +244,128 @@ are functions of
 * stem:[\mu \in D], the parameter inputs
 * stem:[t], time
 
-and the matrices stem:[M], stem:[A], stem:[B], and stem:[L] also depend on stem:[\mu] stem:[\ldots]
+and the matrices stem:[M], stem:[A], stem:[B], and stem:[L] also depend on stem:[\mu].
 
-General Problem Statement stem:[\ldots] construct a reduced order system stem:[\Sigma_N] of dimension stem:[N
-  << \mathcal{N}],
+Construct a reduced order system stem:[\Sigma_N] of dimension stem:[N \ll \mathcal{N}],
 
-image:Slides/rbm/gen-prob-rb.png[image]
+[[gen-prob-rb]]
+.Reduced Basis Method
+image::gen-prob-rb.png[width=50%]
+
 
 where stem:[u_N(\mu) \in \mathbb{R}^N] is the reduced state.
 
-Special case We start by considering stem:[\dot{u} = 0]
+
+We start by considering stem:[\dot{u} = 0]
 
 *Full Model*
 
-stem:[\[\begin{align}
+stem:[\begin{align}
           A(\mu) u(\mu)& = & F(\mu)\\
           s(\mu)&=&L^T(\mu) u(\mu)
-        \end{align}\]]
+        \end{align}]
 
 *Reduced Model*
 
-stem:[\[\begin{align}
+stem:[\begin{align}
           A_N(\mu) u_N(\mu)& = & F_N(\mu)\\
           s_N(\mu)&=&L^T_N(\mu) u_N(\mu)
-        \end{align}\]]
+        \end{align}]
 
-[[key-ingredients]]
-== Key Ingredients
 
-Approximation
+=== Key ingredients
 
-* <1-> Take ``snapshots'' at different stem:[\mu]-values: stem:[u(\mu_i), i = 1
-  \ldots N], and let stem:[\[Z_N=[\xi_1,\ldots,\xi_N] \in \mathbb{R}^{\mathcal{N}\times N}\]] where the basis/test functions, stem:[\xi_i] ``stem:[=]'' stem:[u(\mu_i)], are orthonormalized
-* <2-> For any new stem:[\mu], approximate stem:[u] by a linear combination of the stem:[\xi_i] stem:[\[u(\mu) \approx \sum_{i=1}^N u_{N,i}(\mu) \xi_i = Z_N u_N(\mu)\]] determined by Galerkin projection, i.e.,
+==== Approximation
 
-A posteriori error estimation
+- Take « snapshots » at different stem:[\mu]-values: stem:[u(\mu_i), i = 1
+  \ldots N], and let stem:[Z_N=[\xi_1,\ldots,\xi_N\] \in \mathbb{R}^{\mathcal{N}\times N}] where the basis/test functions, stem:[\xi_i] « stem:[=] » stem:[u(\mu_i)], are orthonormalized
+- For any new stem:[\mu], approximate stem:[u] by a linear combination of the stem:[\xi_i] stem:[u(\mu) \approx \sum_{i=1}^N u_{N,i}(\mu) \xi_i = Z_N u_N(\mu)] determined by Galerkin projection, i.e.,
 
-* <1-> Assume well-posedness; stem:[A(\mu)] pos.def. with min eigenvalue stem:[\alpha_a :=\lambda_1 >0], where stem:[A \xi=\lambda X \xi] and stem:[X] corresponds to the stem:[X]-inner product, stem:[(v, v)_X = \|v\|_X^2]
-* <2-> Let stem:[\underbrace{e_N = u - Z_N\ u_N}_{\text{error}}] , and stem:[\underbrace{r = F - A\ Z_N\ u_N}_{\text{residual}}, \forall \mu \in D], so that stem:[\[A(\mu) e_N (\mu) = r(\mu)\]]
-* <3-> Then for any stem:[\mu \in D], stem:[\[\|u(\mu)- Z_N u_N(\mu)  \|_X \leq
-      \frac{\|r(\mu)\|_{X'}}{\alpha_{LB}(\mu)} =: \Delta_N(\mu)\]] stem:[\[|s(\mu)-s_N(\mu)| \leq \|L\|_{X'} \Delta_N(\mu) =: \Delta^s_N(\mu)\]] where stem:[\alpha_{LB}(\mu)] is a lower bound to stem:[\alpha_a(\mu)], and stem:[\|r\|_{X'}=r^T X^{-1} r].
+[stem]
+++++
+\begin{align*}
+\underbrace{Z_N^T A(\mu) Z_N}_{=:A_N(\mu)}u_N(\mu) &= \underbrace{Z_N^TF(\mu)}_{=:F_N(\mu)}\\
+s_N(\mu) &= \underbrace{L^T(\mu)Z_N}_{=:L_N^T(\mu)}u_N(\mu)
+\end{align*}
+++++
 
-Offline-Online decomposition
+==== A posteriori error estimation
 
-Greedy Algorithm
+- Assume well-posedness; stem:[A(\mu)] positive and definite with a minimal eigenvalue stem:[\alpha_a :=\lambda_1 >0], where stem:[A \xi=\lambda X \xi] and stem:[X] corresponds to the stem:[X]-inner product, stem:[(v, v)_X = \|v\|_X^2]
+- Let stem:[\underbrace{e_N = u - Z_N\ u_N}_{\text{error}}] , and stem:[\underbrace{r = F - A\ Z_N\ u_N}_{\text{residual}}, \forall \mu \in D^\mu], so that stem:[A(\mu) e_N (\mu) = r(\mu)]
+- Then (LAX-MILGRAM) for any stem:[\mu \in D^\mu], stem:[\|u(\mu)- Z_N u_N(\mu)  \|_X \leq
+        \frac{\|r(\mu)\|_{X'}}{\alpha_{LB}(\mu)} =: \Delta_N(\mu)], stem:[|s(\mu)-s_N(\mu)| \leq \|L\|_{X'} \Delta_N(\mu) =: \Delta^s_N(\mu)] where stem:[\alpha_{LB}(\mu)] is a lower bound to stem:[\alpha_a(\mu)], and stem:[\|r\|_{X'}=r^T X^{-1} r].
+
+==== Offline-Online decomposition
+
+_How do we compute stem:[u_N], stem:[s_N], stem:[\Delta_N^s] for any stem:[\mu] efficiently online ?_
+
+We assue stem:[A(\mu) = \displaystyle\sum_{q=1}^Q \theta^q(\mu)A^q] where
+
+* stem:[\theta^q(\mu)] are parameter depandent coefficients,
+* stem:[A^q] are parameter independent matrices
+
+so that stem:[A_N(\mu) = Z_N^T A(\mu)Z_N = \displaystyle \sum_{q=1}^Q \theta^q(\mu)\underbrace{Z_N^T A^q Z_N}_\text{parameter independant}]
+
+Since all required quantities can be decomposed in this manner, we can split the process in two phases :
+
+* **OFFLINE :** Form and store stem:[\mu]-independant quantities at cost stem:[O(\mathcal{N})],
+* ONLINE : For any stem:[\mu\in D^\mu], compute approximation and error obunds at cost stem:[O(QN^2+N^3)] and stem:[O(Q^2N^2)].
+
+==== Greedy Algorithm
+
+_How do we choose the sample points stem:[\mu_i] (snapshots) optimally ?_
+
+Given stem:[Z_{N=2} « = » [u(\mu_1), u(\mu_2)\]], we choos stem:[\mu_{N+1}] as follows
+
+[stem]
+++++
+\mu_{N+1} = \mathrm{argmax}_{\mu\in D^\text{train}}\dfrac{\Delta_N(\mu)}{\Vert u_N(\mu)\Vert_X}
+++++
+
+and stem:[Z_{N+1} := [u(\mu_1),\cdots, u(\mu_{N+1})].
+
+* Key : stem:[\Delta_N(\mu)] is _sharp_ and _inexpensive_ to compute (online)
+* Error bound gives « optimal » samples, so we get a good approximation stem:[u_N(\mu)].
+
+[[greedy-proc]]
+.Greedy algorithm
+image::greedy-procedure.png[width=50%]
+
 
 [[summary-1]]
-== Summary
+=== Summary
 
-Reduced Basis Opportunities Computational Opportunities
+==== Reduced Basis Opportunities Computational Opportunities
 
 * We restrict our attention to the typically smooth and low-dimensional manifold induced by the parametric dependence. +
 stem:[\Rightarrow] Dimension reduction
 * We accept greatly increased offline cost in exchange for greatly decreased online cost. +
 stem:[\Rightarrow] Real-time and/or many-query context
 
-Reduced Basis Relevance Real-Time Context (control,stem:[\ldots]): stem:[\[\begin{align}
+==== Reduced Basis Relevance
+
+Real-Time Context (control,stem:[\ldots]):
+stem:[\begin{align}
     \mu & \rightarrow & s_N(\mu), \Delta^s_N(\mu)  & \\
-    t_0 (``input'') & & & t_0+\delta t_{\mathrm{comp}} (``response'')
-    \end{align}\]] Many-Query Context (design,stem:[\ldots]): stem:[\[\begin{align}
+    t_0 \text{(« input »)} & & & t_0+\delta t_{\mathrm{comp}} (\text{« response »})
+    \end{align}]
+
+Many-Query Context (design,stem:[\ldots]):
+stem:[\begin{align}
     \mu_j  & \rightarrow & s_N(\mu_j), \Delta^s_N(\mu_j),\quad
     j=1\ldots J  \\
     t_0  & & t_0+\delta t_{\mathrm{comp}} J\quad (J \rightarrow \infty)
-    \end{align}\]] stem:[\Rightarrow] (real-time) and/or (many-query) .
+    \end{align}]
 
-Reduced Basis Challenges
+stem:[\Rightarrow] Low parginal (real-time) and/or low average (many-query) cost.
+
+
+==== Reduced Basis Challenges
 
 * A Posteriori error estimation
 ** Rigorous error bounds for outputs of interest
-** Lower bounds to the stability ``constants''
+** Lower bounds to the stability « constants »
 * Offline-online computational procedures
 ** Full decoupling of finite element and reduced basis spaces
 ** A posteriori error estimation
@@ -296,7 +373,7 @@ Reduced Basis Challenges
 * Effective sampling strategies
 ** High parameter dimensions
 
-Reduced Basis Outline
+==== Reduced Basis Outline
 
 1.  Affine Elliptic Problems
 * (non)symmetric, (non)compliant, (non)coercive
@@ -312,1064 +389,3 @@ Reduced Basis Outline
 * Parameter Optimization and Estimation (Inverse Problems)
 * Optimal Control
 
-[[section]]
-===
-
-Linear Compliant Elliptic Problems
-
-[[notations-definitions-problem-statement-example]]
-= Notations, Definitions, Problem Statement, Example
-
-[[inner-product-spaces]]
-== Inner Product Spaces
-
-Definitions
-
-A space stem:[Z] is a linear or vector space if, for any stem:[\alpha \in
-    \mathbb{R}] , stem:[w,v \in Z], stem:[\alpha w+v \in Z]
-
-Note: stem:[\mathbb{R}] denotes the real numbers, and stem:[\mathbb{N}] and stem:[\mathbb{C}] shall denote the natural and complex numbers, respectively.
-
-An inner product space (or Hilbert space) stem:[Z] is a linear space equipped with
-
-* an inner product stem:[(w,v)_Z, \forall w,v \in Z],and
-* induced norm stem:[\|w\|_Z = (w,w)_Z, \forall w \in Z].
-
-Inner Product
-
-An inner product stem:[w,v \in Z \rightarrow (w,v)_Z \in \mathbb{R}] has to satisfy
-
-* Bilinearity +
-+
-stem:[(\alpha w+v,z)_Z =\alpha(w,z)_Z +(v,z)_Z \forall \alpha\in R,w,v,z\in Z]
-+
- +
-+
-stem:[(z,\alpha w+v)_Z =\alpha(z,w)_Z +(z,v)_Z, \forall \alpha\in R, w,v,z\in Z ]
-* Symmetry +
-+
-stem:[(w,v)_Z = (v,w)_Z, \forall w,v \in Z]
-* Positivity +
-+
-stem:[(w,w)_Z >0, \forall w \in Z, w \neq 0]
-+
- +
-+
-stem:[(w,w)_Z =0, \text{ only if } w=0]
-
-Cauchy-Schwarz inequality: stem:[\[(w,v)_Z \leq \|w\|_Z\|v\|_Z,\forall w, v \in Z.\]]
-
-Norm
-
-A norm is a map stem:[\| \cdot \| : Z \rightarrow \mathbb{R}] such that
-
-* stem:[\|w\|_Z > 0\quad \forall w\in Z,w\neq 0,]
-* stem:[\|\alpha w\|_Z = |\alpha |\|w\|_Z\quad \forall \alpha \in
-      \mathbb{R},\ \forall w\in Z, ]
-* stem:[\|w+v\|_Z \leq \|w\|_Z +\|v\|_Z\quad \forall w\in Z,\ \forall v\in Z.]
-
-Equivalence of norms stem:[\| \cdot \|_Z] and stem:[\| \cdot \|_Y] : there exist positive constants stem:[C_1], stem:[C_2] such that stem:[\[C_1\|v\|_Z \leq \|v\|_Y \leq C_2\|v\|_Z .\]]
-
-Cartesian Product Space Given two inner product spaces stem:[Z_1] and stem:[Z_2], we define stem:[\[Z = Z_1 \times Z_2  \equiv  \{(w_1,w_2)\ | \ w_1 \in  Z_1,\ w_2 \in  Z_2\}\]] and given stem:[w = (w_1,w_2) \in  Z, v = (v_1,v_2) \in  Z], we define stem:[\[w + v  \equiv  (w_1 + v_1, w_2 + v_2).\]] We also equip stem:[Z] with the inner product stem:[\[(w,v)_Z =(w_1,v_1)_{Z_1} +(w_2,v_2)_{Z_2}\]] and induced norm stem:[\[\|w\|_Z = (w,w)_Z.\]]
-
-[[linear-and-bilinear-forms]]
-== Linear and Bilinear Forms
-
-Linear Forms
-
-A functional stem:[g : Z \rightarrow  \mathbb{R}] is a linear functional if, for any stem:[\alpha   \in  \mathbb{R}, w,
-  v  \in  Z] stem:[\[g(\alpha w + v) = \alpha g(w) + g(v)\]]
-
-A linear form is bounded, or continuous, over stem:[Z] if stem:[\[|g(v)| \leq  C \|v\|_Z, \forall v \in  Z,\]] for some finite real constant stem:[C].
-
-Dual Spaces
-
-Given stem:[Z], we define the dual space stem:[Z'] as the space of all bounded linear functionals over stem:[Z]. We associate to stem:[Z'] the dual norm stem:[\[\|g\|_{Z'} = \sup_{v \in Z} \frac{g(v)}{\|v\|_Z} , \forall g \in
-    Z'.\]]
-
-For any stem:[g \in Z'], there exists a unique stem:[w_g \in Z] such that stem:[\[(w_g, v)_Z =g(v), \forall v \in Z.\]]
-
-It directly follows that stem:[\[\|g\|_{Z'} = \|w_g\|_Z.\]]
-
-Bilinear Forms
-
-A form stem:[b:Z_1 \times Z_2 \rightarrow \mathbb{R} ] is bilinear if, for any stem:[\alpha \in R],
-
-* stem:[b(\alpha w + v,z) = \alpha b(w,z) + b(v,z), \forall w,v \in  Z_1,
-    z \in  Z_2 ]
-* stem:[b(z,\alpha w + v) =\alpha b(z,w) + b(z,v), \forall z \in  Z_1, w,v \in  Z_2]
-
-The bilinear form stem:[b : Z \times Z \rightarrow \mathbb{R}] is
-
-* symmetric, if stem:[\[b(w,v) = b(v,w),\]]
-* skew-symmetric, if stem:[\[b(w,v) = -b(v,w),\]]
-* positive definite, if stem:[\[b(v,v) \geq  0\text{ , with equality only for } v = 0.\]]
-
-Bilinear Forms The bilinear form stem:[b : Z \times Z \rightarrow \mathbb{R}] is positive semidefinite, if stem:[\[b(v,v) \geq  0, \forall v  \in  Z.\]] We also define, for a general bilinear form stem:[b : Z \times Z
-  \rightarrow \mathbb{R}], the
-
-* symmetric part as stem:[\[b_S(w,v) = 1/2 (b(w,v) + b(v,w)), \forall w,v \in Z;\]]
-* the skew-symmetric part as stem:[\[b_{SS}(w,v) = 1/2 (b(w,v) - b(v,w)), \forall w,v \in Z.\]]
-
-Bilinear Forms The bilinear form stem:[b : Z \times Z \rightarrow \mathbb{R}] is
-
-* over stem:[Z] if stem:[\[\alpha \equiv \inf_{w\in Z} \frac{b(w,w)}{\|w\|^2_Z}\]] is positive;
-* over stem:[Z] if stem:[\[\gamma \equiv \sup_{w\in Z}  \sup_{v\in Z} \frac{b(w, v)}{\|w\|_Z \|v\|_Z}\]] is finite.
-
-Parametric Linear and Bilinear Forms We introduce
-
-* stem:[D  \in  \mathbb{R}^P] : closed bounded parameter domain;
-* stem:[\mu = (\mu_1,\ldots,\mu_P)  \in  D] : parameter vector.
-
-We shall say that
-
-* stem:[g:Z\times D\rightarrow \mathbb{R}] is a if, for all stem:[\mu  \in  D, g( \cdot ; \mu) : Z \rightarrow  \mathbb{R}] is a linear form;
-* stem:[b:Z\times Z\times D\rightarrow \mathbb{R}] is a if,for all stem:[\mu  \in  D, b( \cdot ,  \cdot ; \mu) : Z \times  Z \rightarrow  \mathbb{R}] is a bilinear form.
-
-Concepts of symmetry,stem:[\ldots] directly extend to the parametric case.
-
-Parametric Linear and Bilinear Forms The parametric bilinear form stem:[b : Z \times Z \times D \rightarrow
-  \mathbb{R}] is
-
-* coercive over Z if stem:[\[\alpha(\mu) \equiv  \inf_{w \in Z} \frac{b(w,w;\mu)}{\|w\|^2_Z}\]] is positive for all stem:[\mu  \in  D];
-* continuous over stem:[Z] if stem:[\[\gamma(\mu)\equiv  \sup_{w \in Z} \sup_{v \in Z} \frac{b(w, v; \mu)}{\|w\|_Z\|v\|_Z}\]] is finite for all stem:[\mu  \in  D.]
-
-We also define stem:[\[\begin{align}
-(0 <) \alpha _0 & \equiv  \min_{\mu \in D} \alpha (\mu)\\
-\gamma_0 & \equiv \max_{\mu \in D} \gamma (\mu) (< \infty ).
-    \end{align}\]]
-
-Coercivity EigenProblem We have stem:[\[\alpha (\mu) \equiv  \inf_{w \in Z} \frac{b_S(w,w;\mu)}{\|w\|^2_Z}\]]
-
-Associated generalized eigenproblem:
-
-Given stem:[\mu  \in  D], find stem:[(\chi^{co},\nu^{co})_i(\mu)  \in  Z \times
-\mathbb{R}, 1 \leq  i \leq  \dim(Z),] such that stem:[\[b_S(\chi_i^{co}(\mu), v; \mu) = \nu_i^{co}(\mu)(\chi_i^{co}(\mu), v)_Z\]] and stem:[\[\|\chi_i^{co}(\mu)\|_Z=1\]] Let stem:[\nu_1^{co}(\mu) \leq  \nu_2^{co}(\mu) \leq  \ldots \leq  \nu_{\dim{Z}}^{co} (\mu)] and b coercive, then stem:[\[\alpha (\mu) = \nu_1^{co}(\mu) > 0.\]]
-
-Parameter affine Dependence We assume stem:[\[g(v;\mu)= \sum_{q=1}^{Q_g} \theta^q_g(\mu)g^q(v), \forall v \in Z,\]] where, for stem:[1 \leq  q \leq  Q_g] (finite),
-
-* functions stem:[\theta^q_g : D
-     \rightarrow  \mathbb{R}],
-* forms stem:[g^q : Z \rightarrow  \mathbb{R};]
-
-and stem:[\[b(w,v;\mu)= \sum_{q=1}^{Q_b} \theta^q_b(\mu) b^q(w,v),\quad \forall
-w,v \in Z,\]] where, for stem:[1 \leq  q \leq  Q_b] (finite),
-
-* functions stem:[\theta^q_b : D \rightarrow  \mathbb{R}],
-* forms stem:[b^q : Z \times  Z \rightarrow  \mathbb{R}].
-
-Parametric Coercivity
-
-The coercive bilinear form stem:[b : Z \times Z \times D \rightarrow
-\mathbb{R}] stem:[\[b(w,v;\mu)= \sum_{q=1}^{Q_b} \theta^q_b(\mu) b^q(w,v),\quad \forall
-w,v \in Z,\]] is if stem:[c\equiv  b_S] is affine stem:[\[c(w,v;\mu)= \sum_{q=1}^{Q_c} \theta^q_c(\mu) c^q(w,v),\quad \forall
-w,v \in Z,\]] and satisfies and
-
-* stem:[\theta^q_c(\mu)>0, \forall \mu \in D, 1\leq q\leq Q_c,]
-* stem:[c^q(v,v)\geq 0,\forall v \in Z, 1\leq q\leq Q_c.]
-
-[[classes-of-functions]]
-== Classes of Functions
-
-Scalar and Vector Fields We consider (real)
-
-* scalar-valued field variables (e.g., temperature, pressure) stem:[w : \Omega  \rightarrow  \mathbb{R}^{d=1}]
-* vector-valued field variables (e.g., displacement, velocity) stem:[\mathbf{w} : \Omega  \rightarrow \mathbb{R}^d] , where stem:[\mathbf{w}(x) = (w_1(x), \ldots , w_d (x));]
-
-and
-
-* stem:[\Omega  \in \mathbb{R}^d, d=1, 2, \text{or} 3] is an open bounded domain
-* stem:[x = (x_1,...,x_d)  \in  \Omega ];
-* stem:[\Omega] has Lipschitz continuous boundary stem:[\partial \Omega] ; and
-* we define the canonical basis vectors as stem:[e_i, 1 \leq  i \leq  d.]
-
-Multi-Index Derivative Given a scalar (or one component of a vector)
-
-* field stem:[w : \Omega  \rightarrow  \mathbb{R}]SPATIAL DERIVATIVE stem:[\[(D^\sigma w)(x) = \frac{\partial^\sigma w}{\partial x_1^{\sigma_1} ...\partial x_d^{\sigma d}}\]]
-* field stem:[w : \Omega  \times  D \rightarrow  \mathbb{R}] SENSITIVITY DERIVATIVE stem:[\[(D_\sigma w)(x) = \frac{\partial^\sigma w}{\partial \mu_1^{\sigma_1} ...\partial \mu_d^{\sigma d}}\]]
-
-where
-
-* stem:[\sigma  = (\sigma_1,\ldots,\sigma_d)], stem:[\sigma_i, 1 \leq  i \leq  d], non-negative integers;
-* stem:[|\sigma| = \sum_{j=1}^{d} \sigma_j] is the order of the derivative; and
-* stem:[I^{d,n}] is set of all index vectors stem:[\sigma   \in  N^d_0] such that stem:[|\sigma | \leq  n.]
-
-Function Spaces
-
-Let stem:[m  \in  N_0], the space stem:[C^m(\Omega )] is defined as stem:[\[C^m(\Omega )\equiv  \{w | D^\sigma w  \in  C^0(\Omega ), \forall \sigma   \in  I^{d,m}\},\]] and stem:[C^0(\Omega )] is the space of continuous functions over stem:[\Omega   \in  \mathbb{R}^d].
-
-We denote by stem:[C^\infty (\Omega )] the space of functions stem:[w] for which stem:[D^\sigma] exists and is continuous for any order stem:[|\sigma |.]
-
-Lebesgue Spaces
-
-We define, for stem:[1 \leq  p < \infty] , the Lebesgue space stem:[L^p(\Omega
-)] as stem:[\[L^p(\Omega )\equiv \{  w \text{ measurable } |\quad  \|w\|_{L^p(\Omega )} < \infty\}\]] where
-
-* stem:[\|w\|_{L^p(\Omega )} \equiv  \left( \int_\Omega |w|^pdx\right)^{1/p} ,
-    1\leq p<\infty,]
-* stem:[\|w\|_{L^\infty (\Omega )} \equiv \mathrm{ess} \sup_{x\in\Omega} |w(x)|, p = \infty .]
-
-Hilbert Space
-
-Let stem:[m  \in  \mathbb{N}_0], the space stem:[H^m(\Omega )] is then defined as stem:[\[H^m(\Omega )\equiv  \{w |\quad D^\sigma w  \in   L^2(\Omega ), \forall \sigma   \in  I^{d,m}\},\]] with associated inner product stem:[\[(w,v)_{H^m(\Omega )}\equiv \sum_{\sigma  \in I^{d,m}}\int_\Omega  D^\sigma w D^\sigma v dx,\]] and induced norm stem:[\[\|w\|_{H^m(\Omega )} \equiv   \sqrt{(w, w)_{H^m(\Omega )}}.\]]
-
-Special (most important) cases Since we only consider , we require mostly
-
-* stem:[L^2(\Omega )  = H^0(\Omega )]: Lebesgue Space stem:[p = 2] stem:[\[(w,v)_{L^2(\Omega)} = \int_\Omega w v \quad \forall w, v  \in  L^2(\Omega )\]] stem:[\[\|w\|_{L^2(\Omega)} = \sqrt{(w,w)_{L^2(\Omega)}} \forall w  \in  L^2(\Omega ),\]] stem:[\Rightarrow] Space of all functions stem:[w : \Omega  \rightarrow
-\mathbb{R}] square-integrable over stem:[\Omega] .
-
-Special (most important) cases Since we only consider , we require mostly
-
-* stem:[H^1(\Omega)] stem:[\[H^1(\Omega ) \equiv \{w \in L^2(\Omega )| \frac{\partial w}{ \partial xi}  \in L^2(\Omega ), 1\leq i\leq d\}\]] with inner product and induced norm stem:[\[(w,v)_{H^1(\Omega )}  \equiv \int_\Omega \nabla w  \cdot   \nabla v
-+ wv\quad \forall w,v  \in  H^1(\Omega ),\]], stem:[\[\|w\|_{H^1(\Omega )}  \equiv \sqrt{(w,w)_{H^1(\Omega)}}\quad \forall w  \in  H^1(\Omega ),\]] and seminorm stem:[\[|w|_{H^1(\Omega )} \equiv \int_\Omega  \nabla w  \cdot   \nabla
-w,\quad \forall w  \in  H^1(\Omega ).\]]
-
-Special (most important) cases Since we only consider , we require mostly
-
-* the space stem:[H_0^1(\Omega )]
-+
-stem:[\[H^1_0(\Omega) \equiv \{v \in H^1(\Omega )|v_{|\partial \Omega}=0 \}\]] where stem:[v = 0] on the boundary stem:[\partial \Omega .]
-+
-Note that, for any stem:[v  \in  H_0^1(\Omega )], we have stem:[\[C_{PF} \|v\|_{H^1(\Omega )} \leq  |v|_{H^1(\Omega )} \leq  \|v\|_{H^1(\Omega )},\]] and thus stem:[\[\|v\|_{H^1(\Omega)} = 0 \, \Rightarrow v = 0\]] stem:[\Rightarrow |v|_{H^1(\Omega )}] constitutes a norm for stem:[v  \in
-H_0^1(\Omega ).]
-
-Projection
-
-Given Hilbert Spaces stem:[Y] and stem:[Z \subset  Y] , the projection, stem:[\Pi  : Y \rightarrow  Z], of stem:[y \in Y] onto stem:[Z] is defined as stem:[\[(\Pi y,v)_Y = (y,v)_Y , \forall v  \in  Z\]]
-
-Properties:
-
-* Orthogonality: stem:[(y - \Pi y, v)_Y = 0]
-* Idempotence: stem:[\Pi (\Pi y) = \Pi y]
-* Best Approximation stem:[\|y-\Pi y\|^2_Y = \inf_{v \in Z} \|y-v\|^2_Y, \, ]
-
-Given an orthonormal basis stem:[\{ \varphi i\}_{i=1, N = \dim(Z)}], then stem:[\[\Pi y= \sum_{i=1}^{\dim(Z)}  ( \varphi i,y)_Y  \varphi_i, \forall y \in Y\]]
-
-[[notations]]
-== Notations
-
-Notations and Definitions
-
-Notations
-
-* stem:[(\cdot)^\mathcal{N}] finite element approximation
-* stem:[(\cdot)_N] reduced basis approximation
-* stem:[\mu] input parameter (physical, geometrical,...)
-* stem:[s(t;\mu) \approx s^\mathcal{N}(t;\mu)\approx s_N(t;\mu) ] output approximations
-* stem:[\mu \rightarrow s(t;\mu)] input-output relationship
-
-Definitions
-
-* stem:[\Omega \subset \mathbb{R}^d] spatial domain
-* stem:[\mu] stem:[P]-uplet
-* stem:[\mathcal{D}^\mu \subset \mathbb{R}^P ] parameter space
-* stem:[s] output, stem:[\ell, f] functionals
-* stem:[u] field variable
-* stem:[X] function space stem:[H^1_0(\Omega)^\nu \subset X \subset H^1(\Omega)^\nu] (stem:[\nu=1] for simplicity) +
-stem:[(\cdot,\cdot)_X] scalar product and stem:[\|\cdot\|_X] norm associated to stem:[X]
-
-[[problem-statement-1]]
-== Problem Statement
-
-Problem Statement
-
-The formal problem statement reads: Given stem:[\mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}], evaluate stem:[\[s(\mu)  = \ell(u(\mu);\mu)\]] where stem:[u(x;\mu) \in X] satisfies stem:[\[a(u(\mu), v; \mu ) = f(v; \mu), \quad \forall v \in X\]]
-
-[rem:problem-statement] We consider first the case of linear affine compliant elliptic problem and then complexify
-
-Hypothesis: Reference Geometry In these notes stem:[\Omega] is considered
-
-* To apply the reduced basis methodology exposed later, we need to setup a reference spatial domain stem:[\Omega_{\mathrm{ref}}]
-* We introduce an affine mapping stem:[\matcal{T}(\cdot;\mu) : \Omega (\equiv
-    \Omega_{\mathrm{ref}} = \Omega_o(\bar{\mu}))
-    \rightarrow \Omega_o(\mu)] such that stem:[\[a(u,v;\mu) = a_o(u_o \circ \mathcal{T}_\mu,v_o \circ \mathcal{T}_\mu;\mu)\]]
-
-Hypothesis: Continuity, stability, compliance We consider the following stem:[\mu-]PDE
-
-rl stem:[a(\cdot,\cdot;\mu)] & bilinear +
-& symmetric +
-& continuous +
-& coercive (stem:[\forall \mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}]) +
- +
-stem:[f(\cdot;\mu), \ell(\cdot;\mu)] & linear +
-& bounded (stem:[\forall \mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}]) +
-
-and in particular, to start, the compliant case
-
-* stem:[a] symmetric
-* stem:[f(\cdot;\mu) = \ell(\cdot;\mu)\quad \forall \mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}]
-
-Hypothesis: Affine dependence in the parameter We require for the RB methodology stem:[\[a(u,v;\mu) = \sum_{q=1}^{Q_a} \Theta^q_a(\mu)\ a^q( u, v ),\]] where for stem:[q=1,...,Q_a] stem:[\[\begin{array}[c]{rll}
-      \Theta^q_a :& {\ensuremath{\mathcal{D}^\mu}\xspace}\rightarrow \mathbb{R} & \mu-\text{\alert{dependent} functions}\\
-      a^q :& X \times X \rightarrow \mathbb{R} & \mu-\text{\alert{independent} bilinear forms}
-    \end{array}\]]
-
-[rem:hypothesis-affine]
-
-* similar decomposition is required for stem:[\ell(v;\mu)] and stem:[f(v;\mu)], and denote stem:[Q_\ell] and stem:[Q_f] the corresponding number of terms
-* applicable to a large class of problems including geometric variations
-* can be relaxed (see non affine/non linear problems)
-
-Inner Products and Norms
-
-* and associated norm () stem:[\[\begin{aligned}
-      (((w,v)))_\mu &=  a(w,v;\mu) &\ \forall u,v \in X\\
-      |||v|||_\mu &=  \sqrt{a(v,v;\mu)} &\ \forall v \in X
-    \end{aligned}\]]
-* stem:[X]-inner product and associated norm () stem:[\[\begin{aligned}
-      (w,v)_X &=  (((w,v)))_{\bar{\mu}} \ (\equiv a(w,v;\bar{\mu})) &\ \forall u,v \in X\\
-      ||v||_X &=  |||v|||_{\bar{\mu}} \ (\equiv \sqrt{a(v,v;\bar{\mu})}) & \ \forall v \in X
-    \end{aligned}\]]
-
-Coercivity and Continuity Constants
-
-We assume stem:[a] and
-
-Recall that
-
-* constant stem:[\[(0 < ) \alpha(\mu) \equiv \inf_{v\in X}\frac{a(v,v;\mu)}{||v||^2_X}\]]
-* constant stem:[\[\gamma(\mu) \equiv \sup_{w\in X} \sup_{v\in X}\frac{a(w,v;\mu)}{\|w\|_X
-      \|v\|_X} ( < \infty)\]]
-
-[[example]]
-== Example
-
-[[example-thermal-block-heat-transfer]]
-=== Example Thermal Block: Heat Transfer
-
-.6
-
-(0,0) rectangle (3,3); (0,0) grid (3,3); (0,0) rectangle (3,3);
-
-(1.5,-0.5)node[right]stem:[\Gamma_0] (Heat Flux) to[out=180,in=90] (1.5,0); (1.5,3.5)node[right]stem:[{\Gamma_{\mathrm{top}}}] (Zero Dirichlet) to[out=180,in=90] (1.5,3); (3.5,1.5) node[right]stem:[{\Gamma_{\mathrm{sides}}}] (Insulated) to[out=180,in=90] (0,1.5) ; (3.5,1.5) to[out=180,in=-90] (3,1.5);
-
-in 5mm,15mm,25mm
-
-in 5mm,15mm,25mm
-
-at (+0.45,+0.3) stem:[\mu_\theindex];
-
-.3
-
-Example Thermal Block: Problem statement Given stem:[\mu \in (\mu_1,...\mu_P) \in {\ensuremath{\mathcal{D}^\mu}\xspace}\equiv
-  [\mu^{\text{min}},\mu^{\text{max}}]^P], evaluate (recall that stem:[\ell = f]) +
-stem:[\[s(\mu) = f(u(\mu))\]] where stem:[u(\mu) \in X \equiv \{ v \in H^1(\Omega), v|_{\Gamma_{\text{top}}}  =  0\}] satisfies stem:[\[a(u(\mu), v; \mu) = f(v;\mu) \quad \forall v \in X\]] we have stem:[P = 8] and given stem:[1 < \mu_r < \infty] we set stem:[\[\mu^{\mathrm{min}} = 1/\sqrt{\mu_r},\quad \mu^{\mathrm{max}} =
-    \sqrt{\mu_r}\]] such that stem:[\mu^{\mathrm{max}}/\mu^{\mathrm{min}}=\mu_r.]
-
-Example Thermal Block Recall we are in the compliant case stem:[\ell = f], we have stem:[\[f(v) = \int_{\Gamma_{0}} v\quad \forall v \in X\]] and stem:[\[a(u,v;\mu) = \sum_{i=1}^{P} \mu_i \int_{\Omega_i} \nabla u \cdot \nabla v + 1 \int_{\Omega_{P+1}} \nabla u \cdot \nabla v
-    \quad\forall u,\ v\ \in X\]] where stem:[\Omega = \cup_{i=1}^{P+1} \Omega_i].
-
-Example Thermal Block The inner product is defined as follows stem:[\[(u,v)_X = \sum_{i=1}^P \bar{\mu}_i \int_{\Omega_i}\nabla u \cdot \nabla v + 1 \int_{\Omega_{P+1}} \nabla u \cdot \nabla v\]] where stem:[\bar{\mu}_i] is a . We have readily that stem:[a] is
-
-*
-* stem:[\[0 < \frac{1}{\sqrt{\mu_r}} \leq \mathrm{min}(\mu_1/\bar{\mu}_1, \ldots,
-      \mu_P/\bar{\mu}_P,1) \leq \alpha(\mu)\]]
-* and stem:[\[\gamma(\mu) \leq \mathrm{max}(\mu_1/\bar{\mu}_1, \ldots,
-      \mu_P/\bar{\mu}_P,1) \leq \sqrt{\mu_r} < \infty\]]
-
-and the linear form stem:[f] is .
-
-Example Thermal Block: Affine decomposition We stem:[\[a(u,v;\mu) = \sum_{q=1}^{P+1} \Theta^q(\mu) a^q(u,v)\]] with stem:[\[\begin{aligned}
-    \Theta^1(\mu) = \mu_1 & & a^1(u,v) = \int_{\Omega_1} \nabla u \cdot \nabla v\\
-    & \vdots & \\
-    \Theta^P(\mu) = \mu_P & & a^P(u,v) = \int_{\Omega_P} \nabla u \cdot \nabla v\\
-    \Theta^{P+1}(\mu) = 1 & & a^{P+1}(u,v) = \int_{\Omega_{P+1}} \nabla u \cdot \nabla v
-  \end{aligned}\]]
-
-Example Thermal Block
-
-* 0.5
-**
-+
-image:Figures/pngs/veys/thermalblock/33-max.png[image]
-+
-0.5
-**
-+
-image:Figures/pngs/veys/thermalblock/33-min.png[image]
-* image:Figures/pngs/veys/thermalblock/33-random.png[image]
-
-[sec:fem-approximation]
-
-``Truth'' FEM Approximation
-
-Let stem:[\mu \in \mathcal{D}^{\mu}], evaluate stem:[\[\displaystyle s^{\mathcal{N}} (\mu) = \ell (u^{\mathcal{N}} (\mu)) \ ,\]] where stem:[u^{\mathcal{N}} (\mu) \in X^{\mathcal{N}}] satisfies stem:[\[a (u^{\mathcal{N}} (\mu), v; \mu ) = f (v), \quad \forall \: v \in X^{\mathcal{N}} \ .\]] Here stem:[X^{\mathcal{N}} \subset X] is a finite element approximation of dimension equiped with an inner product stem:[(\cdot,\cdot)_X] and induced norm stem:[||\cdot||_X]. Denote also stem:[X'] and associated norm stem:[\[\ell \in X',\qquad\displaystyle ||\ell||_{X'} \equiv \operatorname{sup}_{v\in X}\frac{\ell(v)}{||v||_X}\]].
-
-Purpose
-
-* stem:[u(\mu)] and stem:[u_{\mathcal{N}}(\mu)] in the sense that stem:[\[||u(\mu)-u_{\mathcal{N}}(\mu)||_X \leq \mathrm{tol}\quad\forall \mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}\]]
-* the reduced basis approximation using the FEM approximation
-* the error associated with the reduced basis approximation relative to the FEM approximation
-
-stem:[\Rightarrow u^{\mathcal{N}} (\mu)] is a calculable surrogate for stem:[u(\mu).] stem:[\[\|u(\mu)-u^\mathcal{N}(\mu)\|_{X} \leq
-\underbrace{\|u(\mu)-u^\mathcal{N}(\mu)\|_{X}}_{\leq \varepsilon^\mathcal{N}} + \underbrace{\|u^\mathcal{N}(\mu)-u^N(\mu)\|_X}_{\varepsilon_{\mathrm{tol,min}}}\]]
-
-with stem:[\varepsilon^\mathcal{N} << \varepsilon_{\mathrm{tol,min}}]
-
-[[sec:reduc-basis-appr]]
-= Reduced Basis Approximation
-
-Reduced Basis Objectives For given accuracy stem:[\epsilon], evaluate stem:[\[\mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}\rightarrow s_N(\mu) (\approx s^\mathcal{N}(\mu)) \text{ and }
-    \Delta^s_N(\mu)\]] that achieves the desired accuracy Reliability stem:[\[|s^\mathcal{N}(\mu)-s_N(\mu)| \leq \Delta^s_N(\mu) \leq \epsilon\]] for a stem:[t_{\textsc{comp}}] Efficiency +
-stem:[\[\text{\alert{Independent} of } \mathcal{N} \text{ as } \mathcal{N}
-    \rightarrow \infty\]] where stem:[t_{\textsc{comp}}] is the time to perform the input-output relationship stem:[\[\hfill\mu \rightarrow (s_N(\mu),\Delta^s_N(\mu))\]]
-
-Reduced Basis Objective : Rapid Convergence Build a rapidly convergent approximation of stem:[\[s_N(\mu) \in \mathbb{R} \text{ and } u_N(\mu) \in X^N \subset  X^{\mathcal{N}} \subset X\]] such that for all stem:[\mu], we have stem:[\[s_N(\mu) \rightarrow s^{\mathcal{N}}(\mu) \text{ and } u_N(\mu) \rightarrow u^{\mathcal{N}}(\mu)\]] rapidly as stem:[N = {\ensuremath{{\operatorname{dim}}}\xspace}{X_N} \rightarrow \infty (= 10-200)] (and of stem:[\mathcal{N}])
-
-Reduced Basis Objective : Reliability and Sharpness Provide error bound stem:[\Delta_N(\mu)] and stem:[\Delta^s_N(\mu)] : stem:[\[1 (\text{rigor}) \leq \frac{\Delta_N(\mu)}{\|u^{\mathcal{N}}(\mu)
-      - u_N(\mu)\|_X} \leq \ E (\text{sharpness})\]] and stem:[\[1 (\text{rigor}) \leq \frac{\Delta^s_N(\mu)}{|s^{\mathcal{N}}(\mu)
-      - s_N(\mu)|} \leq \ E (\text{sharpness})\]] for all stem:[N = 1 \ldots N_{\textsc{max}}] and stem:[\mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}].
-
-Reduced Basis Objective : Efficiency Develop a two stage strategy : Offline/Online
-
-Offline:::
-  very expensive pre-processing, we have typically that for a given stem:[\mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}] stem:[\[t^{\textsc{offline}}_{\textsc{comp}} >> t^{\mu\rightarrow s^{\mathcal{N}}(\mu)}_{\textsc{comp}}\]]
-Online:::
-  very rapid convergent certified reduced basis input-output relationship stem:[\[t^{\textsc{online}}_{\textsc{comp}} \text{ independent of } \mathcal{N}\]]
-
-[rem:rbobjectives-efficiency] stem:[\mathcal{N}] may/should be chosen
-
-Parametric Manifold stem:[\mathcal{M}^\mathcal{N}] We assume
-
-* the form stem:[a] is continuous and coercive (or inf-sup stable); and
-* affine -dependence; and
-* the stem:[\theta^q(\mu), 1 \leq q \leq Q], are smooth (i.e., stem:[\theta^q \in C^\infty(\mathcal{D})] ;
-
-then stem:[\[\mathcal{M}^\mathcal{N} = \{ u^\mathcal{N}(\mu),\, \mu \in \mathcal{D}\}\]] is a smooth stem:[P]-dimensional manifold in stem:[X^\mathcal{N}], since stem:[\[\| D_\sigma y^\mathcal{N}(\mu) \| \leq C_\sigma \forall \mu \in
-    \mathcal{D}, \text{ for any order } |\sigma| \in \mathbb{N}_{+0}\]]
-
-<1-3>Approximation opportunities: Low-Dimension Manifold
-
-.5
-
-(0,0,0) – (1,0,0); (0,0,0) – (0,1,0); (0,0,0) – (0,0,1) node[right]stem:[Y \equiv H^1(\Omega \subset \mathbb{R}^d)];
-
-.5
-
-Spaces & Bases We define the RB approximation space stem:[\[X_N =\operatorname*{span}\{\xi^n, 1 \leq n \leq N \},\, 1 \leq N \leq N_{max}\]] with linearly independent basis functions stem:[\[\xi^n \in X,\, 1 \leq n \leq N_{max}\]] We thus obtain stem:[\[X_N \subset X, \, {\ensuremath{{\operatorname{dim}}}\xspace}(X_N) = N,\, 1 \leq N \leq N_{max}\]] and stem:[\[X_1 \subset X_2 \subset \ldots X_{N_{max}} (\subset X)\]] We denote non-hierarchical RB spaces as stem:[X^{nh}_N, 1 \leq N \leq
-Nmax,] stem:[\[X^{nh}_N \subset X, \, {\ensuremath{{\operatorname{dim}}}\xspace}(X^{nh}_N) = N,\, 1 \leq N \leq N_{max}\]]
-
-Spaces & Bases - Lagrangian
-
-Parameter Samples: stem:[\[\mbox{\alert{Sample}}: \ \ S_N  = \{ \mu_1 \in \mathcal{D}^{\mu},
-    \ldots, \mu_N \in \mathcal{D}^{\mu} \}\quad 1 \leq N \leq N_{\mathrm{max}},\]] with stem:[\[S_1 \subset S_2 \ldots S_{N_\mathrm{max}-1} \subset S_{N_\mathrm{max}} \subset {\ensuremath{\mathcal{D}^\mu}\xspace}\]] Lagrangian Hierarchical Space stem:[\[W_N  =  {\rm span} \: \{ \xi^n \equiv      \underbrace{ u (\mu^n)}_{u^{\mathcal{N}} (\mu^n)}, n = 1, \ldots, N \}.\]] with stem:[\[W_1 \subset W_2 \ldots \subset W_{N_\mathrm{max}} \subset X^{\mathcal{N}} \subset{X}\]]
-
-Sampling strategies?
-
-* Equidistributed points in stem:[\mathcal{D}^\mu](curse of dimensionality)
-* Log-random distributed points in stem:[\mathcal{D}^\mu]
-* See later for more efficient, adaptive strategies
-
-Space & Bases - Taylor & Hermite
-
-* Taylor reduced basis spaces: stem:[\[W^{Taylor}_N = \operatorname*{span}\{D_\sigma u(\mu), \forall \sigma \in I^{P,N-1}    \}, 1 \leq N \leq N_{max},\]] field variable sensitivity derivatives
-* Hermite reduced basis spaces: stem:[\[W^{Hermite}_N ``='' W^{Lagrangian}_N \cup W^{Taylor}_N\]] field variable sensitivity derivatives
-
-Note: We will exclusively use Lagrangian RB spaces in this course.
-
-Space & Bases - Orthogonal Basis Given stem:[\xi^n = u(\mu^n), 1 \leq n \leq N_{max}] (Lagrange case) we construct the basis set stem:[\{\zeta^n, 1 \leq n \leq Nmax\}], from
-
-^1 = ^1/^1_X; +
-for n = 2 : Nmax +
-z^n =^n- _m=1^n-1 (^n,^m )_X ^m; +
-^n = z^n/z^n_X; +
-end. +
-
-Note: stem:[(\zeta^n,\zeta^m)_X =  \delta_{nm}, 1 \leq n,m \leq Nmax]
-
-Space & Bases - Orthogonal Basis Given reduced basis space stem:[\[X_N  =  {\rm span} \: \{ \zeta^n,  n = 1, \ldots, N \}, 1 \leq N
-    \leq N_{max}\]] we can express any stem:[w_N \in X_N] as stem:[\[w_N = \sum_{k=1}^N {w_N}_n \zeta^n\]] for unique stem:[{w_N}_n \in \mathbb{R}, 1 \leq n \leq N]
-
-Reduced basis ``matrices'' stem:[Z_N \in \mathbb{R}^{\mathcal{N}\times N} , 1
-\leq N \leq N_{max}:] stem:[\[Z_N=[\zeta^1,\zeta^2,...,\zeta^N],  1 \leq N \leq N_{max}\]] where, from orthogonality, stem:[Z^T_{N_{max}} X Z^T_{N_{max}} =
-I_{N_{max}},] and stem:[I_M] is the Identity matrix in stem:[\mathbb{R}^{M\times M}].
-
-Formulation (Linear Compliant Case): a Galerkin method
-
-Galerkin Projection Given stem:[\mu \in \mathcal{D}^{\mu} ] evaluate
-
-stem:[\[\label{eq:1}
-         s_N (\mu) =  f(u_N (\mu);\mu)\]]
-
-where stem:[u_N (\mu) \in  X_N] satisfies
-
-stem:[\[a (u_N (\mu), v; \mu)  =  f(v;\mu), \ \forall \: v \in X_N \ .\]]
-
-Formulation (Linear Compliant Case): Optimality For any stem:[\mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}], we have the following optimality results (thanks to Galerkin) stem:[\[\begin{aligned}
-    |||u(\mu) - u_N(\mu)|||_{\mu} &= \inf_{v_N \in X_N} |||u(\mu) -    v_N(\mu)|||_\mu,\\
-    ||u(\mu) - u_N(\mu)||_X &\leq \sqrt{\frac{\gamma(\mu)}{\alpha(\mu)}} \inf_{v_N \in X_N} ||u(\mu) -    v_N(\mu)||_X,\\
-  \end{aligned}\]] and stem:[\[\begin{aligned}
-    s(\mu)-s_N(\mu) &= |||u(\mu) -    u_N(\mu)|||^{\alert{2}}_\mu,\\
-    &= \inf_{v_N \in X_N} |||u(\mu) -    v_N(\mu)|||^{\alert{2}}_\mu,
-  \end{aligned}\]] and finally stem:[\[0 \leq s(\mu)-s_N(\mu) \leq \gamma(\mu)\inf_{v_N \in X_N} ||u(\mu) -    v_N(\mu)||^{\alert{2}}_X\]]
-
-Formulation (Linear Compliant Case): offline-online decomposition our RB approximations: stem:[\[\begin{aligned}
-    u_N(\mu)\ =&\ \sum_{j=1}^N\ {u_N}_j(\mu)\ \zeta_j\label{eq:4}
-  \end{aligned}\]]
-
-stem:[s_N(\mu)] stem:[\[\label{eq:5}
-    \displaystyle s_N(\mu) = \displaystyle\sum_{j=1}^N {u_N}_j(\mu)\ \left\{ \sum_{q=1}^{Q_f}\ \Theta^q_f(\mu)\ f^q(\zeta_j)\right\}\]] where stem:[{u_N}_i(\mu), 1 \leq i \leq N] satisfies stem:[\[\begin{aligned}
-    \sum_{j=1}^N \left\{ \sum_{q=1}^{Q_a}\ \Theta^q_a(\mu)\ a^q( \zeta_i, \zeta_{j})  \right\} {u_N}_j(\mu) =& \sum_{q=1}^{Q_f}\ \Theta^q_f(\mu)\ f^q(\zeta_i),\notag  \\
-    &  1 \leq i \leq N    \label{eq:6}\\
-  \end{aligned}\]]
-
-Formulation (Linear Compliant Case): matrix form
-
-Solve stem:[\[\label{eq:10}
-    \underline{A}_N (\mu) \: \underline{u}_N (\mu) = \underline{F}_N\]]
-
-where stem:[\[\begin{aligned}
-      (A_N)_{i \: j} (\mu) &= \sum_{q=1}^{Q_a}\ \Theta^q_a(\mu)\ a^q( \zeta_i, \zeta_{j}) , \\
-      & \\
-      F_{N \: i} &=  \sum_{q=1}^{Q_f}\ \Theta^q_f(\mu) f^q (\zeta_i) \ . \\[.5ex]
-      & 1 \leq i,j \leq N, \quad 1 \leq i \leq N
-  \end{aligned}\]]
-
-Formulation (Linear Compliant Case): complexity analysis
-
-Offline: independent of stem:[\mu]
-
-* Solve: stem:[N] FEM system depending on stem:[\mathcal{N}]
-* Form and store: stem:[f^q (\zeta_i)]
-* Form and store: stem:[a^q( \zeta_i, \zeta_{j})]
-
-Online: independent of stem:[\mathcal{N}]
-
-* Given a new stem:[\mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}]
-* Form and solve stem:[A_N(\mu)] : stem:[O(Q N^2)] and stem:[O(N^3)]
-* Compute stem:[s_N(\mu)]
-
-Online: stem:[N << \mathcal{N}] Online we realize often orders of magnitude computational economies relative to FEM in the context of
-
-Formulation (Linear Compliant Case): Condition number
-
-[prop:1] Thanks to the orthonormalization of the basis function, we have that the condition number of stem:[A_N(\mu)] is bounded by the ratio stem:[\gamma(\mu)/\alpha(\mu)].
-
-* Write the Rayleigh Quotient stem:[\[\frac{v_N^T A_N(\mu) v_N}{v_N^T v_N}, \quad \forall v_N \in \mathbb{R}^N\]]
-* Express stem:[\[v_N = \sum_{n=1}^N v_{N_n} \zeta^n\]]
-* Use coercivity, continuity and orthonormality.
-
-[[sec:post-error-estim]]
-= A Posteriori Error Estimation
-
-[[motivations-preliminaries]]
-== Motivations & Preliminaries
-
-``Truth'' Problem statement
-
-Let stem:[\mu \in \mathcal{D}^{\mu}], evaluate stem:[\[\displaystyle s (\mu) = \ell (u (\mu)) \ ,\]] where stem:[u (\mu) \in X] satisfies stem:[\[a (u (\mu), v; \mu ) = f (v), \quad \forall \: v \in X \ .\]] Assumptions
-
-* linearity, coercivity, continuity
-* affine parameter dependence; and
-* compliance: stem:[\ell=f], stem:[a] symmetric
-
-Reduced Basis Sample and Space
-
-Parameter Samples: stem:[\[\mbox{\alert{Sample}}: \ \ S_N  = \{ \mu_1 \in \mathcal{D}^{\mu},
-    \ldots, \mu_N \in \mathcal{D}^{\mu} \}\quad 1 \leq N \leq N_{\mathrm{max}},\]] with stem:[\[S_1 \subset S_2 \ldots S_{N_\mathrm{max}-1} \subset S_{N_\mathrm{max}} \subset {\ensuremath{\mathcal{D}^\mu}\xspace}\]] Lagrangian Hierarchical Space stem:[\[W_N  =  {\rm span} \: \{ \xi^n \equiv      \underbrace{ u (\mu^n)}_{u^{\mathcal{N}} (\mu^n)}, n = 1, \ldots, N \}.\]] with stem:[\[W_1 \subset W_2 \ldots \subset W_{N_\mathrm{max}} \subset X^{\mathcal{N}} \subset{X}\]]
-
-Reduced basis approximation Given stem:[\mu \in \mathcal{D}^{\mu} ] evaluate
-
-stem:[\[\label{eq:1}
-    s_N (\mu) =  f(u_N (\mu);\mu)\]]
-
-where stem:[u_N (\mu) \in  X_N] satisfies
-
-stem:[\[a (u_N (\mu), v; \mu)  =  f(v;\mu), \ \forall \: v \in X_N \ .\]] Recall:
-
-* RB Space: stem:[X_N=``\text{Gram-Schmidt}''(W_N)]
-* stem:[u_N(\mu)] unique (coercivity, continuity, linear dependence)
-
-Coercivity and Continuity Constants
-
-We assume stem:[a] and
-
-Recall that
-
-* constant stem:[\[(0 < ) \alpha(\mu) \equiv \inf_{v\in X}\frac{a(v,v;\mu)}{||v||^2_X}\]]
-* constant stem:[\[\gamma(\mu) \equiv \sup_{w\in X} \sup_{v\in X}\frac{a(w,v;\mu)}{\|w\|_X
-      \|v\|_X} ( < \infty)\]]
-
-Affine dependence and parametric coercivity We assume that stem:[a: X\times X \times \mathcal{D} \rightarrow
-  \mathbb{R}] is
-
-* stem:[\[a(u,v;\mu) = \sum_{q=1}^{Q_a} \Theta^q_a(\mu)\ a^q( u, v ),\,
-    \forall u,v \in X\]]
-* and stem:[\[\Theta^q_a(\mu) > 0\quad \forall \mu \in \mathcal{D}, \, 1 \leq q \leq Q_a\]] and stem:[\[a^q(u,v) \geq 0\quad \forall u,v \in X, \, 1 \leq q \leq Q_a\]]
-
-Inner Products and Norms
-
-* and associated norm () stem:[\[\begin{aligned}
-      (((w,v)))_\mu &=  a(w,v;\mu) &\ \forall u,v \in X\\
-      |||v|||_\mu &=  \sqrt{a(v,v;\mu)} &\ \forall v \in X
-    \end{aligned}\]]
-* stem:[X]-inner product and associated norm () stem:[\[\begin{aligned}
-      (w,v)_X &=  (((w,v)))_{\bar{\mu}} \ (\equiv a(w,v;\bar{\mu})) &\ \forall u,v \in X\\
-      ||v||_X &=  |||v|||_{\bar{\mu}} \ (\equiv \sqrt{a(v,v;\bar{\mu})}) & \ \forall v \in X
-    \end{aligned}\]]
-
-[[bound-theorems]]
-== Bound theorems
-
-Questions
-
-* What is the accuracy of stem:[u_N(\mu)] and stem:[s_N(\mu)] ? Online stem:[\[\begin{aligned}
-      \|u(\mu)-u_N(\mu)\|_X &\leq \epsilon_{\mathrm{tol}}, \quad \forall \mu \in
-      {\ensuremath{\mathcal{D}^\mu}\xspace}\\
-      |s(\mu)-s_N(\mu)\|_X &\leq \epsilon^s_{\mathrm{tol}}, \quad \forall \mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}\\
-    \end{aligned}\]]
-* What is the best value for stem:[N] ? Offline/Online
-** stem:[N] too large stem:[\Rightarrow] computational inefficiency
-** stem:[N] too small stem:[\Rightarrow] unacceptable error
-* How should we build stem:[S_N] ? is there an optimal construction ? Offline
-** Good approximation of the manifold stem:[\mathcal{M}] through the RB space, but
-** need for well conditioned RB matrices
-
-A Posteriori Error Estimation: Requirements We shall develop the following error bounds stem:[{\ensuremath{\Delta_N(\mu)}\xspace}] and stem:[\Delta^s_N(\mu)] with the following properties
-
-* stem:[1 \leq N \leq N_{\mathrm{max}}] stem:[\[\begin{aligned}
-      \|u(\mu)-u_N(\mu)\|_X &\leq \Delta_N(\mu), \quad \forall \mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}\\
-      |s(\mu)-s_N(\mu)| &\leq \Delta^s_N(\mu), \quad \forall \mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}\end{aligned}\]]
-* stem:[1 \leq N \leq N_{\mathrm{max}}] stem:[\[\begin{gathered}
-      \frac{\Delta_N(\mu)}{\|u(\mu)-u_N(\mu)\|_X} \leq C,
-      \frac{\Delta^s_N(\mu)}{|s(\mu)-s_N(\mu)|} \leq C,\\C\approx 1
-    \end{gathered}\]]
-* Online cost depend only on stem:[Q] and stem:[N]
-
-stem:[u_N(\mu)] : Error equation and residual dual norm Given our RB approximation stem:[u_N(\mu)], we have stem:[\[\label{eq:20}
-    e(\mu) \equiv u(\mu)  - u_N(\mu)\]] that satisfies stem:[\[\label{eq:21}
-    a( e(\mu), v; \mu ) \ = \ r( u_N(\mu), v; \mu ), \forall v \in X\]] where stem:[r( u_N(\mu), v; \mu ) = f(v) - a( u_N(\mu), v; \mu )] is the . We have then from coercivity and the definitions above that stem:[\[\label{eq:22}
-    ||e(\mu)||_{X} \ \leq\ \frac{||r( u_N(\mu), v; \mu )||_{X'}}{\alpha(\mu)}\ =\ \frac{\varepsilon_N(\mu)}{\alpha(\mu)}\]]
-
-A Posteriori error estimation: Dual norm of the residual
-
-[prop:1] Given stem:[\mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}], the dual norm of stem:[r(u_N(\mu),\cdot;\mu)] is defined as follows stem:[\[\begin{aligned}
-      ||r(u_N(\mu),\cdot;\mu)||_{X'} & \equiv \sup_{v\in X}
-      \frac{r(u_N(\mu),v;\mu)}{||v||_X}\\
-      & = ||{\ensuremath{\Hat{e}(\mu)}\xspace}||_X
-    \end{aligned}\]] where stem:[{\ensuremath{\Hat{e}(\mu)}\xspace}\in X] satisfies stem:[\[\begin{aligned}
-      ({\ensuremath{\Hat{e}(\mu)}\xspace},v)_X = r(u_N(\mu),v;\mu)
-    \end{aligned}\]]
-
-The error residual equation can then be rewritten stem:[\[a( e(\mu), v; \mu ) \ = ({\ensuremath{\Hat{e}(\mu)}\xspace},v)_X, \quad \forall v \in X\]]
-
-stem:[u_N(\mu)] : Definitions of energy error bounds and effectivity Given stem:[{\ensuremath{{\alpha_{{\mathrm{LB}}}}(\mu)}\xspace}] a nonnegative lower bound of stem:[{\ensuremath{\alpha(\mu)}\xspace}]: stem:[\[\label{eq:23}
-    {\ensuremath{\alpha(\mu)}\xspace}\geq {\ensuremath{{\alpha_{{\mathrm{LB}}}}(\mu)}\xspace}\geq \epsilon_{\alpha} {\ensuremath{\alpha(\mu)}\xspace},\ \epsilon_{\alpha} \ \in\ ]0,1[,\, \forall \mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}\]] Denote stem:[\varepsilon_N(\mu) = \|{\ensuremath{\Hat{e}(\mu)}\xspace}\|_X = \|r(u_N(\mu),v;\mu\|_{X'}]
-
-stem:[\[\label{eq:25}
-      \Delta^{\mathrm{en}}_N(\mu) \ \equiv \ \frac{\varepsilon_N(\mu)}{\sqrt{{\ensuremath{{\alpha_{{\mathrm{LB}}}}(\mu)}\xspace}}}\]]
-
-stem:[\[\label{eq:25}
-      \eta^{\mathrm{en}}_N(\mu) \ \equiv \ \frac{\Delta^{\mathrm{en}}_N(\mu)}{|||e(\mu)|||_\mu}\]]
-
-stem:[u_N(\mu)] : energy error bounds
-
-stem:[\[\label{eq:26}
-    1 \ \leq\ \eta^{\mathrm{en}}_N(\mu) \ \leq \sqrt{\frac{{\ensuremath{{\gamma_{{\mathrm{UB}}}}(\mu)}\xspace}}{{\ensuremath{{\alpha_{{\mathrm{LB}}}}(\mu)}\xspace}}}, \quad 1 \leq N \leq N_{\max}, \quad \forall \mu\ \in \ {\ensuremath{\mathcal{D}^\mu}\xspace}\]]
-
-Remarks
-
-* : Left inequality ensures rigorous upper bound measured in stem:[||\cdot||_{X}] , i.e. stem:[||e(\mu)||_{X} \leq {\ensuremath{\Delta_N(\mu)}\xspace},\ \forall \mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}]
-* : Right inequality states that stem:[\Delta_N(\mu)]overestimates the ``true'' error by at most stem:[\gamma(\mu) / {\ensuremath{{\alpha_{{\mathrm{LB}}}}(\mu)}\xspace}]
-* for stem:[a] and symmetric stem:[\[\theta^{\bar{\mu}} \equiv
-        \frac{\Theta^{\max,\bar{\mu}}_a(\mu)}{\Theta^{\min,\bar{\mu}}_a(\mu)}
-        = \frac{\gamma_{\mathrm{ub}}(\mu)}{\alpha_{\mathrm{lb}}(\mu)}\]]
-
-stem:[s_N(\mu)] : output error bounds
-
-stem:[\[1 \ \leq\ \eta^s_N(\mu)  \ \leq \frac{{\ensuremath{{\gamma_{{\mathrm{UB}}}}(\mu)}\xspace}}{{\ensuremath{{\alpha_{{\mathrm{LB}}}}(\mu)}\xspace}}, \quad 1 \leq N \leq N_{\max}, \quad \forall \mu\ \in \ {\ensuremath{\mathcal{D}^\mu}\xspace}\]]
-
-where stem:[\[\label{eq:30}
-    \Delta^s_N (\mu) = {\Delta_N^{\mathrm{en}}}(\mu)^2\]] and stem:[\[\eta^s_N(\mu)\equiv \frac{\Delta^s_N(\mu)}{s(\mu)-s_N(\mu)}\]]
-
-Rapid convergence of the error in the output Note that the error in the output vanishes quadratically
-
-Relative output error bounds We define
-
-* the stem:[\[\Delta^{s,rel}_N (\mu) \equiv \frac{\|\hat{e}(\mu)\|^2_X}{
-          \alpha_\mathrm{lb}(\mu) s_N(\mu)}= \frac{\Delta_N^{\mathrm{en}}(\mu)^2}{s_N(\mu)}\]]
-* the stem:[\[\eta^{s,rel}_N(\mu)\equiv \frac{\Delta^{s,rel}_N(\mu)}{s(\mu)-s_N(\mu)/s(\mu)}\]]
-
-stem:[\[1 \ \leq\ \eta^{s,rel}_N(\mu)  \ \leq 2 \frac{{\ensuremath{{\gamma_{{\mathrm{UB}}}}(\mu)}\xspace}}{{\ensuremath{{\alpha_{{\mathrm{LB}}}}(\mu)}\xspace}}, \quad 1 \leq N \leq N_{\max}, \quad \forall \mu\ \in \ {\ensuremath{\mathcal{D}^\mu}\xspace}\]]
-
-for stem:[\Delta^{s,rel}_N \leq 1]
-
-stem:[X]-norm error bounds We define
-
-* the stem:[\[\Delta_N (\mu) \equiv \frac{\|\hat{e}(\mu)\|_X}{\alpha_\mathrm{lb}(\mu)}\]]
-* the stem:[\[\eta_N(\mu)\equiv \frac{\Delta_N(\mu)}{\|e(\mu)\|_X}\]]
-
-stem:[\[1 \ \leq\ \eta_N(\mu)  \ \leq \frac{{\ensuremath{{\gamma_{{\mathrm{UB}}}}(\mu)}\xspace}}{{\ensuremath{{\alpha_{{\mathrm{LB}}}}(\mu)}\xspace}}, \quad 1 \leq N \leq N_{\max}, \quad \forall \mu\ \in \ {\ensuremath{\mathcal{D}^\mu}\xspace}\]]
-
-Remarks on error bounds Remarks:
-
-* The error bounds are rigorous upper bounds for the reduced basis error for any stem:[N = 1,\ldots,N_{max}] and for all stem:[\mu \in \mathcal{D}].
-* The upper bounds for the effectivities are
-** independent of stem:[N] , and
-** independent of stem:[\mathcal{N}] if stem:[\alpha_{\mathrm{lb}}(\mu)] only depends on stem:[\mu],
-+
-and are thus stable with respect to RB and FEM refinement.
-* Results for energy norm (and stem:[X]-norm) bound directly extend to noncompliant (& nonsymmetric) problems
-** if we choose an appropriate definition for the energy (and stem:[X]) norm
-
-[[offline-online-decomposition]]
-== Offline-Online decomposition
-
-Offline-Online decomposition Denote stem:[{\ensuremath{\Hat{e}(\mu)}\xspace}\in X] stem:[\[\label{eq:34}
-    ||{\ensuremath{\Hat{e}(\mu)}\xspace}||_X = \varepsilon_N(\mu) = ||r(u_N(\mu),\cdot;\mu)||_X\]] such that stem:[\[\label{eq:36}
-    ({\ensuremath{\Hat{e}(\mu)}\xspace},v)_X = -r(u_N(\mu),v;\mu), \quad \forall v \in X\]]
-
-And recall that stem:[\[\label{eq:35}
-    -r(u_N(\mu),v;\mu) = f(v) - \sum_{q=1}^Q \sum_{n=1}^N\ \Theta^q(\mu)\ {u_N}_n(\mu)\ a^q( \zeta_n,v), \quad \forall v\ \in\ X\]]
-
-Offline-Online decomposition
-
-* It follows next that stem:[{\ensuremath{\Hat{e}(\mu)}\xspace}\in X] satisfies stem:[\[({\ensuremath{\Hat{e}(\mu)}\xspace},v)_X \ = \ f(v) - \sum_{q=1}^Q \sum_{n=1}^N\ \Theta^q(\mu)\ {u_N}_n(\mu)\ a^q( \zeta_n,v), \quad \forall v\ \in\ X\]]
-* Observe then that the rhs is the _sum_ of products of parameter dependent functions and parameter independent linear functionals, thus invoking stem:[\[{\ensuremath{\Hat{e}(\mu)}\xspace}\ = \ \mathcal{C} - \sum_{q=1}^Q \sum_{n=1}^N\ \Theta^q(\mu)\ {u_N}_n(\mu)\ \mathcal{L}^q_n\]] where
-** stem:[\mathcal{C} \in X] satisfies stem:[\[(\mathcal{C},v) = f(v), \forall v \in X\]]
-** stem:[\mathcal{L} \in X] satisfies stem:[\[(\mathcal{L}^q_n,v)_X = -a^q(\zeta_n,v), \forall v \in X, \, 1 \leq n \leq N, 1 \leq q \leq Q\]] which are parameter independent problems
-
-Offline-Online decomposition: Error bounds From ([eq:12]) we get stem:[\[\begin{aligned}
-    ||{\ensuremath{\Hat{e}(\mu)}\xspace}||_X^2\ =\ & (\mathcal{C},\mathcal{C})_X\ +\ \sum_{q=1}^Q \sum_{n=1}^N\ \Theta^q(\mu)\ {u_N}_n(\mu)\ \displaystyle \Bigg\{ 2 ( \mathcal{C}, \mathcal{L}^q_n)_X \notag\\
-      & + \sum_{q'=1}^{Q'} \sum_{n'=1}^{N'}\  \Theta^{q'}(\mu)\ {u_N}_{n'}(\mu)\  ( \mathcal{L}^{q}_{n}, \mathcal{L}^{q'}_{n'})_X \Bigg\}    \label{eq:rbellipticlinear_error:37}
-    \end{aligned}\]]
-
-Remark In ([eq:rbellipticlinear_error:37]), stem:[||{\ensuremath{\Hat{e}(\mu)}\xspace}||_X^2] is the sum of products of
-
-* and
-* ,
-
-the offline-online for the error bounds is now clear.
-
-Offline-Online decomposition: steps and complexity
-
-Offline:
-
-* Solve for stem:[\mathcal{C}] and stem:[\mathcal{L}^q_n,\ 1 \leq n \leq N,\ 1 \leq q \leq Q]
-* Form and save stem:[(\mathcal{C},\mathcal{C})_X], stem:[( \mathcal{C},
-      \mathcal{L}^q_n)_X] and stem:[( \mathcal{L}^{q}_{n}, \mathcal{L}^{q'}_{n'})_X], stem:[1 \leq n,n' \leq N,\ 1 \leq q, q' \leq Q]
-
-Online
-
-* Given a new stem:[\mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}]
-* Evaluate the sum stem:[||{\ensuremath{\Hat{e}(\mu)}\xspace}||_X^2] ([eq:rbellipticlinear_error:37]) in terms of stem:[\Theta^q(\mu)] and stem:[{u_N}_n(\mu)]
-* Complexity in stem:[O(Q^2 N^2)] independent of stem:[\mathcal{N}]
-
-[[sec:post-error-estim-1]]
-== Sampling strategy: a Greedy algorithm
-
-Offline-Online Scenarii
-
-Offline Given a tolerance stem:[\tau], build stem:[S_N] and stem:[W_N] s.t. stem:[\[\forall \ \mu\ \in \mathcal{P} \equiv \mathcal{D}^{\mu} \ , \ \Delta_N(\mu) < \tau\]]
-
-Online Given stem:[\mu] and a tolerance stem:[\tau], find stem:[N^*] and thus stem:[s_{N^*}(\mu)] s.t. stem:[\[N^* = \operatorname{arg\ max}_N\ \left( \Delta_{N}(\mu) < \tau \right)\]]
-
-or given stem:[\mu] and a max execution time stem:[T], find stem:[N^*] and thus stem:[s_{N^*}(\mu)] s.t. stem:[\[N^* = \operatorname{arg\ min}_N\ \left( \Delta_{N}(\mu) \mbox{ and execution time } < T   \right)\]]
-
-stem:[S_N] and stem:[W_N] Generation Strategies
-
-Offline Generation
-
-* Given a tolerance stem:[\epsilon], set stem:[N = 0] and stem:[S_0 = \emptyset]
-* While stem:[{\ensuremath{\Delta_N^{\mathrm{max}}}\xspace}> \epsilon]
-* stem:[N = N+1]
-* If N == 1; then Pick ((log-)randomly) stem:[\mu_1 \in {\ensuremath{\mathcal{D}^\mu}\xspace}]
-* Build stem:[{\ensuremath{S_N}\xspace}:= \{ \mu_N \} \cup S_{N-1}]
-* Build stem:[{\ensuremath{W_N}\xspace}:= \{ \xi = u(\mu_N) \} \cup W_{N-1}]
-* Compute stem:[{\ensuremath{\Delta_N^{\mathrm{max}}}\xspace}:= \mathrm{max}_{\mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}}\, \Delta_N(\mu)]
-*
-* End While
-
-Condition number recall that the stem:[\zeta_n] are , this ensures that the condition number will stay bounded by stem:[\gamma(\mu)/\alpha(\mu)]
-
-Online Algorithm I
-
-stem:[\mu] adaptive online
-
-* Given stem:[\mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}], compute stem:[({\ensuremath{s_{N^{*}}}\space}(\mu), {\ensuremath{\Delta_{N^{*}}}\space}(\mu))] such that stem:[{\ensuremath{\Delta_{N^{*}}}\space}(\mu) < \tau.]
-* stem:[N = 2]
-* While stem:[{\ensuremath{\Delta_N}\space}(\mu) > \tau]
-* Compute stem:[({\ensuremath{s_N}\space}(\mu), {\ensuremath{\Delta_N}\space}(\mu)) \mbox{ using } ({\ensuremath{S_N}\xspace},{\ensuremath{W_N}\xspace})]
-* stem:[N = N * 2\qquad] +
-use the (very) fast convergence properties of RB
-* End While
-
-Online Algorithm II
-
-Offline
-
-* While stem:[i <= \mathrm{Imax} >> 1]
-* Pick log-randomly stem:[\mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}]
-* Store in table stem:[\mathcal{T}, {\ensuremath{\Delta_N}\space}(\mu)] if for stem:[N=1,..., {\ensuremath{{N^{\mathrm{max}}}}\xspace}]
-* stem:[i = i + 1]; End While
-
-Online Algorithm II – stem:[\mu] adaptive online – worst case
-
-* Given stem:[\mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}], compute stem:[({\ensuremath{s_{N^{*}}}\space}(\mu), {\ensuremath{\Delta_{N^{*}}}\space}(\mu))] such that stem:[{\ensuremath{\Delta_{N^{*}}}\space}(\mu) < \tau.]
-* stem:[N^{*} := \mathrm{arg} \mathrm{max}_{\mathcal{T}}\, {{\ensuremath{\Delta_N}\space}(\mu) \, < \, \tau}]
-* Use stem:[{\ensuremath{W_{N^{*}}}\xspace}] to compute stem:[({\ensuremath{s_{N^{*}}}\space}(\mu),{\ensuremath{\Delta_{N^{*}}}\space}(\mu))]
-
-[[sec:inf-sup-lower]]
-= Inf-sup lower bound
-
-Lower bound for coercivity constant We require a stem:[{\ensuremath{{\alpha_{{\mathrm{LB}}}}(\mu)}\xspace}] for stem:[{\ensuremath{\alpha(\mu)}\xspace}= \alpha_c(\mu),\ \forall
-  \mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}]
-
-Two strategies are available:
-
-* ``Min stem:[Theta]'' approach if stem:[a] is parametrically coercive (_i.e._ the coercivity constant depends solely on stem:[\mu])
-* and more generally the Successive Constraint Method(SCM) which can also be applied in case of ``Inf-Sup'' stable problems (Stokes, Helmholtz,...)
-
-[[min-theta-approach]]
-== “Min stem:[\Theta]“ Approach
-
-``Min stem:[Theta]'' approach: Lower bound for stem:[\alpha(\mu)]
-
-For a parametrically coercive bilinear form
-
-* stem:[\Theta^q(\mu) > 0,\ \forall \mu \in {\ensuremath{\mathcal{D}^\mu}\xspace}] and
-* stem:[a^q(v,v) \geq 0,\ \forall v \in X,\ 1 \leq q \leq Q]
-
-We have stem:[\[\label{eq:38}
-    \Theta^{\mathrm{min},\Bar{\mu}}_a(\mu) =
-    \alpha(\Bar{\mu})\min_{q=1...Q}\frac{\Theta_a^q(\mu)}{\Theta_a^q(\Bar{\mu})} \leq \alpha(\mu)\]] where stem:[\Bar{\mu} \in {\ensuremath{\mathcal{D}^\mu}\xspace}] which was used to define the stem:[X]-inner product and induced norm
-
-Recall that stem:[\[\begin{aligned}
-    (u,v)_X &=  a(u,v;\alert{\Bar{\mu}}), \quad \forall u,v \in X\\
-    \|v\|_X &=  \sqrt{(u,v)_X}, \quad \forall v \in X
-  \end{aligned}\]]
-
-``Min stem:[Theta]'' approach: Upper bound for stem:[\gamma(\mu)] Similarly we develop an upper bound stem:[{\ensuremath{{\gamma_{{\mathrm{UB}}}}(\mu)}\xspace}] for stem:[\gamma(\mu)]. We define stem:[\[\label{eq:38}
-    \infty > \Theta^{\mathrm{max},\Bar{\mu}}_a(\mu) = \gamma(\Bar{\mu}) \max_{q=1...Q}\frac{\Theta_q^q(\mu)}{\Theta_a^q(\Bar{\mu})}\geq \gamma(\mu)\]]
-
-[rem:mintheta-rem] stem:[{\ensuremath{{\gamma_{{\mathrm{UB}}}}(\mu)}\xspace}] is actually not required in practice but relevant in the theory.
-
-``Min stem:[Theta]'' approach: Summary if stem:[a] is parametrically coercive we then choose
-
-* the coercivity constant lower bound to be stem:[\[{\ensuremath{{\alpha_{{\mathrm{LB}}}}(\mu)}\xspace}\equiv \Theta^{\mathrm{min},\Bar{\mu}}_a(\mu)\]]
-* and the continuity constant upper bound to be (stem:[a] symmetric) stem:[\[{\ensuremath{{\gamma_{{\mathrm{UB}}}}(\mu)}\xspace}\equiv \Theta^{\mathrm{max},\Bar{\mu}}_a(\mu)\]]
-
-[rem:mintheta-rem2]
-
-* Online cost to evaluate stem:[{\ensuremath{{\alpha_{{\mathrm{LB}}}}(\mu)}\xspace}] : stem:[O(Q_a)]
-* Choice of inner product important stem:[(u,v)_X &=
-      a(u,v;\alert{\Bar{\mu}})] (see multiple inner products approach)
-* Extends to non-symmetric problems by considering the symmetric part stem:[\[a_s(u,v;\mu) = \frac{1}{2}( a(u,v;\mu)+a(v,u;\mu) )\]]
-
-[[sec:succ-constr-meth]]
-== Successive constraint method (SCM)
-
-[[successive-constraint-method-stability-estimates]]
-=== Successive Constraint method: Stability estimates
-
-We wish to compute stem:[\alpha_{\mathrm{LB}}: \mathcal{D} \rightarrow \mathbb{R}] such that stem:[\[\label{eq:38}
-    0 < \alpha_{\mathrm{LB}}(\mu) \leq \alpha^{\mathcal{N}}(\mu), \quad \mu \in \mathcal{D}\]] and it computation is rapid stem:[O(1)] where stem:[\[\label{eq:39}
-    \alpha^{\mathcal{N}}(\mu)= \mathrm{inf}_{w \in X^{\mathcal{N}}} \frac{a(w,w;\mu)}{\|w\|_X^2}\]]
-
-Computation of stem:[\alpha^{\mathcal{N}}(\mu)] stem:[\alpha^{\mathcal{N}}(\mu)] is the minimum eigenvalue of the following generalized eigenvalue problem stem:[\[\label{eq:40}
-      a(w,v;\mu) = \lambda(\mu)\ m(w,v;\mu), \quad (A w = \lambda B w)\]] where stem:[m(\cdot,\cdot)] is the bi-linear form associated with stem:[\|\cdot\|_X] and stem:[B] is the associated matrix.
-
-[[successive-constraint-methodreformulation]]
-=== Successive Constraint method:Reformulation
-
-The problem as a minimization one First recall stem:[\[\label{eq:41}
-    a(w,v;\mu) = \sum_{q=1}^{Q_{a}}\ \theta_q(\mu)\ a_q(w,v)\]] Hence we have stem:[\[\label{eq:42}
-    \alpha^{\mathcal{N}}(\mu)= \mathrm{inf}_{w \in X^{\mathcal{N}}} \sum_{q=1}{^Q_a}\ \theta_q(\mu) \frac{a_q(w,w)}{\|w\|_X^2}\]] and we note stem:[\[\label{eq:43}
-    \mathcal{J}^{\mathrm{obj}}(w;\mu) = \sum_{q=1}^{Q_a}\ \theta_q(\mu) \frac{a_q(w,w)}{\|w\|_X^2}\]]
-
-Reformulation We have the following optimisation problem stem:[\[\label{eq:44}
-    \alpha^{\mathcal{N}}(\mu)= \mathrm{inf}_{y \in \mathcal{Y}} \mathcal{J}^{\mathrm{obj}}(\mu; y)\]] where stem:[\[\label{eq:46}
-    \mathcal{J}^{\mathrm{obj}}(\mu; y) \equiv \sum_{q=1}^{Q_a}\ \theta_q(\mu) y_q\]] and stem:[\[\label{eq:45}
-    \mathcal{Y} = \Big\{ y \in \mathbb{R}^{Q_a} |\ \exists w \in X^{\mathcal{N}}\ \mathrm{s.t.}\ y_q = \frac{a_q(w,w)}{\|w\|_{X^{\mathcal{N}}}^2}, 1 \leq q \leq Q_a \Big\}\]]
-
-We now need to characterize stem:[\mathcal{Y}], to do this we construct two sets stem:[\mathcal{Y}_{\mathrm{LB}}] and stem:[\mathcal{Y}_{\mathrm{UB}}] such that stem:[\mathcal{Y}_{\mathrm{UB}}
-    \subset \mathcal{Y} \subset \mathcal{Y}_{\mathrm{LB}}] over which finding stem:[\alpha^{\mathcal{N}}(\mu)] is feasible.
-
-Successive Constraint method: Ingredients First we set the design space for the minimisation problem . We introduce stem:[\[\label{eq:21}
-    \mathcal{B} = \prod_{q=1}^{Q_a} \Big[  \mathrm{inf}_{w\in X^{\mathcal{N}}} \frac{a_q(w,w)}{\|w\|_X^2}; \mathrm{sup}_{w\in X^{\mathcal{N}}} \frac{a_q(w,w)}{\|w\|_X^2} \Big]\]] stem:[\[\label{eq:22}
-    \Xi = \Big\{ \mu_i \in \mathcal{D}; i=1,...,J \Big\}\]] and stem:[\[\label{eq:23}
-    C_K = \Big\{ \mu_i \in \Xi; i=1,...,K \Big\} \subset \Xi\]]
-
-stem:[\Xi] is constructed using a stem:[\frac{1}{2^p}] division of stem:[\mathcal{D}]: in 1D, stem:[0, 1; \frac{1}{2}; \frac{1}{4},
-    \frac{3}{4};...]. stem:[C_K] will be constructed using a greedy algorithm.
-
-Finally we shall denote stem:[P_M(\mu;E)] the set of stem:[M] points closest to stem:[\mu] in the set stem:[E]. We shall need this type of set to construct the lower bounds.
-
-[[successive-constraint-method-lower-bounds-mathcaly_mathrmlb]]
-=== Successive Constraint method: Lower bounds stem:[\mathcal{Y}_{\mathrm{LB}}]
-
-Given stem:[M_\alpha, M_+ \in \mathbb{N}] we are now ready to define stem:[\mathcal{Y}_{\mathrm{LB}}] stem:[\[\begin{gathered}
-    \label{eq:24}
-    \mathcal{Y}_{\mathrm{LB}}(\mu; C_K) = \Big\{ y \in \mathbb{R}^{Q_a}\ |\ y \in  \mathcal{B}, \\
-    \ \sum_{q=1}^{Q_a} \theta_q(\mu')  y_q \geq \alpha^{\mathcal{N}}(\mu'),\ \forall \mu' \in P_{M_\alpha}(\mu;C_K) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\\
-    \sum_{q=1}^{Q_a} \theta_q(\mu')  y_q \geq \alpha_{\mathrm{LB}}(\mu';C_{K-1}),\ \forall \mu' \in P_{M_+}(\mu;\Xi\backslash C_K) \Big\}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  \end{gathered}\]] We now set stem:[\[\label{eq:25}
-    \alpha_{\mathrm{LB}}(\mu;C_K) = \mathrm{inf}_{y \in \mathcal{Y}_{\mathrm{LB}(\mu;C_K)}}\ \mathcal{J}^{\mathrm{obj}}(\mu;y)\]]
-
-Computing stem:[\alpha_{\mathrm{LB}}(\mu;C_K)] is in fact a linear program with stem:[Q_a] design variables, stem:[y_q], and stem:[2 Q_a+M_\alpha+M_+] constraints online. It requires the construction of stem:[C_K] offline.
-
-[sec:upper-bounds:-mathc]
-
-[[successive-constraint-method-upper-bounds-mathcaly_mathrmub]]
-=== Successive Constraint method: Upper bounds stem:[\mathcal{Y}_{\mathrm{UB}}]
-
-Let stem:[\[\label{eq:26}
-    \mathcal{Y}_{\mathrm{UB}}( C_K ) = \Big\{ y^*(\mu_k), 1 \leq k \leq K \Big\}\]] with stem:[\[\label{eq:27}
-    y^*(\mu) = \mathrm{arg}\mathrm{min}_{y \in \mathcal{Y}}\ \mathcal{J}^{\mathrm{obj}}( \mu; y )\]] We set stem:[\[\label{eq:28}
-    \alpha_{\mathrm{UB}}( \mu; C_K) = \mathrm{inf}_{y \in \mathcal{Y}_{\mathrm{UB}}(C_K)}\ \mathcal{J}^{\mathrm{obj}}(\mu;y)\]]
-
-stem:[\mathcal{Y}_{\mathrm{UB}}] requires stem:[K] eigensolves to compute the eigenmode stem:[\eta_k] associated with stem:[w_k, k=1,...,K] and stem:[K Q
-    \mathcal{N}] inner products to compute the stem:[y^*_q(w_k)=\frac{a_q(\eta_k,\eta_k;\mu)}{\|\eta_k\|_{X^{\mathcal{N}}}^2},
-    k=1,...,K] offline . Then computing stem:[\alpha_{\mathrm{UB}}( \mu; C_K)] is a simple enumeration online.
-
-[sec:construction-c_k]
-
-Successive Constraint method: stem:[C_K]
-
-stem:[[C_{K_\mathrm{max}}] = \mathrm{Greedy}(\Xi, \epsilon]) Given stem:[\Xi] and stem:[\epsilon \in [0;1]]
-
-* While stem:[\mathrm{max}_{\mu \in \Xi}\ \frac{\alpha_{\mathrm{UB}}( \mu; C_K) - \alpha_{\mathrm{LB}}( \mu; C_K)}{\alpha_{\mathrm{UB}}( \mu; C_K)} > \epsilon]
-** stem:[\mu_{K+1} = \mathrm{arg} \mathrm{max}_{\mu \in \Xi}\ \frac{\alpha_{\mathrm{UB}}( \mu; C_K) - \alpha_{\mathrm{LB}}( \mu; C_K)}{\alpha_{\mathrm{UB}}( \mu; C_K)}]
-** stem:[C_{K+1} = C_K \cup \{ \mu_{K+1} \}]
-** stem:[K \leftarrow K+1]
-* set stem:[K_{\mathrm{max}} = K]
-
-[sec:operations-count]
-
-Successive Constraint method:Offline-Online
-
-stem:[\mathrm{Offline}]
-
-* stem:[2Q_a+M_\alpha+M_+] eigensolves stem:[\alpha^{\mathcal{N}}(\mu), y^*(\mu_k)] +
-* stem:[n_\Xi K_{\mathrm{max}} LP(Q,M_\alpha,M_+)] to build stem:[C_{K_{\mathrm{max}}}] +
-* stem:[K_{\mathrm{max}} Q] inner products over stem:[X^{\mathcal{N}} \Rightarrow \mathcal{Y}_{\mathrm{UB}}]
-
-stem:[[\alpha_{\mathrm{LB}}(\mu)] = \mathrm{Online}( \mu, C_{K_{\mathrm{max}}}, M_\alpha, M_+ )] Given stem:[\mu \in \mathcal{D}]
-
-* sort over stem:[C_{K_{\mathrm{max}}} \Rightarrow P_{M_\alpha}(\mu;C_{K_{\mathrm{max}}})] and stem:[P_{M_+}(\mu;\Xi\backslash C_{K_{\mathrm{max}}})]
-* stem:[(M_\alpha+M_++2) Q_a] evaluation of stem:[\theta_q(\mu')]
-* stem:[M_\alpha] lookups to get stem:[\mu' \rightarrow \alpha^{\mathcal{N}}(\mu')]
-* stem:[LP(Q_a,M_\alpha,M+)] to get stem:[\alpha_{\mathrm{LB}} (\mu)]
-
-[[numerical-experiments]]
-= Numerical Experiments
-
-[[problem-statement-2]]
-== Problem Statement
-
-[[example-thermal-block-heat-transfer-1]]
-=== Example Thermal Block: Heat Transfer
-
-.6
-
-(0,0) rectangle (3,3); (0,0) grid (3,3); (0,0) rectangle (3,3);
-
-(1.5,-0.5)node[right]stem:[\Gamma_0] (Heat Flux) to[out=180,in=90] (1.5,0); (1.5,3.5)node[right]stem:[{\Gamma_{\mathrm{top}}}] (Zero Dirichlet) to[out=180,in=90] (1.5,3); (3.5,1.5) node[right]stem:[{\Gamma_{\mathrm{sides}}}] (Insulated) to[out=180,in=90] (0,1.5) ; (3.5,1.5) to[out=180,in=-90] (3,1.5);
-
-in 5mm,15mm,25mm
-
-in 5mm,15mm,25mm
-
-at (+0.45,+0.3) stem:[\mu_\theindex];
-
-.3
-
-Example Thermal Block: Problem statement Given stem:[\mu \in (\mu_1,...\mu_P) \in {\ensuremath{\mathcal{D}^\mu}\xspace}\equiv
-  [\mu^{\text{min}},\mu^{\text{max}}]^P], evaluate (recall that stem:[\ell = f]) +
-stem:[\[s(\mu) = f(u(\mu))\]] where stem:[u(\mu) \in X \equiv \{ v \in H^1(\Omega), v|_{\Gamma_{\text{top}}}  =  0\}] satisfies stem:[\[a(u(\mu), v; \mu) = f(v;\mu) \quad \forall v \in X\]] we have stem:[P = 8] and given stem:[1 < \mu_r < \infty] we set stem:[\[\mu^{\mathrm{min}} = 1/\sqrt{\mu_r},\quad \mu^{\mathrm{max}} =
-    \sqrt{\mu_r}\]] such that stem:[\mu^{\mathrm{max}}/\mu^{\mathrm{min}}=\mu_r.]
-
-Example Thermal Block Recall we are in the compliant case stem:[\ell = f], we have stem:[\[f(v) = \int_{\Gamma_{0}} v\quad \forall v \in X\]] and stem:[\[a(u,v;\mu) = \sum_{i=1}^{P} \mu_i \int_{\Omega_i} \nabla u \cdot \nabla v + 1 \int_{\Omega_{P+1}} \nabla u \cdot \nabla v
-    \quad\forall u,\ v\ \in X\]] where stem:[\Omega = \cup_{i=1}^{P+1} \Omega_i].
-
-Example Thermal Block The inner product is defined as follows stem:[\[(u,v)_X = \sum_{i=1}^P \bar{\mu}_i \int_{\Omega_i}\nabla u \cdot \nabla v + 1 \int_{\Omega_{P+1}} \nabla u \cdot \nabla v\]] where stem:[\bar{\mu}_i] is a . We have readily that stem:[a] is
-
-*
-* stem:[\[0 < \frac{1}{\sqrt{\mu_r}} \leq \mathrm{min}(\mu_1/\bar{\mu}_1, \ldots,
-      \mu_P/\bar{\mu}_P,1) \leq \alpha(\mu)\]]
-* and stem:[\[\gamma(\mu) \leq \mathrm{max}(\mu_1/\bar{\mu}_1, \ldots,
-      \mu_P/\bar{\mu}_P,1) \leq \sqrt{\mu_r} < \infty\]]
-
-and the linear form stem:[f] is .
-
-Example Thermal Block: Affine decomposition We stem:[\[a(u,v;\mu) = \sum_{q=1}^{P+1} \Theta^q(\mu) a^q(u,v)\]] with stem:[\[\begin{aligned}
-    \Theta^1(\mu) = \mu_1 & & a^1(u,v) = \int_{\Omega_1} \nabla u \cdot \nabla v\\
-    & \vdots & \\
-    \Theta^P(\mu) = \mu_P & & a^P(u,v) = \int_{\Omega_P} \nabla u \cdot \nabla v\\
-    \Theta^{P+1}(\mu) = 1 & & a^{P+1}(u,v) = \int_{\Omega_{P+1}} \nabla u \cdot \nabla v
-  \end{aligned}\]]
-
-Example Thermal Block
-
-* 0.5
-**
-+
-image:Figures/pngs/veys/thermalblock/33-max.png[image]
-+
-0.5
-**
-+
-image:Figures/pngs/veys/thermalblock/33-min.png[image]
-* image:Figures/pngs/veys/thermalblock/33-random.png[image]
-
-[[thermal-block-p1]]
-== Thermal Block stem:[P=1]
-
-ExampleThermal Block stem:[P=1]
-
-image:thermalblock-P1[image]
-
-We assume stem:[\[1/\mu^{\min}_1=\mu^{\max}_1=\sqrt{\mu_r}=10\]] and choose stem:[\mathcal{N}=256]
-
-we set stem:[\bar{\mu}=1] and have stem:[\[\Theta^1_a(\mu)=\mu_1,\, \Theta^2_a(\mu) = 1\]] Thus, stem:[\[\Theta_a^{\min,\bar{\mu}}(\mu_1)=\min(\mu_1,1)\\
-      \Theta_a^{\max,\bar{\mu}}(\mu_1)=\max(\mu_1,1)\]]
-
-hence
-
-stem:[\[\theta^{\bar{\mu}}(\mu_1) = \max(\frac{1}{\mu_1},\mu_1)\]]
-
-and stem:[\[\theta^{\bar{\mu}}(\mu_1) \leq\sqrt{\mu_r} \forall \mu_1 \in \mathcal{D}\]]
-
-Example: Thermal Block stem:[P=1] in [RHP2008]
-
-.Convergence results for stem:[P=1]
-[cols="^,>,>,>",options="header",]
-|===========================================================================================================================================
-|stem:[N] |stem:[\Delta^s_{N,\mathrm{max}}(\mu)] |stem:[\eta^s_{N,\mathrm{ave}}] |stem:[\eta^s_{N,\mathrm{max}}]
-|1 |7.2084E+00 |2.3417 |3.3305
-|2 |4.5371E–01 |2.4858 |3.6850
-|3 |6.9652E–04 |6.2195 |9.8551
-|4 |1.3744E–07 |3.3219 |7.2632
-|5 |3.1140E–11 |6.0789 |7.0453
-|===========================================================================================================================================
-
-Note that: stem:[\eta^s_{N,\mathrm{max}}(\mu_1) \leq
-  \eta^s_{\mathrm{max,UB}} \equiv \sqrt{\mu_r} = 10]
-
-* Maximum output error bound: stem:[\Delta^s_{N,\mathrm{max}}
-      = \max_{\mu \in \Xi_{\mathrm{train}}} \Delta^s_N(\mu)]
-* Average output effectivity: stem:[\eta^s_{N,\mathrm{ave}} =
-      \frac{1}{\Xi_\mathrm{train}}\sum_{\mu \in \Xi_{\mathrm{train}}} \eta^s_N(\mu)]
-* Maximum output effectivity: stem:[\eta^s_{N,\mathrm{max}}
-      = \max_{\mu \in \Xi_{\mathrm{train}}} \eta^s_N(\mu)]
-
-[[example-thermal-block-p8]]
-== Example Thermal Block stem:[P=8]
-
-Thermal Block stem:[P=8]
-
-* Configuration :
-** 47 600 dofs;
-** Preconditionner : LU – Solver : MUMPS
-** stem:[\Xi : ] parameter sampling of dimension 1 000.
-* Plot stem:[\ds{ \max_{\mu \in \Xi} \frac{ |s^{\mathcal{N}}(\mu)-s_N(\mu)|}{s^{\mathcal{N}}(\mu)} }]
-
-table[x=NbBasis,y=Max]; table[x=NbBasis,y=Max]; ;
-
-Thermal Block stem:[P=8]
-
-* More parameters there are, more rich the problem is;
-* Notations :
-** stem:[e^i(\mu)] is the relative error on the output when stem:[i] parameters vary.
-
-table[x=NbBasis,y=Max]; table[x=NbBasis,y=Max]; table[x=NbBasis,y=Max]; table[x=NbBasis,y=Max]; table[x=NbBasis,y=Max]; table[x=NbBasis,y=Max]; table[x=NbBasis,y=Max]; table[x=NbBasis,y=Max]; ;

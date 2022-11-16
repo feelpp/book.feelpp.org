@@ -1,0 +1,635 @@
+= Linear Compliant Elliptic Problems
+:toc: left
+:toclevels: 3
+:stem: latexmath
+Christophe Prud'homme
+
+[[notations-definitions-problem-statement-example]]
+== Notations, Definitions, Problem Statement, Example
+
+[[inner-product-spaces]]
+=== Inner Product Spaces
+
+==== Definitions
+
+A space stem:[Z] is a _linear_ or _vector space_ if, for any stem:[\alpha \in
+    \mathbb{R}] , stem:[w,v \in Z], stem:[\alpha w+v \in Z]
+
+NOTE: stem:[\mathbb{R}] denotes the real numbers, and stem:[\mathbb{N}] and stem:[\mathbb{C}] shall denote the natural and complex numbers, respectively.
+
+An _inner product space_ (or _Hilbert space_) stem:[Z] is a linear space equipped with
+
+- an inner product stem:[(w,v)_Z, \forall w,v \in Z], and
+- induced norm stem:[\|w\|_Z = (w,w)_Z, \forall w \in Z].
+
+Inner Product : An _inner product_ stem:[w,v \in Z \rightarrow (w,v)_Z \in \mathbb{R}] has to satisfy
+
+* _Bilinearity_ :
+    - stem:[(\alpha w+v,z)_Z =\alpha(w,z)_Z +(v,z)_Z \forall \alpha\in R,w,v,z\in Z]
+    - stem:[(z,\alpha w+v)_Z =\alpha(z,w)_Z +(z,v)_Z, \forall \alpha\in R, w,v,z\in Z ]
+* _Symmetry_ : stem:[(w,v)_Z = (v,w)_Z, \forall w,v \in Z]
+* _Positivity_ :
+  - stem:[(w,w)_Z >0, \forall w \in Z, w \neq 0]
+  - stem:[(w,w)_Z =0] only if stem:[w=0]
+
+Cauchy-Schwarz inequality: stem:[(w,v)_Z \leq \|w\|_Z\|v\|_Z,\forall w, v \in Z]
+
+==== Norm
+
+A _norm_ is a map stem:[\| \cdot \| : Z \rightarrow \mathbb{R}] such that
+
+* stem:[\|w\|_Z > 0\quad \forall w\in Z,w\neq 0,]
+* stem:[\|\alpha w\|_Z = |\alpha |\|w\|_Z\quad \forall \alpha \in
+      \mathbb{R},\ \forall w\in Z, ]
+* stem:[\|w+v\|_Z \leq \|w\|_Z +\|v\|_Z\quad \forall w\in Z,\ \forall v\in Z.]
+
+Equivalence of norms stem:[\| \cdot \|_Z] and stem:[\| \cdot \|_Y] : there exist positive constants stem:[C_1], stem:[C_2] such that stem:[C_1\|v\|_Z \leq \|v\|_Y \leq C_2\|v\|_Z].
+
+==== Cartesian Product Space
+
+Given two inner product spaces stem:[Z_1] and stem:[Z_2], we define stem:[Z = Z_1 \times Z_2  \equiv  \{(w_1,w_2)\ | \ w_1 \in  Z_1,\ w_2 \in  Z_2\}] and given stem:[w = (w_1,w_2) \in  Z, v = (v_1,v_2) \in  Z], we define stem:[w + v  \equiv  (w_1 + v_1, w_2 + v_2).].
+
+We also equip stem:[Z] with the inner product stem:[(w,v)_Z =(w_1,v_1)_{Z_1} +(w_2,v_2)_{Z_2}] and induced norm stem:[\|w\|_Z = (w,w)_Z].
+
+[[linear-and-bilinear-forms]]
+=== Linear and Bilinear Forms
+
+==== Linear Forms
+
+A functional stem:[g : Z \rightarrow  \mathbb{R}] is a _linear functional_ if, for any stem:[\alpha   \in  \mathbb{R}, w,
+  v  \in  Z] stem:[g(\alpha w + v) = \alpha g(w) + g(v)]
+
+A linear form is _bounded_, or _continuous_, over stem:[Z] if stem:[|g(v)| \leq  C \|v\|_Z, \forall v \in  Z,] for some finite real constant stem:[C].
+
+==== Dual Spaces
+
+Given stem:[Z], we define the _dual space_ stem:[Z'] as the space of all bounded linear functionals over stem:[Z]. We associate to stem:[Z'] the dual norm stem:[\|g\|_{Z'} = \displaystyle\sup_{v \in Z} \frac{g(v)}{\|v\|_Z} , \forall g \in Z'].
+
+For any stem:[g \in Z'], there exists a unique stem:[w_g \in Z] such that stem:[(w_g, v)_Z =g(v), \forall v \in Z].
+
+It directly follows that stem:[\|g\|_{Z'} = \|w_g\|_Z]
+
+==== Bilinear Forms
+
+A form stem:[b:Z_1 \times Z_2 \rightarrow \mathbb{R} ] is _bilinear_ if, for any stem:[\alpha \in R],
+
+* stem:[b(\alpha w + v,z) = \alpha b(w,z) + b(v,z), \forall w,v \in  Z_1,
+    z \in  Z_2 ]
+* stem:[b(z,\alpha w + v) =\alpha b(z,w) + b(z,v), \forall z \in  Z_1, w,v \in  Z_2]
+
+The bilinear form stem:[b : Z \times Z \rightarrow \mathbb{R}] is
+
+* _symmetric_, if stem:[b(w,v) = b(v,w),]
+* _skew-symmetric_, if stem:[b(w,v) = -b(v,w),]
+* _positive definite_, if stem:[b(v,v) \geq  0\text{ , with equality only for } v = 0.]
+* _positive semidefinite_, if stem:[b(v,v) \geq  0, \forall v  \in  Z.]
+
+
+We also define, for a general bilinear form stem:[b : Z \times Z \rightarrow \mathbb{R}], the
+
+* _symmetric part_ as stem:[b_S(w,v) = 1/2 (b(w,v) + b(v,w)), \forall w,v \in Z;]
+* the _skew-symmetric part_ as stem:[b_{SS}(w,v) = 1/2 (b(w,v) - b(v,w)), \forall w,v \in Z.]
+
+The bilinear form stem:[b : Z \times Z \rightarrow \mathbb{R}] is
+
+* _coercive_ over stem:[Z] if stem:[\alpha \equiv \inf_{w\in Z} \frac{b(w,w)}{\|w\|^2_Z}] is positive;
+* _continuous_ over stem:[Z] if stem:[\gamma \equiv \sup_{w\in Z}  \sup_{v\in Z} \frac{b(w, v)}{\|w\|_Z \|v\|_Z}] is finite.
+
+==== Parametric Linear and Bilinear Forms
+
+We introduce
+
+* stem:[D  \subset  \mathbb{R}^P] : closed bounded parameter domain;
+* stem:[\mu = (\mu_1,\ldots,\mu_P)  \in  D] : parameter vector.
+
+We shall say that
+
+* stem:[g:Z\times D\rightarrow \mathbb{R}] is a _parametric linear form_ if, for all stem:[\mu  \in  D, g( \cdot ; \mu) : Z \rightarrow  \mathbb{R}] is a linear form;
+* stem:[b:Z\times Z\times D\rightarrow \mathbb{R}] is a _parametric bilinear form_ if,for all stem:[\mu  \in  D, b( \cdot ,  \cdot ; \mu) : Z \times  Z \rightarrow  \mathbb{R}] is a bilinear form.
+
+Concepts of symmetry directly extend to the parametric case.
+
+==== Parametric Linear and Bilinear Forms
+
+The parametric bilinear form stem:[b : Z \times Z \times D \rightarrow
+  \mathbb{R}] is
+
+* _coercive_ over Z if stem:[\alpha(\mu) \equiv  \inf_{w \in Z} \frac{b(w,w;\mu)}{\|w\|^2_Z}] is positive for all stem:[\mu  \in  D];
+* _continuous_ over stem:[Z] if stem:[\gamma(\mu)\equiv  \sup_{w \in Z} \sup_{v \in Z} \frac{b(w, v; \mu)}{\|w\|_Z\|v\|_Z}] is finite for all stem:[\mu  \in  D.]
+
+We also define
+[stem]
+++++
+\begin{align}
+(0 <) \alpha _0 & \equiv  \min_{\mu \in D} \alpha (\mu)\\
+\gamma_0 & \equiv \max_{\mu \in D} \gamma (\mu) (< \infty ).
+    \end{align}
+++++
+
+==== Coercivity EigenProblem
+
+We have stem:[\alpha (\mu) \equiv  \inf_{w \in Z} \frac{b_S(w,w;\mu)}{\|w\|^2_Z}]
+
+THe associated generalized eigenproblem is :
+
+Given stem:[\mu  \in  D], find stem:[(\chi^{co},\nu^{co})_i(\mu)  \in  Z \times
+\mathbb{R}, 1 \leq  i \leq  \dim(Z),] such that stem:[b_S(\chi_i^{co}(\mu), v; \mu) = \nu_i^{co}(\mu)(\chi_i^{co}(\mu), v)_Z] and stem:[\|\chi_i^{co}(\mu)\|_Z=1].
+
+Let stem:[\nu_1^{co}(\mu) \leq  \nu_2^{co}(\mu) \leq  \ldots \leq  \nu_{\dim{Z}}^{co} (\mu)] and stem:[b] coercive, then stem:[\alpha (\mu) = \nu_1^{co}(\mu) > 0.]
+
+==== Parameter affine Dependence
+
+We assume stem:[g(v;\mu)= \displaystyle\sum_{q=1}^{Q_g} \theta^q_g(\mu)g^q(v), \forall v \in Z,] where, for stem:[1 \leq  q \leq  Q_g] (finite),
+
+* parameter-dependant functions stem:[\theta^q_g : D
+     \rightarrow  \mathbb{R}],
+* parameter-independant forms stem:[g^q : Z \rightarrow  \mathbb{R};]
+
+and stem:[b(w,v;\mu)= \displaystyle\sum_{q=1}^{Q_b} \theta^q_b(\mu) b^q(w,v),\quad \forall
+w,v \in Z,] where, for stem:[1 \leq  q \leq  Q_b] (finite),
+
+* parameter-dependant functions stem:[\theta^q_b : D \rightarrow  \mathbb{R}],
+* parameter-independant forms stem:[b^q : Z \times  Z \rightarrow  \mathbb{R}].
+
+
+==== Parametric Coercivity
+
+The coercive bilinear form stem:[b : Z \times Z \times D \rightarrow
+\mathbb{R}] stem:[b(w,v;\mu)= \displaystyle\sum_{q=1}^{Q_b} \theta^q_b(\mu) b^q(w,v),\quad \forall
+w,v \in Z,] is _parametrically corecive_ if stem:[c\equiv  b_S] is affine stem:[c(w,v;\mu)= \displaystyle\sum_{q=1}^{Q_c} \theta^q_c(\mu) c^q(w,v),\quad \forall
+w,v \in Z,] and satisfies and
+
+* stem:[\theta^q_c(\mu)>0, \forall \mu \in D, 1\leq q\leq Q_c,]
+* stem:[c^q(v,v)\geq 0,\forall v \in Z, 1\leq q\leq Q_c.]
+
+[[classes-of-functions]]
+=== Classes of Functions
+
+==== Scalar and Vector Fields
+
+We consider (real)
+
+* scalar-valued field variables (e.g., temperature, pressure) stem:[w : \Omega  \rightarrow  \mathbb{R}^{d=1}]
+* vector-valued field variables (e.g., displacement, velocity) stem:[\mathbf{w} : \Omega  \rightarrow \mathbb{R}^d] , where stem:[\mathbf{w}(x) = (w_1(x), \ldots , w_d (x));]
+
+and
+
+* stem:[\Omega  \in \mathbb{R}^d, d=1, 2, \text{or } 3] is an open bounded domain
+* stem:[x = (x_1,...,x_d)  \in  \Omega ];
+* stem:[\Omega] has Lipschitz continuous boundary stem:[\partial \Omega]
+
+And we define the canonical basis vectors as stem:[e_i, 1 \leq  i \leq  d.]
+
+==== Multi-Index Derivative
+
+Given a scalar (or one component of a vector)
+
+* field stem:[w : \Omega  \rightarrow  \mathbb{R}] (SPATIAL DERIVATIVE)
+
+
+[stem]
+++++
+(D^{\sigma} w)(x) = \frac{\partial^\sigma w}{\partial x_1^{\sigma_1} ...\partial x_d^{\sigma d}}
+++++
+
+* parametric field stem:[w : \Omega  \times  D \rightarrow  \mathbb{R}] (SENSITIVITY DERIVATIVE)
+
+[stem]
+++++
+(D_{\sigma} w)(x) = \frac{\partial^\sigma w}{\partial \mu_1^{\sigma_1} ...\partial \mu_d^{\sigma d}}
+++++
+
+where
+
+* stem:[\sigma  = (\sigma_1,\ldots,\sigma_d)], stem:[\sigma_i, 1 \leq  i \leq  d], non-negative integers;
+* stem:[|\sigma| = \sum_{j=1}^{d} \sigma_j] is the order of the derivative; and
+* stem:[I^{d,n}] is set of all index vectors stem:[\sigma   \in  N^d_0] such that stem:[|\sigma | \leq  n.]
+
+==== Function Spaces
+
+Let stem:[m  \in  N_0], the space stem:[C^m(\Omega )] is defined as stem:[C^m(\Omega )\equiv  \{w | D^\sigma w  \in  C^0(\Omega ), \forall \sigma   \in  I^{d,m}\},] and stem:[C^0(\Omega )] is the space of continuous functions over stem:[\Omega \in  \mathbb{R}^d].
+
+We denote by stem:[C^\infty (\Omega )] the space of functions stem:[w] for which stem:[D^\sigma] exists and is continuous for any order stem:[|\sigma |.]
+
+==== Lebesgue Spaces
+
+We define, for stem:[1 \leq  p < \infty], the _Lebesgue space_ stem:[L^p(\Omega
+)] as stem:[L^p(\Omega )\equiv \{  w \text{ measurable } | \|w\|_{L^p(\Omega )} < \infty\}] where
+
+* stem:[\|w\|_{L^p(\Omega )} \equiv  \left( \int_\Omega |w|^pdx\right)^{1/p} , 1\leq p<\infty,]
+* stem:[\|w\|_{L^\infty (\Omega )} \equiv \mathrm{ess} \sup_{x\in\Omega} |w(x)|, p = \infty .]
+
+==== Hilbert Space
+
+Let stem:[m  \in  \mathbb{N}_0], the space stem:[H^m(\Omega )] is then defined as stem:[H^m(\Omega )\equiv  \{w | D^\sigma w  \in   L^2(\Omega ), \forall \sigma   \in  I^{d,m}\},] with associated inner product stem:[(w,v)_{H^m(\Omega )}\equiv \displaystyle\sum_{\sigma  \in I^{d,m}}\int_\Omega  D^\sigma w D^\sigma v dx,] and induced norm stem:[\|w\|_{H^m(\Omega )} \equiv   \sqrt{(w, w)_{H^m(\Omega )}}.]
+
+==== Special (most important) cases
+
+Since we only consider second-order PDEs, we require mostly
+
+* stem:[L^2(\Omega )  = H^0(\Omega )]: Lebesgue Space stem:[p = 2]
+  - stem:[(w,v)_{L^2(\Omega)} = \int_\Omega w v \quad \forall w, v  \in  L^2(\Omega )]
+  - stem:[\|w\|_{L^2(\Omega)} = \sqrt{(w,w)_{L^2(\Omega)}} \forall w  \in  L^2(\Omega ),]
+
+stem:[\Rightarrow] Space of all functions stem:[w : \Omega  \rightarrow
+\mathbb{R}] square-integrable over stem:[\Omega] .
+
+
+* stem:[H^1(\Omega)] stem:[H^1(\Omega ) \equiv \{w \in L^2(\Omega )| \frac{\partial w}{ \partial xi}  \in L^2(\Omega ), 1\leq i\leq d\}] with inner product and induced norm stem:[(w,v)_{H^1(\Omega )}  \equiv \int_\Omega \nabla w  \cdot   \nabla v
++ wv\quad \forall w,v  \in  H^1(\Omega ),], stem:[\|w\|_{H^1(\Omega )}  \equiv \sqrt{(w,w)_{H^1(\Omega)}}\quad \forall w  \in  H^1(\Omega ),] and seminorm stem:[|w|_{H^1(\Omega )} \equiv \int_\Omega  \nabla w  \cdot   \nabla
+w,\quad \forall w  \in  H^1(\Omega ).]
+
+
+* the space stem:[H_0^1(\Omega )] stem:[H^1_0(\Omega) \equiv \{v \in H^1(\Omega )|v_{|\partial \Omega}=0 \}] where stem:[v = 0] on the boundary stem:[\partial \Omega .]
+
+Note that, for any stem:[v  \in  H_0^1(\Omega )], we have stem:[C_{PF} \|v\|_{H^1(\Omega )} \leq  |v|_{H^1(\Omega )} \leq  \|v\|_{H^1(\Omega )},] and thus stem:[\|v\|_{H^1(\Omega)} = 0 \, \Rightarrow v = 0] stem:[\Rightarrow |v|_{H^1(\Omega )}] constitutes a norm for stem:[v  \in
+H_0^1(\Omega ).]
+
+==== Projection
+
+Given Hilbert Spaces stem:[Y] and stem:[Z \subset  Y] , the projection, stem:[\Pi  : Y \rightarrow  Z], of stem:[y \in Y] onto stem:[Z] is defined as
+[stem]
+++++
+(\Pi y,v)_Y = (y,v)_Y , \forall v  \in  Z
+++++
+
+Properties:
+
+* Orthogonality: stem:[(y - \Pi y, v)_Y = 0]
+* Idempotence: stem:[\Pi (\Pi y) = \Pi y]
+* Best Approximation stem:[\|y-\Pi y\|^2_Y = \inf_{v \in Z} \|y-v\|^2_Y, \, ]
+
+Given an orthonormal basis stem:[\{ \varphi_i\}_{i=1, N = \dim(Z)}], then stem:[\Pi y= \sum_{i=1}^{\dim(Z)}  ( \varphi_i,y)_Y  \varphi_i, \forall y \in Y]
+
+[[notations]]
+=== Notations
+
+
+==== Notations
+
+* stem:[(\cdot)^\mathcal{N}] finite element approximation
+* stem:[(\cdot)_N] reduced basis approximation
+* stem:[\mu] input parameter (physical, geometrical,...)
+* stem:[s(t;\mu) \approx s^\mathcal{N}(t;\mu)\approx s_N(t;\mu) ] output approximations
+* stem:[\mu \rightarrow s(t;\mu)] input-output relationship
+
+==== Definitions
+
+* stem:[\Omega \subset \mathbb{R}^d] spatial domain
+* stem:[\mu] stem:[P]-uplet
+* stem:[\mathcal{D}^\mu \subset \mathbb{R}^P ] parameter space
+* stem:[s] output, stem:[\ell, f] functionals
+* stem:[u] field variable
+* stem:[X] function space stem:[H^1_0(\Omega)^\nu \subset X \subset H^1(\Omega)^\nu] (stem:[\nu=1] for simplicity) +
+stem:[(\cdot,\cdot)_X] scalar product and stem:[\|\cdot\|_X] norm associated to stem:[X]
+
+
+[[problem-statement-1]]
+=== Problem Statement
+
+
+The formal problem statement reads: Given stem:[\mu \in \mathcal{D}^\mu], evaluate stem:[s(\mu)  = \ell(u(\mu);\mu)] where stem:[u(x;\mu) \in X] satisfies stem:[a(u(\mu), v; \mu ) = f(v; \mu), \quad \forall v \in X]
+
+We consider first the case of linear affine compliant elliptic problem and then complexify.
+
+==== Hypothesis: Reference Geometry
+
+In these notes stem:[\Omega] is considered
+
+* To apply the reduced basis methodology exposed later, we need to setup a reference spatial domain stem:[\Omega_{\mathrm{ref}}]
+* We introduce an affine mapping stem:[\mathcal{T}(\cdot;\mu) : \Omega (\equiv
+    \Omega_{\mathrm{ref}} = \Omega_o(\bar{\mu}))
+    \rightarrow \Omega_o(\mu)] such that stem:[a(u,v;\mu) = a_o(u_o \circ \mathcal{T}_\mu,v_o \circ \mathcal{T}_\mu;\mu)]
+
+==== Hypothesis: Continuity, stability, compliance
+
+We consider the following stem:[\mu-]PDE
+
+stem:[a(\cdot,\cdot;\mu)] is :
+
+- bilinear
+- symmetric
+- continuous
+- coercive (stem:[\forall \mu \in \mathcal{D}^\mu])
+
+stem:[f(\cdot;\mu), \ell(\cdot;\mu)] are :
+
+- linear
+- bounded (stem:[\forall \mu \in \mathcal{D}^\mu])
+
+and in particular, to start, the compliant case
+
+* stem:[a] symmetric
+* stem:[f(\cdot;\mu) = \ell(\cdot;\mu)\quad \forall \mu \in \mathcal{D}^\mu]
+
+==== Hypothesis: Affine dependence in the parameter
+
+We require for the RB methodology stem:[a(u,v;\mu) = \displaystyle\sum_{q=1}^{Q_a} \Theta^q_a(\mu)\ a^q( u, v )] where for stem:[q=1,...,Q_a]
+
+[stem]
+++++
+\begin{align*}
+\theta^q_a : & \mathcal{D}^\mu \to \mathbb{R} & \mu\text{-dependant functions}\\
+a^q :& X \times X \rightarrow \mathbb{R} & \mu\text{-independent bilinear forms}
+\end{align*}
+++++
+
+**Remark :**
+
+* similar decomposition is required for stem:[\ell(v;\mu)] and stem:[f(v;\mu)], and denote stem:[Q_\ell] and stem:[Q_f] the corresponding number of terms
+* applicable to a large class of problems including geometric variations
+* can be relaxed (see non affine/non linear problems)
+
+==== Inner Products and Norms
+
+* _energy inner product_ and associated norm (parameter dependant) stem:[\begin{aligned}
+      (((w,v)))_\mu &=  a(w,v;\mu) &\ \forall u,v \in X\\
+      |||v|||_\mu &=  \sqrt{a(v,v;\mu)} &\ \forall v \in X
+    \end{aligned}]
+* stem:[X]-inner product and associated norm (parameter independant) stem:[\begin{aligned}
+      (w,v)_X &=  (((w,v)))_{\bar{\mu}} \ (\equiv a(w,v;\bar{\mu})) &\ \forall u,v \in X\\
+      ||v||_X &=  |||v|||_{\bar{\mu}} \ (\equiv \sqrt{a(v,v;\bar{\mu})}) & \ \forall v \in X
+    \end{aligned}]
+
+==== Coercivity and Continuity Constants
+
+We assume stem:[a] coercive and continuous
+
+Recall that
+
+* coercitivy constant stem:[(0 < ) \alpha(\mu) \equiv \inf_{v\in X}\frac{a(v,v;\mu)}{||v||^2_X}]
+* continuity constant stem:[\gamma(\mu) \equiv \sup_{w\in X} \sup_{v\in X}\frac{a(w,v;\mu)}{\|w\|_X
+      \|v\|_X} ( < \infty)]
+
+
+
+[sec:fem-approximation]
+
+==== « Truth » FEM Approximation
+
+Let stem:[\mu \in \mathcal{D}^{\mu}], evaluate stem:[\displaystyle s^{\mathcal{N}} (\mu) = \ell (u^{\mathcal{N}} (\mu))], where stem:[u^{\mathcal{N}} (\mu) \in X^{\mathcal{N}}] satisfies stem:[a (u^{\mathcal{N}} (\mu), v; \mu ) = f (v), \quad \forall \: v \in X^{\mathcal{N}}].
+Here stem:[X^{\mathcal{N}} \subset X] is a _truth_ finite element approximation of dimension stem:[\mathcal{N}\gg 1] equiped with an inner product stem:[(\cdot,\cdot)_X] and induced norm stem:[||\cdot||_X]. Denote also stem:[X'] and associated norm stem:[\ell \in X',\qquad\displaystyle ||\ell||_{X'} \equiv \operatorname{sup}_{v\in X}\frac{\ell(v)}{||v||_X}].
+
+
+==== Purpose
+
+* Equate stem:[u(\mu)] and stem:[u_{\mathcal{N}}(\mu)] in the sense that stem:[||u(\mu)-u_{\mathcal{N}}(\mu)||_X \leq \mathrm{tol}\quad\forall \mu \in \mathcal{D}^\mu]
+* Build the reduced basis approximation using the FEM approximation
+* Measure the error associated with the reduced basis approximation relative to the FEM approximation
+
+stem:[\Rightarrow u^{\mathcal{N}} (\mu)] is a calculable surrogate for stem:[u(\mu).] stem:[\|u(\mu)-u^\mathcal{N}(\mu)\|_{X} \leq
+\underbrace{\|u(\mu)-u^\mathcal{N}(\mu)\|_{X}}_{\leq \varepsilon^\mathcal{N}} + \underbrace{\|u^\mathcal{N}(\mu)-u^N(\mu)\|_X}_{\varepsilon_{\mathrm{tol,min}}}]
+
+with stem:[\varepsilon^\mathcal{N} \ll \varepsilon_{\mathrm{tol,min}}]
+
+
+
+[[sec:reduc-basis-appr]]
+== Reduced Basis Approximation
+
+=== Reduced Basis Objectives
+
+For any given accuracy stem:[\epsilon], evaluate
+[stem]
+++++
+\mu \in \mathcal{D}^\mu\mapsto s_N(\mu) (\approx s^\mathcal{N}(\mu)) \text{ and } \Delta^s_N(\mu)\qquad\text{Accuracy}
+++++
+
+that probably achieves the desired accuracy
+[stem]
+++++
+|s^\mathcal{N}(\mu)-s_N(\mu)| \leq \Delta^s_N(\mu) \leq \epsilon \qquad\text{Reliability}
+++++
+
+for a very low cost stem:[t_{\text{comp}}] Efficiency +
+
+[stem]
+++++
+\textbf{Independant}\text{ of} \mathcal{N} \text{ as } \mathcal{N} \rightarrow \infty \qquad\text{Efficiency}
+++++
+
+where stem:[t_{\text{comp}}] is the time to perform the input-output relationship stem:[\mu \mapsto (s_N(\mu),\Delta^s_N(\mu))].
+
+=== Rapid Convergence
+
+Build a rapidly convergent approximation of stem:[s_N(\mu) \in \mathbb{R}] and stem:[u_N(\mu) \in X^N \subset  X^{\mathcal{N}} \subset X] such that for all stem:[\mu], we have stem:[s_N(\mu) \rightarrow s^{\mathcal{N}}(\mu)] and stem:[u_N(\mu) \rightarrow u^{\mathcal{N}}(\mu)] rapidly as stem:[N = \operatorname{dim}{X_N} \rightarrow \infty (= 10-200)] (and of stem:[\mathcal{N}])
+
+=== Reliability and Sharpness
+
+Provide _a posteriori_ error bound stem:[\Delta_N(\mu)] and stem:[\Delta^s_N(\mu)] :
+
+[stem]
+++++
+1 (\text{rigor}) \leq \dfrac{\Delta_N(\mu)}{\|u^{\mathcal{N}}(\mu)
+      - u_N(\mu)\|_X} \leq \ E (\text{sharpness})
+++++
+
+and
+
+[stem]
+++++
+1 (\text{rigor}) \leq \frac{\Delta^s_N(\mu)}{|s^{\mathcal{N}}(\mu)
+      - s_N(\mu)|} \leq \ E (\text{sharpness})
+++++
+
+for all stem:[N = 1 \ldots N_{\text{max}}] and stem:[\mu \in \mathcal{D}^\mu].
+
+
+=== Efficiency
+
+Develop a two stage strategy : Offline/Online
+
+Offline:::
+  very expensive pre-processing, we have typically that for a given stem:[\mu \in \mathcal{D}^\mu] stem:[t^{\text{offline}}_{\text{comp}} \gg t^{\mu\rightarrow s^{\mathcal{N}}(\mu)}_{\text{comp}}]
+
+Online:::
+  very rapid convergent certified reduced basis input-output relationship stem:[t^{\text{online}}_{\text{comp}} \text{ independent of } \mathcal{N}]
+
+stem:[\mathcal{N}] may/should be chosen conservatively.
+
+
+
+=== Parametric Manifold stem:[\mathcal{M}^\mathcal{N}]
+
+
+We assume
+
+* the form stem:[a] is continuous and coercive (or inf-sup stable),
+* affine-dependence,
+* the stem:[\theta^q(\mu), 1 \leq q \leq Q], are smooth (i.e., stem:[\theta^q \in C^\infty(\mathcal{D})]
+
+then stem:[\mathcal{M}^\mathcal{N} = \{ u^\mathcal{N}(\mu),\, \mu \in \mathcal{D}\}] is a smooth stem:[P]-dimensional manifold in stem:[X^\mathcal{N}], since stem:[\| D_\sigma y^\mathcal{N}(\mu) \| \leq C_\sigma \forall \mu \in
+    \mathcal{D}], for any order stem:[|\sigma| \in \mathbb{N}_{+0}]
+
+=== Low-Dimension Manifold
+
+
+To approximate stem:[u(\mu)] and thus stem:[s(\mu)], we need not represent all functions in stem:[Y]. We need only approximate functions in low dimensional manifole stem:[W = \{ u(\mu)\in Y; \mu\in \mathcal{D}^\mu\}].
+
+We construct the approximation space stem:[W_N = \{u(\mu^i)\in Y, (\mu^i)_{i=1...N} \subset \mathcal{D}^\mu\}]
+
+
+[[manifold]]
+.Construction of the manifold
+image::manifold.png[width=50%]
+
+
+=== Spaces & Bases
+
+We define the RB approximation space stem:[X_N =\operatorname*{span}\{\xi^n, 1 \leq n \leq N \},\, 1 \leq N \leq N_{max}] with linearly independent basis functions stem:[\xi^n \in X,\, 1 \leq n \leq N_{max}]. We thus obtain stem:[X_N \subset X, \, \operatorname{dim}(X_N) = N,\, 1 \leq N \leq N_{max}] and stem:[X_1 \subset X_2 \subset \ldots X_{N_{max}} (\subset X)].
+
+We denote non-hierarchical RB spaces as stem:[X^{nh}_N, 1 \leq N \leq
+Nmax] stem:[X^{nh}_N \subset X, \, \operatorname{dim}(X^{nh}_N) = N,\, 1 \leq N \leq N_{max}]
+
+
+
+*Parameter Samples :* stem:[S_N  = \{ \mu_1 \in \mathcal{D}^{\mu}, \ldots, \mu_N \in \mathcal{D}^{\mu} \}\quad 1 \leq N \leq N_{\mathrm{max}}], with stem:[S_1 \subset S_2 \ldots S_{N_\mathrm{max}-1} \subset S_{N_\mathrm{max}} \subset \mathcal{D}^\mu]
+
+*Lagrangian Hierarchical Space :* stem:[W_N  =  {\rm span} \: \{ \xi^n \equiv \underbrace{ u (\mu^n)}_{u^{\mathcal{N}} (\mu^n)}, n = 1, \ldots, N \}], with stem:[W_1 \subset W_2 \ldots \subset W_{N_\mathrm{max}} \subset X^{\mathcal{N}} \subset{X}]
+
+Sampling strategies?
+
+* Equidistributed points in stem:[\mathcal{D}^\mu](curse of dimensionality)
+* Log-random distributed points in stem:[\mathcal{D}^\mu]
+* See later for more efficient, adaptive strategies
+
+==== Taylor & Hermite
+
+* Taylor reduced basis spaces: stem:[W^{Taylor}_N = \operatorname*{span}\{D_\sigma u(\mu), \forall \sigma \in I^{P,N-1}    \}, 1 \leq N \leq N_{max}], field variable and sensitivity derivatives at one point in stem:[\mathcal{D}].
+* Hermite reduced basis spaces: stem:[W^{Hermite}_N « = » W^{Lagrangian}_N \cup W^{Taylor}_N] field variable and sensitivity derivatives at several points in stem:[\mathcal{D}]
+
+NOTE: We will exclusively use Lagrangian RB spaces in this page.
+
+==== Orthogonal Basis
+
+Given stem:[\xi^n = u(\mu^n), 1 \leq n \leq N_\text{max}] (Lagrange case) we construct the basis set stem:[\{\zeta^n, 1 \leq n \leq N_\text{max}\}], from
+
+[sidebar]
+.Gram-Schmidt algoritmh
+--
+1. **Input:** stem:[\xi^n = u(\mu^n), 1 \leq n \leq N_\text{max}]
+
+2. Set stem:[\zeta^1 := \dfrac{\xi^1}{\Vert\xi^1\Vert}_X]
+
+3. **for** stem:[n=2] to stem:[N_\text{max}] **do:**
+
+  * stem:[z^n = \xi^n - \displaystyle\sum_{m=1}^{n-1} (\xi^n,\zeta^m)_X \zeta^m]
+  * stem:[\zeta^n = \dfrac{z^n}{\Vert z^n\Vert}_X]
+
+4. ** end for **
+--
+
+NOTE: stem:[(\zeta^n,\zeta^m)_X =  \delta_{nm}, 1 \leq n,m \leq N_\text{max}]
+
+Given reduced basis space stem:[X_N  =  {\rm span} \: \{ \zeta^n,  n = 1, \ldots, N \}, 1 \leq N
+    \leq N_{max}] we can express any stem:[w_N \in X_N] as stem:[w_N = \displaystyle\sum_{k=1}^N {w_N}_n \zeta^n] for unique stem:[{w_N}_n \in \mathbb{R}, 1 \leq n \leq N].
+
+Reduced basis « matrices » stem:[Z_N \in \mathbb{R}^{\mathcal{N}\times N} , 1
+\leq N \leq N_{max}:] stem:[Z_N=[\zeta^1,\zeta^2,...,\zeta^N\],  1 \leq N \leq N_{max}] where, from orthogonality, stem:[Z^T_{N_{max}} X Z^T_{N_{max}} =
+I_{N_{max}}], and stem:[I_M] is the Identity matrix in stem:[\mathbb{R}^{M\times M}].
+
+=== Formulation (Linear Compliant Case): a Galerkin method
+
+==== Galerkin Projection
+
+Given stem:[\mu \in \mathcal{D}^{\mu}] evaluate
+
+[stem]
+++++
+s_N (\mu) =  f(u_N (\mu);\mu)]
+++++
+
+where stem:[u_N (\mu) \in  X_N] satisfies
+
+[stem]
+++++
+a (u_N (\mu), v; \mu)  =  f(v;\mu), \ \forall \: v \in X_N
+++++
+
+
+==== Optimality
+
+For any stem:[\mu \in \mathcal{D}^\mu], we have the following optimality results (thanks to Galerkin)
+[stem]
+++++
+\begin{aligned}
+    |||u(\mu) - u_N(\mu)|||_{\mu} &= \inf_{v_N \in X_N} |||u(\mu) - v_N(\mu)|||_\mu,\\
+    ||u(\mu) - u_N(\mu)||_X &\leq \sqrt{\dfrac{\gamma(\mu)}{\alpha(\mu)}} \inf_{v_N \in X_N} ||u(\mu) -    v_N(\mu)||_X,\\
+  \end{aligned}
+++++
+and
+[stem]
+++++
+\begin{aligned}
+    s(\mu)-s_N(\mu) &= |||u(\mu) - u_N(\mu)|||^2_\mu,\\
+    &= \inf_{v_N \in X_N} |||u(\mu) - v_N(\mu)|||^2_\mu,
+  \end{aligned}
+++++
+
+and finally stem:[0 \leq s(\mu)-s_N(\mu) \leq \gamma(\mu)\inf_{v_N \in X_N} ||u(\mu) - v_N(\mu)||^2_X]
+
+==== Offline-online decomposition
+
+Expand our RB approximations
+
+[stem]
+++++
+u_N(\mu)\ = \sum_{j=1}^N\ {u_N}_j(\mu)\ \zeta_j
+++++
+
+
+Express stem:[s_N(\mu)]
+
+[stem]
+++++
+\displaystyle s_N(\mu) = \displaystyle\sum_{j=1}^N {u_N}_j(\mu)\ \left( \sum_{q=1}^{Q_f}\ \Theta^q_f(\mu)\ f^q(\zeta_j)\right)
+++++
+
+where stem:[{u_N}_i(\mu), 1 \leq i \leq N]  satisfies
+
+[stem]
+++++
+    \sum_{j=1}^N \left( \sum_{q=1}^{Q_a}\ \Theta^q_a(\mu)\ a^q( \zeta_i, \zeta_{j})  \right) {u_N}_j(\mu) = \sum_{q=1}^{Q_f}\ \Theta^q_f(\mu)\ f^q(\zeta_i)
+++++
+for stem:[1 \leq i \leq N]
+
+==== Matrix form
+
+Solve stem:[\underline{A}_N (\mu) \: \underline{u}_N (\mu) = \underline{F}_N]
+
+where
+
+[stem]
+++++
+\begin{aligned}
+      (A_N)_{i \: j} (\mu) &= \sum_{q=1}^{Q_a}\ \Theta^q_a(\mu)\ a^q( \zeta_i, \zeta_{j})
+      & \quad 1 \leq i,j \leq N\\
+      F_{N \: i} &=  \sum_{q=1}^{Q_f}\ \Theta^q_f(\mu) f^q (\zeta_i)
+      & \quad 1 \leq i \leq N
+\end{aligned}
+++++
+
+==== Complexity analysis
+
+Offline: independent of stem:[\mu]
+
+* Solve: stem:[N] FEM system depending on stem:[\mathcal{N}]
+* Form and store: stem:[f^q (\zeta_i)]
+* Form and store: stem:[a^q( \zeta_i, \zeta_{j})]
+
+Online: independent of stem:[\mathcal{N}]
+
+* Given a new stem:[\mu \in \mathcal{D}^\mu]
+* Form and solve stem:[A_N(\mu)] : stem:[O(Q N^2)] and stem:[O(N^3)]
+* Compute stem:[s_N(\mu)]
+
+Online: stem:[N << \mathcal{N}] Online we realize often orders of magnitude computational economies relative to FEM in the context of many stem:[\mu]-queries.
+
+==== Condition number
+
+*Proposition :* Thanks to the orthonormalization of the basis function, we have that the condition number of stem:[A_N(\mu)] is bounded by the ratio stem:[\dfrac{\gamma(\mu)}{\alpha(\mu)}].
+
+*_Proof :_*
+* Write the Rayleigh Quotient stem:[\dfrac{v_N^T A_N(\mu) v_N}{v_N^T v_N}, \quad \forall v_N \in \mathbb{R}^N]
+* Express stem:[v_N = \sum_{n=1}^N v_{N_n} \zeta^n]
+* Use coercivity, continuity and orthonormality.

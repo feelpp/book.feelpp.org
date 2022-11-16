@@ -3,19 +3,24 @@
   "scripts": {
     "clean-build": "npm run clean-install;npm run build",
     "clean-install": "rm -rf node_modules/ .cache/ package-lock.json ;npm i --cache=.cache/npm",
-    "dev": "node_modules/.bin/antora site-dev.yml --stacktrace --fetch",
+    "dev": "npx antora site-dev.yml --stacktrace --fetch",
     "version": "node_modules/.bin/antora --version",
-    "build": "node_modules/.bin/antora --stacktrace --fetch site.yml ",
+    "build": "npx antora --stacktrace --fetch site.yml ",
     "dev-serve": "node_modules/.bin/antora --stacktrace --fetch site-dev.yml ; node-srv -p 8010 build/site",
-    "serve": "node-srv -p 8010 build/site"
+    "serve": "node-srv -p 8011 build/site"
   },
   "devDependencies": {
-    "@antora/cli": "^3.0.0",
-    "@antora/site-generator-default": "^3.0.0",
-    "@feelpp/asciidoctor-remote-include-processor": "^0.0.6",
+    "@antora/cli": "^3.1.2",
+    "@antora/collector-extension": "^1.0.0-alpha.2",
+    "@antora/site-generator-default": "^3.1.2",
+    "@asciidoctor/core": "^2.2.6",
+    "asciidoctor": "^2.2.6",
     "@djencks/asciidoctor-template": "^0.0.3",
-    "asciidoctor-kroki": "^0.14.0",
-    "asciidoctor-emoji": "^0.3.4",
+    "@feelpp/asciidoctor-remote-include-processor": "^0.0.6",
+    "asciidoctor-emoji": "^0.4.2",
+    "asciidoctor-jupyter": "^0.3.0",
+    "asciidoctor-kroki": "^0.16.0", 
+    "handlebars-utils": "^1.0.6",
     "node-srv": "^3.0.3"
   }
 }

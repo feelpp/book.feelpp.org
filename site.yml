@@ -92,6 +92,9 @@ ui:
     url: https://gitlab.com/feelpp/antora-ui-default/-/jobs/artifacts/feelpp/raw/build/ui-bundle.zip?job=bundle-stable
     snapshot: true
   supplemental_files: supplemental-ui
+antora:
+  extensions:
+  - '@antora/collector-extension'
 asciidoc:
   attributes:
     page-pagination: ''
@@ -139,6 +142,8 @@ asciidoc:
     cpp14: C++14
     cmake: CMake
     paraview: ParaView
+    paraview-url: https://paraview.org
+    paraview-website: link:{paraview-url}[{paraview}]
     ensight: EnSight
     girder: Girder
     plantuml-server-url: http://www.plantuml.com/plantuml
