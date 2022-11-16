@@ -5,9 +5,10 @@
 
 This class gathers the properties of the model, that can be set from a JSON file.
 
-* `__init__(filename: str = '', directoryLibExpr: str = '', worldComm: feelpp._core.WorldComm, prefix: str = '') -> None` : initialize `ModelProperties`.
+* `\\__init__(filename: str = '', directoryLibExpr: str = '', worldComm: feelpp._core.WorldComm, prefix: str = '') -> None` : initialize `ModelProperties`.
 * `materials() -> feelpp._models.ModelMaterials` : get the materials of the model (see section <<Class `ModelMaterials`,below>>).
 * `parameters(self: feelpp._models.ModelProperties) -> feelpp._models.ModelParameters` : get parameters of the model (see <<Class `ModelParameters`,below>>).
+* `setup(self: feelpp._models.ModelProperties, arg0: str) -> None` : setup from a filename
 
 
 
@@ -23,15 +24,15 @@ m = heatBox.modelProperties()
 
 This class gathers the different materials present in the model.
 
-* `__getitem__(str) -> feelpp._models.ModelMaterial` : returns the <<Class `ModelMaterial`,`ModelMaterial`>> named `str`. If `mo` is the instance of `ModelMaterials`, the material `s` is called with the command `mo[s]`.
+* `\\__getitem__(str) -> feelpp._models.ModelMaterial` : returns the <<Class `ModelMaterial`,`ModelMaterial`>> named `str`. If `mo` is the instance of `ModelMaterials`, the material `s` is called with the command `mo[s]`.
 
-* `__init__(self: feelpp._models.ModelMaterials, worldComm: feelpp._core.WorldComm) -> None`
+* `\\__init__(self: feelpp._models.ModelMaterials, worldComm: feelpp._core.WorldComm) -> None`
 
-* `__iter__() -> iterator` : returns an iterator on the matrials (for a `for` loop for instance : `for mat in mo: ...`)
+* `\\__iter__() -> iterator` : returns an iterator on the matrials (for a `for` loop for instance : `for mat in mo: ...`)
 
-* `__len__() -> int` : returns the number of materials in the model.
+* `\\__len__() -> int` : returns the number of materials in the model.
 
-* `__str__() -> str` : print the list of materials of the model
+* `\\__str__() -> str` : print the list of materials of the model
 
 * `at(arg0: str) -> feelpp._models.ModelMaterial` : `mo.at(s)` is equivalent to `mo[s]`.
 
@@ -44,11 +45,11 @@ This class gathers the different materials present in the model.
 
 == Class `ModelMaterial`
 
-* `__getitem__(self: feelpp._models.ModelMaterial, arg0: str) -> str`
+* `\\__getitem__(self: feelpp._models.ModelMaterial, arg0: str) -> str`
  
-* `__init__(self: feelpp._models.ModelMaterial) -> None`
+* `\\__init__(self: feelpp._models.ModelMaterial) -> None`
 
-* `__str__(self: feelpp._models.ModelMaterial) -> str`
+* `\\__str__(self: feelpp._models.ModelMaterial) -> str`
 
 * `getString(self: feelpp._models.ModelMaterial, arg0: str) -> str` : returns the string from key if the value is a string
 
@@ -96,13 +97,13 @@ Post
 
 This class gathers all the parameters used in the model.
 
-* `__init__(self: feelpp._models.ModelParameters, worldComm: feelpp._core.WorldComm) -> None`
+* `\\__init__(self: feelpp._models.ModelParameters, worldComm: feelpp._core.WorldComm) -> None`
 
-* `__iter__() -> iterator`
+* `\\__iter__() -> iterator`
 
-* `__len__() -> int`
+* `\\__len__() -> int`
 
-* `__str__() -> str`
+* `\\__str__() -> str`
 
 * `at(arg0: str) -> feelpp._models.ModelParameter`
 
@@ -115,9 +116,9 @@ This class gathers all the parameters used in the model.
 
 == Class `ModelParameter`
 
-* `__init__(self: feelpp._models.ModelParameter) -> None`
+* `\\__init__(self: feelpp._models.ModelParameter) -> None`
 
-* `__str__(self: feelpp._models.ModelParameter) -> str`
+* `\\__str__(self: feelpp._models.ModelParameter) -> str`
 
 * `description(self: feelpp._models.ModelParameter) -> str` : get description
 

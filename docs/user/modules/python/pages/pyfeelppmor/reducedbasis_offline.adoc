@@ -38,7 +38,7 @@ This part can be run in parallel.
 |name of the case
 |`generate_basis`
 
-|dim`
+|`dim`
 |dimension of the case (must be `2` or `3`)
 |_mandatory_
 
@@ -59,7 +59,6 @@ This part can be run in parallel.
 |`False`
 |===
 
-WARNING: The time-dependant case it net yet functionnal...
 
 
 [[Algorithms]]
@@ -71,15 +70,15 @@ WARNING: The time-dependant case it net yet functionnal...
 |===
 |Value|Algorithm|Description
 
-|0
+|`0`
 |From sample
 |Generates a basis of size stem:[N=]`train-size` elements, [log-]randomly taken in the space.
 
-|1
+|`1`
 |Greedy algorithm
 |Run the greedy algorithm on a train set of element of size `train-size`. This algorithm also stores the evolution of the maximal error bound at each step.
 
-|2
+|`2`
 |POD generation
 |Takes the largest POD modes from a basis of size `train-size`. The resulting basis will have a size stem:[N\leqslant]`train-size`. This algorithm also stores the evolution of the maximal error bound at each step.
 
@@ -96,7 +95,7 @@ Here is a description of the generated files :
     - `Qa` : Size of the decomposition of stem:[A(\mu)]
     - `Qf` : Size of the decomposition of stem:[F(\mu)]
     - `QLk` : Sizes of the decompositions of stem:[L_k(\mu)] for stem:[k\in\{1,n_\text{output}\}], gathers in a list.
-    - `N_output` : Number pof output described in the JSON (`CRBOutput`)
+    - `N_output` : Number of output described in the JSON (`CRBOutput`)
     - `output_names` : names of those outputs
     - `N` : Size of the reduced basis
     - `path` : Path where `h5` file is stored 
@@ -128,7 +127,7 @@ config = generateBasisConfig(dim, config_file, time_dependant, odir, case, algo,
 
 The description and the default values of those parameters are descirbed <<parameters,above>>.
 
-If `odir` contains `$name`, this expression will be replaced by the _name_ of the case, defined by concatenation `{case}-np_{nproc}`, where `case` is the name of the case given in the configuration, and `nproc` is the number of processors where the simulation is run.
+If `odir` contains `$name`, this expression will be replaced by the _name_ of the case, defined by concatenation `<case>-np_<nproc>`, where `case` is the name of the case given in the configuration, and `nproc` is the number of processors where the simulation is run.
 
 
 [[files]]
