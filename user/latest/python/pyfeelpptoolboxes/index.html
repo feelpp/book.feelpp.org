@@ -675,6 +675,11 @@ MathJax.Hub.Config({
   <div class="dropdown-content">
 
 
+        <a href="../_attachments/pyfeelpptoolboxes/index.ipynb" title="Download Jupyter Notebook" data-toggle="tooltip" data-placement="left">
+         .ipynb <i class="fas fa-file"></i>
+        </a>
+
+
           <a onclick="print(this)"  class="headerbtn"  data-toggle="tooltip" data-placement="left" title="Print to PDF">
               .pdf <i class="fas fa-file-pdf"></i>
           </a>
@@ -721,7 +726,259 @@ title="Fullscreen mode"
 
 <article class="doc">
 <h1 class="page">Feel++ Toolboxes in Python</h1>
+<div class="sect1">
+<h2 id="_getting_started_with_toolboxes_in_python"><a class="anchor" href="#_getting_started_with_toolboxes_in_python"></a>1. Getting started with toolboxes in Python</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Feel++ toolboxes are availabe as python modules. The following toolboxes are available:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Toolbox</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Python Module</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fluid mechanics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp.toolboxes.fluid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat transfert</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp.toolboxes.heat</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid mechanics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp.toolboxes.solid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp.toolboxes.electric</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hdg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp.toolboxes.hdg</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following example shows how to use the fluid toolbox in python:
+We start with import feelpp, the heat toolboxes and start feelpp environment.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
+from feelpp.toolboxes.core import *
+from feelpp.toolboxes.heat import *
 
+app = feelpp.Environment(["myapp"], opts= toolboxes_options("heat"),config=feelpp.localRepository("")) <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The first argument is the name of the application, the second argument is the directory below <code>feelppdb</code> that will be created in the current directory. The directory will contain the results of the simulation.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Then we continue with the definition of the model and the heat toolbox.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">case=feelpp.download( "github:{repo:feelpp,path:toolboxes/heat/cases/Building/ThermalBridgesENISO10211/", worldComm=app.worldCommPtr() )[0] <i class="conum" data-value="1"></i><b>(1)</b>
+casedfile=case+'/case2.cfg'
+feelpp.Environment.setConfigFile(casefile) <i class="conum" data-value="2"></i><b>(2)</b>
+f = heat(dim=2, order=1) <i class="conum" data-value="3"></i><b>(3)</b>
+if not f.isStationary(): <i class="conum" data-value="4"></i><b>(4)</b>
+    f.setTimeFinal(10*f.timeStep())
+[ok,meas]=simulate(f) <i class="conum" data-value="5"></i><b>(5)</b>
+f.checkResults() <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Download the case from the feelpp repository</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Set the configuration file</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Create the heat toolbox in 2D  with order 1 finite elements</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>If the model is not stationary, set the final time to 10 times the time step</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Simulate the model</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Check the results</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Details</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>heat(2,1)
+[modelProperties] Loading Model Properties : "/scratch/jupyter/feelppdb/downloads/ThermalBridgesENISO10211/case2.json"
+ 0 heat KSP Residual norm 1.812720e+03
+ 1 heat KSP Residual norm 9.989990e-10
++--------------------------------------------------------------------------------------------------------------------------------+
+| Checkers : heat                                                                                                                |
++--------------------------------------------------------------------------------------------------------------------------------+
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | check     | name                                               | measure      | reference    | error        | tolerance    | |
+| +===========+====================================================+==============+==============+==============+==============+ |
+| | [success] | Normal_Heat_Flux_bottom                            | 9.317351e+00 | 9.500000e+00 | 1.960305e-02 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointA_field_temperature                    | 7.067795e+00 | 7.100000e+00 | 4.556565e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointB_field_temperature                    | 7.612815e-01 | 8.000000e-01 | 5.085967e-02 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointC_field_temperature                    | 7.900707e+00 | 7.900000e+00 | 8.954821e-05 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointD_field_temperature                    | 6.278234e+00 | 6.300000e+00 | 3.466902e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointE_field_temperature                    | 8.274854e-01 | 8.000000e-01 | 3.435681e-02 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointF_field_temperature                    | 1.640809e+01 | 1.640000e+01 | 4.935425e-04 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointG_field_temperature                    | 1.633449e+01 | 1.630000e+01 | 2.116074e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointH_field_temperature                    | 1.676604e+01 | 1.680000e+01 | 2.025570e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointI_field_temperature                    | 1.833338e+01 | 1.830000e+01 | 1.824001e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_CheckGeneric_Heat-Flux_top_integrate    | 2.046351e-03 | 0.000000e+00 | 2.046351e-03 | 5.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_CheckGeneric_Heat-Flux_bottom_integrate | 1.775801e-01 | 0.000000e+00 | 1.775801e-01 | 5.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_Check_Heat-Flux_bottom_integrate        | 1.775801e-01 | 0.000000e+00 | 1.775801e-01 | 5.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_Check_Heat-Flux_top_integrate           | 2.046351e-03 | 0.000000e+00 | 2.046351e-03 | 5.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_Inward-Heat-Flux_V2_bottom_integrate    | 9.317351e+00 | 9.500000e+00 | 1.960305e-02 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_Inward-Heat-Flux_bottom_integrate       | 9.494932e+00 | 9.500000e+00 | 5.338099e-04 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
++--------------------------------------------------------------------------------------------------------------------------------+
+
++--------------------------------------------------------------------------------------------------------------------------------+
+...
+| | [success] | Statistics_Inward-Heat-Flux_bottom_integrate       | 9.494932e+00 | 9.500000e+00 | 5.338099e-04 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
++--------------------------------------------------------------------------------------------------------------------------------+</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">if ok: <i class="conum" data-value="1"></i><b>(1)</b>
+    meas = f.postProcessMeasures().values() <i class="conum" data-value="2"></i><b>(2)</b>
+
+    try:
+        import pandas as pd
+        df=pd.DataFrame([meas]) <i class="conum" data-value="3"></i><b>(3)</b>
+        print(df)
+    except ImportError:
+        print("cannot import pandas, no problem it was just a test")
+else:
+    print("error during simulation, cannot proceed with data analysis")</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Check if the simulation was successful</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Get the measures</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Print the measures in a pandas dataframe</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>   Normal_Heat_Flux_bottom  Points_pointA_field_temperature  \
+0                 9.317351                         7.067795
+
+   Points_pointB_field_temperature  Points_pointC_field_temperature  \
+0                         0.761281                         7.900707
+
+   Points_pointD_field_temperature  Points_pointE_field_temperature  \
+0                         6.278234                         0.827485
+
+   Points_pointF_field_temperature  Points_pointG_field_temperature  \
+0                        16.408094                        16.334492
+
+   Points_pointH_field_temperature  Points_pointI_field_temperature  \
+0                        16.766039                        18.333379
+
+   Statistics_CheckGeneric_Heat-Flux_bottom_integrate  \
+0                                            0.17758
+
+   Statistics_CheckGeneric_Heat-Flux_top_integrate  \
+0                                         0.002046
+
+   Statistics_Check_Heat-Flux_bottom_integrate  \
+0                                      0.17758
+
+   Statistics_Check_Heat-Flux_top_integrate  \
+0                                  0.002046
+
+   Statistics_Inward-Heat-Flux_V2_bottom_integrate  \
+0                                         9.317351
+
+   Statistics_Inward-Heat-Flux_bottom_integrate
+0                                      9.494932</pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_simulate_function"><a class="anchor" href="#_the_simulate_function"></a>2. The Simulate function</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The function <code>simulate</code> takes any toolbox as input and simulate it. The function returns a tuple with a boolean and a dictionary. The boolean is true if the simulation was successful and the dictionary contains the measures.</p>
+</div>
+<div class="paragraph">
+<p>Here is the implementation of the function <code>simulate</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>INFO: This is one possible implementation. Feel free to propose another one.</p>
+</div>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="../pyfeelpp/filters.html">Exporting results for visualisation</a></span>
   <span class="next"><a href="modelproperties.html">Model Properties</a></span>
