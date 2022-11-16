@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Petsc API :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/python/pyfeelppmor/petscDouble.html">
-    <link rel="prev" href="parameterSpace.html">
-    <link rel="next" href="reducedbasis.html">
+    <link rel="prev" href="parameters.html">
+    <link rel="next" href="toolboxmor.html">
     <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
@@ -425,18 +425,6 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../pyfeelpptoolboxes/modelproperties.html">Model Properties</a>
   </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelpptoolboxes/heat.html">Heat Transfer</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelpptoolboxes/electric.html">Electrostatic</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelpptoolboxes/fluid.html">Fluid Mechanics</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelpptoolboxes/solid.html">Solid Mechanics</a>
-  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
@@ -444,16 +432,25 @@ MathJax.Hub.Config({
     <a class="nav-link" href="index.html">pyFeel++ MOR</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="parameters.html">Parameters</a>
+    <a class="nav-link" href="parameterSpace.html">Parameter space</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="parameterSpace.html">Parameter space</a>
+    <a class="nav-link" href="parameters.html">Parameters</a>
   </li>
   <li class="nav-item is-current-page" data-depth="3">
     <a class="nav-link" href="petscDouble.html">PETSc vector and matrix</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="toolboxmor.html">Toolbox MOR</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="reducedbasis.html">Python module <code>reducedbasis</code></a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="reducedbasis_offline.html">Offline stage</a>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -736,20 +733,20 @@ title="Fullscreen mode"
 <div class="ulist">
 <ul>
 <li>
-<p><code><em>init</em>(*args, **kwargs)</code> : Overloaded function.</p>
+<p><code>__init__(*args, **kwargs)</code> : Overloaded function.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code><em>init</em>()</code>. The vector created is empty.</p>
+<p><code>__init__()</code>. The vector created is empty.</p>
 </li>
 <li>
-<p><code><em>init</em>(arg0: int, arg1: feelpp._core.WorldComm)</code>. The vector created has a size <code>arg0</code>.</p>
+<p><code>__init__(arg0: int, arg1: feelpp._core.WorldComm)</code>. The vector created has a size <code>arg0</code>.</p>
 </li>
 <li>
-<p><code><em>init</em>(arg0: int, arg1: int, arg2: feelpp._core.WorldComm)</code>. The vector created has a global size <code>arg0</code>, and a local size <code>arg1</code>.</p>
+<p><code>__init__(arg0: int, arg1: int, arg2: feelpp._core.WorldComm)</code>. The vector created has a global size <code>arg0</code>, and a local size <code>arg1</code>.</p>
 </li>
 <li>
-<p><code><em>init</em>(arg0: feelpp._alg.DataMap, arg1: bool)</code></p>
+<p><code>__init__(arg0: feelpp._alg.DataMap, arg1: bool)</code></p>
 </li>
 </ol>
 </div>
@@ -782,17 +779,17 @@ title="Fullscreen mode"
 <div class="ulist">
 <ul>
 <li>
-<p><code><em>init</em>(*args, **kwargs)</code> : Overloaded function.</p>
+<p><code>__init__(*args, **kwargs)</code> : Overloaded function.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code><em>init</em>(arg0: feelpp._core.WorldComm)</code></p>
+<p><code>__init__(arg0: feelpp._core.WorldComm)</code></p>
 </li>
 <li>
-<p><code><em>init</em>(arg0: feelpp._alg.DataMap, arg1: feelpp._alg.DataMap)</code></p>
+<p><code>__init__(arg0: feelpp._alg.DataMap, arg1: feelpp._alg.DataMap)</code></p>
 </li>
 <li>
-<p><code><em>init</em>(arg1: feelpp._alg.DataMap, arg2: feelpp._core.WorldComm)</code></p>
+<p><code>__init__(arg1: feelpp._alg.DataMap, arg2: feelpp._core.WorldComm)</code></p>
 </li>
 </ol>
 </div>
@@ -827,8 +824,8 @@ title="Fullscreen mode"
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="parameterSpace.html">Parameter space</a></span>
-  <span class="next"><a href="reducedbasis.html">Python module <code>reducedbasis</code></a></span>
+  <span class="prev"><a href="parameters.html">Parameters</a></span>
+  <span class="next"><a href="toolboxmor.html">Toolbox MOR</a></span>
 </nav>
 </article>
   </div>

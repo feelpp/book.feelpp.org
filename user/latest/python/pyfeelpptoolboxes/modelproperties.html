@@ -6,7 +6,7 @@
     <title>Model Properties :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/python/pyfeelpptoolboxes/modelproperties.html">
     <link rel="prev" href="index.html">
-    <link rel="next" href="heat.html">
+    <link rel="next" href="../pyfeelppmor/index.html">
     <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
@@ -425,18 +425,6 @@ MathJax.Hub.Config({
   <li class="nav-item is-current-page" data-depth="3">
     <a class="nav-link" href="modelproperties.html">Model Properties</a>
   </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="heat.html">Heat Transfer</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="electric.html">Electrostatic</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="fluid.html">Fluid Mechanics</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="solid.html">Solid Mechanics</a>
-  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
@@ -444,16 +432,25 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../pyfeelppmor/index.html">pyFeel++ MOR</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelppmor/parameters.html">Parameters</a>
+    <a class="nav-link" href="../pyfeelppmor/parameterSpace.html">Parameter space</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelppmor/parameterSpace.html">Parameter space</a>
+    <a class="nav-link" href="../pyfeelppmor/parameters.html">Parameters</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../pyfeelppmor/petscDouble.html">PETSc vector and matrix</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pyfeelppmor/toolboxmor.html">Toolbox MOR</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../pyfeelppmor/reducedbasis.html">Python module <code>reducedbasis</code></a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../pyfeelppmor/reducedbasis_offline.html">Offline stage</a>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -734,13 +731,16 @@ title="Fullscreen mode"
 <div class="ulist">
 <ul>
 <li>
-<p><code><em>init</em>(filename: str = '', directoryLibExpr: str = '', worldComm: feelpp._core.WorldComm, prefix: str = '') &#8594; None</code> : initialize <code>ModelProperties</code>.</p>
+<p><code>__init__(filename: str = '', directoryLibExpr: str = '', worldComm: feelpp._core.WorldComm, prefix: str = '') &#8594; None</code> : initialize <code>ModelProperties</code>.</p>
 </li>
 <li>
 <p><code>materials() &#8594; feelpp._models.ModelMaterials</code> : get the materials of the model (see section <a href="#_class_modelmaterials">below</a>).</p>
 </li>
 <li>
 <p><code>parameters(self: feelpp._models.ModelProperties) &#8594; feelpp._models.ModelParameters</code> : get parameters of the model (see <a href="#_class_modelparameters">below</a>).</p>
+</li>
+<li>
+<p><code>setup(self: feelpp._models.ModelProperties, arg0: str) &#8594; None</code> : setup from a filename</p>
 </li>
 </ul>
 </div>
@@ -763,19 +763,19 @@ title="Fullscreen mode"
 <div class="ulist">
 <ul>
 <li>
-<p><code><em>getitem</em>(str) &#8594; feelpp._models.ModelMaterial</code> : returns the <a href="#_class_modelmaterial"><code>ModelMaterial</code></a> named <code>str</code>. If <code>mo</code> is the instance of <code>ModelMaterials</code>, the material <code>s</code> is called with the command <code>mo[s]</code>.</p>
+<p><code>__getitem__(str) &#8594; feelpp._models.ModelMaterial</code> : returns the <a href="#_class_modelmaterial"><code>ModelMaterial</code></a> named <code>str</code>. If <code>mo</code> is the instance of <code>ModelMaterials</code>, the material <code>s</code> is called with the command <code>mo[s]</code>.</p>
 </li>
 <li>
-<p><code><em>init</em>(self: feelpp._models.ModelMaterials, worldComm: feelpp._core.WorldComm) &#8594; None</code></p>
+<p><code>__init__(self: feelpp._models.ModelMaterials, worldComm: feelpp._core.WorldComm) &#8594; None</code></p>
 </li>
 <li>
-<p><code><em>iter</em>() &#8594; iterator</code> : returns an iterator on the matrials (for a <code>for</code> loop for instance : <code>for mat in mo: &#8230;&#8203;</code>)</p>
+<p><code>__iter__() &#8594; iterator</code> : returns an iterator on the matrials (for a <code>for</code> loop for instance : <code>for mat in mo: &#8230;&#8203;</code>)</p>
 </li>
 <li>
-<p><code><em>len</em>() &#8594; int</code> : returns the number of materials in the model.</p>
+<p><code>__len__() &#8594; int</code> : returns the number of materials in the model.</p>
 </li>
 <li>
-<p><code><em>str</em>() &#8594; str</code> : print the list of materials of the model</p>
+<p><code>__str__() &#8594; str</code> : print the list of materials of the model</p>
 </li>
 <li>
 <p><code>at(arg0: str) &#8594; feelpp._models.ModelMaterial</code> : <code>mo.at(s)</code> is equivalent to <code>mo[s]</code>.</p>
@@ -799,13 +799,13 @@ title="Fullscreen mode"
 <div class="ulist">
 <ul>
 <li>
-<p><code><em>getitem</em>(self: feelpp._models.ModelMaterial, arg0: str) &#8594; str</code></p>
+<p><code>__getitem__(self: feelpp._models.ModelMaterial, arg0: str) &#8594; str</code></p>
 </li>
 <li>
-<p><code><em>init</em>(self: feelpp._models.ModelMaterial) &#8594; None</code></p>
+<p><code>__init__(self: feelpp._models.ModelMaterial) &#8594; None</code></p>
 </li>
 <li>
-<p><code><em>str</em>(self: feelpp._models.ModelMaterial) &#8594; str</code></p>
+<p><code>__str__(self: feelpp._models.ModelMaterial) &#8594; str</code></p>
 </li>
 <li>
 <p><code>getString(self: feelpp._models.ModelMaterial, arg0: str) &#8594; str</code> : returns the string from key if the value is a string</p>
@@ -870,16 +870,16 @@ Post
 <div class="ulist">
 <ul>
 <li>
-<p><code><em>init</em>(self: feelpp._models.ModelParameters, worldComm: feelpp._core.WorldComm) &#8594; None</code></p>
+<p><code>__init__(self: feelpp._models.ModelParameters, worldComm: feelpp._core.WorldComm) &#8594; None</code></p>
 </li>
 <li>
-<p><code><em>iter</em>() &#8594; iterator</code></p>
+<p><code>__iter__() &#8594; iterator</code></p>
 </li>
 <li>
-<p><code><em>len</em>() &#8594; int</code></p>
+<p><code>__len__() &#8594; int</code></p>
 </li>
 <li>
-<p><code><em>str</em>() &#8594; str</code></p>
+<p><code>__str__() &#8594; str</code></p>
 </li>
 <li>
 <p><code>at(arg0: str) &#8594; feelpp._models.ModelParameter</code></p>
@@ -903,10 +903,10 @@ Post
 <div class="ulist">
 <ul>
 <li>
-<p><code><em>init</em>(self: feelpp._models.ModelParameter) &#8594; None</code></p>
+<p><code>__init__(self: feelpp._models.ModelParameter) &#8594; None</code></p>
 </li>
 <li>
-<p><code><em>str</em>(self: feelpp._models.ModelParameter) &#8594; str</code></p>
+<p><code>__str__(self: feelpp._models.ModelParameter) &#8594; str</code></p>
 </li>
 <li>
 <p><code>description(self: feelpp._models.ModelParameter) &#8594; str</code> : get description</p>
@@ -966,7 +966,7 @@ For the two last functions, if a parameter has no max or min, the returned value
 </div>
 <nav class="pagination">
   <span class="prev"><a href="index.html">pyFeel++ Toolboxes</a></span>
-  <span class="next"><a href="heat.html">Heat Transfer</a></span>
+  <span class="next"><a href="../pyfeelppmor/index.html">pyFeel++ MOR</a></span>
 </nav>
 </article>
   </div>

@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Module reducedbasis :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/python/pyfeelppmor/reducedbasis.html">
-    <link rel="prev" href="petscDouble.html">
-    <link rel="next" href="../../conclusion/index.html">
+    <link rel="prev" href="toolboxmor.html">
+    <link rel="next" href="reducedbasis_offline.html">
     <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
@@ -425,18 +425,6 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../pyfeelpptoolboxes/modelproperties.html">Model Properties</a>
   </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelpptoolboxes/heat.html">Heat Transfer</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelpptoolboxes/electric.html">Electrostatic</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelpptoolboxes/fluid.html">Fluid Mechanics</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelpptoolboxes/solid.html">Solid Mechanics</a>
-  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
@@ -444,16 +432,25 @@ MathJax.Hub.Config({
     <a class="nav-link" href="index.html">pyFeel++ MOR</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="parameters.html">Parameters</a>
+    <a class="nav-link" href="parameterSpace.html">Parameter space</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="parameterSpace.html">Parameter space</a>
+    <a class="nav-link" href="parameters.html">Parameters</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="petscDouble.html">PETSc vector and matrix</a>
   </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="toolboxmor.html">Toolbox MOR</a>
+  </li>
   <li class="nav-item is-current-page" data-depth="3">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="reducedbasis.html">Python module <code>reducedbasis</code></a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="reducedbasis_offline.html">Offline stage</a>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -771,12 +768,32 @@ This import load the module for offline generation, associated to the time-depen
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import sys, os
-from feelpp.toolboxes.heat import *
-import feelpp.toolboxes.core as core
-from feelpp.operators import mass
-import feelpp.mor as mor
+from feelpp.toolboxes.heat import * <i class="conum" data-value="1"></i><b>(1)</b>
+import feelpp.toolboxes.core as core <i class="conum" data-value="2"></i><b>(2)</b>
+from feelpp.operators import mass <i class="conum" data-value="3"></i><b>(3)</b>
+import feelpp.mor as mor <i class="conum" data-value="4"></i><b>(4)</b>
 import feelpp</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The toolbox heat is used to simulate the heat equation on the case studied.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The module <code>core</code> is used to set the environment.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>mass</code> function is needed to create the mass matrix if we work on a time-dependent case.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The module <code>mor</code> is used to get the functions neededd by the toolbox mor.</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -785,7 +802,7 @@ import feelpp</code></pre>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">config = feelpp.globalRepository("reducedbasis")
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">config = feelpp.localRepository("reducedbasis")
 sys.argv = ["reducedbasis"]
 o = core.toolboxes_options("heat")
 o.add(mor.makeToolboxMorOptions())
@@ -798,22 +815,54 @@ e = feelpp.Environment(sys.argv, opts=o, config=config)</code></pre>
 <div class="sect1">
 <h2 id="_set_the_model"><a class="anchor" href="#_set_the_model"></a>3. Set the model</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_description_of_the_model"><a class="anchor" href="#_description_of_the_model"></a>3.1. Description of the model</h3>
 <div class="paragraph">
-<p>Set the parameters nedded to the model :
-- <code>config_file</code> : path to the cfg file
-- <code>dim</code> : the dimension of the case
-- <code>order</code> : the order of discretization (<code>1</code> for \(\mathbb{P}_1\), <code>2</code> for \(\mathbb{P}_2\))
-- <code>time_dependant</code> : is the case stationnary or transient ? (for now always to <code>False</code>)
-- <code>name</code> : name of the CRB case</p>
+<p>In this document, the cases used is <code>thermal-fin</code> in 2D, with a \(\mathbb{P}_1\) discretization and stationnary.
+This model is described in <a href="../../../../mor/latest/thermalfin/index.html" class="xref page">this page</a>.</p>
+</div>
+<div class="paragraph">
+<p>The usage would be the same for another case.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code"><a class="anchor" href="#_code"></a>3.2. Code</h3>
+<div class="paragraph">
+<p>Set the parameters nedded to the model :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>config_file</code> : path to the cfg file</p>
+</li>
+<li>
+<p><code>dim</code> : the dimension of the case</p>
+</li>
+<li>
+<p><code>order</code> : the order of discretization (<code>1</code> for \(\mathbb{P}_1\), <code>2</code> for \(\mathbb{P}_2\))</p>
+</li>
+<li>
+<p><code>time_depedent</code> : is the case stationnary or transient ? (for now always to <code>False</code>)</p>
+</li>
+<li>
+<p><code>name</code> : name of the CRB case</p>
+</li>
+</ul>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">config_file = "thermal-fin.cfg"
 dim = 2
 order = 1
-time_dependant = False
+time_depedent = False
 name = "thermalfin-2d"</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>The configuration files for this case are available on github : <a href="https://raw.githubusercontent.com/feelpp/feelpp/develop/mor/cases/thermal-fin/2d/fin.geo">geometry file</a>, <a href="https://raw.githubusercontent.com/feelpp/feelpp/develop/mor/cases/thermal-fin/2d/thermal-fin.cfg">cfg file</a>, and <a href="https://raw.githubusercontent.com/feelpp/feelpp/develop/mor/cases/thermal-fin/2d/thermal-fin.json">json file</a>.</p>
+</div>
+<div class="paragraph">
+<p>Then, we can create the model :</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -855,6 +904,7 @@ print(f"Outputs of the models are {output_names}")</code></pre>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
 <h2 id="_set_the_toolboxes"><a class="anchor" href="#_set_the_toolboxes"></a>4. Set the toolboxes</h2>
 <div class="sectionbody">
@@ -875,7 +925,7 @@ default_parameter = modelParameters.toParameterValues()</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">model = mor.toolboxmor(name=name, dim=dim, time_dependent=time_dependant)
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">model = mor.toolboxmor(name=name, dim=dim, time_dependent=time_depedent)
 model.setFunctionSpaces( Vh=heatBox.spaceTemperature() )
 
 def assembleDEIM(mu):
@@ -1082,6 +1132,9 @@ rb.greedy(mu_0, Xi_train, eps_tol=1e-6)</code></pre>
 rb.computeOfflineError()</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The script <code>generate_basis.py</code> run this offline part. See the  <a href="reducedbasis_offline.html" class="xref page">dedicated page</a> for more details.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1144,13 +1197,14 @@ k_4	3.47058</pre>
 </div>
 </details>
 <div class="paragraph">
-<p>The two functions <code>getSolutions</code> (resp. <code>getSolutionsFE</code>) return the solution \(u_N(\mu)\) (resp. \(u(\mu)\)) and the value of the output \(s_N^k(\mu)\) (res. \(s^k(\mu)\)).</p>
+<p>The two functions <code>getSolutions</code> (resp. <code>getSolutionsFE</code>) return the solution \(u_N(\mu)\) (resp. \(u(\mu)\)) and the value of the output \(s_N^k(\mu)\) (res. \(s^k(\mu)\)).
+See <a href="parameters.html" class="xref page">the dedicated page</a> for the API of <code>ParameterSpaceElement</code>.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="petscDouble.html">PETSc vector and matrix</a></span>
-  <span class="next"><a href="../../conclusion/index.html">What&#8217;s Next?</a></span>
+  <span class="prev"><a href="toolboxmor.html">Toolbox MOR</a></span>
+  <span class="next"><a href="reducedbasis_offline.html">Offline stage</a></span>
 </nav>
 </article>
   </div>

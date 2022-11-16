@@ -3,10 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Benchmark for Mixed Poisson equations :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/math/hdg/diffusion-reaction/verification.html">
-    <link rel="prev" href="index.html">
-    <link rel="next" href="../../rbm/index.html">
+    <title>Thermal fin :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/mor/latest/thermalfin/index.html">
+    <link rel="prev" href="../opusheat/index.html">
     <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">    
@@ -167,275 +166,53 @@ MathJax.Hub.Config({
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="math" data-version="master">
+<div class="nav-container" data-component="mor" data-version="latest">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../../index.html">Feel++ Mathematics</a></h3>
+    <h3 class="title"><a href="../index.html">Model Order Reduction</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../index.html">Introduction</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../index.html">Notations</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../calculus/index.html">Calculus</a>
+    <a class="nav-link" href="../toolboxmor.html">ToolboxMor</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../calculus/vectorial.html">Calcul Vectoriel</a>
+    <a class="nav-link" href="../toolboxmor.html#_creating_a_model_from_scratch">Creating a model from scratch</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../calculus/change_of_variable.html">Change of variables in integrals</a>
+    <a class="nav-link" href="../toolboxmor.html#_creating_a_model_from_a_toolbox">Creating a model from a toolbox</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../calculus/integral_theorems.html">Integral theorems</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../calculus/forms.html">Formes Différentielles</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../analyse-fonctionnelle/index.html">Analyse Fonctionnelle</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../analyse-fonctionnelle/index.html#normes-et-produits-scalaires">Normes et produits scalaires</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../analyse-fonctionnelle/index.html#espaces-fonctionnels">Espaces fonctionnels</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../analyse-fonctionnelle/index.html#sec:notion-de-derivee">Dérivée Généralisée</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../analyse-fonctionnelle/index.html#espaces-de-sobolev">Espaces de Sobolev</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../analyse-fonctionnelle/lemma.html">Lemma</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../fem/index.html">Méthode des éléments finis</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../fem/index.html">Introduction</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/index.html#formulation-variationelle">Formulation Variationelle</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/index.html#formulation-générale">Formulation Générale</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/index.html#théorème-de-lax-milgram">Théorème de Lax-Milgram</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/index.html#approximation-interne">Approximation Interne</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/index.html#sec:overview">Principe général de la méthode des éléments finis</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/index.html#sec:retour-a-lexemple">Retour à l’exemple 1-D</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../fem/ch-ef-lagrange.html">Élement fini de Lagrange</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-ef-lagrange.html#unisolvance">Unisolvance</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-ef-lagrange.html#sec:lagrange">Élement fini de Lagrange</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-ef-lagrange.html#exemples-déléments-finis-de-lagrange">Exemples d&#8217;éléments finis de Lagrange</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-ef-lagrange.html#famille-affine-déléments-finis">Famille affine d’éléments finis</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-ef-lagrange.html#sec:maillages">Maillages</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-ef-lagrange.html#sec:espace">Espaces élément fini de Lagrange</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-ef-lagrange.html#sec:interp-iso-param">Approximation iso-paramétrique</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-ef-lagrange.html#sec:feelpp">Feel++</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-ef-lagrange.html#sec:glob">Du problème global aux éléments locaux</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-ef-lagrange.html#exercices">Exercices</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../fem/ch-problemes-coercifs.html">Problèmes Coercifs</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../fem/laplacian/index.html">Laplacien</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../user/latest/cpp/laplacian.html">Numerical Experiments</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fem/advection-diffusion/index.html">Advection-Diffusion</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../fem/elasticity/index.html">Élasticité Linéaire</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/elasticity/mixed.html">Problème mixte</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/elasticity/pure-traction.html">Problème de traction pure</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/elasticity/implementation.html">Implementation</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/elasticity/numerical-experiments.html">Numerical Experiments</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../fem/coercivity-loss.html">Perte de coercivité</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/advection-diffusion/dominant-advection.html">Advection-Diffusion avec advection dominante</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/elasticity/incompressibility.html">Incompressibilité en élasticité</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../toolboxmor.html#_configuration">Configuration</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../fem/ch-problemes-mixtes.html">Problèmes Mixtes</a>
+    <a class="nav-link" href="../pbdw.html">PBDW</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fem/ch-problemes-mixtes.html#_model_problems">Model Problems</a>
+    <a class="nav-link" href="../pbdw.html#_sensors">Sensors</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fem/ch-problemes-mixtes.html#_saddle_point_problems">Saddle Point Problems</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fem/ch-problemes-mixtes.html#_finite_element_approximation">Finite Element Approximation</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../fem/ch-problemes-mixtes.html#_mixed_finite_element_for_stokes">Mixed Finite Element for Stokes</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-problemes-mixtes.html#_variational_formulation_for_stokes">Variational Formulation</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-problemes-mixtes.html#_finite_element_approximation_for_stokes">Finite Element Approximation</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-problemes-mixtes.html#_bad_finite_elements_for_stokes">Bad Finite Elements</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-problemes-mixtes.html#_mini_element">Mini-Element</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../fem/ch-problemes-mixtes.html#_taylor_hood_element">Taylor-Hood Element</a>
+    <a class="nav-link" href="../pbdw.html#_using_pbdw">Using PBDW</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fem/ch-problemes-mixtes.html#_test_cases">Test Cases for Stokes</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fem/darcy.html">Flow through porous medium : Darcy&#8217;s law</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../fem/coupling_darcystokes.html">The Darcy-Stokes coupled problem</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../fem/nonlinear.html">Nonlinear problems</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../index.html">HDG Methods</a>
+    <a class="nav-link" href="../index.html#_cases">Cases</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Diffusion-Reaction</a>
-<ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="3">
-    <a class="nav-link" href="verification.html">verification</a>
+    <a class="nav-link" href="../opusheat/index.html">OpusHeat</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="index.html">ThermalFin</a>
   </li>
 </ul>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../rbm/index.html">Reduced Basis Methods</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../rbm/linear-compliant-elliptic-problems.html">Linear compliant elliptic problems</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../rbm/a-posteriori-error-estimation.html">A Posteriori Error Estimation</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../rbm/Inf-sup-lower-bound.html">Inf-sup lower bound</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../rbm/numerical-experiment.html">Numerical experiment</a>
   </li>
 </ul>
   </li>
@@ -444,8 +221,8 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Feel++ Mathematics</span>
-    <span class="version">master</span>
+    <span class="title">Model Order Reduction</span>
+    <span class="version">latest</span>
   </div>
   <ul class="components">
     <li class="component">
@@ -503,11 +280,11 @@ MathJax.Hub.Config({
         </li>
       </ul>
     </li>
-    <li class="component is-current">
-      <a class="title" href="../../index.html">Feel++ Mathematics</a>
+    <li class="component">
+      <a class="title" href="../../../math/index.html">Feel++ Mathematics</a>
       <ul class="versions">
-        <li class="version is-current is-latest">
-          <a href="../../index.html">master</a>
+        <li class="version is-latest">
+          <a href="../../../math/index.html">master</a>
         </li>
       </ul>
     </li>
@@ -578,14 +355,14 @@ MathJax.Hub.Config({
         </li>
       </ul>
     </li>
-    <li class="component">
-      <a class="title" href="../../../mor/latest/index.html">Model Order Reduction</a>
+    <li class="component is-current">
+      <a class="title" href="../index.html">Model Order Reduction</a>
       <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../../mor/latest/index.html">latest</a>
+        <li class="version is-current is-latest">
+          <a href="../index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../../mor/0.109/index.html">0.109</a>
+          <a href="../../0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
@@ -608,13 +385,19 @@ MathJax.Hub.Config({
   <a href="../../../feelpp/0.109/index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../../index.html">Feel++ Mathematics</a></li>
-    <li><a href="../index.html">HDG Methods</a></li>
-    <li><a href="index.html">Diffusion-Reaction</a></li>
-    <li><a href="verification.html">verification</a></li>
+    <li><a href="../index.html">Model Order Reduction</a></li>
+    <li><a href="../index.html#_cases">Cases</a></li>
+    <li><a href="index.html">ThermalFin</a></li>
   </ul>
 </nav>
 
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
+  <div class="version-menu">
+    <a class="version is-current" href="index.html">latest</a>
+    <a class="version is-missing" href="../../0.109/index.html">0.109</a>
+  </div>
+</div>
   
 <div class="dropdown">
   <button class="dropbtn" aria-label="Download this page">
@@ -638,7 +421,7 @@ MathJax.Hub.Config({
 
     <a href="https://github.com/feelpp/book.feelpp.org">Open repository <i class="fab fa-github"></i></a>
     
-  <a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/math/modules/hdg/pages/diffusion-reaction/verification.adoc">Edit this Page <i class="fas fa-edit"></i></a>
+  <a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/mor/modules/thermalfin/pages/index.adoc">Edit this Page <i class="fas fa-edit"></i></a>
 
     <a href="https://github.com/feelpp/book.feelpp.org/issues/new">Open issue <i class="fas fa-lightbulb"></i></a>
 
@@ -668,91 +451,12 @@ title="Fullscreen mode"
 </aside>
 
 <article class="doc">
-<h1 class="page">Benchmark for Mixed Poisson equations</h1>
+<h1 class="page">Thermal fin</h1>
 <div class="paragraph">
-<p>The goal of this section is to test the convergence of the HDG algorithm for the
-mixed poisson problem in 2D and 3D domain.<br></p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\begin{equation}
-  \left\{
-  \begin{aligned}
-    \mathbf{u} + k\nabla p &amp;= 0 &amp;\text{ in } \Omega\\
-    \nabla\cdot\mathbf{u} &amp;= f &amp;\text{ in } \Omega\\
-    p &amp;= g_D &amp;\text{ on } \Gamma_D\\
-    \mathbf{u}\cdot\mathbf{n} &amp;= g_N &amp;\text{ on } \Gamma_N\\
-    \int_{\Gamma_I} \mathbf{u}\cdot\mathbf{n} &amp;= g_I &amp;\text{ on } \Gamma_I
-  \end{aligned}
-  \right.
-\end{equation}\]
-</div>
-</div>
-<div class="paragraph">
-<p>The exact solutions and domain are presented in the following figures
-for 2D and 3D.<br>
-We have tested three cases:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>only Dirichlet conditions:</p>
-</li>
-</ul>
-</div>
-\begin{equation*}
-\Gamma_D=\partial\Omega\text{ and }\Gamma_N=\Gamma_I=\emptyset
-\end{equation*}
-<div class="ulist">
-<ul>
-<li>
-<p>only Neumann conditions:</p>
-</li>
-</ul>
-</div>
-\begin{equation*}
-\Gamma_N=\partial\Omega\text{ and }\Gamma_D=\Gamma_I=\emptyset
-\end{equation*}
-<div class="ulist">
-<ul>
-<li>
-<p>with integral boundary condition:</p>
-</li>
-</ul>
-</div>
-\begin{equation*}
-\Gamma_D=\{(x,y,z), y=0\}\text{, }\Gamma_I=\{(x,y,z), x=0\}\text{ and }\Gamma_N=\partial\Omega\setminus(\Gamma_D\cup\Gamma_I)
-\end{equation*}
-<div class="paragraph">
-<p>For those tests, we uses the following parameters:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>\(k=-1\)</p>
-</li>
-<li>
-<p>\(p=\frac{1}{2\pi}atan(y,x)\)</p>
-</li>
-<li>
-<p>\(u=\frac{1}{2\pi(x^2+y^2)}(y,-x)\)</p>
-</li>
-<li>
-<p>\(f=0\)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>On the following domain:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../_images/quarter-turn2D.png" alt="quarter turn2D">
-</div>
+<p>The redaction of this page is in progress.</p>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="index.html">Diffusion-Reaction</a></span>
-  <span class="next"><a href="../../rbm/index.html">Reduced Basis Methods</a></span>
+  <span class="prev"><a href="../opusheat/index.html">OpusHeat</a></span>
 </nav>
 </article>
   </div>

@@ -425,18 +425,6 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../pyfeelpptoolboxes/modelproperties.html">Model Properties</a>
   </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelpptoolboxes/heat.html">Heat Transfer</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelpptoolboxes/electric.html">Electrostatic</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelpptoolboxes/fluid.html">Fluid Mechanics</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelpptoolboxes/solid.html">Solid Mechanics</a>
-  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
@@ -444,16 +432,25 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../pyfeelppmor/index.html">pyFeel++ MOR</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelppmor/parameters.html">Parameters</a>
+    <a class="nav-link" href="../pyfeelppmor/parameterSpace.html">Parameter space</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../pyfeelppmor/parameterSpace.html">Parameter space</a>
+    <a class="nav-link" href="../pyfeelppmor/parameters.html">Parameters</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../pyfeelppmor/petscDouble.html">PETSc vector and matrix</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pyfeelppmor/toolboxmor.html">Toolbox MOR</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../pyfeelppmor/reducedbasis.html">Python module <code>reducedbasis</code></a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../pyfeelppmor/reducedbasis_offline.html">Offline stage</a>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -776,18 +773,18 @@ app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) <i class="
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">app.setLogVerbosityLevel(0) <i class="conum" data-value="0"></i><b>(0)</b>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">app.setLogVerbosityLevel(0) <i class="conum" data-value="1"></i><b>(1)</b>
 geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
-mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) <i class="conum" data-value="1"></i><b>(1)</b>
-Xh=feelpp.functionSpace(mesh=mesh,space="Pch",order=1) <i class="conum" data-value="2"></i><b>(2)</b>
-P0h=feelpp.functionSpace(mesh=mesh,space="Pdh",order=0) <i class="conum" data-value="3"></i><b>(3)</b>
-u=Xh.element() <i class="conum" data-value="4"></i><b>(4)</b>
-u.on(range=feelpp.elements(mesh), expr=feelpp.expr("sin(2*pi*x)*cos(pi*y):x:y")) <i class="conum" data-value="5"></i><b>(5)</b>
-e = feelpp.exporter(mesh=mesh)  <i class="conum" data-value="6"></i><b>(6)</b>
-e.addScalar("a_scalar", 1.) <i class="conum" data-value="7"></i><b>(7)</b>
-e.addP1c("u",u) <i class="conum" data-value="8"></i><b>(8)</b>
-e.addP0d("pid",feelpp.pid( P0h )) <i class="conum" data-value="9"></i><b>(9)</b>
-e.save()   <i class="conum" data-value="10"></i><b>(10)</b></code></pre>
+mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) <i class="conum" data-value="2"></i><b>(2)</b>
+Xh=feelpp.functionSpace(mesh=mesh,space="Pch",order=1) <i class="conum" data-value="3"></i><b>(3)</b>
+P0h=feelpp.functionSpace(mesh=mesh,space="Pdh",order=0) <i class="conum" data-value="4"></i><b>(4)</b>
+u=Xh.element() <i class="conum" data-value="5"></i><b>(5)</b>
+u.on(range=feelpp.elements(mesh), expr=feelpp.expr("sin(2*pi*x)*cos(pi*y):x:y")) <i class="conum" data-value="6"></i><b>(6)</b>
+e = feelpp.exporter(mesh=mesh)  <i class="conum" data-value="7"></i><b>(7)</b>
+e.addScalar("a_scalar", 1.) <i class="conum" data-value="8"></i><b>(8)</b>
+e.addP1c("u",u) <i class="conum" data-value="9"></i><b>(9)</b>
+e.addP0d("pid",feelpp.pid( P0h )) <i class="conum" data-value="10"></i><b>(10)</b>
+e.save()   <i class="conum" data-value="11"></i><b>(11)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -802,39 +799,39 @@ e.save()   <i class="conum" data-value="10"></i><b>(10)</b></code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The function space \(X_h\) is built from the mesh \(mesh\) and the space \(Pch\) and order \(1\)</td>
+<td>The function space \(X_h\) is built from the mesh <code>mesh</code> and the space <code>Pch</code> and order <code>1</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The function space \(P0_h\) is built from the mesh \(mesh\) and the space \(Pdh\) and order \(0\)</td>
+<td>The function space \(P0_h\) is built from the mesh <code>mesh</code> and the space <code>Pdh</code> and order <code>0</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>The element \(u\) is built from the function space \(X_h\)</td>
+<td>The element <code>u</code> is built from the function space <code>Xh</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>The element \(u\) is interpolated with the expression \({sin(2*pi*x)*cos(pi*y)}:x:y\)</td>
+<td>The element <code>u</code> is interpolated with the expression <code>{sin(2*pi*x)*cos(pi*y)}:x:y</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>The exporter is built from the mesh \(mesh\)</td>
+<td>The exporter is built from the mesh <code>mesh</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>The scalar \(a_scalar\) is added to the exporter \(e\)</td>
+<td>The scalar <code>a_scalar</code> is added to the exporter <code>e</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="9"></i><b>9</b></td>
-<td>The element \(u\) is added to the exporter \(e\)</td>
+<td>The element <code>u</code> is added to the exporter <code>e</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="10"></i><b>10</b></td>
-<td>The element \(pid\) is added to the exporter \(e\)</td>
+<td>The element <code>pid</code> is added to the exporter <code>e</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="11"></i><b>11</b></td>
-<td>The exporter \(e\) is saved to the disk</td>
+<td>The exporter <code>e</code> is saved to the disk</td>
 </tr>
 </table>
 </div>
@@ -850,7 +847,7 @@ e.save()   <i class="conum" data-value="10"></i><b>(10)</b></code></pre>
 </div>
 </details>
 <div class="paragraph">
-<p>The results are stored in the directory <code>feelppdb`</code> and can be visualized with <a href="https://paraview.org">ParaView</a> or EnSight.</p>
+<p>The results are stored in the directory <code>feelppdb</code> and can be visualized with <a href="https://paraview.org">ParaView</a> or EnSight.</p>
 </div>
 <div class="paragraph">
 <p>INFO: The file <code>exports/ensightgold/myapp/myapp.case</code> can be opened directly in ParaView or EnSight to visualize the mesh and the fields.</p>
