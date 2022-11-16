@@ -23,6 +23,7 @@ jobs:
     - name: Build
       run: npm run build 
       env:
+        FEELPP_GITHUB_TOKEN: ${{ secrets.DOCS_GITHUB_KEY }}
         GITHUB_OAUTH: ${{ secrets.DOCS_GITHUB_KEY }}
         ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
         ALGOLIA_INDEX_NAME: ${{ secrets.ALGOLIA_INDEX_NAME }}
