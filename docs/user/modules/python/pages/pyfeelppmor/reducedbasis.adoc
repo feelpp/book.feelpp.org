@@ -20,19 +20,24 @@ To set the environment, those module also need to be imported :
 [source, python]
 ----
 import sys, os
-from feelpp.toolboxes.heat import *
-import feelpp.toolboxes.core as core
-from feelpp.operators import mass
-import feelpp.mor as mor
+from feelpp.toolboxes.heat import * <1>
+import feelpp.toolboxes.core as core <2>
+from feelpp.operators import mass <3>
+import feelpp.mor as mor <4>
 import feelpp
 ----
+
+<1> The toolbox heat is used to simulate the heat equation on the case studied.
+<2> The module `core` is used to set the environment.
+<3> The `mass` function is needed to create the mass matrix if we work on a time-dependent case.
+<4> The module `mor` is used to get the functions neededd by the toolbox mor.
 
 
 == Set the environment
 
 [source, python]
 ----
-config = feelpp.globalRepository("reducedbasis")
+config = feelpp.localRepository("reducedbasis")
 sys.argv = ["reducedbasis"]
 o = core.toolboxes_options("heat")
 o.add(mor.makeToolboxMorOptions())
@@ -43,21 +48,38 @@ e = feelpp.Environment(sys.argv, opts=o, config=config)
 
 == Set the model
 
+=== Description of the model
+
+In this document, the cases used is `thermal-fin` in 2D, with a stem:[\mathbb{P}_1] discretization and stationnary.
+This model is described in xref:mor:thermalfin:index.adoc[this page].
+
+The usage would be the same for another case.
+
+
+=== Code
+
 Set the parameters nedded to the model :
+
 - `config_file` : path to the cfg file
 - `dim` : the dimension of the case
 - `order` : the order of discretization (`1` for stem:[\mathbb{P}_1], `2` for stem:[\mathbb{P}_2])
-- `time_dependant` : is the case stationnary or transient ? (for now always to `False`)
+- `time_depedent` : is the case stationnary or transient ? (for now always to `False`)
 - `name` : name of the CRB case
+
+
 
 [source,python]
 ----
 config_file = "thermal-fin.cfg"
 dim = 2
 order = 1
-time_dependant = False
+time_depedent = False
 name = "thermalfin-2d"
 ----
+
+The configuration files for this case are available on github : https://raw.githubusercontent.com/feelpp/feelpp/develop/mor/cases/thermal-fin/2d/fin.geo[geometry file], https://raw.githubusercontent.com/feelpp/feelpp/develop/mor/cases/thermal-fin/2d/thermal-fin.cfg[cfg file], and https://raw.githubusercontent.com/feelpp/feelpp/develop/mor/cases/thermal-fin/2d/thermal-fin.json[json file].
+
+Then, we can create the model :
 
 [source,python]
 ----
@@ -118,7 +140,7 @@ default_parameter = modelParameters.toParameterValues()
 
 [source, python]
 ----
-model = mor.toolboxmor(name=name, dim=dim, time_dependent=time_dependant)
+model = mor.toolboxmor(name=name, dim=dim, time_dependent=time_depedent)
 model.setFunctionSpaces( Vh=heatBox.spaceTemperature() )
 
 def assembleDEIM(mu):
@@ -305,6 +327,8 @@ rb.computeOfflineErrorRhs()
 rb.computeOfflineError()
 ----
 
+The script `generate_basis.py` run this offline part. See the  xref:pyfeelppmor/reducedbasis_offline.adoc[dedicated page] for more details.
+
 == Online phase
 
 [source, python]
@@ -358,12 +382,3 @@ rb.getSolutionsFE(mu, k=0)
 The two functions `getSolutions` (resp. `getSolutionsFE`) return the solution stem:[u_N(\mu)] (resp. stem:[u(\mu)]) and the value of the output stem:[s_N^k(\mu)] (res. stem:[s^k(\mu)]).
 See xref:pyfeelppmor/parameters.adoc[the dedicated page] for the API of `ParameterSpaceElement`.
 
-
-
-== Offline stage :
-
-See the xref:pyfeelppmor/reducedbasis_offline.adoc[offline stage] page.
-
-== Online stage :
-
-See the xref:pyfeelppmor/reducedbasis_online.adoc[online stage] page.
