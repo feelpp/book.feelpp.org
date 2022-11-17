@@ -1,6 +1,6 @@
 name: user
 title: Feel++ User Manual
-version: 'latest'
+version: '0.110'
 nav:
 - modules/ROOT/nav.adoc
 - modules/install/nav.adoc
@@ -9,13 +9,13 @@ nav:
 - modules/python/nav.adoc
 - modules/conclusion/nav.adoc
 asciidoc:
-  attributes:    
+  attributes:
     y: icon:check[role="green"]
     n: icon:times[role="red"]
     c: icon:file-text-o[role="blue"]
 ext:
   collector:
-    - run: 
+    - run:
         command: ./generate-jupyter.sh docs/user/modules/python
       scan:
         dir: jupyter/
