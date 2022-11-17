@@ -1,0 +1,98 @@
+= Slurm
+
+Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained. As a cluster workload manager, Slurm has three key functions. First, it allocates exclusive and/or non-exclusive access to resources (compute nodes) to users for some duration of time so they can perform work. Second, it provides a framework for starting, executing, and monitoring work (normally a parallel job) on the set of allocated nodes. Finally, it arbitrates contention for resources by managing a queue of pending work.
+
+Full documentation is available on https://slurm.schedmd.com/[slurm.schedmd.com]         
+
+== User manual
+
+
+.Basic Slurm Commands
+|===
+| Executable | Description
+
+| `sinfo`      | View information about nodes and partitions
+| `squeue`     | View information about jobs 
+| `salloc`     | Obtain a job allocation
+| `sbatch`     | Submit a batch script for later execution
+| `srun`       | Obtain a job allocation (as needed) and execute an application
+| `scancel`    | Signal jobs, job arrays, and/or job steps
+|===
+
+
+=== Run job using `sbatch`
+
+.minimal example of script slurm
+----
+#!/bin/bash
+#SBATCH --job-name=job_test    # Job name
+#SBATCH --ntasks=4             # Run on 4 CPU
+#SBATCH --time=00:05:00        # Time limit hrs:min:sec
+#SBATCH --output=test_%j.log   # Standard and error output
+
+pwd; hostname; date
+
+echo "Running on 4 CPU core"
+
+mpiexec feelpp_toolbox_fluid --license                                                                                                                                                                                                                                               
+date
+----
+
+
+NOTE: If hyperthreading is enabled and you do not want to use it : `#SBATCH --ntasks-per-core 1`
+
+
+In the previous script, we save in log file the standard output and error outup. We can can extract the error output in another file by adding `--error=<FILE>` option.
+Also, you can be notified by an email when the job is finished or have generated a erro by using `--mail-type=<EVENTS>` and `--mail-user<EMAIl>`.
+
+.example of script slurm with mail notification and error output
+----
+#!/bin/bash
+#SBATCH --job-name=job_test    # Job name
+#SBATCH --mail-type=END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=toto@mail.com     # Where to send mail
+#SBATCH --ntasks=4                    # Run on 4 CPU
+#SBATCH --time=00:05:00               # Time limit hrs:min:sec
+#SBATCH --output=test_%j.log          # Standard output
+#SBATCH --error=test_%j.err           # Error output
+
+pwd; hostname; date
+
+echo "Running on 4 CPU core"
+
+mpiexec feelpp_toolbox_fluid --license                                                                                                                                                                                                                                               
+date
+----
+
+
+In the slurm scrit, some env variables is automatically defined by SLURM and can be used in the script :
+
+.Environement SLURM variables in script
+|===
+| Variable | Description
+
+| SLURM_NTASKS
+
+  SLURM_NPROCS | Number of task
+| SLURM_JOB_ID | The ID of the job allocation
+|===
+
+
+
+=== Run job using `srun`
+
+=== Run interactive session
+
+To automatically allocate and connect, you can use this command
+
+[source,shell]
+----
+salloc -t "03:00:00" -p public -J "jobname" --exclusive -N 1 srun --pty ${SHELL}
+----
+
+NOTE: Please be reasonable with your use of the --exclusive and -t "XX:YY:ZZ", as it could prevent other users to access the node.
+
+=== Job arrays
+
+
+

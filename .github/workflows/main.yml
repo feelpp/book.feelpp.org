@@ -1,24 +1,35 @@
 name: Build and Deploy
 on:
   push:
-    branches: [ master ]
+    branches: [ master,develop ]
+  repository_dispatch:
+    types:
+      - toolbox-update-trigger
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v3
     - name: Install 
-      run: npm install
+      run: |
+        npm i 
+        echo "${{ github.workspace }}/node_modules/.bin" >> $GITHUB_PATH
+    - name: Check
+      run: |
+        antora -v
+        asciidoctor -v
+
     - name: Build
       run: npm run build 
       env:
+        FEELPP_GITHUB_TOKEN: ${{ secrets.DOCS_GITHUB_KEY }}
         GITHUB_OAUTH: ${{ secrets.DOCS_GITHUB_KEY }}
         ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
         ALGOLIA_INDEX_NAME: ${{ secrets.ALGOLIA_INDEX_NAME }}
         ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@4.1.6
+      uses: JamesIves/github-pages-deploy-action@v4.4.1
       with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.

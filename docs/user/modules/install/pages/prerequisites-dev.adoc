@@ -5,6 +5,24 @@ NOTE: {lvl_advanced}
 
 We present here the {feelpp} toolchain with both required and suggested tools to either compile {feelpp} or use with {feelpp}.
 
+== System Environments
+
+{feelpp} is compiled and tested on various systems:
+
+.Table of linux operating systems
+|===
+| Flavor | Version | Compiler | Notes
+| Ubuntu | 20.04 | clang | Docker images and packages available
+| Ubuntu | 22.04 | clang | Docker images and packages available
+| Ubuntu | 22.10 | clang | Scheduled build once per week
+| Debian | 11 | clang | Docker images and packages available
+| Debian | testing | clang | Scheduled build once per week
+| Debian | unstable | clang | Scheduled build once per week
+| Fedora | 36 | clang | Scheduled build once per week
+| Fedora | 37 | clang | Scheduled build once per week
+|===
+
+
 == Compilers
 
 {feelpp} uses {cpp}17 compilers such as GCC8 and Clang (stem:[\geq 5]).
@@ -18,9 +36,9 @@ We don't use yet {cpp}17 standard library features
 .Table {cpp} compilers and standard libraries combinations
 |===
 | Compiler  | Minimal Version | Recommended Version | Standard Library
-| {clangpp} | 6 | 9  | libstdc{plus}{plus} 7
-| {clangpp}| 6 | 9 |  libc{plus}{plus} (corresponding clang version)
-| {gpp}  | 8 | 9 | libstdc{plus}{plus} 7
+| {clangpp} | 6 | >= 9  | libstdc{plus}{plus} 7
+| {clangpp}| 6 | >= 9 |  libc{plus}{plus} (corresponding clang version)
+| {gpp}  | 8 | >=11  | libstdc{plus}{plus} 7
 |===
 
 IMPORTANT: {clangpp} is the preferred compiler by far for {feelpp}, it compiles much faster and use far less memory than {gpp}
@@ -42,12 +60,12 @@ Other than {cpp}17 compilers, {feelpp} requires only a few tools and libraries, 
 
 .Table required tools to compile Feel++
 |===
-| Name | Minimum Version | Maximum Version | Notes
+| Name | Minimum Version | Recommended Version | Maximum Version | Notes
 
-| link:https://cmake.org/[CMake] | 3.13.0 | -- |
-| MPI   | -- | -- | link:https://www.open-mpi.org/[OpenMPI] or link:https://www.mpich.org/[MPICH]
-| link:https://www.boost.org/[Boost] | 1.61 | 1.70 |
-| link:https://www.python.org/[Python Interpreter] |  3 | 3 | Version 2 has never been tested
+| link:https://cmake.org/[CMake] | 3.13.0 | >= 3.21 | -- |
+| MPI   | -- | -- | -- | link:https://www.open-mpi.org/[OpenMPI] or link:https://www.mpich.org/[MPICH]
+| link:https://www.boost.org/[Boost] | 1.61 | >= 1.70 | -- | Boost C++ libraries
+| link:https://www.python.org/[Python Interpreter] |  3.8 | >= 3.8 | -- | Version 2 has never been tested
 |===
 
 == Recommended libraries
@@ -62,7 +80,7 @@ Here is a list of libraries that we recommend to use jointly with Feel++.
 | link:https://support.hdfgroup.org/HDF5/[HDF5]  | 1.8.6  | --  |
 | link:https://www.mcs.anl.gov/petsc/[PETSc] | 3.5 | -- | We strongly recommand to install PETSc with MUMPS packages. Others packages like Suitesparse, Trilinos/ML, Boomeramg can be appreciable.
 | link:http://slepc.upv.es/[SLEPc] | 3.5 | -- | Depends on PETSc
-| link:http://gmsh.info/[Gmsh]  | 2.8.7 | 4.4.1 |
+| link:http://gmsh.info/[Gmsh]  | 2.8.7 | -- |
 //| OpenTURNS | 2.0 ||
 | link:https://docs.python.org/3/library/index.html[Python Libs] |  3.0 ||
 | link:http://www.sympy.org/en/index.html[Python SymPy] |  1.1 || Python 3 module sympy

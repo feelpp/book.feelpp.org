@@ -1,0 +1,52 @@
+= CRB Model Properties
+
+This page gathers the functions about Model Properties in a CRB Model.
+
+== Class `CRBModelProperties`
+
+This class gathers the properties of the model, that can be set from a JSON file.
+
+*  `\\__init__(self: feelpp.mor._mor.CRBModelProperties, directoryLibExpr: str = '', worldComm: feelpp._core.WorldComm, prefix: str = '') -> None` : initialize ModelProperties
+* `outputs(self: feelpp.mor._mor.CRBModelProperties) -> feelpp.mor._mor.CRBModelOutputs` : get outputs of the model (see <<Class `CRBModelOutputs`,below>>).
+* `parameters(self: feelpp.mor._mor.CRBModelProperties) -> feelpp.mor._mor.CRBModelParameters` : get parameters of the model (see <<Class `CRBModelProperties`,below>>).
+* `setup(self: feelpp.mor._mor.CRBModelProperties, arg0: str) -> None` : setup from a filename
+
+Here is an example setting a `CRBModelProperties` :
+[source,python]
+----
+model_path = "$cfgdir/"+os.path.splitext(os.path.basename(casefile))[0] + ".json"
+model_properties = CRBModelProperties(worldComm=feelpp.Environment.worldCommPtr())
+model_properties.setup(model_path)
+----
+
+
+
+
+== Class `CRBModelProperties`
+
+Deals with the outputs of the model, see xref:{page-component-version}@mor:ROOT:toolboxmor.adoc[toolboxmor] for more informations.
+
+* `\\__init__(self: feelpp.mor._mor.CRBModelParameters, worldComm: feelpp._core.WorldComm) -> None`
+* `\\__iter__(self: feelpp.mor._mor.CRBModelParameters) -> iterator`
+* `\\__len__(self: feelpp.mor._mor.CRBModelParameters) -> int`
+* `at(self: feelpp.mor._mor.CRBModelParameters, arg0: str) -> feelpp.mor._mor.CRBModelParamater` (see <<Class `CRBModelParameter`, `CRBModelParameter`>>)
+
+
+== Class `CRBModelParameter`
+
+* `\\__init__(self: feelpp.mor._mor.CRBModelParamater) -> None`
+* `description(self: feelpp.mor._mor.CRBModelParamater) -> str` : description of the parameter
+* `max(self: feelpp.mor._mor.CRBModelParamater) -> float` : maximum of the parameter
+* `min(self: feelpp.mor._mor.CRBModelParamater) -> float` : minimum of the parameter
+* `name(self: feelpp.mor._mor.CRBModelParamater) -> str` : name of the parameter
+* `value(self: feelpp.mor._mor.CRBModelParamater) -> float` : value of the parameter
+
+== Class `CRBModelOutputs`
+
+* `\\__init__(self: feelpp.mor._mor.CRBModelOutputs, worldComm: feelpp._core.WorldComm) -> None`
+* `\\__iter__(self: feelpp.mor._mor.CRBModelOutputs) -> iterator`
+* `\\__len__(self: feelpp.mor._mor.CRBModelOutputs) -> int`
+* `at(self: feelpp.mor._mor.CRBModelOutputs, arg0: str) -> feelpp.mor._mor.CRBModelOutput` : output for key (see <<Class `CRBModelOutput`, `CRBModelOutput`>>).
+
+== Class `CRBModelOutput`
+

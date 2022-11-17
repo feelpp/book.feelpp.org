@@ -25,10 +25,10 @@ We call this generic form by Coefficient Form PDE and the coefficients are
 
 Many problems are multiphysics (i.e. several unknowns) and the generic form can be extended naturally into a system of generic PDE.
 
-NOTE: Coefficients of each equation can be defined by an expression that depends of the current unknown or with unknowns of others equations.
+NOTE: Coefficients of each equation can be defined by an expression that depends of the current unknown or unknowns of other equations.
 
 The unknown of each PDEs can be defined as a scalar function (stem:[u:\mathbb{R}^n \longrightarrow \mathbb{R}]) or a vectorial function (stem:[u:\mathbb{R}^n \longrightarrow \mathbb{R}^n]).
-But we need to respect some constraint on the coefficient shape as describe in the next table.
+We need also to respect some constraint on the coefficient shape as described in the next table.
 
 .Shape required by the coefficients
 |===
@@ -52,7 +52,7 @@ But we need to respect some constraint on the coefficient shape as describe in t
 == Boundary Conditions
 
 * Dirichlet : 
-* Neumann : generic version (can depend on unknown)
+* Neumann : generic version which can depend on the unknowns
 * Robin : 
 
 == Finite Element Approximation
@@ -63,3 +63,19 @@ But we need to respect some constraint on the coefficient shape as describe in t
 * Theta
 
 == Stabilized finite element
+
+Given a `cfpdes` equation  named `eq`, SUPG and GaLS can be used as stabilisation methods. 
+To enable them use, in the command-line or `.cfg` file, the option `cfpdes.eq.stabilitsation=1` and define the stabilisation type `cfpdes.eq.stabilitsation.type=gls #supg#unusual-gls #gls`
+
+.Stabilisation methods
+|===
+| type | 
+
+
+| `gls`      | default option
+| `supg`      | 
+| `unusual-gls`  | 
+
+|===
+
+Examples are available https://github.com/feelpp/feelpp/tree/develop/toolboxes/coefficientformpdes/cases/adr[here] 

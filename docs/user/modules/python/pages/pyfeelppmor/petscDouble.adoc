@@ -1,3 +1,5 @@
+= Petsc API
+
 == Vector PETSc Double
 
 Class `VectorPetscDouble` (`feelpp._alg.VectorPetscDouble`)
@@ -5,12 +7,12 @@ Class `VectorPetscDouble` (`feelpp._alg.VectorPetscDouble`)
 
 === Methods
 
-* `__init__(*args, **kwargs)` : Overloaded function.
+* `\\__init__(*args, **kwargs)` : Overloaded function.
 
-    1. `__init__()`. The vector created is empty.
-    2. `__init__(arg0: int, arg1: feelpp._core.WorldComm)`. The vector created has a size `arg0`.
-    3. `__init__(arg0: int, arg1: int, arg2: feelpp._core.WorldComm)`. The vector created has a global size `arg0`, and a local size `arg1`.
-    4. `__init__(arg0: feelpp._alg.DataMap, arg1: bool)`
+    1. `\\__init__()`. The vector created is empty.
+    2. `\\__init__(arg0: int, arg1: feelpp._core.WorldComm)`. The vector created has a size `arg0`.
+    3. `\\__init__(arg0: int, arg1: int, arg2: feelpp._core.WorldComm)`. The vector created has a global size `arg0`, and a local size `arg1`.
+    4. `\\__init__(arg0: feelpp._alg.DataMap, arg1: bool)`
 * `clear()` : clear PETSc vector
 * `size()` -> `int` : return  PETSc Vector size
 * `vec()` -> `vec` : return a PETSc Vector that can be manipulated with funciton of the module https://pypi.org/project/petsc4py/[petsc4py]. The functions of this class can be found on the https://www.mcs.anl.gov/petsc/petsc4py-current/docs/apiref/petsc4py.PETSc.Vec-class.html[documentation of PETSc4py].
@@ -24,10 +26,10 @@ Class `MatrixPetscDouble` (`feelpp._alg.MatrixPetscDouble`). The methods of this
 
 === Methods
 
-* `__init__(*args, **kwargs)` : Overloaded function.
-    1. `__init__(arg0: feelpp._core.WorldComm)`
-    2. `__init__(arg0: feelpp._alg.DataMap, arg1: feelpp._alg.DataMap)`
-    3. `__init__(arg1: feelpp._alg.DataMap, arg2: feelpp._core.WorldComm)`
+* `\\__init__(*args, **kwargs)` : Overloaded function.
+    1. `\\__init__(arg0: feelpp._core.WorldComm)`
+    2. `\\__init__(arg0: feelpp._alg.DataMap, arg1: feelpp._alg.DataMap)`
+    3. `\\__init__(arg1: feelpp._alg.DataMap, arg2: feelpp._core.WorldComm)`
 * `clear()` : clear PETSc matrix
 * `mat(...)` -> `mat` : return a PETSc sparse matrix. See https://www.mcs.anl.gov/petsc/petsc4py-current/docs/apiref/petsc4py.PETSc.Mat-class.html[the documentation].
 * `rowStart()` -> `int` : return PETSc Matrix row start. This method is usefull is the matrix is shared with many processors, as the following.

@@ -204,7 +204,7 @@ Soit une fonction stem:[g:\partial \Omega \rightarrow \RR], nous voulons imposer
 
 NOTE: Dans le cas où stem:[\alpha = \mathcal{I}], la condition de Neumann correspond à spécifier la dérivée normale de stem:[u] car stem:[\nabla u \cdot n = \partial_n u = \frac{\partial u}{\partial n}].
 
-Nous procédons de la même façon que précédemment et en utilisant la condition de Neumann dans <<l'intégrale de surface>>, on obtient la formulation faible suivante:
+Nous procédons de la même façon que précédemment et en utilisant la condition de Neumann dans l'intégrale de surface, on obtient la formulation faible suivante:
 
 [[problem_neumann]]
 .Problème de Neumann
@@ -450,25 +450,25 @@ Ceci termine les preuves de _(i)_ et _(iv)_. stem:[\blacksquare]
 
 IMPORTANT: La coercivité est garantie si stem:[\alpha_0] est suffisamment grand c’est à dire que si la diffusion est dominante.
 
-NOTE: Pour le problème Dirichlet homogène et non-homogène, stem:[f] peut être prise dans stem:[H^{-1}(\Omega)=\left(H_{0}^{1}(\Omega)\right)^{\prime} .] 
+NOTE: Pour le problème Dirichlet homogène et non-homogène, stem:[f] peut être prise dans stem:[H^{-1}(\Omega)=\left(H_{0}^{1}(\Omega)\right)^{\prime} .]
 Dans ce cas, le second membre du <<resume-formulation,problème générique>>  devient stem:[f(v)=\langle f, v\rangle_{H^{-1}, H_{0}^{1}},] et le problème est toujours bien posé. L'estimation de stabilité devient stem:[\|u\|_{1, \Omega} \leq c\|f\|_{-1, \Omega} .]
 
-NOTE: Considérons le Laplacien avec conditions de Dirichlet homogène, i.e., étant donné stem:[f \in H^{-1}(\Omega),] résoudre stem:[-\Delta u=f] dans stem:[\Omega] avec la condition stem:[u_{\mid \partial \Omega}=0 .] 
+NOTE: Considérons le Laplacien avec conditions de Dirichlet homogène, i.e., étant donné stem:[f \in H^{-1}(\Omega),] résoudre stem:[-\Delta u=f] dans stem:[\Omega] avec la condition stem:[u_{\mid \partial \Omega}=0 .]
 Alors, la formulation faible revient à chercher stem:[u \in H_{0}^{1}(\Omega)] telle que stem:[\int_{\Omega} \nabla u \cdot \nabla v=\langle f, v\rangle_{H^{-1}, H_{0}^{1}}] pour tout stem:[v \in H_{0}^{1}(\Omega)]
 D'après le Théorème précédent stem:[(\mathrm{i})] avec stem:[\beta=0, \sigma=\mathcal{I},] et stem:[\mu=0,] le problème est bien posé. Cela signifie que l'opérateur stem:[(-\Delta)^{-1}: H^{-1}(\Omega) \rightarrow H_{0}^{1}(\Omega)] est un isomorphisme.
 
-NOTE: L'unicité n'est pas une propriété triviale dans les espaces plus grands que stem:[H^{1}(\Omega).] 
+NOTE: L'unicité n'est pas une propriété triviale dans les espaces plus grands que stem:[H^{1}(\Omega).]
 Par exemple, on peut construire des domaines dans lesquels cette propriété n'est pas  vérifiée dans stem:[L^{2}] pour le problème de Dirichlet
 
-NOTE: Considérons le  <<resume-formulation,problème générique>>: si le champ d'advection stem:[\beta] disparaît et si la matrice de diffusion stem:[\sigma] est symétrique c.a. dans stem:[\Omega], la forme bilinéaire stem:[a] est symétrique et positive. 
-Par conséquent, en raison de la proposition ci-dessous,<<resume-formulation,le problème>> peut être reformulée en une forme variationnelle. 
+NOTE: Considérons le  <<resume-formulation,problème générique>>: si le champ d'advection stem:[\beta] disparaît et si la matrice de diffusion stem:[\sigma] est symétrique c.a. dans stem:[\Omega], la forme bilinéaire stem:[a] est symétrique et positive.
+Par conséquent, en raison de la proposition ci-dessous,<<resume-formulation,le problème>> peut être reformulée en une forme variationnelle.
 Pour le problème de Dirichlet homogène, la forme variationnelle en question est
 [stem]
 ++++
 \min _{v \in H_{0}^{1}(\Omega)}\left(\frac{1}{2} \int_{\Omega} \nabla v \cdot \sigma \cdot \nabla v+\frac{1}{2} \int_{\Omega} \mu v^{2}-\int_{\Omega} f v\right)
 ++++
 
-.Proposition: 
+.Proposition:
 ****
 En plus des hypothèses du Lemme de Lax Milgram , supposons que:
 
@@ -541,7 +541,7 @@ Nous avons stem:[\lim_{h\rightarrow 0} \|u-u_h\|_{1,\Omega} = 0] et pour stem:[\
 ****
 
 .Estimation stem:[L^2]
-[env.theorem#thr-adr-conv]
+[env.theorem#thr-adr-conv-l2]
 ****
 Soient les hypothèse du théorème précédent, auxquelles nous ajoutons des hypothèses initiales, a des propriétés régularisantes
 Nous avons stem:[\lim_{h\rightarrow 0} \|u-u_h\|_{1,\Omega} = 0] et pour stem:[\frac{d}{2} < s < k+1], il existe une constante stem:[c] telle que

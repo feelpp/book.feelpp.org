@@ -54,18 +54,18 @@ stem:[{\|u-\pi_h u\|_m \le C' h^{k+1-m} |u|_{k+1} }]
 L’équation (<<eq:cea>>) établie dans la section <<sec:estim>> indique que
 [stem]
 ++++
---
 \|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-v_h\|_m \quad \forall v_h\in V_h
---
+++++
 
 NOTE: Cette majoration est aussi appelée Lemme de Céa
 
 On peut l’appliquer dans le cas particulier où stem:[v_h=\pi_h u], ce qui donne
 
-[env.equation#eq:cea2]
---
+[[eq:cea2]]
+[stem]
+++++
 \|u-u_h\|_m \le \frac{M}{\alpha}\; \|u-\pi_h u\|_m
---
+++++
 
 [[etape-2-décomposition-sur-les-éléments]]
 === Etape 2: Décomposition sur les éléments
@@ -152,31 +152,29 @@ Par ailleurs, si l’on utilise le changement de variable stem:[x=F(\hat{x})=B\h
 
 [stem]
 ++++
---
 \forall \xi_1,\ldots,\xi_l \in \RR^n,\qquad D^l \hat{v}(\hat{x}).(\xi_1,\ldots,\xi_l) = D^l v(x).(B\xi_1,\ldots,B\xi_l)
---
+++++
 
 d'où
 
 [stem]
 ++++
---
 \|D^l \hat{v}(\hat{x})\| \le \|B\|^l\; \|D^l v(x)\|
---
+++++
 Or, stem:[D^l v(x) = D^l v(F(\hat{x}))]. Donc
 
-[env.equation#eq:maj2]
---
+[[eq:maj2]]
+[stem]
+++++
 \int_{\hat{x}\in \hat{K}}\|D^l \hat{v}(\hat{x})\|^2 \; d\hat{x} \le \|B\|^{2l}\; \int_{\hat{x}\in \hat{K}} \|D^l v(F(\hat{x}))\|^2 \; d\hat{x}
 = \|B\|^{2l}\; |\hbox{det }B|^{-1} \int_{x\in K} \|D^l v(x)\|^2 \; dx
---
+++++
 
 En minorant et majorant (<<eq:maj2>>) grâce à la (<<eq:maj1,majoration>>), on obtient :
 [stem]
 ++++
---
 \gamma^2_1 \; |\hat{v}|^2_{l,\hat{K}} \le \|B\|^{2l}\; |\hbox{det }B|^{-1} \gamma^2_2 \; |v|^2_{l,K}
---
+++++
 d’où le résultat de (<<eq:majref,majoration du théorème>>) ce qui conclut la preuve de <<thr1>> stem:[\blacksquare]
 
 
@@ -190,9 +188,8 @@ Soit stem:[\rho_K] la rondeur de stem:[K], c’est à dire le diamètre maximum 
 On a :
 [stem]
 ++++
---
 \|B\| = \sup_{x\ne 0} \frac{\|Bx\|}{\|x\|} = \sup_{\|x\|=\hat{\rho}} \frac{\|Bx\|}{\hat{\rho}}
---
+++++
 
 
 Soit stem:[x] un vecteur de stem:[\RR^n] tel que stem:[\|x\|=\hat{\rho}].

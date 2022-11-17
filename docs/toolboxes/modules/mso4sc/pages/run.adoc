@@ -1,4 +1,3 @@
-
 = Running {feelpp} Applications in the Portal
 :toc: left
 :uri-msoportal-www: http://portal.mso4sc.eu
@@ -29,7 +28,7 @@ you order. To check the status of your order:
 
 You shall be able to see your products and their status in each product form.
 
-NOTE: The Marketplace is not available anymore, for technical reasons. For now, all the registered applications can be used in the *Experiments* section. 
+NOTE: The Marketplace is not available anymore, for technical reasons. For now, all the registered applications can be used in the *Experiments* section.
 
 
 
@@ -48,9 +47,9 @@ Go to the xref:cases:ROOT:index.adoc[{feelpp} Case Studies guide] to discover ex
 At this point you should have a page with all the options that need to be filled before creating the instance.
 
 .Example of interface of the {feelpp} CFD app
-image::Portal_FeelppCFDApp2.png[]
+image::Portal_FeelppCFDApp.png[]
 
-The interface above is commun to all the toolbox applications. For each application, default parameters are filled and sould work right away. 
+The interface above is commun to all the toolbox applications. For each application, default parameters are filled and sould work right away.
 The only mandatory field to fill is the ID. This ID will be used to identify the instance once it is deployed.
 
 We detail the different field in the following tables. We differentiate the keys specs to run the simulation and the key specs to define the HPC settings.
@@ -78,10 +77,10 @@ Once the fields are filled, you can click on *Create new Instance*. Your applica
 
 At this point you will see the simplified logs of the deployement and execution process.
 Depending on the application and the HPC availability, this step may takes some minutes to be performed. The button will indicate the status of the running process :
- 
-* Blue: on going 
+
+* Blue: on going
 * Red: error
-* Green: application finished successfully. 
+* Green: application finished successfully.
 
 Once the running process is over you can destroy the current instance and move to the visualization section.
 
@@ -111,10 +110,10 @@ include::{examplesdir}/remotedesktop.txt[]
 
 [NOTE]: if no *Remote desktop* is defined, you will receive a warning message. Create a <<post, *Setting*>>, then go back to this step.
 
-It opens a new web page within your browser. You can now start visualization tolls such as paraview or ensight. Here is the procedure to start paraview, for more information on paraview see link:{https://www.paraview.org/documentation/}[*paraview documentation*]. 
+It opens a new web page within your browser. You can now start visualization tolls such as paraview or ensight. Here is the procedure to start paraview, for more information on paraview see link:{https://www.paraview.org/documentation/}[*paraview documentation*].
 
 * start a terminal (second icone in the top left corner)
-* load paraview module 
+* load paraview module
 ----
 $ module load ParaView/5.2.0
 ----
@@ -123,4 +122,3 @@ $ module load ParaView/5.2.0
 ----
 $ paraview Export.case
 ----
-

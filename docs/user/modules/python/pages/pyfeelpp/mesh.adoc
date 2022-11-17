@@ -1,15 +1,211 @@
 = Creating a mesh
-include::{partialsdir}/header-macros.adoc[]
+include::user:ROOT:partial$header-macros.adoc[]
+:page-jupyter: true
 
-The `mesh` provides the {feelpp} data structures in Python:
+We start with setting the {feelpp} environment and loading the {feelpp} library.
 
-* Mesh information:
-** `dimension()`
-** average statistics on the mesh size
-* ranges: `elements`, `markedelements`, `faces`, `markedfaces`, `boundaryfaces`
-
-.Mesh data structure handling example
+.Set the {feelpp} environment with local repository
 [source,python]
 ----
-include::{uri-pyfeelpp-raw}tests/test_mesh.py[]
+import feelpp 
+import sys
+app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))
 ----
+
+== Load a mesh from a `geo` or `msh` file
+
+`feelpp.mesh(dim=2, geo=1, realdim=2, worldComm=None)` : create a mesh.
+The mesh is of topological dimension `dim`, in real dimension `realdim` with geometric order `geo`.
+The mesh is configured with a `WorldComm` which provides the parallel process layout.
+
+Keyword arguments:
+
+* `dim` : the topological dimension (default: `2`)
+* `geo` : the geometrical order (default: `1`)
+* `realdim` : the real dimension (default: `2`)
+* `worldComm` : the parallel communicator for the mesh (default:  `Environment::worldCommPtr()`)
+
+
+`feelpp.load(m, path, size) -> feelpp._mesh.Mesh_S1DG1R1` : load a mesh from a file
+
+* `m` declared with the function `mesh` above
+* `path` (`string`) path to the geometry (with `geo` or `msh` format)
+* `size` (`float`) size of the meshed geometry (if it is not meshed yet)
+
+
+.Example
+[source,python]
+----
+geo=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+print("geo file: {}".format(geo))
+mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)
+----
+
+[%collapsible.result]
+.Results
+====
+----
+[ Starting Feel++ ] application myapp version 0.1 date 2022-Nov-07
+ . myapp files are stored in /scratch/jupyter/feelppdb/np_1
+ .. logfiles :/scratch/jupyter/feelppdb/np_1/logs
+Output exceeds the size limit. Open the full output data in a text editor
+geo file: /scratch/jupyter/feelppdb/downloads/feelpp2d.geo
+[loadMesh] Loading mesh in format geo+msh: "/scratch/jupyter/feelppdb/downloads/feelpp2d.geo"
+[loadMesh] Use default geo desc: /scratch/jupyter/feelppdb/downloads/feelpp2d.geo 0.1 
+Info    : Reading 'feelpp2d.geo'...
+Info    : Done reading 'feelpp2d.geo'
+Info    : Meshing 1D...
+Info    : [  0%] Meshing curve 1 (Line)
+Info    : [ 10%] Meshing curve 2 (Line)
+Info    : [ 10%] Meshing curve 3 (Line)
+Info    : [ 10%] Meshing curve 4 (Line)
+Info    : [ 10%] Meshing curve 5 (Line)
+Info    : [ 10%] Meshing curve 6 (Line)
+Info    : [ 10%] Meshing curve 7 (Line)
+Info    : [ 20%] Meshing curve 8 (Line)
+Info    : [ 20%] Meshing curve 9 (Line)
+Info    : [ 20%] Meshing curve 10 (Line)
+Info    : [ 20%] Meshing curve 11 (Line)
+Info    : [ 20%] Meshing curve 12 (Line)
+Info    : [ 20%] Meshing curve 13 (Line)
+Info    : [ 20%] Meshing curve 14 (Line)
+Info    : [ 30%] Meshing curve 15 (Line)
+Info    : [ 30%] Meshing curve 16 (Line)
+Info    : [ 30%] Meshing curve 17 (Line)
+Info    : [ 30%] Meshing curve 18 (Line)
+Info    : [ 30%] Meshing curve 19 (Line)
+...
+Info    : Done meshing 2D (Wall 0.106645s, CPU 0.106853s)
+Info    : 2867 nodes 5812 elements
+Info    : Writing 'feelpp2d.msh'...
+Info    : Done writing 'feelpp2d.msh'
+----
+====
+
+== Usage
+
+The `mesh` provides the {feelpp} data structures in Python:
+The following methods are to use on the mesh object (`mesh` in the previous example) :
+
+=== Mesh information :
+
+
+* `dimension(self) -> int` : get topological dimension
+* `hAverage(self) -> float` : get the average edge length of the mesh
+* `hMax(self) -> float` : get the maximum edge length of the mesh
+* `hMin(self) -> float` : get the minimum edge length of the mesh
+* `measure(self, parallel: bool = True) -> float` : get the measure of the mesh (which is equal to stem:[\int_\Omega 1])
+* `measureBoundary(self) -> float` : get the measure of the boundary of the mesh (which is equal to stem:[???])
+* `numGlobalEdges(self) -> int` : get the number of edges over the whole mesh, requires communication if the mesh is parallel
+* `numGlobalElements(self) -> int` : get the number of elements over the whole mesh, requires communication if the mesh is parallel
+* `numGlobalFaces(self) -> int` : get the number of faces over the whole mesh, requires communication if the mesh is parallel
+* `numGlobalPoints(self) -> int` : get the number of points over the whole mesh, requires communication if the mesh is parallel
+* `realDimension(self) -> int` : get real dimension
+* `updateMeasures(self) -> None` : update the measures of the mesh
+
+Here is an example of how to use the mesh information:
+
+[source,python]
+.Query the mesh information
+----
+print("dimention: {}".format(mesh.dimension()))
+print("number of elements: {}".format(mesh.numGlobalElements()))
+print("number of faces: {}".format(mesh.numGlobalFaces()))
+print("hmin: {}".format(mesh.hMin()))
+print("havg: {}".format(mesh.hAverage()))
+print("hmax: {}".format(mesh.hMax()))
+print("measure: {}".format(mesh.measure()))
+print("measure of boundary: {}".format(mesh.measureBoundary()))
+----
+
+[%collapsible.result]
+.Results
+====
+----
+dimention: 2
+number of elements: 5134
+number of faces: 8006
+hmin: 0.0763352613189128
+havg: 0.10274873094289755
+hmax: 0.13695416558140516
+measure: 20.79999999999997
+measure of boundary: 1497.0959239128888
+----
+====
+
+=== Test relation between meshes :
+
+* `isParentMeshOf(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) -> bool` : is the mesh the parent mesh of another mesh
+* `isRelatedTo(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) -> bool` : is the mesh related to another mesh
+* `isSiblingOf(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) -> bool`: is the mesh a sibling of another mesh
+* `isSubMeshFrom(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) -> bool` : is the mesh a sub mesh of another mesh
+
+
+=== Export and load mesh on https://support.hdfgroup.org/HDF5/[HDF5 format]
+
+* `saveHDF5(self, name: str) -> None` : save mesh to H5 file
+* `loadHDF5(self, name: str) -> None` : load mesh from H5 file
+
+[source,python]
+----
+mesh.saveHDF5("mesh.h5")
+mesh.loadHDF5("mesh.h5")
+----
+
+== Ranges
+
+* `elements` : `feelpp.elements(mesh)` : get iterator over the elements of the mesh
+* `markedelements` :
+    1. `feelpp.markedelements(mesh, tag: str)` : get iterator over the marked elements of the mesh
+    2. `feelpp.markedelements(mesh, marker: str)` :  return the range of elements of the mesh with marker
+    3. `feelpp.markedelements(mesh, markers: List[str])` : return the range of elements of the mesh with markers
+* `faces` (???)
+* `markedfaces` :
+    1. `feelpp.markedfaces(mesh, marker: str)` : return the range of facets of the mesh with marker
+    2. `markedfaces(mesh, markers: List[str])` : return the range of facets of the mesh with marker
+* `boundaryfaces` : `feelpp.boundaryfaces(mesh)`: get iterator over the boundary faces of the mesh
+
+A first example with ranges:
+
+[source,python]
+----
+r = feelpp.elements(mesh)
+print("mesh elts:", feelpp.nelements(r))
+r = feelpp.boundaryfaces(mesh)
+print("mesh boundary faces:", feelpp.nelements(r))
+----
+    
+[%collapsible.result]
+.Results
+====
+----
+mesh elts: 5134
+mesh boundary faces: 610
+----
+====
+
+A second more interesting example with ranges uses integrate to compute integrals of expressions over the mesh:
+
+.Example : compute integrals
+[source,python]
+----
+from feelpp.integrate  import integrate
+
+i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
+i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
+i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")
+print("i1 = {}, i2 = {}, i3 = {}".format(i1,i2,i3))
+----
+
+[%collapsible.result]
+.Results
+====
+----
+i1 = [3.24282386], i2 = [149.465], i3 = [0.]
+----
+====
+
+== Next steps
+
+- [x] xref:pyfeelpp/discr.adoc[Manipulate functions and function spaces]
+- [x] xref:pyfeelpp/filters.adoc[Export to paraview]

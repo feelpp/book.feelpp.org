@@ -3,38 +3,38 @@
 We start by setting the {feelpp} environment
 [source,cpp]
 ----
-include::{examplesdir}/qs_elasticity.cpp[tag=env]
+include::example$qs_elasticity.cpp[tag=env]
 ----
 
 Next, we define the Mesh stem:[\cal{T}_h]
 [source,cpp]
 ----
-include::{examplesdir}/qs_elasticity.cpp[tag=mesh]
+include::example$qs_elasticity.cpp[tag=mesh]
 ----
 
 Next, we define the function space stem:[X^1_h]
 [source,cpp]
 ----
-include::{examplesdir}/qs_elasticity.cpp[tag=space]
+include::example$qs_elasticity.cpp[tag=space]
 ----
 
 and the linear stem:[\ell] and bilinear form stem:[a]
 [source,cpp]
 ----
-include::{examplesdir}/qs_elasticity.cpp[tag=forms]
+include::example$qs_elasticity.cpp[tag=forms]
 ----
 
 We solve the algebraic system stem:[A \disp{d} = b]
 [source,cpp]
 ----
-include::{examplesdir}/qs_elasticity.cpp[tag=solver]
+include::example$qs_elasticity.cpp[tag=solver]
 ----
 
 We attach to the algebraic backend the near null space that may be useful for Multigrid methods and optionally the null space.
 To do that we build a basis spanning the (near) null space  in 2D and 3D.
 [source,cpp]
 ----
-include::{examplesdir}/qs_elasticity.cpp[tag=kernel]
+include::example$qs_elasticity.cpp[tag=kernel]
 ----
 <1> basis for translation stem:[\{(1,0,0),(0,1,0),(0,0,1)\}]
 <2> basis for rotation stem:[\{(y,-x,0),(-z,0,x),(0,z,-y)\}]
@@ -43,5 +43,5 @@ include::{examplesdir}/qs_elasticity.cpp[tag=kernel]
 Finally, we export the solution for visualization in Paraview
 [source,cpp]
 ----
-include::{examplesdir}/qs_elasticity.cpp[tag=exporter]
+include::example$qs_elasticity.cpp[tag=exporter]
 ----

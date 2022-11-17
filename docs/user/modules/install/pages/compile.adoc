@@ -23,30 +23,27 @@ $ git clone https://github.com/feelpp/feelpp.git
 {feelpp} does not allow in-source `cmake`, the build must be done in separate directory.
 
 [source,bash]
-.Create a build directory
-----
-$ mkdir build
-$ cd build
-----
-
-
-[source,bash]
 .Configure {feelpp}
 ----
-$ CXX=clang++ ../feelpp/configure -r
+$ cmake --preset default <1>
 ----
-
+<1> configure the default preset in `build/default`.
 
 [source,bash]
 .Compile the {feelpp} library, its tools and a few examples
 ----
-$ make  <1>
-$ make install <2>
+$ cmake --build --preset default  <1>
+$ make --build --preset default -t install <2>
 ----
 <1> compile {feelpp}:  library, tools and quickstart examples
-<2> install {feelpp}
+<2> compile and install {feelpp}, the option `-t` allows to set a target to build
 
-TIP: you can speed up the make process by passing the option `-j<N>` where `N` is the number of concurrent `make` sub-processes. It compiles `N` files at a time and respect dependencies. For example `-j4` compiles 4 C++ files at a time.
+[TIP]
+====
+You can speed up the make process by passing the option `-j<N>` where `N` is the number of concurrent `make` sub-processes. It compiles `N` files at a time and respect dependencies. For example `-j4` compiles 4 {cpp} files at a time.
+
+  $ cmake --build --preset default -j4
+====
 
 WARNING: Be aware that {feelpp} consumes memory. The {feelpp} library compile with 2Go of RAM. But to be more comfortable, 4Go or more would be best.
 
@@ -63,6 +60,32 @@ $ ./feelpp_qs_laplacian_2d --case laplacian/feelpp2d
 $ cd feelpp/quickstart
 $ mpirun -np 4 feelpp_qs_laplacian_2d --case laplacian/feelpp2d
 ----
+
+=== Targets 
+
+Here is a list of targets you might be interested in
+
+To compile a specific target use the following command line
+
+ $ cmake --build --preset default -t <target>
+
+[cols="1,1"] 
+|===
+| Target | Description
+| feelpp | {feelpp} core library
+| feelpp_mesh_partitioner | see xref:using:tools/mesh_partitioner.adoc[> documentation]
+| feelpp_toolbox_coefficientformpdes | see xref:using:toolboxes/coefficientformpdes.adoc[> documentation]
+| feelpp_toolbox_electric | see xref:using:toolboxes/electric.adoc[> documentation]
+| feelpp_toolbox_fluid | see xref:using:toolboxes/fluid.adoc[> documentation]
+| feelpp_toolbox_fsi | see xref:using:toolboxes/fsi.adoc[> documentation]
+| feelpp_toolbox_hdg_coupledpoisson | see xref:using:toolboxes/hdg_coupledpoisson.adoc[> documentation]
+| feelpp_toolbox_hdg_elasticity | see xref:using:toolboxes/hdg_elasticity.adoc[> documentation]
+| feelpp_toolbox_hdg_poisson | see xref:using:toolboxes/hdg_poisson.adoc[> documentation]
+| feelpp_toolbox_heat | see xref:using:toolboxes/heat.adoc[> documentation]
+| feelpp_toolbox_heatfluid | see xref:using:toolboxes/heatfluid.adoc[> documentation]
+| feelpp_toolbox_solid | see xref:using:toolboxes/solid.adoc[> documentation]
+| feelpp_toolbox_thermoelectric | see xref:using:toolboxes/thermoelectric.adoc[> documentation]
+|===
 
 == Downloading sources
 

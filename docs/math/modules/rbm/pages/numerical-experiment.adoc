@@ -1,0 +1,124 @@
+[[numerical-experiments]]
+= Numerical Experiments
+:toc: left
+:toclevels: 3
+:stem: latexmath
+Christophe Prud'homme
+
+
+[[problem-statement-2]]
+== Problem Statement
+
+We have a geometry splitted in 9 subparts :
+
+[[figure]]
+.Geometry
+image::example-thermal-block-heat-transfer.png
+
+
+Given stem:[\mu \in (\mu_1,...\mu_P) \in \mathcal{D}^\mu\equiv [\mu^{\text{min}},\mu^{\text{max}}\]^P], evaluate (recall that stem:[\ell = f]) +
+stem:[s(\mu) = f(u(\mu))\]] where stem:[u(\mu) \in X \equiv \{ v \in H^1(\Omega), v|_{\Gamma_{\text{top}}}  =  0\}] satisfies stem:[a(u(\mu), v;  \mu) = f(v; \mu) \quad \forall v \in X] we have stem:[P = 8] and given stem:[1 < \mu_r < \infty] we set stem:[\mu^{\mathrm{min}} = \dfrac{1}{\sqrt{\mu_r}},\quad \mu^{\mathrm{max}} =
+    \sqrt{\mu_r}] such that stem:[\dfrac{\mu^{\mathrm{max}}}{\mu^{\mathrm{min}}}=\mu_r].
+
+
+Recall we are in the compliant case stem:[\ell = f], we have stem:[f(v) = \displaystyle\int_{\Gamma_{0}} v\quad \forall v \in X] and stem:[a(u,v;\mu) = \displaystyle\sum_{i=1}^{P} \mu_i \int_{\Omega_i} \nabla u \cdot \nabla v + 1 \int_{\Omega_{P+1}} \nabla u \cdot \nabla v
+    \quad\forall u,\ v\ \in X] where stem:[\Omega = \displaystyle\cup_{i=1}^{P+1} \Omega_i].
+
+The inner product is defined as follows stem:[(u,v)_X = \displaystyle\sum_{i=1}^P \bar{\mu}_i \int_{\Omega_i}\nabla u \cdot \nabla v + 1 \int_{\Omega_{P+1}} \nabla u \cdot \nabla v] where stem:[\bar{\mu}_i] is a reference parameter. We have readily that stem:[a] is
+
+* symmetric,
+* parametrically coercive stem:[0 < \dfrac{1}{\sqrt{\mu_r}} \leq \mathrm{min}(\mu_1/\bar{\mu}_1, \ldots,
+      \mu_P/\bar{\mu}_P,1) \leq \alpha(\mu)],
+* and continuous stem:[\gamma(\mu) \leq \mathrm{max}(\mu_1/\bar{\mu}_1, \ldots,
+      \mu_P/\bar{\mu}_P,1) \leq \sqrt{\mu_r} < \infty]
+
+and the linear form stem:[f] is bounded.
+
+
+== Affine decomposition
+
+We obtain the affine decomposition stem:[a(u,v;\mu) = \displaystyle\sum_{q=1}^{P+1} \Theta^q(\mu) a^q(u,v)] with stem:[\begin{aligned}
+    \Theta^1(\mu) = \mu_1 & & a^1(u,v) = \int_{\Omega_1} \nabla u \cdot \nabla v\\
+    & \vdots & \\
+    \Theta^P(\mu) = \mu_P & & a^P(u,v) = \int_{\Omega_P} \nabla u \cdot \nabla v\\
+    \Theta^{P+1}(\mu) = 1 & & a^{P+1}(u,v) = \int_{\Omega_{P+1}} \nabla u \cdot \nabla v
+  \end{aligned}]
+
+== Results
+
+* Homogeneous parameters
+
+[[figure2]]
+.Maximum parameter values
+image::33-max.png
+
+[[figure3]]
+.Minimum parameter values
+image::33-min.png
+
+* Heteregeneous parameters
+
+[[figure4]]
+.Random values
+image::33-random.png
+
+
+
+[[thermal-block-p1]]
+== Thermal Block stem:[P=1]
+
+
+[[figure5]]
+.Random values
+image::thermalblock-P1.png
+
+
+We assume stem:[1/\mu^{\min}_1=\mu^{\max}_1=\sqrt{\mu_r}=10] and choose stem:[\mathcal{N}=256]
+
+we set stem:[\bar{\mu}=1] and have stem:[\Theta^1_a(\mu)=\mu_1,\, \Theta^2_a(\mu) = 1]. Thus, stem:[\Theta_a^{\min,\bar{\mu}}(\mu_1)=\min(\mu_1,1)\\
+      \Theta_a^{\max,\bar{\mu}}(\mu_1)=\max(\mu_1,1)]
+
+hence  stem:[\theta^{\bar{\mu}}(\mu_1) = \max(\frac{1}{\mu_1},\mu_1)]  and stem:[\theta^{\bar{\mu}}(\mu_1) \leq\sqrt{\mu_r} \forall \mu_1 \in \mathcal{D}].
+
+Values in [RHP2008]
+
+.Convergence results for stem:[P=1]
+[cols=">,>,>,>",options="header",]
+|===========================================================================================================================================
+|stem:[N] |stem:[\Delta^s_{N,\mathrm{max}}(\mu)] |stem:[\eta^s_{N,\mathrm{ave}}] |stem:[\eta^s_{N,\mathrm{max}}]
+|1 |7.2084E+00 |2.3417 |3.3305
+|2 |4.5371E–01 |2.4858 |3.6850
+|3 |6.9652E–04 |6.2195 |9.8551
+|4 |1.3744E–07 |3.3219 |7.2632
+|5 |3.1140E–11 |6.0789 |7.0453
+|===========================================================================================================================================
+
+Note that: stem:[\eta^s_{N,\mathrm{max}}(\mu_1) \leq
+  \eta^s_{\mathrm{max,UB}} \equiv \sqrt{\mu_r} = 10]
+
+* Maximum output error bound: stem:[\Delta^s_{N,\mathrm{max}}
+      = \max_{\mu \in \Xi_{\mathrm{train}}} \Delta^s_N(\mu)]
+* Average output effectivity: stem:[\eta^s_{N,\mathrm{ave}} =
+      \frac{1}{\Xi_\mathrm{train}}\sum_{\mu \in \Xi_{\mathrm{train}}} \eta^s_N(\mu)]
+* Maximum output effectivity: stem:[\eta^s_{N,\mathrm{max}}
+      = \max_{\mu \in \Xi_{\mathrm{train}}} \eta^s_N(\mu)]
+
+[[example-thermal-block-p8]]
+== Example Thermal Block stem:[P=8]
+
+
+* Configuration :
+** 47 600 dofs;
+** Preconditionner : LU – Solver : MUMPS
+** stem:[\Xi : ] parameter sampling of dimension 1 000.
+* Plot stem:[\max_{\mu \in \Xi} \frac{ |s^{\mathcal{N}}(\mu)-s_N(\mu)|}{s^{\mathcal{N}}(\mu)}]
+
+image::Relative-error.png
+
+Thermal Block stem:[P=8]
+
+* More parameters there are, more rich the problem is;
+* Notations :
+** stem:[e^i(\mu)] is the relative error on the output when stem:[i] parameters vary.
+
+image::Relative-error-2.png

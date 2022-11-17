@@ -1,7 +1,7 @@
 = Change of variables in integrals
 :stem: latexmath
 
-Let stem:[\hat{K}] and stem:[K] be two open set of stem:[\mathbb{R}^d]. Let stem:[\varphi] be a stem:[{\cal C}^1]-diffeomorphism from stem:[\hat{K}] to stem:[K], i.e. a bijection of class stem:[{\cal C}^1] whose reciprocal is also of class stem:[{\cal C}^1]. Denote  stem:[(e_1,\ldots,e_d)] the canonical basis of stem:[\mathbb{R}^d].  
+Let stem:[\hat{K}] and stem:[K] be two open set of stem:[\mathbb{R}^d]. Let stem:[\varphi] be a stem:[{\cal C}^1]-diffeomorphism from stem:[\hat{K}] to stem:[K], i.e. a bijection of class stem:[{\cal C}^1] whose reciprocal is also of class stem:[{\cal C}^1]. Denote  stem:[(e_1,\ldots,e_d)] the canonical basis of stem:[\mathbb{R}^d].
 
 We have
 
@@ -64,7 +64,7 @@ y & = & c\hat{x} + d\hat{y} + f
 \right.
 ++++
 
-we have 
+we have
 
 [stem]
 ++++
@@ -80,8 +80,8 @@ The previous calculus becomes
 [stem]
 ++++
 \begin{aligned}
-\int_K (\nabla u(x))^2\; dx &= 
-\int_{\hat{K}} \left[ \left(\frac{\partial \hat{u}(\hat{x},\hat{y})}{\partial \hat{x}} \;  \frac{d}{D} + \frac{\partial \hat{u}(\hat{x},\hat{y})}{\partial \hat{y}} \; \frac{-c}{D} \right)^2 + 
+\int_K (\nabla u(x))^2\; dx &=
+\int_{\hat{K}} \left[ \left(\frac{\partial \hat{u}(\hat{x},\hat{y})}{\partial \hat{x}} \;  \frac{d}{D} + \frac{\partial \hat{u}(\hat{x},\hat{y})}{\partial \hat{y}} \; \frac{-c}{D} \right)^2 +
    \left(\frac{\partial \hat{u}(\hat{x},\hat{y})}{\partial \hat{x}} \;  \frac{-b}{D} + \frac{\partial \hat{u}(\hat{x},\hat{y})}{\partial \hat{y}} \; \frac{a}{D} \right)^2 \right] |D| \; \; d\hat{x}\, d\hat{y}\\
 
 & = \frac{1}{|D|}\; \int_{\hat{K}} \left[  \left( d\, \frac{\partial \hat{u}(\hat{x},\hat{y})}{\partial \hat{x}} - c\, \frac{\partial \hat{u}(\hat{x},\hat{y})}{\partial \hat{y}} \right)^2 +
@@ -90,13 +90,13 @@ The previous calculus becomes
 \end{aligned}
 ++++
 
-== Some change of variable formulas 
+== Some change of variable formulas
 
-Denote stem:[f: K \mapsto \mathbb{R}] and stem:[\hat{f}: \hat{K} \mapsto \mathbb{R}] such that stem:[\hat{f} = f \circ F] and 
-]\mathbf{F}: K \mapsto \mathbb{R}^d] and stem:[\mathbf{\hat{F}}: \hat{K} \mapsto \mathbb{R}^d] such that stem:[\hat{\mathbf{F}} = \mathbf{F} \circ \chi^e].
+Denote stem:[f: K \mapsto \mathbb{R}] and stem:[\hat{f}: \hat{K} \mapsto \mathbb{R}] such that stem:[\hat{f} = f \circ \chi^e] and
+stem:[\mathbf{F}: K \mapsto \mathbb{R}^d] and stem:[\mathbf{\hat{F}}: \hat{K} \mapsto \mathbb{R}^d] such that stem:[\hat{\mathbf{F}} = \mathbf{F} \circ \chi^e].
 
-Moreover denote  stem:[\mathbf{n}] the local outward normal to stem:[\Omega] and stem:[\mathbf{n}^{st}] the local outward normal to stem:[\hat{\Omega}].
-  
+Moreover denote  stem:[\mathbf{n}] the local outward normal to stem:[\Omega] and stem:[\mathbf{n}] the local outward normal to stem:[\hat{\Omega}].
+
 we have the following relations
 
 [stem]
@@ -106,8 +106,18 @@ we have the following relations
 
 \int_{K}\ \nabla f\ dx\ &=\ \int_{\hat{K}} \Big(\nabla^{\text{st}} \underbrace{\hat{f}(\xi)}_{f \circ \chi^e(\xi)} B^e(\xi)\Big) J^e( \xi )\ d \xi\\
 
-\int_{\partial K}\ f( x )\ dx &= \int_{\partial \hat{K}} \hat{f}(\xi)\  \| B^e(\xi)^T \ \mathbf{n^{\text{st}}}(\xi) \|\ J^e( \xi )\ d \xi\\
+\int_{\partial K}\ f( x )\ dx &= \int_{\partial \hat{K}} \hat{f}(\xi)\  \| B^e(\xi) \ \mathbf{n^{\text{st}}}(\xi) \|\ J^e( \xi )\ d \xi\\
 
-\int_{\partial K}\ \mathbf{F}( x )\ \cdot\ \mathbf{n}(x) dx & = \int_{\partial \hat{K}} \mathbf{\hat{F}}( \xi )\  \cdot \Big(B^e(\xi)^T \ \mathbf{n^{\text{st}}}(\xi) \Big) \ J^e( \xi )\ d \xi
+\int_{\partial K}\ \mathbf{F}( x )\ \cdot\ \mathbf{n}(x) dx & = \int_{\partial \hat{K}} \mathbf{\hat{F}}( \xi )\  \cdot \Big(B^e(\xi) \ \mathbf{n^{\text{st}}}(\xi) \Big) \ J^e( \xi )\ d \xi
+\end{aligned}
+++++
+
+where
+
+[stem]
+++++
+\begin{aligned}
+B^e(\xi) &=  ( \nabla \chi^e(\xi) )^{-T}\\
+J^e( \xi ) &= \det ( \nabla \chi^e(\xi) )
 \end{aligned}
 ++++

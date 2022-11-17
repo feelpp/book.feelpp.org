@@ -1,6 +1,6 @@
 = Get {feelpp}
 
-{feelpp} can be installed on Windows 10, Debian/Ubuntu systems and MacOSX.
+{feelpp} can be installed on Windows 10, Debian/Ubuntu systems.
 
 We created two delivery channels: `stable` and `latest`.
 
@@ -14,8 +14,8 @@ We created two delivery channels: `stable` and `latest`.
 [source,bash]
 --
 wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
-echo "deb http://apt.feelpp.org/{flavor} {dist} {channel}" | tee -a /etc/apt/sources.list.d/feelpp.list
-apt update
+echo "deb http://apt.feelpp.org/{flavor}/{dist} {dist} {channel}" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+sudo apt update
 --
 ----
 
@@ -24,8 +24,8 @@ apt update
 Ubuntu::
 +
 --
-// Ubuntu LTS distributions fo focal(20.04-preferred) bionic (18.04) are supported.
-Ubuntu LTS distributions fo focal(20.04-preferred) is supported.
+// Ubuntu LTS distributions focal(20.04-preferred) bionic (18.04) are supported.
+Ubuntu LTS distributions focal(20.04-preferred) is supported.
 
 We may support short term distributions.
 
@@ -34,14 +34,10 @@ We may support short term distributions.
 
 par::[ubuntu,focal,latest]
 
-// par::[ubuntu,focal,stable]
+[discrete]
+=== Jammy (22.04)
 
-// [discrete]
-// === Bionic (18.04)
-
-// par::[ubuntu,bionic,latest]
-
-// par::[ubuntu,bionic,stable]
+par::[ubuntu,jammy,latest]
 
 
 The supported systems are described below
@@ -50,19 +46,28 @@ The supported systems are described below
 |===
 |Distribution | Release | Version | Supported Channels | Comment
 
-|ubuntu | focal | 20.04 | latest | LTS
-// |ubuntu | bionic| 18.04 | latest | LTS
+|ubuntu | focal | 20.04 | latest | LTS
+|ubuntu | jammy | 22.04 | latest | LTS
 
 |===
+
+[NOTE]
+.Other Ubuntu systems
+======
+{feelpp} is also compiled regularly on the latest Ubuntu distribition, currently Kinetic (22.10), see xref:compile.adoc[how to build {feelpp} from sources].
+
+.Ubuntu Kinetic (22.10)
+ $ docker run --rm -it ghcr.io/feelpp/feelpp-env:ubuntu-22.10
+======
 
 include::partial$install-deb.adoc[]
 --
 Debian::
 +
 --
-Debian LTS distributions buster(10) is supported.
+Debian LTS distributions bullseye(11) is supported.
 
-Debian Sid packages are also available.
+//Debian Sid packages are also available.
 
 The supported systems are described below
 [cols="1,1,1,1,2", options="header"]
@@ -70,18 +75,22 @@ The supported systems are described below
 |===
 |Distribution | Release | Version | Supported Channels | Comment
 
-|debian |buster | 10 | latest | LTS
-|debian |sid|  | latest | unstable
+|debian |bullseye | 11 | latest | LTS
+|debian |testing| - | latest | testing
+|debian |sid| - | latest | unstable
 
 |===
 
 
 [discrete]
-=== Buster (10)
+=== Bullseye (11)
 
-par::[debian,buster,latest]
+par::[debian,bullseye,latest]
 
-par::[debian,buster,stable]
+[discrete]
+=== Testing (testing)
+
+par::[debian,testing,latest]
 
 [discrete]
 === Sid (unstable)
@@ -89,10 +98,40 @@ par::[debian,buster,stable]
 par::[debian,sid,latest]
 
 
+[NOTE]
+.Other Debian systems
+======
+{feelpp} is also compiled regularly on the latest Debian distribitions testing and unstable (sid). See xref:compile.adoc[how to build {feelpp} from sources].
 
+.Debian testing
+ $ docker run --rm -it ghcr.io/feelpp/feelpp-env:debian-testing
 
+.Debian unstable (sid)
+ $ docker run --rm -it ghcr.io/feelpp/feelpp-env:debian-sid
+======
 
 include::partial$install-deb.adoc[]
+--
+Fedora::
++
+--
+
+{feelpp} is not yet packaged for Fedora. 
+However 
+ 
+- [x] it is possible to compile it from source for Fedora:36 and Fedora:37
+- [x] a docker image containing {feelpp} development environment is available for both systems
+
+.Fedora 36(stable) 
+ $ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-36 
+
+or 
+
+.Fedora 37(beta)
+ $ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-37 
+
+see xref:compile.adoc[how to build {feelpp} from sources].
+
 --
 Windows 10::
 +
@@ -100,48 +139,48 @@ Windows 10::
 To use {feelpp} on Windows 10, follow these steps:
 
  * [x] install https://docs.microsoft.com/fr-fr/windows/wsl/install-win10:[WSL (Windows Subsystem for Linux)]
- * [x] install https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions[Ubuntu focal (20.04) or Debian buster(10)]
+ * [x] install https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions[Ubuntu focal (20.04) Ubuntu jammy(22.04) or Debian bullseye(11)]
  * [x] follow the corresponding Ubuntu or Debian {feelpp} installation steps
 
+include::partial$install-deb.adoc[]
 --
 Docker::
 +
 --
 A docker image is generated with the deb packages.
-The image is based on the distribution eoan(Ubuntu 19.10).
+The image is based on the LTS distribution Ubuntu Focal 20.04.
 
 To download and execute it, follow the steps described below
 
-.Download and run  the feelpp docker image: contains feelpp-quickstart, feelpp-tools and libfeelpp-dev
+.Download and run  the feelpp docker image: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
 ----
-docker pull feelpp/feelpp
-docker run --rm -it -v $HOME/feel:/feel feelpp/feelpp
-----
-
-.Download and run  the feelpp-toolboxes docker image : contains the packages above plus all toolboxes packages
-----
-docker pull feelpp/feelpp-toolboxes
-docker run --rm -it -v $HOME/feel:/feel feelpp/feelpp-toolboxes
+docker pull ghcr.io/feelpp/feelpp:focal
+docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:focal
 ----
 
+.Download and run  the feelpp docker image including the development kit: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
+----
+docker pull ghcr.io/feelpp/feelpp-dev:focal
+docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-dev:focal
+----
 --
-MacOSX::
-+
---
-
-* [x] install https://brew.sh/[Homebrew] 
-* [x] install {feelpp} Homebrew tap
-[source,bash]
-----
-brew tap feelpp/homebrew-feelpp
-----
-* [x] install {feelpp}
-[source,bash]
-----
-brew install feelpp
-----
-
---
+// MacOSX::
+// +
+// --
+// 
+// * [x] install https://brew.sh/[Homebrew] 
+// * [x] install {feelpp} Homebrew tap
+// [source,bash]
+// ----
+// brew tap feelpp/homebrew-feelpp
+// ----
+// * [x] install {feelpp}
+// [source,bash]
+// ----
+// brew install feelpp
+// ----
+// 
+// --
 
 ====
 

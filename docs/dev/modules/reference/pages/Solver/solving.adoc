@@ -2,11 +2,11 @@
 
 The configuration files `.cfg` allow for a wide range of options to solve a linear or non-linear system.
 
-We consider now the following example 
+We consider now the following example
 
 [source,cpp]
 ----
-include::example$mylaplacian.cpp[tag=marker1]
+include::tutorial-dev:ROOT:example$mylaplacian.cpp[tag=marker1]
 ----
 
 To execute this example
@@ -16,10 +16,10 @@ To execute this example
 # sequential
 ./feelpp_tut_laplacian
 # parallel on 4 cores
-mpirun -np 4 ./feelpp_tut_laplacian 
+mpirun -np 4 ./feelpp_tut_laplacian
 ----
 
-As described in section 
+As described in section
 
 == Direct solver
 
@@ -29,7 +29,7 @@ As described in section
 ----
 # no iterative solver
 ksp-type=preonly
-# 
+#
 pc-type=cholesky
 ----
 
@@ -68,7 +68,7 @@ auto a = form2( _test=..., _trial=..., _properties=SPD );
 
 === Using CG
 
-==== ICC(3) 
+==== ICC(3)
 
 with a relative tolerance of 1e-12:
 [source,ini]
@@ -81,7 +81,7 @@ pc-factor-levels=3
 
 === Using GMRES
 
-==== ILU(3) 
+==== ILU(3)
 
 with a relative tolerance of 1e-12 and a restart of 300:
 
@@ -94,7 +94,7 @@ pc-type=ilu
 pc-factor-levels=3
 ----
 
-==== Jacobi 
+==== Jacobi
 
 With a relative tolerance of 1e-12 and a restart of 100:
 
@@ -117,5 +117,3 @@ snes-monitor=1
 # eigen value problem
 eps-monitor=1
 ----
-
-

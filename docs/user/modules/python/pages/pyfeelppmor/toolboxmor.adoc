@@ -1,0 +1,57 @@
+:stem: latexmath
+
+= Toolboxmor
+
+For the configuration of the case, and the usage in a C++ application, refer to xref:mor:ROOT:toolboxmor.adoc[ToolboxMor] documentation.
+More details on the functions of the toolbox can be found in xref:pyfeelppmor/reducedbasis.adoc[this page].
+
+== Model
+
+We have a model defining a parameter-dependant problem to solve stem:[a(u, v; \mu) = f(v; \mu)], and we are foccussing on the following outputs stem:[s_i(\mu) = L_i(\mu)^T u(\mu)] for stem:[i\in [|1, n_\text{outputs}|\]],  where stem:[n_\text{outputs}] is the number of `CRBOutputs` described in the JSON file of the case.
+
+We assume that we have the following decompositions :
+
+[stem]
+++++
+\begin{align}
+a(u, v; \mu) &= \displaystyle\sum_{q=1}^{Q_a} \beta_A^q(\mu) a^q(u, v) \\
+f(v; \mu) &= \displaystyle\sum_{p=1}^{Q_f} \beta_F^p(\mu) f^p(v)\\
+l_i(v; \mu) &= \displaystyle\sum_{p=1}^{Q_{l_i}} \beta_{s_i}^p(\mu) l_i^p(v)
+\end{align}
+++++
+
+In the term of matrices and vectors, it translates by :
+
+[stem]
+++++
+\begin{align}
+A(\mu) &= \displaystyle\sum_{q=1}^{Q_a} \beta_A^q(\mu) A^q \\
+F(\mu) &= \displaystyle\sum_{p=1}^{Q_f} \beta_F^p(\mu) F^p\\
+L_i(\mu) &= \displaystyle\sum_{p=1}^{Q_{l_i}} \beta_{L_i}^p(\mu) L_i^p
+\end{align}
+++++
+
+== Get affine decomposition
+
+.Offline computation
+[source, python]
+----
+[Aq, Fq] = model.getAffineDecomposition()
+----
+
+* `Aq` is a `list` of lenght 1, and `Aq[0]` contains the list of the matrices of the affine decomposition of the bilinear form : `Aq[0] = [` stem:[A^1]`,...,` stem:[A^{Q_a}]`]`
+* `Fq` is a list a lenght stem:[1 + n_\text{outputs}]. `Fq[0]` contains the affine decomposition of the right-hand side `Fq[0] = [` stem:[F^1]`,...,` stem:[F^{Q_f}]`]`, and for stem:[i\in [|1,n_\text{outputs}|\]], `Fq[i]` contains the affine decomposition of the stem:[i]-th output `Fq[i] = [` stem:[L_i^1]`,...,` stem:[L_i^{Q_{l_i}}]`]`.
+
+
+.Online computation
+[source, python]
+----
+[betaA, betaF] = model.computeBetaQm(mu)
+----
+
+where `mu` is a `ParameterSpaceElement` (see xref:pyfeelppmor/parameters.adoc[Parameters]).
+
+* `betaA` is a list of length 1, and `betaA[0]` contains the coefficients of the affine decomposition `betaA[0] = [` stem:[\beta_A^1]`,...,` stem:[\beta_A^{Q_a}] `]`.
+* `betaF` is a list of length  stem:[1 + n_\text{outputs}] contains the coefficients of the affine decompositions of stem:[f], and stem:[s_i] :
+** `betaF[0][0] = [` stem:[\beta_F^1]`,...,` stem:[\beta_F^{Q_f}] `]`,
+** `betaF[i][0] = [` stem:[\beta_{L_i}^1]`,...,` stem:[\beta_{L_i}^{Q_{l_i}}] `]` for stem:[i\in [|1,n_\text{outputs}|\]].

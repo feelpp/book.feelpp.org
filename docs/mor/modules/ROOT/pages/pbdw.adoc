@@ -1,0 +1,78 @@
+= Parametrized Background Data Weak
+
+== Sensors
+
+There is three type of sensors available:
+
+gaussian::
+A sensor capturing data around a point within a given radius
+pointwise::
+A sensor capturing data at a discrete point
+surface::
+A sensor capturing the average data on a surface
+
+The definition of the sensors can be made through a json file:
+[,json]
+----
+{
+    "sensor1":
+    {
+        "type":"gaussian",
+        "coord":[0.1,0.2,0.3],
+        "radius":0.01
+    },
+    "sensor2":
+    {
+        "type":"pointwise",
+        "coord":[0.25,0.25,0.25]
+    },
+    "sensor3":
+    {
+        "type":"surface",
+        "markers":["mymarker"]
+    }
+}
+----
+This json file is then parsed by the class SensorMap:
+[,cpp]
+----
+auto Xh = space_type::New(mesh);
+SensorMap<space_type> sigmas(Xh);
+auto i = std::ifstream("mysensors.json");
+sigmas.loadJson(json::parse(i, nullptr, true, true));
+----
+
+== Using PBDW
+
+In order to use PBDW, we need a set of sensors and a reduced basis.
+[,cpp]
+----
+auto XR = crbModel->rBFunctionSpace();
+auto pbdw = std::make_shared<PBDW<reducedbasis_type>>(soption("rb.name"), XR, sigmas, crb->id());
+----
+If we want to compute outputs with PBDW, we need a vector of vector representing the linear form and a vector of names for the outputs. +
+One drawback of PBDW is that the outputs have to be independant of the parameters, since the value of these are unknonw.
+[,cpp]
+----
+std::vector<vector_ptrtype> Fs;
+//...fill linear forms
+std::vector<std::string> outputNames;
+//...fill names
+pbdw->setOutputs(Fs, outputNames);
+----
+After that, we only need to launch the offline phase:
+[,cpp]
+----
+pbdw->offline();
+----
+
+For the online phase, we need the values of all or a subset of the sensors to compute either the coefficients of the solution in the reduced basis, or the value of the outputs:
+[,cpp]
+----
+Eigen::VectorXd yobs; // observations from all the sensors
+auto uN = pbdw->online(yobs); // coefficients of the solution
+auto sN = pbdw->outputs(yobs); // values of the outputs
+Eigen::VectorXd yobsPartial; // observation of a subset of the sensors
+auto uNPartial = pbdw->online(yobsPartial, {1,2,3}); // the second argument is the index of the sensors used
+auto sNPartial = pbdw->onlune(yobdsPartial, {{"sensor1","sensor2","sensor3"}}); // the second argument is the names of the sensors used
+----

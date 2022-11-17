@@ -1,0 +1,199 @@
+[[sec:post-error-estim]]
+= Inf-sup lower bound
+:toc: left
+:toclevels: 3
+:stem: latexmath
+Christophe Prud'homme
+
+[[sec:inf-sup-lower]]
+
+*Lower bound for coercivity constant*
+
+We require a  lower bound stem:[\alpha_{\mathrm{LB}}(\mu)] for stem:[\alpha(\mu) = \alpha_c(\mu),\ \forall   \mu \in \mathcal{D}^\mu]
+
+Two strategies are available:
+
+* « <<min-theta-approach,_Min stem:[\Theta]_>> » approach if stem:[a] is parametrically coercive (_i.e._ the coercivity constant depends solely on stem:[\mu])
+* and more generally the <<sec:succ-constr-meth,_Successive Constraint Method_>> (SCM) which can also be applied in case of « Inf-Sup » stable problems (Stokes, Helmholtz,...)
+
+[[min-theta-approach]]
+== « Min stem:[\Theta] » Approach
+
+=== Lower bound for stem:[\alpha(\mu)]
+
+
+.Lemma
+--
+
+For a parametrically coercive bilinear form
+
+* stem:[\Theta^q(\mu) > 0,\ \forall \mu \in \mathcal{D}^\mu] and
+* stem:[a^q(v,v) \geq 0,\ \forall v \in X,\ 1 \leq q \leq Q]
+
+We have
+
+[stem]
+++++
+\Theta^{\mathrm{min},\bar{\mu}}_a(\mu) =
+    \alpha(\bar{\mu})\min_{q=1...Q}\frac{\Theta_a^q(\mu)}{\Theta_a^q(\bar{\mu})} \leq \alpha(\mu)
+++++
+where stem:[\bar{\mu} \in \mathcal{D}^\mu] which was used to define the stem:[X]-inner product and induced norm
+--
+
+
+Recall that
+
+stem:[\begin{align}
+    (u,v)_X &=  a(u,v;\bar{\mu}), \quad \forall u,v \in X\\
+    \|v\|_X &=  \sqrt{(u,v)_X}, \quad \forall v \in X
+  \end{align}]
+
+=== Upper bound for stem:[\gamma(\mu)]
+
+Similarly we develop an upper bound stem:[\gamma_{\mathrm{UB}}(\mu)] for stem:[\gamma(\mu)]. We define
+
+[stem]
+++++
+  \infty > \Theta^{\mathrm{max},\bar{\mu}}_a(\mu) = \gamma(\bar{\mu}) \max_{q=1...Q}\frac{\Theta_q^q(\mu)}{\Theta_a^q(\bar{\mu})}\geq \gamma(\mu)
+++++
+
+
+**Remark :** stem:[\gamma_{\mathrm{UB}}(\mu)] is actually not required in practice but relevant in the theory.
+
+===  Summary
+
+If stem:[a] is parametrically coercive we then choose
+
+* the coercivity constant lower bound to be stem:[\alpha_{\mathrm{LB}}(\mu)\equiv \Theta^{\mathrm{min},\bar{\mu}}_a(\mu)]
+* and the continuity constant upper bound to be (stem:[a] symmetric) stem:[\gamma_{\mathrm{UB}}(\mu)\equiv \Theta^{\mathrm{max},\bar{\mu}}_a(\mu)]
+
+[rem:mintheta-rem2]
+**Remark on cost :**
+
+* Online cost to evaluate stem:[\alpha_{\mathrm{LB}}(\mu)] : stem:[O(Q_a)]
+* Choice of inner product important stem:[(u,v)_X =
+      a(u,v;\bar{\mu})] (see multiple inner products approach)
+* Extends to non-symmetric problems by considering the symmetric part stem:[a_s(u,v;\mu) = \frac{1}{2}\left( a(u,v;\mu)+a(v,u;\mu) \right)]
+
+
+[[sec:succ-constr-meth]]
+== Successive constraint method (SCM)
+
+[[successive-constraint-method-stability-estimates]]
+=== Stability estimates
+
+We wish to compute stem:[\alpha_{\mathrm{LB}}: \mathcal{D} \rightarrow \mathbb{R}] such that
+[stem]
+++++
+0 < \alpha_{\mathrm{LB}}(\mu) \leq \alpha^{\mathcal{N}}(\mu), \quad \mu \in \mathcal{D}
+++++
+
+and it computation is rapid stem:[O(1)] where stem:[\alpha^{\mathcal{N}}(\mu)= \displaystyle\inf_{w \in X^{\mathcal{N}}} \frac{a(w,w;\mu)}{\|w\|_X^2}]
+
+*Computation of stem:[\alpha^{\mathcal{N}}(\mu)] :* stem:[\alpha^{\mathcal{N}}(\mu)] is the minimum eigenvalue of the following generalized eigenvalue problem
+[stem]
+++++
+a(w,v;\mu) = \lambda(\mu)\ m(w,v;\mu), \quad (A w = \lambda B w)
+++++
+
+where stem:[m(\cdot,\cdot)] is the bi-linear form associated with stem:[\|\cdot\|_X] and stem:[B] is the associated matrix.
+
+[[successive-constraint-methodreformulation]]
+=== Successive Constraint method : Reformulation
+
+The problem as a minimization one First recall stem:[
+    a(w,v;\mu) = \displaystyle\sum_{q=1}^{Q_{a}} \theta_q(\mu)\ a_q(w,v)]. Hence we have stem:[
+    \alpha^{\mathcal{N}}(\mu)= \displaystyle\inf_{w \in X^{\mathcal{N}}} \displaystyle\sum_{q=1}^{Q_a} \theta_q(\mu) \frac{a_q(w,w)}{\|w\|_X^2}] and we note stem:[
+    \mathcal{J}^{\mathrm{obj}}(w;\mu) = \displaystyle\sum_{q=1}^{Q_a} \theta_q(\mu) \frac{a_q(w,w)}{\|w\|_X^2}]
+
+*Reformulation :* We have the following optimisation problem stem:[
+    \alpha^{\mathcal{N}}(\mu)= \displaystyle\inf_{y \in \mathcal{Y}} \mathcal{J}^{\mathrm{obj}}(\mu; y)], where stem:[
+    \mathcal{J}^{\mathrm{obj}}(\mu; y) \equiv \displaystyle\sum_{q=1}^{Q_a} \theta_q(\mu) y_q] and stem:[
+    \mathcal{Y} = \left\{ y \in \mathbb{R}^{Q_a} |\ \exists w \in X^{\mathcal{N}}\ \mathrm{s.t.}\ y_q = \frac{a_q(w,w)}{\|w\|_{X^{\mathcal{N}}}^2}, 1 \leq q \leq Q_a \right\}]
+
+We now need to characterize stem:[\mathcal{Y}], to do this we construct two sets stem:[\mathcal{Y}_{\mathrm{LB}}] and stem:[\mathcal{Y}_{\mathrm{UB}}] such that stem:[\mathcal{Y}_{\mathrm{UB}}
+    \subset \mathcal{Y} \subset \mathcal{Y}_{\mathrm{LB}}] over which finding stem:[\alpha^{\mathcal{N}}(\mu)] is feasible.
+
+*Successive Constraint method :* Ingredients
+
+First we set the design space for the minimisation problem. We introduce
+[stem]
+++++
+    \mathcal{B} = \prod_{q=1}^{Q_a} \left[  \inf_{w\in X^{\mathcal{N}}} \frac{a_q(w,w)}{\|w\|_X^2}; \sup_{w\in X^{\mathcal{N}}} \frac{a_q(w,w)}{\|w\|_X^2} \right]
+++++
+
+[stem]
+++++
+  \Xi = \left\{ \mu_i \in \mathcal{D}; i=1,...,J \right\}
+++++
+and
+[stem]
+++++
+C_K = \left\{ \mu_i \in \Xi; i=1,...,K \right\} \subset \Xi
+++++
+
+
+The set stem:[\Xi] is constructed using a stem:[\frac{1}{2^p}] division of stem:[\mathcal{D}]: in 1D, stem:[0, 1; \frac{1}{2}; \frac{1}{4},
+    \frac{3}{4};...]. stem:[C_K] will be constructed using a greedy algorithm.
+
+Finally we shall denote stem:[P_M(\mu;E)] the set of stem:[M] points closest to stem:[\mu] in the set stem:[E]. We shall need this type of set to construct the lower bounds.
+
+[[successive-constraint-method-lower-bounds-mathcaly_mathrmlb]]
+=== Successive Constraint method: Lower bounds stem:[\mathcal{Y}_{\mathrm{LB}}]
+
+Given stem:[M_\alpha, M_+ \in \mathbb{N}] we are now ready to define stem:[\mathcal{Y}_{\mathrm{LB}}]
+
+[stem]
+++++
+\begin{align}
+\mathcal{Y}_{\mathrm{LB}}(\mu; C_K) = \Big\{ y \in \mathbb{R}^{Q_a}|& y \in  \mathcal{B}, \\
+&\sum_{q=1}^{Q_a} \theta_q(\mu')  y_q \geq \alpha^{\mathcal{N}}(\mu'),\ \forall \mu' \in P_{M_\alpha}(\mu;C_K) \\
+&\sum_{q=1}^{Q_a} \theta_q(\mu')  y_q \geq \alpha_{\mathrm{LB}}(\mu';C_{K-1}),\ \forall \mu' \in P_{M_+}(\mu;\Xi\backslash C_K) \Big\}
+\end{align}
+++++
+
+Computing stem:[\alpha_{\mathrm{LB}}(\mu;C_K)] is in fact a linear program with stem:[Q_a] design variables, stem:[y_q], and stem:[2 Q_a+M_\alpha+M_+] constraints online. It requires the construction of stem:[C_K] offline.
+
+[sec:upper-bounds:-mathc]
+
+[[successive-constraint-method-upper-bounds-mathcaly_mathrmub]]
+=== Successive Constraint method: Upper bounds stem:[\mathcal{Y}_{\mathrm{UB}}]
+
+Let stem:[
+    \mathcal{Y}_{\mathrm{UB}}( C_K ) = \left\{ y^*(\mu_k), 1 \leq k \leq K \right\}] with stem:[
+    y^*(\mu) = \mathrm{arg}\mathrm{min}_{y \in \mathcal{Y}}\ \mathcal{J}^{\mathrm{obj}}( \mu; y )] We set stem:[
+    \alpha_{\mathrm{UB}}( \mu; C_K) = \inf_{y \in \mathcal{Y}_{\mathrm{UB}}(C_K)}\ \mathcal{J}^{\mathrm{obj}}(\mu;y)]
+
+stem:[\mathcal{Y}_{\mathrm{UB}}] requires stem:[K] eigensolves to compute the eigenmode stem:[\eta_k] associated with stem:[w_k, k=1,...,K] and stem:[K Q
+    \mathcal{N}] inner products to compute the stem:[y^*_q(w_k)=\frac{a_q(\eta_k,\eta_k;\mu)}{\|\eta_k\|_{X^{\mathcal{N}}}^2},
+    k=1,...,K] offline . Then computing stem:[\alpha_{\mathrm{UB}}( \mu; C_K)] is a simple enumeration online.
+
+[sec:construction-c_k]
+*Successive Constraint method : stem:[C_K]*
+
+Given stem:[\Xi] and stem:[\epsilon \in [0;1]], stem:[C_{K_\mathrm{max}} = \mathrm{Greedy}(\Xi, \epsilon]).
+
+* While stem:[\displaystyle\max_{\mu \in \Xi}\ \frac{\alpha_{\mathrm{UB}}( \mu; C_K) - \alpha_{\mathrm{LB}}( \mu; C_K)}{\alpha_{\mathrm{UB}}( \mu; C_K)} > \epsilon]
+** stem:[\mu_{K+1} = \mathrm{arg} \mathrm{max}_{\mu \in \Xi}\ \frac{\alpha_{\mathrm{UB}}( \mu; C_K) - \alpha_{\mathrm{LB}}( \mu; C_K)}{\alpha_{\mathrm{UB}}( \mu; C_K)}]
+** stem:[C_{K+1} = C_K \cup \{ \mu_{K+1} \}]
+** stem:[K \leftarrow K+1]
+* set stem:[K_{\mathrm{max}} = K]
+
+[sec:operations-count]
+*Successive Constraint method : Offline-Online*
+
+stem:[\mathrm{Offline}]
+
+* stem:[2Q_a+M_\alpha+M_+] eigensolves stem:[\alpha^{\mathcal{N}}(\mu), y^*(\mu_k)] +
+* stem:[n_\Xi K_{\mathrm{max}} LP(Q,M_\alpha,M_+)] to build stem:[C_{K_{\mathrm{max}}}] +
+* stem:[K_{\mathrm{max}} Q] inner products over stem:[X^{\mathcal{N}} \Rightarrow \mathcal{Y}_{\mathrm{UB}}]
+
+Given stem:[\mu \in \mathcal{D}], stem:[\alpha_{\mathrm{LB}}(\mu) = \mathrm{Online}( \mu, C_{K_{\mathrm{max}}}, M_\alpha, M_+ )].
+
+* sort over stem:[C_{K_{\mathrm{max}}} \Rightarrow P_{M_\alpha}(\mu;C_{K_{\mathrm{max}}})] and stem:[P_{M_+}(\mu;\Xi\backslash C_{K_{\mathrm{max}}})]
+* stem:[(M_\alpha+M_++2) Q_a] evaluation of stem:[\theta_q(\mu')]
+* stem:[M_\alpha] lookups to get stem:[\mu' \rightarrow \alpha^{\mathcal{N}}(\mu')]
+* stem:[LP(Q_a,M_\alpha,M+)] to get stem:[\alpha_{\mathrm{LB}} (\mu)]
+
+
+

@@ -23,15 +23,15 @@ The fluid mechanics model (`Navier-Stokes` or `Stokes`) can be selected in json 
 | turbulent-dynamic-viscosity | mu_t                         | scalar | turbulent dynamic viscosity
 | consistency-index           | mu_k                         | scalar | consistency index
 | power-law-index             | mu_power_law_n               | scalar | power law index
-| viscosity-min               | mu_min                       | scalar | 
-| viscosity-max               | mu_max                       | scalar | 
-| viscosity-zero-shear        | mu_0                         | scalar | 
-| viscosity-infinite-shear    | mu_inf                       | scalar | 
-| carreau-law-lambda          | mu_carreau_law_lambda        | scalar | 
-| carreau-law-n               | mu_carreau_law_n             | scalar | 
-| carreau-yasuda-law-lambda   | mu_carreau_yasuda_law_lambda | scalar | 
-| carreau-yasuda-law-n        | mu_carreau_yasuda_law_n      | scalar | 
-| carreau-yasuda-law-a        | mu_carreau_yasuda_law_a      | scalar | 
+| viscosity-min               | mu_min                       | scalar |
+| viscosity-max               | mu_max                       | scalar |
+| viscosity-zero-shear        | mu_0                         | scalar |
+| viscosity-infinite-shear    | mu_inf                       | scalar |
+| carreau-law-lambda          | mu_carreau_law_lambda        | scalar |
+| carreau-law-n               | mu_carreau_law_n             | scalar |
+| carreau-yasuda-law-lambda   | mu_carreau_yasuda_law_lambda | scalar |
+| carreau-yasuda-law-n        | mu_carreau_yasuda_law_n      | scalar |
+| carreau-yasuda-law-a        | mu_carreau_yasuda_law_a      | scalar |
 |===
 
 
@@ -51,11 +51,13 @@ The fluid mechanics model (`Navier-Stokes` or `Stokes`) can be selected in json 
 | Symbol | Expression | Description
 
 
-| fluid_U_0              | stem:[u_0]                             | evaluate the temperature
-| fluid_U_1              | stem:[u_1]                             | evaluate the temperature
-| fluid_U_2              | stem:[u_2]                             | evaluate the temperature
-| fluid_U_magnitude      | stem:[\sqrt{u \cdot u}]                             | evaluate the temperature
-| fluid_curl_U_magnitude | stem:[\nabla \wedge u | evaluate the first component of gradient of temperature
+| fluid_U_0              | stem:[u_0]                             | evaluate the component X of fluid velocity
+| fluid_U_1              | stem:[u_1]                             | evaluate the component Y of fluid velocity
+| fluid_U_2              | stem:[u_2]                             | evaluate the component Z of fluid velocity
+| fluid_U_magnitude      | stem:[\lVert \boldsymbol{u} \rVert = \sqrt{\boldsymbol{u} \cdot \boldsymbol{u}}]                | evaluate the magnitude of fluid velocity
+| fluid_curl_U           | stem:[\nabla \wedge \boldsymbol{u}]     | evaluate the curl of fluid velocity
+| fluid_curl_U_magnitude | stem:[\lVert \nabla \wedge \boldsymbol{u} \rVert]     | evaluate the magnitude of curl of fluid velocity
+| fluid_div_U           | stem:[\nabla \cdot \boldsymbol{u}]     | evaluate the div of fluid velocity
 |===
 
 
@@ -503,7 +505,7 @@ Body forces are also defined in the `fluid` section of `BoundaryConditions` in  
 ----
 "BoundaryConditions":
 {
-    "fluid":{ 
+    "fluid":{
         "VolumicForces":
         {
             "<marker>":
@@ -512,7 +514,7 @@ Body forces are also defined in the `fluid` section of `BoundaryConditions` in  
             }
         }
     }
-}    
+}
 ----
 
 IMPORTANT: The marker corresponds to mesh elements marked with this tag. If the marker is an empty string, it corresponds to all elements of the mesh.
@@ -564,7 +566,7 @@ The fields allowed to be exported in the `fields` section are:
 - Pressure
 - VelocityDivergence
 
-The following fluid variables are available 
+The following fluid variables are available
 |===
 | Name | Description
 | `fluid_U_magnitude` | magnitude of the velocity
@@ -666,11 +668,11 @@ Galerkin leat-Square (GLS) stabilization methods can be activated from the cfg f
 Others options available are enumerated in the next table and must be given with the prefix `fluid.stabilization-gls`.
 
 [cols="1,1,1,1", options="header"]
-.GLS stabilzation options in CFG 
+.GLS stabilzation options in CFG
 |===
 | Option | Value | Default value |Description
 | type | `gls`,`supg`,`gls-no-pspg`, `supg-pspg`, `pspg` | `gls` | type of stabilization
-| parameter.method | `eigenvalue`,`doubly-asymptotic-approximation` | `eigenvalue` | method used to compute the stabilization parameter 
+| parameter.method | `eigenvalue`,`doubly-asymptotic-approximation` | `eigenvalue` | method used to compute the stabilization parameter
 | parameter.hsize.method | `hmin`,`h`,`meas` | `hmin` | method used for evalute an element mesh size
 | parameter.eigenvalue.penal-lambdaK | real | 0. | add a mass matrix scaled by this factor in the eigen value problem for the stabilization parameter
 | convection-diffusion.location.expressions | string | | if given, the stabilization is apply only on mesh location which verify ```expr>0```
@@ -692,5 +694,3 @@ Here is an example of execution of the 2D CFD toolbox on 4 processors using the 
 ----
 mpirun -np 4 feelpp_toolbox_fluid_2d --config-file=<myfile.cfg>
 ----
-
-
