@@ -1,0 +1,323 @@
+= Module `nirb`
+include::user:ROOT:partial$header-macros.adoc[]
+:page-jupyter: true
+
+
+NOTE: The work has not yet been merged in `develop`. To include the module at current state, you need to checkout to this branch https://github.com/feelpp/feelpp/tree/1912-implement-nirb-tools[`nirb`].
+
+
+
+== Set the environment
+
+NOTE: The nirb offline and online parts are loaded with a `config-file` which is a path to the configuration file. To load the `config-file`, we need to import python module argparse.  Here is a script to set the nirb environment : 
+
+[source, python]
+----
+import feelpp
+import argparse 
+
+parser = argparse.ArgumentParser(description='NIRB Offline')
+parser.add_argument('--config-file', type=str, help='path to cfg file')
+parser.add_argument("--N", help="Number of initial snapshots [default=10]", type=int, default=None)
+
+args = parser.parse_args()
+config_file = args.config_file
+
+cfg = feelpp.readCfg(config_file)
+toolboxType = cfg['nirb']['toolboxType']
+e = init_feelpp_environment(toolboxType, config_file)
+
+nirb_file = feelpp.Environment.expand(cfg['nirb']['filename'])
+config_nirb = feelpp.readJson(nirb_file)['nirb']
+----
+
+Line to import the nirb module :
+
+[source, python]
+----
+import feelpp.mor.nirb as nirb
+----
+
+== Set the model
+The config file should contain the link to the model path and the toolboxe type.  
+Here is an exemple : 
+[source, python]
+----
+[nirb]
+filename=$cfgdir/square.json
+toolboxType=heat
+----
+
+Here is an exemple of model file : 
+
+[source,python]
+----
+"nirb":
+    {
+        "H": 0.01,
+        "h": "H**2:H",
+        "dim": 2,
+        "order": 1,
+        "toolboxType": "heat",
+        "finemesh_path": "$cfgdir/square.geo",
+        "coarsemesh_path": "$cfgdir/square.geo",
+        "model_path": "$cfgdir/square.json",
+        "doRectification": true,
+        "doBiorthogonalization": false,
+        "nbSnapshots": 10
+        "outdir": "results/rect/greedy"
+    }
+----
+Where 
+
+- `H`: value of coarse mesh size 
+- `h`: value of fine mesh size 
+- `dim`: the dimension of the problem 
+- `order`: the order of discretization (`1` for stem:[\mathbb{P}_1], `2` for stem:[\mathbb{P}_2])
+- `toolboxType`: the toolboxe type ('heat', 'fluid', ...)
+- `finemesh_path`: the fine mesh path (which is the same as coarsemesh_path when .geo file is given)
+- `coarsemesh_path`: the coarse mesh path 
+- `model_path`: the model path 
+- `doRectification`: with or without rectification poost-process (default to `True`)
+- `doBiorthogonalization`: with or without bi-orhtonormalization (in progress) 
+- `nbSnapshots`: number of basis function to build 
+- `outdir` : path to save data defaults to `./`
+
+== Offline phase
+Load the nirb offline object 
+
+[source, python]
+----
+nirb_off = nirb.nirbOffline(**config_nirb)
+----
+
+Initialize the offline part by getting `N` initial snapshots. The number of snapshot is provided as argument or set to default value given in the model file. 
+
+[source, python]
+----
+nirb_off.initProblem(N)
+----
+
+Generate basis functions and save them on separate files. When the rectification post-process is activated, we can specifie the value of regularization parameter by `regulParam` = stem:[\lambda] (default value is stem:[1.e^{-10}]). 
+
+If the `outdir` (directory to save data) argument is not specified, all the nirb datas will be saved in feelpp environement variable. 
+[source, python]
+----
+regulParam = 1.e-10
+nirb_off.generateOperators()
+nirb_off.generateReducedBasis(regulParam=regulParam)
+nirb_off.saveData(force=True)
+----
+
+[%collapsible.result]
+.Results
+====
+----
+[NIRB] Number of nodes on the fine mesh : 13512
+[NIRB] Initialization done
+[NIRB] Number of nodes on the coarse mesh : 156
+[NIRB] Initialization done
+[NIRB] Number of snapshot computed : 10
+[NIRB] Number of modes : 10
+[NIRB] Data saved in /feel/feelppdb/nirb/heat/np_1/results/rect/greedy
+Is L2 orthonormalized ? True
+Is H1 orthonormalized ?  False
+[NIRB] Offline part Done !
+----
+====
+
+== Online phase 
+In the this part, we need to load the datas generated in the offline phase and use them to compute the `online nirb` solution. 
+
+First we construct the online object by : 
+[source, python]
+----
+nirb_on = nirb.nirbOnline(**config_nirb)
+----
+
+Load the offline data : 
+
+[source, python]
+----
+err = nirb_on.loadData(path=RESPATH, nbSnap=Ns)
+----
+Where 
+
+- `RESPATH` : the path where offline data are saved 
+- `Ns` : the number of basis function to be loaded
+- `err = 0` : when the datas are loaded with success. 
+
+
+The solution is computed on a specific given parameter, stem:[\mu]. This parameter shoul have the same structure as `CRBparameter` from `feelpp`. We can generate a sampling of parmater and choose one of them :  
+
+[source, python]
+----
+Dmu = nirb_on.Dmu
+s = Dmu.sampling()
+s.sampling(Ns, 'log-random')
+mus = s.getVector()
+mu = mus[id]
+----
+where 
+
+- `Ns` : the number of parameter in the sample 
+- `id` : index of parameter to choose
+
+We can either choose one parameter by :  
+[source, python]
+----
+mu = nirb_on.Dmu.element()
+----
+
+Then, compute nirb solution by : 
+
+[source, python]
+----
+uHh = nirb_on.getOnlineSol(mu)
+----
+
+
+[%collapsible.result]
+.Results
+====
+----
+[NIRB] Number of nodes on the fine mesh : 13512
+[NIRB] Initialization done
+[NIRB] Number of nodes on the coarse mesh : 156
+[NIRB] Initialization done
+[NIRB] Loading data from /feel/feelppdb/nirb/heat/np_1/results/rect/greedy
+[NIRB] Data loaded from /feel/feelppdb/nirb/heat/np_1/results/rect/greedy
+[NIRB] Number of basis functions loaded : 10
+[NIRB] Solution computed with Rectification post-process 
+[NIRB] Online part Done !!
+----
+====
+
+We can compare nirb solution with high fidelity solution : 
+[source, python]
+----
+errorN = ComputeErrors(nirb_on, mu, h1=true)
+
+df = pd.DataFrame(errorN)
+df['N'] = nirb_on.N
+
+if feelpp.Environment.isMasterRank():
+    print(f"[NIRB online] with {nirb_on.N} snapshots ")
+    print(f"[NIRB online] computed relative errors on {df.shape[0]} parameters ")
+    data_mean = df.mean(axis=0)
+    print("[NIRB online] Mean of errors ")
+    print(data_mean)
+----
+
+[%collapsible.result]
+.Results
+====
+----
+[NIRB online] computed relative errors on 1 parameters 
+[NIRB online] Mean of errors 
+l2(uh-uHn)         0.002453
+l2(uh-uHn)rec      0.002454
+l2(uh-uhn)         0.002453
+l2(uh)           112.220552
+l2(uh-uH)          0.000034
+h1(uh-uHn)         0.063821
+h1(uh-uHn)rec      0.063838
+h1(uh-uhn)         0.063820
+h1(uh)            20.452913
+h1(uh-uH)          0.012918
+N                 10.000000
+dtype: float64
+---- 
+
+To export nirb solution for vizulisation in Paraview, we use this command : 
+
+[source, python]
+----
+dirname = "nirbSol"
+nirb_on.initExporter(dirname, toolbox="fine")
+fieldname = 'nirb'
+nirb_on.exportField(uHh,fieldname)
+nirb_on.saveExporter()
+----
+
+== Performance of the `nirb` method 
+
+=== Accuracy 
+The following script allow to vizualise some precomputed convergence results of the method : 
+
+Import useful module and load data folder from Girder 
+[source, python]
+----
+import feelpp as fpp
+import sys
+from post_process import * 
+import pandas as pd 
+import numpy as np
+import matplotlib.pyplot as plt
+
+app = fpp.Environment(["myapp"],config=fpp.localRepository(""))
+
+
+----
+
+Download error data from Girder 
+[source, python]
+----
+file = fpp.download("girder:{file:6380b58db0e9570495446a59}")
+
+# load absolute errors
+dfGlob = pd.read_csv(file, sep=',')
+# compute relative errors 
+dfRel = getRelativeErrors(dfGlob)
+----
+
+Get some statiscals infos with H1 and L2 norm : Mean, Max and Min 
+
+[source, python]
+----
+### Get stats for all parameters 
+ 
+l2df, h1df = getDataStat(dfRel) 
+----
+
+Vizualise error with and without rectification post-process. Use keys='Min', 'Max' or 'Mean'
+
+[source, python]
+----
+compare_dataStats(l2df, keys='Max')
+----
+
+[%collapsible.result]
+.Results
+====
+----
+
+----
+ 
+=== Time execution of the code 
+
+[source, python]
+----
+file = fpp.download("girder:{file:75e9b3769003f1e9d4e6d0be73ed571f80bbbee477151b84c5d1f82f4ba2bfde27f05e5833fca99565b460ae492a19ba977195023db00ed3e0281e6e35e8b110}")
+
+df = pd.read_csv(file, sep=',')
+plot_time(df)
+----
+
+[%collapsible.result]
+.Results
+====
+----
+
+----
+====
+
+=== Parallel computation 
+The `nirb` method is working in parallel. Here is a comparison between time execution in sequential and in parallel with some number of process `n`.
+
+[%collapsible.result]
+.Results
+====
+----
+
+----
