@@ -1,0 +1,154 @@
+= {feelpp} CPFDES in Python
+:page-jupyter: true
+
+== Getting started with cfpdes toolbox in Python
+
+The following example shows how to use the cfpdes toolbox in python:
+We start with import feelpp, the cfpdes toolboxes and start feelpp environment.
+[source,python]
+----
+import feelpp
+from feelpp.toolboxes.core import *
+from feelpp.toolboxes.cfpdes import *
+
+app = feelpp.Environment(["myapp"], opts= toolboxes_options("coefficient-form-pdes", "cfpdes"),config=feelpp.localRepository("")) # <1>
+----
+<1> The first argument is the name of the application, the second argument is the directory below `feelppdb` that will be created in the current directory. The directory will contain the results of the simulation.
+
+
+Then we continue with the definition of the model and the cfpdes toolbox.
+[source,python]
+----
+case=feelpp.download( "github:{repo:feelpp,path:toolboxes/coefficientformpdes/cases/heat/ThermalBridgesENISO10211/", worldComm=app.worldCommPtr() )[0] # <1>
+casedfile=case+'/thermo2dCase2.cfg'
+feelpp.Environment.setConfigFile(casefile) # <2>
+f = cfpdes(dim=2) # <3>
+if not f.isStationary(): # <4>
+    f.setTimeFinal(10*f.timeStep())
+[ok,meas]=simulate(f) # <5>
+f.checkResults() # <6>
+----
+<1> Download the case from the feelpp repository
+<2> Set the configuration file
+<3> Create the cfpdes toolbox in 2D
+<4> If the model is not stationary, set the final time to 10 times the time step
+<5> Simulate the model
+<6> Check the results
+
+[%collapsible.result]
+====
+----
+[modelProperties] Loading Model Properties : "/scratch/jupyter/feelppdb/downloads/ThermalBridgesENISO10211/thermo2dCase2.json"
+ 0 cfpdes KSP Residual norm 1.783468e+03
+ 1 cfpdes KSP Residual norm 5.197329e+01
+ 2 cfpdes KSP Residual norm 1.376873e+01
+ 3 cfpdes KSP Residual norm 3.082213e+00
+ 4 cfpdes KSP Residual norm 4.889185e-01
+ 5 cfpdes KSP Residual norm 8.269029e-02
+ 6 cfpdes KSP Residual norm 1.703458e-02
+ 7 cfpdes KSP Residual norm 3.452564e-03
+ 8 cfpdes KSP Residual norm 6.491152e-04
+ 9 cfpdes KSP Residual norm 1.059308e-04
+ 10 cfpdes KSP Residual norm 1.676888e-05
++--------------------------------------------------------------------------------------------------------------------------------+
+| Checkers : cfpdes                                                                                                              |
++--------------------------------------------------------------------------------------------------------------------------------+
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | check     | name                                               | measure      | reference    | error        | tolerance    | |
+| +===========+====================================================+==============+==============+==============+==============+ |
+| | [success] | Points_pointA_field_heat.temperature               | 7.067795e+00 | 7.100000e+00 | 4.556528e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointB_field_heat.temperature               | 7.612815e-01 | 8.000000e-01 | 5.085966e-02 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointC_field_heat.temperature               | 7.900708e+00 | 7.900000e+00 | 8.956493e-05 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointD_field_heat.temperature               | 6.278234e+00 | 6.300000e+00 | 3.466865e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointE_field_heat.temperature               | 8.274854e-01 | 8.000000e-01 | 3.435677e-02 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointF_field_heat.temperature               | 1.640809e+01 | 1.640000e+01 | 4.935323e-04 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointG_field_heat.temperature               | 1.633449e+01 | 1.630000e+01 | 2.116059e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointH_field_heat.temperature               | 1.676604e+01 | 1.680000e+01 | 2.025577e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointI_field_heat.temperature               | 1.833338e+01 | 1.830000e+01 | 1.823998e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_CheckGeneric_Heat-Flux_top_integrate    | 2.049132e-03 | 0.000000e+00 | 2.049132e-03 | 5.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_CheckGeneric_Heat-Flux_bottom_integrate | 1.775843e-01 | 0.000000e+00 | 1.775843e-01 | 5.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_Check_Heat-Flux_bottom_integrate        | 1.775843e-01 | 0.000000e+00 | 1.775843e-01 | 5.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_Check_Heat-Flux_top_integrate           | 2.049132e-03 | 0.000000e+00 | 2.049132e-03 | 5.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_Inward-Heat-Flux_bottom_integrate       | 9.494932e+00 | 9.500000e+00 | 5.337647e-04 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
++--------------------------------------------------------------------------------------------------------------------------------+
+
++--------------------------------------------------------------------------------------------------------------------------------+
+...
+| | [success] | Statistics_Inward-Heat-Flux_bottom_integrate       | 9.494932e+00 | 9.500000e+00 | 5.337647e-04 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
++--------------------------------------------------------------------------------------------------------------------------------+
+----
+====
+
+
+[source,python]
+----
+if ok: # <1>
+    meas = f.postProcessMeasures().values() # <2>
+
+    try:
+        import pandas as pd
+        df=pd.DataFrame([meas]) # <3>
+        print(df)
+    except ImportError:
+        print("cannot import pandas, no problem it was just a test")
+else:
+    print("error during simulation, cannot proceed with data analysis")
+----
+<1> Check if the simulation was successful
+<2> Get the measures
+<3> Print the measures in a pandas dataframe
+
+[%collapsible.result]
+.Results
+====
+----
+    Points_pointA_field_heat.temperature  Points_pointB_field_heat.temperature  \
+0                              7.067795                              0.761281
+    Points_pointC_field_heat.temperature  Points_pointD_field_heat.temperature  \
+0                              7.900708                              6.278234 
+    Points_pointE_field_heat.temperature  Points_pointF_field_heat.temperature  \
+0                              0.827485                             16.408094
+    Points_pointG_field_heat.temperature  Points_pointH_field_heat.temperature  \
+0                             16.334492                             16.766039
+    Points_pointI_field_heat.temperature  \
+0                             18.333379
+    Statistics_CheckGeneric_Heat-Flux_bottom_integrate  \ 
+0                                           0.177584
+    Statistics_CheckGeneric_Heat-Flux_top_integrate  \
+0                                          0.002049
+    Statistics_Check_Heat-Flux_bottom_integrate  \
+0                                     0.177584
+    Statistics_Check_Heat-Flux_top_integrate  \
+0                                  0.002049
+    Statistics_Inward-Heat-Flux_bottom_integrate  \
+0                                      9.494932
+----
+====
+
+== The Simulate function
+
+The function `simulate` takes any toolbox as input and simulate it. The function returns a tuple with a boolean and a dictionary. The boolean is true if the simulation was successful and the dictionary contains the measures.
+
+Here is the implementation of the function `simulate`:
+
+[source,python]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/python/pyfeelpp-toolboxes/feelpp/toolboxes/core/__init__.py[lines=4..-1]
+----
+
+NOTE: This is one possible implementation. Feel free to propose another one.
