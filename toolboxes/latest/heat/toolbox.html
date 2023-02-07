@@ -1364,6 +1364,302 @@ The expressions given to the convective heat flux boundary condition can depend 
 </table>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_radiative_heat_flux"><a class="anchor" href="#_radiative_heat_flux"></a>4.4. Radiative heat flux</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Radiative heat transfer is not yet available in the toolboxes. An application implementing radiative heat is currently available in feelpp/doc/manual/heat.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>New sections in the JSON configuration file are necessary.
+Firstly, the "Coating" section, which contains information about the radiative properties of the emitting surfaces, especially the value of the emissivity constant \(\epsilon\).</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. JSON properties of Coating section</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">list of mesh markers associated to a radiative surface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>epsilon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">value of the emissivity of the radiative surface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "Coating":{
+    "materialName": {
+        "markers": [
+            "markerName"
+        ],
+        "epsilon": "0.5"
+    }
+}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Secondly, the "radiative_enclosure_heat_flux" and "radiative_blackbody_heat_flux" sections, inside the "BoundaryConditions" section, which specify the decomposition of the radiating boundaries into cavities, independent of each other, open or closed, where the radiative boundary conditions are imposed.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 8. JSON properties of the "radiative_enclosure_heat_flux/CavityName" section</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Values</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>enclosure</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies if the cavity is isolated (closed) or if it communicates with a black body (open)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>open</code>, <code>closed</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">list of mesh markers associated to a radiative surface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sigma</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stefan-Boltzmann constant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Tref</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reference temperature of the black body (only for open enclosures)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>viewfactors</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Information for the computation/loading of view factors of the cavity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JSON</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. JSON properties of the "radiative_enclosure_heat_flux/CavityName/viewfactors" section</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Values</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies if view factors have to be computed or loaded from file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>compute</code>, <code>load</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>filename</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File name for the computation of view factors (JSON format) or loading (CSV)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. JSON properties of the "radiative_blackbody_heat_flux/CavityName" section</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Values</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">list of mesh markers associated to a radiative surface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sigma</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stefan-Boltzmann constant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Tref</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reference temperature of the black body (only for open enclosures)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "BoundaryConditions": {
+    "heat": {
+      "radiative_enclosure_heat_flux": {
+              "Cavity": {
+                  "enclosure": "closed",
+                  "markers": ["InnerTop", "LowerTop","LeftTop","RightTop"],
+                  "sigma": "sigma:sigma",
+                  "Tref": "Tref_C+273.15:Tref_C",
+                  "viewfactors": {
+                      "status":"load",
+                      "filename":"$cfgdir/VF_Matrix_Cavity_1.csv"
+                      // "status":"compute",
+                      // "filename":"$cfgdir/rectangular_cavity_vf.json"
+                  }
+            }
+          },
+        "radiative_blackbody_heat_flux": {
+                "Gamma_BBC_1": {
+                    "markers": ["Gamma_B_11","Gamma_B_12"],
+                    "Tref": "Tref_C+273.15:Tref_C",
+                    "sigma": "sigma:sigma"
+                }
+        }
+      }
+   }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, an additional JSON file per cavity is necessary if the view factor matrix needs to be computed. This file will specify the algorithm to be use in order to compute the view factors, and the markers forming the cavity.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 11. JSON properties for the computation of view factors</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Values</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Choose between raytracing (obstructed and non-obstructed cavities) and quadrature (only non-obstructed cavities)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Raytracing</code>, <code>UnobstructedPlanar</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>algorithm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Choose the algorithm (only for UnobstructedPlanar) between DoubleAreaIntegration (2D) and SingleAreaIntegration (3D)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DoubleAreaIntegration</code>, <code>SingleAreaIntegration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quadrature_order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Quadrature order (only for UnobstructedPlanar)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>int</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">list of mesh markers associated to the cavity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+     "viewfactor": {
+         "type": "UnobstructedPlanar",
+         "algorithm":"DoubleAreaIntegration",
+         "quadrature_order":2,
+         "markers":["RadiativeSurface1", "RadiativeSurface2","RadiativeSurface3"],
+         "description": "The viewfactor of a closed triangular cavity."
+     }
+ }</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1378,7 +1674,7 @@ The expressions given to the convective heat flux boundary condition can depend 
 <div class="sect2">
 <h3 id="_exports"><a class="anchor" href="#_exports"></a>6.1. Exports</h3>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Fields allowed to be exported in the <code>fields</code> section are:</caption>
+<caption class="title">Table 12. Fields allowed to be exported in the <code>fields</code> section are:</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1545,7 +1841,7 @@ All materials properties given in the section <a href="#_materials">Materials</a
     </div>
     <div class="footer-terms">
       <div class="footer-terms-copyright">
-          <span>© 2022 Cemosis, Université de Strasbourg</span>
+          <span>© 2023 Cemosis, Université de Strasbourg</span>
       </div>
       <div class="footer-terms-links">
         <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>

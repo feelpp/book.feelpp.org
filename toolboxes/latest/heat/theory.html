@@ -1021,6 +1021,101 @@ F = (l(\varphi_1), l(\varphi_2), ..., l(\varphi_N)) \in \mathbb{R}^{N}\]
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_variational_formulation_and_discretization_of_the_heat_equation_with_radiative_boundary_conditions_on_several_surfaces"><a class="anchor" href="#_variational_formulation_and_discretization_of_the_heat_equation_with_radiative_boundary_conditions_on_several_surfaces"></a>1.4. Variational formulation and discretization of the heat equation with radiative boundary conditions on several surfaces</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Radiative heat transfer is not yet available in the toolboxes. An application implementing radiative heat is currently available in feelpp/doc/manual/heat.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let \(\partial\Omega_D\) and \(\partial \Omega_N\) be the portions of the boundary where Dirichlet and Neumann boundary conditions are applied, respectively. Let us write the variational formulation of the heat equation: find \(T \in H^1((0,T);H^1(\Omega))\) such that, for all \(\phi \in H^1_{0,\partial \Omega_D}(\Omega)\)</p>
+</div>
+<div id="heat_eq_variational" class="exampleblock">
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[\int_\Omega \rho c_p \partial_t T \phi + \int_\Omega k \nabla T \cdot \nabla \phi + \int_{\partial \Omega_R} k \nabla T \cdot \vec{n} \phi = \int_\Omega S \phi - \int_{\partial \Omega_N} k \nabla T \cdot \vec{n} \phi.\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>When the radiative boundary \(\partial \Omega_R\) is composed of several subsurfaces that can exchange heat through radiation, the associated radiative boundary condition is complex. In fact, each surface receives heat contributions from the other ones, proportionally to the values of the corresponding view factors. From Modest&#8217;s book <a href="#Radiative_heat_transfer">[Radiative_heat_transfer]</a>, equation (5.28), the radiative heat flux at point \(x\) of \(\partial \Omega_R\) is</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[\frac{q(x)}{\epsilon(x)} - \int_{\partial \Omega_R} (\frac{1}{\epsilon(x')}-1)q(x')dF_{x-x'} = E_b(x) -  \int_{\partial \Omega_R} E_b(x') dF_{x-x'}.\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>In this equation, \(q=\nabla T \cdot \vec{n}, E_b(x)=\sigma T^4\), \(\epsilon(x)\) is the emittance and \(dF_{x-x'}\) is the view factor between the infinitesimal areas surrounding points \(x,x'\).</p>
+</div>
+<div class="paragraph">
+<p>Let us now propose a variational formulation for this equation. Let \(\psi \in \mathbb{P}^0_{d}(\partial \Omega_R)\) be discontinuous, piecewise constant basis functions. Functions \(\psi\) are elementwise discontinuous; however, one could choose to work, as a first approximation, with \(\Psi \in P\), where \(P\) a space of discontinuous, piecewise constant basis functions, where discontinuities are not elementwise, but for example discontinuous in correspondence of different radiating surfaces. In the following, we will use \(\psi\) to denote test functions and \(N_h\) to denote the cardinality of the test space. We have</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[\begin{multline}
+\int_{\partial \Omega_R} \frac{q(x)}{\epsilon(x)} \psi_j - \int_{\partial \Omega_R}\int_{\partial \Omega_R} (\frac{1}{\epsilon(x')}-1)q(x')dF_{x-x'} \psi_j \\
+= \int_{\partial \Omega_R}  E_b(x) \psi_j-   \int_{\partial \Omega_R} \int_{\partial \Omega_R} E_b(x') dF_{x-x'} \psi_j.
+\end{multline}\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>By decomposing \(q(x)=\sum_{i=0}^{N_h} q_i \psi_i(x)\), the first term of the left-hand side gives rise to a mass matrix \(M_{ij} = \int_{\partial \Omega_R} \epsilon_i^{-1} \psi_i\psi_j\).
+The non-linearity in \(q\) is handled iteratively: the second term on the left-hand side is treated explicitly and moved to the right-hand side. It can be decomposed as a function of coefficients \(q_i\) as \(N_{j}(q) = \int_{\partial \Omega_R} \Big( \sum_{A_k} \frac{1}{A_k} \int_{A_k} (\frac{1}{\epsilon_k}-1) q_k F_{ik} \, dA \Big)\psi_j\).
+The right-hand side is of the form \(D_j(T) = \int_{\partial \Omega_R} ( \sigma T^4 + \sum_{A_k} \frac{1}{A_k} \int_{A_k} T^4_k F_{jk} \, dA) \psi_j\).</p>
+</div>
+<div class="paragraph">
+<p>Due to the presence of the fourth power of the temperature and the non-linearity of the equation with respect to temperature and heat flux, two nested iterative loops are proposed. In the following algorithm, \(n\) denotes time indices, \(k\) denotes the indices of the temperature loop and \(l\) denotes the indices of the flux loop.</p>
+</div>
+<pre id="radiative" style="display:hidden;">
+\begin{algorithm}
+    \caption{Solution of the heat equation with radiative BC on the timestep $\Delta t$.}
+    \begin{algorithmic}
+    \STATE $T^{n}=T^{n,0}$, $q^{n}=q^{n,0,0}$
+    \STATE $T^{n+1,0} = Heat_{\Delta t}(T^n,q^{n})$;
+    \STATE $q^{n+1,0,0} = q^{n}$
+    \WHILE{$||T^{n+1,k+1} -T^{n+1,k}||/||T^{n+1,0}|| > \tau_T$}
+        \STATE $T^{n+1,k} \leftarrow T^{n+1,k+1}$
+        \STATE $q^{n+1,k,0} = M_{ij}^{-1} (D_j(T^{n+1,k})-N_{ij}(q^{n+1,k+1,0}))$
+        \WHILE{$||q^{n+1,k,l} -q^{n+1,k,l-1}||/||q^{n+1,k,0}|| > \tau_q$}
+            \STATE $q^{n+1,k,l-1} \leftarrow q^{n+1,k,l}$
+            \STATE $q^{n+1,k,l} = M_{ij}^{-1} (D_j(T^{n+1,k})-N_{j}(q^{n+1,k,l-1}))$
+        \ENDWHILE
+        \STATE $q^{n+1,k+1,0} \leftarrow q^{n+1,k,l}$
+        \STATE $T^{n+1,k+1} = Heat_{\Delta t}(T^{n+1,k},q^{n+1,k+1,0})$
+    \ENDWHILE
+    \STATE $T^{n+1} \leftarrow T^{n+1,k+1}$
+    \STATE $q^{n+1} \leftarrow q^{n+1,k+1,0}$
+    \end{algorithmic}
+\end{algorithm}
+</pre>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bibliography"><a class="anchor" href="#_bibliography"></a>2. Bibliography</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="#Radiative_heat_transfer">[Radiative_heat_transfer]</a> Modest, M.F., <em>Radiative Heat Transfer</em>, Elsevier Science (2013) <a href="https://doi.org/10.1016/C2010-0-65874-3" class="bare">doi.org/10.1016/C2010-0-65874-3</a></p>
+</div>
 </div>
 </div>
 <nav class="pagination">
@@ -1087,7 +1182,7 @@ F = (l(\varphi_1), l(\varphi_2), ..., l(\varphi_N)) \in \mathbb{R}^{N}\]
     </div>
     <div class="footer-terms">
       <div class="footer-terms-copyright">
-          <span>© 2022 Cemosis, Université de Strasbourg</span>
+          <span>© 2023 Cemosis, Université de Strasbourg</span>
       </div>
       <div class="footer-terms-links">
         <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>
