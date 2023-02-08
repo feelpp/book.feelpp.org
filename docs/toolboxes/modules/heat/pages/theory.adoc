@@ -1,3 +1,6 @@
+:stem: latexmath
+:page-pseudocode: [“radiative”]
+
 = Heat Transfer
 
 Assumtions
@@ -230,7 +233,7 @@ Let stem:[\partial\Omega_D] and stem:[\partial \Omega_N] be the portions of the 
 ++++
 ====
 
-When the radiative boundary stem:[\partial \Omega_R] is composed of several subsurfaces that can exchange heat through radiation, the associated radiative boundary condition is complex. In fact, each surface receives heat contributions from the other ones, proportionally to the values of the corresponding view factors. From Modest's book <<Radiative_heat_transfer>>, equation (5.28), the radiative heat flux at point stem:[x] of stem:[\partial \Omega_R] is 
+When the radiative boundary stem:[\partial \Omega_R] is composed of several subsurfaces that can exchange heat through radiation, the associated radiative boundary condition is complex. In fact, each surface receives heat contributions from the other ones, proportionally to the values of the corresponding view factors. From Modest's book <<Radiative_heat_transfer>>, equation (5.28), the radiative heat flux at point stem:[x] of stem:[\partial \Omega_R] is
 
 ====
 [stem]
@@ -271,10 +274,10 @@ Due to the presence of the fourth power of the temperature and the non-linearity
     \WHILE{$||T^{n+1,k+1} -T^{n+1,k}||/||T^{n+1,0}|| > \tau_T$}
         \STATE $T^{n+1,k} \leftarrow T^{n+1,k+1}$
         \STATE $q^{n+1,k,0} = M_{ij}^{-1} (D_j(T^{n+1,k})-N_{ij}(q^{n+1,k+1,0}))$
-        \WHILE{$||q^{n+1,k,l} -q^{n+1,k,l-1}||/||q^{n+1,k,0}|| > \tau_q$} 
+        \WHILE{$||q^{n+1,k,l} -q^{n+1,k,l-1}||/||q^{n+1,k,0}|| > \tau_q$}
             \STATE $q^{n+1,k,l-1} \leftarrow q^{n+1,k,l}$
             \STATE $q^{n+1,k,l} = M_{ij}^{-1} (D_j(T^{n+1,k})-N_{j}(q^{n+1,k,l-1}))$
-        \ENDWHILE        
+        \ENDWHILE
         \STATE $q^{n+1,k+1,0} \leftarrow q^{n+1,k,l}$
         \STATE $T^{n+1,k+1} = Heat_{\Delta t}(T^{n+1,k},q^{n+1,k+1,0})$
     \ENDWHILE
