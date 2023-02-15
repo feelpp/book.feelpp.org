@@ -2,6 +2,46 @@
 
 NOTE: The following theorems and lemma are taken from Theory and Practice of Finite Elements by A. Ern and J.L. Guermond.
 
+== Embedding and Compacity
+
+[[thmB39]]
+.Proposition B.39 
+****
+Let stem:[\Omega] be an open bounded set. Then, for stem:[1 \leq p<q \leq +\infty], the embedding stem:[L^q(\Omega) \subset L^p(\Omega)] is continuous.
+****
+**Proof.** This is a consequence of Hölder's inequality.
+
+One of the key arguments in the embedding theory is the following:
+
+[[thmB40]]
+.Theorem B.40 (Sobolev). 
+****
+Let stem:[1 \leq p<d] and denote by stem:[p^*] the number such that stem:[\frac{1}{p^*}=\frac{1}{p}-\frac{1}{d}]. Then,
+[stem]
+++++
+\begin{equation*}
+\exists c=\frac{p^*}{1^*}, \forall u \in W^{1, p}\left(\mathbb{R}^d\right), \quad\|u\|_{L^{p^*}\left(\mathbb{R}^d\right)} \leq c\|\nabla u\|_{L^p\left(\mathbb{R}^d\right)} .
+\end{equation*}
+++++
+****
+**Proof.** See [MaZ97, p. 32], [Sob63, §I.7.4], or [Bre91, p. 162].
+
+[[thmB41]]
+.Corollary B.41. 
+****
+Let stem:[1 \leq p, q \leq+\infty]. The following embeddings are continuous:
+[stem]
+++++
+\begin{equation*}
+W^{1, p}\left(\mathbb{R}^d\right) \subset L^q\left(\mathbb{R}^d\right) \text { if }\left\{\begin{array}{l}
+\text { either } 1 \leq p<d \text { and } p \leq q \leq p^*, \\
+\text { or } p=d \text { and } p \leq q<+\infty .
+\end{array}\right.
+\end{equation*}
+++++
+****
+**Proof.** See [MaZ97, p. 34], [Sob63, §I.8.2], or [Bre91, p. 165].
+
 [[thmB46]]
 .Theorem B.46 (Rellich-Kondrachov)
 ****
