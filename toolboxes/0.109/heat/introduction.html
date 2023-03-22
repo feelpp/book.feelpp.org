@@ -944,11 +944,32 @@ This, similar to a structural analysis, the model input comprises abstracted geo
 <div class="paragraph">
 <p>The simple <a href="#guideline">flow diagram</a> summarises the classification process.</p>
 </div>
-<div id="guideline" class="imageblock activity kroki-format-svg kroki">
+<div id="guideline" class="literalblock activity kroki-error">
+<div class="title">Guideline to select the type of Thermal Analysis</div>
 <div class="content">
-<img src="_images/diag-4b32569c9f75f820e70df0898818b62ede4b63ce.svg" alt="Guideline to select the type of Thermal Analysis">
+<pre>start
+
+if (are materials properties or boundary
+    temperature dependent) then (true)
+  :Non-Linear Analysis;
+  if ( Time Dependence? ) then ( true )
+  :Non-Linear Transient Analysis;
+  end
+  else (false)
+  :Non-Linear Steady State Analysis;
+  end
+  endif
+else (false)
+  :Linear Analysis;
+  if ( Time Dependence? ) then ( true )
+  :Linear Transient Analysis;
+  end
+  else (false)
+  :Linear Steady State Analysis;
+  end
+  endif
+endif</pre>
 </div>
-<div class="title">Figure 5. Guideline to select the type of Thermal Analysis</div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Summary of heat transfer processes</caption>
