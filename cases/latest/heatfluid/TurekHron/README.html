@@ -776,18 +776,17 @@ title="Fullscreen mode"
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_running_the_case">1. Running the case</a></li>
-<li><a href="#_data_files">2. Data files</a></li>
-<li><a href="#_geometry">3. Geometry</a></li>
-<li><a href="#_input_parameters">4. Input parameters</a>
+<li><a href="#_geometry">2. Geometry</a></li>
+<li><a href="#_input_parameters">3. Input parameters</a>
 <ul class="sectlevel2">
-<li><a href="#_initial_condition">4.1. initial condition</a></li>
-<li><a href="#_materials">4.2. Materials</a></li>
-<li><a href="#_boundary_conditions">4.3. Boundary conditions</a></li>
-<li><a href="#_fields">4.4. Fields</a></li>
-<li><a href="#_measures">4.5. Measures</a></li>
+<li><a href="#_initial_condition">3.1. initial condition</a></li>
+<li><a href="#_materials">3.2. Materials</a></li>
+<li><a href="#_boundary_conditions">3.3. Boundary conditions</a></li>
+<li><a href="#_fields">3.4. Fields</a></li>
+<li><a href="#_measures">3.5. Measures</a></li>
 </ul>
 </li>
-<li><a href="#_numerical_experiments">5. Numerical Experiments</a></li>
+<li><a href="#_numerical_experiments">4. Numerical Experiments</a></li>
 </ul>
 </div>
 <div id="preamble">
@@ -814,11 +813,19 @@ Copy command line to clipboard
 <button class="btn" data-clipboard-text="github:{repo:toolbox,path:examples/modules/{toolbox}/examples/{case}}">
 Copy case option to clipboard
 </button>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The report of the execution of the command above is available <a href="heatfluid-informations.html" class="xref page">here</a>.
+== Data files
+</td>
+</tr>
+</table>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_data_files"><a class="anchor" href="#_data_files"></a>2. Data files</h2>
-<div class="sectionbody">
 <div class="paragraph">
 <p>The case data files are available in Github <a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/heatfluid/examples/rotating-winch/">here</a></p>
 </div>
@@ -835,7 +842,7 @@ Copy case option to clipboard
 </div>
 </div>
 <div class="sect1">
-<h2 id="_geometry"><a class="anchor" href="#_geometry"></a>3. Geometry</h2>
+<h2 id="_geometry"><a class="anchor" href="#_geometry"></a>2. Geometry</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A channel with a  cylinder inside</p>
@@ -844,11 +851,9 @@ Copy case option to clipboard
 <p>We consider a 2D model representative of a laminar incompressible flow around an obstacle. The flow domain, named \(\Omega_f\), is contained into
 the rectangle \( \lbrack 0,Long \rbrack \times \lbrack 0,Haut \rbrack \). It is characterised, in particular, by its dynamic viscosity \(\mu_f\) and by its density \(\rho_f\).</p>
 </div>
-<div id="ImageModelingCFDTurekHronGeometry" class="imageblock text-center">
-<div class="content">
-<img src="../_images/TurekHron/TurekHronCFDGeometry.png" alt="TurekHron Geometry">
-</div>
-<div class="title">Figure 1. Geometry of the Turek &amp; Hron HeatFluid Benchmark</div>
+<div id="ImageModelingCFDTurekHronGeometry" class="paragraph">
+<div class="title">Geometry of the Turek &amp; Hron HeatFluid Benchmark</div>
+<p><span class="image"><img src="../_images/TurekHron/TurekHronCFDGeometry.png" alt="TurekHron Geometry"></span></p>
 </div>
 <div class="paragraph">
 <p>In order to describe the flow, the incompressible Navier-Stokes model is chosen for this case, define by the conservation of momentum equation and the conservation of mass equation. At them, we add the material constitutive equation, that help us to define \(\boldsymbol{\sigma}_f\)</p>
@@ -873,7 +878,7 @@ We remind that the Naviers-Stokes equation are</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_input_parameters"><a class="anchor" href="#_input_parameters"></a>4. Input parameters</h2>
+<h2 id="_input_parameters"><a class="anchor" href="#_input_parameters"></a>3. Input parameters</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The following table displays the various fixed and variables
@@ -940,7 +945,7 @@ parameters of this test-case.</p>
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="_initial_condition"><a class="anchor" href="#_initial_condition"></a>4.1. initial condition</h3>
+<h3 id="_initial_condition"><a class="anchor" href="#_initial_condition"></a>3.1. initial condition</h3>
 <div class="paragraph">
 <p>For the fluid:</p>
 </div>
@@ -985,7 +990,7 @@ parameters of this test-case.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_materials"><a class="anchor" href="#_materials"></a>4.2. Materials</h3>
+<h3 id="_materials"><a class="anchor" href="#_materials"></a>3.2. Materials</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">    "Materials":
@@ -1001,7 +1006,7 @@ parameters of this test-case.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>4.3. Boundary conditions</h3>
+<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>3.3. Boundary conditions</h3>
 <div class="paragraph">
 <p>For the fluid:</p>
 </div>
@@ -1037,7 +1042,7 @@ parameters of this test-case.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_fields"><a class="anchor" href="#_fields"></a>4.4. Fields</h3>
+<h3 id="_fields"><a class="anchor" href="#_fields"></a>3.4. Fields</h3>
 <div class="paragraph">
 <p>We are intersting in the visualisation of the three fields : the velocity, the pressure and the temperature of the fluid</p>
 </div>
@@ -1046,12 +1051,12 @@ parameters of this test-case.</p>
 <pre>            "Exports":
             {
                 "fields":["fluid.velocity","fluid.pressure","heat.temperature","fluid.pid"]
-            }</pre>
+            },</pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_measures"><a class="anchor" href="#_measures"></a>4.5. Measures</h3>
+<h3 id="_measures"><a class="anchor" href="#_measures"></a>3.5. Measures</h3>
 <div class="paragraph">
 <p>the pressure is measured on two points to see the behavior of the pressure as a function of time</p>
 </div>
@@ -1073,14 +1078,14 @@ parameters of this test-case.</p>
                         "fields":"pressure"
                     }
                 }
-            }</code></pre>
+            },</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_numerical_experiments"><a class="anchor" href="#_numerical_experiments"></a>5. Numerical Experiments</h2>
+<h2 id="_numerical_experiments"><a class="anchor" href="#_numerical_experiments"></a>4. Numerical Experiments</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We run this model, using the command labeled at the top, we have the following results.</p>

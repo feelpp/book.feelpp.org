@@ -3,10 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>T-beam :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/cases/latest/csm/t-beam/index.html">
-    <link rel="prev" href="../sheet-rounding/index.html">
-    <link rel="next" href="../vierendeel-truss/index.html">
+    <title>Toolbox : solid :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/cases/latest/csm/t-beam/solid-information.html">
     <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
@@ -16,8 +14,6 @@
 <script src="../../../../_/js/vendor/tabs-block-behavior.js"></script>
 
 
-    <script type="text/javascript" src="../../../../_/js/vendor/visu-vtk.js"></script>
-    <script type="text/javascript" src="../../../../_/js/vendor/Viewer.js"></script>
 
 
 <script type="text/x-mathjax-config">
@@ -262,7 +258,7 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../sheet-rounding/index.html">Effect of sheet rounding</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="3">
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="index.html">T-Beam</a>
   </li>
   <li class="nav-item" data-depth="3">
@@ -704,20 +700,18 @@ MathJax.Hub.Config({
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../../index.html">Feel++ Toolbox Cases Guide</a></li>
-    <li><a href="../README.html">Computational Solid Mechanics</a></li>
-    <li><a href="../README.html#_cases">Cases</a></li>
-    <li><a href="index.html">T-Beam</a></li>
+    <li><a href="solid-information.html">Toolbox : solid</a></li>
   </ul>
 </nav>
 
 <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
   <div class="version-menu">
-    <a class="version is-current" href="index.html">latest</a>
-    <a class="version" href="../../../0.110/csm/t-beam/index.html">0.110</a>
-    <a class="version" href="../../../0.109/csm/t-beam/index.html">0.109</a>
-    <a class="version" href="../../../0.108/csm/t-beam/index.html">0.108</a>
-    <a class="version" href="../../../0.107/csm/t-beam/index.html">0.107</a>
+    <a class="version is-current" href="solid-information.html">latest</a>
+    <a class="version is-missing" href="../../../0.110/index.html">0.110</a>
+    <a class="version is-missing" href="../../../0.109/index.html">0.109</a>
+    <a class="version is-missing" href="../../../0.108/index.html">0.108</a>
+    <a class="version is-missing" href="../../../0.107/index.html">0.107</a>
   </div>
 </div>
   
@@ -726,11 +720,6 @@ MathJax.Hub.Config({
     <i class="fas fa-download"></i>
   </button>
   <div class="dropdown-content">
-
-
-        <a download href="../_attachments/t-beam/index.ipynb" title="Download Jupyter Notebook" data-toggle="tooltip" data-placement="left">
-         .ipynb <i class="fas fa-file"></i>
-        </a>
 
 
           <a onclick="print(this)"  class="headerbtn"  data-toggle="tooltip" data-placement="left" title="Print to PDF">
@@ -748,7 +737,7 @@ MathJax.Hub.Config({
 
     <a href="https://github.com/feelpp/toolbox">Open repository <i class="fab fa-github"></i></a>
     
-  <a href="https://github.com/feelpp/toolbox/edit/develop/examples/modules/csm/pages/t-beam/index.adoc">Edit this Page <i class="fas fa-edit"></i></a>
+  <a href="https://github.com/feelpp/toolbox/edit/develop/examples/modules/csm/pages/t-beam/solid-information.adoc">Edit this Page <i class="fas fa-edit"></i></a>
 
     <a href="https://github.com/feelpp/book.feelpp.org/issues/new">Open issue <i class="fas fa-lightbulb"></i></a>
 
@@ -778,264 +767,793 @@ title="Fullscreen mode"
 </aside>
 
 <article class="doc">
-<h1 class="page">T-beam</h1>
-<div class="sect1">
-<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
+<h1 class="page">Toolbox : solid</h1>
+<div id="preamble">
 <div class="sectionbody">
-<div class="paragraph">
-<p>Tee Section, also known as T beam or T bar, is a structural beam with a “T” shaped cross section.
-Tee section is generally made of plain carbon steel.
-Manufacturing methods of “T” sections are hot rolling, extrusion and plate welding.
-T bars are often used for general fabrication.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_running_the_case"><a class="anchor" href="#_running_the_case"></a>2. Running the case</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The command line to run this case is</p>
-</div>
-<div id="command-line" class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpirun -np 4 feelpp_toolbox_solid --case "github:{repo:toolbox,path:examples/modules/csm/examples/t-beam}"</code></pre>
-</div>
-</div>
-<button class="btn" data-clipboard-target="#command-line">
-Copy command line to clipboard
-</button>
-<button class="btn" data-clipboard-text="github:{repo:toolbox,path:examples/modules/csm/examples/t-beam}">
-Copy case option to clipboard
-</button>
-<div class="admonitionblock note">
-<table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
 <tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The report of the execution of the command above is available <a href="#t-beam/solid-informations.adoc" class="xref unresolved">here</a>.
-</td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">prefix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">keyword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">root repository</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/home/congo/feelppdb/toolboxes/solid/t-beam/P1/np_1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of processus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_physics"><a class="anchor" href="#_physics"></a>1. Physics</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_solid"><a class="anchor" href="#_solid"></a>1.1. solid</h3>
+<div class="sect3">
+<h4 id="_solid_2"><a class="anchor" href="#_solid_2"></a>1.1.1. solid</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">modeling</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Equation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Elasticity</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_physics2"><a class="anchor" href="#_physics2"></a>2. Physics2</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">time mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stationary</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_materials_properties"><a class="anchor" href="#_materials_properties"></a>3. Materials Properties</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of materials</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_material_omega"><a class="anchor" href="#_material_omega"></a>3.1. Material : omega</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+<th class="tableblock halign-left valign-top">Components</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lame-first-parameter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-(-1+2*materials_omega_nu)<sup>(-1)<strong>materials_omega_E*materials_omega_nu</strong>(1+materials_omega_nu)</sup>(-1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">materials_omega_lambdaLame</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lame-second-parameter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1/2*materials_omega_E*(1+materials_omega_nu)^(-1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">materials_omega_muLame</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Poisson-ratio</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">materials_omega_nu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Young-modulus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">210000.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">materials_omega_E</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bulk-modulus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1/3*materials_omega_E*(-1+2*materials_omega_nu)^(-1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">materials_omega_K</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">density</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7.87E-6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">materials_omega_rho</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_data_files"><a class="anchor" href="#_data_files"></a>3. Data files</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The case data files are available in Github <a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/csm/examples/t-beam/">here</a></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/csm/examples/t-beam/beam.cfg">CFG file</a> - [<a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/csm/examples/t-beam/beam.cfg">Edit the file</a>]</p>
-</li>
-<li>
-<p><a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/csm/examples/t-beam/beam.json">JSON file</a> - [<a href="https://github.com/feelpp/toolbox/edit/master/examples/modules/csm/examples/t-beam/beam.json">Edit the file</a>]</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_modelgeometry"><a class="anchor" href="#_modelgeometry"></a>4. Model/Geometry</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>First, we need to build the model, which we are going to do using the Gmsh-software.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/t-beam/image1.png" alt="image" width="210" height="202"></span>In this case we will use the following data:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>h = 150 mm</p>
-</li>
-<li>
-<p>B = 300 mm</p>
-</li>
-<li>
-<p>t1 = 10 mm</p>
-</li>
-<li>
-<p>t2 = 15 mm</p>
-</li>
-<li>
-<p>r = 20 mm</p>
-</li>
-<li>
-<p>l = 2000 mm</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The finished geometry and the meshed model with 10 mm mesh-size:</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/t-beam/image2.png" alt="image" width="604" height="289"></span></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_materials_and_boundary_conditions"><a class="anchor" href="#_materials_and_boundary_conditions"></a>5. Materials and boundary conditions</h2>
+<h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>4. Boundary Conditions</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_materials"><a class="anchor" href="#_materials"></a>5.1. Materials</h3>
-<div class="paragraph">
-<p>The beam is made of steel, so we need to use the following data:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>E = 210 GPa</p>
-</li>
-<li>
-<p>nu = 0.3</p>
-</li>
-<li>
-<p>rho = 7870 kg/m<sup>3</sup></p>
-</li>
-</ul>
+<h3 id="_displacement_imposed"><a class="anchor" href="#_displacement_imposed"></a>4.1. Displacement Imposed</h3>
+<div class="sect3">
+<h4 id="_fixed"><a class="anchor" href="#_fixed"></a>4.1.1. fixed</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">elimination</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">{0,0,0}</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">markers</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fixed</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>5.2. Boundary conditions</h3>
-<div class="paragraph">
-<p>Both ends of the beam are fixed and the force is applied to the upper surface, in the center of the beam. In this case we will apply 50000 N force to the upper surface (named „load”).</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/t-beam/image3.png" alt="image" width="604" height="286"></span></p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/t-beam/image4.png" alt="image" width="509" height="358"></span></p>
+<h3 id="_normal_stress"><a class="anchor" href="#_normal_stress"></a>4.2. Normal Stress</h3>
+<div class="sect3">
+<h4 id="_load"><a class="anchor" href="#_load"></a>4.2.1. load</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">frame</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lagrangian</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-0.05</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">markers</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">load</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_results"><a class="anchor" href="#_results"></a>6. Results</h2>
+<h2 id="_meshes"><a class="anchor" href="#_meshes"></a>5. Meshes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_mesh_solid"><a class="anchor" href="#_mesh_solid"></a>5.1. Mesh : solid</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Discretization</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/Mesh/solid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">filename</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/home/congo/feelppdb/toolboxes/solid/t-beam/P1/np_1/solid.mesh.msh</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="_import_configuration"><a class="anchor" href="#_import_configuration"></a>5.1.1. Import configuration</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">geo-filename</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/home/congo/Bureau/toolbox/examples/modules/csm/examples/t-beam/beam.geo</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hsize</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e+01</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">generate-partitioning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_discretization"><a class="anchor" href="#_discretization"></a>5.1.2. Discretization</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dim</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">h_average</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.620297e+01</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">h_max</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.067954e+01</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">h_min</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.509192e+00</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n_edges</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">110564</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n_elements</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">67498</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n_faces</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">156264</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n_partition</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n_points</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21799</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">real_dim</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">shape</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simplex_3_1_3</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_function_spaces"><a class="anchor" href="#_function_spaces"></a>6. Function Spaces</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_displacement"><a class="anchor" href="#_displacement"></a>6.1. Displacement</h3>
-<div class="paragraph">
-<p>Maximum displacement: 0.4854 mm</p>
-</div>
-<div class="admonitionblock note">
-<table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
 <tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-In the lower picture a 100x scale factor was used to make the displacement easy to see.
-</td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mesh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/Mesh/solid</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nSpace</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="_basis"><a class="anchor" href="#_basis"></a>6.1.1. Basis</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">is_continuous</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nComponents</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nComponents1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nComponents2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nLocalDof</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lagrange</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">shape</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial</p></td>
+</tr>
+</tbody>
 </table>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/t-beam/image5.png" alt="image5"></span></p>
+<div class="sect3">
+<h4 id="_dof_table"><a class="anchor" href="#_dof_table"></a>6.1.2. Dof Table</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nDof</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">65397</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/t-beam/image6.png" alt="image6"></span></p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fields"><a class="anchor" href="#_fields"></a>7. Fields</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_displacement_2"><a class="anchor" href="#_displacement_2"></a>7.1. displacement</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">base symbol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">s</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">function space</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/FunctionSpace/object-0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">displacement</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">prefix symbol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+<th class="tableblock halign-left valign-top">Components</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">eval of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">idv(.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial [3]</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Indices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_s_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_s_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_s_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,0</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">norm2 of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">norm2(.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_s_magnitude</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">grad of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gradv(.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tensor2 [3x3]</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Indices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_00</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_02</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_grad_s_22</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,2</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">normal derivative of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dnv(.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_dn_s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial [3]</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Indices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_dn_s_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_dn_s_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_dn_s_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,0</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">curl of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">curlv(.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_curl_s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vectorial [3]</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Indices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_curl_s_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_curl_s_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_curl_s_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2,0</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">norm2 of curl of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">norm2(curlv(.))</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_curl_s_magnitude</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">div of displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">divv(.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid_div_s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_algebraic_solver"><a class="anchor" href="#_algebraic_solver"></a>8. Algebraic Solver</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_backend"><a class="anchor" href="#_backend"></a>8.1. Backend</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">prefix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">solid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">petsc</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
-<h3 id="_von_mises_criterions"><a class="anchor" href="#_von_mises_criterions"></a>6.2. Von-Mises Criterions</h3>
-<div class="paragraph">
-<p>Maximum stress: 99,75 MPa</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="../_images/t-beam/image7.png" alt="image7"></span></p>
-</div>
+<h3 id="_ksp"><a class="anchor" href="#_ksp"></a>8.2. KSP</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">atol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e-50</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dtol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e+05</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reuse-prec</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rtol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e-08</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gmres</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
-<h3 id="_model_3d"><a class="anchor" href="#_model_3d"></a>6.3. Model 3D</h3>
-		<div id="root" style="margin: auto; width: 100%; height: 600px;      padding: 10px;"></div>
-
-		<script>
-
-			var containerId = 'root';
-
-			var data = [
-                        {"filePath":"examples/csm/T-beam/np_24/solid.exports/Export.case","expirationDate":"2020-01-20 02:06:55","dataLoadSignature":"3fef1f5c091a4ef5f2deb1ac4449e51f0a4eb8ed92ceb46f18847ab2164a9a74ef2b941d53cd020d2770a11513928a4adfd9683b35f2823a10f665f086d1857b2af3d82a89f6e622eb2c16439394dbe698fac5ff71331896e02d6f87727ca64a69a11e697e5f78050811d5530e9344b31bc4b2f2e7fcf3e4d419f761a2a2956c"}
-			];
-
-			var configuration = {
-				connection: {
-                                        sessionManagerURL: 'http://viewer.feelpp.org:80/paraview',
-					timeout: 60,
-				},
-				render: {
-					quality: {
-						still: 100,
-						interactive: 75,
-					},
-					ratio: {
-						still: 1,
-						interactive: 0.75,
-					},
-				},
-				statisticsDisplayStatus: true,
-				visualizationParameterEditor: {
-					displayStatus: true,
-					initialOpenStatus: false,
-					sections: {
-						view: {
-							enableStatus: true,
-							initialOpenStatus: true,
-						},
-						colorMap: {
-							enableStatus: true,
-							initialOpenStatus: false,
-						},
-						camera: {
-							enableStatus: true,
-							initialOpenStatus: false,
-						},
-						legend: {
-							enableStatus: true,
-							initialOpenStatus: false,
-						},
-						grid: {
-							enableStatus: true,
-							initialOpenStatus: false,
-						},
-						filters: {
-							enableStatus: true,
-							initialOpenStatus: false,
-						},
-						others: {
-							enableStatus: true,
-							initialOpenStatus: false,
-						},
-					},
-				},
-				screenShot: {
-					format: 'png',
-					quality: 1,
-				},
-			};
-
-			var viewer = new Cemosis.Viewer(containerId, data[0].dataLoadSignature, configuration);
-		</script>
-<div class="stretchy-wrapper-16_9">
-<div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
+<h3 id="_snes"><a class="anchor" href="#_snes"></a>8.3. SNES</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">atol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e-50</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">50</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reuse-jac</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rtol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e-08</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e-08</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<script type="text/javascript">
-feelppVtkJs.createSceneImporter( vtkVisuSection1, {
-                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5ad503e0b0e9574027047d84/download",
-                                 objects: { "deformation":[ { scene:"displacement" }, { scene:"von_mises" } ] }
-                               } );
-</script>
+<div class="sect2">
+<h3 id="_ksp_in_snes"><a class="anchor" href="#_ksp_in_snes"></a>8.4. KSP in SNES</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reuse-prec</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rtol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.000000e-05</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_pc"><a class="anchor" href="#_pc"></a>8.5. PC</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gamg</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
-<nav class="pagination">
-  <span class="prev"><a href="../sheet-rounding/index.html">Effect of sheet rounding</a></span>
-  <span class="next"><a href="../vierendeel-truss/index.html">Vierendeel Truss</a></span>
-</nav>
 </article>
   </div>
 </main>
