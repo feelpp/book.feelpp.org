@@ -87,9 +87,9 @@ A bit more interesting example: the following code will download a csv file from
 
 [source,python]
 ----
-acsv=fpp.download( "github:{repo:feelpp,path:toolboxes/fluid/cases/moving_body/gravity/cylinder_under_gravity/curve_comparison.csv}", worldComm=app.worldCommPtr() )[0] <1>
-import pandas as pd <2>
-df = pd.read_csv(acsv, sep=",") <3>
+acsv=fpp.download( "github:{repo:feelpp,path:toolboxes/fluid/cases/moving_body/gravity/cylinder_under_gravity/curve_comparison.csv}", worldComm=app.worldCommPtr() )[0] # <1>
+import pandas as pd # <2>
+df = pd.read_csv(acsv, sep=",") # <3>
 df.columns = df.columns.str.replace(' ', '')
 print(df.head())
 ----
