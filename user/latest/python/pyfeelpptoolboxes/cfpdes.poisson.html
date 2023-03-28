@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>The Poisson equation with Coefficient Form PDEs toolbox :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/user/latest/python/pyfeelpptoolboxes/cfpdes.poisson.html">
+    <link rel="prev" href="cfpdes.index.html">
+    <link rel="next" href="cfpdes.adr.html">
+    <meta name="generator" content="Antora 3.1.2">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
+<script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
+
+<script src="../../../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../../../_/js/vendor/tabs-block-behavior.js"></script>
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true, 
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+
+  TeX: {
+      Macros: {
+      RR: "{\\mathbb R}",
+      NN: "{\\mathbb N}",
+      Nso: "{N_{\\mathrm{so}}}",
+      Nma: "{N_{\\mathrm{ma}}}",
+      Nno: "{N_{\\mathrm{no}}}",
+      Ne: "{N_{\\mathrm{e}}}",
+      Ilag: ["{\\mathcal{I}^{\\mathrm{lag}}_{#1}}",1],
+      calTh: "{\\mathcal{T}_h}",
+      Ck: ["{\\mathcal{C}^{#1}}",1],
+      Pk: ["{\\mathcal{P}^{#1}}",1],
+      Qk: ["{\\mathcal{Q}^{#1}}",1],
+      Pch: ["{P^{#1}_{c,h}}",1],
+      Pcho: ["{P^{#1}_{c,h,0}}",1],
+      Qch: ["{Q^{#1}_{c,h}}",1],
+      Ich: ["{\\mathcal{I}^{#1}_{c,h}#2}",2],
+      poly: ["{\\mathbb{#1}}",1],
+      nf: "{n_f}",
+      ngeo: "{n_{\\mathrm{geo}}}",
+      geo: "{\\mathrm{geo}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      dim: ["{\\operatorname{dim}(#1)}",1],
+      opdim: "{\\operatorname{dim}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      poly: ["{\\mathbb{#1}",1],
+      R: ["{\\mathbb{R}^{#1}}",1],
+      set: ["{\\left\\{#1\\right\\}}",1],
+      diam: "{\\operatorname{diam}}",
+      jump: ["{[\\![ #1 ]\\!]}",1],
+      Next: "{\\mathrm{n}}",
+      essinf: "{\\operatorname{ess}\\, \\operatorname{inf}}",
+      tr: "{\\operatorname{tr}}",
+      Id: "{\\mathcal{I}}",
+      disp: ["{\\mathbf{#1}}",1],
+      stresst: ["{\\mathbf{\\sigma(#1)}}",1],
+      deformt: ["{\\mathbf{\\varepsilon(#1)}}",1],
+      domain: "{\\Omega}",
+      prect: ["{\\left\\(#1\\right\\)}",1],
+      ds: "",
+      bold: ["{\\bf #1}",1],
+      p: "{\\mathrm{p}}",
+      q:"{\\mathbf{q}}",
+      n:"{\\mathbf{n}}",
+      T:"{\\mathcal{T}}",
+      F:"{\\mathcal{F}}",
+      P:"{\\mathcal{P}}",
+      v:"{\\mathbf{v}}"
+  },
+  extensions: ["mhchem.js"] }
+});
+</script>
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML'>
+</script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
+<script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
+<script>var uiRootPath = '../../../../_'</script>
+
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+         <!--  <a href="https://book.feelpp.org">Feel++ documentation</a> -->
+           <a href="https://docs.feelpp.org">Feel++ Docs</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://docs.feelpp.org">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Docs</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Latest Version</strong></div>
+
+            <!-- this code allow to manage ordering of navbar item -->
+                                                                                                                                      
+
+            <hr class="navbar-divider">
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Feel++</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>GitHub</strong></div>
+            <a class="navbar-item" href="http://github.com/feelpp/feelpp">GitHub Repository</a>
+            <a class="navbar-item" href="http://github.com/feelpp/feelpp/issues">GitHub Issue Tracker</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Documentation</strong></div>
+            <a class="navbar-item" href="http://docs.feelpp.org/user/">User Manual</a>
+            <a class="navbar-item" href="http://docs.feelpp.org/dev/">Developer Manual</a>
+            <a class="navbar-item" href="http://docs.feelpp.org/toolbox/">Toolbox Manual</a>
+            
+          </div>
+        </div>
+        <div class="primary-action">
+            <form class="navbar-item search">
+              <input type="text" placeholder="Search Feel++ Docs" class="query" id="search-query">
+              <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ">
+            <img src="../../../../_/img/slack.png" alt="slack" style="width:30px;"></a>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="http://docs.feelpp.org">
+            <img src="../../../../_/img/logoFeelpp.png" alt="Feel++" style="width:60px;">
+          </a>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="http://www.cemosis.fr">
+            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis" style="width:60px;">
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="user" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Feel++ User Manual</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../index.html#feelpp">What is Feel++?</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../index.html#purpose">What is the purpose of this manual ?</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../index.html#scope">What is the scope of this manual?</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../index.html#target">Who is this book for?</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../index.html#discuss">Where to discuss about this manual</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../index.html#contribute">How to contribute to this manual</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../how-feelpp-works.html">How Feel++ works</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../install/index.html">Get Feel++</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../install/sources.html">Install From Sources</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../install/prerequisites-dev.html">Programming Environment</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../install/linux.html">Linux</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../install/linux.html#_ubuntu">Ubuntu</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../install/linux.html#_debian">Debian</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../install/mac.html">Mac</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../install/mac.html#xcode">Xcode</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../install/mac.html#homebrew">Homebrew</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../install/mac.html#MacPorts">MacPort</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../install/windows.html">Windows</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../install/compiling-external-projects.html">Compiling Third Party Software</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../install/compile.html">Compiling</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../install/test.html">Testing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../using/index.html">Using Feel++</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../using/docker.html">Starting Feel++ with Docker</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/docker.html#installation">Installation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/docker.html#usage">Usage</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../using/expr.html">Using mathematical expressions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Using Feel++ Tools</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/tools/remotedata.html">Remote Data</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/tools/mesh_partitioner.html">Mesh Partitioner</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/tools/mesh_exporter.html">Mesh Exporter</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/tools/fmu.html">FMI FMU</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Using Feel++ Toolboxes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/toolboxes/fluid.html">Computational Fluid Mechanics</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/toolboxes/solid.html">Computational Solid Mechanics</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/toolboxes/fsi.html">Fluid Structure Interaction</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/toolboxes/heat.html">Heat Transfer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/toolboxes/heatfluid.html">Heat Transfer and Fluid</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/toolboxes/electric.html">Electric</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/toolboxes/thermoelectric.html">Thermo-Electric</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/toolboxes/hdg_poisson.html">HDG Poisson</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/toolboxes/hdg_elasticity.html">HDG Elasticity</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../using/toolboxes/hdg_coupledpoisson.html">HDG Coupled Poisson</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../cpp/index.html">Using Feel++ in C++</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../cpp/laplacian.html">Minimal application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../cpp/laplacian.html">Laplacian quickstart application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../cpp/laplacian.html#_variational_formulation">Variational Formulation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../cpp/laplacian.html#_conforming_approximation">Conforming Approximation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../cpp/laplacian.html#_feel_implementation">Feel++ implementation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../cpp/laplacian.html#_testcases">Test cases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../cpp/laplacian.html#_circle">Circle</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../cpp/laplacian.html#_feelpp2d">Feelpp2d</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../cpp/laplacian.html#_feelpp3d">Feelpp3d</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Using Feel++ in Python</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../pyfeelpp/index.html">pyFeel++</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pyfeelpp/core.html">Initializing Feel++</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pyfeelpp/mesh.html">Creating a mesh</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pyfeelpp/expr.html">Manipulating Expressions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pyfeelpp/discr.html">Manipulating functions and function spaces</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pyfeelpp/integrals.html">Computing integrals</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pyfeelpp/filters.html">Exporting results for visualisation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">pyFeel++ Toolboxes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="modelproperties.html">Model Properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="cfpdes.index.html">Coefficient Formulation PDEs</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="cfpdes.poisson.html">Coefficient Formulation PDEs Poisson Equation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="cfpdes.adr.html">Coefficient Formulation PDEs Advection Diffusion Equation  Equation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="cfpdes.linearelasticity.html">Coefficient Formulation PDEs Linear Elasticity Equation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../pyfeelppmor/index.html">pyFeel++ MOR</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../pyfeelppmor/parameterSpace.html">Parameter space</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../pyfeelppmor/parameters.html">Parameters</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../pyfeelppmor/petscDouble.html">PETSc vector and matrix</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../pyfeelppmor/toolboxmor.html">Toolbox MOR</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../pyfeelppmor/reducedbasis.html">Python module <code>reducedbasis</code></a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pyfeelppmor/reducedbasis_offline.html">Offline stage</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../conclusion/index.html">What&#8217;s Next?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../../feelpp/latest/acknowledgments.html">Acknowledgments</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../../feelpp/latest/acknowledgments.html#_funding">Funding</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../../feelpp/latest/acknowledgments.html#_contributors">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../../feelpp/latest/consortium.html">Consortium</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../conclusion/glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Feel++ User Manual</span>
+    <span class="version">latest</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../../../angiotk/0.1/index.html">AngioTK User Manual</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../angiotk/0.1/index.html">0.1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../data/latest/index.html">Data Manual</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../data/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../../../data/0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../../../../data/0.109/index.html">0.109</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../dev/latest/index.html">Developer manual</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../dev/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../../../dev/0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../../../../dev/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../../../../dev/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../../dev/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../salome/current/index.html">Feel++ and Salome</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../salome/current/index.html">current</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../feelpp/latest/index.html">Feel++ Documentation</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../feelpp/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../../../feelpp/0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../../../../feelpp/0.109/index.html">0.109</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../math/index.html">Feel++ Mathematics</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../math/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../template_project/1.0.3/index.html">Feel++ Templace Project</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../template_project/1.0.3/index.html">1.0.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../cases/latest/index.html">Feel++ Toolbox Cases Guide</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../cases/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../../../cases/0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../../../../cases/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../../../../cases/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../../cases/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../toolboxes/latest/index.html">Feel++ Toolboxes Manual</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../toolboxes/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../../../toolboxes/0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../../../../toolboxes/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../../../../toolboxes/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../../toolboxes/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../tutorial-dev/latest/index.html">Feel++ Tutorial Dev</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../tutorial-dev/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="../../index.html">Feel++ User Manual</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../../0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../../../0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../../../0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../../../0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../mor/latest/index.html">Model Order Reduction</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../mor/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../../../../mor/0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../../../../mor/0.109/index.html">0.109</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../contribute/index.html">Toolbox Contribution Guide</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../contribute/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../../feelpp/0.110/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Feel++ User Manual</a></li>
+    <li><a href="../index.html">Using Feel++ in Python</a></li>
+    <li><a href="cfpdes.index.html">Coefficient Formulation PDEs</a></li>
+    <li><a href="cfpdes.poisson.html">Coefficient Formulation PDEs Poisson Equation</a></li>
+  </ul>
+</nav>
+
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
+  <div class="version-menu">
+    <a class="version is-current" href="cfpdes.poisson.html">latest</a>
+    <a class="version is-missing" href="../../../0.110/index.html">0.110</a>
+    <a class="version is-missing" href="../../../0.109/index.html">0.109</a>
+    <a class="version is-missing" href="../../../0.108/index.html">0.108</a>
+    <a class="version is-missing" href="../../../0.107/index.html">0.107</a>
+  </div>
+</div>
+  
+<div class="dropdown">
+  <button class="dropbtn" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <div class="dropdown-content">
+
+
+        <a download href="../_attachments/pyfeelpptoolboxes/cfpdes.poisson.ipynb" title="Download Jupyter Notebook" data-toggle="tooltip" data-placement="left">
+         .ipynb <i class="fas fa-file"></i>
+        </a>
+
+
+          <a onclick="print(this)"  class="headerbtn"  data-toggle="tooltip" data-placement="left" title="Print to PDF">
+              .pdf <i class="fas fa-file-pdf"></i>
+          </a>
+
+  </div>
+</div>
+  
+<div class="dropdown">
+  <button class="dropbtn" aria-label="Github">
+    <i class="fab fa-github"></i>
+  </button>
+  <div class="dropdown-content">
+
+    <a href="https://github.com/feelpp/book.feelpp.org">Open repository <i class="fab fa-github"></i></a>
+    
+  <a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/user/modules/python/pages/pyfeelpptoolboxes/cfpdes.poisson.adoc">Edit this Page <i class="fas fa-edit"></i></a>
+
+    <a href="https://github.com/feelpp/book.feelpp.org/issues/new">Open issue <i class="fas fa-lightbulb"></i></a>
+
+
+  </div>
+</div>
+
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+</div>
+
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+
+<article class="doc">
+<h1 class="page">The Poisson equation with Coefficient Form PDEs toolbox</h1>
+<div class="sect1">
+<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This page is devoted to the finite element approximation of coercive problems.</p>
+</div>
+<div class="paragraph">
+<p>The prototype is the Dirichlet problem: given a function \(f: \Omega \rightarrow \mathbb{R}\),  look for a function \(u: \Omega \rightarrow \mathbb{R}\) such that</p>
+</div>
+<div id="laplace" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\begin{aligned}
+-\Delta u &amp; =f &amp; &amp; \text { in } \Omega, \\
+u &amp; =0 &amp; &amp; \text { on } \partial \Omega,
+\end{aligned}
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\Delta u=\sum_{i=1}^d \partial_{i i}^2 u\) is the Laplacian of \(u\).</p>
+</div>
+<div class="paragraph">
+<p>Equation <a href="#laplace">[laplace]</a>, which imposes the nullity of the solution \(u\) on the domain boundary, is called a homogeneous Dirichlet boundary condition.</p>
+</div>
+<div class="paragraph">
+<p>Other boundary conditions (non-homogeneous Dirichlet, Neumann or Robin) are possible and will be discussed later on.</p>
+</div>
+<div class="paragraph">
+<p>The problem is used in many physical models, in particular</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>in heat transfer where \(u\) represents the temperature,</p>
+</li>
+<li>
+<p>in electrostatics where \(u\) represents an electric potential,</p>
+</li>
+<li>
+<p>in mechanics where \(u\) represents a vertical membrane displacement, and</p>
+</li>
+<li>
+<p>in hydraulics where \(u\) represents a charge in a Darcy flow.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A second example of a coercive problem is the advection-diffusion-reaction equations with dominant diffusion which we shall study <a href="cfpdes.adr.html" class="xref page">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>A third example is provided by the mechanics of continuous deformable media in the framework of linear elasticity which we shall study <a href="cfpdes.linearelasticity.html" class="xref page">here</a>.
+In this case, the unknown is a function \(u: \Omega \rightarrow \mathbb{R}^d\) which represents a displacement field.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Coercive problems provided the first framework for the application of the finite element method, when engineers used this method in the 1950&#8217;s to approximate the solution of deformable continuum mechanics problems.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The mathematical analysis of coercivity problems is relatively simple since it is based on the Lax-Milgram lemma.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_mathematical_framework"><a class="anchor" href="#_the_mathematical_framework"></a>2. The mathematical framework</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We assume for simplicity that the data \(f\) is in \(L^2(\Omega)\).
+The weak formulation of the  <a href="#laplace">homogeneous Dirichlet problem</a> is the following:</p>
+</div>
+<div id="laplace-varf" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u \in H_0^1(\Omega) \text { such that } \\
+\int_{\Omega} \nabla u \ \nabla w=\int_{\Omega} f w, \quad \forall w \in H_0^1(\Omega) .
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Introducing the functional space \(V=H_0^1(\Omega)\), the bilinear form \(a \in \mathcal{L}(V \times V; \mathbb{R})\) defined by \(a(v, w)=\int_{\Omega} \nabla v \cdot \nabla w\) and the linear form \(f \in V^{\prime}\) defined by \(f(w)=\int_{\Omega} f w\), the  <a href="#laplace-varf">problem</a> is written in the following abstract form:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u \in V \text { such that } \\
+a(u, w)=f(w), \quad \forall w \in V .
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>The space \(V\) equipped with the norm \(\|\cdot\|_{1, \Omega}\) (defined by \(\|v\|_{1, \Omega}=\left(\|v\|_{0, \Omega}^2+\|\nabla v\|_{0, \Omega}^2\right)^{1 / 2}\) for \(v \in V\) ) is a Hilbert space and the forms \(a\) and \(f\) are continuous on \(V \times V\) and \(V\), respectively.
+The only non-trivial property to establish the well-posedness of <a href="#laplace-varf">[laplace-varf]</a> is the coercivity of \(a\) on \(H_0^1(\Omega)\).
+This results from the following inequality</p>
+</div>
+<div id="lem:1" class="sidebarblock">
+<div class="content">
+<div class="title">Lemma: Poincaré inequality</div>
+<div class="paragraph">
+<p>Let \(\Omega\) be a bounded open of \(\mathbb{R}^d\).
+There exists a constant \(\ell_{\Omega}\) such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\forall v \in H_0^1(\Omega), \quad\|v\|_{0, \Omega} \leq \ell_{\Omega}||\nabla v\|_{0, \Omega}
+\end{equation*}\]
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+the constant \(\ell_{\Omega}\) has the dimension of a length; it can be interpreted as a characteristic length of the bounded open \(\Omega\).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The Poincaré inequality implies the coercivity of the bilinear form \(a\) on \(H_0^1(\Omega)\) since</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\forall v \in H_0^1(\Omega), \quad a(v, v)=\|\nabla v|_{0, \Omega}^2 \geq \frac{1}{1+\ell_{\Omega}^2}\|v\|_{1, \Omega}^2 .
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>The Lax-Milgram lemma allows us to conclude that the <a href="#laplace-varf">problem</a> is well-posed.</p>
+</div>
+<div class="sect2">
+<h3 id="_conforming_approximation"><a class="anchor" href="#_conforming_approximation"></a>2.1. Conforming Approximation</h3>
+<div class="paragraph">
+<p>We consider a conformal approximation of <a href="#laplace-varf">problem</a>  by Lagrange finite elements.
+We assume for simplicity that \(\Omega\) is a \(\mathbb{R}^2\) polygon or a \(\mathbb{R}^3\) polyhedron.
+We consider a regular and conformal family of affine meshes of \(\Omega\) which we denote \(\left\{\mathcal{T}_h\right\}_{h&gt;0}\).</p>
+</div>
+<div class="paragraph">
+<p>We choose as finite element of reference \(\left\{\widehat{K}, \widehat{P}, \widehat{\Sigma}\right\}\) a finite element of Lagrange such that \(\mathbb{P}_k \subset \widehat{P}\) and \(k+1&gt;\frac{d}{2}\)</p>
+</div>
+<div class="paragraph">
+<p>We pose</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+P_{\mathrm{c}, h}^k=\left\{v_h \in \mathcal{C}^0(\bar{\Omega}); \forall K \in \mathcal{T}_h, v_h \circ T_K \in \widehat{P}\right\}
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(T_K\) is the geometric transformation sending \(\widehat{K}\) into \(K\).
+The space \(P_{\mathrm{c}, h}^k\) is the space of the functions of \(\mathcal{C}^0(\bar{\Omega})\) which are continuous on the boundary of \(\Omega\) and which are piecewise polynomials of degree \(k\) on each element of \(\mathcal{T}_b\).</p>
+</div>
+<div class="paragraph">
+<p>In order to construct an approximation space which is included in \(V=H_0^1(\Omega)\), we pose</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+V_h=P_{\mathrm{c}, h}^k \cap H_0^1(\Omega)
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>The elements of \(V_h\) are the functions of \(P_{\mathrm{c}, h}^k\) which are \(0\) on the boundary of \(\Omega\).</p>
+</div>
+<div class="paragraph">
+<p>We consider the following approximate problem:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u_h \in V_h \text { such that } \\
+a\left(u_h, v_h\right)=f\left(v_h\right), \quad \forall v_h \in V_h,
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>which is clearly well-posed since \(a\) is coercive on \(V\) and \(V_h \subset V\).</p>
+</div>
+<div id="thm:1" class="sidebarblock">
+<div class="content">
+<div class="title">Convergence theorem of the conforming approximation</div>
+<div class="paragraph">
+<p>With the above assumptions, we suppose that the unique solution \(u\) of <a href="#laplace-varf">the problem</a> is in \(H^{k+1}(\Omega) \cap H_0^1(\Omega)\).
+Then there exists a constant \(c\) such that for all \(h\),</p>
+</div>
+<div id="thm:1:1" class="stemblock">
+<div class="title">\(H^1\) estimate</div>
+<div class="content">
+\[\begin{equation*}
+\left\|u-u_h\right\|_{1, \Omega} \leq c h^k|u|_{k+1, \Omega}
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(|u|_{k+1, \Omega}=\left(\|u\|_{0, \Omega}^2+\|\nabla u\|_{0, \Omega}^2+\dots+\|\nabla^{k+1} u\|_{0, \Omega}^2\right)^{1 / 2}\).
+Moreover, if  <a href="#laplace-varf">the problem</a> is regularizing, there exists a constant \(c\) such that for all \(h\),</p>
+</div>
+<div id="thm:1:2" class="stemblock">
+<div class="title">\(L^2\) estimate</div>
+<div class="content">
+\[\begin{equation*}
+\left\|u-u_b\right\|_{0, \Omega} \leq c h^{k+1}|u|_{k+1, \Omega}
+\end{equation*}\]
+</div>
+</div>
+<details>
+<summary class="title">Notes on the proof</summary>
+<div class="content">
+<div class="paragraph">
+<p>The <a href="#thm:1:1">\(H^1\) estimate</a> results from the lemma of Céa  and an interpolation theorem.
+Indeed, we have</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\begin{aligned}
+\left\|u-u_h\right\|_{1, \Omega} &amp; \leq c \inf _{v_h \in V_h}\left\|u-v_h\right\|_{1, \Omega} \\
+&amp; \leq c\left\|u-\mathcal{I}_h^{\mathrm{Lag}} u\right\|_{1, \Omega} \\
+&amp; \leq c h^k|u|_{k+1, \Omega}
+\end{aligned}
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\mathcal{I}_h^{\mathrm{Lag}}\) is the Lagrangian interpolation operator.</p>
+</div>
+<div class="paragraph">
+<p>Moreover, the <a href="#thm:1:2">\(L^2\) estimate</a> follows from the Aubin-Nitsche lemma which allows us to state that</p>
+</div>
+<div class="stemblock">
+<div class="title">Aubin-Nitsche lemma</div>
+<div class="content">
+\[\begin{equation*}
+\left\|u-u_h\right\|_{0, \Omega} \leq c h\left|u-u_h\right|_{1, \Omega}
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>so that <a href="#thm:1:2">\(L^2\) estimate</a> is deduced from <a href="#thm:1:1">\(H^1\) estimate</a>.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note on \(\mathbb{P}_1\) or \(\mathbb{Q}_1\) finite element approximation</div>
+<div class="paragraph">
+<p>The generic example of the application of <a href="#thm:1">the previous theorem</a> in dimension 2 or 3 is that of the Lagrangian finite element approximation \(\mathbb{P}_1\) or \(\mathbb{Q}_1\), for which, if <a href="#laplace-varf">the problem</a> is regularizing, we have</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\|u-u_h\right\|_{0, \Omega}+h\left\|u-u_h\right\|_{1, \Omega} \leq c h^2\|f\|_{0, \Omega} .
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>We thus obtain a convergence to <strong>order 1 in \(H^1\) norm and a convergence to order 2 in \(L^2\) norm.</strong></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_of_homogeneous_dirichlet_problem"><a class="anchor" href="#_example_of_homogeneous_dirichlet_problem"></a>2.2. Example of homogeneous Dirichlet problem</h3>
+<div class="paragraph">
+<p>We now consider an example to illustrate the <a href="#thm:1">previous theorem</a>.</p>
+</div>
+<div class="paragraph">
+<p>We start by initializing the Feel++ environment.</p>
+</div>
+<div id="code:1" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import sys
+import feelpp
+import feelpp.toolboxes.core as tb
+from feelpp.toolboxes.cfpdes import *
+import pandas as pd
+
+sys.argv = ["feelpp_cfpdes_poisson"]
+e = feelpp.Environment(sys.argv,
+                        opts=tb.toolboxes_options("coefficient-form-pdes", "cfpdes"),
+                        config=feelpp.globalRepository("cfpdes-poisson-homogeneous-dirichlet"))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then we consider the \(\mathbb{R}^2\) domain \(\Omega\) defined by \(\Omega=\left\{x \in \mathbb{R}^2; 0 \leq x_1 \leq 1, 0 \leq x_2 \leq 1\right\}\).
+We consider the following mesh \(\mathcal{T}_h\) of \(\Omega\) with \(h=0.1\).</p>
+</div>
+<div id="code:2" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def generateSquareGeometry(filename,hsize=0.1):
+    """create gmsh mesh
+
+    Args:
+        filename (str): name of the file
+        hsize (float): mesh size
+    """
+    geo="""SetFactory("OpenCASCADE");
+    h={};
+    Rectangle(1) = {{0, 0, 0, 1, 1, 0}};
+    Characteristic Length{{ PointsOf{{ Surface{{1}}; }} }} = h;
+    Physical Curve("Gamma_D") = {{1,2,3,4}};
+    Physical Surface("Omega") = {{1}};
+    """.format(hsize)
+    with open(filename, 'w') as f:
+        # Write the string to the file
+        f.write(geo)
+
+def getMesh(filename,hsize=0.05,verbose=False):
+    import os
+    if os.path.exists(os.path.basename(filename)+'.msh'):
+        os.remove(os.path.basename(filename)+'.msh')
+    if verbose:
+        print(f"generate mesh {filename} with hsize={hsize}")
+    generateSquareGeometry(filename=filename,hsize=hsize)
+    mesh = feelpp.load(feelpp.mesh(dim=2), filename, hsize)
+    return mesh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then we consider the following right hand side \(f\) and the exact solution \(u(x,y) = \sin(2 \pi x) \sin(2 \pi y)\) such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[f=-\Delta u = 8 \pi^2 \sin(2 \pi x) \sin(2 \pi y)\]
+</div>
+</div>
+<div class="paragraph">
+<p>that way we can check the <a href="#thm:1">Convergence theorem of the conforming approximation</a> with the exact solution.</p>
+</div>
+<div class="paragraph">
+<p>The Coefficient Form PDEs toolbox allows to solve the problem <a href="#laplace-varf">problem</a> with the following code:</p>
+</div>
+<div id="code:3" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def laplacian(hsize, json, keyword="cfpdes",verbose=False):
+    if verbose:
+        print(f"Solving the laplacian problem for hsize = {hsize}...")
+    laplacian = cfpdes(dim=2, keyword=keyword)
+    laplacian.setMesh(getMesh("square.geo",hsize=hsize))
+    laplacian.setModelProperties(json)
+    laplacian.init(buildModelAlgebraicFactory=True)
+    laplacian.solve()
+    laplacian.exportResults()
+    measures = laplacian.postProcessMeasures().values()
+
+    return measures
+
+laplacian_json = lambda order:  {
+    "Name": "Laplacian",
+    "ShortName": "Laplacian",
+    "Models":
+    {
+        "cfpdes":{
+            "equations":"laplace"
+        },
+        "laplace":{
+            "setup":{
+                "unknown":{
+                    "basis":f"Pch{order}",
+                    "name":"u",
+                    "symbol":"u"
+                },
+                "coefficients":{
+                    "c":"1",
+
+                    "f":"8*pi*pi*sin(2*pi*x)*sin(2*pi*y):x:y"
+                }
+            }
+        }
+    },
+    "Materials":
+    {
+        "toto":
+        {
+            "markers":"Omega"
+        }
+    },
+    "BoundaryConditions":
+    {
+        "laplace":
+        {
+            "Dirichlet":
+            {
+                "zero":
+                {
+                    "markers":["Gamma_D"],
+                    "expr":"0."
+                }
+            }
+        }
+    },
+    "PostProcess":
+    {
+        "cfpdes":
+        {
+            "Exports":
+            {
+                "fields":["all"]
+            },
+            "Measures" :
+            {
+              "Norm" :
+              {
+                  "laplace" :
+                  {
+                     "type":["L2-error", "H1-error"],
+                     "field":"laplace.u",
+                     "solution":"sin(2*pi*x)*sin(2*pi*y):x:y",
+                     "grad_solution":"{2*pi*cos(2*pi*x)*sin(2*pi*y),2*pi*sin(2*pi*x)*cos(2*pi*y)}:x:y",
+                     "markers":"Omega"
+                 }
+              }
+            }
+        }
+    }
+}
+
+# execute the laplacian problem using P1 basis on a mesh of size 0.1
+laplacian(hsize=0.1,json=laplacian_json(1),verbose=True)
+# execute the laplacian problem using P2 basis on a mesh of size 0.1
+laplacian(hsize=0.1,json=laplacian_json(2),verbose=True)</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>Solving the laplacian problem for hsize = 0.1...
+{'Norm_laplace_H1-error': 0.9578973774398879,
+ 'Norm_laplace_L2-error': 0.0256824272246114}</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>We can proceed with the visualisation of the field <code>u</code> using the following code using <code>pyvista</code>:</p>
+</div>
+<div id="code:4" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">try:
+    from xvfbwrapper import Xvfb <i class="conum" data-value="1"></i><b>(1)</b>
+    vdisplay = Xvfb()
+    vdisplay.start()
+except:
+    print("please install 'xvfbwrapper' python package")
+    exit(0)
+
+import pyvista as pv <i class="conum" data-value="2"></i><b>(2)</b>
+import os
+
+# Define the path to the case file directory
+case_path = os.path.abspath('cfpdes.exports/Export.case') <i class="conum" data-value="3"></i><b>(3)</b>
+reader = pv.get_reader(case_path) <i class="conum" data-value="4"></i><b>(4)</b>
+mesh = reader.read()
+mesh.plot(scalars="cfpdes.laplace.u", clim=[-1, 1],
+          cpos='xy', cmap='RdBu', show_scalar_bar=True, show_edges=True) <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>xvfbwrapper</code> package is used to run the <code>pyvista</code> visualisation in a virtual display. This is useful when running the code on a remote server.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>pyvista</code> package is used to visualise the mesh and the field <code>u</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>Export.case</code> file is generated by the <code>cfpdes</code> toolbox. It contains the mesh and the field <code>u</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <code>pyvista</code> package provides a Ensight case reader to read the <code>Export.case</code> file.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The <code>pyvista</code> package provides a <code>plot</code> function to visualise the mesh and the field <code>u</code> amd the edges of the mesh.</td>
+</tr>
+</table>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/pyfeelpp-toolboxes/cfpdes/cfpdes.laplace.u-pv.png" alt="cfpdes.laplace.u pv" width="50%">
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>Then we can run the following code to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>compute the solution for different mesh sizes and compute the error in \(L^2\) and \(H^1\) norms</p>
+</li>
+<li>
+<p>compute the convergence rates of the error in \(L^2\) and \(H^1\) norms</p>
+</li>
+<li>
+<p>display the errors in \(L^2\) and \(H^1\) norms in a table</p>
+</li>
+<li>
+<p>check that the convergence rates are close to the expected theoretical values</p>
+</li>
+</ul>
+</div>
+<div id="code:4" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def runLaplacianPk(df,order=1,verbose=False):
+    """generate the Pk case
+
+    Args:
+        order (int, optional): order of the basis. Defaults to 1.
+    """
+    meas=dict()
+    for h in df['h']:
+        m=laplacian(hsize=h,json=laplacian_json(order),verbose=verbose)
+        for norm in ['L2','H1']:
+            meas.setdefault(f'P{order}-Norm_laplace_{norm}-error', [])
+            meas[f'P{order}-Norm_laplace_{norm}-error'].append(m.pop(f'Norm_laplace_{norm}-error'))
+    df=df.assign(**meas)
+    for norm in ['L2','H1']:
+        df[f'P{order}-laplace_{norm}-convergence-rate']=np.log2(df[f'P{order}-Norm_laplace_{norm}-error'].shift() / df[f'P{order}-Norm_laplace_{norm}-error']) / np.log2(df['h'].shift() / df['h'])
+    return df
+
+import pandas as pd
+import numpy as np
+df=pd.DataFrame({'h':[0.1,0.05,0.025,0.0125]})
+for order in [1,2]:
+    df=runLaplacianPk(df=df,order=order,verbose=False)
+print(df.to_markdown())</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>|    |      h |   P1-Norm_laplace_L2-error |   P1-Norm_laplace_H1-error |   P1-laplace_L2-convergence-rate |   P1-laplace_H1-convergence-rate |   P2-Norm_laplace_L2-error |   P2-Norm_laplace_H1-error |   P2-laplace_L2-convergence-rate |   P2-laplace_H1-convergence-rate |
+|---:|-------:|---------------------------:|---------------------------:|---------------------------------:|---------------------------------:|---------------------------:|---------------------------:|---------------------------------:|---------------------------------:|
+|  0 | 0.1    |                0.0256824   |                   0.957897 |                        nan       |                       nan        |                0.00108252  |                 0.0931597  |                        nan       |                        nan       |
+|  1 | 0.05   |                0.00674339  |                   0.492079 |                          1.92924 |                         0.960981 |                0.000139537 |                 0.0240171  |                          2.95567 |                          1.95564 |
+|  2 | 0.025  |                0.00170431  |                   0.247621 |                          1.98429 |                         0.990757 |                1.75159e-05 |                 0.00601782 |                          2.99391 |                          1.99675 |
+|  3 | 0.0125 |                0.000426066 |                   0.123856 |                          2.00004 |                         0.999468 |                2.16968e-06 |                 0.00150015 |                          3.01311 |                          2.00414 |</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>Finally we postprocess the results using plotly.
+The following code allows to</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>plot the error in \(L^2\) and \(H^1\) norms in plotly</p>
+</li>
+<li>
+<p>display the convergence rates in the legend of the plot</p>
+</li>
+<li>
+<p>check that the convergence rates are close to the theoretical values</p>
+</li>
+</ul>
+</div>
+<div id="code:5" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import plotly.express as px
+from plotly.subplots import make_subplots
+import itertools
+
+fig=px.line(df, x="h", y=[f'P{order}-Norm_laplace_{norm}-error' for order,norm in list(itertools.product([1,2],['L2','H1']))])
+fig.update_xaxes(title_text="h",type="log")
+fig.update_yaxes(title_text="Error",type="log")
+for order,norm in list(itertools.product([1,2],['L2','H1'])):
+    fig.update_traces(name=f'P{order} - {norm} error - {df[f"P{order}-laplace_{norm}-convergence-rate"].iloc[-1]:.2f}', selector=dict(name=f'P{order}-Norm_laplace_{norm}-error'))
+fig.update_layout(
+        title=f"Convergence rate for the Laplacian problem for P1 and P2",
+        autosize=False,
+        width=900,
+        height=900,
+    )
+fig.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="../_images/pyfeelpp-toolboxes/cfpdes/cfpdes.poisson-1.png" alt="cfpdes.poisson 1" width="100%"></span></p>
+</div>
+</div>
+</details>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="cfpdes.index.html">Coefficient Formulation PDEs</a></span>
+  <span class="next"><a href="cfpdes.adr.html">Coefficient Formulation PDEs Advection Diffusion Equation  Equation</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="sharethis-inline-share-buttons"></div>
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.cemosis.fr" class="icon">
+            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.cemosis.fr" target="_blank" rel="noopener">Projects Documentation</a></li>
+          <li><a href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">Forums(Slack)</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://www.cemosis.fr" target="_blank" rel="noopener">Cemosis</a></li>
+          <li><a href="https://www.cemosis.fr/news" target="_blank" rel="noopener">News</a></li>
+          <li><a href="https://www.cemosis.fr/projects" target="_blank" rel="noopener">Projects</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.feelpp.org" target="_blank" rel="noopener">Feel++ Documentation</a></li>
+          <li><a href="http://docs.feelpp.org/user/">Get Started</a></li>
+          <li><a href="http://docs.feelpp.org/user//install/distributions/">Downloads</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="facebook" class="cls-1" d="M29,0H3A2.652,2.652,0,0,0,0,3V29a2.652,2.652,0,0,0,3,3H16V18H12V14h4V12a6.452,6.452,0,0,1,6-6h4v4H22a2.151,2.151,0,0,0-2,2v2h6l-1,4H20V32h9a2.652,2.652,0,0,0,3-3V3A2.652,2.652,0,0,0,29,0Z"/></svg>
+            <a href="https://www.facebook.com/cemosis.fr" class="icon">
+            Facebook
+            </a>
+          </li>
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32.1 26.1"> <path id="twitter" class="cls-1" d="M32,7.1a11.836,11.836,0,0,1-3.8,1,6.462,6.462,0,0,0,2.9-3.6,12.606,12.606,0,0,1-4.2,1.6A6.492,6.492,0,0,0,22.1,4a6.594,6.594,0,0,0-6.6,6.6,7.719,7.719,0,0,0,.2,1.5A18.458,18.458,0,0,1,2.2,5.2a6.294,6.294,0,0,0-.9,3.3A6.765,6.765,0,0,0,4.2,14a6.109,6.109,0,0,1-3-.8v.1a6.543,6.543,0,0,0,5.3,6.4,4.678,4.678,0,0,1-1.7.2,4.869,4.869,0,0,1-1.2-.1,6.679,6.679,0,0,0,6.1,4.6,12.917,12.917,0,0,1-8.2,2.8,9.151,9.151,0,0,1-1.6-.1,18.438,18.438,0,0,0,10.1,3c12.1,0,18.7-10,18.7-18.7v-.8A13.336,13.336,0,0,0,32,7.2Z" transform="translate(0.1 -4)"/></svg>
+            <a href="https://twitter.com/cemosis" class="icon">
+              Twitter
+            </a>
+          </li>
+          <li>
+          <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="linkedin" class="cls-1" d="M29,0H3A3.076,3.076,0,0,0,0,3V29a3.009,3.009,0,0,0,3,3H29a2.946,2.946,0,0,0,3-3V3A3.009,3.009,0,0,0,29,0ZM12,26H8V12h4ZM10,10a2,2,0,1,1,2-2A2.006,2.006,0,0,1,10,10ZM26,26H22V18a2,2,0,0,0-4,0v8H14V12h4v2.5c.8-1.1,2.1-2.5,3.5-2.5A4.736,4.736,0,0,1,26,17Z"/></svg>
+              <a href="https://www.linkedin.com/company/cemosis" class="icon">
+             Linkedin
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <div class="footer-terms-copyright">
+          <span>© 2023 Cemosis, Université de Strasbourg</span>
+      </div>
+      <div class="footer-terms-links">
+        <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>
+        <a href="https://www.cemosis.fr/privacy-policy">Privacy Policy</a>
+        <a href="https://www.cemosis.fr/cookie-policy">Cookie Policy</a>
+        <a href="https://www.cemosis.fr/support-policy">Support Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
+
+
+<script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+
+<script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">
+</script>
+
+
+<script type="text/javascript">
+function toggleFullScreen() {
+   var doc = window.document;
+   var docEl = doc.documentElement;
+
+   var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+   var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+   if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+       requestFullScreen.call(docEl);
+   }
+   else {
+       cancelFullScreen.call(doc);
+   }
+}
+</script>  </body>
+</html>
