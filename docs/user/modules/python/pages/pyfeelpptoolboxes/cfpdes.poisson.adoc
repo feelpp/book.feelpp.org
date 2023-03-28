@@ -1,0 +1,498 @@
+:cfpdes: Coefficient Form PDEs 
+= The Poisson equation with {cfpdes} toolbox
+:feelpp: Feel++
+:stem: latexmath
+:page-jupyter: true
+
+== Introduction
+
+This page is devoted to the finite element approximation of coercive problems. 
+
+The prototype is the Dirichlet problem: given a function stem:[f: \Omega \rightarrow \mathbb{R}],  look for a function stem:[u: \Omega \rightarrow \mathbb{R}] such that
+[[laplace]]
+[stem]
+++++
+\begin{equation*}
+\begin{aligned}
+-\Delta u & =f & & \text { in } \Omega, \\
+u & =0 & & \text { on } \partial \Omega,
+\end{aligned}
+\end{equation*}
+++++
+where stem:[\Delta u=\sum_{i=1}^d \partial_{i i}^2 u] is the Laplacian of stem:[u]. 
+
+Equation <<laplace>>, which imposes the nullity of the solution stem:[u] on the domain boundary, is called a homogeneous Dirichlet boundary condition.
+
+Other boundary conditions (non-homogeneous Dirichlet, Neumann or Robin) are possible and will be discussed later on. 
+
+The problem is used in many physical models, in particular 
+
+- in heat transfer where stem:[u] represents the temperature,
+- in electrostatics where stem:[u] represents an electric potential, 
+- in mechanics where stem:[u] represents a vertical membrane displacement, and 
+- in hydraulics where stem:[u] represents a charge in a Darcy flow. 
+
+A second example of a coercive problem is the advection-diffusion-reaction equations with dominant diffusion which we shall study xref:pyfeelpptoolboxes/cfpdes.adr.adoc[here].
+
+A third example is provided by the mechanics of continuous deformable media in the framework of linear elasticity which we shall study xref:pyfeelpptoolboxes/cfpdes.linearelasticity.adoc[here]. 
+In this case, the unknown is a function stem:[u: \Omega \rightarrow \mathbb{R}^d] which represents a displacement field. 
+
+
+NOTE: Coercive problems provided the first framework for the application of the finite element method, when engineers used this method in the 1950's to approximate the solution of deformable continuum mechanics problems. 
+
+The mathematical analysis of coercivity problems is relatively simple since it is based on the Lax-Milgram lemma.
+
+== The mathematical framework
+
+We assume for simplicity that the data stem:[f] is in stem:[L^2(\Omega)]. 
+The weak formulation of the  <<laplace,homogeneous Dirichlet problem>> is the following:
+[[laplace-varf]]
+[stem]
+++++
+\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u \in H_0^1(\Omega) \text { such that } \\
+\int_{\Omega} \nabla u \ \nabla w=\int_{\Omega} f w, \quad \forall w \in H_0^1(\Omega) .
+\end{array}\right.
+\end{equation*}
+++++
+
+Introducing the functional space stem:[V=H_0^1(\Omega)], the bilinear form stem:[a \in \mathcal{L}(V \times V; \mathbb{R})] defined by stem:[a(v, w)=\int_{\Omega} \nabla v \cdot \nabla w] and the linear form stem:[f \in V^{\prime}] defined by stem:[f(w)=\int_{\Omega} f w], the  <<laplace-varf,problem>> is written in the following abstract form:
+[stem]
+++++
+\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u \in V \text { such that } \\
+a(u, w)=f(w), \quad \forall w \in V .
+\end{array}\right.
+\end{equation*}
+++++
+
+
+The space stem:[V] equipped with the norm stem:[\|\cdot\|_{1, \Omega}] (defined by stem:[\|v\|_{1, \Omega}=\left(\|v\|_{0, \Omega}^2+\|\nabla v\|_{0, \Omega}^2\right)^{1 / 2}] for stem:[v \in V] ) is a Hilbert space and the forms stem:[a] and stem:[f] are continuous on stem:[V \times V] and stem:[V], respectively. 
+The only non-trivial property to establish the well-posedness of <<laplace-varf>> is the coercivity of stem:[a] on stem:[H_0^1(\Omega)]. 
+This results from the following inequality 
+
+[[lem:1]]
+.Lemma: Poincaré inequality
+****
+Let stem:[\Omega] be a bounded open of stem:[\mathbb{R}^d]. 
+There exists a constant stem:[\ell_{\Omega}] such that
+[stem]
+++++
+\begin{equation*}
+\forall v \in H_0^1(\Omega), \quad\|v\|_{0, \Omega} \leq \ell_{\Omega}||\nabla v\|_{0, \Omega}
+\end{equation*}
+++++
+****
+
+NOTE:  the constant stem:[\ell_{\Omega}] has the dimension of a length; it can be interpreted as a characteristic length of the bounded open stem:[\Omega].
+
+The Poincaré inequality implies the coercivity of the bilinear form stem:[a] on stem:[H_0^1(\Omega)] since
+[stem]
+++++
+\begin{equation*}
+\forall v \in H_0^1(\Omega), \quad a(v, v)=\|\nabla v|_{0, \Omega}^2 \geq \frac{1}{1+\ell_{\Omega}^2}\|v\|_{1, \Omega}^2 .
+\end{equation*}
+++++
+
+The Lax-Milgram lemma allows us to conclude that the <<laplace-varf,problem>> is well-posed.
+
+=== Conforming Approximation 
+
+
+We consider a conformal approximation of <<laplace-varf,problem>>  by Lagrange finite elements. 
+We assume for simplicity that stem:[\Omega] is a stem:[\mathbb{R}^2] polygon or a stem:[\mathbb{R}^3] polyhedron. 
+We consider a regular and conformal family of affine meshes of stem:[\Omega] which we denote stem:[\left\{\mathcal{T}_h\right\}_{h>0}]. 
+
+We choose as finite element of reference stem:[\left\{\widehat{K}, \widehat{P}, \widehat{\Sigma}\right\}] a finite element of Lagrange such that stem:[\mathbb{P}_k \subset \widehat{P}] and stem:[k+1>\frac{d}{2}] 
+
+We pose
+[stem]
+++++
+\begin{equation*}
+P_{\mathrm{c}, h}^k=\left\{v_h \in \mathcal{C}^0(\bar{\Omega}); \forall K \in \mathcal{T}_h, v_h \circ T_K \in \widehat{P}\right\}
+\end{equation*}
+++++
+where stem:[T_K] is the geometric transformation sending stem:[\widehat{K}] into stem:[K]. 
+The space stem:[P_{\mathrm{c}, h}^k] is the space of the functions of stem:[\mathcal{C}^0(\bar{\Omega})] which are continuous on the boundary of stem:[\Omega] and which are piecewise polynomials of degree stem:[k] on each element of stem:[\mathcal{T}_b].
+
+In order to construct an approximation space which is included in stem:[V=H_0^1(\Omega)], we pose
+[stem]
+++++
+\begin{equation*}
+V_h=P_{\mathrm{c}, h}^k \cap H_0^1(\Omega)
+\end{equation*}
+++++
+
+The elements of stem:[V_h] are the functions of stem:[P_{\mathrm{c}, h}^k] which are stem:[0] on the boundary of stem:[\Omega]. 
+
+
+We consider the following approximate problem:
+[stem]
+++++
+\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u_h \in V_h \text { such that } \\
+a\left(u_h, v_h\right)=f\left(v_h\right), \quad \forall v_h \in V_h,
+\end{array}\right.
+\end{equation*}
+++++
+which is clearly well-posed since stem:[a] is coercive on stem:[V] and stem:[V_h \subset V].
+
+[[thm:1]]
+.Convergence theorem of the conforming approximation 
+****
+With the above assumptions, we suppose that the unique solution stem:[u] of <<laplace-varf, the problem>> is in stem:[H^{k+1}(\Omega) \cap H_0^1(\Omega)]. 
+Then there exists a constant stem:[c] such that for all stem:[h],
+[[thm:1:1]]
+[stem]
+.stem:[H^1] estimate
+++++
+\begin{equation*}
+\left\|u-u_h\right\|_{1, \Omega} \leq c h^k|u|_{k+1, \Omega}
+\end{equation*}
+++++
+
+where stem:[|u|_{k+1, \Omega}=\left(\|u\|_{0, \Omega}^2+\|\nabla u\|_{0, \Omega}^2+\dots+\|\nabla^{k+1} u\|_{0, \Omega}^2\right)^{1 / 2}].
+Moreover, if  <<laplace-varf, the problem>> is regularizing, there exists a constant stem:[c] such that for all stem:[h],
+
+[[thm:1:2]]
+[stem]
+.stem:[L^2] estimate
+++++
+\begin{equation*}
+\left\|u-u_b\right\|_{0, \Omega} \leq c h^{k+1}|u|_{k+1, \Omega}
+\end{equation*}
+++++
+
+.Notes on the proof
+[%collapsible]
+====
+The <<thm:1:1>> results from the lemma of Céa  and an interpolation theorem. 
+Indeed, we have
+[stem]
+++++
+\begin{equation*}
+\begin{aligned}
+\left\|u-u_h\right\|_{1, \Omega} & \leq c \inf _{v_h \in V_h}\left\|u-v_h\right\|_{1, \Omega} \\ 
+& \leq c\left\|u-\mathcal{I}_h^{\mathrm{Lag}} u\right\|_{1, \Omega} \\ 
+& \leq c h^k|u|_{k+1, \Omega}
+\end{aligned}
+\end{equation*}
+++++
+where stem:[\mathcal{I}_h^{\mathrm{Lag}}] is the Lagrangian interpolation operator. 
+
+Moreover, the <<thm:1:2>> follows from the Aubin-Nitsche lemma which allows us to state that
+[stem]
+.Aubin-Nitsche lemma
+++++
+\begin{equation*}
+\left\|u-u_h\right\|_{0, \Omega} \leq c h\left|u-u_h\right|_{1, \Omega}
+\end{equation*}
+++++
+so that <<thm:1:2>> is deduced from <<thm:1:1>>.
+====
+****
+
+[NOTE]
+.Note on stem:[\mathbb{P}_1] or stem:[\mathbb{Q}_1] finite element approximation
+====
+The generic example of the application of <<thm:1, the previous theorem>> in dimension 2 or 3 is that of the Lagrangian finite element approximation stem:[\mathbb{P}_1] or stem:[\mathbb{Q}_1], for which, if <<laplace-varf,the problem>> is regularizing, we have
+[stem]
+++++
+\begin{equation*}
+\left\|u-u_h\right\|_{0, \Omega}+h\left\|u-u_h\right\|_{1, \Omega} \leq c h^2\|f\|_{0, \Omega} .
+\end{equation*}
+++++
+
+We thus obtain a convergence to **order 1 in stem:[H^1] norm and a convergence to order 2 in stem:[L^2] norm.**
+====
+
+=== Example of homogeneous Dirichlet problem
+
+We now consider an example to illustrate the <<thm:1,previous theorem>>.
+
+We start by initializing the {feelpp} environment.
+
+[[code:1]]  
+[source,python]
+----
+import sys
+import feelpp
+import feelpp.toolboxes.core as tb
+from feelpp.toolboxes.cfpdes import *
+import pandas as pd
+
+sys.argv = ["feelpp_cfpdes_poisson"]
+e = feelpp.Environment(sys.argv,
+                        opts=tb.toolboxes_options("coefficient-form-pdes", "cfpdes"),
+                        config=feelpp.globalRepository("cfpdes-poisson-homogeneous-dirichlet"))
+----
+
+Then we consider the stem:[\mathbb{R}^2] domain stem:[\Omega] defined by stem:[\Omega=\left\{x \in \mathbb{R}^2; 0 \leq x_1 \leq 1, 0 \leq x_2 \leq 1\right\}].
+We consider the following mesh stem:[\mathcal{T}_h] of stem:[\Omega] with stem:[h=0.1].
+
+[[code:2]]
+[source,python]
+----
+def generateSquareGeometry(filename,hsize=0.1):
+    """create gmsh mesh
+
+    Args:
+        filename (str): name of the file
+        hsize (float): mesh size
+    """
+    geo="""SetFactory("OpenCASCADE");
+    h={};
+    Rectangle(1) = {{0, 0, 0, 1, 1, 0}};
+    Characteristic Length{{ PointsOf{{ Surface{{1}}; }} }} = h;
+    Physical Curve("Gamma_D") = {{1,2,3,4}};
+    Physical Surface("Omega") = {{1}};
+    """.format(hsize)
+    with open(filename, 'w') as f:
+        # Write the string to the file
+        f.write(geo)
+
+def getMesh(filename,hsize=0.05,verbose=False):
+    import os
+    if os.path.exists(os.path.basename(filename)+'.msh'):
+        os.remove(os.path.basename(filename)+'.msh')
+    if verbose:
+        print(f"generate mesh {filename} with hsize={hsize}")
+    generateSquareGeometry(filename=filename,hsize=hsize)
+    mesh = feelpp.load(feelpp.mesh(dim=2), filename, hsize)
+    return mesh
+----
+
+
+Then we consider the following right hand side stem:[f] and the exact solution stem:[u(x,y) = \sin(2 \pi x) \sin(2 \pi y)] such that 
+[stem]
+++++
+f=-\Delta u = 8 \pi^2 \sin(2 \pi x) \sin(2 \pi y)
+++++
+that way we can check the <<thm:1>> with the exact solution. 
+
+The {cfpdes} toolbox allows to solve the problem <<laplace-varf,problem>> with the following code:
+    
+[[code:3]]
+[source,python]
+----
+def laplacian(hsize, json, keyword="cfpdes",verbose=False):
+    if verbose:
+        print(f"Solving the laplacian problem for hsize = {hsize}...")
+    laplacian = cfpdes(dim=2, keyword=keyword)
+    laplacian.setMesh(getMesh("square.geo",hsize=hsize))
+    laplacian.setModelProperties(json)
+    laplacian.init(buildModelAlgebraicFactory=True)
+    laplacian.solve()
+    laplacian.exportResults()
+    measures = laplacian.postProcessMeasures().values()
+
+    return measures
+
+laplacian_json = lambda order:  {
+    "Name": "Laplacian",
+    "ShortName": "Laplacian",
+    "Models":
+    {
+        "cfpdes":{
+            "equations":"laplace"
+        },
+        "laplace":{
+            "setup":{
+                "unknown":{
+                    "basis":f"Pch{order}",
+                    "name":"u",
+                    "symbol":"u"
+                },
+                "coefficients":{
+                    "c":"1",
+
+                    "f":"8*pi*pi*sin(2*pi*x)*sin(2*pi*y):x:y"
+                }
+            }
+        }
+    },
+    "Materials":
+    {
+        "toto":
+        {
+            "markers":"Omega"
+        }
+    },
+    "BoundaryConditions":
+    {
+        "laplace":
+        {
+            "Dirichlet":
+            {
+                "zero":
+                {
+                    "markers":["Gamma_D"],
+                    "expr":"0."
+                }
+            }
+        }
+    },
+    "PostProcess":
+    {
+        "cfpdes":
+        {
+            "Exports":
+            {
+                "fields":["all"]
+            },
+            "Measures" :
+            {
+              "Norm" :
+              {
+                  "laplace" :
+                  {
+                     "type":["L2-error", "H1-error"],
+                     "field":"laplace.u",
+                     "solution":"sin(2*pi*x)*sin(2*pi*y):x:y",
+                     "grad_solution":"{2*pi*cos(2*pi*x)*sin(2*pi*y),2*pi*sin(2*pi*x)*cos(2*pi*y)}:x:y",
+                     "markers":"Omega"
+                 }
+              }
+            }
+        }
+    }
+}
+
+# execute the laplacian problem using P1 basis on a mesh of size 0.1
+laplacian(hsize=0.1,json=laplacian_json(1),verbose=True)
+# execute the laplacian problem using P2 basis on a mesh of size 0.1
+laplacian(hsize=0.1,json=laplacian_json(2),verbose=True)
+----
+
+
+[%collapsible.result]
+.Results
+====
+----
+Solving the laplacian problem for hsize = 0.1...
+{'Norm_laplace_H1-error': 0.9578973774398879,
+ 'Norm_laplace_L2-error': 0.0256824272246114}
+----
+====
+
+We can proceed with the visualisation of the field `u` using the following code using `pyvista`:
+
+[[code:4]]
+[source,python]
+----
+try:
+    from xvfbwrapper import Xvfb # <1>
+    vdisplay = Xvfb()
+    vdisplay.start()
+except:
+    print("please install 'xvfbwrapper' python package")
+    exit(0)
+    
+import pyvista as pv # <2>
+import os
+
+# Define the path to the case file directory
+case_path = os.path.abspath('cfpdes.exports/Export.case') # <3>
+reader = pv.get_reader(case_path) # <4>
+mesh = reader.read()
+mesh.plot(scalars="cfpdes.laplace.u", clim=[-1, 1],
+          cpos='xy', cmap='RdBu', show_scalar_bar=True, show_edges=True) # <5>
+----
+<1> The `xvfbwrapper` package is used to run the `pyvista` visualisation in a virtual display. This is useful when running the code on a remote server.
+<2> The `pyvista` package is used to visualise the mesh and the field `u`.
+<3> The `Export.case` file is generated by the `cfpdes` toolbox. It contains the mesh and the field `u`.
+<4> The `pyvista` package provides a Ensight case reader to read the `Export.case` file.
+<5> The `pyvista` package provides a `plot` function to visualise the mesh and the field `u` amd the edges of the mesh.
+
+[%collapsible.result]
+.Results
+====
+image::pyfeelpp-toolboxes/cfpdes/cfpdes.laplace.u-pv.png[width=50%]
+====
+
+Then we can run the following code to:
+
+- compute the solution for different mesh sizes and compute the error in stem:[L^2] and stem:[H^1] norms
+- compute the convergence rates of the error in stem:[L^2] and stem:[H^1] norms
+- display the errors in stem:[L^2] and stem:[H^1] norms in a table
+- check that the convergence rates are close to the expected theoretical values
+
+[[code:4]]
+[source,python]
+----
+def runLaplacianPk(df,order=1,verbose=False):
+    """generate the Pk case
+
+    Args:
+        order (int, optional): order of the basis. Defaults to 1.
+    """
+    meas=dict()
+    for h in df['h']:
+        m=laplacian(hsize=h,json=laplacian_json(order),verbose=verbose)
+        for norm in ['L2','H1']:
+            meas.setdefault(f'P{order}-Norm_laplace_{norm}-error', [])
+            meas[f'P{order}-Norm_laplace_{norm}-error'].append(m.pop(f'Norm_laplace_{norm}-error'))
+    df=df.assign(**meas)
+    for norm in ['L2','H1']:
+        df[f'P{order}-laplace_{norm}-convergence-rate']=np.log2(df[f'P{order}-Norm_laplace_{norm}-error'].shift() / df[f'P{order}-Norm_laplace_{norm}-error']) / np.log2(df['h'].shift() / df['h'])
+    return df
+
+import pandas as pd
+import numpy as np
+df=pd.DataFrame({'h':[0.1,0.05,0.025,0.0125]})
+for order in [1,2]:
+    df=runLaplacianPk(df=df,order=order,verbose=False)
+print(df.to_markdown())    
+----
+
+
+[%collapsible.result]
+.Results
+====
+----
+|    |      h |   P1-Norm_laplace_L2-error |   P1-Norm_laplace_H1-error |   P1-laplace_L2-convergence-rate |   P1-laplace_H1-convergence-rate |   P2-Norm_laplace_L2-error |   P2-Norm_laplace_H1-error |   P2-laplace_L2-convergence-rate |   P2-laplace_H1-convergence-rate |
+|---:|-------:|---------------------------:|---------------------------:|---------------------------------:|---------------------------------:|---------------------------:|---------------------------:|---------------------------------:|---------------------------------:|
+|  0 | 0.1    |                0.0256824   |                   0.957897 |                        nan       |                       nan        |                0.00108252  |                 0.0931597  |                        nan       |                        nan       |
+|  1 | 0.05   |                0.00674339  |                   0.492079 |                          1.92924 |                         0.960981 |                0.000139537 |                 0.0240171  |                          2.95567 |                          1.95564 |
+|  2 | 0.025  |                0.00170431  |                   0.247621 |                          1.98429 |                         0.990757 |                1.75159e-05 |                 0.00601782 |                          2.99391 |                          1.99675 |
+|  3 | 0.0125 |                0.000426066 |                   0.123856 |                          2.00004 |                         0.999468 |                2.16968e-06 |                 0.00150015 |                          3.01311 |                          2.00414 |
+----
+====
+
+Finally we postprocess the results using plotly. 
+The following code allows to 
+
+- plot the error in stem:[L^2] and stem:[H^1] norms in plotly
+- display the convergence rates in the legend of the plot
+- check that the convergence rates are close to the theoretical values
+
+[[code:5]]
+[source,python]
+----
+import plotly.express as px
+from plotly.subplots import make_subplots
+import itertools
+
+fig=px.line(df, x="h", y=[f'P{order}-Norm_laplace_{norm}-error' for order,norm in list(itertools.product([1,2],['L2','H1']))])
+fig.update_xaxes(title_text="h",type="log")
+fig.update_yaxes(title_text="Error",type="log")
+for order,norm in list(itertools.product([1,2],['L2','H1'])):
+    fig.update_traces(name=f'P{order} - {norm} error - {df[f"P{order}-laplace_{norm}-convergence-rate"].iloc[-1]:.2f}', selector=dict(name=f'P{order}-Norm_laplace_{norm}-error'))
+fig.update_layout(
+        title=f"Convergence rate for the Laplacian problem for P1 and P2",
+        autosize=False,
+        width=900,
+        height=900,
+    )
+fig.show()
+----
+
+[%collapsible.result]
+.Results
+====
+image:pyfeelpp-toolboxes/cfpdes/cfpdes.poisson-1.png[width=100%]
+====
+
