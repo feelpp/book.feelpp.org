@@ -496,3 +496,117 @@ fig.show()
 image:pyfeelpp-toolboxes/cfpdes/cfpdes.poisson-1.png[width=100%]
 ====
 
+== Other boundary conditions
+
+The previous example shows how to solve a Poisson problem with Dirichlet boundary conditions.
+
+=== Inhomogeneous Dirichlet boundary conditions
+
+Given a function stem:[f \in L^2(\Omega)] and a function stem:[g \in \mathcal{C}^{0,1}(\partial \Omega)] ( stem:[g] is lipschitzian on stem:[\partial \Omega]), we look for a function stem:[u: \Omega \rightarrow \mathbb{R}] such that
+[stem]
+++++
+\begin{equation*}
+\begin{aligned}
+& -\Delta u=f \text { in } \Omega \text {, } \\
+& u=g \quad \text { on } \partial \Omega . \\
+&
+\end{aligned}
+\end{equation*}
+++++
+
+[NOTE]
+====
+We can take stem:[g] in the fractional Sobolev space stem:[H^{refrac{1}{2}}(\partial \Omega)] defined as 
+[stem]
+++++
+H^{\frac{1}{2}}(\partial \Omega)=\left\{v \in L^2(\partial \Omega) ; \frac{v(x)-v(y)}{\|x-y\|^{\frac{d+1}{2}}} \in L^2(\partial \Omega \times \partial \Omega)\right\}.
+++++
+====
+
+The hypothesis stem:[g \in \mathcal{C}^{0,1}(\partial \Omega)] allows us to assert that there exists a lifting stem:[u_g] of stem:[g] in stem:[H^1(\Omega)], that is to say that there exists a function stem:[u_g] in stem:[H^1(\Omega)] such that stem:[\left.u_g\right|_{\partial \Omega}=g]. 
+
+Under these conditions, we perform the change of unknown stem:[u_0=u-u_g] and consider the following weak formulation:
+
+[[laplace-dir]]
+[stem]
+++++
+\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u_0 \in H_0^1(\Omega) \text { such that } \\
+a\left(u_0, w\right)=f(w)-a\left(u_g, w\right), \quad \forall w \in H_0^1(\Omega) .
+\end{array}\right.
+\end{equation*}
+++++
+
+By the Lax-Milgram lemma, this problem is well posed.
+We are interested in a conformal approximation of <<laplace-ug,the problem>> by Lagrange finite elements. 
+We use the discrete framework described previously.
+We suppose that the data stem:[g] is regular enough to admit a lifting stem:[u_g] in stem:[\mathcal{C}^0(\bar{\Omega}) \cap H^1(\Omega)]. 
+We denote stem:[\mathcal{I}_b^{\mathrm{Lag}}] the interpolation operator associated with the mesh stem:[\mathcal{T}_h] and the finite Lagrangian element of reference stem:[\widehat{K}, \widehat{P}, \widehat{\Sigma}}].
+Recall that stem:[P_{\mathrm{c}, h}^k] denotes the stem:[H^1]-conformal space based on this finite element and that stem:[V_h] is the stem:[H_0^1]-conformal approximation space defined in (5.9). 
+
+Let stem:[N=\operatorname{dim} L_{mathrm{c}, h}^k] be given. 
+We denote by stem:[\left\{varphi_1, \ldots, \varphi_N\right\}] the nodal basis of stem:[L_{\mathrm{c}, h}^k] and by stem:[\left\{a_1, \ldots, a_N\right\}] the associated nodes. 
+By definition, for stem:[u \in \mathcal{C}^0(\bar{\Omega})], we have
+[stem]
+++++
+\begin{equation*}
+\mathcal{I}_h^{\mathrm{Lag}} u=\sum_{i=1}^N u\left(a_i\right) \varphi_i
+\end{equation*}
+++++
+
+and we also introduce the surface Lagrange interpolation
+[stem]
+++++
+\begin{equation*}
+\mathcal{I}_h^{\mathrm{Lag} \partial}\left(\left.u\right|_{\partial \Omega}\right)=\left.\sum_{a_i \in \partial \Omega} u\left(a_i\right) \varphi_i\right|_{\partial \Omega}
+\end{equation*}
+++++
+
+We consider the approximated problem
+[stem]
+++++
+\begin{equation*}
+\left\{\begin{array}{l}
+\text { Search } u_{0 h} \in V_h \text { such that } \\
+a\left(u_{0 h}, w_h\right)=f\left(w_h\right)-a\left(\mathcal{I}_h^{\mathrm{Lag}} u_g, w_h\right), \quad \forall w_h \in V_n,
+\end{array}\right.
+\end{equation*}
+++++
+which is clearly well posed. 
+We pose stem:[u_h=u_{0 h}+\mathcal{I}_h^{\mathrm{Lag}} u_g] so that stem:[\left.u_h\right|_{partial \Omega}] coincides with the Lagrange interpolated surface of stem:[g]. 
+
+stem:[u_h] is the solution of the problem
+[stem]
+++++
+\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u_b \in L_{mathrm{c}, b}^k \text { such that } \\
+a\left(u_b, w_h\right)=f\left(w_h\right), \quad \forall w_h \in V_b, \
+\left.u_h\right|_{partial \Omega}=athcal{I}_b^{athrm{Lag} \partial} g .
+\end{array}\right.
+\end{equation*}
+++++
+
+For any surface node stem:[x_i \in \partial \Omega], then stem:[u_h\left(x_i\right)=g\left(x_i\right)], but in general stem:[\left.u_h\right|_{\partial \Omega} \neq g].
+
+With the above assumptions, assume that the unique solution stem:[u] of <<laplace-dir>> is in stem:[H^{k+1}(\Omega) \cap H_0^1(\Omega)]. 
+Then there exists a constant stem:[c] such that for all stem:[h],
+[stem]
+++++
+\begin{equation*}
+\left\|u-u_b\right\|_{1, \Omega} \leqsant c h^k|u|_{k+1, \Omega} .
+\end{equation*}
+++++
+Moreover, if <<laplace-dir,the problem>> is regularizing, there exists a constant stem:[mathrm{c}] such that for all stem:[h],
+[stem]
+++++
+\begin{equation*}
+\left\|u-u_h\right\|_{0, \Omega} \leqsant c h^{k+1}|u|_{k+1, \Omega}
+\end{equation*}
+++++
+
+[appendix]
+== References
+
+- [1] docs.feelpp.org
