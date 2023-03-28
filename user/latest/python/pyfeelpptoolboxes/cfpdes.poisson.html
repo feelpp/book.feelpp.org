@@ -1401,6 +1401,163 @@ fig.show()</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_other_boundary_conditions"><a class="anchor" href="#_other_boundary_conditions"></a>3. Other boundary conditions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The previous example shows how to solve a Poisson problem with Dirichlet boundary conditions.</p>
+</div>
+<div class="sect2">
+<h3 id="_inhomogeneous_dirichlet_boundary_conditions"><a class="anchor" href="#_inhomogeneous_dirichlet_boundary_conditions"></a>3.1. Inhomogeneous Dirichlet boundary conditions</h3>
+<div class="paragraph">
+<p>Given a function \(f \in L^2(\Omega)\) and a function \(g \in \mathcal{C}^{0,1}(\partial \Omega)\) ( \(g\) is lipschitzian on \(\partial \Omega\)), we look for a function \(u: \Omega \rightarrow \mathbb{R}\) such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\begin{aligned}
+&amp; -\Delta u=f \text { in } \Omega \text {, } \\
+&amp; u=g \quad \text { on } \partial \Omega . \\
+&amp;
+\end{aligned}
+\end{equation*}\]
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We can take \(g\) in the fractional Sobolev space \(H^{refrac{1}{2}}(\partial \Omega)\) defined as</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[H^{\frac{1}{2}}(\partial \Omega)=\left\{v \in L^2(\partial \Omega) ; \frac{v(x)-v(y)}{\|x-y\|^{\frac{d+1}{2}}} \in L^2(\partial \Omega \times \partial \Omega)\right\}.\]
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The hypothesis \(g \in \mathcal{C}^{0,1}(\partial \Omega)\) allows us to assert that there exists a lifting \(u_g\) of \(g\) in \(H^1(\Omega)\), that is to say that there exists a function \(u_g\) in \(H^1(\Omega)\) such that \(\left.u_g\right|_{\partial \Omega}=g\).</p>
+</div>
+<div class="paragraph">
+<p>Under these conditions, we perform the change of unknown \(u_0=u-u_g\) and consider the following weak formulation:</p>
+</div>
+<div id="laplace-dir" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u_0 \in H_0^1(\Omega) \text { such that } \\
+a\left(u_0, w\right)=f(w)-a\left(u_g, w\right), \quad \forall w \in H_0^1(\Omega) .
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>By the Lax-Milgram lemma, this problem is well posed.
+We are interested in a conformal approximation of <a href="#laplace-ug">the problem</a> by Lagrange finite elements.
+We use the discrete framework described previously.
+We suppose that the data \(g\) is regular enough to admit a lifting \(u_g\) in \(\mathcal{C}^0(\bar{\Omega}) \cap H^1(\Omega)\).
+We denote \(\mathcal{I}_b^{\mathrm{Lag}}\) the interpolation operator associated with the mesh \(\mathcal{T}_h\) and the finite Lagrangian element of reference \(\widehat{K}, \widehat{P}, \widehat{\Sigma}}\).
+Recall that \(P_{\mathrm{c}, h}^k\) denotes the \(H^1\)-conformal space based on this finite element and that \(V_h\) is the \(H_0^1\)-conformal approximation space defined in (5.9).</p>
+</div>
+<div class="paragraph">
+<p>Let \(N=\operatorname{dim} L_{mathrm{c}, h}^k\) be given.
+We denote by \(\left\{varphi_1, \ldots, \varphi_N\right\}\) the nodal basis of \(L_{\mathrm{c}, h}^k\) and by \(\left\{a_1, \ldots, a_N\right\}\) the associated nodes.
+By definition, for \(u \in \mathcal{C}^0(\bar{\Omega})\), we have</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\mathcal{I}_h^{\mathrm{Lag}} u=\sum_{i=1}^N u\left(a_i\right) \varphi_i
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>and we also introduce the surface Lagrange interpolation</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\mathcal{I}_h^{\mathrm{Lag} \partial}\left(\left.u\right|_{\partial \Omega}\right)=\left.\sum_{a_i \in \partial \Omega} u\left(a_i\right) \varphi_i\right|_{\partial \Omega}
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>We consider the approximated problem</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Search } u_{0 h} \in V_h \text { such that } \\
+a\left(u_{0 h}, w_h\right)=f\left(w_h\right)-a\left(\mathcal{I}_h^{\mathrm{Lag}} u_g, w_h\right), \quad \forall w_h \in V_n,
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>which is clearly well posed.
+We pose \(u_h=u_{0 h}+\mathcal{I}_h^{\mathrm{Lag}} u_g\) so that \(\left.u_h\right|_{partial \Omega}\) coincides with the Lagrange interpolated surface of \(g\).</p>
+</div>
+<div class="paragraph">
+<p>\(u_h\) is the solution of the problem</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u_b \in L_{mathrm{c}, b}^k \text { such that } \\
+a\left(u_b, w_h\right)=f\left(w_h\right), \quad \forall w_h \in V_b, \
+\left.u_h\right|_{partial \Omega}=athcal{I}_b^{athrm{Lag} \partial} g .
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>For any surface node \(x_i \in \partial \Omega\), then \(u_h\left(x_i\right)=g\left(x_i\right)\), but in general \(\left.u_h\right|_{\partial \Omega} \neq g\).</p>
+</div>
+<div class="paragraph">
+<p>With the above assumptions, assume that the unique solution \(u\) of <a href="#laplace-dir">[laplace-dir]</a> is in \(H^{k+1}(\Omega) \cap H_0^1(\Omega)\).
+Then there exists a constant \(c\) such that for all \(h\),</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\|u-u_b\right\|_{1, \Omega} \leqsant c h^k|u|_{k+1, \Omega} .
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Moreover, if <a href="#laplace-dir">the problem</a> is regularizing, there exists a constant \(mathrm{c}\) such that for all \(h\),</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\|u-u_h\right\|_{0, \Omega} \leqsant c h^{k+1}|u|_{k+1, \Omega}
+\end{equation*}\]
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references"><a class="anchor" href="#_references"></a>Appendix A: References</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>[1] docs.feelpp.org</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="cfpdes.index.html">Coefficient Formulation PDEs</a></span>
   <span class="next"><a href="cfpdes.adr.html">Coefficient Formulation PDEs Advection Diffusion Equation  Equation</a></span>
