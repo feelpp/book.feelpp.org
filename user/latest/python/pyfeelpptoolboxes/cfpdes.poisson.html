@@ -937,7 +937,7 @@ P_{\mathrm{c}, h}^k=\left\{v_h \in \mathcal{C}^0(\bar{\Omega}); \forall K \in \m
 </div>
 <div class="paragraph">
 <p>where \(T_K\) is the geometric transformation sending \(\widehat{K}\) into \(K\).
-The space \(P_{\mathrm{c}, h}^k\) is the space of the functions of \(\mathcal{C}^0(\bar{\Omega})\) which are continuous on the boundary of \(\Omega\) and which are piecewise polynomials of degree \(k\) on each element of \(\mathcal{T}_b\).</p>
+The space \(P_{\mathrm{c}, h}^k\) is the space of the functions of \(\mathcal{C}^0(\bar{\Omega})\) which are continuous on the boundary of \(\Omega\) and which are piecewise polynomials of degree \(k\) on each element of \(\mathcal{T}_h\).</p>
 </div>
 <div class="paragraph">
 <p>In order to construct an approximation space which is included in \(V=H_0^1(\Omega)\), we pose</p>
@@ -991,7 +991,7 @@ Moreover, if  <a href="#laplace-varf">the problem</a> is regularizing, there exi
 <div class="title">\(L^2\) estimate</div>
 <div class="content">
 \[\begin{equation*}
-\left\|u-u_b\right\|_{0, \Omega} \leq c h^{k+1}|u|_{k+1, \Omega}
+\left\|u-u_h\right\|_{0, \Omega} \leq c h^{k+1}|u|_{k+1, \Omega}
 \end{equation*}\]
 </div>
 </div>
@@ -1512,9 +1512,9 @@ We pose \(u_h=u_{0 h}+\mathcal{I}_h^{\mathrm{Lag}} u_g\) so that \(\left.u_h\rig
 <div class="content">
 \[\begin{equation*}
 \left\{\begin{array}{l}
-\text { Find } u_b \in L_{mathrm{c}, b}^k \text { such that } \\
-a\left(u_b, w_h\right)=f\left(w_h\right), \quad \forall w_h \in V_b, \
-\left.u_h\right|_{partial \Omega}=athcal{I}_b^{athrm{Lag} \partial} g .
+\text { Find } u_h \in L_{\mathrm{c}, b}^k \text { such that } \\
+a\left(u_h, w_h\right)=f\left(w_h\right), \quad \forall w_h \in V_h, \
+\left.u_h\right|_{\partial \Omega}=\mathcal{I}_b^{\mathrm{Lag} \partial} g .
 \end{array}\right.
 \end{equation*}\]
 </div>
@@ -1529,7 +1529,7 @@ Then there exists a constant \(c\) such that for all \(h\),</p>
 <div class="stemblock">
 <div class="content">
 \[\begin{equation*}
-\left\|u-u_b\right\|_{1, \Omega} \leqsant c h^k|u|_{k+1, \Omega} .
+\left\|u-u_h\right\|_{1, \Omega} \leqsant c h^k|u|_{k+1, \Omega} .
 \end{equation*}\]
 </div>
 </div>
