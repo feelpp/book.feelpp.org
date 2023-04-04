@@ -115,7 +115,7 @@ P_{\mathrm{c}, h}^k=\left\{v_h \in \mathcal{C}^0(\bar{\Omega}); \forall K \in \m
 \end{equation*}
 ++++
 where stem:[T_K] is the geometric transformation sending stem:[\widehat{K}] into stem:[K]. 
-The space stem:[P_{\mathrm{c}, h}^k] is the space of the functions of stem:[\mathcal{C}^0(\bar{\Omega})] which are continuous on the boundary of stem:[\Omega] and which are piecewise polynomials of degree stem:[k] on each element of stem:[\mathcal{T}_b].
+The space stem:[P_{\mathrm{c}, h}^k] is the space of the functions of stem:[\mathcal{C}^0(\bar{\Omega})] which are continuous on the boundary of stem:[\Omega] and which are piecewise polynomials of degree stem:[k] on each element of stem:[\mathcal{T}_h].
 
 In order to construct an approximation space which is included in stem:[V=H_0^1(\Omega)], we pose
 [stem]
@@ -162,7 +162,7 @@ Moreover, if  <<laplace-varf, the problem>> is regularizing, there exists a cons
 .stem:[L^2] estimate
 ++++
 \begin{equation*}
-\left\|u-u_b\right\|_{0, \Omega} \leq c h^{k+1}|u|_{k+1, \Omega}
+\left\|u-u_h\right\|_{0, \Omega} \leq c h^{k+1}|u|_{k+1, \Omega}
 \end{equation*}
 ++++
 
@@ -608,9 +608,9 @@ stem:[u_h] is the solution of the problem
 ++++
 \begin{equation*}
 \left\{\begin{array}{l}
-\text { Find } u_b \in L_{mathrm{c}, b}^k \text { such that } \\
-a\left(u_b, w_h\right)=f\left(w_h\right), \quad \forall w_h \in V_b, \
-\left.u_h\right|_{partial \Omega}=athcal{I}_b^{athrm{Lag} \partial} g .
+\text { Find } u_h \in L_{\mathrm{c}, b}^k \text { such that } \\
+a\left(u_h, w_h\right)=f\left(w_h\right), \quad \forall w_h \in V_h, \
+\left.u_h\right|_{\partial \Omega}=\mathcal{I}_b^{\mathrm{Lag} \partial} g .
 \end{array}\right.
 \end{equation*}
 ++++
@@ -625,7 +625,7 @@ Then there exists a constant stem:[c] such that for all stem:[h],
 [stem]
 ++++
 \begin{equation*}
-\left\|u-u_b\right\|_{1, \Omega} \leqsant c h^k|u|_{k+1, \Omega} .
+\left\|u-u_h\right\|_{1, \Omega} \leqsant c h^k|u|_{k+1, \Omega} .
 \end{equation*}
 ++++
 Moreover, if <<laplace-dir,the problem>> is regularizing, there exists a constant stem:[mathrm{c}] such that for all stem:[h],

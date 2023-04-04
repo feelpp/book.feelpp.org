@@ -24,20 +24,33 @@ sudo apt update
 Ubuntu::
 +
 --
-// Ubuntu LTS distributions focal(20.04-preferred) bionic (18.04) are supported.
-Ubuntu LTS distributions focal(20.04-preferred) is supported.
+Ubuntu LTS distributions jammy(22.04-preferred) is supported.
 
 We may support short term distributions.
 
+[[jammy]]
 [discrete]
-=== Focal (20.04)
-
-par::[ubuntu,focal,latest]
-
-[discrete]
-=== Jammy (22.04)
+=== Jammy LTS (22.04)
 
 par::[ubuntu,jammy,latest]
+
+[[lunar]]
+[discrete]
+=== Lunar (23.04)
+
+par::[ubuntu,lunar,latest]
+
+[[kinetic]]
+[discrete]
+=== Kinetic (22.10)
+
+par::[ubuntu,kinetic,latest]
+
+[[focal]]
+[discrete]
+=== Focal LTS (20.04)
+
+par::[ubuntu,focal,latest]
 
 
 The supported systems are described below
@@ -46,19 +59,13 @@ The supported systems are described below
 |===
 |Distribution | Release | Version | Supported Channels | Comment
 
-|ubuntu | focal | 20.04 | latest | LTS
 |ubuntu | jammy | 22.04 | latest | LTS
+|ubuntu | lunar | 23.04 | latest |
+|ubuntu | kinetic | 22.10 | latest |
+|ubuntu | focal | 20.04 | latest | LTS
+
 
 |===
-
-[NOTE]
-.Other Ubuntu systems
-======
-{feelpp} is also compiled regularly on the latest Ubuntu distribition, currently Kinetic (22.10), see xref:compile.adoc[how to build {feelpp} from sources].
-
-.Ubuntu Kinetic (22.10)
- $ docker run --rm -it ghcr.io/feelpp/feelpp-env:ubuntu-22.10
-======
 
 include::partial$install-deb.adoc[]
 --
@@ -97,18 +104,6 @@ par::[debian,testing,latest]
 
 par::[debian,sid,latest]
 
-
-[NOTE]
-.Other Debian systems
-======
-{feelpp} is also compiled regularly on the latest Debian distribitions testing and unstable (sid). See xref:compile.adoc[how to build {feelpp} from sources].
-
-.Debian testing
- $ docker run --rm -it ghcr.io/feelpp/feelpp-env:debian-testing
-
-.Debian unstable (sid)
- $ docker run --rm -it ghcr.io/feelpp/feelpp-env:debian-sid
-======
 
 include::partial$install-deb.adoc[]
 --
