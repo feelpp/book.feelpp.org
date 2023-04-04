@@ -236,7 +236,7 @@ We consider the following mesh stem:[\mathcal{T}_h] of stem:[\Omega] with stem:[
 [[code:2]]
 [source,python]
 ----
-def generateSquareGeometry(filename,hsize=0.1):
+def generateGeometry(filename,dim=2,hsize=0.1):
     """create gmsh mesh
 
     Args:
@@ -245,24 +245,33 @@ def generateSquareGeometry(filename,hsize=0.1):
     """
     geo="""SetFactory("OpenCASCADE");
     h={};
-    Rectangle(1) = {{0, 0, 0, 1, 1, 0}};
-    Characteristic Length{{ PointsOf{{ Surface{{1}}; }} }} = h;
-    Physical Curve("Gamma_D") = {{1,2,3,4}};
-    Physical Surface("Omega") = {{1}};
-    """.format(hsize)
+    If ( {}==2 )
+        Rectangle(1) = {{0, 0, 0, 1, 1, 0}};
+        Characteristic Length{{ PointsOf{{ Surface{{1}}; }} }} = h;
+        Physical Curve("Gamma_D") = {{1,2,3,4}};
+        Physical Surface("Omega") = {{1}};
+    Else
+        Box(1) = {{0, 0, 0, 1, 1, 1}};
+        Characteristic Length{{ PointsOf{{ Volume{{1}}; }} }} = h;
+        Physical Surface("Gamma_D") = {{1,2,3,4,5,6}};
+        Physical Volume("Omega") = {{1}};
+    EndIf
+    """.format(hsize,dim)
     with open(filename, 'w') as f:
         # Write the string to the file
         f.write(geo)
 
-def getMesh(filename,hsize=0.05,verbose=False):
+def getMesh(filename,hsize=0.05,dim=2,verbose=False):
     import os
     if os.path.exists(os.path.basename(filename)+'.msh'):
         os.remove(os.path.basename(filename)+'.msh')
     if verbose:
-        print(f"generate mesh {filename} with hsize={hsize}")
-    generateSquareGeometry(filename=filename,hsize=hsize)
-    mesh = feelpp.load(feelpp.mesh(dim=2), filename, hsize)
+        print(f"generate mesh {filename} with hsize={hsize} and dimension={dim}")
+    generateGeometry(filename=filename,dim=dim,hsize=hsize)
+    mesh = feelpp.load(feelpp.mesh(dim=dim,realdim=dim), filename, hsize)
     return mesh
+
+mesh = getMesh("square.geo",hsize=0.1,dim=2,verbose=True)
 ----
 
 
@@ -278,11 +287,11 @@ The {cfpdes} toolbox allows to solve the problem <<laplace-varf,problem>> with t
 [[code:3]]
 [source,python]
 ----
-def laplacian(hsize, json, keyword="cfpdes",verbose=False):
+def laplacian(hsize, json, dim=2,verbose=False):
     if verbose:
         print(f"Solving the laplacian problem for hsize = {hsize}...")
-    laplacian = cfpdes(dim=2, keyword=keyword)
-    laplacian.setMesh(getMesh("square.geo",hsize=hsize))
+    laplacian = cfpdes(dim=dim, keyword=f"cfpdes-{dim}d")
+    laplacian.setMesh(getMesh("mesh.geo",hsize=hsize,dim=dim,verbose=verbose))
     laplacian.setModelProperties(json)
     laplacian.init(buildModelAlgebraicFactory=True)
     laplacian.solve()
@@ -291,12 +300,12 @@ def laplacian(hsize, json, keyword="cfpdes",verbose=False):
 
     return measures
 
-laplacian_json = lambda order:  {
+laplacian_json = lambda order,dim=2:  {
     "Name": "Laplacian",
     "ShortName": "Laplacian",
     "Models":
     {
-        "cfpdes":{
+        f"cfpdes-{dim}d":{
             "equations":"laplace"
         },
         "laplace":{
@@ -309,14 +318,14 @@ laplacian_json = lambda order:  {
                 "coefficients":{
                     "c":"1",
 
-                    "f":"8*pi*pi*sin(2*pi*x)*sin(2*pi*y):x:y"
+                    "f":"8*pi*pi*sin(2*pi*x)*sin(2*pi*y):x:y" if dim==2 else "8*pi*pi*sin(2*pi*x)*sin(2*pi*y)*sin(2*pi*z):x:y:z"
                 }
             }
         }
     },
     "Materials":
     {
-        "toto":
+        "Omega":
         {
             "markers":"Omega"
         }
@@ -337,7 +346,7 @@ laplacian_json = lambda order:  {
     },
     "PostProcess":
     {
-        "cfpdes":
+        f"cfpdes-{dim}d":
         {
             "Exports":
             {
@@ -351,8 +360,8 @@ laplacian_json = lambda order:  {
                   {
                      "type":["L2-error", "H1-error"],
                      "field":"laplace.u",
-                     "solution":"sin(2*pi*x)*sin(2*pi*y):x:y",
-                     "grad_solution":"{2*pi*cos(2*pi*x)*sin(2*pi*y),2*pi*sin(2*pi*x)*cos(2*pi*y)}:x:y",
+                     "solution":"sin(2*pi*x)*sin(2*pi*y):x:y" if dim==2 else "sin(2*pi*x)*sin(2*pi*y)*sin(2*pi*z):x:y:z",
+                     "grad_solution":"{2*pi*cos(2*pi*x)*sin(2*pi*y),2*pi*sin(2*pi*x)*cos(2*pi*y)}:x:y" if dim==2 else "{2*pi*cos(2*pi*x)*sin(2*pi*y)*sin(2*pi*z),2*pi*sin(2*pi*x)*cos(2*pi*y)*sin(2*pi*z),2*pi*sin(2*pi*x)*sin(2*pi*y)*cos(2*pi*z)}:x:y:z",
                      "markers":"Omega"
                  }
               }
@@ -361,9 +370,9 @@ laplacian_json = lambda order:  {
     }
 }
 
-# execute the laplacian problem using P1 basis on a mesh of size 0.1
+# execute the laplacian problem using P1 basis on a mesh of the unit square  of size 0.1
 laplacian(hsize=0.1,json=laplacian_json(1),verbose=True)
-# execute the laplacian problem using P2 basis on a mesh of size 0.1
+# execute the laplacian problem using P2 basis on a mesh of the unit square of size 0.1
 laplacian(hsize=0.1,json=laplacian_json(2),verbose=True)
 ----
 
@@ -394,11 +403,12 @@ except:
 import pyvista as pv # <2>
 import os
 
+
 # Define the path to the case file directory
-case_path = os.path.abspath('cfpdes.exports/Export.case') # <3>
+case_path = os.path.abspath('cfpdes-2d.exports/Export.case') # <3>
 reader = pv.get_reader(case_path) # <4>
 mesh = reader.read()
-mesh.plot(scalars="cfpdes.laplace.u", clim=[-1, 1],
+mesh.plot(scalars="cfpdes-2d.laplace.u", clim=[-1, 1],
           cpos='xy', cmap='RdBu', show_scalar_bar=True, show_edges=True) # <5>
 ----
 <1> The `xvfbwrapper` package is used to run the `pyvista` visualisation in a virtual display. This is useful when running the code on a remote server.
@@ -496,6 +506,23 @@ fig.show()
 image:pyfeelpp-toolboxes/cfpdes/cfpdes.poisson-1.png[width=100%]
 ====
 
+Similar results can be obtained in 3D.
+Let's consider the poisson with the exact solution stem:[u=\sin(2 \pi x) \sin(2 \pi y) \sin(2 \pi z)] and the right hand side stem:[f=6 \pi^2 \sin(2 \pi x) \sin(2 \pi y) \sin(2 \pi z)].
+
+[[code:6]]
+[source,python]
+----
+laplacian(hsize=0.1,json=laplacian_json(order=1,dim=3),verbose=True)
+
+# Define the path to the case file directory
+case_path = os.path.abspath('cfpdes-3d.exports/Export.case') 
+reader = pv.get_reader(case_path) 
+mesh = reader.read()
+mesh.plot(scalars="cfpdes-3d.laplace.u", clim=[-1, 1],
+          cpos='xy', cmap='RdBu', show_scalar_bar=True, show_edges=True) # <5>
+----
+
+
 == Other boundary conditions
 
 The previous example shows how to solve a Poisson problem with Dirichlet boundary conditions.
@@ -590,6 +617,9 @@ a\left(u_b, w_h\right)=f\left(w_h\right), \quad \forall w_h \in V_b, \
 
 For any surface node stem:[x_i \in \partial \Omega], then stem:[u_h\left(x_i\right)=g\left(x_i\right)], but in general stem:[\left.u_h\right|_{\partial \Omega} \neq g].
 
+[[thm:1:3]]
+.Convergence theorem for the inhomogeneous Dirichlet problem
+****
 With the above assumptions, assume that the unique solution stem:[u] of <<laplace-dir>> is in stem:[H^{k+1}(\Omega) \cap H_0^1(\Omega)]. 
 Then there exists a constant stem:[c] such that for all stem:[h],
 [stem]
@@ -602,9 +632,16 @@ Moreover, if <<laplace-dir,the problem>> is regularizing, there exists a constan
 [stem]
 ++++
 \begin{equation*}
-\left\|u-u_h\right\|_{0, \Omega} \leqsant c h^{k+1}|u|_{k+1, \Omega}
+\left\|u-u_h\right\|_{0, \Omega} \leq c h^{k+1}|u|_{k+1, \Omega}
 \end{equation*}
 ++++
+****
+
+==== Example 
+
+We consider the following problem in stem:[\Omega=\left[0, 1\right] \times \left[0, 1\right]]:
+
+
 
 [appendix]
 == References
