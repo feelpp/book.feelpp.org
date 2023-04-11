@@ -1094,37 +1094,55 @@ We consider the following mesh \(\mathcal{T}_h\) of \(\Omega\) with \(h=0.1\).</
 
     Args:
         filename (str): name of the file
+        dim (int): dimension of the mesh
         hsize (float): mesh size
     """
     geo="""SetFactory("OpenCASCADE");
     h={};
-    If ( {}==2 )
-        Rectangle(1) = {{0, 0, 0, 1, 1, 0}};
-        Characteristic Length{{ PointsOf{{ Surface{{1}}; }} }} = h;
-        Physical Curve("Gamma_D") = {{1,2,3,4}};
-        Physical Surface("Omega") = {{1}};
-    Else
-        Box(1) = {{0, 0, 0, 1, 1, 1}};
-        Characteristic Length{{ PointsOf{{ Volume{{1}}; }} }} = h;
-        Physical Surface("Gamma_D") = {{1,2,3,4,5,6}};
-        Physical Volume("Omega") = {{1}};
-    EndIf
+    dim={};
     """.format(hsize,dim)
+    if dim==2 :
+        geo+="""
+        Rectangle(1) = {0, 0, 0, 1, 1, 0};
+        Characteristic Length{ PointsOf{ Surface{1}; } } = h;
+        Physical Curve("Gamma_D") = {1,2,3,4};
+        Physical Surface("Omega") = {1};
+        """
+    elif dim==3 :
+        geo+="""
+        Box(1) = {0, 0, 0, 1, 1, 1};
+        Characteristic Length{ PointsOf{ Volume{1}; } } = h;
+        Physical Surface("Gamma_D") = {1,2,3,4,5,6};
+        Physical Volume("Omega") = {1};
+        """
     with open(filename, 'w') as f:
         # Write the string to the file
         f.write(geo)
 
 def getMesh(filename,hsize=0.05,dim=2,verbose=False):
+    """create mesh
+
+    Args:
+        filename (str): name of the file
+        hsize (float): mesh size
+        dim (int): dimension of the mesh
+        verbose (bool): verbose mode
+    """
     import os
-    if os.path.exists(os.path.basename(filename)+'.msh'):
-        os.remove(os.path.basename(filename)+'.msh')
+    for ext in [".msh",".geo"]:
+        f=os.path.splitext(filename)[0]+ext
+        # print(f)
+        if os.path.exists(f):
+            os.remove(f)
     if verbose:
         print(f"generate mesh {filename} with hsize={hsize} and dimension={dim}")
     generateGeometry(filename=filename,dim=dim,hsize=hsize)
     mesh = feelpp.load(feelpp.mesh(dim=dim,realdim=dim), filename, hsize)
     return mesh
 
-mesh = getMesh("square.geo",hsize=0.1,dim=2,verbose=True)</code></pre>
+# generate 2D abd 3D meshes
+for dim in [2,3]:
+    mesh = getMesh(f"omega-{dim}d.geo",hsize=0.1,dim=dim,verbose=True)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1147,34 +1165,36 @@ mesh = getMesh("square.geo",hsize=0.1,dim=2,verbose=True)</code></pre>
     if verbose:
         print(f"Solving the laplacian problem for hsize = {hsize}...")
     laplacian = cfpdes(dim=dim, keyword=f"cfpdes-{dim}d")
-    laplacian.setMesh(getMesh("mesh.geo",hsize=hsize,dim=dim,verbose=verbose))
+    laplacian.setMesh(getMesh(f"omega-{dim}.geo",hsize=hsize,dim=dim,verbose=verbose))
     laplacian.setModelProperties(json)
     laplacian.init(buildModelAlgebraicFactory=True)
+    laplacian.printAndSaveInfo()
     laplacian.solve()
     laplacian.exportResults()
     measures = laplacian.postProcessMeasures().values()
 
     return measures
 
-laplacian_json = lambda order,dim=2:  {
+laplacian_json = lambda order,dim=2,name="u":  {
     "Name": "Laplacian",
     "ShortName": "Laplacian",
     "Models":
     {
-        f"cfpdes-{dim}d":{
+        f"cfpdes-{dim}d":
+        {
             "equations":"laplace"
         },
         "laplace":{
             "setup":{
                 "unknown":{
                     "basis":f"Pch{order}",
-                    "name":"u",
+                    "name":f"{name}",
                     "symbol":"u"
                 },
                 "coefficients":{
                     "c":"1",
 
-                    "f":"8*pi*pi*sin(2*pi*x)*sin(2*pi*y):x:y" if dim==2 else "8*pi*pi*sin(2*pi*x)*sin(2*pi*y)*sin(2*pi*z):x:y:z"
+                    "f":"8*pi*pi*sin(2*pi*x)*sin(2*pi*y):x:y" if dim==2 else "12*pi*pi*sin(2*pi*x)*sin(2*pi*y)*sin(2*pi*z):x:y:z"
                 }
             }
         }
@@ -1183,7 +1203,7 @@ laplacian_json = lambda order,dim=2:  {
     {
         "Omega":
         {
-            "markers":"Omega"
+            "markers":["Omega"]
         }
     },
     "BoundaryConditions":
@@ -1192,10 +1212,10 @@ laplacian_json = lambda order,dim=2:  {
         {
             "Dirichlet":
             {
-                "zero":
+                "g":
                 {
                     "markers":["Gamma_D"],
-                    "expr":"0."
+                    "expr":"0"
                 }
             }
         }
@@ -1206,7 +1226,11 @@ laplacian_json = lambda order,dim=2:  {
         {
             "Exports":
             {
-                "fields":["all"]
+                "fields":["all"],
+                "expr":{
+                    "u_exact":"sin(2*pi*x)*sin(2*pi*y):x:y" if dim==2 else "sin(2*pi*x)*sin(2*pi*y)*sin(2*pi*z):x:y:z",
+                    "grad_u_exact": "{2*pi*cos(2*pi*x)*sin(2*pi*y),2*pi*sin(2*pi*x)*cos(2*pi*y)}:x:y" if dim==2 else "{2*pi*cos(2*pi*x)*sin(2*pi*y)*sin(2*pi*z),2*pi*sin(2*pi*x)*cos(2*pi*y)*sin(2*pi*z),2*pi*sin(2*pi*x)*sin(2*pi*y)*cos(2*pi*z)}:x:y:z"
+                }
             },
             "Measures" :
             {
@@ -1215,21 +1239,27 @@ laplacian_json = lambda order,dim=2:  {
                   "laplace" :
                   {
                      "type":["L2-error", "H1-error"],
-                     "field":"laplace.u",
+                     "field":f"laplace.{name}",
                      "solution":"sin(2*pi*x)*sin(2*pi*y):x:y" if dim==2 else "sin(2*pi*x)*sin(2*pi*y)*sin(2*pi*z):x:y:z",
                      "grad_solution":"{2*pi*cos(2*pi*x)*sin(2*pi*y),2*pi*sin(2*pi*x)*cos(2*pi*y)}:x:y" if dim==2 else "{2*pi*cos(2*pi*x)*sin(2*pi*y)*sin(2*pi*z),2*pi*sin(2*pi*x)*cos(2*pi*y)*sin(2*pi*z),2*pi*sin(2*pi*x)*sin(2*pi*y)*cos(2*pi*z)}:x:y:z",
-                     "markers":"Omega"
+                     "markers":"Omega",
+                     "quad":6
                  }
               }
             }
         }
     }
 }
-
-# execute the laplacian problem using P1 basis on a mesh of the unit square  of size 0.1
-laplacian(hsize=0.1,json=laplacian_json(1),verbose=True)
+# simulate the laplacian problem for 2D and 3D
+for dim in [2,3]:
+    with open(f'laplacian-{dim}d.json', 'w') as f:
+        # Write the string to the file
+        import json
+        f.write(json.dumps(laplacian_json(dim=dim,order=1),indent=1))
+        # execute the laplacian problem using P1 basis on a mesh of the unit square  of size 0.1
+        laplacian(hsize=0.1,json=laplacian_json(order=1,dim=dim), dim=dim,verbose=True)
 # execute the laplacian problem using P2 basis on a mesh of the unit square of size 0.1
-laplacian(hsize=0.1,json=laplacian_json(2),verbose=True)</code></pre>
+#laplacian(hsize=0.025,json=laplacian_json(dim=2,order=2),dim=2,verbose=True)</code></pre>
 </div>
 </div>
 <details class="result">
@@ -1249,24 +1279,33 @@ laplacian(hsize=0.1,json=laplacian_json(2),verbose=True)</code></pre>
 </div>
 <div id="code:4" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">try:
-    from xvfbwrapper import Xvfb <i class="conum" data-value="1"></i><b>(1)</b>
-    vdisplay = Xvfb()
-    vdisplay.start()
-except:
-    print("please install 'xvfbwrapper' python package")
-    exit(0)
-
-import pyvista as pv <i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import pyvista as pv <i class="conum" data-value="2"></i><b>(2)</b>
 import os
+pv.start_xvfb()  <i class="conum" data-value="1"></i><b>(1)</b>
+pv.set_jupyter_backend('panel') <i class="conum" data-value="3"></i><b>(3)</b>
+def pv_get_mesh(mesh_path):
+    reader = pv.get_reader(mesh_path)
+    mesh = reader.read()
+    return mesh
+def pv_plot(mesh, field, clim=None, cmap='viridis', cpos='xy', show_scalar_bar=True, show_edges=True):
+    mesh.plot(scalars=field, clim=clim, cmap=cmap, cpos=cpos, show_scalar_bar=show_scalar_bar, show_edges=show_edges)
 
+def myplots(dim=2, field="cfpdes.laplace.u", factor=1, cmap='viridis'):
+    mesh = pv_get_mesh(f"cfpdes-{dim}d.exports/Export.case") <i class="conum" data-value="4"></i><b>(4)</b>
+    pv_plot(mesh, field) <i class="conum" data-value="5"></i><b>(5)</b>
+    pl = pv.Plotter()
+    contours = mesh[0].contour()
+    pl.add_mesh(mesh[0], opacity=0.85)
+    pl.add_mesh(contours, color="white", line_width=5, render_lines_as_tubes=True)
+    pl.show()
+    if dim == 2:
+        warped = mesh[0].warp_by_scalar(field, factor=factor)
+        warped.plot(cmap=cmap, show_scalar_bar=False, show_edges=True)
+    else:
+        slices = mesh.slice_orthogonal(x=0.2,y=0.4,z=.6)
+        slices.plot()
 
-# Define the path to the case file directory
-case_path = os.path.abspath('cfpdes-2d.exports/Export.case') <i class="conum" data-value="3"></i><b>(3)</b>
-reader = pv.get_reader(case_path) <i class="conum" data-value="4"></i><b>(4)</b>
-mesh = reader.read()
-mesh.plot(scalars="cfpdes-2d.laplace.u", clim=[-1, 1],
-          cpos='xy', cmap='RdBu', show_scalar_bar=True, show_edges=True) <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+myplots(dim=2,factor=0.5)</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1281,11 +1320,11 @@ mesh.plot(scalars="cfpdes-2d.laplace.u", clim=[-1, 1],
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <code>Export.case</code> file is generated by the <code>cfpdes</code> toolbox. It contains the mesh and the field <code>u</code>.</td>
+<td>The <code>set_jupyter_backend</code> function is used to set the backend to <code>panel</code>, use <code>static</code> instead to render an image and display it in the notebook.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The <code>pyvista</code> package provides a Ensight case reader to read the <code>Export.case</code> file.</td>
+<td>The <code>Export.case</code> file is generated by the <code>cfpdes</code> toolbox. It contains the mesh and the field <code>u</code>. The <code>pyvista</code> package provides a Ensight case reader to read the <code>Export.case</code> file.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -1303,6 +1342,14 @@ mesh.plot(scalars="cfpdes-2d.laplace.u", clim=[-1, 1],
 </div>
 </div>
 </details>
+<div class="paragraph">
+<p>In 3D, the plots are more difficult to visualise. We can use the <code>pyvista</code> package to visualise the mesh and the field <code>u</code>:</p>
+</div>
+<div id="code:4" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">myplots(dim=3)</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Then we can run the following code to:</p>
 </div>
@@ -1324,15 +1371,19 @@ mesh.plot(scalars="cfpdes-2d.laplace.u", clim=[-1, 1],
 </div>
 <div id="code:4" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def runLaplacianPk(df,order=1,verbose=False):
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import pandas as pd
+import numpy as np
+
+def runLaplacianPk(df,model,verbose=False):
     """generate the Pk case
 
     Args:
         order (int, optional): order of the basis. Defaults to 1.
     """
     meas=dict()
+    dim,order,json=model
     for h in df['h']:
-        m=laplacian(hsize=h,json=laplacian_json(order),verbose=verbose)
+        m=laplacian(hsize=h,json=json,dim=dim,verbose=verbose)
         for norm in ['L2','H1']:
             meas.setdefault(f'P{order}-Norm_laplace_{norm}-error', [])
             meas[f'P{order}-Norm_laplace_{norm}-error'].append(m.pop(f'Norm_laplace_{norm}-error'))
@@ -1341,13 +1392,23 @@ mesh.plot(scalars="cfpdes-2d.laplace.u", clim=[-1, 1],
         df[f'P{order}-laplace_{norm}-convergence-rate']=np.log2(df[f'P{order}-Norm_laplace_{norm}-error'].shift() / df[f'P{order}-Norm_laplace_{norm}-error']) / np.log2(df['h'].shift() / df['h'])
     return df
 
-import pandas as pd
-import numpy as np
-df=pd.DataFrame({'h':[0.1,0.05,0.025,0.0125]})
-for order in [1,2]:
-    df=runLaplacianPk(df=df,order=order,verbose=False)
-print(df.to_markdown())</code></pre>
+def runConvergenceAnalysis(json,dim=2,hs=[0.1,0.05,0.025,0.0125],orders=[1,2],verbose=False):
+    df=pd.DataFrame({'h':hs})
+    for order in orders:
+        df=runLaplacianPk(df=df,model=[dim,order,json(dim=dim,order=order)],verbose=verbose)
+    print(df.to_markdown()) <i class="conum" data-value="1"></i><b>(1)</b>
+    return df
+
+df=runConvergenceAnalysis(json=laplacian_json,dim=2,verbose=True)</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>to_markdown</code> function is used to display the results in a table.</td>
+</tr>
+</table>
 </div>
 <details class="result">
 <summary class="title">Results</summary>
@@ -1360,6 +1421,32 @@ print(df.to_markdown())</code></pre>
 |  1 | 0.05   |                0.00674339  |                   0.492079 |                          1.92924 |                         0.960981 |                0.000139537 |                 0.0240171  |                          2.95567 |                          1.95564 |
 |  2 | 0.025  |                0.00170431  |                   0.247621 |                          1.98429 |                         0.990757 |                1.75159e-05 |                 0.00601782 |                          2.99391 |                          1.99675 |
 |  3 | 0.0125 |                0.000426066 |                   0.123856 |                          2.00004 |                         0.999468 |                2.16968e-06 |                 0.00150015 |                          3.01311 |                          2.00414 |</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>In 3D, we use the same code to verify the convergence rates of the error in \(L^2\) and \(H^1\) norms.
+However we do this for different mesh sizes and only in \(\mathbb{P}^1\) to reduce the computational cost which increases significantly with the dimension.</p>
+</div>
+<div id="code:4" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">df3d=runConvergenceAnalysis(json=laplacian_json,dim=3,hs=[0.1,0.05,0.03],orders=[1],verbose=True)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Again, we observe that the proper convergence rates are obtained.</p>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>|    |    h |   P1-Norm_laplace_L2-error |   P1-Norm_laplace_H1-error |   P1-laplace_L2-convergence-rate |   P1-laplace_H1-convergence-rate |
+|---:|-----:|---------------------------:|---------------------------:|---------------------------------:|---------------------------------:|
+|  0 | 0.1  |                 0.060237   |                   1.53146  |                        nan       |                       nan        |
+|  1 | 0.05 |                 0.0157572  |                   0.781105 |                          1.93464 |                         0.971323 |
+|  2 | 0.03 |                 0.00531707 |                   0.452647 |                          2.12671 |                         1.06807  |</pre>
 </div>
 </div>
 </div>
@@ -1387,18 +1474,21 @@ The following code allows to</p>
 from plotly.subplots import make_subplots
 import itertools
 
-fig=px.line(df, x="h", y=[f'P{order}-Norm_laplace_{norm}-error' for order,norm in list(itertools.product([1,2],['L2','H1']))])
-fig.update_xaxes(title_text="h",type="log")
-fig.update_yaxes(title_text="Error",type="log")
-for order,norm in list(itertools.product([1,2],['L2','H1'])):
-    fig.update_traces(name=f'P{order} - {norm} error - {df[f"P{order}-laplace_{norm}-convergence-rate"].iloc[-1]:.2f}', selector=dict(name=f'P{order}-Norm_laplace_{norm}-error'))
-fig.update_layout(
-        title=f"Convergence rate for the Laplacian problem for P1 and P2",
-        autosize=False,
-        width=900,
-        height=900,
-    )
-fig.show()</code></pre>
+def plot_convergence(df,dim,orders=[1,2]):
+    fig=px.line(df, x="h", y=[f'P{order}-Norm_laplace_{norm}-error' for order,norm in list(itertools.product(orders,['L2','H1']))])
+    fig.update_xaxes(title_text="h",type="log")
+    fig.update_yaxes(title_text="Error",type="log")
+    for order,norm in list(itertools.product(orders,['L2','H1'])):
+        fig.update_traces(name=f'P{order} - {norm} error - {df[f"P{order}-laplace_{norm}-convergence-rate"].iloc[-1]:.2f}', selector=dict(name=f'P{order}-Norm_laplace_{norm}-error'))
+    fig.update_layout(
+            title=f"Convergence rate for the {dim}D Laplacian problem",
+            autosize=False,
+            width=900,
+            height=900,
+        )
+    fig.show()
+plot_convergence(df,dim=2)
+plot_convergence(df3d,dim=3,orders=[1])</code></pre>
 </div>
 </div>
 <details class="result">
@@ -1409,22 +1499,6 @@ fig.show()</code></pre>
 </div>
 </div>
 </details>
-<div class="paragraph">
-<p>Similar results can be obtained in 3D.
-Let&#8217;s consider the poisson with the exact solution \(u=\sin(2 \pi x) \sin(2 \pi y) \sin(2 \pi z)\) and the right hand side \(f=6 \pi^2 \sin(2 \pi x) \sin(2 \pi y) \sin(2 \pi z)\).</p>
-</div>
-<div id="code:6" class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">laplacian(hsize=0.1,json=laplacian_json(order=1,dim=3),verbose=True)
-
-# Define the path to the case file directory
-case_path = os.path.abspath('cfpdes-3d.exports/Export.case')
-reader = pv.get_reader(case_path)
-mesh = reader.read()
-mesh.plot(scalars="cfpdes-3d.laplace.u", clim=[-1, 1],
-          cpos='xy', cmap='RdBu', show_scalar_bar=True, show_edges=True) <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -1458,7 +1532,7 @@ mesh.plot(scalars="cfpdes-3d.laplace.u", clim=[-1, 1],
 </td>
 <td class="content">
 <div class="paragraph">
-<p>We can take \(g\) in the fractional Sobolev space \(H^{refrac{1}{2}}(\partial \Omega)\) defined as</p>
+<p>We can take \(g\) in the fractional Sobolev space \(H^{\frac{1}{2}}(\partial \Omega)\) defined as</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -1487,15 +1561,15 @@ a\left(u_0, w\right)=f(w)-a\left(u_g, w\right), \quad \forall w \in H_0^1(\Omega
 </div>
 <div class="paragraph">
 <p>By the Lax-Milgram lemma, this problem is well posed.
-We are interested in a conformal approximation of <a href="#laplace-ug">the problem</a> by Lagrange finite elements.
+We are interested in a conformal approximation of <a href="#laplace-dir">the problem</a> by Lagrange finite elements.
 We use the discrete framework described previously.
 We suppose that the data \(g\) is regular enough to admit a lifting \(u_g\) in \(\mathcal{C}^0(\bar{\Omega}) \cap H^1(\Omega)\).
-We denote \(\mathcal{I}_b^{\mathrm{Lag}}\) the interpolation operator associated with the mesh \(\mathcal{T}_h\) and the finite Lagrangian element of reference \(\widehat{K}, \widehat{P}, \widehat{\Sigma}}\).
+We denote \(\mathcal{I}_h^{\mathrm{Lag}}\) the interpolation operator associated with the mesh \(\mathcal{T}_h\) and the finite Lagrangian element of reference \(\widehat{K}, \widehat{P}, \widehat{\Sigma}}\).
 Recall that \(P_{\mathrm{c}, h}^k\) denotes the \(H^1\)-conformal space based on this finite element and that \(V_h\) is the \(H_0^1\)-conformal approximation space defined in (5.9).</p>
 </div>
 <div class="paragraph">
-<p>Let \(N=\operatorname{dim} L_{mathrm{c}, h}^k\) be given.
-We denote by \(\left\{varphi_1, \ldots, \varphi_N\right\}\) the nodal basis of \(L_{\mathrm{c}, h}^k\) and by \(\left\{a_1, \ldots, a_N\right\}\) the associated nodes.
+<p>Let \(N=\operatorname{dim} P_{\mathrm{c}, h}^k\) be given.
+We denote by \(\left\{\varphi_1, \ldots, \varphi_N\right\}\) the nodal basis of \(P_{\mathrm{c}, h}^k\) and by \(\left\{a_1, \ldots, a_N\right\}\) the associated nodes.
 By definition, for \(u \in \mathcal{C}^0(\bar{\Omega})\), we have</p>
 </div>
 <div class="stemblock">
@@ -1522,7 +1596,7 @@ By definition, for \(u \in \mathcal{C}^0(\bar{\Omega})\), we have</p>
 <div class="content">
 \[\begin{equation*}
 \left\{\begin{array}{l}
-\text { Search } u_{0 h} \in V_h \text { such that } \\
+\text { Find } u_{0 h} \in V_h \text { such that } \\
 a\left(u_{0 h}, w_h\right)=f\left(w_h\right)-a\left(\mathcal{I}_h^{\mathrm{Lag}} u_g, w_h\right), \quad \forall w_h \in V_n,
 \end{array}\right.
 \end{equation*}\]
@@ -1539,15 +1613,24 @@ We pose \(u_h=u_{0 h}+\mathcal{I}_h^{\mathrm{Lag}} u_g\) so that \(\left.u_h\rig
 <div class="content">
 \[\begin{equation*}
 \left\{\begin{array}{l}
-\text { Find } u_h \in L_{\mathrm{c}, b}^k \text { such that } \\
+\text { Find } u_h \in P_{\mathrm{c}, h}^k \text { such that } \\
 a\left(u_h, w_h\right)=f\left(w_h\right), \quad \forall w_h \in V_h, \
-\left.u_h\right|_{\partial \Omega}=\mathcal{I}_b^{\mathrm{Lag} \partial} g .
+\left.u_h\right|_{\partial \Omega}=\mathcal{I}_h^{\mathrm{Lag}\, \partial} g .
 \end{array}\right.
 \end{equation*}\]
 </div>
 </div>
-<div class="paragraph">
-<p>For any surface node \(x_i \in \partial \Omega\), then \(u_h\left(x_i\right)=g\left(x_i\right)\), but in general \(\left.u_h\right|_{\partial \Omega} \neq g\).</p>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+For any surface node \(x_i \in \partial \Omega\), then \(u_h\left(x_i\right)=g\left(x_i\right)\), but in general \(\left.u_h\right|_{\partial \Omega} \neq g\).
+</td>
+</tr>
+</table>
 </div>
 <div id="thm:1:3" class="sidebarblock">
 <div class="content">
@@ -1559,12 +1642,12 @@ Then there exists a constant \(c\) such that for all \(h\),</p>
 <div class="stemblock">
 <div class="content">
 \[\begin{equation*}
-\left\|u-u_h\right\|_{1, \Omega} \leqsant c h^k|u|_{k+1, \Omega} .
+\left\|u-u_h\right\|_{1, \Omega} \leq c h^k|u|_{k+1, \Omega} .
 \end{equation*}\]
 </div>
 </div>
 <div class="paragraph">
-<p>Moreover, if <a href="#laplace-dir">the problem</a> is regularizing, there exists a constant \(mathrm{c}\) such that for all \(h\),</p>
+<p>Moreover, if <a href="#laplace-dir">the problem</a> is regularizing, there exists a constant \(\mathrm{c}\) such that for all \(h\),</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -1578,7 +1661,776 @@ Then there exists a constant \(c\) such that for all \(h\),</p>
 <div class="sect3">
 <h4 id="_example"><a class="anchor" href="#_example"></a>3.1.1. Example</h4>
 <div class="paragraph">
-<p>We consider the following problem in \(\Omega=\left[0, 1\right\) \times \left[0, 1\right]]:</p>
+<p>Then we consider the \(\mathbb{R}^2\) domain \(\Omega\) defined by \(\Omega=\left\{x \in \mathbb{R}^2; 0 \leq x_1 \leq 1, 0 \leq x_2 \leq 1\right\}\).
+We consider the following mesh \(\mathcal{T}_h\) of \(\Omega\) with \(h=0.1\).</p>
+</div>
+<div class="paragraph">
+<p>We shall replace the exact solution by \(u(x,y)=\sin(2\pi x) \cos(2\pi y)\) which yields</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[f=\Delta u=4\pi^2 \sin(2\pi x) \cos(2\pi y).\]
+</div>
+</div>
+<div class="paragraph">
+<p>the boundary condition \(g=0\) is replace by \(h=u\) on \(\partial \Omega\).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># get the laplacian json model
+def laplacian_g_json(dim,order=1):
+    j=laplacian_json(dim=dim,order=order)
+    if dim == 2:
+        j['Models']['laplace']['setup']['coefficients']['f']=f'8*(pi^2)*sin(2*pi*x)*cos(2*pi*y):x:y'
+        j['BoundaryConditions']['laplace']['Dirichlet']['g']={
+                                                                "markers":["Gamma_D"],
+                                                                "expr":"sin(2*pi*x)*cos(2*pi*y):x:y"
+                                                             }
+        j['PostProcess'][f'cfpdes-2d']['Measures']['Norm']['laplace']['solution']='sin(2*pi*x)*cos(2*pi*y):x:y'
+        j['PostProcess'][f'cfpdes-2d']['Measures']['Norm']['laplace']['grad_solution']='{2*pi*cos(2*pi*x)*cos(2*pi*y),-2*pi*sin(2*pi*x)*sin(2*pi*y)}:x:y'
+    else:
+        j['Models']['laplace']['setup']['coefficients']['f']='12*(pi^2)*sin(2*pi*x)*cos(2*pi*y)*cos(2*pi*z):x:y:z'
+        j['BoundaryConditions']['laplace']['Dirichlet']['g']={
+                                                                "markers":["Gamma_D"],
+                                                                "expr":"sin(2*pi*x)*cos(2*pi*y)*cos(2*pi*z):x:y:z"
+                                                             }
+        j['PostProcess'][f'cfpdes-3d']['Measures']['Norm']['laplace']['solution']='sin(2*pi*x)*cos(2*pi*y)*cos(2*pi*z):x:y:z'
+        j['PostProcess'][f'cfpdes-3d']['Measures']['Norm']['laplace']['grad_solution']='{2*pi*cos(2*pi*x)*cos(2*pi*y)*cos(2*pi*z),-2*pi*sin(2*pi*x)*sin(2*pi*y)*cos(2*pi*z),-2*pi*sin(2*pi*x)*cos(2*pi*y)*sin(2*pi*z)}:x:y:z'
+    return j
+
+# in 2D
+laplacian(hsize=0.1,json=laplacian_g_json(dim=2,order=1),dim=2)
+
+# in 3D
+laplacian(hsize=0.1,json=laplacian_g_json(dim=3,order=1),dim=3)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can then plot the 2D results</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># plot the 2D results
+myplots(dim=2)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and plot the 3D results</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># plot the 3D results
+myplots(dim=3)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We now run the convergence analysis and verify the convergence rate expected from <a href="#thm:1">Convergence theorem of the conforming approximation</a> in 2D.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># run the 2D convergence analysis
+df=runConvergenceAnalysis(json=laplacian_g_json,dim=2,verbose=True)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We now run the convergence analysis and verify the convergence rate expected from <a href="#thm:1">Convergence theorem of the conforming approximation</a> in 2D.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># run the 2D convergence analysis
+df3d=runConvergenceAnalysis(json=laplacian_g_json,dim=3,hs=[0.1,0.05,0.03], orders=[1], verbose=True)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_neumann_boundary_conditions"><a class="anchor" href="#_neumann_boundary_conditions"></a>3.2. Neumann boundary conditions</h3>
+<div class="paragraph">
+<p>Given a strictly positive real \(\lambda\), a function \(f \in L^2(\Omega)\) and a function \(g \in L^2(\partial \Omega)\), we look for a function \(u: \Omega \rightarrow \mathbb{R}\) such that</p>
+</div>
+<div id="laplace-N" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\begin{aligned}
+&amp; -\Delta u+\lambda u=f \quad \text { in } \Omega \text {, } \\
+&amp; \partial_n u=g \quad \operatorname{on} \partial \Omega \text {, } \\
+&amp;
+\end{aligned}
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\partial_n u\) denotes the normal derivative of \(u\) on the boundar.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+By noting \(n=\left(n_1, \ldots, n_d\right)^T\) the Cartesian coordinates of the exterior normal at a point of the boundary, we have by definition \(\partial_n u=n \cdot \nabla u=\sum_{i=1}^d n_i \partial_i u\).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The weak formulation of <a href="#laplace-N">the Neumann problem</a> reads</p>
+</div>
+<div id="laplace-N-vf" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u \in H^1(\Omega) \text { such that } \\
+a_{\mathrm{N}}(u, w)=f_{\mathrm{N}}(w), \quad \forall w \in H^1(\Omega),
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+a_{\mathrm{N}}(v, w)=\int_{\Omega} \nabla v \cdot \nabla w+\int_{\Omega} \lambda v w
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div id="laplace-N-vf-fN" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+f_{\mathrm{N}}(w)=\int_{\Omega} f w+\int_{\partial \Omega} g w
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>The well-posedness of <a href="#laplace-N-vf">the weak formulation</a> results from the coercivity of the bilinear form \(a_{\mathrm{N}} \operatorname{on} H^1(\Omega)\).
+The <a href="#laplace-N-vf">problem</a> can be approximated by Lagrange finite elements.
+We take the discrete framework described for the <a href="#_conforming_approximation">Conforming Approximation</a>.
+We consider the following approximated problem:</p>
+</div>
+<div id="laplace-N-approx" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u_h \in P_{\mathrm{c}, h}^k \text { such that } \\
+a_{\mathrm{N}}\left(u_h, w_h\right)=f_{\mathrm{N}}\left(w_h\right), \quad \forall w_h \in P_{\mathrm{c}, h}^k,
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>which is clearly <strong>well-posed</strong>.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+An important difference between the Neumann boundary condition and the Dirichlet boundary condition is that the former is not imposed explicitly in the space where the solution is sought but results from the fact that the test functions in <a href="#laplace-N-vf">the variational formulation</a> can take zero values at the edge. This difference is reflected in the finite element approximation by the fact that the solution \(u_h\) of <a href="#laplace-N-approx">the discrete Neumann problem</a> satisfies the Neumann boundary condition in an approximate way and not in an exact way.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Finally, the convergence analysis of the  <a href="#laplace-N-approx">approximatio problem</a> leads, under the assumptions of <a href="#thm:1">Theorem</a>, to the same estimates as for the homogeneous Dirichlet problem.</p>
+</div>
+<div class="paragraph">
+<p>We can also consider, at the cost of some technical difficulties, the Neumann problem with \(\lambda=0\).
+We look for a function \(u: \Omega \rightarrow \mathbb{R}\) such that</p>
+</div>
+<div id="laplace-N-0" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\begin{array}{rr}
+-\Delta u=f &amp; \text { in } \Omega, \\
+\partial_n u=g &amp; \text { on } \partial \Omega .
+\end{array}
+\end{equation*}\]
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="title">Necessary condition for the existence of a solution for the Neumann problem with \(\lambda=0\)</div>
+<div class="paragraph">
+<p>We observe that a necessary condition for the existence of a solution is that the data \(f\) and \(g\) satisfy the compatibility condition</p>
+</div>
+<div id="laplace-N-0-cond" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\int_{\Omega} f+\int_{\partial \Omega} g=0
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>since \(\int_{\Omega} f+\int_{\partial \Omega} g=-\int_{\Omega} \Delta u+\int_{\partial \Omega} \partial_n u=0\) according to the divergence theorem.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Divergence theorem</div>
+<div class="paragraph">
+<p>The divergence theorem expresses the fact that for any \(\phi\) vector field that is sufficiently regular,</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\int_{\Omega} \nabla \cdot \phi=\int_{\partial \Omega} \phi \cdot n
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>In particular, taking \(\phi=\nabla u\) where \(u\) is a sufficiently regular function, we get \(\int_{\Omega} \Delta u=\int_{\partial \Omega} \partial_n u\).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A solution of the <a href="#laplace-N-0">problem</a> with the <a href="#laplace-N-cond">condition</a>  is only determined to within one additive constant.
+We should then look for the solution in the functional space</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+H_*^1(\Omega)=\left\{v \in H^1(\Omega); \int_{\Omega} v=0\right\} .
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>The weak formulation is the following:</p>
+</div>
+<div id="laplace-N-0-vf" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u \in H_*^1(\Omega) \text { such that } \\
+a(u, w)=f_{\mathrm{N}}(w), \quad \forall w \in H_*^1(\Omega),
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>with the bilinear form $a$ such that \(a(v, w)=\int_{\Omega} \nabla v \cdot \nabla w\).</p>
+</div>
+<div class="paragraph">
+<p>The well-posedness of <a href="#laplace-N-0-vf">problem</a> results from the coercivity of the bilinear form a on \(H_*^1(\Omega)\), this last property being itself a consequence of the inequality below.</p>
+</div>
+<div id="lem:2" class="sidebarblock">
+<div class="content">
+<div class="title">Lemma: Poincaré-Wirtinger inequality.</div>
+<div class="paragraph">
+<p>Let \(\Omega\) be a bounded open of \(\mathbb{R}^d\).
+There exists a constant \(\ell_{\Omega}^{\prime \prime}\) such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\forall v \in H_*^1(\Omega), \quad\|v\|_{0, \Omega} \leq \ell_{\Omega}^{\prime \prime} \|\nabla v\|_{0, \Omega}
+\end{equation*}\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="#laplace-N-0-vf">problem</a>  can be approximated by Lagrangian finite elements, which leads to the following approximated problem:</p>
+</div>
+<div id="laplace-N-0-approx" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u_h \in P_{\mathrm{c}, h}^k \text { such that } \\
+a\left(u_h, w_h\right)=f_{\mathrm{N}}\left(w_h\right), \quad \forall w_h \in P_{\mathrm{c}, h}^k .
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+the approximation space \(P_{\mathrm{c}, h}^k\) is not conformal in \(H_*^1(\Omega)\) and that the linear system associated to the <a href="#discrete problem">laplace-N-0-vf-approx</a> is singular.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>By noting this linear system in the form</p>
+</div>
+<div id="laplace-N-0-approx-sys" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\mathcal{A}^* U=F^*
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>and introducing the vector \(Z=(1, \ldots, 1)^T \in \mathbb{R}^N\) where \(N=\operatorname{dim} P_{\mathrm{c}, h}^k\), we find that \(\operatorname{Ker}\left(\mathcal{A}^*\right)=\operatorname{span}(Z), \operatorname{Im}\left(\mathcal{A}^*\right)=Z^{\perp}\) and \(F^* \in Z^{\perp}\).
+Therefore, the <a href="#laplace-N-0-approx-sys">linear system</a>  has infinitely many solutions.
+One of them can be approximated using an iterative method, for example the conjugate gradient method.
+We denote by \(U^{\circ}\) the approximation provided by the iterative method.
+The solution of the <a href="#laplace-N-0-approx-sys">linear system</a> whose components have zero mean is obtained by posing</p>
+</div>
+<div id="laplace-N-0-approx-sol" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+U=U^{\circ}-\left(\frac{\left(U^{\circ}, Z\right)_{\mathbb{R}^N}}{(Z, Z)_{\mathbb{R}^N}}\right) Z
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \((\cdot, \cdot)_{\mathbb{R}^N}\) denotes the Euclidean scalar product on \(\mathbb{R}^N\).  \
+The <a href="#laplace-N-0-approx-sol">postprocessing of the solution</a> removes the mean value of the solution \(U^{\circ}\) and is necessary to obtain the zero mean solution of <a href="#laplace-N-0-approx">problem</a>.</p>
+</div>
+<div class="paragraph">
+<p>An alternative way to obtain the solution of <a href="#laplace-N-0-approx-sys">linear system</a> is to use the method of Lagrange multipliers to impose the condition \(\int_{\Omega} u=0\).</p>
+</div>
+<div class="sect3">
+<h4 id="_example_2"><a class="anchor" href="#_example_2"></a>3.2.1. Example</h4>
+<div class="paragraph">
+<p>Consider the <a href="#laplace-N-0">problem</a> with \(\Omega=\mathbb{R}^2\) and the exact solution \(u(x, y)=\sin(2*\pi*x) \sin(2*\pi*y)\) in 2D and \(u(x, y, z)=\sin(2*\pi*x) \sin(2*\pi*y) \sin(2*\pi*z)\) in 3D.</p>
+</div>
+<div class="paragraph">
+<p>The right hand side \(f\) and the boundary condition \(g_{\mathrm{N}}\) are computed using the exact solution \(u\) in \(\mathbb{R}^d, d=2,3\).
+We have</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\begin{aligned}
+f_{\mathrm{N}}(x, y)&amp;=- \Delta u(x,y) = 4  d  \pi^2 \sin(2 \pi x) \sin(2 \pi y)\\
+g_{\mathrm{N}}(x, y)&amp;=\partial_n u(x,y) = 0
+\end{aligned}
+\end{equation*}\]
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+we can verify the condition <a href="#laplace-N-0-cond">[laplace-N-0-cond]</a> is indeed satisfied.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The code below computes the solution of the <a href="#laplace-N-0">problem</a> using the finite element method in 2D.</p>
+</div>
+<div id="code:laplace-N-0" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># get the laplacian json model
+def laplacian_gN_json(dim,order=1):
+    j=laplacian_json(dim=dim,order=order)
+    if dim == 2:
+        j['Models']['laplace']['setup']['coefficients']['f']=f'8*(pi^2)*sin(2*pi*x)*sin(2*pi*y)+sin(2*pi*x)*sin(2*pi*y):x:y'
+        j['Models']['laplace']['setup']['coefficients']['a']='1' # set \lambda=1
+        j['BoundaryConditions']['laplace'].pop('Dirichlet')
+        j['BoundaryConditions']['laplace']['Neumann']= { "gN": {
+                                                                "markers":["Gamma_D"],
+                                                                "expr":"2*pi*cos(2*pi*x)*sin(2*pi*y)*nx+2*pi*sin(2*pi*x)*cos(2*pi*y)*ny:x:y:nx:ny"
+                                                               }
+                                                        }
+        j['PostProcess'][f'cfpdes-2d']['Measures']['Norm']['laplace']['solution']='sin(2*pi*x)*sin(2*pi*y):x:y'
+        j['PostProcess'][f'cfpdes-2d']['Measures']['Norm']['laplace']['grad_solution']='{2*pi*cos(2*pi*x)*sin(2*pi*y),2*pi*sin(2*pi*x)*cos(2*pi*y)}:x:y'
+    return j
+
+# in 2D
+laplacian(hsize=0.1,json=laplacian_gN_json(dim=2,order=1),dim=2)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We now run the convergence analysis and verify the convergence rate expected from <a href="#thm:1">Convergence theorem of the conforming approximation</a> in 2D.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># run the 2D convergence analysis
+df=runConvergenceAnalysis(json=laplacian_gN_json,dim=2,verbose=True)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_robin_boundary_conditions"><a class="anchor" href="#_robin_boundary_conditions"></a>3.3. Robin Boundary Conditions</h3>
+<div class="paragraph">
+<p>Given a function \(f \in L^2(\Omega)\) and a function \(g \in L^2(\partial \Omega)\), we look for a function \(u: \Omega \rightarrow \mathbb{R}\) such that</p>
+</div>
+<div id="laplace-R-strong" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\begin{aligned}
+&amp; -\Delta u=f \quad \text { in } \Omega \text {, } \\
+&amp; \gamma_R u+\partial_n u=g_R \quad \text { on } \partial \Omega, \
+&amp;
+\end{aligned}
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\gamma_R&gt;0\) is a real parameter.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+More generally, consider a function \(\gamma_R \in L^{\infty}(\partial \Omega)\) such that \(\gamma_R(x) \geq \gamma_0&gt;0\) for almost all \(x \in \partial \Omega\).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The weak formulation of the <a href="#laplace-R-strong">problem</a> reads</p>
+</div>
+<div id="laplace-R-weak" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u \in H^1(\Omega) \text { such that } \\
+a_{\mathrm{R}}(u, w)=f_{\mathrm{N}}(w), \quad \forall w \in H^1(\Omega),
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where the linear form \(f_{\mathrm{N}}\) is defined <a href="#laplace-N-vf-fN">here</a> and the bilinear form \(a_{\mathrm{R}}\) is such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+a_{\mathrm{R}}(v, w)=\int_{\Omega} \nabla v \cdot \nabla w+\int_{\partial \Omega} \gamma v w
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>The well-posedness of <a href="#laplace-R-weak">weak problem</a> results from the coercivity of \(a_{mathrm{R}}[\) on \(H^1(\Omega)\), this last property being itself a consequence of the fact that there exists a constant \(\rho_{\Omega}\) such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\forall v \in H^1(\Omega), \quad\|v\|_{0, \Omega} \leq \rho_{\Omega} \left(\|nabla v|_{0, \Omega}+\|v\|_{0, \partial \Omega}\right) .
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Starting from the initial discrete framework, we are interested in an approximation  by Lagrange finite elements.
+We consider the following approximated problem:</p>
+</div>
+<div id="laplace-R-vf-approx" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u_h \in P_{mathrm{c}, h}^k \text { such that } \\
+a_{\mathrm{R}}\left(u_h, w_h\right)=f_{\mathrm{N}}\left(w_h\right), \quad \forall w_h \in P_{\mathrm{c}, h}^k,
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>which is clearly well-posed.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+As with the Neumann boundary condition, the Robin boundary condition results from the fact that the test functions can take non-zero values at the edge; the condition is not exactly satisfied by the discrete solution \(u_h\) but only in an approximate way.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Finally, the convergence analysis for the \(u_h\)  leads, under the assumptions of &lt;&lt;thm:1,the theorem&gt;, to the same estimates as for the homogeneous Dirichlet problem.</p>
+</div>
+<div class="sect3">
+<h4 id="_example_3"><a class="anchor" href="#_example_3"></a>3.3.1. Example</h4>
+<div class="paragraph">
+<p>We consider the following problem in the unit square \(\Omega=[0,1]^d, d=2\) with  exact solution \(u(x,y)=\sin(2\pi x)\, \sin(2\pi y)\). We consider \(\gamma_R=1\)
+We then compute \(f\) and \(g_R\) such that \(u\) is the solution of the problem <a href="#laplace-R-strong">above</a>.</p>
+</div>
+<div class="paragraph">
+<p>We have</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\begin{aligned}
+f=-\Delta u &amp;=2 d \pi^2 sin(2\pi x)sin(2\pi y), \\
+\nabla u = { 2\pi cos(2\pi x)sin(2\pi y), 2\pi sin(2\pi x)sin(2\pi y) } \\
+g_R &amp;= +\gamma_R u+\nabla u \cdot n = \gamma_R sin(2\pi x)sin(2\pi y)+2\pi \cos(2\pi x)\sin(2\pi y) n_x +2\pi \sin(2\pi x) \cos(2\pi y) n_y.
+\end{aligned}
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(n=(n_x,n_y)\) is the outward unit normal to the boundary \(\partial \Omega\).</p>
+</div>
+<div class="paragraph">
+<p>The json specifications now read as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># get the laplacian json model
+def laplacian_gR_json(dim,order=1):
+    j=laplacian_json(dim=dim,order=order)
+    if dim == 2:
+        j['Parameters'] = { 'gammaR': 1.0 }
+        j['BoundaryConditions']['laplace'].pop('Dirichlet')
+        j['BoundaryConditions']['laplace']['Robin']= { "gR": {
+                                                                "markers":["Gamma_D"],
+                                                                "expr1":"gammaR:gammaR:x:y",
+                                                                "expr2":"gammaR*sin(2*pi*x)*sin(2*pi*y)+(2*pi*cos(2*pi*x)*sin(2*pi*y)*nx+2*pi*sin(2*pi*x)*cos(2*pi*y)*ny):gammaR:x:y:nx:ny"
+                                                             }
+                                                        }
+    return j
+
+# in 2D
+laplacian(hsize=0.1,json=laplacian_gR_json(dim=2,order=1),dim=2)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can now verify the convergence properties</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># run the 2D convergence analysis
+df=runConvergenceAnalysis(json=laplacian_gR_json,dim=2,verbose=True)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_advection_diffusion_reaction_equation"><a class="anchor" href="#_advection_diffusion_reaction_equation"></a>3.4. Advection-Diffusion-Reaction Equation</h3>
+<div class="paragraph">
+<p>Consider a differential operator of the form
+<a id="laplace-ADR-op"></a>]</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\mathcal{L} u=-\nabla \cdot(\sigma \cdot \nabla u)+\beta \cdot \nabla u+\mu u,
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where $\sigma, \beta$ and $\mu$ are functions defined on $\Omega$ and with values in $\mathbb{R}^{d, d}, \mathbb{R}^d$ and $\mathbb{R}$ respectively.
+The <a href="#laplace-ADR-op">operator</a>  is used, for example, in the modeling of advection-diffusion-reaction problems; the first term of the right-hand side is the diffusive term, the second the advective term and the third the reactive term.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The advective term is sometimes called the "convective" term and the equation is then called the convection-diffusion-reaction equation.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The \(\mathcal{L}\) operator is used in many domais such as fluid mechanics, heat transfer, finance, chemistry, etc.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the following, we assume that \(\sigma \in\left[L^{\infty}(\Omega)\right]^{d, d}, \beta \in\left[L^{\infty}(\Omega)\right]^d, \nabla \cdot \beta \in L^{\infty}(\Omega)\) and \(\mu \in L^{\infty}(\Omega)\).
+Moreover, we assume that the operator \(\mathcal{L}\) is elliptic in the following sense.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Definition: Elliptic operator.</div>
+<div class="paragraph">
+<p>The <a href="#laplace-ADR-op">operator \(\mathcal{L}\)</a> is said to be <strong>elliptic</strong> if there exists a constant \(\sigma_0&gt;0\) such that, almost everywhere in \(\Omega\),</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\forall \xi \in \mathbb{R}^d, \quad \sum_{i, j=1}^d \sigma_{i j} \xi_i \xi_j \geq \sigma_0\left(\sum_{i=1}^d \xi_i^2\right) .
+\end{equation*}\]
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The Laplacian falls into the category of elliptic operators since it is obtained from \(\mathcal{L}\) by taking \(\beta=0, \mu=0\) and \(\sigma=\mathcal{I}_d\), the identity matrix in \(\mathbb{R}^{d, d}\).
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Given a function \(f \in L^2(\Omega)\), we look for a function \(u: \Omega \rightarrow \mathbb{R}\) such that</p>
+</div>
+<div id="laplace-ADR-strong" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\begin{aligned}
+\mathcal{L} u &amp; =f &amp; &amp; \text { in } \Omega, \
+u &amp; =0 &amp; &amp; \text { on } \partial \Omega .
+\end{aligned}
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>The weak formulation of the <a href="#laplace-ADR-strong">strong formulation</a> is the following:</p>
+</div>
+<div id="laplace-ADR-weak" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\left\{\begin{array}{l}
+\text { Find } u \in H_0^1(\Omega) \text { such that } \\
+a_{\sigma \beta \mu}(u, w)=f(w), \quad \forall w \in H_0^1(\Omega),
+\end{array}\right.
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>with the bilinear form \(a_{\sigma \beta \mu}\) such that for all \((v, w) \in H_0^1(\Omega) \times H_0^1(\Omega)\),</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation*}
+a_{\sigma \beta \mu}(v, w)=\int_{\Omega} \nabla w \cdot \sigma \cdot \nabla v+w(\beta \cdot \nabla v)+\mu w v
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>We pose \(p=\inf {\operatorname{ess}}{ }_{x \in \Omega}\left(\mu-\frac{1}{2} \nabla \cdot \beta\right)\) and we recall that \(\ell_{\Omega}\) is the constant intervening in the Poincaré inequality above.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For a function \(f \in L^{\infty}(\Omega), \inf \operatorname{ess}_{x \in \Omega} f(x)=\sup \left\{ M \in \mathbb{R}_{+}; f(x) \geq M \text{ almost\ everywhere\ in\ } \Omega\right\}\).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Then, we show that under the condition</p>
+</div>
+<div id="laplace-ADR-condition" class="stemblock">
+<div class="content">
+\[\begin{equation*}
+\sigma_0+\min \left(0, \ell_{\Omega} p\right)&gt;0
+\end{equation*}\]
+</div>
+</div>
+<div class="paragraph">
+<p>the bilinear form \(a_{\sigma \beta \mu}\) is coercive on \(H_0^1(\Omega)\), so that, thanks to the Lax-Milgram lemma, the <a href="#laplace-ADR-weak">problem</a>  is well posed.
+The <a href="#laplace-ADR-condition">condition</a>  being a minimization of \(\sigma_0\), we retain that the coercivity is guaranteed provided that \(\sigma_0\) is sufficiently large, i.e. in the <strong>dominant diffusion regime</strong>.</p>
+</div>
+<div class="paragraph">
+<p>The conformal approximation  by Lagrangian finite elements uses the discrete framework introduced for the Laplacian.
+Finally, one can consider instead of non-homogeneous Dirichlet, Neumann or Robin boundary conditions.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Convergence results are obtained in the same way as for the Laplacian, with the same assumptions on the mesh and the finite element space in the case of diffusion dominated problems, we shall see in <a href="#cfpdes.adr.adoc" class="xref unresolved">cfpdes.adr.adoc</a> that the mesh and finite element space must be adapted to the problem in the case of advection dominated problems.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_example_4"><a class="anchor" href="#_example_4"></a>3.4.1. Example</h4>
+<div class="paragraph">
+<p>we consider the same domain and exact solution as before and we set \(\beta=(1,1)\) and \(\mu=1\).</p>
+</div>
+<div class="paragraph">
+<p>The json specifications now read as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># get the laplacian json model
+def adr_json(dim,order=1,c=1):
+    j=laplacian_json(dim=dim,order=order,name="u")
+    if dim == 2:
+        j['Models']['laplace']['setup']['coefficients']['f']='physics_laplace_laplace_c*8*(pi^2)*sin(2*pi*x)*sin(2*pi*y)+physics_laplace_laplace_beta_0*2*pi*cos(2*pi*x)*sin(2*pi*y)+physics_laplace_laplace_beta_1*2*pi*sin(2*pi*x)*cos(2*pi*y)+physics_laplace_laplace_a*sin(2*pi*x)*sin(2*pi*y):x:y:physics_laplace_laplace_beta_0:physics_laplace_laplace_beta_1:physics_laplace_laplace_c:physics_laplace_laplace_a'
+        j['Models']['laplace']['setup']['coefficients']['beta']='{1,1}'
+        j['Models']['laplace']['setup']['coefficients']['a']='1'
+        j['Models']['laplace']['setup']['coefficients']['c']=c
+    return j
+print(adr_json(dim=2,order=1,c=1e-7))
+# in 2D
+laplacian(hsize=0.1,json=adr_json(dim=2,order=1,c=1),dim=2)</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>{'Norm_laplace_H1-error': 1.1895228288020558,
+ 'Norm_laplace_L2-error': 0.021235807952695886}</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>We can plot the solution:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">myplots(dim=2,field="cfpdes.laplace.u")</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and obtain the convergence rates as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># run the 2D convergence analysis with c=1
+df=runConvergenceAnalysis(json=lambda dim,order: adr_json(dim=dim,order=order,c=1),dim=2,verbose=True)</code></pre>
+</div>
 </div>
 </div>
 </div>
