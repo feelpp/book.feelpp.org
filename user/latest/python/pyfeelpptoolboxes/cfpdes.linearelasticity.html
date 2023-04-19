@@ -769,7 +769,520 @@ title="Fullscreen mode"
 
 <article class="doc">
 <h1 class="page">The linear elasticity equation with Coefficient Form PDEs toolbox</h1>
-
+<div class="sect1">
+<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This notebook deals with the finite element approximation of deformable continuum mechanics problems in three space dimensions.
+The domain \(\Omega \subset \mathbb{R}^3\) represents a deformable medium, initially at rest and to which an external loading \(f: \Omega \rightarrow \mathbb{R}^3\) is applied.
+The objective is to determine the displacement field \(u: \Omega \rightarrow \mathbb{R}^3\) induced by this loading once the medium has reached equilibrium.
+It is assumed that the deformations are small enough to be modeled in the framework of linear elasticity.
+For simplicity, it is also assumed that the medium is isotropic.</p>
+</div>
+<div class="paragraph">
+<p>We note \(\sigma: \Omega \rightarrow \mathbb{R}^{3,3}\) the stress field.
+The equilibrium condition is written as follows</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\nabla \cdot \sigma+f=0 \quad \text { in } \Omega\]
+</div>
+</div>
+<div class="paragraph">
+<p>Let us note \(\varepsilon(u): \Omega \rightarrow \mathbb{R}^{3,3}\) the linearized deformation field defined by</p>
+</div>
+<div id="eq-def-epsilon" class="stemblock">
+<div class="content">
+\[\varepsilon(u)=\frac{1}{2}\left(\nabla u+\nabla u^T\right) .\]
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+\(\nabla u\) is the field with values in \(\mathbb{R}^{3,3}\) of components \((\nabla u)_{i j}=\partial_j u_i, i, j \in\{1,2,3}\).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the framework of linear elasticity, the stress field is expressed as a function of the linearized strain field as</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\sigma(u)=\lambda \operatorname{tr}(\varepsilon(u)) \mathcal{I}_3+2 \mu \varepsilon(u)\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\lambda\) and \(\mu\) are the Lamé coefficients and \(\mathcal{I}_3\) the identity matrix in \(\mathb{R}^{3,3}\). Using <a href="#eq-def-epsilon">the definition of the deformation tensor</a>, we get</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\sigma(u)=\lambda(\nabla \cdot u) \mathcal{I}_3+\mu\left(\nabla u+\nabla u^T\right)\]
+</div>
+</div>
+<div class="paragraph">
+<p>The Lamé coefficients are phenomenological coefficients which, for thermodynamic reasons, are constrained by the relations \(\mu&gt;0\) and \(\lambda+\frac{2}{3} \mu \geq 0\).
+For simplicity, we assume that \(\lambda \geq 0\) and that the medium is homogeneous so that the coefficients \(\lambda\) and \(\mu\) are constants.
+In some applications, it is more convenient to introduce the Young&#8217;s modulus \(E\) and the Poisson&#8217;s ratio \(v\) such that</p>
+</div>
+<div id="eq-def-Ev" class="stemblock">
+<div class="content">
+\[E=\mu \frac{3 \lambda+2 \mu}{\lambda+\mu} \quad \text { and } \quad v=frac{1}{2}  }\]
+</div>
+</div>
+<div class="paragraph">
+<p>The Poisson coefficient is such that \(-1 \leq \nu&lt;frac{1}{2}\); moreover, \(\nu \geq 0\) if \(\lambda \geq 0\). A Poisson&#8217;s ratio very close to \(\frac{1}{2}\) (i.e. Lamé coefficients such that the ratio \(\frac{1}{2}\) is very large) characterizes a practically incompressible material.</p>
+</div>
+<div class="paragraph">
+<p>The model problem  must be completed by boundary conditions. In the following, two cases are considered.
+The homogeneous Dirichlet problem::  we impose the boundary condition</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[u=0 \quad \text { on } \partial \Omega\]
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">The pure traction problem (or Neumann problem)</dt>
+<dd>
+<p>we impose the boundary condition</p>
+</dd>
+</dl>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\sigma(u) \cdot n=g \quad \text { on } \partial \Omega\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(g: \partial \Omega \rightarrow \mathbb{R}^3\) represents a force field applied on the edge of \(\Omega\) and \(n\) the exterior normal to \(\Omega\).</p>
+</div>
+<div class="paragraph">
+<p>Other boundary conditions are possible such as, for example, mixed Dirichlet-Neumann conditions.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_mathematical_framework"><a class="anchor" href="#_the_mathematical_framework"></a>2. The mathematical framework</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>On \(\left[H^1(\Omega)\right]^3 \times\left[H^1(\Omega)\right]^3\), we introduce the bilinear form</p>
+</div>
+<div id="eq-def-a" class="stemblock">
+<div class="content">
+\[a(v, w)=\int_{\Omega} \sigma(v): \varepsilon(w)=\int_{\Omega} \lambda(\nabla \cdot v)(\nabla \cdot w)+\int_{\Omega} 2 \mu \varepsilon(v): \varepsilon(w).\]
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For two matrices \(\sigma\) and \(\varepsilon\) in \(\mathbb{R}^{3,3}, \sigma: \varepsilon\) denotes their maximal contraction, which is equal to \(\sum_{i, j=1}^3 \sigma_{i j} \varepsilon_{i j}\).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>It is clear that \(a \in \mathcal{L}\left(\left[H^1(\Omega)\right]^3 \times\left[H^1(\Omega)\right]^3 ; \mathbb{R}\right)\).
+Moreover, the bilinear form \(a\) is symmetric and positive.
+On the other hand, the bilinear form \(a\) is singular.
+Indeed, by introducing the vector space of rigid displacements</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathcal{R}=\left{z \in\left[H^1(\Omega)\right]^3 ; \exists(\alpha, \beta) \in \mathbb{R}^3 \times \mathbb{R}^3, \forall x \in \Omega, z(x)=\alpha+\beta \times x\right\}\]
+</div>
+</div>
+<div class="paragraph">
+<p>we have the equivalence</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[(z \in \mathcal{R}) \Longleftrightarrow\left(\forall v \in \left[H^1(\Omega)\right]^3, a(z, v)=0\right) .\]
+</div>
+</div>
+<div class="paragraph">
+<p>We note that a rigid displacement consists in the compound of a translation and a rotation and that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathcal{R} \cap\left[H_0^1(\Omega)\right]^3=\{0\}\]
+</div>
+</div>
+<div class="paragraph">
+<p>since the only rigid displacement that preserves the boundary is the zero displacement.</p>
+</div>
+<div class="sect2">
+<h3 id="_homogeneous_dirichlet_problem"><a class="anchor" href="#_homogeneous_dirichlet_problem"></a>2.1. Homogeneous Dirichlet problem.</h3>
+<div class="paragraph">
+<p>In order to write the homogeneous Dirichlet problem in weak form, we introduce the functional space</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[V_{\mathrm{D}}=\left[H_0^1(\Omega)\right]^3\]
+</div>
+</div>
+<div class="paragraph">
+<p>and the linear form \(f_{\mathrm{D}} \in V_{\mathrm{D}}^{\prime}\) such that for any \(w \in V_{\mathrm{D}}\),</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[f_{\mathrm{D}}(w)=\int_{\Omega} f \cdot w\]
+</div>
+</div>
+<div class="paragraph">
+<p>We obtain the following problem:</p>
+</div>
+<div id="eq-problem-D" class="stemblock">
+<div class="content">
+\[\left\{\begin{array}{l}
+\text { Find } u \in V_{\mathrm{D}} \text { such that } \\
+a(u, w)=f_{\mathrm{D}}(w), \quad \forall w \in V_{\mathrm{D}} .
+\end{array}\right.\]
+</div>
+</div>
+<div class="paragraph">
+<p>The well-posedness of <a href="#eq-problem-D">the previous problem</a> follows from the following inequality
+.Lemma First Korn inequality.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Let \(\Omega\) be a domain of \(\mathbb{R}^3\). Let \(\|varepsilon(v)\|_{0, \Omega}=\left(\int_{\Omega} \varepsilon(v): \varepsilon(v)\right)^{\frac{1}{2}}\). There exists a constant \(\boldsymbol{\kappa}_{\Omega}\) such that
+[[1st-korn-ineq]]]</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\forall v \in\left[H_0^1(\Omega)\right]^3, \quad \kappa_{\Omega}|v\|_{1, \Omega}.\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="#1st-korn-ineq">inequality</a> implies the coercivity of the bilinear form \(a\) on stem: [V_{\mathrm{D}}=left[H_0<sup>1(\Omega)\right\]</sup>3] since</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\forall v \in\left[H_0^1(\Omega)\right]^3, \quad a(v, v) \geq 2 \mu|\varepsilon(v)\|_{0, \Omega}^2 \geq 2 \mu \kappa_{\Omega}^2|v||_{1, \Omega}^2 .\]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pure_traction_problem"><a class="anchor" href="#_pure_traction_problem"></a>2.2. Pure traction problem</h3>
+<div class="paragraph">
+<p>The mathematical study of the pure traction problem requires some precautions.
+Indeed, we cannot look for the solution \(u\) in \(\left[H^1(\Omega)\right\)^3] and ask that for any \(w \in\left[H^1(\Omega)\right\)^3], \(a(u, w)=\int_{\Omega} f \cdot w+\int_{\partial \Omega} g \cdot w\) because the bilinear form \(a\) is singular on \(\left[H^1(\Omega)\right\)^3].</p>
+</div>
+<div class="paragraph">
+<p>A necessary condition for the existence of a solution is that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\forall z \in \mathcal{R}, \quad \int_{\Omega} f \cdot z+\int_{\partial \Omega} g \cdot z=0 .\]
+</div>
+</div>
+<div class="paragraph">
+<p>This equation expresses the fact that the resultant of all external forces and their moments are zero.
+Moreover, the solution \(u\), if it exists, is determined only to the nearest rigid displacement.
+We therefore consider the functional space</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[V_{\mathrm{N}}=\left{v \in\left[H^1(\Omega)\right]^3; \int_{\Omega} v=0; \int_{\Omega} \nabla \times v=0\right},\]
+</div>
+</div>
+<div class="paragraph">
+<p>and the linear form \(f_{\mathrm{N}} \in V_{\mathrm{N}}^{\prime}\) such that for any \(w \in V_{\mathrm{N}}\),</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[f_{\mathrm{N}}(w)=\int_{\Omega} f \cdot w+\int_{\partial \Omega} g \cdot w .\]
+</div>
+</div>
+<div class="paragraph">
+<p>We obtain the following problem:</p>
+</div>
+<div id="pure-traction-problem-varf" class="stemblock">
+<div class="content">
+\[\left\{\begin{array}{l}
+\text { Find } u \in V_{\mathrm{N}} \text { such that } \\
+a(u, w)=f_{\mathrm{N}}(w), \quad \forall w \in V_{\mathrm{N}}
+\end{array}\right.\]
+</div>
+</div>
+<div class="paragraph">
+<p>The well-posedness of <a href="#pure-traction-problem-varf">this problem</a> follows from the following inequality</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Lemma Second inequality of Korn.</div>
+<div class="paragraph">
+<p>Let \(\Omega\) be a domain of \(\mathbb{R}^3\). There exists a constant \(\kappa_{\Omega}^{\prime}\) such that
+[[2nd-korn-ineq]]</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\forall v \in\left[H^1(\Omega)\right]^3, \quad \boldsymbol{\kappa}_{\Omega}^{\prime}\|v\|_{1, \Omega} \leq \|\varepsilon(v)\|_{0, \Omega}+\|v\|_{0, \Omega}\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>We show that the <a href="#2nd-korn-ineq">inequality</a>  implies the coercivity of the bilinear form \(a\) on \(V_{\mathrm{N}}\).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In continuum mechanics, the test function \(w\) involved in the weak formulations is interpreted as an admissible virtual displacement field and the weak formulations express the principle of virtual work. Moreover, the bilinear form \(a\) being symmetric and coercive on \(V_{\mathrm{D}}\) and \(V_{\mathrm{N}}\), the unique solution, respectively, minimizes on \(V_{\mathrm{D}}\) and \(V_{\mathrm{N}}\) the energy functional</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathcal{E}_{\mathrm{D}}(v)=\frac{1}{2} \lambda \int_{\Omega}(\nabla \cdot v)^2+\frac{1}{2} \mu \int_{\Omega} \varepsilon(v): \varepsilon(v)-f_{\mathrm{D}}(v)\]
+</div>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathcal{E}_{\mathrm{N}}(v)=\frac{1}{2} \lambda \int_{\Omega}(\nabla \cdot v)^2+\frac{1}{2} \mu \int_{\Omega} \varepsilon(v): \varepsilon(v)-f_{\mathbb{N}}(v)\]
+</div>
+</div>
+<div class="paragraph">
+<p>We find the principle of least energy. The quadratic terms in \(v\)  represent the elastic energy of deformation and the linear terms the potential energy under the external force field.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conformal_approximation"><a class="anchor" href="#_conformal_approximation"></a>3. Conformal approximation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We consider a conformal approximation of problems by Lagrangian finite elements.
+We suppose that \(\Omega\) is a polyhedron of \(\mathbb{R}^3\) and we consider a regular and conformal family of affine meshes of \(\Omega\) that we note \(\left{\mathcal{T}_h\right}_{h&gt;0}\).
+We choose as reference finite element \(\widehat{K}, \widehat{P}, \widehat{Sigma}}\) a Lagrangian finite element of degree \(k \geq 1\).</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Homogeneous Dirichlet problem</dt>
+<dd>
+<p>In order to construct a \(V_{\mathrm{D}}\)-conformal approximation space, we pose</p>
+</dd>
+</dl>
+</div>
+<div class="stemblock">
+<div class="content">
+\[V_{\mathrm{D} h}=\left[P_{\mathrm{c}, h}^k\right]^3 \cap\left[H_0^1(\Omega)\right]^3,\]
+</div>
+</div>
+<div class="paragraph">
+<p>The elements of \(V_{\mathrm{D} h}\) are the vector fields of which each component is in \(P_{\mathrm{c}, h}^k\) and which cancel on the boundary of \(\Omega\).
+We consider the following approximate problem:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\left\{\begin{array}{l}
+\text { Search } u_h \in V_{\mathrm{D} h} \text { such as } \\
+a\left(u_h, w_h\right)=f_{\mathrm{D}}\left(w_h\right), \quad \forall w_h \in V_{\mathrm{D} h},
+\end{array}\right.\]
+</div>
+</div>
+<div class="paragraph">
+<p>which is clearly well-posed since \(a\) is coercive on \(V_{\mathrm{D}}\) and \(V_{\mathrm{D}} h} \subset V_{\mathrm{D}}\).</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Theorem Convergence.</div>
+<div class="paragraph">
+<p>With the above assumptions, we suppose that the unique solution \(u\) is in \(\left[H^{k+1}(\Omega) \cap H_0^1(\Omega)\right]^3\). Then, there exists a constant \(c\) such that for all \(h\),</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\left\|u-u_h\right\|_{1, \Omega} \leq c b^k|u|_{k+1, \Omega}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Moreover, if the problem  is regularizing (i.e., if there exists a constant \(c_s\) such that for any \(f \in\left[L^2(\Omega)\right]^3\), the unique solution satisfies \(\|u|_{2, \Omega} \leq c_s\|f|_{0, \Omega}\)), there exists a constant \(c\) such that for any \(h\),</p>
+</div>
+<div id="estimation-conv" class="stemblock">
+<div class="content">
+\[\left\|u-u_h\right\|_{0, \Omega} \leq c h^{k+1}|u|_{k+1, \Omega} .\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="#estimation-conv">estimation</a> results from the lemma of Céa  and the interpolation theorem which we apply component by component. The estimate results from the Aubin-Nitsche lemma.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Pure traction problem</dt>
+<dd>
+<p>For the pure traction problem, one way to eliminate the arbitrary rigid displacement at the discrete level is to:</p>
+</dd>
+</dl>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>impose that the displacement at one mesh node, \(a_0\), is zero;</p>
+</li>
+<li>
+<p>choose three other mesh nodes, \(a_1, a_2, a_3\), and three unit vectors, \(\tau_1, \tau_2, \tau_3\), such that the set stem: [\left{\left(a_i-a_0\right) \times \tau_i\right}_{1 \leq i \leq 3}] forms a basis of \(\mathbb{R}^3\);</p>
+</li>
+<li>
+<p>impose that the displacement at the node \(a_i\) along the direction \(\boldsymbol{\tau}_i\) is zero.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This leads to the approximation space</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+V_{\mathrm{N} h}=\left\{v_h \in\left[\mathcal{C}^0(\bar{\Omega})\right]^3 ;\right. &amp; \forall K \in \mathcal{T}_h, v_h \circ T_K \in[\widehat{P}]^3 ; \\ &amp; \left.v_h\left(a_0\right)=0 ; v_h\left(a_i\right) \cdot \tau_i=0, i \in\{1,2,3\}\right\} .
+\end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>We consider the following approximated problem:</p>
+</div>
+<div id="approx-problem-N" class="stemblock">
+<div class="content">
+\[\left\{\begin{array}{l}
+\text { Find } u_h \in V_{\mathrm{N} h} \text { such as } \\
+a\left(u_h, w_h\right)=f_{\mathrm{N}}\left(w_h\right), \quad \forall w_h \in V_{\mathrm{N} h} .
+\end{array}\right.\]
+</div>
+</div>
+<div class="paragraph">
+<p>Using the second Korn inequality, we show that the bilinear form \(a\) is coercive on \(V_{\mathrm{N} h}\) so that the <a href="#approx-problem-N">discrete problem</a>  is well posed.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Theorem Convergence.</div>
+<div class="paragraph">
+<p>With the above assumptions, we suppose that the unique solution u of <a href="#pure-traction-problem-varf">continuous problem</a> is in \(\left[H^{k+1}(\Omega)\right\)^3 \cap V_{\mathrm<span class="icon red"><i class="fa fa-times"></i></span>}]. Then there exists a constant \(c\) such that for all \(h\),</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\left\|u-u_h\right\|_{1, \Omega} \leq c h^k|u|_{k+1, \Omega} .\]
+</div>
+</div>
+<div class="paragraph">
+<p>Moreover, if \(g=0\) and if the <a href="#pure-traction-problem-varf">problem</a>  is regularizing, (i.e. if there exists a constant \(c_s\) such that for any \(f \in\left[L^2(\Omega)\right]^3\), the unique solution of <a href="#pure-traction-problem-varf">problem</a> with \(g=0\) satisfies \(\left.\|u\|_{2, \Omega} \leq c_s\|f\|_{0, \Omega}\right)\)), there exists a constant \(c\) such that for any \(h\),</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\left\|u-u_h\right\|_{0, \Omega} \leq c h^{k+1}|u|_{k+1, \Omega}\]
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A sufficient condition for the problems  to be regularizing is that the polyhedron \(\Omega\) is convex and that \(g=0\); see, for example, the book by <a href="#grisvard">Grisvard</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_example"><a class="anchor" href="#_example"></a>3.1. Example</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_virtually_incompressible_materials_loss_of_coercivity"><a class="anchor" href="#_virtually_incompressible_materials_loss_of_coercivity"></a>4. Virtually incompressible materials: loss of coercivity</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We are now interested in materials whose ratio of Lamé coefficients is such that
+<a id="coercivity-loss"></a>]</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\frac{\lambda}{\mu} \gg 1\]
+</div>
+</div>
+<div class="paragraph">
+<p>This situation occurs when the <strong>Poisson&#8217;s ratio</strong> is very close to \(\frac{1}{2}\), i.e. for practically incompressible materials.
+For such materials, it is observed that if we use a mesh that is not fine enough, the discrete solution is polluted by spurious oscillations. This phenomenon, called <strong>coercivity loss</strong>.
+The ratio \(\frac{lambda}{\mu}\) being very large, it is not reasonable to absorb it in the generic constants \(c\) appearing in the error estimates.
+We consider the bilinear form \(a\) defined <a href="#eq-def-a">above</a>. We pose</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+&amp; \alpha_a=\inf _{v \in V} \frac{a(v, v)}{\|v\|_{1, \Omega}^2} \\
+&amp; \omega_a=sup _{v \in V} \sup _{w \in V} \frac{a(v, w)}{\|v\|_{1, \Omega}\|w\|_{1, \Omega}}
+\end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(V\) is the functional space on which the continuous problem is posed. Under the <a href="#coercivity-loss">hypothesis</a>, we show that the ratio \(\frac{\omega_a}{\alpha_a}\) is of order \(\frac{\lambda}{\mu}\).</p>
+</div>
+<div class="paragraph">
+<p>Using the convergence analysis presented in the previous section, we obtain the error estimate</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\left\|u-u_h\right\|_{1, \Omega} \leq c \frac{\lambda}{\mu} h^k|u|_{k+1, \Omega}\]
+</div>
+</div>
+<div class="paragraph">
+<p>with a constant \(c\) independent of \(h\) and the ratio \(\frac{\lambda}{\mu}\). This estimate shows that the mesh must be fine enough for the error to be controlled.</p>
+</div>
+<div class="sect2">
+<h3 id="_example_of_coercivity_loss"><a class="anchor" href="#_example_of_coercivity_loss"></a>4.1. Example of coercivity loss</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># TODO</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bibliography"><a class="anchor" href="#_bibliography"></a>Bibliography</h2>
+<div class="sectionbody">
+<div class="ulist bibliography">
+<ul class="bibliography">
+<li>
+<p><a id="grisvard"></a>[grisvard] GRISVARD (P.), Singularities in Boundary Value Problems. Masson, Paris, France, 1992.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="cfpdes.adr.html">Coefficient Formulation PDEs Advection Diffusion Equation  Equation</a></span>
   <span class="next"><a href="../pyfeelppmor/index.html">pyFeel++ MOR</a></span>
