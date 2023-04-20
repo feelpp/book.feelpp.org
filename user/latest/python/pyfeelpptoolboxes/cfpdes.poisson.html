@@ -1279,9 +1279,12 @@ for dim in [2,3]:
 </div>
 <div id="code:4" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import pyvista as pv <i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from xvfbwrapper import Xvfb <i class="conum" data-value="1"></i><b>(1)</b>
+vdisplay = Xvfb()
+vdisplay.start()
+
+import pyvista as pv <i class="conum" data-value="2"></i><b>(2)</b>
 import os
-pv.start_xvfb()  <i class="conum" data-value="1"></i><b>(1)</b>
 pv.set_jupyter_backend('panel') <i class="conum" data-value="3"></i><b>(3)</b>
 def pv_get_mesh(mesh_path):
     reader = pv.get_reader(mesh_path)
@@ -1312,7 +1315,7 @@ myplots(dim=2,factor=0.5)</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>xvfbwrapper</code> package is used to run the <code>pyvista</code> visualisation in a virtual display. This is useful when running the code on a remote server.</td>
+<td>The <code>xvfbwrapper</code> package is used to run the <code>pyvista</code> visualisation in a virtual display. This is necessary when running the code on a remote server.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
