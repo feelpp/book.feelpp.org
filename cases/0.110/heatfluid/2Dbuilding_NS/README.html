@@ -9,7 +9,7 @@
     <link rel="next" href="../cabin/README.html">
     <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../../_/css/site.css">
-<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">    
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
 <script src="../../../../_/js/vendor/tabs-block-extension.js"></script>
@@ -26,7 +26,7 @@ MathJax.Hub.Config({
     inlineMath: [['$','$'], ['\\(','\\)']],
     displayMath: [['$$','$$'], ['\\[','\\]']],
     processEscapes: true,
-    processEnvironments: true, 
+    processEnvironments: true,
     ignoreClass: "nostem|nolatexmath"
   },
   asciimath2jax: {
@@ -94,7 +94,6 @@ MathJax.Hub.Config({
 
 <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
 <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
 <script>var uiRootPath = '../../../../_'</script>
@@ -105,9 +104,8 @@ MathJax.Hub.Config({
 <header class="header">
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
-      <div class="navbar-item">
-         <!--  <a href="https://book.feelpp.org">Feel++ documentation</a> -->
-           <a href="https://docs.feelpp.org">Feel++ Docs</a>
+      <div class="navbar-item feelpp-logo">
+        <a href="https://docs.feelpp.org"><img src="../../../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -117,50 +115,61 @@ MathJax.Hub.Config({
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="https://docs.feelpp.org">Home</a>
+        <div class="navbar-item search hide-for-print">
+          <form class="search">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Search Feel++ Docs" class="query" id="search-query">
+          </form>
+        </div>
         <div class="navbar-item has-dropdown is-hoverable">
-          <div class="navbar-link">Docs</div>
+          <div class="navbar-link">Manuals</div>
           <div class="navbar-dropdown">
-            <div class="navbar-item"><strong>Latest Version</strong></div>
-
-            <!-- this code allow to manage ordering of navbar item -->
-                                                                                                                                      
-
-            <hr class="navbar-divider">
+            <a class="navbar-item" href="https://docs.feelpp.org/user/">User</a>
+            <a class="navbar-item" href="https://docs.feelpp.org/dev/">Developer</a>
+            <a class="navbar-item" href="https://docs.feelpp.org/toolbox/">Toolbox</a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
-          <div class="navbar-link">Feel++</div>
-          <div class="navbar-dropdown">
-            <div class="navbar-item"><strong>GitHub</strong></div>
-            <a class="navbar-item" href="http://github.com/feelpp/feelpp">GitHub Repository</a>
-            <a class="navbar-item" href="http://github.com/feelpp/feelpp/issues">GitHub Issue Tracker</a>
-            <hr class="navbar-divider">
-            <div class="navbar-item"><strong>Documentation</strong></div>
-            <a class="navbar-item" href="http://docs.feelpp.org/user/">User Manual</a>
-            <a class="navbar-item" href="http://docs.feelpp.org/dev/">Developer Manual</a>
-            <a class="navbar-item" href="http://docs.feelpp.org/toolbox/">Toolbox Manual</a>
-            
+          <div class="navbar-link" data-title="Support">
+            <span class="icon"><img src="../../../../_/img/octicons-24.svg#view-comment-discussion"></span>
+          </div>
+          <div class="navbar-dropdown is-right">
+            <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../../_/img/slack-icon.svg"></span>
+              <span>Chat</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span>Discussions</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span>Source</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-hash"></span>
+              <span>Tweets</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-bug"></span>
+              <span>Issues</span>
+            </a>
           </div>
         </div>
-        <div class="primary-action">
-            <form class="navbar-item search">
-              <input type="text" placeholder="Search Feel++ Docs" class="query" id="search-query">
-              <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
-            </form>
+        <div class="navbar-item has-dropdown is-hoverable download-item">
+          <div class="navbar-item"><div class="download-btn">Get Feel++</div></div>
+          <div class="navbar-dropdown is-right">
+              <a class="navbar-item" href="../../../../user/0.110/install/index.html" target="_blank" rel="noopener">
+                <span>Stable (0.110)</span>
+              </a>
+              <a class="navbar-item" href="../../../../user/latest/install/index.html" target="_blank" rel="noopener">
+                <span>Latest</span>
+              </a>
+          </div>
         </div>
         <div class="navbar-item">
-          <a class="navbar-brand" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ">
-            <img src="../../../../_/img/slack.png" alt="slack" style="width:30px;"></a>
-        </div>
-        <div class="navbar-item">
-          <a class="navbar-brand"  href="http://docs.feelpp.org">
-            <img src="../../../../_/img/logoFeelpp.png" alt="Feel++" style="width:60px;">
-          </a>
-        </div>
-        <div class="navbar-item">
-          <a class="navbar-brand"  href="http://www.cemosis.fr">
-            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis" style="width:60px;">
+          <a class="navbar-brand"  href="https://www.cemosis.fr">
+            <img class="cemosis-logo"  src="../../../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
           </a>
         </div>
       </div>
@@ -594,10 +603,10 @@ MathJax.Hub.Config({
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../../template_project/1.0.3/index.html">Feel++ Templace Project</a>
+      <a class="title" href="../../../../feelpp-project/index.html">Feel++ Template Project</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../../template_project/1.0.3/index.html">1.0.3</a>
+          <a href="../../../../feelpp-project/index.html">default</a>
         </li>
       </ul>
     </li>
@@ -698,9 +707,9 @@ MathJax.Hub.Config({
 </div>
 <main class="article">
 <div class="toolbar" role="navigation">
-<button class="nav-toggle"></button>
-  <a href="../../../../feelpp/0.110/index.html" class="home-link"></a>
-<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <button class="nav-toggle"></button>
+    <a href="../../../../feelpp/0.110/index.html" class="home-link"></a>
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../../index.html">Feel++ Toolbox Cases Guide</a></li>
     <li><a href="../README.html">Heat &amp; Fluid</a></li>
@@ -709,7 +718,7 @@ MathJax.Hub.Config({
   </ul>
 </nav>
 
-<div class="page-versions">
+  <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">0.110</button>
   <div class="version-menu">
     <a class="version" href="../../../latest/heatfluid/2Dbuilding_NS/README.html">latest</a>
@@ -719,51 +728,20 @@ MathJax.Hub.Config({
     <a class="version" href="../../../0.107/heatfluid/2Dbuilding_NS/README.html">0.107</a>
   </div>
 </div>
+
+    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/blob/v0.110/examples/modules/heatfluid/pages/2Dbuilding_NS/README.adoc">Edit this Page</a></div>
   
-<div class="dropdown">
-  <button class="dropbtn" aria-label="Download this page">
-    <i class="fas fa-download"></i>
-  </button>
-  <div class="dropdown-content">
-
-
-          <a onclick="print(this)"  class="headerbtn"  data-toggle="tooltip" data-placement="left" title="Print to PDF">
-              .pdf <i class="fas fa-file-pdf"></i>
-          </a>
-
-  </div>
+  <div class="page-downloads">
+  <span class="label">Download as</span>
+  <ul class="download-options">
+    <li>
+      <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
+         class="pdf-download">
+        <img class="pdf-file-icon icon" src="../../../../_/img/pdf.svg"/> .pdf
+      </a>
+    </li>
+  </ul>
 </div>
-  
-<div class="dropdown">
-  <button class="dropbtn" aria-label="Github">
-    <i class="fab fa-github"></i>
-  </button>
-  <div class="dropdown-content">
-
-    <a href="https://github.com/feelpp/toolbox">Open repository <i class="fab fa-github"></i></a>
-    
-  <a href="https://github.com/feelpp/toolbox/blob/v0.110/examples/modules/heatfluid/pages/2Dbuilding_NS/README.adoc">Edit this Page <i class="fas fa-edit"></i></a>
-
-    <a href="https://github.com/feelpp/book.feelpp.org/issues/new">Open issue <i class="fas fa-lightbulb"></i></a>
-
-
-  </div>
-</div>
-
-
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
 </div>
 
   <div class="content">
@@ -1432,7 +1410,6 @@ feelppVtkJs.createSceneImporter( vtkVisuSection2, {
 <script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">
 </script>
 
-
 <script type="text/javascript">
 function toggleFullScreen() {
    var doc = window.document;
@@ -1448,5 +1425,6 @@ function toggleFullScreen() {
        cancelFullScreen.call(doc);
    }
 }
-</script>  </body>
+</script>
+  </body>
 </html>
