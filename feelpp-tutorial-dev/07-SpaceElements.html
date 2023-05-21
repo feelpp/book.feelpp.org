@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Solve a partial differential equation :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/tutorial-dev/latest/11-SolveAnEquation.html">
-    <link rel="prev" href="08-ComputingIntegrals.html">
-    <link rel="next" href="09-UsingBackend.html">
+    <title>Untitled :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/feelpp-tutorial-dev/07-SpaceElements.html">
+    <link rel="prev" href="06-VisualizingFunctions.html">
+    <link rel="next" href="08-ComputingIntegrals.html">
     <meta name="generator" content="Antora 3.1.2">
-    <link rel="stylesheet" href="../../_/css/site.css">
-<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
-<script src="../../_/js/vendor/tabs-block-extension.js"></script>
-<script src="../../_/js/vendor/tabs-block-behavior.js"></script>
+<script src="../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../_/js/vendor/tabs-block-behavior.js"></script>
 
 
 
@@ -95,7 +95,7 @@ MathJax.Hub.Config({
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
 <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
-<script>var uiRootPath = '../../_'</script>
+<script>var uiRootPath = '../_'</script>
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
   </head>
@@ -104,7 +104,7 @@ MathJax.Hub.Config({
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
       <div class="navbar-item feelpp-logo">
-        <a href="https://docs.feelpp.org"><img src="../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
+        <a href="https://docs.feelpp.org"><img src="../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -130,27 +130,27 @@ MathJax.Hub.Config({
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link" data-title="Support">
-            <span class="icon"><img src="../../_/img/octicons-24.svg#view-comment-discussion"></span>
+            <span class="icon"><img src="../_/img/octicons-24.svg#view-comment-discussion"></span>
           </div>
           <div class="navbar-dropdown is-right">
             <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/slack-icon.svg"></span>
+              <span class="icon"><img src="../_/img/slack-icon.svg"></span>
               <span>Chat</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span class="icon"><img src="../_/img/octicons-16.svg#view-discussion-closed"></span>
               <span>Discussions</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span class="icon"><img src="../_/img/octicons-16.svg#view-mark-github"></span>
               <span>Source</span>
             </a>
             <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-hash"></span>
+              <span class="icon"><img src="../_/img/octicons-16.svg#view-hash"></span>
               <span>Tweets</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-bug"></span>
+              <span class="icon"><img src="../_/img/octicons-16.svg#view-bug"></span>
               <span>Issues</span>
             </a>
           </div>
@@ -158,17 +158,17 @@ MathJax.Hub.Config({
         <div class="navbar-item has-dropdown is-hoverable download-item">
           <div class="navbar-item"><div class="download-btn">Get Feel++</div></div>
           <div class="navbar-dropdown is-right">
-              <a class="navbar-item" href="../../user/0.110/install/index.html" target="_blank" rel="noopener">
+              <a class="navbar-item" href="../user/0.110/install/index.html" target="_blank" rel="noopener">
                 <span>Stable (0.110)</span>
               </a>
-              <a class="navbar-item" href="../../user/latest/install/index.html" target="_blank" rel="noopener">
+              <a class="navbar-item" href="../user/latest/install/index.html" target="_blank" rel="noopener">
                 <span>Latest</span>
               </a>
           </div>
         </div>
         <div class="navbar-item">
           <a class="navbar-brand"  href="https://www.cemosis.fr">
-            <img class="cemosis-logo"  src="../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
+            <img class="cemosis-logo"  src="../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
           </a>
         </div>
       </div>
@@ -176,53 +176,76 @@ MathJax.Hub.Config({
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="tutorial-dev" data-version="latest">
+<div class="nav-container" data-component="feelpp-tutorial-dev" data-version="">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Feel++ Tutorial Dev</a></h3>
+    <h3 class="title"><a href="index.html">Feel++ Programming Tutorial</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Programming environment</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Introducing Feel++ programming</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-OutputDirectories.html">File Organisation</a>
+    <a class="nav-link" href="index.html">Introduction</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-SettingUpEnvironment.html">Runtime Environment</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cmake.html">cmake environment</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-LoadingMesh.html">Loading a Mesh</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="antora.html">antora environment</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-UsingExpressions.html">Using expressions</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="vscode.html">vscode integration</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="05-EvaluatingFunctions.html">Evaluating a function</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="githubactions.html">Github Actions</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="06-VisualizingFunctions.html">Visualizing functions</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="rename.html">Renaming the project</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="07-SpaceElements.html">Using function spaces</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="08-ComputingIntegrals.html">Computing integrals</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="11-SolveAnEquation.html">Solving a PDE</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="09-UsingBackend.html">Using a solver backend</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="12-CreateModels.html">Creating models</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="jupyter.html">Jupyter Notebook</a>
   </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Programming Feel++</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="01-OutputDirectories.html">File Organisation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="02-SettingUpEnvironment.html">Runtime Environment</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="03-LoadingMesh.html">Loading a Mesh</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="04-UsingExpressions.html">Using expressions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="05-EvaluatingFunctions.html">Evaluating a function</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="06-VisualizingFunctions.html">Visualizing functions</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="07-SpaceElements.html">Using function spaces</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="08-ComputingIntegrals.html">Computing integrals</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="11-SolveAnEquation.html">Solving a PDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="09-UsingBackend.html">Using a solver backend</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="12-CreateModels.html">Creating models</a>
   </li>
 </ul>
   </li>
@@ -231,177 +254,177 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Feel++ Tutorial Dev</span>
-    <span class="version">latest</span>
+    <span class="title">Feel++ Programming Tutorial</span>
+    <span class="version">default</span>
   </div>
   <ul class="components">
     <li class="component">
-      <a class="title" href="../../angiotk/0.1/index.html">AngioTK User Manual</a>
+      <a class="title" href="../angiotk/0.1/index.html">AngioTK User Manual</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../angiotk/0.1/index.html">0.1</a>
+          <a href="../angiotk/0.1/index.html">0.1</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../data/latest/index.html">Data Manual</a>
+      <a class="title" href="../data/latest/index.html">Data Manual</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../data/latest/index.html">latest</a>
+          <a href="../data/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../data/0.110/index.html">0.110</a>
+          <a href="../data/0.110/index.html">0.110</a>
         </li>
         <li class="version">
-          <a href="../../data/0.109/index.html">0.109</a>
+          <a href="../data/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../dev/latest/index.html">Developer manual</a>
+      <a class="title" href="../dev/latest/index.html">Developer manual</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../dev/latest/index.html">latest</a>
+          <a href="../dev/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../dev/0.110/index.html">0.110</a>
+          <a href="../dev/0.110/index.html">0.110</a>
         </li>
         <li class="version">
-          <a href="../../dev/0.109/index.html">0.109</a>
+          <a href="../dev/0.109/index.html">0.109</a>
         </li>
         <li class="version">
-          <a href="../../dev/0.108/index.html">0.108</a>
+          <a href="../dev/0.108/index.html">0.108</a>
         </li>
         <li class="version">
-          <a href="../../dev/0.107/index.html">0.107</a>
+          <a href="../dev/0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../salome/current/index.html">Feel++ and Salome</a>
+      <a class="title" href="../salome/current/index.html">Feel++ and Salome</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../salome/current/index.html">current</a>
+          <a href="../salome/current/index.html">current</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../feelpp/latest/index.html">Feel++ Documentation</a>
+      <a class="title" href="../feelpp/latest/index.html">Feel++ Documentation</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../feelpp/latest/index.html">latest</a>
+          <a href="../feelpp/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../feelpp/0.110/index.html">0.110</a>
+          <a href="../feelpp/0.110/index.html">0.110</a>
         </li>
         <li class="version">
-          <a href="../../feelpp/0.109/index.html">0.109</a>
+          <a href="../feelpp/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../math/index.html">Feel++ Mathematics</a>
+      <a class="title" href="../math/index.html">Feel++ Mathematics</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../math/index.html">master</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
-      <a class="title" href="../../feelpp-project/index.html">Feel++ Template Project</a>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../feelpp-project/index.html">default</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
-      <a class="title" href="../../cases/latest/index.html">Feel++ Toolbox Cases Guide</a>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../cases/latest/index.html">latest</a>
-        </li>
-        <li class="version">
-          <a href="../../cases/0.110/index.html">0.110</a>
-        </li>
-        <li class="version">
-          <a href="../../cases/0.109/index.html">0.109</a>
-        </li>
-        <li class="version">
-          <a href="../../cases/0.108/index.html">0.108</a>
-        </li>
-        <li class="version">
-          <a href="../../cases/0.107/index.html">0.107</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
-      <a class="title" href="../../toolboxes/latest/index.html">Feel++ Toolboxes Manual</a>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../toolboxes/latest/index.html">latest</a>
-        </li>
-        <li class="version">
-          <a href="../../toolboxes/0.110/index.html">0.110</a>
-        </li>
-        <li class="version">
-          <a href="../../toolboxes/0.109/index.html">0.109</a>
-        </li>
-        <li class="version">
-          <a href="../../toolboxes/0.108/index.html">0.108</a>
-        </li>
-        <li class="version">
-          <a href="../../toolboxes/0.107/index.html">0.107</a>
+          <a href="../math/index.html">master</a>
         </li>
       </ul>
     </li>
     <li class="component is-current">
-      <a class="title" href="index.html">Feel++ Tutorial Dev</a>
+      <a class="title" href="index.html">Feel++ Programming Tutorial</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="index.html">latest</a>
+          <a href="index.html">default</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../user/latest/index.html">Feel++ User Manual</a>
+      <a class="title" href="../feelpp-project/index.html">Feel++ Template Project</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../user/latest/index.html">latest</a>
-        </li>
-        <li class="version">
-          <a href="../../user/0.110/index.html">0.110</a>
-        </li>
-        <li class="version">
-          <a href="../../user/0.109/index.html">0.109</a>
-        </li>
-        <li class="version">
-          <a href="../../user/0.108/index.html">0.108</a>
-        </li>
-        <li class="version">
-          <a href="../../user/0.107/index.html">0.107</a>
+          <a href="../feelpp-project/index.html">default</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../mor/latest/index.html">Model Order Reduction</a>
+      <a class="title" href="../cases/latest/index.html">Feel++ Toolbox Cases Guide</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../mor/latest/index.html">latest</a>
+          <a href="../cases/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../mor/0.110/index.html">0.110</a>
+          <a href="../cases/0.110/index.html">0.110</a>
         </li>
         <li class="version">
-          <a href="../../mor/0.109/index.html">0.109</a>
+          <a href="../cases/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../cases/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../cases/0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../contribute/index.html">Toolbox Contribution Guide</a>
+      <a class="title" href="../toolboxes/latest/index.html">Feel++ Toolboxes Manual</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../contribute/index.html">master</a>
+          <a href="../toolboxes/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../toolboxes/0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../toolboxes/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../toolboxes/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../toolboxes/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../user/latest/index.html">Feel++ User Manual</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../user/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../user/0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../user/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../user/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../user/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../mor/latest/index.html">Model Order Reduction</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../mor/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../mor/0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../mor/0.109/index.html">0.109</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../contribute/index.html">Toolbox Contribution Guide</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../contribute/index.html">master</a>
         </li>
       </ul>
     </li>
@@ -413,17 +436,17 @@ MathJax.Hub.Config({
 <main class="article">
 <div class="toolbar" role="navigation">
   <button class="nav-toggle"></button>
-    <a href="../../feelpp/0.110/index.html" class="home-link"></a>
+    <a href="../feelpp/0.110/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="index.html">Feel++ Tutorial Dev</a></li>
-    <li>Introducing Feel++ programming</li>
-    <li><a href="11-SolveAnEquation.html">Solving a PDE</a></li>
+    <li><a href="index.html">Feel++ Programming Tutorial</a></li>
+    <li>Programming Feel++</li>
+    <li><a href="07-SpaceElements.html">Using function spaces</a></li>
   </ul>
 </nav>
 
   
-    <div class="edit-this-page"><a href="https://github.com/feelpp/feelpp-tutorial-dev/edit/master/docs/modules/ROOT/pages/11-SolveAnEquation.adoc">Edit this Page</a></div>
+    <div class="edit-this-page"><a href="https://github.com/feelpp/feelpp-tutorial-dev/edit/master/docs/modules/ROOT/pages/07-SpaceElements.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -431,7 +454,7 @@ MathJax.Hub.Config({
     <li>
       <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
          class="pdf-download">
-        <img class="pdf-file-icon icon" src="../../_/img/pdf.svg"/> .pdf
+        <img class="pdf-file-icon icon" src="../_/img/pdf.svg"/> .pdf
       </a>
     </li>
   </ul>
@@ -444,197 +467,168 @@ MathJax.Hub.Config({
 </aside>
 
 <article class="doc">
-<h1 class="page">Solve a partial differential equation</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>With all the previously notions we approach, the definition of a
-partial differential equation and boundary conditions are our next
-step. More details on these aspects can be retrieve at this
-<a href="../07-quickref/forms.adoc">page</a>.</p>
-</div>
-</div>
-</div>
 <div class="sect1">
-<h2 id="_variational_formulation"><a class="anchor" href="#_variational_formulation"></a>1. Variational formulation</h2>
+<h2 id="_spaces_and_elements"><a class="anchor" href="#_spaces_and_elements"></a>1. Spaces and elements</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This example refers to a laplacian problem, define by</p>
+<p>You&#8217;ve learned how to discretize the space you want to compute on.
+You now have to learn how to define and use function spaces and
+elements of functions spaces. For advanced informations on this
+subject, you can look in the <a href="../dev/latest/reference/Spaces/functionspace.html" class="xref page">Function Space</a> documentation.</p>
 </div>
-<div id="strongform" class="stemblock">
-<div class="title">Strong formulation</div>
-<div class="content">
-\[-\Delta u=1 \text{ in } \Omega=[0,1]^2, \quad u=1 \text{ on } \partial \Omega\]
-</div>
-</div>
-<div class="paragraph">
-<p>After turning the <a href="#strongform">Strong formulation</a> into its weak form, we have</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\int_\Omega \nabla u \cdot \nabla v = \int_\Omega v,\quad u=1 \text{ on } \partial \Omega\]
-</div>
-</div>
-<div class="paragraph">
-<p>where \(u\) is the unknown and \(v\) a test function.  The left
-side is known as the bilinear form \(a\) and the right side is the
-linear form \(l\).</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[a(u,v) = l(v), \quad u=1 \text{ on } \partial \Omega\]
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_implementation"><a class="anchor" href="#_implementation"></a>2. Implementation</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The steps to implement this problem are</p>
-</div>
+<div class="sect2">
+<h3 id="_constructing_a_function_space"><a class="anchor" href="#_constructing_a_function_space"></a>1.1. Constructing a function space</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Loading a 2D mesh, creating the function space \(V_h\), composed
-of piecewise polynomial functions of order 2, and its associated
-elements</p>
+<p>Loading a Mesh in 2D</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp"> auto mesh = loadMesh(_mesh=new Mesh&lt;Simplex&lt;2&gt;&gt;);
- auto Vh = Pch&lt;2&gt;( mesh );
- auto u = Vh-&gt;element();
- auto v = Vh-&gt;element();</code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto mesh = loadMesh(_mesh=new Mesh&lt;Simplex&lt;2&gt;&gt;);</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Define the linear form \(l\) with test function space \(V_h\)</p>
+<p>For basic function spaces, we have predetermined constructors:</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto l = form1( _test=Vh );
-l = integrate(_range=elements(mesh),
-              _expr=id(v));</code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto Xh = Pch&lt;2&gt;( mesh );</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Define the bilinear form \(a\) with \(V_h\) as test and trial function spaces</p>
+<p>Defining an element</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto a = form2( _trial=Vh, _test=Vh);
-a = integrate(_range=elements(mesh),
-              _expr=gradt(u)*trans(grad(v)) );</code></pre>
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">auto u = Xh-&gt;element( "u" );
+auto w = Xh-&gt;element( "w" );</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>form1</code> and <code>form2</code> are used to define respectively the left and right
-side of our partial differential equation.</p>
+<p>One can also use :</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Add Dirichlet boundary condition on u</p>
+<p><code>Pdh&lt;ORDER&gt;(mesh)</code> : Polynomial Discontinuous</p>
+</li>
+<li>
+<p><code>Pvh&lt;ORDER&gt;(mesh)</code> : Polynomial Continuous Vectorial</p>
+</li>
+<li>
+<p><code>Pdhv&lt;ORDER&gt;(mesh)</code> : Polynomial Discontinuous Vectorial</p>
+</li>
+<li>
+<p><code>Pchm&lt;ORDER&gt;(mesh)</code> : Polynomial Continuous Matrix</p>
+</li>
+<li>
+<p><code>Dh&lt;ORDER&gt;(mesh)</code> : RaviartThomas function space</p>
+</li>
+<li>
+<p><code>Ned1h&lt;ORDER&gt;(mesh)</code> : Nedelec function spaces</p>
 </li>
 </ul>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">a+=on(_range=boundaryfaces(mesh),
-      _rhs=l, _element=u, _expr=cst(0.) );</code></pre>
 </div>
-</div>
+<div class="sect2">
+<h3 id="_implementation"><a class="anchor" href="#_implementation"></a>1.2. Implementation</h3>
 <div class="paragraph">
-<p>We impose, in this case, \(u=0\) on \(\partial\Omega\), with the keyword <code>on</code>.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Solving the problem</p>
-</li>
-</ul>
+<p>The implementation reads are follows</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">a.solve(_rhs=l,_solution=u);</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Exporting the solution</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto e = exporter( _mesh=mesh );
-e-&gt;add( "u", u );
-e-&gt;save();</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The complete code reads as follows :</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#include &lt;feel/feel.hpp&gt;
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#include &lt;feel/feelcore/environment.hpp&gt;
+#include &lt;feel/feeldiscr/pch.hpp&gt;
+#include &lt;feel/feelfilters/loadmesh.hpp&gt;
+#include &lt;feel/feelfilters/exporter.hpp&gt;
+#include &lt;feel/feelvf/vf.hpp&gt;
 
-int main(int argc, char**argv )
+using namespace Feel;
+
+int main( int argc, char** argv )
 {
-     using namespace Feel;
 
-     Environment env( _argc=argc, _argv=argv,
-                      _about=about(_name="qs_laplacian",
+    //Initialize Feel++ Environment
+    Environment env( _argc=argc, _argv=argv,
+                     _about=about( _name="myfunctionspace",
                                    _author="Feel++ Consortium",
-                                   _email="feelpp-devel@feelpp.org"));
+                                   _email="feelpp-devel@feelpp.org" )  );
 
+    // create the mesh
     auto mesh = loadMesh(_mesh=new Mesh&lt;Simplex&lt;2&gt;&gt;);
-    auto Vh = Pch&lt;2&gt;( mesh );
-    auto u = Vh-&gt;element();
-    auto v = Vh-&gt;element();
 
-    auto l = form1( _test=Vh );
-    l = integrate(_range=elements(mesh),
-                  _expr=id(v));
+    // function space \( X_h \) using order 2 Lagrange basis functions
+    auto Xh = Pch&lt;2&gt;( mesh );
 
-    auto a = form2( _trial=Vh, _test=Vh);
-    a = integrate(_range=elements(mesh),
-                  _expr=gradt(u)*trans(grad(v)) );
-    a+=on(_range=boundaryfaces(mesh), _rhs=l, _element=u, _expr=cst(0.) );
-    a.solve(_rhs=l,_solution=u);
+    auto g = expr&lt;4&gt;( soption(_name="functions.g"));
+    auto gradg = grad&lt;3&gt;(g);
 
+    // elements of \( u,w \in X_h \)
+    auto u = Xh-&gt;element( "u" );
+    auto w = Xh-&gt;element( "w" );
+
+		// build the interpolant of u
+    u.on( _range=elements( mesh ), _expr=g );
+
+		// build the interpolant of the interpolation error
+    w.on( _range=elements( mesh ), _expr=idv( u )-g );
+
+    // compute L2 norms \(||\cdot||_{L^2}\)
+    double L2g = normL2( elements( mesh ), g );
+    double H1g = normL2( elements( mesh ), _expr=g,_grad_expr=gradg );
+    double L2uerror = normL2( elements( mesh ), ( idv( u )-g ) );
+    double H1uerror = normH1( elements( mesh ), _expr=( idv( u )-g ),
+                              _grad_expr=( gradv( u )-gradg ) );
+    
+    Feel::cout &lt;&lt; "||u-g||_0 = " &lt;&lt; L2uerror/L2g &lt;&lt; std::endl;
+    Feel::cout &lt;&lt; "||u-g||_1 = " &lt;&lt; H1uerror/H1g &lt;&lt; std::endl;
+
+    // export for post-processing
     auto e = exporter( _mesh=mesh );
-    e-&gt;add( "u", u );
+
+	 	// save interpolant
+    e-&gt;add( "g", u );
+
+	 	// save interpolant of interpolation error
+    e-&gt;add( "u-g", w );
+
     e-&gt;save();
+
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and the corresponding config file</p>
+<p>and the associated config file</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cfg hljs" data-lang="cfg">[gmsh]
-hsize=1e-1</code></pre>
+# default is hypercube
+shape=hypercube
+# you can try ellipsoid
+#shape=ellipsoid
+
+[functions]
+g=x*y*(y*2.2+4.3)*(2.1*x-1.3):x:y</code></pre>
+</div>
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="08-ComputingIntegrals.html">Computing integrals</a></span>
-  <span class="next"><a href="09-UsingBackend.html">Using a solver backend</a></span>
+  <span class="prev"><a href="06-VisualizingFunctions.html">Visualizing functions</a></span>
+  <span class="next"><a href="08-ComputingIntegrals.html">Computing integrals</a></span>
 </nav>
 </article>
   </div>
@@ -647,7 +641,7 @@ hsize=1e-1</code></pre>
       <div class="col">
         <div class="footer-logo">
           <a href="https://www.cemosis.fr" class="icon">
-            <img src="../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+            <img src="../_/img/logoCemosisTransparent.png" alt="Cemosis">
           </a>
         </div>
       </div>
@@ -707,14 +701,14 @@ hsize=1e-1</code></pre>
     </div>
   </div>
 </footer>
-<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
 
 
-<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../_/js/vendor/fontawesome.js"></script>
-<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../_/js/vendor/fontawesome.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
 
-<script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">
+<script async id="search-script" src="../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../_/css/vendor/docsearch.css">
 </script>
 
 <script type="text/javascript">

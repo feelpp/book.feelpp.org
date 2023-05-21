@@ -3,15 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Line options :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/tutorial-dev/latest/03ter-lineOptions.html">
+    <title>Cmake environment :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/feelpp-tutorial-dev/cmake.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="antora.html">
     <meta name="generator" content="Antora 3.1.2">
-    <link rel="stylesheet" href="../../_/css/site.css">
-<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
-<script src="../../_/js/vendor/tabs-block-extension.js"></script>
-<script src="../../_/js/vendor/tabs-block-behavior.js"></script>
+<script src="../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../_/js/vendor/tabs-block-behavior.js"></script>
 
 
 
@@ -93,7 +95,7 @@ MathJax.Hub.Config({
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
 <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
-<script>var uiRootPath = '../../_'</script>
+<script>var uiRootPath = '../_'</script>
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
   </head>
@@ -102,7 +104,7 @@ MathJax.Hub.Config({
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
       <div class="navbar-item feelpp-logo">
-        <a href="https://docs.feelpp.org"><img src="../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
+        <a href="https://docs.feelpp.org"><img src="../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -128,27 +130,27 @@ MathJax.Hub.Config({
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link" data-title="Support">
-            <span class="icon"><img src="../../_/img/octicons-24.svg#view-comment-discussion"></span>
+            <span class="icon"><img src="../_/img/octicons-24.svg#view-comment-discussion"></span>
           </div>
           <div class="navbar-dropdown is-right">
             <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/slack-icon.svg"></span>
+              <span class="icon"><img src="../_/img/slack-icon.svg"></span>
               <span>Chat</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span class="icon"><img src="../_/img/octicons-16.svg#view-discussion-closed"></span>
               <span>Discussions</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span class="icon"><img src="../_/img/octicons-16.svg#view-mark-github"></span>
               <span>Source</span>
             </a>
             <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-hash"></span>
+              <span class="icon"><img src="../_/img/octicons-16.svg#view-hash"></span>
               <span>Tweets</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-bug"></span>
+              <span class="icon"><img src="../_/img/octicons-16.svg#view-bug"></span>
               <span>Issues</span>
             </a>
           </div>
@@ -156,17 +158,17 @@ MathJax.Hub.Config({
         <div class="navbar-item has-dropdown is-hoverable download-item">
           <div class="navbar-item"><div class="download-btn">Get Feel++</div></div>
           <div class="navbar-dropdown is-right">
-              <a class="navbar-item" href="../../user/0.110/install/index.html" target="_blank" rel="noopener">
+              <a class="navbar-item" href="../user/0.110/install/index.html" target="_blank" rel="noopener">
                 <span>Stable (0.110)</span>
               </a>
-              <a class="navbar-item" href="../../user/latest/install/index.html" target="_blank" rel="noopener">
+              <a class="navbar-item" href="../user/latest/install/index.html" target="_blank" rel="noopener">
                 <span>Latest</span>
               </a>
           </div>
         </div>
         <div class="navbar-item">
           <a class="navbar-brand"  href="https://www.cemosis.fr">
-            <img class="cemosis-logo"  src="../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
+            <img class="cemosis-logo"  src="../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
           </a>
         </div>
       </div>
@@ -174,53 +176,76 @@ MathJax.Hub.Config({
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="tutorial-dev" data-version="latest">
+<div class="nav-container" data-component="feelpp-tutorial-dev" data-version="">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Feel++ Tutorial Dev</a></h3>
+    <h3 class="title"><a href="index.html">Feel++ Programming Tutorial</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Programming environment</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Introducing Feel++ programming</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-OutputDirectories.html">File Organisation</a>
+    <a class="nav-link" href="index.html">Introduction</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-SettingUpEnvironment.html">Runtime Environment</a>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="cmake.html">cmake environment</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-LoadingMesh.html">Loading a Mesh</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="antora.html">antora environment</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-UsingExpressions.html">Using expressions</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="vscode.html">vscode integration</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="05-EvaluatingFunctions.html">Evaluating a function</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="githubactions.html">Github Actions</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="06-VisualizingFunctions.html">Visualizing functions</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="rename.html">Renaming the project</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="07-SpaceElements.html">Using function spaces</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="08-ComputingIntegrals.html">Computing integrals</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="11-SolveAnEquation.html">Solving a PDE</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="09-UsingBackend.html">Using a solver backend</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="12-CreateModels.html">Creating models</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="jupyter.html">Jupyter Notebook</a>
   </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Programming Feel++</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="01-OutputDirectories.html">File Organisation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="02-SettingUpEnvironment.html">Runtime Environment</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="03-LoadingMesh.html">Loading a Mesh</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="04-UsingExpressions.html">Using expressions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="05-EvaluatingFunctions.html">Evaluating a function</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="06-VisualizingFunctions.html">Visualizing functions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="07-SpaceElements.html">Using function spaces</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="08-ComputingIntegrals.html">Computing integrals</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="11-SolveAnEquation.html">Solving a PDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="09-UsingBackend.html">Using a solver backend</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="12-CreateModels.html">Creating models</a>
   </li>
 </ul>
   </li>
@@ -229,177 +254,177 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Feel++ Tutorial Dev</span>
-    <span class="version">latest</span>
+    <span class="title">Feel++ Programming Tutorial</span>
+    <span class="version">default</span>
   </div>
   <ul class="components">
     <li class="component">
-      <a class="title" href="../../angiotk/0.1/index.html">AngioTK User Manual</a>
+      <a class="title" href="../angiotk/0.1/index.html">AngioTK User Manual</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../angiotk/0.1/index.html">0.1</a>
+          <a href="../angiotk/0.1/index.html">0.1</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../data/latest/index.html">Data Manual</a>
+      <a class="title" href="../data/latest/index.html">Data Manual</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../data/latest/index.html">latest</a>
+          <a href="../data/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../data/0.110/index.html">0.110</a>
+          <a href="../data/0.110/index.html">0.110</a>
         </li>
         <li class="version">
-          <a href="../../data/0.109/index.html">0.109</a>
+          <a href="../data/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../dev/latest/index.html">Developer manual</a>
+      <a class="title" href="../dev/latest/index.html">Developer manual</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../dev/latest/index.html">latest</a>
+          <a href="../dev/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../dev/0.110/index.html">0.110</a>
+          <a href="../dev/0.110/index.html">0.110</a>
         </li>
         <li class="version">
-          <a href="../../dev/0.109/index.html">0.109</a>
+          <a href="../dev/0.109/index.html">0.109</a>
         </li>
         <li class="version">
-          <a href="../../dev/0.108/index.html">0.108</a>
+          <a href="../dev/0.108/index.html">0.108</a>
         </li>
         <li class="version">
-          <a href="../../dev/0.107/index.html">0.107</a>
+          <a href="../dev/0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../salome/current/index.html">Feel++ and Salome</a>
+      <a class="title" href="../salome/current/index.html">Feel++ and Salome</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../salome/current/index.html">current</a>
+          <a href="../salome/current/index.html">current</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../feelpp/latest/index.html">Feel++ Documentation</a>
+      <a class="title" href="../feelpp/latest/index.html">Feel++ Documentation</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../feelpp/latest/index.html">latest</a>
+          <a href="../feelpp/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../feelpp/0.110/index.html">0.110</a>
+          <a href="../feelpp/0.110/index.html">0.110</a>
         </li>
         <li class="version">
-          <a href="../../feelpp/0.109/index.html">0.109</a>
+          <a href="../feelpp/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../math/index.html">Feel++ Mathematics</a>
+      <a class="title" href="../math/index.html">Feel++ Mathematics</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../math/index.html">master</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
-      <a class="title" href="../../feelpp-project/index.html">Feel++ Template Project</a>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../feelpp-project/index.html">default</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
-      <a class="title" href="../../cases/latest/index.html">Feel++ Toolbox Cases Guide</a>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../cases/latest/index.html">latest</a>
-        </li>
-        <li class="version">
-          <a href="../../cases/0.110/index.html">0.110</a>
-        </li>
-        <li class="version">
-          <a href="../../cases/0.109/index.html">0.109</a>
-        </li>
-        <li class="version">
-          <a href="../../cases/0.108/index.html">0.108</a>
-        </li>
-        <li class="version">
-          <a href="../../cases/0.107/index.html">0.107</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
-      <a class="title" href="../../toolboxes/latest/index.html">Feel++ Toolboxes Manual</a>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../toolboxes/latest/index.html">latest</a>
-        </li>
-        <li class="version">
-          <a href="../../toolboxes/0.110/index.html">0.110</a>
-        </li>
-        <li class="version">
-          <a href="../../toolboxes/0.109/index.html">0.109</a>
-        </li>
-        <li class="version">
-          <a href="../../toolboxes/0.108/index.html">0.108</a>
-        </li>
-        <li class="version">
-          <a href="../../toolboxes/0.107/index.html">0.107</a>
+          <a href="../math/index.html">master</a>
         </li>
       </ul>
     </li>
     <li class="component is-current">
-      <a class="title" href="index.html">Feel++ Tutorial Dev</a>
+      <a class="title" href="index.html">Feel++ Programming Tutorial</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="index.html">latest</a>
+          <a href="index.html">default</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../user/latest/index.html">Feel++ User Manual</a>
+      <a class="title" href="../feelpp-project/index.html">Feel++ Template Project</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../user/latest/index.html">latest</a>
-        </li>
-        <li class="version">
-          <a href="../../user/0.110/index.html">0.110</a>
-        </li>
-        <li class="version">
-          <a href="../../user/0.109/index.html">0.109</a>
-        </li>
-        <li class="version">
-          <a href="../../user/0.108/index.html">0.108</a>
-        </li>
-        <li class="version">
-          <a href="../../user/0.107/index.html">0.107</a>
+          <a href="../feelpp-project/index.html">default</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../mor/latest/index.html">Model Order Reduction</a>
+      <a class="title" href="../cases/latest/index.html">Feel++ Toolbox Cases Guide</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../mor/latest/index.html">latest</a>
+          <a href="../cases/latest/index.html">latest</a>
         </li>
         <li class="version">
-          <a href="../../mor/0.110/index.html">0.110</a>
+          <a href="../cases/0.110/index.html">0.110</a>
         </li>
         <li class="version">
-          <a href="../../mor/0.109/index.html">0.109</a>
+          <a href="../cases/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../cases/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../cases/0.107/index.html">0.107</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../contribute/index.html">Toolbox Contribution Guide</a>
+      <a class="title" href="../toolboxes/latest/index.html">Feel++ Toolboxes Manual</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../contribute/index.html">master</a>
+          <a href="../toolboxes/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../toolboxes/0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../toolboxes/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../toolboxes/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../toolboxes/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../user/latest/index.html">Feel++ User Manual</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../user/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../user/0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../user/0.109/index.html">0.109</a>
+        </li>
+        <li class="version">
+          <a href="../user/0.108/index.html">0.108</a>
+        </li>
+        <li class="version">
+          <a href="../user/0.107/index.html">0.107</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../mor/latest/index.html">Model Order Reduction</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../mor/latest/index.html">latest</a>
+        </li>
+        <li class="version">
+          <a href="../mor/0.110/index.html">0.110</a>
+        </li>
+        <li class="version">
+          <a href="../mor/0.109/index.html">0.109</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../contribute/index.html">Toolbox Contribution Guide</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../contribute/index.html">master</a>
         </li>
       </ul>
     </li>
@@ -411,16 +436,17 @@ MathJax.Hub.Config({
 <main class="article">
 <div class="toolbar" role="navigation">
   <button class="nav-toggle"></button>
-    <a href="../../feelpp/0.110/index.html" class="home-link"></a>
+    <a href="../feelpp/0.110/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="index.html">Feel++ Tutorial Dev</a></li>
-    <li><a href="03ter-lineOptions.html">Line options</a></li>
+    <li><a href="index.html">Feel++ Programming Tutorial</a></li>
+    <li>Programming environment</li>
+    <li><a href="cmake.html">cmake environment</a></li>
   </ul>
 </nav>
 
   
-    <div class="edit-this-page"><a href="https://github.com/feelpp/feelpp-tutorial-dev/edit/master/docs/modules/ROOT/pages/03ter-lineOptions.adoc">Edit this Page</a></div>
+    <div class="edit-this-page"><a href="https://github.com/feelpp/feelpp-tutorial-dev/edit/master/docs/modules/ROOT/pages/cmake.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -428,7 +454,7 @@ MathJax.Hub.Config({
     <li>
       <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
          class="pdf-download">
-        <img class="pdf-file-icon icon" src="../../_/img/pdf.svg"/> .pdf
+        <img class="pdf-file-icon icon" src="../_/img/pdf.svg"/> .pdf
       </a>
     </li>
   </ul>
@@ -441,90 +467,87 @@ MathJax.Hub.Config({
 </aside>
 
 <article class="doc">
-<h1 class="page">Line options</h1>
+<h1 class="page">Cmake environment</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This page list the possible options to get with <code>soption</code>, <code>doption</code>&#8230;&#8203; The syntax is</p>
+<p>The CMakeLists.txt is setup with Feel++.
+A sample Feel++ application is available in <code>src</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_building"><a class="anchor" href="#_building"></a>1. Building</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The CMakeLists.txt is configured to build the application in <code>src</code>.
+The following commands can be used to build the application:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto f = [soption | doption | ...] (_name="&lt;field&gt;.&lt;option&gt;") ;</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"> $ cmake --preset default <i class="conum" data-value="1"></i><b>(1)</b>
+ $ cmake --build --preset default <i class="conum" data-value="2"></i><b>(2)</b>
+ $ cmake --build --preset default -t install <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Configure the project</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Build the project</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Install the project</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_parameters_and_functions"><a class="anchor" href="#_parameters_and_functions"></a>1. Parameters and functions</h2>
+<h2 id="_packaging"><a class="anchor" href="#_packaging"></a>2. Packaging</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The syntax to configure those parameters is <code>parameters.&lt;option&gt;</code> or <code>functions.&lt;option&gt;</code>.
-The possible values for parameters and functions are :</p>
+<p>CPack is configured and allows to generate a binary and source package.
+Use the following commands to generate the binary package:</p>
 </div>
-<div class="listingblock">
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp"> "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa", "lambda", "mu", "nu", "xi", "omicron", "pi", "rho", "sigma", "tau", "upsilon", "phi", "chi", "psi", "omega"</code></pre>
+<pre>$ cmake --build --preset default -t package</pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_gmsh_options"><a class="anchor" href="#_gmsh_options"></a>2. Gmsh options</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>The syntax is <code>gmsh.&lt;option&gt;</code>. The main options are :</p>
+<p>Use the following commands to generate the source package:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>filename</code> : choose the `.geo`file</p>
-</li>
-<li>
-<p><code>hsize</code> : set the characteristic mesh size</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_time_options"><a class="anchor" href="#_time_options"></a>3. Time options</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The syntax is <code>ts.&lt;option&gt;</code>, and the main options are :</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>time-initial</code> : initial time</p>
-</li>
-<li>
-<p><code>time-final</code> : final time</p>
-</li>
-<li>
-<p><code>time-step</code> : time step</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_add_our_own_options"><a class="anchor" href="#_add_our_own_options"></a>4. Add our own options</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To define special option, the line to add in the source code is :</p>
-</div>
-<div class="listingblock">
+<div class="literalblock">
 <div class="content">
-<pre>options.add_options()
-      ( "hc", po::value&lt;std::string&gt;()-&gt;default_value( "1" ), "convective heat transfer coefficient" )
-      ( "Tinf", po::value&lt;std::string&gt;()-&gt;default_value( "1" ), "Temperature far from boundary" ) ;</pre>
+<pre>$ cmake --build --preset default -t package_source</pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testing"><a class="anchor" href="#_testing"></a>3. Testing</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>(it is given for special example here)</p>
+<p>CTest is configured.
+Use the following command to run the tests:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ cmake --build --preset default -t test</pre>
 </div>
 </div>
 </div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html">Introduction</a></span>
+  <span class="next"><a href="antora.html">antora environment</a></span>
+</nav>
 </article>
   </div>
 </main>
@@ -536,7 +559,7 @@ The possible values for parameters and functions are :</p>
       <div class="col">
         <div class="footer-logo">
           <a href="https://www.cemosis.fr" class="icon">
-            <img src="../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+            <img src="../_/img/logoCemosisTransparent.png" alt="Cemosis">
           </a>
         </div>
       </div>
@@ -596,14 +619,14 @@ The possible values for parameters and functions are :</p>
     </div>
   </div>
 </footer>
-<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
 
 
-<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../_/js/vendor/fontawesome.js"></script>
-<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../_/js/vendor/fontawesome.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
 
-<script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">
+<script async id="search-script" src="../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../_/css/vendor/docsearch.css">
 </script>
 
 <script type="text/javascript">
