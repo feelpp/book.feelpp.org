@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Feel++ documentation :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/feelpp/latest/index.html">
+    <title>Feel++ Policies :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/home/policy/index.html">
     <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../_/css/site.css">
 <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
@@ -13,8 +13,6 @@
 <script src="../../_/js/vendor/tabs-block-extension.js"></script>
 <script src="../../_/js/vendor/tabs-block-behavior.js"></script>
 
-    <script src="../../_/js/vendor/cover.js"></script>
-    <script src="../../_/js/vendor/cover_custom.js"></script>
 
 
 
@@ -99,7 +97,7 @@ MathJax.Hub.Config({
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
   </head>
-  <body class="article home">
+  <body class="article">
 <header class="header">
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
@@ -176,13 +174,13 @@ MathJax.Hub.Config({
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="feelpp" data-version="latest">
+<div class="nav-container" data-component="home" data-version="">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-explore is-active" data-panel="explore">
   <div class="context">
-    <span class="title">Feel++ Documentation</span>
-    <span class="version">latest</span>
+    <span class="title">Explore</span>
+    <span class="version">default</span>
   </div>
   <ul class="components">
     <li class="component">
@@ -227,6 +225,14 @@ MathJax.Hub.Config({
         </li>
       </ul>
     </li>
+    <li class="component is-current">
+      <a class="title" href="../index.html">Explore</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">default</a>
+        </li>
+      </ul>
+    </li>
     <li class="component">
       <a class="title" href="../../salome/current/index.html">Feel++ and Salome</a>
       <ul class="versions">
@@ -235,17 +241,14 @@ MathJax.Hub.Config({
         </li>
       </ul>
     </li>
-    <li class="component is-current">
-      <a class="title" href="index.html">Feel++ Documentation</a>
+    <li class="component">
+      <a class="title" href="../../feelpp/0.110/index.html">Feel++ Documentation</a>
       <ul class="versions">
-        <li class="version is-current is-latest">
-          <a href="index.html">latest</a>
+        <li class="version is-latest">
+          <a href="../../feelpp/0.110/index.html">0.110</a>
         </li>
         <li class="version">
-          <a href="../0.110/index.html">0.110</a>
-        </li>
-        <li class="version">
-          <a href="../0.109/index.html">0.109</a>
+          <a href="../../feelpp/0.109/index.html">0.109</a>
         </li>
       </ul>
     </li>
@@ -363,20 +366,12 @@ MathJax.Hub.Config({
 <main class="article">
 <div class="toolbar" role="navigation">
   <button class="nav-toggle"></button>
-    <a href="../0.110/index.html" class="home-link"></a>
+    <a href="../../feelpp/0.110/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
 </nav>
 
-  <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
-  <div class="version-menu">
-    <a class="version is-current" href="index.html">latest</a>
-    <a class="version" href="../0.110/index.html">0.110</a>
-    <a class="version" href="../0.109/index.html">0.109</a>
-  </div>
-</div>
-
-    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/feelppdocs/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+  
+    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/feelppdocs/modules/ROOT/pages/policy/index.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -396,379 +391,9 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 
-<aside class="toc sidebar">
- <div>
-     <a class="twitter-timeline" href="https://twitter.com/feelpp?ref_src=twsrc%5Etfw" data-limit="2">Tweets by feelpp</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <a class="twitter-timeline" href="https://twitter.com/cemosis?ref_src=twsrc%5Etfw" data-limit="2">Tweets by cemosis</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</div>
-</aside>
 <article class="doc">
-<h1 class="page">Feel++ documentation</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="openblock lead panel">
-<div class="content">
-<div class="paragraph">
-<p>Welcome to Feel++ documentation! Feel++ is an Open-Source C++ library which allows to solve a large range of partial differential equations using Galerkin methods, <em>e.g</em> finite element method, spectral element method,  discontinuous Galerkin methods or reduced basis methods.
-Feel++ enables parallel computing in a seamless way and allows to solve large scale systems up to tens of thousands of cores.</p>
-</div>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Feel++ packages Docker (All platforms: Windows, Mac, Linux) and Debian/Ubuntu packages (Linux, Windows/WSL)</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-center valign-top">Stable</th>
-<th class="tableblock halign-center valign-top">Latest</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="../../user/0.110/install/index.html" class="xref page">Get Feel++ 0.110</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="../../user/latest/install/index.html" class="xref page">Get Feel++ latest</a></p></td>
-</tr>
-</tbody>
-</table>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Documentation Version"></i>
-</td>
-<td class="content">
-The latest released version of Feel++ is <a href="https://github.com/feelpp/feelpp/releases/latest:"><strong>0.110</strong></a> and the documentation will be only updated to fix issues.
-The current development version of Feel++ is <a href="https://github.com/feelpp/feelpp/blob/develop/CHANGELOG.adoc#change-log:"><strong>latest</strong></a> and the associated documentation may be updated anytime.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The Feel++ documentation introduce the Feel++ concepts, the process to build and run an application and the process to run a toolbox application.
-New user should begin with the <a href="../../user/latest/index.html" class="xref page">User Manual</a>.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-You wish to contribute? Please consult the <a href="#Contribute">contribute</a> section to learn how to proceed!
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_manuals_references"><a class="anchor" href="#_manuals_references"></a>1. Manuals references</h2>
-<div class="sectionbody">
-<div class="cover-left">
-<div id="cover-user-link" class="paragraph">
-<p><a href="../../user/latest/index.html" class="xref page">Feel++ User Manual</a></p>
-</div>
-  <div id="mancover" class="cover", onClick="coverGetLink('cover-user-link')">
-    <div class="coverload">
-      <div class="bounce1"></div>
-      <div class="bounce2"></div>
-      <div class="bounce3"></div>
-    </div>
-  </div>
-</div>
-<div class="cover-left">
-<div id="cover-dev-link" class="paragraph">
-<p><a href="../../dev/latest/index.html" class="xref page">Feel++ Developer Manual</a></p>
-</div>
-  <div id="devcover" class="cover", onClick="coverGetLink('cover-dev-link')">
-    <div class="coverload">
-      <div class="bounce1"></div>
-      <div class="bounce2"></div>
-      <div class="bounce3"></div>
-    </div>
-  </div>
-</div>
-<div class="cover-left">
-<div id="cover-data-link" class="paragraph">
-<p><a href="../../data/latest/index.html" class="xref page">Feel++ Data Manual</a></p>
-</div>
-  <div id="datacover" class="cover", onClick="coverGetLink('cover-data-link')">
-    <div class="coverload">
-      <div class="bounce1"></div>
-      <div class="bounce2"></div>
-      <div class="bounce3"></div>
-    </div>
-  </div>
-</div>
-<div style="clear:left"></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_mathematics_references"><a class="anchor" href="#_mathematics_references"></a>2. Mathematics references</h2>
-<div class="sectionbody">
-<div class="cover-left">
-<div id="cover-fem-link" class="paragraph">
-<p><a href="../../math/fem/index.html" class="xref page">Feel++ FEM Manual</a></p>
-</div>
-  <div id="femcover" class="cover", onClick="coverGetLink('cover-fem-link')">
-    <div class="coverload">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
-    </div>
-  </div>
-</div>
-<div class="cover-left">
-<div id="cover-hdg-link" class="paragraph">
-<p><a href="../../math/hdg/index.html" class="xref page">Feel++ HDG Manual</a></p>
-</div>
-  <div id="hdgcover" class="cover", onClick="coverGetLink('cover-hdg-link')">
-    <div class="coverload">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
-    </div>
-  </div>
-</div>
-<div style="clear:left"></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_feel_toolboxes"><a class="anchor" href="#_feel_toolboxes"></a>3. Feel++ Toolboxes</h2>
-<div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Feel++ toolboxes provides a environment for modeling and solving various kinds of scientific and engineering problems : Heat-transfer, CFD, CSM, FSI, Thermo-Electric, &#8230;&#8203;</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="../../toolboxes/latest/index.html" class="xref page">Documentations</a></p>
-</li>
-<li>
-<p><a href="../../cases/latest/index.html" class="xref page">Cases</a></p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><span class="image"><img src="_images/toolboxes/GalleryToolboxes.jpg" alt="GalleryToolboxes" width="100%"></span></p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_feel_mor"><a class="anchor" href="#_feel_mor"></a>4. Feel++ MOR</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Feel++ comes with a Model Order Reduction <a href="../../mor/latest/index.html" class="xref page">framework</a>.</p>
-</div>
-<div class="paragraph">
-<p>Test cases are presented <a href="../../mor/latest/index.html#_cases" class="xref page">here</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_infrastructure"><a class="anchor" href="#_infrastructure"></a>5. Infrastructure</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Feel++ is available on various supercomputing infrastructures.</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1"><a href="infra/atlas.html" class="xref page">Atlas</a></dt>
-<dd>
-<p>Atlas is our local computing resource at Cemosis and IRMA laboratory.
-We open access to Atlas</p>
-</dd>
-<dt class="hdlist1"><a href="infra/alsacalcul.html" class="xref page">Alsacalcul</a></dt>
-<dd>
-<p>Alsacalcul is the supercomputer at Université de Strasbourg.
-<strong>If you are a member of the university</strong>, you have access to Alsacalcul either through best effort or through dedicated calls.
-<strong>If you are a company</strong>, Cemosis is in charge of selling computing hours on Alsacalcul and providing associated services.</p>
-</dd>
-<dt class="hdlist1"><a href="infra/ft2.html" class="xref page">Finis Terrae 2</a></dt>
-<dd>
-<p>As one of the basic component of the MSO4SC E-INFRA H2020 project, Feel++ is available on Finis Terrae 2(FT2) from CESGA natively and via Singularity. If you are a CESGA/FT2 user, you have access to Feel++.</p>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_external_tools"><a class="anchor" href="#_external_tools"></a>6. External Tools</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_salome"><a class="anchor" href="#_salome"></a>6.1. Salome</h3>
-<div class="paragraph">
-<p>Feel++ can use <a href="../../salome/current/index.html" class="xref page">Salome and MeshGems</a>.</p>
-</div>
-<div class="paragraph">
-<p>Feel++ will soon be integrated with Salome.</p>
-</div>
-<div class="paragraph">
-<p>Feel++ can use a license for <a href="../../salome/current/meshgems/index.html" class="xref page">MeshGems</a>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_slurm"><a class="anchor" href="#_slurm"></a>6.2. Slurm</h3>
-<div class="paragraph">
-<p>How use <a href="external_tools/slurm.html" class="xref page">Slurm</a> for run Feel++ on supercomputing infrastructures.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_get_help"><a class="anchor" href="#_get_help"></a>7. Get Help</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Feel++ project is developed to help you easily do <em>(i)</em> modelisation simulation and optimisation and <em>(ii)</em> high performance computing.
-But your feedback is invaluable to make progress!
-We encourage you to ask questions and discuss any aspects of the project on the discussion list, on Twitter or in the chat room.</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Twitter</dt>
-<dd>
-<p>#feelpp hashtag or @feelpp mention</p>
-</dd>
-<dt class="hdlist1">Chat using Slack</dt>
-<dd>
-<p><a href="https://feelpp.slack.com"><span class="image"><img src="_images/tools/joinslack.svg" alt="joinslack"></span></a></p>
-</dd>
-<dt class="hdlist1">Chat using Gitter (deprecated)</dt>
-<dd>
-<p><span class="image"><a class="image" href="https://gitter.im/feelpp/feelpp"><img src="https://badges.gitter.im/Join%20In.svg" alt="Gitter"></a></span></p>
-</dd>
-</dl>
-</div>
-<div class="paragraph">
-<p>The Feel++ organization on GitHub hosts the project&#8217;s source code, issue tracker, and sub-projects.</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Source repository (git)</dt>
-<dd>
-<p><a href="https://github.com/feelpp/feelpp" class="bare">github.com/feelpp/feelpp</a></p>
-</dd>
-<dt class="hdlist1">Issue tracker</dt>
-<dd>
-<p><a href="https://github.com/feelpp/feelpp/issues" class="bare">github.com/feelpp/feelpp/issues</a></p>
-</dd>
-<dt class="hdlist1">Feel++ organization on GitHub</dt>
-<dd>
-<p><a href="https://github.com/feelpp" class="bare">github.com/feelpp</a></p>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_how_to_contribute"><a class="anchor" href="#_how_to_contribute"></a>8. How to Contribute</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In the spirit of <a href="https://www.gnu.org/philosophy/free-sw.html">free software</a>, <em>everyone</em> is encouraged to help improve this project.
-If you discover errors or omissions in the source code, documentation, or website content, please don&#8217;t hesitate to submit an issue, open a pull request with a fix or even directly Edit the documentation pages.
-New contributors are always welcome!</p>
-</div>
-<div class="paragraph">
-<p>Here are some ways <strong>you</strong> can contribute:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>by using develop versions</p>
-</li>
-<li>
-<p>by <a href="https://github.com/feelpp/feelpp/issues">reporting bugs</a></p>
-</li>
-<li>
-<p>by <a href="https://github.com/feelpp/feelpp/issues">suggesting new features</a></p>
-</li>
-<li>
-<p>by writing or editing documentation</p>
-</li>
-<li>
-<p>by writing specifications</p>
-</li>
-<li>
-<p>by writing code&#8201;&#8212;&#8201;<em>No patch is too small.</em></p>
-<div class="ulist">
-<ul>
-<li>
-<p>fix typos</p>
-</li>
-<li>
-<p>add comments</p>
-</li>
-<li>
-<p>write examples!</p>
-</li>
-<li>
-<p>write tests!</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>by refactoring code</p>
-</li>
-<li>
-<p>by fixing <a href="https://github.com/feelpp/feelpp/issues">issues</a></p>
-</li>
-<li>
-<p>by reviewing Pull Requests</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The <a href="https://github.com/feelpp/feelpp/blob/develop/CONTRIBUTING.adoc">Contributing</a> guide provides information on how to create, style, and submit issues, feature requests, code, and documentation to the Feel++ Project.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_copyright_and_licensing"><a class="anchor" href="#_copyright_and_licensing"></a>9. Copyright and Licensing</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Copyright &#169; 2011-2019 Feel++ Consortium.
-Free use of this software is granted under the terms of the LGPL and GPL Licenses.</p>
-</div>
-<div class="paragraph">
-<p>See the <a href="https://github.com/feelpp/feelpp/blob/develop/LICENSE.adoc">LICENSE</a> file for details.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_authors"><a class="anchor" href="#_authors"></a>10. Authors</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Feel++ development is led by <a href="https://github.com/prudhomm">Christophe Prud&#8217;homme</a> and <a href="https://github.com/vincentchabannes">Vincent Chabannes</a>.
-It has received contributions from <a href="https://github.com/feelpp/feelpp/graphs/contributors">many other individuals</a>.</p>
-</div>
-<div class="paragraph">
-<p>The project was initiated in 2006 by <a href="https://github.com/prudhomm">Christophe Prud&#8217;homme</a> and based initially on <a href="https://cmcsforge.epfl.ch/projects/lifev/">lifeV</a> and completely re-written since then.</p>
-</div>
-</div>
-</div>
+<h1 class="page">Feel++ Policies</h1>
+
 </article>
   </div>
 </main>
