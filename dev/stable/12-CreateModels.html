@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/dev/stable/12-CreateModels.html">
+    <meta name="generator" content="Antora 3.1.4">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+<script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
+
+<script src="../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../_/js/vendor/tabs-block-behavior.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+
+  TeX: {
+      Macros: {
+      RR: "{\\mathbb R}",
+      NN: "{\\mathbb N}",
+      Nso: "{N_{\\mathrm{so}}}",
+      Nma: "{N_{\\mathrm{ma}}}",
+      Nno: "{N_{\\mathrm{no}}}",
+      Ne: "{N_{\\mathrm{e}}}",
+      Ilag: ["{\\mathcal{I}^{\\mathrm{lag}}_{#1}}",1],
+      calTh: "{\\mathcal{T}_h}",
+      Ck: ["{\\mathcal{C}^{#1}}",1],
+      Pk: ["{\\mathcal{P}^{#1}}",1],
+      Qk: ["{\\mathcal{Q}^{#1}}",1],
+      Pch: ["{P^{#1}_{c,h}}",1],
+      Pcho: ["{P^{#1}_{c,h,0}}",1],
+      Qch: ["{Q^{#1}_{c,h}}",1],
+      Ich: ["{\\mathcal{I}^{#1}_{c,h}#2}",2],
+      poly: ["{\\mathbb{#1}}",1],
+      nf: "{n_f}",
+      ngeo: "{n_{\\mathrm{geo}}}",
+      geo: "{\\mathrm{geo}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      dim: ["{\\operatorname{dim}(#1)}",1],
+      opdim: "{\\operatorname{dim}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      poly: ["{\\mathbb{#1}",1],
+      R: ["{\\mathbb{R}^{#1}}",1],
+      set: ["{\\left\\{#1\\right\\}}",1],
+      diam: "{\\operatorname{diam}}",
+      jump: ["{[\\![ #1 ]\\!]}",1],
+      Next: "{\\mathrm{n}}",
+      essinf: "{\\operatorname{ess}\\, \\operatorname{inf}}",
+      tr: "{\\operatorname{tr}}",
+      Id: "{\\mathcal{I}}",
+      disp: ["{\\mathbf{#1}}",1],
+      stresst: ["{\\mathbf{\\sigma(#1)}}",1],
+      deformt: ["{\\mathbf{\\varepsilon(#1)}}",1],
+      domain: "{\\Omega}",
+      prect: ["{\\left\\(#1\\right\\)}",1],
+      ds: "",
+      bold: ["{\\bf #1}",1],
+      p: "{\\mathrm{p}}",
+      q:"{\\mathbf{q}}",
+      n:"{\\mathbf{n}}",
+      T:"{\\mathcal{T}}",
+      F:"{\\mathcal{F}}",
+      P:"{\\mathcal{P}}",
+      v:"{\\mathbf{v}}"
+  },
+  extensions: ["mhchem.js"] }
+});
+</script>
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML'>
+</script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
+<script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
+<script>var uiRootPath = '../../_'</script>
+
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item feelpp-logo">
+        <a href="https://docs.feelpp.org"><img src="../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <form class="search">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Search Feel++ Docs" class="query" id="search-query">
+          </form>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Manuals</div>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://docs.feelpp.org/user/">User</a>
+            <a class="navbar-item" href="https://docs.feelpp.org/dev/">Developer</a>
+            <a class="navbar-item" href="https://docs.feelpp.org/toolbox/">Toolbox</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link" data-title="Support">
+            <span class="icon"><img src="../../_/img/octicons-24.svg#view-comment-discussion"></span>
+          </div>
+          <div class="navbar-dropdown is-right">
+            <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../_/img/slack-icon.svg"></span>
+              <span>Chat</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span>Discussions</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span>Source</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../_/img/octicons-16.svg#view-hash"></span>
+              <span>Tweets</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
+              <span class="icon"><img src="../../_/img/octicons-16.svg#view-bug"></span>
+              <span>Issues</span>
+            </a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable download-item">
+          <div class="navbar-item"><div class="download-btn">Get Feel++</div></div>
+          <div class="navbar-dropdown is-right">
+              <a class="navbar-item" href="../../user/stable/install/index.html" target="_blank" rel="noopener">
+                <span>Stable (0.110)</span>
+              </a>
+              <a class="navbar-item" href="../../user/latest/install/index.html" target="_blank" rel="noopener">
+                <span>Latest</span>
+              </a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="https://www.cemosis.fr">
+            <img class="cemosis-logo"  src="../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<a href="#" class="menu-expand-toggle"></a>
+<div class="nav-container" data-component="dev" data-version="0.110">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Developer manual</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Programming with Feel++</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Programming environment</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Debugging Feel++</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Profiling Feel++</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="#tutorial-dev:ROOT:index.adoc">Feel++ Development Tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="#template_project:ROOT:index.adoc">Feel++ Template Project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="reference/index.html">Mathematical Concepts Reference</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="reference/Mesh/README.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Mesh/iterators.html">Mesh iterators</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="reference/Integrals/README.html">Integrals</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Integrals/integrate.html">integrate</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Integrals/mean.html">mean</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Integrals/norms.html">norms</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Integrals/project.html">project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="reference/Spaces/README.html">Function spaces</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Spaces/notations.html">Notations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Spaces/functionspace.html">FunctionSpace</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Spaces/projection.html">Projection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Spaces/interpolation.html">Interpolation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Spaces/save.html">Save</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="reference/Solver/README.html">Algebraic solutions</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Solver/notations.html">Notations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Solver/backend.html">Defining a backend</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Solver/preconditioner.html">Defining a preconditioner</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Solver/solving.html">Solving linear systems</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Solver/eigensolver.html">Solving eigenvalue problems</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="reference/forms.html">Linear and Bilinear Forms</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="reference/Time/README.html">Time Discretization</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Time/bdf.html">BDF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="reference/Time/adaptivestepping.html">Adaptive time stepping</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="reference/exporter.html">Post-processing and Visualization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="reference/Keywords/README.html">Mathematical keywords</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Developer Reference</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="reference/cmake.html">CMake Feel++ macros</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="reference/environment.html">Feel++ Environment</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="reference/fileformats.html">Feel++ File Formats</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="reference/codingrules.html">Feel++ Coding Rules</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Developer manual</span>
+    <span class="version">0.110</span>
+  </div>
+  <ul class="components">
+      <li class="component">
+        <a class="title" href="../../user/stable/index.html">Feel++ User Manual</a>
+          <ul class="versions">
+              <li class="version">
+                <a href="../../user/latest/index.html">latest</a>
+              </li>
+              <li class="version is-latest">
+                <a href="../../user/stable/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../user/0.109/index.html">0.109</a>
+              </li>
+              <li class="version">
+                <a href="../../user/0.108/index.html">0.108</a>
+              </li>
+              <li class="version">
+                <a href="../../user/0.107/index.html">0.107</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component is-current">
+        <a class="title" href="index.html">Developer manual</a>
+          <ul class="versions">
+              <li class="version">
+                <a href="../latest/index.html">latest</a>
+              </li>
+              <li class="version is-current is-latest">
+                <a href="index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../0.109/index.html">0.109</a>
+              </li>
+              <li class="version">
+                <a href="../0.108/index.html">0.108</a>
+              </li>
+              <li class="version">
+                <a href="../0.107/index.html">0.107</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../data/stable/index.html">Data Manual</a>
+          <ul class="versions">
+              <li class="version">
+                <a href="../../data/latest/index.html">latest</a>
+              </li>
+              <li class="version is-latest">
+                <a href="../../data/stable/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../data/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../math/index.html">Feel++ Mathematics</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../math/index.html">master</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../toolboxes/stable/index.html">Feel++ Toolboxes Manual</a>
+          <ul class="versions">
+              <li class="version">
+                <a href="../../toolboxes/latest/index.html">latest</a>
+              </li>
+              <li class="version is-latest">
+                <a href="../../toolboxes/stable/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../toolboxes/0.109/index.html">0.109</a>
+              </li>
+              <li class="version">
+                <a href="../../toolboxes/0.108/index.html">0.108</a>
+              </li>
+              <li class="version">
+                <a href="../../toolboxes/0.107/index.html">0.107</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../cases/stable/index.html">Feel++ Toolbox Cases Guide</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../cases/stable/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../cases/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../cases/0.109/index.html">0.109</a>
+              </li>
+              <li class="version">
+                <a href="../../cases/0.108/index.html">0.108</a>
+              </li>
+              <li class="version">
+                <a href="../../cases/0.107/index.html">0.107</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../angiotk/stable/index.html">AngioTK User Manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../angiotk/stable/index.html">0.1</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../salome/stable/index.html">Feel++ and Salome</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../salome/stable/index.html">current</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../feelpp/stable/index.html">Feel++ Documentation</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../feelpp/stable/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../feelpp/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../feelpp-tutorial-dev/index.html">Feel++ Programming Tutorial</a>
+      </li>
+      <li class="component">
+        <a class="title" href="../../feelpp-project/index.html">Feel++ Template Project</a>
+      </li>
+      <li class="component">
+        <a class="title" href="../../mor/stable/index.html">Model Order Reduction</a>
+          <ul class="versions">
+              <li class="version">
+                <a href="../../mor/latest/index.html">latest</a>
+              </li>
+              <li class="version is-latest">
+                <a href="../../mor/stable/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../mor/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../contribute/index.html">Toolbox Contribution Guide</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../contribute/index.html">master</a>
+              </li>
+          </ul>
+      </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button class="nav-toggle"></button>
+    <a href="../../home/index.html" class="home-link"></a>
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+
+  <div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">0.110</button>
+  <div class="version-menu">
+    <a class="version" href="../latest/12-CreateModels.html">latest</a>
+    <a class="version is-current" href="12-CreateModels.html">0.110</a>
+    <a class="version" href="../0.109/12-CreateModels.html">0.109</a>
+    <a class="version" href="../0.108/12-CreateModels.html">0.108</a>
+    <a class="version" href="../0.107/12-CreateModels.html">0.107</a>
+  </div>
+</div>
+
+    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/blob/v0.110/docs/dev/modules/ROOT/pages/12-CreateModels.adoc">Edit this Page</a></div>
+  
+  <div class="page-downloads">
+  <span class="label">Download as</span>
+  <ul class="download-options">
+    <li>
+      <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
+         class="pdf-download">
+        <img class="pdf-file-icon icon" src="../../_/img/pdf.svg"/> .pdf
+      </a>
+    </li>
+  </ul>
+</div>
+</div>
+
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<div class="sect1">
+<h2 id="_defining_a_model"><a class="anchor" href="#_defining_a_model"></a>1. Defining a Model</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_introduction"><a class="anchor" href="#_introduction"></a>1.1. Introduction</h3>
+<div class="paragraph">
+<p>It is well known an equation can describe a huge range of physical
+problems. Each of theses problems will have a particular environment,
+but the equation to solve will be the same. To make our program
+applicable to theses range of problem, we have defined a model. Models
+definitions can be retrieve in this
+<a href="../07-quickref/Models/README.adoc">section</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_what_is_a_model"><a class="anchor" href="#_what_is_a_model"></a>1.2. What is a model</h3>
+<div class="paragraph">
+<p>A model is defined by :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a Name</p>
+</li>
+<li>
+<p>a Description</p>
+</li>
+<li>
+<p>a Model</p>
+</li>
+<li>
+<p>Parameters</p>
+</li>
+<li>
+<p>Materials</p>
+</li>
+<li>
+<p>Boundary Conditions</p>
+</li>
+<li>
+<p>Post Processing</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_parameters"><a class="anchor" href="#_parameters"></a>1.2.1. Parameters</h4>
+<div class="paragraph">
+<p>A parameter is a non physical property for a model.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_materials"><a class="anchor" href="#_materials"></a>1.2.2. Materials</h4>
+<div class="paragraph">
+<p>To retrieve the materials properties, we use :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">ModelMaterials materials = model.materials();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_boundaryconditions"><a class="anchor" href="#_boundaryconditions"></a>1.2.3. BoundaryConditions</h4>
+<div class="paragraph">
+<p>Thanks to GiNaC, we handle boundary conditions (Dirichlet, Neumann, Robin) as expression. You have to indicate in the json file the quantity to handle (velocity, pressure&#8230;&#8203;) and the associated expression.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">map_scalar_field&lt;2&gt; bc_u { model.boundaryConditions().getScalarFields&lt;2&gt;("heat","dirichlet") };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can apply theses boundary condition this way</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">  for(auto it : bc_u){
+    if(boption("myVerbose") &amp;&amp; Environment::isMasterRank() )
+      std::cout &lt;&lt; "[BC] - Applying " &lt;&lt; it.second &lt;&lt; " on " &lt;&lt; it.first &lt;&lt; std::endl;
+    a+=on(_range=markedfaces(mesh,it.first), _rhs=l, _element=u, _expr=it.second );
+  }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_code"><a class="anchor" href="#_code"></a>1.2.4. Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  for(auto it : materials)
+  {
+    auto mat = material(it);
+    if(boption("myVerbose") &amp;&amp; Environment::isMasterRank() )
+      std::cout &lt;&lt; "[Materials] - Laoding data for " &lt;&lt; it.second.name() &lt;&lt; " that apply on marker " &lt;&lt; it.first  &lt;&lt; " with diffusion coef [" 
+#if MODEL_DIM == 3
+        &lt;&lt; "[" &lt;&lt; it.second.k11() &lt;&lt; "," &lt;&lt; it.second.k12() &lt;&lt; "," &lt;&lt; it.second.k13() &lt;&lt; "],"
+        &lt;&lt; "[" &lt;&lt; it.second.k12() &lt;&lt; "," &lt;&lt; it.second.k22() &lt;&lt; "," &lt;&lt; it.second.k23() &lt;&lt; "],"
+        &lt;&lt; "[" &lt;&lt; it.second.k13() &lt;&lt; "," &lt;&lt; it.second.k23() &lt;&lt; "," &lt;&lt; it.second.k33() &lt;&lt; "]]" 
+#else
+        &lt;&lt; "[" &lt;&lt; it.second.k11() &lt;&lt; "," &lt;&lt; it.second.k12() &lt;&lt; "],"
+        &lt;&lt; "[" &lt;&lt; it.second.k12() &lt;&lt; "," &lt;&lt; it.second.k22() &lt;&lt; "]]"
+#endif
+        &lt;&lt; std::endl;
+    k11.on(_range=markedelements(mesh,it.first),_expr=cst(it.second.k11()));
+    k12.on(_range=markedelements(mesh,it.first),_expr=cst(it.second.k12()));
+    k22.on(_range=markedelements(mesh,it.first),_expr=cst(it.second.k22()));
+#if MODEL_DIM == 3
+    k13 += vf::project(_space=Vh,_range=markedelements(mesh,marker(it)),_expr=mat.k13());
+    k23 += vf::project(_space=Vh,_range=markedelements(mesh,marker(it)),_expr=mat.k23());
+    k33 += vf::project(_space=Vh,_range=markedelements(mesh,marker(it)),_expr=mat.k33());
+#endif
+  }
+#if MODEL_DIM == 2
+  a += integrate(_range=elements(mesh),_expr=inner(mat&lt;MODEL_DIM,MODEL_DIM&gt;(idv(k11), idv(k12), idv(k12), idv(k22) )*trans(gradt(u)),trans(grad(v))) );
+#else
+  a += integrate(_range=elements(mesh),_expr=inner(mat&lt;MODEL_DIM,MODEL_DIM&gt;(idv(k11), idv(k12), idv(k13), idv(k12), idv(k22), idv(k23), idv(k31), idv(k32), idv(k33))*trans(gradt(u)),trans(grad(v))) );
+#endif</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_postprocessing"><a class="anchor" href="#_postprocessing"></a>1.2.5. PostProcessing</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+explanation pending.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example"><a class="anchor" href="#_example"></a>1.2.6. Example</h4>
+<div class="paragraph">
+<p>We have set up an example : an anisotropic laplacian.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#include &lt;feel/feel.hpp&gt;
+#include &lt;feel/feelmodels/modelproperties.hpp&gt;
+int main(int argc, char**argv )
+{
+  using namespace Feel;
+  po::options_description laplacianoptions( "Laplacian options" );
+  laplacianoptions.add_options()
+    ("myVerbose", po::value&lt; bool &gt;()-&gt; default_value( true ), "Display information during execution")
+    ;
+  Environment env( _argc=argc, _argv=argv,
+      _desc=laplacianoptions,
+      _about=about(_name="aniso_laplacian",
+        _author="Feel++ Consortium",
+        _email="feelpp-devel@feelpp.org"));
+  ModelProperties model; // Will load --mod-file
+  map_scalar_field&lt;2&gt; bc_u { model.boundaryConditions().getScalarFields&lt;2&gt;("heat","dirichlet") };
+  ModelMaterials materials = model.materials();
+  if(boption("myVerbose") &amp;&amp; Environment::isMasterRank() )
+    std::cout &lt;&lt; "Model " &lt;&lt; Environment::expand( soption("mod-file")) &lt;&lt; " loaded." &lt;&lt; std::endl;
+  auto f = expr( soption(_name="functions.f"), "f" );
+  auto mesh = loadMesh(_mesh=new Mesh&lt;Simplex&lt;MODEL_DIM&gt;&gt;);
+  auto Vh = Pch&lt;2&gt;( mesh );
+  auto u = Vh-&gt;element();
+  auto v = Vh-&gt;element();
+  auto k11 = Vh-&gt;element();
+  auto k12 = Vh-&gt;element();
+  auto k22 = Vh-&gt;element();
+#if MODEL_DIM == 3
+  auto k13 = Vh-&gt;element();
+  auto k23 = Vh-&gt;element();
+  auto k33 = Vh-&gt;element();
+#endif
+  auto a = form2( _trial=Vh, _test=Vh);
+  auto l = form1( _test=Vh );
+  l = integrate(_range=elements(mesh),_expr=f*id(v));
+  for(auto it : materials)
+  {
+    auto mat = material(it);
+    if(boption("myVerbose") &amp;&amp; Environment::isMasterRank() )
+      std::cout &lt;&lt; "[Materials] - Laoding data for " &lt;&lt; it.second.name() &lt;&lt; " that apply on marker " &lt;&lt; it.first  &lt;&lt; " with diffusion coef [" 
+#if MODEL_DIM == 3
+        &lt;&lt; "[" &lt;&lt; it.second.k11() &lt;&lt; "," &lt;&lt; it.second.k12() &lt;&lt; "," &lt;&lt; it.second.k13() &lt;&lt; "],"
+        &lt;&lt; "[" &lt;&lt; it.second.k12() &lt;&lt; "," &lt;&lt; it.second.k22() &lt;&lt; "," &lt;&lt; it.second.k23() &lt;&lt; "],"
+        &lt;&lt; "[" &lt;&lt; it.second.k13() &lt;&lt; "," &lt;&lt; it.second.k23() &lt;&lt; "," &lt;&lt; it.second.k33() &lt;&lt; "]]" 
+#else
+        &lt;&lt; "[" &lt;&lt; it.second.k11() &lt;&lt; "," &lt;&lt; it.second.k12() &lt;&lt; "],"
+        &lt;&lt; "[" &lt;&lt; it.second.k12() &lt;&lt; "," &lt;&lt; it.second.k22() &lt;&lt; "]]"
+#endif
+        &lt;&lt; std::endl;
+    k11.on(_range=markedelements(mesh,it.first),_expr=cst(it.second.k11()));
+    k12.on(_range=markedelements(mesh,it.first),_expr=cst(it.second.k12()));
+    k22.on(_range=markedelements(mesh,it.first),_expr=cst(it.second.k22()));
+#if MODEL_DIM == 3
+    k13 += vf::project(_space=Vh,_range=markedelements(mesh,marker(it)),_expr=mat.k13());
+    k23 += vf::project(_space=Vh,_range=markedelements(mesh,marker(it)),_expr=mat.k23());
+    k33 += vf::project(_space=Vh,_range=markedelements(mesh,marker(it)),_expr=mat.k33());
+#endif
+  }
+#if MODEL_DIM == 2
+  a += integrate(_range=elements(mesh),_expr=inner(mat&lt;MODEL_DIM,MODEL_DIM&gt;(idv(k11), idv(k12), idv(k12), idv(k22) )*trans(gradt(u)),trans(grad(v))) );
+#else
+  a += integrate(_range=elements(mesh),_expr=inner(mat&lt;MODEL_DIM,MODEL_DIM&gt;(idv(k11), idv(k12), idv(k13), idv(k12), idv(k22), idv(k23), idv(k31), idv(k32), idv(k33))*trans(gradt(u)),trans(grad(v))) );
+#endif
+  for(auto it : bc_u){
+    if(boption("myVerbose") &amp;&amp; Environment::isMasterRank() )
+      std::cout &lt;&lt; "[BC] - Applying " &lt;&lt; it.second &lt;&lt; " on " &lt;&lt; it.first &lt;&lt; std::endl;
+    a+=on(_range=markedfaces(mesh,it.first), _rhs=l, _element=u, _expr=it.second );
+  }
+  a.solve(_rhs=l,_solution=u);
+  auto e = exporter( _mesh=mesh );
+  for(int i = 0; i &lt; 3; i ++){
+    for(auto const &amp;it : model.postProcess()["Fields"] )
+    {
+      if(it == "diffused") 
+        e-&gt;step(i)-&gt;add("diffused",u);
+      else if(it == "k11")
+        e-&gt;step(i)-&gt;add("k11",k11);
+      else if(it == "k12")
+        e-&gt;step(i)-&gt;add("k12",k12);
+      else if(it == "k11")
+        e-&gt;step(i)-&gt;add("k22",k22);
+#if MODEL_DIM == 3
+      else if(it == "k13")
+        e-&gt;step(i)-&gt;add("k13",k13);
+      else if(it == "k11")
+        e-&gt;step(i)-&gt;add("k23",k23);
+      else if(it == "k33")
+        e-&gt;step(i)-&gt;add("k33",k33);
+#endif
+    }
+    e-&gt;save();
+  }
+  return 0;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="sharethis-inline-share-buttons"></div>
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.cemosis.fr" class="icon">
+            <img src="../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.cemosis.fr" target="_blank" rel="noopener">Projects Documentation</a></li>
+          <li><a href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">Forums(Slack)</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://www.cemosis.fr" target="_blank" rel="noopener">Cemosis</a></li>
+          <li><a href="https://www.cemosis.fr/news" target="_blank" rel="noopener">News</a></li>
+          <li><a href="https://www.cemosis.fr/projects" target="_blank" rel="noopener">Projects</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.feelpp.org" target="_blank" rel="noopener">Feel++ Documentation</a></li>
+          <li><a href="http://docs.feelpp.org/user/">Get Started</a></li>
+          <li><a href="http://docs.feelpp.org/user//install/distributions/">Downloads</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="facebook" class="cls-1" d="M29,0H3A2.652,2.652,0,0,0,0,3V29a2.652,2.652,0,0,0,3,3H16V18H12V14h4V12a6.452,6.452,0,0,1,6-6h4v4H22a2.151,2.151,0,0,0-2,2v2h6l-1,4H20V32h9a2.652,2.652,0,0,0,3-3V3A2.652,2.652,0,0,0,29,0Z"/></svg>
+            <a href="https://www.facebook.com/cemosis.fr" class="icon">
+            Facebook
+            </a>
+          </li>
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32.1 26.1"> <path id="twitter" class="cls-1" d="M32,7.1a11.836,11.836,0,0,1-3.8,1,6.462,6.462,0,0,0,2.9-3.6,12.606,12.606,0,0,1-4.2,1.6A6.492,6.492,0,0,0,22.1,4a6.594,6.594,0,0,0-6.6,6.6,7.719,7.719,0,0,0,.2,1.5A18.458,18.458,0,0,1,2.2,5.2a6.294,6.294,0,0,0-.9,3.3A6.765,6.765,0,0,0,4.2,14a6.109,6.109,0,0,1-3-.8v.1a6.543,6.543,0,0,0,5.3,6.4,4.678,4.678,0,0,1-1.7.2,4.869,4.869,0,0,1-1.2-.1,6.679,6.679,0,0,0,6.1,4.6,12.917,12.917,0,0,1-8.2,2.8,9.151,9.151,0,0,1-1.6-.1,18.438,18.438,0,0,0,10.1,3c12.1,0,18.7-10,18.7-18.7v-.8A13.336,13.336,0,0,0,32,7.2Z" transform="translate(0.1 -4)"/></svg>
+            <a href="https://twitter.com/cemosis" class="icon">
+              Twitter
+            </a>
+          </li>
+          <li>
+          <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="linkedin" class="cls-1" d="M29,0H3A3.076,3.076,0,0,0,0,3V29a3.009,3.009,0,0,0,3,3H29a2.946,2.946,0,0,0,3-3V3A3.009,3.009,0,0,0,29,0ZM12,26H8V12h4ZM10,10a2,2,0,1,1,2-2A2.006,2.006,0,0,1,10,10ZM26,26H22V18a2,2,0,0,0-4,0v8H14V12h4v2.5c.8-1.1,2.1-2.5,3.5-2.5A4.736,4.736,0,0,1,26,17Z"/></svg>
+              <a href="https://www.linkedin.com/company/cemosis" class="icon">
+             Linkedin
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <div class="footer-terms-copyright">
+          <span>© 2023 Cemosis, Université de Strasbourg</span>
+      </div>
+      <div class="footer-terms-links">
+        <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>
+        <a href="https://www.cemosis.fr/privacy-policy">Privacy Policy</a>
+        <a href="https://www.cemosis.fr/cookie-policy">Cookie Policy</a>
+        <a href="https://www.cemosis.fr/support-policy">Support Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+
+
+<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+
+<script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">
+</script>
+
+<script type="text/javascript">
+function toggleFullScreen() {
+   var doc = window.document;
+   var docEl = doc.documentElement;
+
+   var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+   var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+   if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+       requestFullScreen.call(docEl);
+   }
+   else {
+       cancelFullScreen.call(doc);
+   }
+}
+</script>
+  </body>
+</html>
