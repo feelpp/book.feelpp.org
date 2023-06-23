@@ -1,7 +1,7 @@
 site:
   title: Feel++ // Docs
   url: https://docs.feelpp.org
-  start_page: latest@feelpp::index.adoc
+  start_page: home::index.adoc
 content:
   sources:
   - url: ./
@@ -79,14 +79,15 @@ urls:
   latest_version_segment_strategy: redirect:to
 ui:
   bundle:
-    url: https://github.com/feelpp/antora-ui/releases/download/v0.5/ui-bundle.zip #https://gitlab.com/feelpp/antora-ui-default/-/jobs/artifacts/feelpp/raw/build/ui-bundle.zip?job=bundle-stable
+    url: https://github.com/feelpp/antora-ui/releases/download/v0.10/ui-bundle.zip #https://gitlab.com/feelpp/antora-ui-default/-/jobs/artifacts/feelpp/raw/build/ui-bundle.zip?job=bundle-stable
     snapshot: true
-  supplemental_files: supplemental-ui
+#  supplemental_files: supplemental-ui
 antora:
   extensions:
   - '@antora/collector-extension'
 asciidoc:
   attributes:
+    page-component-order: '!home, !ROOT, user, dev, data, math, toolboxes, cases, *'
     version: 0.110
     feelpp-git-tag: develop
     deploymentRoot: ""
@@ -138,8 +139,11 @@ asciidoc:
     girder: Girder
     plantuml-server-url: http://www.plantuml.com/plantuml
   extensions:
+    - ./lib/plotly.js
     - ./lib/remote-include-processor
     - ./lib/tabs-block-extension
     - '@djencks/asciidoctor-template'
 #    - "@djencks/asciidoctor-tabset-block"
     - asciidoctor-kroki
+    - ./lib/vtkjs.js
+    - ./lib/mpirun.js
