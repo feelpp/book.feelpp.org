@@ -1177,14 +1177,14 @@ temperature of the air doesn&#8217;t have to be high to not interfere the proper
 <div class="sect2">
 <h3 id="_testcases"><a class="anchor" href="#_testcases"></a>2.3. Testcases</h3>
 <div class="paragraph">
-<p>We have some results from an other simulation software for this problem with methods, but we use
+<p>We have some results from another simulation software for this problem with methods, but we use
 them for an exemple purpose because Feel++ toolboxes do not handle yet the periodic conditions and
 the discontinuities in the toolboxes.</p>
 </div>
 <div class="sect3">
 <h4 id="_test_1_a"><a class="anchor" href="#_test_1_a"></a>2.3.1. Test 1-a</h4>
 <div class="paragraph">
-<p>This test is the base of all of the other tests, we bold the changes in the next tests. Only these
+<p>This test is the base of all the other tests, we bold the changes in the next tests. Only these
 parameters varies in these tests :</p>
 </div>
 <div class="ulist">
@@ -1242,48 +1242,52 @@ ICs.</p>
 <p>As the periodicity helps to dissipate the heat in both directions of the PCB, the reference results
 are attended to be lower than the results obtained with Feel++ on these testcases.</p>
 </div>
-<div id="plotly_test1a"></div>
-<script type="text/javascript">
-  Plotly.d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download",
-    function(err,rows) {
-      var data = [{
-        name: 'IC2 reference results of test 1a',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test1a-s1'),
-        showlegend: true,
-        line: { color: '#FF99BB' }
-      },{
-        name: 'IC2 example results of test 1a',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test1a-s1'),
-        showlegend: true,
-        line: { color: '#CC3333' }
-      },{
-        name: 'Output reference results of test 1a',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test1a-s2'),
-        showlegend: true,
-        line: { color: '#BB99FF' }
-      },{
-        name: 'Output example results of test 1a',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test1a-s2'),
-        showlegend: true,
-        line: { color: '#3333CC' }
-      }];
+<div id="ploty_c8484ba8-9a48-4a43-8c15-6e65409b0efe"></div>
+<script>
+  d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
+    .then((d) => {
+      /* global d */
+const times = d.map(i => i['T'])
 
-      var layout = {
-        title: 'Temperature'
-      };
-      Plotly.plot(plotly_test1a,data,layout,{ showLink: false });
+const data = [{
+  name: 'IC2 reference results of test 1a',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test1a-s1']),
+  showlegend: true,
+  line: {color: '#FF99BB'}
+}, {
+  name: 'IC2 example results of test 1a',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test1a-s1']),
+  showlegend: true,
+  line: {color: '#CC3333'}
+}, {
+  name: 'Output reference results of test 1a',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test1a-s2']),
+  showlegend: true,
+  line: {color: '#BB99FF'}
+}, {
+  name: 'Output example results of test 1a',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test1a-s2']),
+  showlegend: true,
+  line: {color: '#3333CC'}
+}]
 
-      feelpp_add_redimensionable_plot(plotly_test1a);
-    }
-  );
+const layout = {
+  title: 'Temperature'
+}
+
+      Plotly.newPlot('ploty_c8484ba8-9a48-4a43-8c15-6e65409b0efe', data, layout, { showLink: false, responsive: true })
+    })
+    .catch((err) => {
+      console.log('Unable to get data', err)
+    })
 </script>
 <div class="paragraph">
 <p>The Feel++ toolboxes are configured with two complementary files, the <em>.json</em> file configure the
@@ -1422,7 +1426,7 @@ Copy case option to clipboard
 </button>
 <div class="paragraph">
 <p>All the tests follow the same command, and don&#8217;t forget to define the <em>FEELPP_GITHUB_TOKEN</em>,
-else Github can refuse the access.</p>
+else GitHub can refuse the access.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1455,48 +1459,52 @@ else Github can refuse the access.</p>
 </tr>
 </tbody>
 </table>
-<div id="plotly_test1b"></div>
-<script type="text/javascript">
-  Plotly.d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download",
-    function(err,rows) {
-      var data = [{
-        name: 'IC2 reference results of test 1b',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test1b-s1'),
-        showlegend: true,
-        line: { color: '#FF99BB' }
-      },{
-        name: 'IC2 example results of test 1b',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test1b-s1'),
-        showlegend: true,
-        line: { color: '#CC3333' }
-      },{
-        name: 'Output reference results of test 1b',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test1b-s2'),
-        showlegend: true,
-        line: { color: '#BB99FF' }
-      },{
-        name: 'Output example results of test 1b',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test1b-s2'),
-        showlegend: true,
-        line: { color: '#3333CC' }
-      }];
+<div id="ploty_51648244-43cd-45a6-a06b-7e5f1f123e65"></div>
+<script>
+  d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
+    .then((d) => {
+      /* global d */
+const times = d.map(i => i['T'])
 
-      var layout = {
-        title: 'Temperature'
-      };
-      Plotly.plot(plotly_test1b,data,layout,{ showLink: false });
+const data = [{
+  name: 'IC2 reference results of test 1b',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test1b-s1']),
+  showlegend: true,
+  line: {color: '#FF99BB'}
+}, {
+  name: 'IC2 example results of test 1b',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test1b-s1']),
+  showlegend: true,
+  line: {color: '#CC3333'}
+}, {
+  name: 'Output reference results of test 1b',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test1b-s2']),
+  showlegend: true,
+  line: {color: '#BB99FF'}
+}, {
+  name: 'Output example results of test 1b',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test1b-s2']),
+  showlegend: true,
+  line: {color: '#3333CC'}
+}]
 
-      feelpp_add_redimensionable_plot(plotly_test1b);
-    }
-  );
+const layout = {
+  title: 'Temperature'
+}
+
+      Plotly.newPlot('ploty_51648244-43cd-45a6-a06b-7e5f1f123e65', data, layout, { showLink: false, responsive: true })
+    })
+    .catch((err) => {
+      console.log('Unable to get data', err)
+    })
 </script>
 <div class="paragraph">
 <p>Changes :</p>
@@ -1555,48 +1563,52 @@ Copy case option to clipboard
 </tr>
 </tbody>
 </table>
-<div id="plotly_test1c"></div>
-<script type="text/javascript">
-  Plotly.d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download",
-    function(err,rows) {
-      var data = [{
-        name: 'IC2 reference results of test 1c',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test1c-s1'),
-        showlegend: true,
-        line: { color: '#FF99BB' }
-      },{
-        name: 'IC2 example results of test 1c',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test1c-s1'),
-        showlegend: true,
-        line: { color: '#CC3333' }
-      },{
-        name: 'Output reference results of test 1c',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test1c-s2'),
-        showlegend: true,
-        line: { color: '#BB99FF' }
-      },{
-        name: 'Output example results of test 1c',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test1c-s2'),
-        showlegend: true,
-        line: { color: '#3333CC' }
-      }];
+<div id="ploty_d2328bf5-d779-406d-a1ab-8e502c8c09d0"></div>
+<script>
+  d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
+    .then((d) => {
+      /* global d */
+const times = d.map(i => i['T'])
 
-      var layout = {
-        title: 'Temperature'
-      };
-      Plotly.plot(plotly_test1c,data,layout,{ showLink: false });
+const data = [{
+  name: 'IC2 reference results of test 1c',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test1c-s1']),
+  showlegend: true,
+  line: {color: '#FF99BB'}
+}, {
+  name: 'IC2 example results of test 1c',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test1c-s1']),
+  showlegend: true,
+  line: {color: '#CC3333'}
+}, {
+  name: 'Output reference results of test 1c',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test1c-s2']),
+  showlegend: true,
+  line: {color: '#BB99FF'}
+}, {
+  name: 'Output example results of test 1c',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test1c-s2']),
+  showlegend: true,
+  line: {color: '#3333CC'}
+}]
 
-      feelpp_add_redimensionable_plot(plotly_test1c);
-    }
-  );
+const layout = {
+  title: 'Temperature'
+}
+
+      Plotly.newPlot('ploty_d2328bf5-d779-406d-a1ab-8e502c8c09d0', data, layout, { showLink: false, responsive: true })
+    })
+    .catch((err) => {
+      console.log('Unable to get data', err)
+    })
 </script>
 <div class="paragraph">
 <p>Changes :</p>
@@ -1655,48 +1667,52 @@ Copy case option to clipboard
 </tr>
 </tbody>
 </table>
-<div id="plotly_test1d"></div>
-<script type="text/javascript">
-  Plotly.d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download",
-    function(err,rows) {
-      var data = [{
-        name: 'IC2 reference results of test 1d',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test1d-s1'),
-        showlegend: true,
-        line: { color: '#FF99BB' }
-      },{
-        name: 'IC2 example results of test 1d',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test1d-s1'),
-        showlegend: true,
-        line: { color: '#CC3333' }
-      },{
-        name: 'Output reference results of test 1d',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test1d-s2'),
-        showlegend: true,
-        line: { color: '#BB99FF' }
-      },{
-        name: 'Output example results of test 1d',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test1d-s2'),
-        showlegend: true,
-        line: { color: '#3333CC' }
-      }];
+<div id="ploty_53f7eee4-4f70-4f26-8a62-bb2eea51dcb8"></div>
+<script>
+  d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
+    .then((d) => {
+      /* global d */
+const times = d.map(i => i['T'])
 
-      var layout = {
-        title: 'Temperature'
-      };
-      Plotly.plot(plotly_test1d,data,layout,{ showLink: false });
+const data = [{
+  name: 'IC2 reference results of test 1d',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test1d-s1']),
+  showlegend: true,
+  line: {color: '#FF99BB'}
+}, {
+  name: 'IC2 example results of test 1d',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test1d-s1']),
+  showlegend: true,
+  line: {color: '#CC3333'}
+}, {
+  name: 'Output reference results of test 1d',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test1d-s2']),
+  showlegend: true,
+  line: {color: '#BB99FF'}
+}, {
+  name: 'Output example results of test 1d',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test1d-s2']),
+  showlegend: true,
+  line: {color: '#3333CC'}
+}]
 
-      feelpp_add_redimensionable_plot(plotly_test1d);
-    }
-  );
+const layout = {
+  title: 'Temperature'
+}
+
+      Plotly.newPlot('ploty_53f7eee4-4f70-4f26-8a62-bb2eea51dcb8', data, layout, { showLink: false, responsive: true })
+    })
+    .catch((err) => {
+      console.log('Unable to get data', err)
+    })
 </script>
 <div class="paragraph">
 <p>Changes :</p>
@@ -1755,48 +1771,52 @@ Copy case option to clipboard
 </tr>
 </tbody>
 </table>
-<div id="plotly_test1e"></div>
-<script type="text/javascript">
-  Plotly.d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download",
-    function(err,rows) {
-      var data = [{
-        name: 'IC2 reference results of test 1e',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test1e-s1'),
-        showlegend: true,
-        line: { color: '#FF99BB' }
-      },{
-        name: 'IC2 example results of test 1e',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test1e-s1'),
-        showlegend: true,
-        line: { color: '#CC3333' }
-      },{
-        name: 'Output reference results of test 1e',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test1e-s2'),
-        showlegend: true,
-        line: { color: '#BB99FF' }
-      },{
-        name: 'Output example results of test 1e',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test1e-s2'),
-        showlegend: true,
-        line: { color: '#3333CC' }
-      }];
+<div id="ploty_b276fb85-5afb-47ea-bae5-3e74830fb245"></div>
+<script>
+  d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
+    .then((d) => {
+      /* global d */
+const times = d.map(i => i['T'])
 
-      var layout = {
-        title: 'Temperature'
-      };
-      Plotly.plot(plotly_test1e,data,layout,{ showLink: false });
+const data = [{
+  name: 'IC2 reference results of test 1e',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test1e-s1']),
+  showlegend: true,
+  line: {color: '#FF99BB'}
+}, {
+  name: 'IC2 example results of test 1e',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test1e-s1']),
+  showlegend: true,
+  line: {color: '#CC3333'}
+}, {
+  name: 'Output reference results of test 1e',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test1e-s2']),
+  showlegend: true,
+  line: {color: '#BB99FF'}
+}, {
+  name: 'Output example results of test 1e',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test1e-s2']),
+  showlegend: true,
+  line: {color: '#3333CC'}
+}]
 
-      feelpp_add_redimensionable_plot(plotly_test1e);
-    }
-  );
+const layout = {
+  title: 'Temperature'
+}
+
+      Plotly.newPlot('ploty_b276fb85-5afb-47ea-bae5-3e74830fb245', data, layout, { showLink: false, responsive: true })
+    })
+    .catch((err) => {
+      console.log('Unable to get data', err)
+    })
 </script>
 <div class="paragraph">
 <p>Changes :</p>
@@ -1854,48 +1874,52 @@ Copy case option to clipboard
 </tr>
 </tbody>
 </table>
-<div id="plotly_test1f"></div>
-<script type="text/javascript">
-  Plotly.d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download",
-    function(err,rows) {
-      var data = [{
-        name: 'IC2 reference results of test 1f',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test1f-s1'),
-        showlegend: true,
-        line: { color: '#FF99BB' }
-      },{
-        name: 'IC2 example results of test 1f',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test1f-s1'),
-        showlegend: true,
-        line: { color: '#CC3333' }
-      },{
-        name: 'Output reference results of test 1f',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test1f-s2'),
-        showlegend: true,
-        line: { color: '#BB99FF' }
-      },{
-        name: 'Output example results of test 1f',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test1f-s2'),
-        showlegend: true,
-        line: { color: '#3333CC' }
-      }];
+<div id="ploty_59366952-9f64-4ad2-a83e-0af2d08b4195"></div>
+<script>
+  d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
+    .then((d) => {
+      /* global d */
+const times = d.map(i => i['T'])
 
-      var layout = {
-        title: 'Temperature'
-      };
-      Plotly.plot(plotly_test1f,data,layout,{ showLink: false });
+const data = [{
+  name: 'IC2 reference results of test 1f',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test1f-s1']),
+  showlegend: true,
+  line: {color: '#FF99BB'}
+}, {
+  name: 'IC2 example results of test 1f',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test1f-s1']),
+  showlegend: true,
+  line: {color: '#CC3333'}
+}, {
+  name: 'Output reference results of test 1f',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test1f-s2']),
+  showlegend: true,
+  line: {color: '#BB99FF'}
+}, {
+  name: 'Output example results of test 1f',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test1f-s2']),
+  showlegend: true,
+  line: {color: '#3333CC'}
+}]
 
-      feelpp_add_redimensionable_plot(plotly_test1f);
-    }
-  );
+const layout = {
+  title: 'Temperature'
+}
+
+      Plotly.newPlot('ploty_59366952-9f64-4ad2-a83e-0af2d08b4195', data, layout, { showLink: false, responsive: true })
+    })
+    .catch((err) => {
+      console.log('Unable to get data', err)
+    })
 </script>
 <div class="paragraph">
 <p>Changes :</p>
@@ -1984,7 +2008,7 @@ Copy case option to clipboard
 <div class="listingblock">
 <div class="title">eads_stationary.json</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json5 hljs" data-lang="json5">{
     "BoundaryConditions" : {
         "temperature" : {
             "VolumicForces" : {
@@ -2051,48 +2075,52 @@ Copy case option to clipboard
 </tr>
 </tbody>
 </table>
-<div id="plotly_test3"></div>
-<script type="text/javascript">
-  Plotly.d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download",
-    function(err,rows) {
-      var data = [{
-        name: 'IC2 reference results of test 3',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test3-s1'),
-        showlegend: true,
-        line: { color: '#FF99BB' }
-      },{
-        name: 'IC2 example results of test 3',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test3-s1'),
-        showlegend: true,
-        line: { color: '#CC3333' }
-      },{
-        name: 'Output reference results of test 3',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test3-s2'),
-        showlegend: true,
-        line: { color: '#BB99FF' }
-      },{
-        name: 'Output example results of test 3',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test3-s2'),
-        showlegend: true,
-        line: { color: '#3333CC' }
-      }];
+<div id="ploty_9e34fed7-359d-4633-b655-3c76d1ccd563"></div>
+<script>
+  d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
+    .then((d) => {
+      /* global d */
+const times = d.map(i => i['T'])
 
-      var layout = {
-        title: 'Temperature'
-      };
-      Plotly.plot(plotly_test3,data,layout,{ showLink: false });
+const data = [{
+  name: 'IC2 reference results of test 3',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test3-s1']),
+  showlegend: true,
+  line: {color: '#FF99BB'}
+}, {
+  name: 'IC2 example results of test 3',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test3-s1']),
+  showlegend: true,
+  line: {color: '#CC3333'}
+}, {
+  name: 'Output reference results of test 3',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test3-s2']),
+  showlegend: true,
+  line: {color: '#BB99FF'}
+}, {
+  name: 'Output example results of test 3',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test3-s2']),
+  showlegend: true,
+  line: {color: '#3333CC'}
+}]
 
-      feelpp_add_redimensionable_plot(plotly_test3);
-    }
-  );
+const layout = {
+  title: 'Temperature'
+}
+
+      Plotly.newPlot('ploty_9e34fed7-359d-4633-b655-3c76d1ccd563', data, layout, { showLink: false, responsive: true })
+    })
+    .catch((err) => {
+      console.log('Unable to get data', err)
+    })
 </script>
 <div class="paragraph">
 <p>Changes :</p>
@@ -2151,48 +2179,52 @@ Copy case option to clipboard
 </tr>
 </tbody>
 </table>
-<div id="plotly_test4"></div>
-<script type="text/javascript">
-  Plotly.d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download",
-    function(err,rows) {
-      var data = [{
-        name: 'IC2 reference results of test 4',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test4-s1'),
-        showlegend: true,
-        line: { color: '#FF99BB' }
-      },{
-        name: 'IC2 example results of test 4',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test4-s1'),
-        showlegend: true,
-        line: { color: '#CC3333' }
-      },{
-        name: 'Output reference results of test 4',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Ref-test4-s2'),
-        showlegend: true,
-        line: { color: '#BB99FF' }
-      },{
-        name: 'Output example results of test 4',
-        type: 'scatter',
-        x: feelpp_unpack(rows,'T'),
-        y: feelpp_unpack(rows,'Results-test4-s2'),
-        showlegend: true,
-        line: { color: '#3333CC' }
-      }];
+<div id="ploty_83ce88e2-415b-4fe6-a939-05c472c1f578"></div>
+<script>
+  d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
+    .then((d) => {
+      /* global d */
+const times = d.map(i => i['T'])
 
-      var layout = {
-        title: 'Temperature'
-      };
-      Plotly.plot(plotly_test4,data,layout,{ showLink: false });
+const data = [{
+  name: 'IC2 reference results of test 4',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test4-s1']),
+  showlegend: true,
+  line: {color: '#FF99BB'}
+}, {
+  name: 'IC2 example results of test 4',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test4-s1']),
+  showlegend: true,
+  line: {color: '#CC3333'}
+}, {
+  name: 'Output reference results of test 4',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Ref-test4-s2']),
+  showlegend: true,
+  line: {color: '#BB99FF'}
+}, {
+  name: 'Output example results of test 4',
+  type: 'scatter',
+  x: times,
+  y: d.map(i => i['Results-test4-s2']),
+  showlegend: true,
+  line: {color: '#3333CC'}
+}]
 
-      feelpp_add_redimensionable_plot(plotly_test4);
-    }
-  );
+const layout = {
+  title: 'Temperature'
+}
+
+      Plotly.newPlot('ploty_83ce88e2-415b-4fe6-a939-05c472c1f578', data, layout, { showLink: false, responsive: true })
+    })
+    .catch((err) => {
+      console.log('Unable to get data', err)
+    })
 </script>
 <div class="paragraph">
 <p>Changes :</p>
