@@ -1,7 +1,7 @@
 site:
   title: Feel++ Docs
-  url: https://docs.feelpp.org
-  start_page: 0.110@feelpp::index.adoc
+  url: https://docs.feelpp.org/
+  start_page: home::index.adoc
   robots: allow
   keys:
     google_analytics: 'UA-65761593-1'
@@ -97,14 +97,15 @@ content:
 
 ui:
   bundle:
-    url: https://github.com/feelpp/antora-ui/releases/download/v0.5/ui-bundle.zip # https://gitlab.com/feelpp/antora-ui-default/-/jobs/artifacts/feelpp/raw/build/ui-bundle.zip?job=bundle-stable
+    url: https://github.com/feelpp/antora-ui/releases/download/v0.9/ui-bundle.zip # https://gitlab.com/feelpp/antora-ui-default/-/jobs/artifacts/feelpp/raw/build/ui-bundle.zip?job=bundle-stable
     snapshot: true
-  supplemental_files: supplemental-ui
+#  supplemental_files: supplemental-ui
 antora:
   extensions:
   - '@antora/collector-extension'
 asciidoc:
   attributes:
+    page-component-order: '!home, !ROOT, *'
     page-pagination: ''
     kroki-fetch-diagram: true
     feelpp-git-tag: develop
@@ -162,3 +163,5 @@ asciidoc:
     - ./lib/tabs-block-extension
     - "@djencks/asciidoctor-template"
     - ./lib/vtkjs.js
+    - ./lib/mpirun.js
+
