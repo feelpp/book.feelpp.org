@@ -177,7 +177,7 @@ MathJax.Hub.Config({
 </header>
 <div class="body">
 <a href="#" class="menu-expand-toggle"></a>
-<div class="nav-container" data-component="cases" data-version="latest">
+<div class="nav-container" data-component="cases" data-version="0.110">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -527,7 +527,7 @@ MathJax.Hub.Config({
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Feel++ Toolbox Cases Guide</span>
-    <span class="version">latest</span>
+    <span class="version">0.110</span>
   </div>
   <ul class="components">
       <li class="component">
@@ -615,11 +615,11 @@ MathJax.Hub.Config({
       <li class="component is-current">
         <a class="title" href="../../index.html">Feel++ Toolbox Cases Guide</a>
           <ul class="versions">
-              <li class="version is-current is-latest">
-                <a href="../../index.html">latest</a>
-              </li>
               <li class="version">
-                <a href="../../../0.110/index.html">0.110</a>
+                <a href="../../../latest/index.html">latest</a>
+              </li>
+              <li class="version is-current is-latest">
+                <a href="../../index.html">0.110</a>
               </li>
               <li class="version">
                 <a href="../../../0.109/index.html">0.109</a>
@@ -705,17 +705,17 @@ MathJax.Hub.Config({
 </nav>
 
   <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
+  <button class="version-menu-toggle" title="Show other versions of page">0.110</button>
   <div class="version-menu">
-    <a class="version is-current" href="README.html">latest</a>
-    <a class="version" href="../../../0.110/thermoelectric/electromagnet/README.html">0.110</a>
+    <a class="version" href="../../../latest/thermoelectric/electromagnet/README.html">latest</a>
+    <a class="version is-current" href="README.html">0.110</a>
     <a class="version" href="../../../0.109/thermoelectric/electromagnet/README.html">0.109</a>
     <a class="version" href="../../../0.108/thermoelectric/electromagnet/README.html">0.108</a>
     <a class="version" href="../../../0.107/thermoelectric/electromagnet/README.html">0.107</a>
   </div>
 </div>
 
-    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/develop/examples/modules/thermoelectric/pages/electromagnet/README.adoc">Edit this Page</a></div>
+    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/blob/v0.110/examples/modules/thermoelectric/pages/electromagnet/README.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -813,18 +813,14 @@ Copy cli options to clipboard
 <div class="paragraph">
 <p>The conductor consists in a solenoid, which is one helix of a magnet.</p>
 </div>
-<div id="vtkjs_0ee4c111-4ddb-4fe7-a7ed-7105f70092b8" style="height: 500px; width: 100%;"></div>
-<script>
-feelppVtkJs.createSceneImporter("vtkjs_0ee4c111-4ddb-4fe7-a7ed-7105f70092b8", {
-  fileURL: "https://girder.math.unistra.fr/api/v1/file/5afad5dbb0e9574027048010/download",
-  objects: {
-  "geometry": [
-    {
-      "scene": "HL-31_H1-geo"
-    }
-  ]
-}
-})
+<div class="stretchy-wrapper-16_9">
+<div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
+</div>
+<script type="text/javascript">
+feelppVtkJs.createSceneImporter( vtkVisuSection1, {
+                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5afad5dbb0e9574027048010/download",
+                                 objects: { "geometry":[ { scene:"HL-31_H1-geo"} ] }
+                                 } );
 </script>
 <div class="paragraph">
 <p>The mesh can be retrieve from girder with the following ID: 5af59e88b0e9574027047fc0 (see <a href="../../../../contribute/girder/README.html" class="xref page">girder</a>).</p>
@@ -1116,24 +1112,14 @@ k(T) &= \sigma(T)*L*T
 <div class="paragraph">
 <p><span class="image"><img src="../_images/electromagnet/electromagnet.png" alt="100%"></span></p>
 </div>
-<div id="vtkjs_3f35090a-f4f7-4de6-ab4e-0033434f33ac" style="height: 500px; width: 100%;"></div>
-<script>
-feelppVtkJs.createSceneImporter("vtkjs_3f35090a-f4f7-4de6-ab4e-0033434f33ac", {
-  fileURL: "https://girder.math.unistra.fr/api/v1/file/5afad33ab0e957402704800d/download",
-  objects: {
-  "fields": [
-    {
-      "scene": "electric_potential"
-    },
-    {
-      "scene": "temperature"
-    },
-    {
-      "scene": "electric_field"
-    }
-  ]
-}
-})
+<div class="stretchy-wrapper-16_9">
+<div id="vtkVisuSection2" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
+</div>
+<script type="text/javascript">
+feelppVtkJs.createSceneImporter( vtkVisuSection2, {
+                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5afad33ab0e957402704800d/download",
+                                 objects: { "fields":[ { scene:"electric_potential" }, { scene:"temperature" }, { scene:"electric_field"} ] }
+                                 } );
 </script>
 </div>
 </div>

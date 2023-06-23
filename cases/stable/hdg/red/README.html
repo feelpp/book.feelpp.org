@@ -17,6 +17,8 @@
 
     <script type="text/javascript" src="../../../../_/js/vendor/visu-vtk.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2" charset="utf-8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7" charset="utf-8"></script>
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -177,7 +179,7 @@ MathJax.Hub.Config({
 </header>
 <div class="body">
 <a href="#" class="menu-expand-toggle"></a>
-<div class="nav-container" data-component="cases" data-version="latest">
+<div class="nav-container" data-component="cases" data-version="0.110">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -527,7 +529,7 @@ MathJax.Hub.Config({
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Feel++ Toolbox Cases Guide</span>
-    <span class="version">latest</span>
+    <span class="version">0.110</span>
   </div>
   <ul class="components">
       <li class="component">
@@ -615,11 +617,11 @@ MathJax.Hub.Config({
       <li class="component is-current">
         <a class="title" href="../../index.html">Feel++ Toolbox Cases Guide</a>
           <ul class="versions">
-              <li class="version is-current is-latest">
-                <a href="../../index.html">latest</a>
-              </li>
               <li class="version">
-                <a href="../../../0.110/index.html">0.110</a>
+                <a href="../../../latest/index.html">latest</a>
+              </li>
+              <li class="version is-current is-latest">
+                <a href="../../index.html">0.110</a>
               </li>
               <li class="version">
                 <a href="../../../0.109/index.html">0.109</a>
@@ -705,17 +707,17 @@ MathJax.Hub.Config({
 </nav>
 
   <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
+  <button class="version-menu-toggle" title="Show other versions of page">0.110</button>
   <div class="version-menu">
-    <a class="version is-current" href="README.html">latest</a>
-    <a class="version" href="../../../0.110/hdg/red/README.html">0.110</a>
+    <a class="version" href="../../../latest/hdg/red/README.html">latest</a>
+    <a class="version is-current" href="README.html">0.110</a>
     <a class="version is-missing" href="../../../0.109/index.html">0.109</a>
     <a class="version is-missing" href="../../../0.108/index.html">0.108</a>
     <a class="version is-missing" href="../../../0.107/index.html">0.107</a>
   </div>
 </div>
 
-    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/develop/examples/modules/hdg/pages/red/README.adoc">Edit this Page</a></div>
+    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/blob/v0.110/examples/modules/hdg/pages/red/README.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -1357,25 +1359,16 @@ in inversion condition.</p>
 <div class="paragraph">
 <p>In the window below, you can manipulate the 3D model at steady state.</p>
 </div>
-<div id="vtkjs_27dd58f4-2b88-42c5-b10a-52f93de7a126" style="height: 500px; width: 100%;"></div>
-<script>
-feelppVtkJs.createSceneImporter("vtkjs_27dd58f4-2b88-42c5-b10a-52f93de7a126", {
-  fileURL: "https://girder.math.unistra.fr/api/v1/file/5b170a71b0e9574027048127/download",
-  objects: {
-  "potential": [
-    {
-      "scene": "CellDatatoPointData1.CellDatatoPointData1",
-      "name": "potential"
-    }
-  ],
-  "cut": [
-    {
-      "scene": "Clip1.Clip1",
-      "name": "potential cut"
-    }
-  ]
-}
-})
+<div class="stretchy-wrapper-16_9">
+<div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
+</div>
+<script type="text/javascript">
+feelppVtkJs.createSceneImporter( vtkVisuSection1, {
+                        fileURL: "https://girder.math.unistra.fr/api/v1/file/5b170a71b0e9574027048127/download",
+                        objects: {
+                              "potential": [{ scene:"CellDatatoPointData1.CellDatatoPointData1",name:"potential"} ],
+                              "cut":       [{ scene:"Clip1.Clip1", name:"potential cut"} ]}
+                        } );
 </script>
 <div class="admonitionblock note">
 <table>
