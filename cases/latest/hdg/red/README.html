@@ -1359,16 +1359,25 @@ in inversion condition.</p>
 <div class="paragraph">
 <p>In the window below, you can manipulate the 3D model at steady state.</p>
 </div>
-<div class="stretchy-wrapper-16_9">
-<div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
-</div>
-<script type="text/javascript">
-feelppVtkJs.createSceneImporter( vtkVisuSection1, {
-                        fileURL: "https://girder.math.unistra.fr/api/v1/file/5b170a71b0e9574027048127/download",
-                        objects: {
-                              "potential": [{ scene:"CellDatatoPointData1.CellDatatoPointData1",name:"potential"} ],
-                              "cut":       [{ scene:"Clip1.Clip1", name:"potential cut"} ]}
-                        } );
+<div id="vtkjs_79f60720-fc6e-4449-b1a7-3cf48b53b6f2" style="height: 500px; width: 100%;"></div>
+<script>
+feelppVtkJs.createSceneImporter("vtkjs_79f60720-fc6e-4449-b1a7-3cf48b53b6f2", {
+  fileURL: "https://girder.math.unistra.fr/api/v1/file/5b170a71b0e9574027048127/download",
+  objects: {
+  "potential": [
+    {
+      "scene": "CellDatatoPointData1.CellDatatoPointData1",
+      "name": "potential"
+    }
+  ],
+  "cut": [
+    {
+      "scene": "Clip1.Clip1",
+      "name": "potential cut"
+    }
+  ]
+}
+})
 </script>
 <div class="admonitionblock note">
 <table>

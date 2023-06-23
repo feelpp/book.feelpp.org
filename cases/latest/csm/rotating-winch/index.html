@@ -1028,15 +1028,30 @@ The result were run in time (a whole period, but on the pictures can be seen onl
 
 			var viewer = new Cemosis.Viewer(containerId, data[0].dataLoadSignature, configuration);
 		</script>
-<div class="stretchy-wrapper-16_9">
-<div id="vtkVisuSection2" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
-</div>
-<script type="text/javascript">
-feelppVtkJs.createSceneImporter( vtkVisuSection2, {
-                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5ac72882b0e9574027047897/download",
-                                 objects: { "deformation":[ { scene:"displacement" }, { scene:"von_mises" }, { scene:"pid" } ],
-                                            "geometry":[ { scene:"geo_initial", name:"solid" } ] }
-                                         } );
+<div id="vtkjs_9e445d29-ec04-487f-a1bd-31201b215583" style="height: 500px; width: 100%;"></div>
+<script>
+feelppVtkJs.createSceneImporter("vtkjs_9e445d29-ec04-487f-a1bd-31201b215583", {
+  fileURL: "https://girder.math.unistra.fr/api/v1/file/5ac72882b0e9574027047897/download",
+  objects: {
+  "deformation": [
+    {
+      "scene": "displacement"
+    },
+    {
+      "scene": "von_mises"
+    },
+    {
+      "scene": "pid"
+    }
+  ],
+  "geometry": [
+    {
+      "scene": "geo_initial",
+      "name": "solid"
+    }
+  ]
+}
+})
 </script>
 </div>
 </div>

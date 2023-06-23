@@ -728,7 +728,7 @@ MathJax.Hub.Config({
       </a>
     </li>
       <li>
-        <a href="#"
+        <a href="../_attachments/sensor/index.ipynb"
            title="Download Jupyter Notebook" data-toggle="tooltip" data-placement="left" class="jupyter-download">
           <img class="jupyter-file-icon icon" src="../../../../_/img/jupyter-logo.svg"/> .ipynb
         </a>
@@ -1173,14 +1173,24 @@ this section is available only in html, it is not supported in jupyter notebooks
 </tr>
 </table>
 </div>
-<div class="stretchy-wrapper-16_9">
-<div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
-</div>
-<script type="text/javascript">
-feelppVtkJs.createSceneImporter( vtkVisuSection1, {
-                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5ad4bff6b0e9574027047d77/download",
-                                 objects: { "deformation":[ { scene:"displacement" }, { scene:"von_mises" }, { scene:"pid" } ] }
-                               } );
+<div id="vtkjs_2d959f47-fa28-4d49-82df-d9fdb011ce1e" style="height: 500px; width: 100%;"></div>
+<script>
+feelppVtkJs.createSceneImporter("vtkjs_2d959f47-fa28-4d49-82df-d9fdb011ce1e", {
+  fileURL: "https://girder.math.unistra.fr/api/v1/file/5ad4bff6b0e9574027047d77/download",
+  objects: {
+  "deformation": [
+    {
+      "scene": "displacement"
+    },
+    {
+      "scene": "von_mises"
+    },
+    {
+      "scene": "pid"
+    }
+  ]
+}
+})
 </script>
 </div>
 </div>

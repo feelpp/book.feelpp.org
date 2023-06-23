@@ -935,14 +935,19 @@ Copy case option to clipboard
 <div class="paragraph">
 <p>From the result of ParaView, we can see that the temperature is dissipated along the 5 heaters.</p>
 </div>
-<div class="stretchy-wrapper-16_9">
-<div id="vtkVisuSection2" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
-</div>
-<script type="text/javascript">
-feelppVtkJs.createSceneImporter( vtkVisuSection2, {
-                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5afee6d1b0e9574027048050/download",
-                                 objects: { "fields":[ { scene:"Export.case", name:"temperature" } ] }
-                                 } );
+<div id="vtkjs_9f36230f-2d77-4b1a-abc6-4bfb7aa79208" style="height: 500px; width: 100%;"></div>
+<script>
+feelppVtkJs.createSceneImporter("vtkjs_9f36230f-2d77-4b1a-abc6-4bfb7aa79208", {
+  fileURL: "https://girder.math.unistra.fr/api/v1/file/5afee6d1b0e9574027048050/download",
+  objects: {
+  "fields": [
+    {
+      "scene": "Export.case",
+      "name": "temperature"
+    }
+  ]
+}
+})
 </script>
 </div>
 </div>

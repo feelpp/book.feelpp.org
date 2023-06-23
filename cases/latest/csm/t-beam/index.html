@@ -985,14 +985,21 @@ In the lower picture a 100x scale factor was used to make the displacement easy 
 
 			var viewer = new Cemosis.Viewer(containerId, data[0].dataLoadSignature, configuration);
 		</script>
-<div class="stretchy-wrapper-16_9">
-<div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
-</div>
-<script type="text/javascript">
-feelppVtkJs.createSceneImporter( vtkVisuSection1, {
-                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5ad503e0b0e9574027047d84/download",
-                                 objects: { "deformation":[ { scene:"displacement" }, { scene:"von_mises" } ] }
-                               } );
+<div id="vtkjs_e9cd2d3f-ac5f-44b2-864e-71d02be9d76b" style="height: 500px; width: 100%;"></div>
+<script>
+feelppVtkJs.createSceneImporter("vtkjs_e9cd2d3f-ac5f-44b2-864e-71d02be9d76b", {
+  fileURL: "https://girder.math.unistra.fr/api/v1/file/5ad503e0b0e9574027047d84/download",
+  objects: {
+  "deformation": [
+    {
+      "scene": "displacement"
+    },
+    {
+      "scene": "von_mises"
+    }
+  ]
+}
+})
 </script>
 </div>
 </div>

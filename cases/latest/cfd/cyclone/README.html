@@ -957,14 +957,27 @@ In the 3D view below, when selecting the pid in the first dropdown list, each co
 }</code></pre>
 </div>
 </div>
-<div class="stretchy-wrapper-16_9">
-<div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
-</div>
-<script type="text/javascript">
-feelppVtkJs.createSceneImporter( vtkVisuSection1, {
-                                 fileURL: "https://girder.math.unistra.fr/api/v1/item/5b1f9818b0e9570499f66bd2/download",
-                                 objects: { "fields":[ { scene:"Pressure",name:"pressure" }, { scene:"Velocity",name:"velocity" }, { scene:"pid",name:"pid" } ] }
-                                 } );
+<div id="vtkjs_1af9a438-f3ca-4c5e-8501-70e24b00ae2d" style="height: 500px; width: 100%;"></div>
+<script>
+feelppVtkJs.createSceneImporter("vtkjs_1af9a438-f3ca-4c5e-8501-70e24b00ae2d", {
+  fileURL: "https://girder.math.unistra.fr/api/v1/item/5b1f9818b0e9570499f66bd2/download",
+  objects: {
+  "fields": [
+    {
+      "scene": "Pressure",
+      "name": "pressure"
+    },
+    {
+      "scene": "Velocity",
+      "name": "velocity"
+    },
+    {
+      "scene": "pid",
+      "name": "pid"
+    }
+  ]
+}
+})
 </script>
 </div>
 </div>

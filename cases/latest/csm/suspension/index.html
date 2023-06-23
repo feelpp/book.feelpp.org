@@ -925,15 +925,24 @@ The maximum displacement is 1.778 mm. The design of the wishbones is very good b
 <div class="paragraph">
 <p>Finally, we provide a 3D interactive model of the fishbone</p>
 </div>
-<div class="stretchy-wrapper-16_9">
-<div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
-</div>
-<script type="text/javascript">
-feelppVtkJs.createSceneImporter( vtkVisuSection1, {
-                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5ad4b768b0e9574027047d73/download",
-                                 objects: { "deformation":[ { scene:"displacement" } ],
-                                   "geometry":[ { scene:"geo",name:"solid" } ] }
-                               } );
+<div id="vtkjs_ccbb848d-e81c-4059-a33f-41dc720576d4" style="height: 500px; width: 100%;"></div>
+<script>
+feelppVtkJs.createSceneImporter("vtkjs_ccbb848d-e81c-4059-a33f-41dc720576d4", {
+  fileURL: "https://girder.math.unistra.fr/api/v1/file/5ad4b768b0e9574027047d73/download",
+  objects: {
+  "deformation": [
+    {
+      "scene": "displacement"
+    }
+  ],
+  "geometry": [
+    {
+      "scene": "geo",
+      "name": "solid"
+    }
+  ]
+}
+})
 </script>
 </div>
 </div>

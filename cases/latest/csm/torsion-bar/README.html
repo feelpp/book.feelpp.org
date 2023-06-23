@@ -851,14 +851,25 @@ The command line in feelpp-toolboxes docker or singularity reads</p>
 <div class="paragraph">
 <p>In the window below, you can manipulate the 3D model at the final time step.</p>
 </div>
-<div class="stretchy-wrapper-16_9">
-<div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
-</div>
-<script type="text/javascript">
-feelppVtkJs.createSceneImporter( vtkVisuSection1, {
-                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5a687a58b0e9570150cb252d/download",
-                                 objects: { "object":[ { scene:"displacement" }, { scene:"von_mises_criterions",name:"von_mises" }, { scene:"pid" } ] }
-                                 } );
+<div id="vtkjs_567d889b-e5e8-4dd1-a449-0d82ffd782f9" style="height: 500px; width: 100%;"></div>
+<script>
+feelppVtkJs.createSceneImporter("vtkjs_567d889b-e5e8-4dd1-a449-0d82ffd782f9", {
+  fileURL: "https://girder.math.unistra.fr/api/v1/file/5a687a58b0e9570150cb252d/download",
+  objects: {
+  "object": [
+    {
+      "scene": "displacement"
+    },
+    {
+      "scene": "von_mises_criterions",
+      "name": "von_mises"
+    },
+    {
+      "scene": "pid"
+    }
+  ]
+}
+})
 </script>
 <div class="admonitionblock note">
 <table>
