@@ -1,29 +1,31 @@
 // -*- mode: adoc -*-
-= Outils d’analyse fonctionnelle
+= Functional analysis tools
 :lang: fr
+:stem: latexmath
 
 
-[[quelques-rappels]]
-== Quelques rappels
+[[A few reminders]]
+== A few reminders
 
-[[normes-et-produits-scalaires]]
-=== Normes et produits scalaires
+[[norms-and-scalar-products]]
+=== Norms and scalar products
 
-Soit stem:[E] un espace vectoriel. +
+Let stem:[E] be a vector space. +
 
 //[[def:7]]
-.Définition: Norme
+.Definition: Norm
+[.def#def:norm]
 ****
-stem:[\|.\|] : stem:[E \rightarrow \RR] est une *norme* sur stem:[E] ssi elle vérifie :
+stem:[\|.\|] : stem:[E \rightarrow \RR] is a *norm* on stem:[E] if it verifies :
 
-(N1)::  stem:[ \left( \| x \| = 0 \right)  \Longrightarrow (x=0) ]
+(N1):: stem:[ \left( \| x \| = 0 \right) \Longrightarrow (x=0) ]
 
-(N2)::  stem:[\forall\, \lambda\in\RR,\; \forall x\in E, \quad \| \lambda x \|  = |\lambda| \; \| x \| ]
+(N2):: stem:[\forall\, \lambda\in\RR,\; \forall x\in E, \quad \| \lambda x \| = |\lambda| \; \| x \| ]
 
-(N3)::   stem:[\forall\,  x,y \in E, \quad \| x+ y \| \le \|x \| + \|y\|]   (inégalité triangulaire)
+(N3):: stem:[\forall\, x,y \in E, \quad \| x+ y \| \le \|x \| + \|y\|] (triangular inequality)
 ****
 
-Pour stem:[E=\RR^n] et stem:[x=(x_1,\ldots,x_n) \in\RR^n], on définit les normes
+For stem:[E=\RR^n] and stem:[x=(x_1,\ldots,x_n) \in\RR^n], we define the norms
 
 [stem]
 ++++
@@ -32,11 +34,12 @@ Pour stem:[E=\RR^n] et stem:[x=(x_1,\ldots,x_n) \in\RR^n], on définit les norme
 
 
 
-.Définition: Produit scalaire
+.Definition: Scalar product
+[.def#def:scalar-product]
 ****
-On appelle _produit scalaire_ sur stem:[E] toute forme bilinéaire symétrique définie positive.
+Any positive definite symmetric bilinear form is called _scalar product_ on stem:[E].
 
-stem:[\quad<.,.>] : stem:[E\times E \rightarrow \RR] est donc un produit scalaire sur stem:[E] ssi il vérifie :
+stem:[\quad<.,.>] : stem:[E\times E \rightarrow \RR] is therefore a scalar product on stem:[E] if it verifies :
 
 S1::
 [stem]
@@ -53,23 +56,23 @@ S2::
 S3::
 [stem]
 ++++
-\forall\; x,y \in E, \, \forall\, \lambda\in\RR,\quad      <\lambda x,y> = \lambda <x,y>
+\forall\; x,y \in E, \, \forall\, \lambda\in\RR,\quad <\lambda x,y> = \lambda <x,y>
 ++++
 
 S4::
 [stem]
 ++++
-\forall\;  x \in E, x\ne 0, \quad  <x,x>\; > 0
+\forall\; x \in E, x\ne 0, \quad <x,x>\; \gt 0
 ++++
 ****
 
 
-A partir d’un produit scalaire, on peut définir une *norme induite* :
+From a scalar product, an *induced norm* can be defined:
 [stem]
 ++++
 \| x \| = \sqrt{<x,x>}
 ++++
-On a alors, d’après (N3), l’*inégalité de Cauchy-Schwarz* :
+Then, according to (N3), we have the Cauchy-Schwarz *inequality*:
 [stem]
 ++++
 { | <x,y> | \le \| x \| \; \| y \| }
@@ -78,38 +81,40 @@ On a alors, d’après (N3), l’*inégalité de Cauchy-Schwarz* :
 
 [NOTE]
 ====
-Pour stem:[E=\RR^n], on définit le produit scalaire
+For stem:[E=\RR^n], we define the scalar product
 [stem]
 ++++
 <x,y> = \sum_{i=1}^n x_i \, y_i.
 ++++
-Sa norme induite est stem:[\| . \|_2] définie précédemment.
+Its induced norm is stem:[\| . \|_2] defined above.
 ====
 
 
 
-.Définition: Espace normé
+.Definition: Normed space
+[.def#def:normed-space]
 ****
-Un espace vectoriel muni d’une norme est appelé *espace normé*.
-****
-
-.Définition: Espace préhilbertien
-****
-Un espace vectoriel muni d’un produit scalaire est appelé *espace
-préhilbertien*. En particulier, c’est donc un espace normé pour la norme
-induite.
+A vector space with a norm is called *normed space*.
 ****
 
-
-=== Suites de Cauchy et espaces complets
-
-
-[[def:1]]
-.Définition: Suite de Cauchy
+.Definition: Prehilbert space
+[.def#def:prehilbert-space]
 ****
-Soit stem:[E] un espace vectoriel et
-stem:[(x_n)_n] une suite de stem:[E].
-stem:[(x_n)_n] est une *suite de Cauchy* si et seulement si
+A vector space with a scalar product is called a *Prehilbertian
+prehilbert space*. In particular, it is a normed space for the norm
+norm.
+****
+
+
+=== Cauchy sequences and complete spaces
+
+
+.Definition: Cauchy sequences
+[.def#def:cauchy-sequence]
+****
+Let stem:[E] be a vector space and
+stem:[(x_n)_n] a sequence of stem:[E].
+stem:[(x_n)_n] is a *Cauchy sequence* if and only if
 
 [stem]
 ++++
@@ -117,560 +122,573 @@ stem:[(x_n)_n] est une *suite de Cauchy* si et seulement si
 ++++
 ****
 
-[[th-conv-cauchy]]
-.Théorème de Cauchy
-[example]
+
+.Cauchy's theorem
+[.thm#th-conv-cauchy]
 ====
-Toute suite convergente est de Cauchy.
+Every convergent sequence is Cauchy.
 ====
 
-NOTE: La réciproque de <<th-conv-cauchy>> est fausse.
+NOTE: The reciprocal of <<th-conv-cauchy>> is false.
 
-[[def:espace-complet]]
-.Définition: Espace complet
+.Definition: Complete space
+[.def#def:complete-space]
 ****
-Un espace vectoriel est *complet* ssi toute suite de Cauchy y
-est convergente.
-****
-
-[[def:espace-banch]]
-.Définiton: Espace de Banach
-****
-Un espace normé complet est un *espace de Banach*.
+A vector space is *complete* if every Cauchy sequence y
+is convergent.
 ****
 
-[[def:4]]
-.Définition: Espace de Hilbert
+
+.Definition: Banach space
+[.def#def:banach-space]
 ****
-Un espace préhilbertien complet est un *espace de Hilbert*.
+A complete normed space is a *Banach space*.
 ****
 
-[[def:5]]
-.Définition: Espace euclidien
+.Definition: Hilbert space
+[.def#def:hilbert-space]
 ****
-Un espace de Hilbert de dimension finie est appelé *espace
-euclidien*.
+A complete pre-Hilbert space is a *Hilbert space*.
 ****
 
-[[espaces-fonctionnels]]
-== Espaces fonctionnels
 
-
-[[def:6]]
-.Définition: Espace fonctonel
+.Definition: Euclidean space
+[.def#def:euclidean-space]
 ****
-Un *espace fonctionnel* est un espace vectoriel dont les
-éléments sont des fonctions.
+A finite-dimensional Hilbert space is called a *Euclidean
+Euclidean* space.
+****
+
+[[Functional spaces]]
+== Functional spaces
+
+
+
+.Definition: Functional space
+[.def#def:functional-space]
+****
+A *functional space* is a vector space whose elements are
+elements are functions.
 ****
 
 [example]
 .stem:[{\cal C}^p([a;b])]
 ====
-stem:[{\cal C}^p([a;b])] désigne l’espace des fonctions définies sur l’intervalle stem:[ [a,b\]], dont toutes les dérivées jusqu’à l’ordre stem:[p] existent et sont continues sur stem:[ [a,b\]].
+stem:[{\cal C}^p([a;b])] denotes the space of functions defined on the interval stem:[[a,b]], all derivatives of which up to the order stem:[p] exist and are continuous on stem:[[a,b]].
 ====
 
-Dans la suite, les fonctions seront définies sur un sous-ensemble de stem:[\RR^n] (le plus souvent un ouvert noté stem:[\Omega]), à valeurs dans stem:[\RR] ou stem:[\RR^p].
+In the following, functions will be defined on a subset of stem:[\RR^n] (most often an open denoted stem:[\Omega]), with values in stem:[\RR] or stem:[\RR^p].
 
 [example]
-.La température
+.Temperature
 ====
-La température stem:[T(x,y,z,t)] en tout point d’un objet stem:[\bar{\Omega}\subset \RR^3] est une fonction de stem:[ \bar{\Omega} \times \RR \longrightarrow \RR].
+The temperature stem:[T(x,y,z,t)] at any point of an object stem:[\bar{\Omega}\subset \RR^3] is a function of stem:[ \bar{\Omega} \times \RR \longrightarrow \RR].
 ====
 
-Les normes usuelles les plus simples sur les espaces fonctionnels sont
-les *normes* stem:[\bf L^p] définies par :
+The simplest usual norms for functional spaces are
+the *norms* stem:[\bf L^p] defined by :
 
 [stem]
 ++++
 \| u \|_{L^p} = \left ( \int_{\Omega } |u|^p \right) ^{1/p} \quad ,\; p\in [1,+ \infty[ ,
-\qquad \hbox{et}\qquad \| u \|_{L^\infty} = {\hbox{Sup}}_{\Omega } |u|
+\qquad \hbox{and}\qquad \| u \|_{L^\infty} = {\hbox{Sup}}_{\Omega } |u|
 ++++
 
-Comme on va le voir, ces formes stem:[L^p] ne sont pas nécessairement des normes. Et
-lorsqu’elles le sont, les espaces fonctionnels munis de ces normes ne
-sont pas nécessairement des espaces de Banach. Par exemple, les formes
-stem:[L^\infty] et stem:[L^1] sont bien des normes sur
-l’espace stem:[{\cal C}^0([a;b])], et cet espace est complet si
-on le munit de la norme stem:[L^\infty], mais ne l’est pas si on
-le munit de la norme stem:[L^1].
+As we shall see, these stem:[L^p] forms are not necessarily standards. And
+when they are, the functional spaces with these norms are not necessarily
+are not necessarily Banach spaces. For example, the forms
+stem:[L^\infty] and stem:[L^1] are norms on the space
+the space stem:[{\cal C}^0([a;b])], and this space is complete if we
+with the norm stem:[L^\infty], but not with the norm stem:[L^\infty].
+the stem:[L^1] norm.
 
-Pour cette raison, on va définir les espaces stem:[{\cal L}^p(\Omega)(p\in [1,+ \infty[]) par
+For this reason, we define the spaces stem:[{\cal L}^p(\Omega)(p\in [1,+ \infty[]) by
 
 [stem]
 ++++
-[{\cal L}^p(\Omega) = \left\{ u : \Omega \rightarrow \RR, \hbox{ mesurable, et telle que }\int_\Omega |u|^p<\infty \right\}
+{\cal L}^p(\Omega) = \left\{ u : \Omega \rightarrow \RR, \hbox{ measurable, and such that }\int_\Omega |u|^p<\infty \right\}
 ++++
 
-NOTE: on rappelle qu’une fonction stem:[u] est mesurable ssi stem:[\{ x / |u(x)|<r \}] est mesurable stem:[\forall r>0].
+NOTE: A function stem:[u] is measurable if stem:[\{ x / |u(x)|<r \}] is measurable stem:[\forall r>0].
 
-Sur ces espaces stem:[{\cal L}^p(\Omega)], les
-formes stem:[L^p] ne sont pas des normes. En effet, stem:[\| u
-\|_{L^p} = 0] implique que stem:[u] est *nulle presque partout* dans
-stem:[{\cal L}^p(\Omega)], et non pas stem:[u=0]. C’est pourquoi on va
-définir les *espaces* stem:[\bf L^p(\Omega)] :
+On these spaces stem:[{\cal L}^p(\Omega)], the
+forms stem:[L^p] are not norms. Indeed, stem:[\| u
+\|_{L^p} = 0] implies that stem:[u] is *zero almost everywhere* in
+stem:[{\cal L}^p(\Omega)], not stem:[u=0]. This is why we'll
+define the *spaces* stem:[\bf L^p(\Omega)] :
 
-[[def:presque-partout]]
-.Définition: Égalité presque partout
+.Definition: Equality almost everywhere
+[.def#def:almost-everywhere]
 ****
-stem:[L^p(\Omega)] est la classe d’équivalence des fonctions de
-stem:[{\cal  L}^p(\Omega)] pour la relation d’équivalence *égalité presque
-partout*. Autrement dit, on confondra deux fonctions dès lors qu’elles
-sont égales presque partout, c’est à dire qu’elles ne diffèrent que sur
-un ensemble de mesure nulle.
-****
-
-[[thr:1]]
-.Théorème: Les espaces stem:[L^p(\Omega)] sont complets
-****
-La forme stem:[L^p] est une norme sur stem:[L^p(\Omega)],
-et stem:[L^p(\Omega)] muni de la norme stem:[L^p] est un
-espace de Banach (c.a.d. est complet).
+stem:[L^p(\Omega)] is the equivalence class of functions of
+stem:[{\cal L}^p(\Omega)] for the equivalence relation *equality almost everywhere
+everywhere*. In other words, we'll confuse two functions whenever they are
+are equal almost everywhere, i.e. they differ only on a set of zero measure.
+a set of zero measure.
 ****
 
-NOTE: Un cas particulier très important est stem:[p=2]. On obtient
-alors l’*espace fonctionnel stem:[L^2(\Omega)]*, c’est à dire
-l’espace des fonctions de carré sommable sur stem:[\Omega] (à la
-relation d’équivalence *égalité presque partout* près). A la norme
+.Theorem: stem:[L^p(\Omega)]
+[.thm#th-lp-complete]
+****
+The form stem:[L^p] is a norm on stem:[L^p(\Omega)],
+and stem:[L^p(\Omega)] equipped with the norm stem:[L^p] is a
+Banach space (i.e. is complete).
+****
+
+NOTE: A very important special case is stem:[p=2]. In this case
+the *functional space stem:[L^2(\Omega)]*, i.e. the space of
+the space of summable square functions on stem:[\Omega] (at the
+equivalence relation *equality almost everywhere*). To the norm
 stem:[L^2] :
-stem:[\| u \|_{L^2} = \left( \int_\Omega u^2 \right)^{1/2} ], on
-peut associer la forme bilinéaire
-stem:[(u,v)_{L^2} = \int_\Omega u\, v]. Il s’agit d’un produit
-scalaire, dont dérive la norme stem:[L^2].
+stem:[\| u \|_{L^2} = \left( \int_\Omega u^2 \right)^{1/2} ], we can associate the bilinear form
+the bilinear form
+stem:[(u,v)_{L^2} = \int_\Omega u\, v]. This is a scalar product
+from which the norm stem:[L^2] is derived.
 
-D’où le théorème suivant
+Hence the following theorem
 
-[[thr:L2-hilbert]]
-.Théorème
+
+.Theorem: stem:[L^2(\Omega)] 
+[.thm#th-l2-hilbert]
 ****
-stem:[L^2(\Omega)] est un espace de Hilbert.
+stem:[L^2(\Omega)] is a Hilbert space.
 ****
 
 [[sec:notion-de-derivee]]
-== Notion de dérivée généralisée
+== Notion of generalized derivative
 
 
-Nous venons de définir des espaces fonctionnels complets, ce qui sera un bon cadre pour démontrer l’existence et l’unicité de solutions d’équations aux dérivées partielles, comme on le verra plus loin notamment avec le théorème de Lax-Milgram.
+We've just defined complete functional spaces, which provide a good framework for demonstrating the existence and uniqueness of solutions to partial differential equations, as we'll see later with the Lax-Milgram theorem.
 
-Toutefois, on a vu que les éléments de ces espaces stem:[L^p] ne sont pas nécessairement des fonctions très régulières.
+However, we have seen that the elements of these stem:[L^p] spaces are not necessarily very regular functions.
 
-Dès lors, les dérivées partielles de telles fonctions ne sont pas forcément définies partout.
+Consequently, the partial derivatives of such functions are not necessarily defined everywhere.
 
-Pour s’affranchir de ce problème, on va étendre la notion de dérivation.
+To overcome this problem, we're going to extend the notion of derivation.
 
-Le véritable outil à introduire pour cela est la notion de *distribution*, due à L. Schwartz (1950).
+The real tool to be introduced for this is the notion of *distribution*, due to L. Schwartz (1950).
 
-Par manque de temps dans ce cours, on se contentera ici d’en donner une idée très simplifiée, avec la notion de *dérivée généralisée*.
+For lack of time in this course, we'll confine ourselves here to giving a very simplified idea, with the notion of *generalized derivative*.
 
-Cette dernière a des propriétés beaucoup plus limitées que les distributions, mais permet de “sentir" les aspects nécessaires pour
-mener à la formulation variationnelle.
+The latter has much more limited properties than distributions, but allows us to get a "feel" for the aspects necessary to
+the variational formulation.
 
-Dans la suite, stem:[\Omega] sera un ouvert (pas nécessairement borné) de stem:[\RR^n].
+In the following, stem:[\Omega] will be an open (not necessarily bounded) of stem:[\RR^n].
 
-[[sec:fonctions-tests]]
-=== Fonctions tests
+[[sec:test-functions]]
+=== Test functions
 
 
-Soit stem:[\varphi : \Omega \rightarrow \RR].
+Let stem:[\varphi : \Omega \rightarrow \RR].
 
-[[def:10]]
-.Définition
+.Definition: support of stem:[\varphi]
+[.def#def:support]
 ****
-On appelle *support de stem:[\bf   \varphi]* l’adhérence de stem:[\{ x \in \Omega / \varphi(x) \ne 0 \}].
-****
-
-[example]
-====
-Pour stem:[\Omega = \]-1,1\]], et stem:[\varphi] la fonction constante égale à 1, stem:[\hbox{Supp}\, \varphi = \[-1,1\]].
-====
-
-[[def:11]]
-.Définition: Espace des fonctions tests
-****
-On note stem:[{\cal D}(\Omega)] l’espace des fonctions de stem:[\Omega] vers stem:[\RR], de classe stem:[{\cal C}^\infty], et à support compact inclus dans stem:[\Omega].
-
-stem:[{\cal D}(\Omega)] est parfois appelé *espace des fonctions-tests*.
+We call *support of stem:[\bf \varphi]* the adherence of stem:[\{ x \in \Omega / \varphi(x) \ne 0 \}].
 ****
 
 [example]
 ====
-L’exemple le plus classique dans le cas 1-D est la fonction
+For stem:[\Omega = \]-1,1\]], and stem:[\varphi] the constant function equal to 1, stem:[\hbox{Supp}\, \varphi = \[-1,1\]].
+====
+
+.Definition: Space for test functions
+[.def#def:test-functions]
+****
+Let stem:[{\cal D}(\Omega)] be the space of functions from stem:[\Omega] to stem:[\RR], of class stem:[{\cal C}^\infty], and with compact support included in stem:[\Omega].
+
+stem:[{\cal D}(\Omega)] is sometimes called *test function space*.
+****
+
+[example]
+====
+The most classic example in the 1-D case is the function
 
 stem:[
 \varphi(x) =
   \left\{
     \begin{array}{ll}
-    { e^{- \frac{1}{1-x^2}} } & \hbox{si } |x|<1\\
-      0 &  \hbox{si } |x|\ge 1\\
+    { e^{- \frac{1}{1-x^2}} } & \hbox{si } |x|<1
+      0 & \hbox{si } |x|1\\ge
     \end{array}
   \right.
 ]
-stem:[\varphi] est une fonction de stem:[{\cal D}(]a,bstem:[)] pour tous stem:[a < -1 < 1 < b].
+stem:[\varphi] is a function of stem:[{\cal D}(]a,bstem:[)] for all stem:[a < -1 < 1 < b].
 
 
-NOTE: Cet exemple s’étend aisément au cas multi-dimensionnel (stem:[n>1]).
+NOTE: This example can easily be extended to the multi-dimensional case (stem:[n>1]).
 ====
 
-Soit stem:[a\in\Omega] et stem:[r>0] tel que la boule fermée de centre stem:[a] et de rayon stem:[r] soit incluse dans stem:[\Omega].
+Let stem:[a\in\Omega] and stem:[r>0] be such that the closed ball of center stem:[a] and radius stem:[r] is included in stem:[\Omega].
 
-On pose alors :
-[[eq:fonction-test2]]
+We then pose :
+[[eq:function-test2]]
 [stem]
 ++++
  \varphi(x) = \left\{
  \begin{array}{ll}
- { e^{- \frac{1}{r^2-|x-a|^2}} } & \hbox{si } |x-a| < r \\
- 0 &  \hbox{sinon }\\
+ { e^{- \frac{1}{r^2-|x-a|^2}} } & \hbox{si } |x-a| < r\\
+ 0 & \hbox{ otherwise }
  \end{array}
  \right.
 ++++
 
-stem:[\varphi] ainsi définie est un élément de stem:[{\cal D}(\Omega)].
+stem:[\varphi] thus defined is an element of stem:[{\cal D}(\Omega)].
 
-[[thr:4]]
-.Théorème: Adhérence de stem:[\overline{{\cal D}(\Omega)}]
+
+.Theorem: Adherence of stem:[\overline{{\cal D}(\Omega)}]]
+[.thm#thm:adherence]
 ****
 stem:[\overline{{\cal D}(\Omega) } = L^2(\Omega)]
 ****
 
 [[sec:derivee-generalisee]]
-=== Dérivée généralisée
+=== Generalized derivative
 
 
-Soit stem:[u\in {\cal C}^1(\Omega)] et stem:[\varphi \in {\cal D}(\Omega)].
+Let stem:[u\in {\cal C}^1(\Omega)] and stem:[\varphi \in {\cal D}(\Omega)].
 
-Par intégration par parties (annexe [sec:green]), on a :
+By integration by parts (appendix [sec:green]), we have :
 
 [stem]
 ++++
-\int_\Omega \partial_i u\;  \varphi = - \int_\Omega u \; \partial_i\varphi + \int_{\partial \Omega} u \; \varphi \; {\bf e}_i.{\bf n}
+\int_\Omega \partial_i u\; \varphi = - \int_\Omega u \; \partial_i\varphi + \int_{\partial \Omega} u \; \varphi \; {\bf e}_i.{\bf n}
 ++++
 
-Ce dernier terme (intégrale sur le bord de stem:[\Omega]) est nul car stem:[\varphi] est à support compact (donc nul sur
+This last term (integral on the edge of stem:[\Omega]) is null because stem:[\varphi] is compactly supported (hence null on
 stem:[\partial \Omega]).
 
-Or stem:[\int_\Omega u \; \partial_i\varphi] a un sens par exemple dès que stem:[u\in L^2(\Omega)].
+But stem:[\int_\Omega u \; \partial_i\varphi] makes sense as soon as stem:[u\in L^2(\Omega)].
 
-Donc le terme stem:[\int_\Omega \partial_i u\; \varphi] a aussi du sens, sans que stem:[u] ne soit nécessairement de classe stem:[{\cal C}^1].
+So stem:[\int_\Omega \partial_i u\; \varphi] also makes sense, without stem:[u] necessarily being of class stem:[{\cal C}^1].
 
-Ceci permet de définir stem:[\partial_i u] même dans ce cas.
+This makes it possible to define stem:[\partial_i u] even in this case.
 
-[[def:12]]
-.Définition: Dérivée généralisée
+.Definition: Generalized derivative
+[.def#def:generalized-derivative]
 ****
-cas 1-D stem:[\quad] Soit stem:[I] un intervalle de stem:[\RR], pas
-forcément borné.
+1-D case stem:[\quad] Let stem:[I] be an interval of stem:[\RR], not necessarily bounded.
+not necessarily bounded.
 
-On dit que stem:[u\in L^2(I)] admet une *dérivée généralisée* dans stem:[L^2(I)] ssi stem:[\exists u_1\in L^2(I)] telle que
+We say that stem:[u\in L^2(I)] admits a *generalized derivative* in stem:[L^2(I)] if stem:[\exists u_1\in L^2(I)] such that
 
 stem:[
-\forall \varphi\in {\cal   D}(I), \quad \int_I u_1\;\varphi = - \int_I u \varphi'
+\forall \varphi\in {\cal D}(I), \quad \int_I u_1\;\varphi = - \int_I u \varphi'
 ]
 ****
 
 [example]
 ====
-Soit stem:[I=\]a,b[] un intervalle borné, et stem:[c] un
-point de stem:[I]. On considère une fonction stem:[u]
-formée de deux branches de classe stem:[{\cal C}^1], l’une sur
-stem:[]a,c[], l’autre sur stem:[]c,b[], et se raccordant
-de façon continue mais non dérivable en stem:[c]. Alors
-stem:[u] admet une dérivée généralisée définie par
-stem:[u_1(x)=u'(x)\quad \forall x\ne c]. En effet :
+Let stem:[I=\]a,b[] be a bounded interval, and stem:[c] be a point of stem:[I].
+point of stem:[I]. Consider a function stem:[u]
+formed by two branches of class stem:[{\cal C}^1], one on
+one on stem:[]a,c[], the other on stem:[]c,b[], and connecting continuously
+to stem:[c]. Then
+stem:[u] has a generalized derivative defined by
+stem:[u_1(x)=u'(x)\quad \forall x\ne c]. Indeed :
 
 
 stem:[
 \forall \varphi\in {\cal D}(\]a,b[)\qquad \int_a^b u \varphi' = \int_a^c + \int_c^b = - \int_a^c u' \varphi - \int_c^b u'\varphi + \underbrace{(u(c^-)-u(c^+))}_{=0} \, \varphi(c)
 ]
 
-par intégration par parties. La valeur stem:[u_1(c)] n’a pas d’importance: on a de
-toute façon au final la même fonction de stem:[L^2(I)],
-puisqu’elle est définie comme classe d’équivalence de la relation
-d’équivalence *égalité presque partout*.
+by integration by parts. The stem value:[u_1(c)] doesn't matter: we end up with the same
+the same function as stem:[L^2(I)],
+since it is defined as the equivalence class of the equivalence relation
+equivalence relation *equality almost everywhere*.
 ====
 
-[[def:13]]
-.Définition: Dérivée généralisée d'ordre stem:[k]
+
+.Definition: Generalized derivative of order stem:[k]
+[.def#def:generalized-derivative-order-k]
 ****
-En itérant, on dit que stem:[u] admet une *dérivée généralisée
-d’ordre stem:[\bf k]* dans stem:[L^2(I)], notée
+By iterating, we say that stem:[u] admits a *generalized derivative
+of order stem:[\bf k]* in stem:[L^2(I)], denoted by
 stem:[u_k], ssi stem:[{\forall \varphi\in
   {\cal D}(I), \quad \int_I u_k\;\varphi = (- 1)^k \; \int_I u \varphi^{(k)}
   }]
 ****
 
-Ces définitions s’étendent naturellement pour la définition de dérivées partielles généralisées, dans le cas stem:[n>1].
+These definitions extend naturally to the definition of generalized partial derivatives, in the stem case:[n>1].
 
-[[thr:5]]
-.Théorème: Unicité de la dérivée généralisée
+
+.Theorem: Uniqueness of the generalized derivative
+[.thm#thm:uniqueness]
 ****
-Quand elle existe, la dérivée généralisée est unique.
+When it exists, the generalized derivative is unique.
 ****
 
-[[thr:6]]
-.Théorème: dérivée généralisée et dérivée classique
+
+.Theorem: generalized derivative and classical derivative
+[.thm#thm:generalized-classical]
 --
-Quand stem:[u] est de classe stem:[{\cal C}^1(\bar{\Omega})], la dérivée généralisée est égale à la dérivée classique.
+When stem:[u] is of class stem:[{\cal C}^1(\bar{\Omega})], the generalized derivative is equal to the classical derivative.
 --
 
-[[espaces-de-sobolev]]
-== Espaces de Sobolev
+[[Sobolev spaces]]
+== Sobolev spaces
 
 
-[[sec:sobolev]]
-=== Les espaces stem:[H^m]
+=== stem:[H^m] spaces
 
 
-[[def:14]]
-.Définition: stem:[H^1(\Omega)]
+.Definition: stem:[H^1(\Omega)]
+[.def#def:h1]
 ****
 [stem]
 ++++
 { H^1(\Omega) = \left\{ u \in L^2(\Omega)\; / \; \partial_i u \; \in
-    L^2(\Omega), \quad 1 \le i \le n \right\} }
+    L^2(\Omega), \; 1 \leq i \leq n \right\} }
 ++++
-où stem:[\partial_i u] est définie au sens de la dérivée généralisée.
+where stem:[\partial_i u] is defined in the sense of the generalized derivative.
 
 
-stem:[H^1(\Omega)] est appelé *espace de Sobolev d’ordre 1*.
+stem:[H^1(\Omega)] is called *Sobolev space of order 1*.
 ****
 
-[[def:15]]
-.Définition: stem:[H^m(\Omega)]
+.Definition: stem:[H^m(\Omega)]
+[.def#def:hm]
 ****
-Pour tout entier stem:[m\ge 1],
+For any integer stem:[m\ge 1],
 stem:[
 H^m(\Omega) = \left\{ u \in L^2(\Omega) \; / \; \partial^\alpha u \; \in
-  L^2(\Omega) \quad \forall \alpha =(\alpha_1,\ldots,\alpha_n) \in \NN^n\hbox{
-  tel que}\; |\alpha|= \alpha_1+\cdots+\alpha_n \le m \right\}]
+  L^2(\Omega) \quad \forall \alpha =(\alpha_1,\ldots,\alpha_n) \in \N^n\hbox{
+  such that}\; |\alpha|= \alpha_1+\cdots+\alpha_n \le m \right\}]
 
 
-stem:[H^m(\Omega)] est appelé *espace de Sobolev d’ordre stem:[\bf m].
+stem:[H^m(\Omega)] is called *Sobolev space of order stem:[\bf m].
 ****
 
-NOTE: Par extension, on voit aussi que stem:[H^0(\Omega)=L^2(\Omega)].
+NOTE: By extension, we also see that stem:[H^0(\Omega)=L^2(\Omega)].
 
 [NOTE]
 ====
-Dans le cas de la dimension 1, on écrit plus simplement pour stem:[I] ouvert de stem:[\RR] :
+In the case of dimension 1, it's simpler to write stem:[I] open from stem:[\RR] :
 
-stem:[ H^m(I) =  \left\{ u \in L^2(I)  \; / \;   u', \ldots, u^{(m)} \in L^2(I) \right\} ]
+stem:[ H^m(I) = \left\{ u \in L^2(I) \; / \; u', \ldots, u^{(m)} \in L^2(I) \right\} ]
 ====
 
-[[thr:7]]
-.Théorème: stem:[H^1(\Omega)] est un espace de Hilbert
+.Theorem: stem:[H^1(\Omega)] is a Hilbert space
+[.thm#thm:h1-hilbert]
 ****
-stem:[H^1(\Omega)] est un espace de Hilbert pour le produit scalaire
+stem:[H^1(\Omega)] is a Hilbert space for the scalar product
 stem:[(u,v)_1 = \int_\Omega u \, v\, + \sum_{i=1}^n \; \int_\Omega \partial_i u
 \; \partial_i v = (u,v)_0 + \sum_{i=1}^n (\partial_i u, \partial_i v )_0]
 
-en notant stem:[(.,.)_0] le produit scalaire stem:[L^2].
-On notera stem:[\|.\|_1] la norme associée à
+noting stem:[(.,.)_0] the scalar product stem:[L^2].
+Let stem:[\|.\|_1] be the norm associated with
 stem:[(.,.)_1].
 ****
 
-On définit de même un produit scalaire et une norme sur
-stem:[H^m(\Omega)] par
+Similarly, we define a scalar product and a norm on
+stem:[H^m(\Omega)] by
 [stem]
 ++++
-(u,v)_m =   \sum_{|\alpha| \le m} ( \partial^\alpha u , \partial^\alpha v )_0 \qquad
-\hbox{ et }\qquad \| u \|_m = (u,u)_m^{1/2}]
+(u,v)_m = \sum_{|alpha| \le m} ( \partial^\alpha u , \partial^\alpha v )_0 \qquad
+\hbox{ and }\qquad \| u \|_m = (u,u)_m^{1/2}]
 ++++
 
-.Théorème: stem:[H^m(\Omega)] sont des espaces de Hilbert]
+.Theorem: stem:[H^m(\Omega)] are Hilbert spaces]
+[.thm#thm:hm-hilbert]
 ****
-stem:[H^m(\Omega)] muni du produit scalaire stem:[(.,.)_m]
-est un espace de Hilbert.[thr:8]
+stem:[H^m(\Omega)] with scalar product stem:[(.,.)_m] is a Hilbert space.
+is a Hilbert space [thr:8].
 ****
 
-[[thr:9]]
-.Théorème: stem:[H^m(\Omega)] et stem:[{\cal C}^k(\bar{\Omega})]
+
+.Theorem: stem:[H^m(\Omega)] and stem:[{\cal C}^k(\bar{\Omega})]
+[.thm#thm:hm-ck]
 ****
-Si stem:[\Omega] est un ouvert de stem:[\RR^n] de
-frontière stem:[\partial\Omega] “suffisamment régulière" (par
-exemple stem:[{\cal C}^1]), on a l’inclusion :
-stem:[H^m(\Omega) \subset {\cal C}^k(\bar{\Omega})] pour
+If stem:[\Omega] is an open of stem:[\RR^n] with boundary stem:[\partial\Omega].
+"sufficiently regular"  stem:[\partial\Omega] (for example
+example stem:[{\cal C}^1]), we have the inclusion :
+stem:[H^m(\Omega) \subset {\cal C}^k(\bar{\Omega})] for
 stem:[{ k < m-\frac{n}{2}
   }]
 ****
 
 [example]
 ====
-En particulier, on voit que pour un intervalle stem:[I] de stem:[\RR],
-on a stem:[H^1(I) \subset {\cal C}^0(\bar{I})], c’est à dire que, en
-1-D, toute fonction stem:[H^1] est continue.
+In particular, we see that for an interval stem:[I] of stem:[\RR],
+we have stem:[H^1(I) \subset {\cal C}^0(\bar{I})], i.e. in
+1-D, any stem:[H^1] function is continuous.
 
-L’exemple de stem:[u(x) = x\, \sin\frac{1}{x}] pour
-stem:[x\in\]0,1\]] et stem:[u(0)=0] montre que la réciproque
-est fausse.
+The example of stem:[u(x) = x\, \sin\frac{1}{x}] for
+stem:[x\in\]0,1\]] and stem:[u(0)=0] shows that the converse is false.
+is false.
 
-L’exemple de stem:[u(x,y) = | \ln (x^2+y^2) |^k] pour
-stem:[0<k<1/2] montre qu’en dimension supérieure à 1 il existe
-des fonctions stem:[H^1] discontinues.
+The example of stem:[u(x,y) = | \ln (x^2+y^2) |^k] for
+stem:[0<k<1/2] shows that in dimensions greater than 1 there are
+discontinuous stem:[H^1] functions.
 ====
 
-[[trace-dune-fonction]]
-=== Trace d’une fonction
+[[trace-a-function]]
+=== Trace of a function
 
 
-Pour pouvoir faire les intégrations par parties qui seront utiles par
-exemple pour la formulation variationnelle, il faut pouvoir définir le
-prolongement (_la trace_) d’une fonction sur le bord de l’ouvert
+To be able to perform integrations by parts, which will be useful for
+for variational formulation, you need to be able to define the extension
+extension (_trace_) of a function on the edge of the open
 stem:[\Omega].
 
-*stem:[n=1] (cas 1-D)*:: on considère un intervalle ouvert
-stem:[I=\]a,b[] borné.
-On a vu que stem:[H^1(I) \subset {\cal C}^0(\bar{I})]. Donc, pour
-stem:[u\in H^1(I)], stem:[u] est continue sur
-stem:[\[a,b\]], et stem:[u(a)] et stem:[u(b)] sont
-bien définies.
+*stem:[n=1] (case 1-D)*:: we consider an open interval
+stem:[I=\]a,b[] bounded.
+We have seen that stem:[H^1(I) \subset {\cal C}^0(\bar{I})]. Therefore, for
+stem:[u\in H^1(I)], stem:[u] is continuous on
+stem:[\[a,b\]], and stem:[u(a)] and stem:[u(b)] are
+well-defined.
 
 
-stem:[n>1]:: on n’a plus stem:[H^1(\Omega) \subset {\cal C}^0(\bar{\Omega})]. Comment
-alors définir la trace ? La démarche est la suivante :
- * On définit l’espace stem:[{\cal C}^1(\bar{\Omega}) = \left\{  \varphi : \Omega \rightarrow \RR \;/\;  \exists O \hbox{ ouvert contenant } \bar{\Omega},\; \exists \psi \in {\cal C}^1(O),\; \psi_{|\Omega} = \varphi \right\}]
-Autrement dit, stem:[{\cal C}^1(\bar{\Omega})] est l’espace des fonctions stem:[{\cal C}^1] sur stem:[\Omega],
-prolongeables par continuité sur stem:[\partial\Omega] et dont le
-gradient est lui-aussi prolongeable par continuité. Il n’y a donc pas de
-problème pour définir la trace de telles fonctions.
- * On montre que, si stem:[\Omega] est un ouvert borné de
-frontière stem:[\partial\Omega] “assez régulière", alors
-stem:[{\cal C}^1(\bar{\Omega})] est dense dans
+stem:[n>1]:: we no longer have stem:[H^1(\Omega) \subset {\cal C}^0(\bar{\Omega})]. How can
+define the trace? Here's how:
+ * We define the  space stem:[{\cal C}^1(\bar{\Omega}) = \left\{ \varphi : \Omega \rightarrow \RR \;/\; \exists O \hbox{ open containing } \bar{\Omega},\; \exists \psi \in {\cal C}^1(O),\; \psi_{|\Omega} = \varphi \right\}]
+In other words, stem:[{\cal C}^1(\bar{\Omega})] is the space of functions stem:[{\cal C}^1] on stem:[\Omega],
+extendable by continuity on stem:[\partial\Omega] and whose gradient
+gradient can also be extended by continuity. There is therefore no
+to define the trace of such functions.
+ * We show that, if stem:[\partial\Omega] is a bounded open
+boundary stem:[\partial\Omega] "regular enough", then
+stem:[{\cal C}^1(\bar{\Omega})] is dense in
 stem:[H^1(\Omega)].
- * L’application linéaire continue, qui à toute fonction stem:[u]
-de stem:[{\cal C}^1(\bar{\Omega})] associe sa trace sur
-stem:[\partial\Omega], se prolonge alors en une application
-linéaire continue de stem:[H^1(\Omega)] dans
-stem:[L^2(\partial\Omega)], notée stem:[\gamma_0], qu’on
-appelle *application trace*. On dit que stem:[\gamma_0(u)] *est
-la trace de stem:[u] sur* stem:[\partial\Omega].
+ * The continuous linear application, which to any function stem:[u]
+of stem:[{\cal C}^1(\bar{\Omega})] associates its trace on
+stem:[\partial\Omega], then extends into a continuous
+continuous linear application of stem:[H^1(\\Omega)] in
+stem:[L^2(\partial\Omega)], denoted stem:[\gamma_0], which we call *trace application*.
+trace application*. We say that stem:[\gamma_0(u)] *is
+the trace of stem:[u] on* stem:[\partial\Omega].
 
-NOTE: Pour une fonction stem:[u] de stem:[H^1(\Omega)] qui soit en même temps continue sur stem:[\bar{\Omega}], on a évidemment stem:[\gamma_0(u) = u_{|\partial\Omega}].
-C’est pourquoi on note souvent par abus simplement stem:[u_{|\partial\Omega}] plutôt que stem:[\gamma_0(u)].
+NOTE: For a function stem:[u] of stem:[H^1(\Omega)] which is at the same time continuous on stem:[\bar{\Omega}], we obviously have stem:[\gamma_0(u) = u_{||partial\Omega}].
+This is why stem:[u_{|\partial\Omega}] is often simply noted rather than stem:[\gamma_0(u)].
 
 
 
-On peut de façon analogue définir stem:[\gamma_1], application
-trace qui permet de prolonger la définition usuelle de la dérivée
-normale sur stem:[\partial\Omega]. Pour
-stem:[u\in H^2(\Omega)], on a
+Analogously, we can define stem:[\gamma_1], an application
+which extends the usual definition of the normal derivative
+on stem:[\partial\O]. For
+stem:[u\in H^2(\Omega)], we have
 stem:[\partial_i u \in H^1(\Omega)],
-stem:[\forall i=1,\ldots,n], et on peut donc définir
-stem:[\gamma_0(\partial_i u)]. La frontière
-stem:[\partial\Omega] étant “assez régulière" (par exemple,
-idéalement, de classe stem:[{\cal C}^1]), on peut définir la
-normale
-stem:[n=\left(   \begin{array}{l}  n_1 \\ \vdots \\ n_n \end{array} \right)]
-en tout point de stem:[\partial\Omega]. On pose alors
+stem:[\forall i=1,\ldots,n], and we can therefore define
+stem:[\gamma_0(\partial_i u)]. The boundary
+stem:[\partial\Omega] being "fairly regular" (for example,
+ideally, of class stem:[{\cal C}^1]), we can define the
+normal
+stem:[n=\left( \begin{array}{l} n_1 \\ \vdots  n_n \end{array} \right)]
+at any point of stem:[\partial\Omega]. We then pose
 stem:[{\gamma_1(u) = \sum_{i=1}^n \gamma_0(\partial_i u) n_i}].
-Cette application continue stem:[\gamma_1] de
-stem:[H^2(\Omega)] dans stem:[L^2(\partial\Omega)] permet
-donc bien de prolonger la définition usuelle de la dérivée normale. Dans
-le cas où stem:[u] est une fonction de stem:[H^2(\Omega)]
-qui soit en même temps dans stem:[{\cal C}^1(\bar{\Omega})], la
-dérivée normale au sens usuel de stem:[u] existe, et
-stem:[\gamma_1(u)] lui est évidemment égal. C’est pourquoi on
-note souvent, par abus, stem:[\partial_n u] plutôt que
+This continuous application stem:[\gamma_1] of
+stem:[H^2(\Omega)] into stem:[L^2(\partial\Omega)] thus extends
+the usual definition of the normal derivative. In
+the case where stem:[u] is a function of stem:[H^2(\Omega)]
+which is at the same time in stem:[{\cal C}^1(\bar{\Omega})]], the normal
+normal derivative in the usual sense of stem:[u] exists, and
+stem:[\gamma_1(u)] is obviously equal to it. This is why
+stem:[\partial_n u] rather than stem:[\gamma_1(u)].
 stem:[\gamma_1(u)].
 
 [[sec:H10]]
-=== Espace stem:[H^1_0(\Omega)]
+=== Space stem:[H^1_0(\Omega)]
 
 
-[[def:16]]
-.Définition: stem:[H^1_0(\Omega)]
+.Definition: stem:[H^1_0(\Omega)]
+[.def#def:h10]
 ****
-Soit stem:[\Omega] ouvert de stem:[\RR^n].
-L’espace stem:[H^1_0(\Omega)] est défini comme l’adhérence de stem:[{\cal D}(\Omega)] pour la norme stem:[\|.\|_1] de stem:[H^1(\Omega)].
-(on rappelle que stem:[{\cal D}(\Omega)] est l’espace des fonctions stem:[{\cal C}^\infty] sur stem:[\Omega] à support compact, encore appelé espace des fonctions tests)
-****
-
-[[thr:10]]
-.Théorème: stem:[H^1_0(\Omega)] est un espace de Hilbert
-****
-Par construction stem:[H^1_0(\Omega)] est un espace complet.
-C’est un espace de Hilbert pour la norme stem:[\|.\|_1]
+Let stem:[\Omega] be open from stem:[\RR^n].
+The space stem:[H^1_0(\Omega)] is defined as the adherence of stem:[{\cal D}(\Omega)] to the norm stem:[\|.\|_1] of stem:[H^1(\Omega)].
+(Recall that stem:[{\cal D}(\Omega)] is the space of stem:[{\cal C}^\infty] functions on stem:[\Omega] with compact support, also known as the space of test functions).
 ****
 
-Si stem:[n=1] (cas 1-D)}:: on considère un intervalle ouvert stem:[I=\]a,b[] borné. Alors
+
+.Theorem: stem:[H^1_0(\Omega)] is a Hilbert space
+[.thm#thm:h10-hilbert]
+****
+By construction stem:[H^1_0(\Omega)] is a complete space.
+It is a Hilbert space for the norm stem:[\|.\|_1]
+****
+
+If stem:[n=1] (case 1-D)}:: consider a bounded open interval stem:[I=\]a,b[]. Then
 [stem]
 ++++
 H^1_0(]a,b[) = \left\{ u \in H^1(]a,b[),\; u(a)=u(b)=0 \right\}
 ++++
 
-Si stem:[n>1]:: Si stem:[\Omega] est un ouvert borné de frontière“assez
-régulière" (par exemple stem:[{\cal C}^1] par morceaux), alors
+If stem:[n>1]:: If stem:[\Omega] is a bounded open with a "fairly
+regular" boundary (for example stem:[{\cal C}^1] by pieces), then
 stem:[H^1_0(\Omega) = \ker \gamma_0]. stem:[H^1_0(\Omega)]
-est donc le sous-espace des fonctions de stem:[H^1(\Omega)] de
-trace nulle sur la frontière stem:[\partial\Omega].
+is therefore the subspace of functions of stem:[H^1(\Omega)] with
+zero trace on the stem:[\partial\Omega] boundary.
 
-[[def:17]]
-.Définition:
+
+.Definition
+[.def#def:trace]
 ****
-Pour toute fonction stem:[u] de stem:[H^1(\Omega)], on
-peut définir :
+For any stem:[u] function of stem:[H^1(\Omega)], we 
+can define :
 [stem]
 ++++
 { |u|_1 = \left( \sum_{i=1}^n \| \partial_i u \|_0^2 \right)^{1/2} = \left( \int_\Omega \sum_{i=1}^n \left( \partial_i u \right)^2 dx \right)^{1/2} }
 ++++
 ****
 
-[thr:11]
-.Théorème: Inégalité de Poincaré
+
+.Theorem: Poincaré's inequality
+[.thm#thm:poincare]
 ****
-Si stem:[\Omega] est borné dans au moins une direction, alors il existe une constante stem:[C(\Omega)] telle que
+If stem:[\Omega] is bounded in at least one direction, then there exists a constant stem:[C(\Omega)] such that
 [stem]
 ++++
-\forall u \in H^1_0(\Omega), \; \|u\|_0 \le   C(\Omega)\; |u|_1.
+\forall u \in H^1_0(\Omega), \; \|u\|_0 \le C(\Omega)\; |u|_1.
 ++++
 ****
 
-On en déduit que stem:[|.|_1] est une norme sur stem:[H^1_0(\Omega)], équivalente à la norme stem:[\|.\|_1].
+We deduce that stem:[|.|_1] is a norm on stem:[H^1_0(\Omega)], equivalent to the norm stem:[\|.\|_1].
 
-Le résultat précédent s’étend au cas où l’on a une condition de Dirichlet nulle seulement sur une partie de stem:[\partial\Omega], si stem:[\Omega] est connexe.
+The previous result extends to the case where we have a null Dirichlet condition only on a part of stem:[\partial\Omega], if stem:[\Omega] is connected.
 
-On suppose que stem:[\Omega] est un ouvert borné connexe, de frontière stem:[{\cal C}^1] par morceaux.
+We assume that stem:[\Omega] is a connected bounded open, of boundary stem:[{\cal C}^1] by pieces.
 
-Soit stem:[V=\left\{ v\in H^1(\Omega),\, v=0 \hbox{ sur   }\Gamma_0 \right\}] où stem:[\Gamma_0] est une partie de stem:[\partial\Omega] de mesure non-nulle.
+Let stem:[V=\left\{ v\in H^1(\Omega),\, v=0 \hbox{ on }\Gamma_0 \right\}] be where stem:[\Gamma_0] is a part of stem:[\partial\Omega] of non-zero measure.
 
-Alors il existe une constante stem:[C(\Omega)] telle que stem:[\forall u \in V, \; \|u\|_{0,V} \le C(\Omega)\; |u|_{1,V}], où stem:[\|.\|_{0,V}] et stem:[|.|_{1,V}] désignent les norme et semi-norme induites sur stem:[V].
+Then there exists a constant stem:[C(\Omega)] such that stem:[\forall u \in V, \; \|u\|_{0,V} \le C(\Omega)\; |u|_{1,V}], where stem:[\|.\|_{0,V}] and stem:[|.|_{1,V}] denote the norm and semi-norm induced on stem:[V].
 
-On en déduit que stem:[|.|_{1,V}] est une norme sur stem:[V], équivalente à la norme stem:[\|.\|_{1,V}].
+We deduce that stem:[|.|_{1,V}] is a norm on stem:[V], equivalent to the norm stem:[\|.\|_{1,V}].
 
 
-[thr:trace]
-.Théorème de trace
+
+.Theorem: Trace theorem
+[.thm#thm:trace]
 ****
-Soit D un ouvert avec bord de type.
-Il existe une constante stem:[c] telle que stem:[\forall g \in H^{\frac{1}{2}}(\partial \Omega)] il existe stem:[u_g \in H^1(\Omega)] satisfaisant
+Let D be an open with type edge.
+There exists a constant stem:[c] such that stem:[\forall g \in H^{\frac{1}{2}}(\partial \Omega)] there exists stem:[u_g \in H^1(\Omega)] satisfying
 [stem]
 ++++
-\gamma_0(u_g) = g \mbox{ et } \|u\|_{H^1} \leq c \|g\|_{H^\frac{1}{2}}
+\gamma_0(u_g) = g \mbox{ and } \|u\|_{H^1} \leq c \|g\|_{H^\frac{1}{2}}
 ++++
-stem:[u_g] est appelée un *relèvement* de stem:[g] dans stem:[H^1(\Omega)].
+stem:[u_g] is called an *overlap* of stem:[g] in stem:[H^1(\Omega)].
 ****
 
-[[exercices]]
-== Exercices
+[[exercises]]
+== Exercises
 
 
-1.  Montrer que les fonctions définies par ([eq:fonction-test1]) et
-([eq:fonction-test2]) sont bien stem:[{\cal C}^\infty] à support
-compact.
-2.  Montrer que stem:[{\cal C}^0([a,b\])] est un espace complet
-pour la norme stem:[L^\infty].
-3.  Montrer que ce n’est pas le cas pour la norme stem:[L^1]
-(exhiber une suite de Cauchy non convergente dans
+1.  Show that the functions defined by ([eq:test-function1]) and
+([eq:function-test2]) are stem:[{\cal C}^\infty] with support
+support.
+2.  Show that stem:[{\cal C}^0([a,b\])] is a complete space
+for the norm stem:[L^\infty].
+3.  Show that this is not the case for stem:[L^1].
+(show a non-convergent Cauchy sequence in
 stem:[{\cal C}^0([a,b\])]).
-4.  Démontrer que, lorsqu’elle existe, la dérivée généralisée est
+4.  Show that, when it exists, the generalized derivative is
 unique.
-5.  Démontrer que, pour une fonction de classe stem:[{\cal C}^1],
-la dérivée généralisée est égale à la dérivée classique.
-6.  Soit une fonction de stem:[[a,b\]] vers stem:[\RR],
-formée de deux branches de classe stem:[{\cal C}^1] sur
-stem:[[a,c[] et stem:[\]c,b\]], et discontinue en
-stem:[c]. Montrer qu’elle n’admet pas de dérivée généralisée. (il
-faudrait alors avoir recours à la notion de distribution pour dériver
-cette fonction).
-7.  Montrer que stem:[|.|_1] est une norme sur
-stem:[H^1_0(\Omega)], équivalente à la norme
+5.  Show that, for a function of class stem:[{\cal C}^1],
+the generalized derivative is equal to the classical derivative.
+6.  Let be a function from stem:[[a,b\]] to stem:[\RR],
+formed by two branches of class stem:[{\cal C}^1] on
+stem:[[a,c[] and stem:[\]c,b\]], and discontinuous in
+stem:[c]. Show that it has no generalized derivative. (you
+the notion of distribution to derive this function).
+this function).
+7.  Show that stem:[|.|_1] is a norm on
+stem:[H^1_0(\Omega)], equivalent to the norm
 stem:[\|.\|_1]
