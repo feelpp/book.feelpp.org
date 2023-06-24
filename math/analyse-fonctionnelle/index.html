@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Outils d’analyse fonctionnelle :: Feel++ Docs</title>
+    <title>Functional analysis tools :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/math/analyse-fonctionnelle/index.html">
     <link rel="prev" href="../calculus/forms.html">
     <link rel="next" href="lemma.html">
@@ -651,55 +651,60 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Outils d’analyse fonctionnelle</h1>
-<div class="sect1">
-<h2 id="quelques-rappels"><a class="anchor" href="#quelques-rappels"></a>1. Quelques rappels</h2>
+<h1 class="page">Functional analysis tools</h1>
+<div id="preamble">
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="normes-et-produits-scalaires"><a class="anchor" href="#normes-et-produits-scalaires"></a>1.1. Normes et produits scalaires</h3>
 <div class="paragraph">
-<p>Soit \(E\) un espace vectoriel.<br></p>
+<p>[[A few reminders]]
+== A few reminders</p>
 </div>
-<div class="sidebarblock">
-<div class="content">
-<div class="title">Définition: Norme</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="norms-and-scalar-products"><a class="anchor" href="#norms-and-scalar-products"></a>1. Norms and scalar products</h3>
 <div class="paragraph">
-<p>\(\|.\|\) : \(E \rightarrow \RR\) est une <strong>norme</strong> sur \(E\) ssi elle vérifie :</p>
+<p>Let \(E\) be a vector space.<br></p>
+</div>
+<div id="def:norm" class="sidebarblock def">
+<div class="content">
+<div class="title">Definition: Norm</div>
+<div class="paragraph">
+<p>\(\|.\|\) : \(E \rightarrow \RR\) is a <strong>norm</strong> on \(E\) if it verifies :</p>
 </div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">(N1)</dt>
 <dd>
-<p>\( \left( \| x \| = 0 \right)  \Longrightarrow (x=0) \)</p>
+<p>\( \left( \| x \| = 0 \right) \Longrightarrow (x=0) \)</p>
 </dd>
 <dt class="hdlist1">(N2)</dt>
 <dd>
-<p>\(\forall\, \lambda\in\RR,\; \forall x\in E, \quad \| \lambda x \|  = |\lambda| \; \| x \| \)</p>
+<p>\(\forall\, \lambda\in\RR,\; \forall x\in E, \quad \| \lambda x \| = |\lambda| \; \| x \| \)</p>
 </dd>
 <dt class="hdlist1">(N3)</dt>
 <dd>
-<p>\(\forall\,  x,y \in E, \quad \| x+ y \| \le \|x \| + \|y\|\)   (inégalité triangulaire)</p>
+<p>\(\forall\, x,y \in E, \quad \| x+ y \| \le \|x \| + \|y\|\) (triangular inequality)</p>
 </dd>
 </dl>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>Pour \(E=\RR^n\) et \(x=(x_1,\ldots,x_n) \in\RR^n\), on définit les normes</p>
+<p>For \(E=\RR^n\) and \(x=(x_1,\ldots,x_n) \in\RR^n\), we define the norms</p>
 </div>
 <div class="stemblock">
 <div class="content">
 \[\| x \|_1 = \sum_{i=1}^n |x_i| \qquad \| x \|_2 = \left( \sum_{i=1}^n x_i^2 \right)^{1/2} \qquad \| x \|_\infty = \sup_{i} |x_i|\]
 </div>
 </div>
-<div class="sidebarblock">
+<div id="def:scalar-product" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: Produit scalaire</div>
+<div class="title">Definition: Scalar product</div>
 <div class="paragraph">
-<p>On appelle <em>produit scalaire</em> sur \(E\) toute forme bilinéaire symétrique définie positive.</p>
+<p>Any positive definite symmetric bilinear form is called <em>scalar product</em> on \(E\).</p>
 </div>
 <div class="paragraph">
-<p>\(\quad&lt;.,.&gt;\) : \(E\times E \rightarrow \RR\) est donc un produit scalaire sur \(E\) ssi il vérifie :</p>
+<p>\(\quad&lt;.,.&gt;\) : \(E\times E \rightarrow \RR\) is therefore a scalar product on \(E\) if it verifies :</p>
 </div>
 <div class="dlist">
 <dl>
@@ -728,7 +733,7 @@ MathJax.Hub.Config({
 </div>
 <div class="stemblock">
 <div class="content">
-\[\forall\; x,y \in E, \, \forall\, \lambda\in\RR,\quad      &lt;\lambda x,y&gt; = \lambda &lt;x,y&gt;\]
+\[\forall\; x,y \in E, \, \forall\, \lambda\in\RR,\quad &lt;\lambda x,y&gt; = \lambda &lt;x,y&gt;\]
 </div>
 </div>
 <div class="dlist">
@@ -738,13 +743,13 @@ MathJax.Hub.Config({
 </div>
 <div class="stemblock">
 <div class="content">
-\[\forall\;  x \in E, x\ne 0, \quad  &lt;x,x&gt;\; &gt; 0\]
+\[\forall\; x \in E, x\ne 0, \quad &lt;x,x&gt;\; \gt 0\]
 </div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>A partir d’un produit scalaire, on peut définir une <strong>norme induite</strong> :</p>
+<p>From a scalar product, an <strong>induced norm</strong> can be defined:</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -752,7 +757,7 @@ MathJax.Hub.Config({
 </div>
 </div>
 <div class="paragraph">
-<p>On a alors, d’après (N3), l’<strong>inégalité de Cauchy-Schwarz</strong> :</p>
+<p>Then, according to (N3), we have the Cauchy-Schwarz <strong>inequality</strong>:</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -767,7 +772,7 @@ MathJax.Hub.Config({
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Pour \(E=\RR^n\), on définit le produit scalaire</p>
+<p>For \(E=\RR^n\), we define the scalar product</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -775,40 +780,40 @@ MathJax.Hub.Config({
 </div>
 </div>
 <div class="paragraph">
-<p>Sa norme induite est \(\| . \|_2\) définie précédemment.</p>
+<p>Its induced norm is \(\| . \|_2\) defined above.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
-<div class="sidebarblock">
+<div id="def:normed-space" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: Espace normé</div>
+<div class="title">Definition: Normed space</div>
 <div class="paragraph">
-<p>Un espace vectoriel muni d’une norme est appelé <strong>espace normé</strong>.</p>
+<p>A vector space with a norm is called <strong>normed space</strong>.</p>
 </div>
 </div>
 </div>
-<div class="sidebarblock">
+<div id="def:prehilbert-space" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: Espace préhilbertien</div>
+<div class="title">Definition: Prehilbert space</div>
 <div class="paragraph">
-<p>Un espace vectoriel muni d’un produit scalaire est appelé <strong>espace
-préhilbertien</strong>. En particulier, c’est donc un espace normé pour la norme
-induite.</p>
+<p>A vector space with a scalar product is called a <strong>Prehilbertian
+prehilbert space</strong>. In particular, it is a normed space for the norm
+norm.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_suites_de_cauchy_et_espaces_complets"><a class="anchor" href="#_suites_de_cauchy_et_espaces_complets"></a>1.2. Suites de Cauchy et espaces complets</h3>
-<div id="def:1" class="sidebarblock">
+<h3 id="_cauchy_sequences_and_complete_spaces"><a class="anchor" href="#_cauchy_sequences_and_complete_spaces"></a>2. Cauchy sequences and complete spaces</h3>
+<div id="def:cauchy-sequence" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: Suite de Cauchy</div>
+<div class="title">Definition: Cauchy sequences</div>
 <div class="paragraph">
-<p>Soit \(E\) un espace vectoriel et
-\((x_n)_n\) une suite de \(E\).
-\((x_n)_n\) est une <strong>suite de Cauchy</strong> si et seulement si</p>
+<p>Let \(E\) be a vector space and
+\((x_n)_n\) a sequence of \(E\).
+\((x_n)_n\) is a <strong>Cauchy sequence</strong> if and only if</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -817,11 +822,11 @@ induite.</p>
 </div>
 </div>
 </div>
-<div id="th-conv-cauchy" class="exampleblock">
-<div class="title">Example 1. Théorème de Cauchy</div>
+<div id="th-conv-cauchy" class="exampleblock thm">
+<div class="title">Example 1. Cauchy&#8217;s theorem</div>
 <div class="content">
 <div class="paragraph">
-<p>Toute suite convergente est de Cauchy.</p>
+<p>Every convergent sequence is Cauchy.</p>
 </div>
 </div>
 </div>
@@ -832,57 +837,55 @@ induite.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-La réciproque de <a href="#th-conv-cauchy">Théorème de Cauchy</a> est fausse.
+The reciprocal of <a href="#th-conv-cauchy">Cauchy&#8217;s theorem</a> is false.
 </td>
 </tr>
 </table>
 </div>
-<div id="def:espace-complet" class="sidebarblock">
+<div id="def:complete-space" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: Espace complet</div>
+<div class="title">Definition: Complete space</div>
 <div class="paragraph">
-<p>Un espace vectoriel est <strong>complet</strong> ssi toute suite de Cauchy y
-est convergente.</p>
+<p>A vector space is <strong>complete</strong> if every Cauchy sequence y
+is convergent.</p>
 </div>
 </div>
 </div>
-<div id="def:espace-banch" class="sidebarblock">
+<div id="def:banach-space" class="sidebarblock def">
 <div class="content">
-<div class="title">Définiton: Espace de Banach</div>
+<div class="title">Definition: Banach space</div>
 <div class="paragraph">
-<p>Un espace normé complet est un <strong>espace de Banach</strong>.</p>
+<p>A complete normed space is a <strong>Banach space</strong>.</p>
 </div>
 </div>
 </div>
-<div id="def:4" class="sidebarblock">
+<div id="def:hilbert-space" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: Espace de Hilbert</div>
+<div class="title">Definition: Hilbert space</div>
 <div class="paragraph">
-<p>Un espace préhilbertien complet est un <strong>espace de Hilbert</strong>.</p>
+<p>A complete pre-Hilbert space is a <strong>Hilbert space</strong>.</p>
 </div>
 </div>
 </div>
-<div id="def:5" class="sidebarblock">
+<div id="def:euclidean-space" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: Espace euclidien</div>
+<div class="title">Definition: Euclidean space</div>
 <div class="paragraph">
-<p>Un espace de Hilbert de dimension finie est appelé <strong>espace
-euclidien</strong>.</p>
+<p>A finite-dimensional Hilbert space is called a <strong>Euclidean
+Euclidean</strong> space.</p>
 </div>
 </div>
 </div>
+<div class="paragraph">
+<p>[[Functional spaces]]
+== Functional spaces</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="espaces-fonctionnels"><a class="anchor" href="#espaces-fonctionnels"></a>2. Espaces fonctionnels</h2>
-<div class="sectionbody">
-<div id="def:6" class="sidebarblock">
+<div id="def:functional-space" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: Espace fonctonel</div>
+<div class="title">Definition: Functional space</div>
 <div class="paragraph">
-<p>Un <strong>espace fonctionnel</strong> est un espace vectoriel dont les
-éléments sont des fonctions.</p>
+<p>A <strong>functional space</strong> is a vector space whose elements are
+elements are functions.</p>
 </div>
 </div>
 </div>
@@ -890,46 +893,46 @@ euclidien</strong>.</p>
 <div class="title">Example 2. \({\cal C}^p([a;b\))]</div>
 <div class="content">
 <div class="paragraph">
-<p>\({\cal C}^p([a;b\))] désigne l’espace des fonctions définies sur l’intervalle \( [a,b]\), dont toutes les dérivées jusqu’à l’ordre \(p\) existent et sont continues sur \( [a,b]\).</p>
+<p>\({\cal C}^p([a;b\))] denotes the space of functions defined on the interval \([a,b\)], all derivatives of which up to the order \(p\) exist and are continuous on \([a,b\)].</p>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>Dans la suite, les fonctions seront définies sur un sous-ensemble de \(\RR^n\) (le plus souvent un ouvert noté \(\Omega\)), à valeurs dans \(\RR\) ou \(\RR^p\).</p>
+<p>In the following, functions will be defined on a subset of \(\RR^n\) (most often an open denoted \(\Omega\)), with values in \(\RR\) or \(\RR^p\).</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 3. La température</div>
+<div class="title">Example 3. Temperature</div>
 <div class="content">
 <div class="paragraph">
-<p>La température \(T(x,y,z,t)\) en tout point d’un objet \(\bar{\Omega}\subset \RR^3\) est une fonction de \( \bar{\Omega} \times \RR \longrightarrow \RR\).</p>
+<p>The temperature \(T(x,y,z,t)\) at any point of an object \(\bar{\Omega}\subset \RR^3\) is a function of \( \bar{\Omega} \times \RR \longrightarrow \RR\).</p>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>Les normes usuelles les plus simples sur les espaces fonctionnels sont
-les <strong>normes</strong> \(\bf L^p\) définies par :</p>
+<p>The simplest usual norms for functional spaces are
+the <strong>norms</strong> \(\bf L^p\) defined by :</p>
 </div>
 <div class="stemblock">
 <div class="content">
 \[\| u \|_{L^p} = \left ( \int_{\Omega } |u|^p \right) ^{1/p} \quad ,\; p\in [1,+ \infty[ ,
-\qquad \hbox{et}\qquad \| u \|_{L^\infty} = {\hbox{Sup}}_{\Omega } |u|\]
+\qquad \hbox{and}\qquad \| u \|_{L^\infty} = {\hbox{Sup}}_{\Omega } |u|\]
 </div>
 </div>
 <div class="paragraph">
-<p>Comme on va le voir, ces formes \(L^p\) ne sont pas nécessairement des normes. Et
-lorsqu’elles le sont, les espaces fonctionnels munis de ces normes ne
-sont pas nécessairement des espaces de Banach. Par exemple, les formes
-\(L^\infty\) et \(L^1\) sont bien des normes sur
-l’espace \({\cal C}^0([a;b\))], et cet espace est complet si
-on le munit de la norme \(L^\infty\), mais ne l’est pas si on
-le munit de la norme \(L^1\).</p>
+<p>As we shall see, these \(L^p\) forms are not necessarily standards. And
+when they are, the functional spaces with these norms are not necessarily
+are not necessarily Banach spaces. For example, the forms
+\(L^\infty\) and \(L^1\) are norms on the space
+the space \({\cal C}^0([a;b\))], and this space is complete if we
+with the norm \(L^\infty\), but not with the norm \(L^\infty\).
+the \(L^1\) norm.</p>
 </div>
 <div class="paragraph">
-<p>Pour cette raison, on va définir les espaces \({\cal L}^p(\Omega)(p\in [1,+ \infty[\)) par</p>
+<p>For this reason, we define the spaces \({\cal L}^p(\Omega)(p\in [1,+ \infty[\)) by</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[[{\cal L}^p(\Omega) = \left\{ u : \Omega \rightarrow \RR, \hbox{ mesurable, et telle que }\int_\Omega |u|^p&lt;\infty \right\}\]
+\[{\cal L}^p(\Omega) = \left\{ u : \Omega \rightarrow \RR, \hbox{ measurable, and such that }\int_\Omega |u|^p&lt;\infty \right\}\]
 </div>
 </div>
 <div class="admonitionblock note">
@@ -939,37 +942,37 @@ le munit de la norme \(L^1\).</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-on rappelle qu’une fonction \(u\) est mesurable ssi \(\{ x / |u(x)|&lt;r \}\) est mesurable \(\forall r&gt;0\).
+A function \(u\) is measurable if \(\{ x / |u(x)|&lt;r \}\) is measurable \(\forall r&gt;0\).
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Sur ces espaces \({\cal L}^p(\Omega)\), les
-formes \(L^p\) ne sont pas des normes. En effet, \(\| u
-\|_{L^p} = 0\) implique que \(u\) est <strong>nulle presque partout</strong> dans
-\({\cal L}^p(\Omega)\), et non pas \(u=0\). C’est pourquoi on va
-définir les <strong>espaces</strong> \(\bf L^p(\Omega)\) :</p>
+<p>On these spaces \({\cal L}^p(\Omega)\), the
+forms \(L^p\) are not norms. Indeed, \(\| u
+\|_{L^p} = 0\) implies that \(u\) is <strong>zero almost everywhere</strong> in
+\({\cal L}^p(\Omega)\), not \(u=0\). This is why we&#8217;ll
+define the <strong>spaces</strong> \(\bf L^p(\Omega)\) :</p>
 </div>
-<div id="def:presque-partout" class="sidebarblock">
+<div id="def:almost-everywhere" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: Égalité presque partout</div>
+<div class="title">Definition: Equality almost everywhere</div>
 <div class="paragraph">
-<p>\(L^p(\Omega)\) est la classe d’équivalence des fonctions de
-\({\cal  L}^p(\Omega)\) pour la relation d’équivalence <strong>égalité presque
-partout</strong>. Autrement dit, on confondra deux fonctions dès lors qu’elles
-sont égales presque partout, c’est à dire qu’elles ne diffèrent que sur
-un ensemble de mesure nulle.</p>
+<p>\(L^p(\Omega)\) is the equivalence class of functions of
+\({\cal L}^p(\Omega)\) for the equivalence relation <strong>equality almost everywhere
+everywhere</strong>. In other words, we&#8217;ll confuse two functions whenever they are
+are equal almost everywhere, i.e. they differ only on a set of zero measure.
+a set of zero measure.</p>
 </div>
 </div>
 </div>
-<div id="thr:1" class="sidebarblock">
+<div id="th-lp-complete" class="sidebarblock thm">
 <div class="content">
-<div class="title">Théorème: Les espaces \(L^p(\Omega)\) sont complets</div>
+<div class="title">Theorem: \(L^p(\Omega)\)</div>
 <div class="paragraph">
-<p>La forme \(L^p\) est une norme sur \(L^p(\Omega)\),
-et \(L^p(\Omega)\) muni de la norme \(L^p\) est un
-espace de Banach (c.a.d. est complet).</p>
+<p>The form \(L^p\) is a norm on \(L^p(\Omega)\),
+and \(L^p(\Omega)\) equipped with the norm \(L^p\) is a
+Banach space (i.e. is complete).</p>
 </div>
 </div>
 </div>
@@ -980,107 +983,106 @@ espace de Banach (c.a.d. est complet).</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Un cas particulier très important est \(p=2\). On obtient
-alors l’<strong>espace fonctionnel \(L^2(\Omega)\)</strong>, c’est à dire
-l’espace des fonctions de carré sommable sur \(\Omega\) (à la
-relation d’équivalence <strong>égalité presque partout</strong> près). A la norme
+A very important special case is \(p=2\). In this case
+the <strong>functional space \(L^2(\Omega)\)</strong>, i.e. the space of
+the space of summable square functions on \(\Omega\) (at the
+equivalence relation <strong>equality almost everywhere</strong>). To the norm
 \(L^2\) :
-\(\| u \|_{L^2} = \left( \int_\Omega u^2 \right)^{1/2} \), on
-peut associer la forme bilinéaire
-\((u,v)_{L^2} = \int_\Omega u\, v\). Il s’agit d’un produit
-scalaire, dont dérive la norme \(L^2\).
+\(\| u \|_{L^2} = \left( \int_\Omega u^2 \right)^{1/2} \), we can associate the bilinear form
+the bilinear form
+\((u,v)_{L^2} = \int_\Omega u\, v\). This is a scalar product
+from which the norm \(L^2\) is derived.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>D’où le théorème suivant</p>
+<p>Hence the following theorem</p>
 </div>
-<div id="thr:L2-hilbert" class="sidebarblock">
+<div id="th-l2-hilbert" class="sidebarblock thm">
 <div class="content">
-<div class="title">Théorème</div>
+<div class="title">Theorem: \(L^2(\Omega)\)</div>
 <div class="paragraph">
-<p>\(L^2(\Omega)\) est un espace de Hilbert.</p>
-</div>
+<p>\(L^2(\Omega)\) is a Hilbert space.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:notion-de-derivee"><a class="anchor" href="#sec:notion-de-derivee"></a>3. Notion de dérivée généralisée</h2>
+<h2 id="sec:notion-de-derivee"><a class="anchor" href="#sec:notion-de-derivee"></a>3. Notion of generalized derivative</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Nous venons de définir des espaces fonctionnels complets, ce qui sera un bon cadre pour démontrer l’existence et l’unicité de solutions d’équations aux dérivées partielles, comme on le verra plus loin notamment avec le théorème de Lax-Milgram.</p>
+<p>We&#8217;ve just defined complete functional spaces, which provide a good framework for demonstrating the existence and uniqueness of solutions to partial differential equations, as we&#8217;ll see later with the Lax-Milgram theorem.</p>
 </div>
 <div class="paragraph">
-<p>Toutefois, on a vu que les éléments de ces espaces \(L^p\) ne sont pas nécessairement des fonctions très régulières.</p>
+<p>However, we have seen that the elements of these \(L^p\) spaces are not necessarily very regular functions.</p>
 </div>
 <div class="paragraph">
-<p>Dès lors, les dérivées partielles de telles fonctions ne sont pas forcément définies partout.</p>
+<p>Consequently, the partial derivatives of such functions are not necessarily defined everywhere.</p>
 </div>
 <div class="paragraph">
-<p>Pour s’affranchir de ce problème, on va étendre la notion de dérivation.</p>
+<p>To overcome this problem, we&#8217;re going to extend the notion of derivation.</p>
 </div>
 <div class="paragraph">
-<p>Le véritable outil à introduire pour cela est la notion de <strong>distribution</strong>, due à L. Schwartz (1950).</p>
+<p>The real tool to be introduced for this is the notion of <strong>distribution</strong>, due to L. Schwartz (1950).</p>
 </div>
 <div class="paragraph">
-<p>Par manque de temps dans ce cours, on se contentera ici d’en donner une idée très simplifiée, avec la notion de <strong>dérivée généralisée</strong>.</p>
+<p>For lack of time in this course, we&#8217;ll confine ourselves here to giving a very simplified idea, with the notion of <strong>generalized derivative</strong>.</p>
 </div>
 <div class="paragraph">
-<p>Cette dernière a des propriétés beaucoup plus limitées que les distributions, mais permet de “sentir" les aspects nécessaires pour
-mener à la formulation variationnelle.</p>
+<p>The latter has much more limited properties than distributions, but allows us to get a "feel" for the aspects necessary to
+the variational formulation.</p>
 </div>
 <div class="paragraph">
-<p>Dans la suite, \(\Omega\) sera un ouvert (pas nécessairement borné) de \(\RR^n\).</p>
+<p>In the following, \(\Omega\) will be an open (not necessarily bounded) of \(\RR^n\).</p>
 </div>
 <div class="sect2">
-<h3 id="sec:fonctions-tests"><a class="anchor" href="#sec:fonctions-tests"></a>3.1. Fonctions tests</h3>
+<h3 id="sec:test-functions"><a class="anchor" href="#sec:test-functions"></a>3.1. Test functions</h3>
 <div class="paragraph">
-<p>Soit \(\varphi : \Omega \rightarrow \RR\).</p>
+<p>Let \(\varphi : \Omega \rightarrow \RR\).</p>
 </div>
-<div id="def:10" class="sidebarblock">
+<div id="def:support" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition</div>
+<div class="title">Definition: support of \(\varphi\)</div>
 <div class="paragraph">
-<p>On appelle <strong>support de \(\bf   \varphi\)</strong> l’adhérence de \(\{ x \in \Omega / \varphi(x) \ne 0 \}\).</p>
+<p>We call <strong>support of \(\bf \varphi\)</strong> the adherence of \(\{ x \in \Omega / \varphi(x) \ne 0 \}\).</p>
 </div>
 </div>
 </div>
 <div class="exampleblock">
 <div class="content">
 <div class="paragraph">
-<p>Pour \(\Omega = ]-1,1]\), et \(\varphi\) la fonction constante égale à 1, \(\hbox{Supp}\, \varphi = \[-1,1]\).</p>
+<p>For \(\Omega = ]-1,1]\), and \(\varphi\) the constant function equal to 1, \(\hbox{Supp}\, \varphi = \[-1,1]\).</p>
 </div>
 </div>
 </div>
-<div id="def:11" class="sidebarblock">
+<div id="def:test-functions" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: Espace des fonctions tests</div>
+<div class="title">Definition: Space for test functions</div>
 <div class="paragraph">
-<p>On note \({\cal D}(\Omega)\) l’espace des fonctions de \(\Omega\) vers \(\RR\), de classe \({\cal C}^\infty\), et à support compact inclus dans \(\Omega\).</p>
+<p>Let \({\cal D}(\Omega)\) be the space of functions from \(\Omega\) to \(\RR\), of class \({\cal C}^\infty\), and with compact support included in \(\Omega\).</p>
 </div>
 <div class="paragraph">
-<p>\({\cal D}(\Omega)\) est parfois appelé <strong>espace des fonctions-tests</strong>.</p>
+<p>\({\cal D}(\Omega)\) is sometimes called <strong>test function space</strong>.</p>
 </div>
 </div>
 </div>
 <div class="exampleblock">
 <div class="content">
 <div class="paragraph">
-<p>L’exemple le plus classique dans le cas 1-D est la fonction</p>
+<p>The most classic example in the 1-D case is the function</p>
 </div>
 <div class="paragraph">
 <p>\(
 \varphi(x) =
   \left\{
     \begin{array}{ll}
-    { e^{- \frac{1}{1-x^2}} } &amp; \hbox{si } |x|&lt;1\\
-      0 &amp;  \hbox{si } |x|\ge 1\\
+    { e^{- \frac{1}{1-x^2}} } &amp; \hbox{si } |x|&lt;1
+      0 &amp; \hbox{si } |x|1\\ge
     \end{array}
   \right.
 \)
-\(\varphi\) est une fonction de \({\cal D}(\)a,b\()\) pour tous \(a &lt; -1 &lt; 1 &lt; b\).</p>
+\(\varphi\) is a function of \({\cal D}(\)a,b\()\) for all \(a &lt; -1 &lt; 1 &lt; b\).</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1089,7 +1091,7 @@ mener à la formulation variationnelle.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Cet exemple s’étend aisément au cas multi-dimensionnel (\(n&gt;1\)).
+This example can easily be extended to the multi-dimensional case (\(n&gt;1\)).
 </td>
 </tr>
 </table>
@@ -1097,27 +1099,27 @@ Cet exemple s’étend aisément au cas multi-dimensionnel (\(n&gt;1\)).
 </div>
 </div>
 <div class="paragraph">
-<p>Soit \(a\in\Omega\) et \(r&gt;0\) tel que la boule fermée de centre \(a\) et de rayon \(r\) soit incluse dans \(\Omega\).</p>
+<p>Let \(a\in\Omega\) and \(r&gt;0\) be such that the closed ball of center \(a\) and radius \(r\) is included in \(\Omega\).</p>
 </div>
 <div class="paragraph">
-<p>On pose alors :</p>
+<p>We then pose :</p>
 </div>
-<div id="eq:fonction-test2" class="stemblock">
+<div id="eq:function-test2" class="stemblock">
 <div class="content">
 \[ \varphi(x) = \left\{
  \begin{array}{ll}
- { e^{- \frac{1}{r^2-|x-a|^2}} } &amp; \hbox{si } |x-a| &lt; r \\
- 0 &amp;  \hbox{sinon }\\
+ { e^{- \frac{1}{r^2-|x-a|^2}} } &amp; \hbox{si } |x-a| &lt; r\\
+ 0 &amp; \hbox{ otherwise }
  \end{array}
  \right.\]
 </div>
 </div>
 <div class="paragraph">
-<p>\(\varphi\) ainsi définie est un élément de \({\cal D}(\Omega)\).</p>
+<p>\(\varphi\) thus defined is an element of \({\cal D}(\Omega)\).</p>
 </div>
-<div id="thr:4" class="sidebarblock">
+<div id="thm:adherence" class="sidebarblock thm">
 <div class="content">
-<div class="title">Théorème: Adhérence de \(\overline{{\cal D}(\Omega)}\)</div>
+<div class="title">Theorem: Adherence of \(\overline{{\cal D}(\Omega)}\)]</div>
 <div class="paragraph">
 <p>\(\overline{{\cal D}(\Omega) } = L^2(\Omega)\)</p>
 </div>
@@ -1125,44 +1127,44 @@ Cet exemple s’étend aisément au cas multi-dimensionnel (\(n&gt;1\)).
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:derivee-generalisee"><a class="anchor" href="#sec:derivee-generalisee"></a>3.2. Dérivée généralisée</h3>
+<h3 id="sec:derivee-generalisee"><a class="anchor" href="#sec:derivee-generalisee"></a>3.2. Generalized derivative</h3>
 <div class="paragraph">
-<p>Soit \(u\in {\cal C}^1(\Omega)\) et \(\varphi \in {\cal D}(\Omega)\).</p>
+<p>Let \(u\in {\cal C}^1(\Omega)\) and \(\varphi \in {\cal D}(\Omega)\).</p>
 </div>
 <div class="paragraph">
-<p>Par intégration par parties (annexe [sec:green]), on a :</p>
+<p>By integration by parts (appendix [sec:green]), we have :</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[\int_\Omega \partial_i u\;  \varphi = - \int_\Omega u \; \partial_i\varphi + \int_{\partial \Omega} u \; \varphi \; {\bf e}_i.{\bf n}\]
+\[\int_\Omega \partial_i u\; \varphi = - \int_\Omega u \; \partial_i\varphi + \int_{\partial \Omega} u \; \varphi \; {\bf e}_i.{\bf n}\]
 </div>
 </div>
 <div class="paragraph">
-<p>Ce dernier terme (intégrale sur le bord de \(\Omega\)) est nul car \(\varphi\) est à support compact (donc nul sur
+<p>This last term (integral on the edge of \(\Omega\)) is null because \(\varphi\) is compactly supported (hence null on
 \(\partial \Omega\)).</p>
 </div>
 <div class="paragraph">
-<p>Or \(\int_\Omega u \; \partial_i\varphi\) a un sens par exemple dès que \(u\in L^2(\Omega)\).</p>
+<p>But \(\int_\Omega u \; \partial_i\varphi\) makes sense as soon as \(u\in L^2(\Omega)\).</p>
 </div>
 <div class="paragraph">
-<p>Donc le terme \(\int_\Omega \partial_i u\; \varphi\) a aussi du sens, sans que \(u\) ne soit nécessairement de classe \({\cal C}^1\).</p>
+<p>So \(\int_\Omega \partial_i u\; \varphi\) also makes sense, without \(u\) necessarily being of class \({\cal C}^1\).</p>
 </div>
 <div class="paragraph">
-<p>Ceci permet de définir \(\partial_i u\) même dans ce cas.</p>
+<p>This makes it possible to define \(\partial_i u\) even in this case.</p>
 </div>
-<div id="def:12" class="sidebarblock">
+<div id="def:generalized-derivative" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: Dérivée généralisée</div>
+<div class="title">Definition: Generalized derivative</div>
 <div class="paragraph">
-<p>cas 1-D \(\quad\) Soit \(I\) un intervalle de \(\RR\), pas
-forcément borné.</p>
+<p>1-D case \(\quad\) Let \(I\) be an interval of \(\RR\), not necessarily bounded.
+not necessarily bounded.</p>
 </div>
 <div class="paragraph">
-<p>On dit que \(u\in L^2(I)\) admet une <strong>dérivée généralisée</strong> dans \(L^2(I)\) ssi \(\exists u_1\in L^2(I)\) telle que</p>
+<p>We say that \(u\in L^2(I)\) admits a <strong>generalized derivative</strong> in \(L^2(I)\) if \(\exists u_1\in L^2(I)\) such that</p>
 </div>
 <div class="paragraph">
 <p>\(
-\forall \varphi\in {\cal   D}(I), \quad \int_I u_1\;\varphi = - \int_I u \varphi'
+\forall \varphi\in {\cal D}(I), \quad \int_I u_1\;\varphi = - \int_I u \varphi'
 \)</p>
 </div>
 </div>
@@ -1170,13 +1172,13 @@ forcément borné.</p>
 <div class="exampleblock">
 <div class="content">
 <div class="paragraph">
-<p>Soit \(I=]a,b[\) un intervalle borné, et \(c\) un
-point de \(I\). On considère une fonction \(u\)
-formée de deux branches de classe \({\cal C}^1\), l’une sur
-\(]a,c[\), l’autre sur \(]c,b[\), et se raccordant
-de façon continue mais non dérivable en \(c\). Alors
-\(u\) admet une dérivée généralisée définie par
-\(u_1(x)=u'(x)\quad \forall x\ne c\). En effet :</p>
+<p>Let \(I=]a,b[\) be a bounded interval, and \(c\) be a point of \(I\).
+point of \(I\). Consider a function \(u\)
+formed by two branches of class \({\cal C}^1\), one on
+one on \(]a,c[\), the other on \(]c,b[\), and connecting continuously
+to \(c\). Then
+\(u\) has a generalized derivative defined by
+\(u_1(x)=u'(x)\quad \forall x\ne c\). Indeed :</p>
 </div>
 <div class="paragraph">
 <p>\(
@@ -1184,19 +1186,19 @@ de façon continue mais non dérivable en \(c\). Alors
 \)</p>
 </div>
 <div class="paragraph">
-<p>par intégration par parties. La valeur \(u_1(c)\) n’a pas d’importance: on a de
-toute façon au final la même fonction de \(L^2(I)\),
-puisqu’elle est définie comme classe d’équivalence de la relation
-d’équivalence <strong>égalité presque partout</strong>.</p>
+<p>by integration by parts. The stem value:[u_1(c)] doesn&#8217;t matter: we end up with the same
+the same function as \(L^2(I)\),
+since it is defined as the equivalence class of the equivalence relation
+equivalence relation <strong>equality almost everywhere</strong>.</p>
 </div>
 </div>
 </div>
-<div id="def:13" class="sidebarblock">
+<div id="def:generalized-derivative-order-k" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: Dérivée généralisée d&#8217;ordre \(k\)</div>
+<div class="title">Definition: Generalized derivative of order \(k\)</div>
 <div class="paragraph">
-<p>En itérant, on dit que \(u\) admet une <strong>dérivée généralisée
-d’ordre \(\bf k\)</strong> dans \(L^2(I)\), notée
+<p>By iterating, we say that \(u\) admits a <strong>generalized derivative
+of order \(\bf k\)</strong> in \(L^2(I)\), denoted by
 \(u_k\), ssi \({\forall \varphi\in
   {\cal D}(I), \quad \int_I u_k\;\varphi = (- 1)^k \; \int_I u \varphi^{(k)}
   }\)</p>
@@ -1204,61 +1206,60 @@ d’ordre \(\bf k\)</strong> dans \(L^2(I)\), notée
 </div>
 </div>
 <div class="paragraph">
-<p>Ces définitions s’étendent naturellement pour la définition de dérivées partielles généralisées, dans le cas \(n&gt;1\).</p>
+<p>These definitions extend naturally to the definition of generalized partial derivatives, in the stem case:[n&gt;1].</p>
 </div>
-<div id="thr:5" class="sidebarblock">
+<div id="thm:uniqueness" class="sidebarblock thm">
 <div class="content">
-<div class="title">Théorème: Unicité de la dérivée généralisée</div>
+<div class="title">Theorem: Uniqueness of the generalized derivative</div>
 <div class="paragraph">
-<p>Quand elle existe, la dérivée généralisée est unique.</p>
+<p>When it exists, the generalized derivative is unique.</p>
 </div>
 </div>
 </div>
-<div id="thr:6" class="openblock">
-<div class="title">Théorème: dérivée généralisée et dérivée classique</div>
+<div id="thm:generalized-classical" class="openblock thm">
+<div class="title">Theorem: generalized derivative and classical derivative</div>
 <div class="content">
 <div class="paragraph">
-<p>Quand \(u\) est de classe \({\cal C}^1(\bar{\Omega})\), la dérivée généralisée est égale à la dérivée classique.</p>
+<p>When \(u\) is of class \({\cal C}^1(\bar{\Omega})\), the generalized derivative is equal to the classical derivative.</p>
 </div>
 </div>
 </div>
+<div class="paragraph">
+<p>[[Sobolev spaces]]
+== Sobolev spaces</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="espaces-de-sobolev"><a class="anchor" href="#espaces-de-sobolev"></a>4. Espaces de Sobolev</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="sec:sobolev"><a class="anchor" href="#sec:sobolev"></a>4.1. Les espaces \(H^m\)</h3>
-<div id="def:14" class="sidebarblock">
+<h3 id="_hm_spaces"><a class="anchor" href="#_hm_spaces"></a>3.3. \(H^m\) spaces</h3>
+<div id="def:h1" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: \(H^1(\Omega)\)</div>
+<div class="title">Definition: \(H^1(\Omega)\)</div>
 <div class="stemblock">
 <div class="content">
 \[{ H^1(\Omega) = \left\{ u \in L^2(\Omega)\; / \; \partial_i u \; \in
-    L^2(\Omega), \quad 1 \le i \le n \right\} }\]
+    L^2(\Omega), \; 1 \leq i \leq n \right\} }\]
 </div>
 </div>
 <div class="paragraph">
-<p>où \(\partial_i u\) est définie au sens de la dérivée généralisée.</p>
+<p>where \(\partial_i u\) is defined in the sense of the generalized derivative.</p>
 </div>
 <div class="paragraph">
-<p>\(H^1(\Omega)\) est appelé <strong>espace de Sobolev d’ordre 1</strong>.</p>
+<p>\(H^1(\Omega)\) is called <strong>Sobolev space of order 1</strong>.</p>
 </div>
 </div>
 </div>
-<div id="def:15" class="sidebarblock">
+<div id="def:hm" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: \(H^m(\Omega)\)</div>
+<div class="title">Definition: \(H^m(\Omega)\)</div>
 <div class="paragraph">
-<p>Pour tout entier \(m\ge 1\),
+<p>For any integer \(m\ge 1\),
 \(
 H^m(\Omega) = \left\{ u \in L^2(\Omega) \; / \; \partial^\alpha u \; \in
-  L^2(\Omega) \quad \forall \alpha =(\alpha_1,\ldots,\alpha_n) \in \NN^n\hbox{
-  tel que}\; |\alpha|= \alpha_1+\cdots+\alpha_n \le m \right\}\)</p>
+  L^2(\Omega) \quad \forall \alpha =(\alpha_1,\ldots,\alpha_n) \in \N^n\hbox{
+  such that}\; |\alpha|= \alpha_1+\cdots+\alpha_n \le m \right\}\)</p>
 </div>
 <div class="paragraph">
-<p>\(H^m(\Omega)\) est appelé *espace de Sobolev d’ordre \(\bf m\).</p>
+<p>\(H^m(\Omega)\) is called *Sobolev space of order \(\bf m\).</p>
 </div>
 </div>
 </div>
@@ -1269,7 +1270,7 @@ H^m(\Omega) = \left\{ u \in L^2(\Omega) \; / \; \partial^\alpha u \; \in
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Par extension, on voit aussi que \(H^0(\Omega)=L^2(\Omega)\).
+By extension, we also see that \(H^0(\Omega)=L^2(\Omega)\).
 </td>
 </tr>
 </table>
@@ -1282,57 +1283,57 @@ Par extension, on voit aussi que \(H^0(\Omega)=L^2(\Omega)\).
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Dans le cas de la dimension 1, on écrit plus simplement pour \(I\) ouvert de \(\RR\) :</p>
+<p>In the case of dimension 1, it&#8217;s simpler to write \(I\) open from \(\RR\) :</p>
 </div>
 <div class="paragraph">
-<p>\( H^m(I) =  \left\{ u \in L^2(I)  \; / \;   u', \ldots, u^{(m)} \in L^2(I) \right\} \)</p>
+<p>\( H^m(I) = \left\{ u \in L^2(I) \; / \; u', \ldots, u^{(m)} \in L^2(I) \right\} \)</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
-<div id="thr:7" class="sidebarblock">
+<div id="thm:h1-hilbert" class="sidebarblock thm">
 <div class="content">
-<div class="title">Théorème: \(H^1(\Omega)\) est un espace de Hilbert</div>
+<div class="title">Theorem: \(H^1(\Omega)\) is a Hilbert space</div>
 <div class="paragraph">
-<p>\(H^1(\Omega)\) est un espace de Hilbert pour le produit scalaire
+<p>\(H^1(\Omega)\) is a Hilbert space for the scalar product
 \((u,v)_1 = \int_\Omega u \, v\, + \sum_{i=1}^n \; \int_\Omega \partial_i u
 \; \partial_i v = (u,v)_0 + \sum_{i=1}^n (\partial_i u, \partial_i v )_0\)</p>
 </div>
 <div class="paragraph">
-<p>en notant \((.,.)_0\) le produit scalaire \(L^2\).
-On notera \(\|.\|_1\) la norme associée à
+<p>noting \((.,.)_0\) the scalar product \(L^2\).
+Let \(\|.\|_1\) be the norm associated with
 \((.,.)_1\).</p>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>On définit de même un produit scalaire et une norme sur
-\(H^m(\Omega)\) par</p>
+<p>Similarly, we define a scalar product and a norm on
+\(H^m(\Omega)\) by</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[(u,v)_m =   \sum_{|\alpha| \le m} ( \partial^\alpha u , \partial^\alpha v )_0 \qquad
-\hbox{ et }\qquad \| u \|_m = (u,u)_m^{1/2}]\]
+\[(u,v)_m = \sum_{|alpha| \le m} ( \partial^\alpha u , \partial^\alpha v )_0 \qquad
+\hbox{ and }\qquad \| u \|_m = (u,u)_m^{1/2}]\]
 </div>
 </div>
-<div class="sidebarblock">
+<div id="thm:hm-hilbert" class="sidebarblock thm">
 <div class="content">
-<div class="title">Théorème: \(H^m(\Omega)\) sont des espaces de Hilbert]</div>
+<div class="title">Theorem: \(H^m(\Omega)\) are Hilbert spaces]</div>
 <div class="paragraph">
-<p>\(H^m(\Omega)\) muni du produit scalaire \((.,.)_m\)
-est un espace de Hilbert.[thr:8]</p>
+<p>\(H^m(\Omega)\) with scalar product \((.,.)_m\) is a Hilbert space.
+is a Hilbert space [thr:8].</p>
 </div>
 </div>
 </div>
-<div id="thr:9" class="sidebarblock">
+<div id="thm:hm-ck" class="sidebarblock thm">
 <div class="content">
-<div class="title">Théorème: \(H^m(\Omega)\) et \({\cal C}^k(\bar{\Omega})\)</div>
+<div class="title">Theorem: \(H^m(\Omega)\) and \({\cal C}^k(\bar{\Omega})\)</div>
 <div class="paragraph">
-<p>Si \(\Omega\) est un ouvert de \(\RR^n\) de
-frontière \(\partial\Omega\) “suffisamment régulière" (par
-exemple \({\cal C}^1\)), on a l’inclusion :
-\(H^m(\Omega) \subset {\cal C}^k(\bar{\Omega})\) pour
+<p>If \(\Omega\) is an open of \(\RR^n\) with boundary \(\partial\Omega\).
+"sufficiently regular"  \(\partial\Omega\) (for example
+example \({\cal C}^1\)), we have the inclusion :
+\(H^m(\Omega) \subset {\cal C}^k(\bar{\Omega})\) for
 \({ k &lt; m-\frac{n}{2}
   }\)</p>
 </div>
@@ -1341,69 +1342,69 @@ exemple \({\cal C}^1\)), on a l’inclusion :
 <div class="exampleblock">
 <div class="content">
 <div class="paragraph">
-<p>En particulier, on voit que pour un intervalle \(I\) de \(\RR\),
-on a \(H^1(I) \subset {\cal C}^0(\bar{I})\), c’est à dire que, en
-1-D, toute fonction \(H^1\) est continue.</p>
+<p>In particular, we see that for an interval \(I\) of \(\RR\),
+we have \(H^1(I) \subset {\cal C}^0(\bar{I})\), i.e. in
+1-D, any \(H^1\) function is continuous.</p>
 </div>
 <div class="paragraph">
-<p>L’exemple de \(u(x) = x\, \sin\frac{1}{x}\) pour
-\(x\in]0,1]\) et \(u(0)=0\) montre que la réciproque
-est fausse.</p>
+<p>The example of \(u(x) = x\, \sin\frac{1}{x}\) for
+\(x\in]0,1]\) and \(u(0)=0\) shows that the converse is false.
+is false.</p>
 </div>
 <div class="paragraph">
-<p>L’exemple de \(u(x,y) = | \ln (x^2+y^2) |^k\) pour
-\(0&lt;k&lt;1/2\) montre qu’en dimension supérieure à 1 il existe
-des fonctions \(H^1\) discontinues.</p>
+<p>The example of \(u(x,y) = | \ln (x^2+y^2) |^k\) for
+\(0&lt;k&lt;1/2\) shows that in dimensions greater than 1 there are
+discontinuous \(H^1\) functions.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="trace-dune-fonction"><a class="anchor" href="#trace-dune-fonction"></a>4.2. Trace d’une fonction</h3>
+<h3 id="trace-a-function"><a class="anchor" href="#trace-a-function"></a>3.4. Trace of a function</h3>
 <div class="paragraph">
-<p>Pour pouvoir faire les intégrations par parties qui seront utiles par
-exemple pour la formulation variationnelle, il faut pouvoir définir le
-prolongement (<em>la trace</em>) d’une fonction sur le bord de l’ouvert
+<p>To be able to perform integrations by parts, which will be useful for
+for variational formulation, you need to be able to define the extension
+extension (<em>trace</em>) of a function on the edge of the open
 \(\Omega\).</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1"><strong>\(n=1\) (cas 1-D)</strong></dt>
+<dt class="hdlist1"><strong>\(n=1\) (case 1-D)</strong></dt>
 <dd>
-<p>on considère un intervalle ouvert
-\(I=]a,b[\) borné.
-On a vu que \(H^1(I) \subset {\cal C}^0(\bar{I})\). Donc, pour
-\(u\in H^1(I)\), \(u\) est continue sur
-\(\[a,b]\), et \(u(a)\) et \(u(b)\) sont
-bien définies.</p>
+<p>we consider an open interval
+\(I=]a,b[\) bounded.
+We have seen that \(H^1(I) \subset {\cal C}^0(\bar{I})\). Therefore, for
+\(u\in H^1(I)\), \(u\) is continuous on
+\(\[a,b]\), and \(u(a)\) and \(u(b)\) are
+well-defined.</p>
 </dd>
 <dt class="hdlist1">\(n&gt;1\)</dt>
 <dd>
-<p>on n’a plus \(H^1(\Omega) \subset {\cal C}^0(\bar{\Omega})\). Comment
-alors définir la trace ? La démarche est la suivante :</p>
+<p>we no longer have \(H^1(\Omega) \subset {\cal C}^0(\bar{\Omega})\). How can
+define the trace? Here&#8217;s how:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>On définit l’espace \({\cal C}^1(\bar{\Omega}) = \left\{  \varphi : \Omega \rightarrow \RR \;/\;  \exists O \hbox{ ouvert contenant } \bar{\Omega},\; \exists \psi \in {\cal C}^1(O),\; \psi_{|\Omega} = \varphi \right\}\)
-Autrement dit, \({\cal C}^1(\bar{\Omega})\) est l’espace des fonctions \({\cal C}^1\) sur \(\Omega\),
-prolongeables par continuité sur \(\partial\Omega\) et dont le
-gradient est lui-aussi prolongeable par continuité. Il n’y a donc pas de
-problème pour définir la trace de telles fonctions.</p>
+<p>We define the  space \({\cal C}^1(\bar{\Omega}) = \left\{ \varphi : \Omega \rightarrow \RR \;/\; \exists O \hbox{ open containing } \bar{\Omega},\; \exists \psi \in {\cal C}^1(O),\; \psi_{|\Omega} = \varphi \right\}\)
+In other words, \({\cal C}^1(\bar{\Omega})\) is the space of functions \({\cal C}^1\) on \(\Omega\),
+extendable by continuity on \(\partial\Omega\) and whose gradient
+gradient can also be extended by continuity. There is therefore no
+to define the trace of such functions.</p>
 </li>
 <li>
-<p>On montre que, si \(\Omega\) est un ouvert borné de
-frontière \(\partial\Omega\) “assez régulière", alors
-\({\cal C}^1(\bar{\Omega})\) est dense dans
+<p>We show that, if \(\partial\Omega\) is a bounded open
+boundary \(\partial\Omega\) "regular enough", then
+\({\cal C}^1(\bar{\Omega})\) is dense in
 \(H^1(\Omega)\).</p>
 </li>
 <li>
-<p>L’application linéaire continue, qui à toute fonction \(u\)
-de \({\cal C}^1(\bar{\Omega})\) associe sa trace sur
-\(\partial\Omega\), se prolonge alors en une application
-linéaire continue de \(H^1(\Omega)\) dans
-\(L^2(\partial\Omega)\), notée \(\gamma_0\), qu’on
-appelle <strong>application trace</strong>. On dit que \(\gamma_0(u)\) <strong>est
-la trace de \(u\) sur</strong> \(\partial\Omega\).</p>
+<p>The continuous linear application, which to any function \(u\)
+of \({\cal C}^1(\bar{\Omega})\) associates its trace on
+\(\partial\Omega\), then extends into a continuous
+continuous linear application of \(H^1(\\Omega)\) in
+\(L^2(\partial\Omega)\), denoted \(\gamma_0\), which we call <strong>trace application</strong>.
+trace application*. We say that \(\gamma_0(u)\) <strong>is
+the trace of \(u\) on</strong> \(\partial\Omega\).</p>
 </li>
 </ul>
 </div>
@@ -1417,63 +1418,63 @@ la trace de \(u\) sur</strong> \(\partial\Omega\).</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Pour une fonction \(u\) de \(H^1(\Omega)\) qui soit en même temps continue sur \(\bar{\Omega}\), on a évidemment \(\gamma_0(u) = u_{|\partial\Omega}\).
-C’est pourquoi on note souvent par abus simplement \(u_{|\partial\Omega}\) plutôt que \(\gamma_0(u)\).
+For a function \(u\) of \(H^1(\Omega)\) which is at the same time continuous on \(\bar{\Omega}\), we obviously have \(\gamma_0(u) = u_{||partial\Omega}\).
+This is why \(u_{|\partial\Omega}\) is often simply noted rather than \(\gamma_0(u)\).
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>On peut de façon analogue définir \(\gamma_1\), application
-trace qui permet de prolonger la définition usuelle de la dérivée
-normale sur \(\partial\Omega\). Pour
-\(u\in H^2(\Omega)\), on a
+<p>Analogously, we can define \(\gamma_1\), an application
+which extends the usual definition of the normal derivative
+on \(\partial\O\). For
+\(u\in H^2(\Omega)\), we have
 \(\partial_i u \in H^1(\Omega)\),
-\(\forall i=1,\ldots,n\), et on peut donc définir
-\(\gamma_0(\partial_i u)\). La frontière
-\(\partial\Omega\) étant “assez régulière" (par exemple,
-idéalement, de classe \({\cal C}^1\)), on peut définir la
-normale
-\(n=\left(   \begin{array}{l}  n_1 \\ \vdots \\ n_n \end{array} \right)\)
-en tout point de \(\partial\Omega\). On pose alors
+\(\forall i=1,\ldots,n\), and we can therefore define
+\(\gamma_0(\partial_i u)\). The boundary
+\(\partial\Omega\) being "fairly regular" (for example,
+ideally, of class \({\cal C}^1\)), we can define the
+normal
+\(n=\left( \begin{array}{l} n_1 \\ \vdots  n_n \end{array} \right)\)
+at any point of \(\partial\Omega\). We then pose
 \({\gamma_1(u) = \sum_{i=1}^n \gamma_0(\partial_i u) n_i}\).
-Cette application continue \(\gamma_1\) de
-\(H^2(\Omega)\) dans \(L^2(\partial\Omega)\) permet
-donc bien de prolonger la définition usuelle de la dérivée normale. Dans
-le cas où \(u\) est une fonction de \(H^2(\Omega)\)
-qui soit en même temps dans \({\cal C}^1(\bar{\Omega})\), la
-dérivée normale au sens usuel de \(u\) existe, et
-\(\gamma_1(u)\) lui est évidemment égal. C’est pourquoi on
-note souvent, par abus, \(\partial_n u\) plutôt que
+This continuous application \(\gamma_1\) of
+\(H^2(\Omega)\) into \(L^2(\partial\Omega)\) thus extends
+the usual definition of the normal derivative. In
+the case where \(u\) is a function of \(H^2(\Omega)\)
+which is at the same time in \({\cal C}^1(\bar{\Omega})\)], the normal
+normal derivative in the usual sense of \(u\) exists, and
+\(\gamma_1(u)\) is obviously equal to it. This is why
+\(\partial_n u\) rather than \(\gamma_1(u)\).
 \(\gamma_1(u)\).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:H10"><a class="anchor" href="#sec:H10"></a>4.3. Espace \(H^1_0(\Omega)\)</h3>
-<div id="def:16" class="sidebarblock">
+<h3 id="sec:H10"><a class="anchor" href="#sec:H10"></a>3.5. Space \(H^1_0(\Omega)\)</h3>
+<div id="def:h10" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition: \(H^1_0(\Omega)\)</div>
+<div class="title">Definition: \(H^1_0(\Omega)\)</div>
 <div class="paragraph">
-<p>Soit \(\Omega\) ouvert de \(\RR^n\).
-L’espace \(H^1_0(\Omega)\) est défini comme l’adhérence de \({\cal D}(\Omega)\) pour la norme \(\|.\|_1\) de \(H^1(\Omega)\).
-(on rappelle que \({\cal D}(\Omega)\) est l’espace des fonctions \({\cal C}^\infty\) sur \(\Omega\) à support compact, encore appelé espace des fonctions tests)</p>
+<p>Let \(\Omega\) be open from \(\RR^n\).
+The space \(H^1_0(\Omega)\) is defined as the adherence of \({\cal D}(\Omega)\) to the norm \(\|.\|_1\) of \(H^1(\Omega)\).
+(Recall that \({\cal D}(\Omega)\) is the space of \({\cal C}^\infty\) functions on \(\Omega\) with compact support, also known as the space of test functions).</p>
 </div>
 </div>
 </div>
-<div id="thr:10" class="sidebarblock">
+<div id="thm:h10-hilbert" class="sidebarblock thm">
 <div class="content">
-<div class="title">Théorème: \(H^1_0(\Omega)\) est un espace de Hilbert</div>
+<div class="title">Theorem: \(H^1_0(\Omega)\) is a Hilbert space</div>
 <div class="paragraph">
-<p>Par construction \(H^1_0(\Omega)\) est un espace complet.
-C’est un espace de Hilbert pour la norme \(\|.\|_1\)</p>
+<p>By construction \(H^1_0(\Omega)\) is a complete space.
+It is a Hilbert space for the norm \(\|.\|_1\)</p>
 </div>
 </div>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Si \(n=1\) (cas 1-D)}</dt>
+<dt class="hdlist1">If \(n=1\) (case 1-D)}</dt>
 <dd>
-<p>on considère un intervalle ouvert \(I=]a,b[\) borné. Alors</p>
+<p>consider a bounded open interval \(I=]a,b[\). Then</p>
 </dd>
 </dl>
 </div>
@@ -1484,22 +1485,22 @@ C’est un espace de Hilbert pour la norme \(\|.\|_1\)</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Si \(n&gt;1\)</dt>
+<dt class="hdlist1">If \(n&gt;1\)</dt>
 <dd>
-<p>Si \(\Omega\) est un ouvert borné de frontière“assez
-régulière" (par exemple \({\cal C}^1\) par morceaux), alors
+<p>If \(\Omega\) is a bounded open with a "fairly
+regular" boundary (for example \({\cal C}^1\) by pieces), then
 \(H^1_0(\Omega) = \ker \gamma_0\). \(H^1_0(\Omega)\)
-est donc le sous-espace des fonctions de \(H^1(\Omega)\) de
-trace nulle sur la frontière \(\partial\Omega\).</p>
+is therefore the subspace of functions of \(H^1(\Omega)\) with
+zero trace on the \(\partial\Omega\) boundary.</p>
 </dd>
 </dl>
 </div>
-<div id="def:17" class="sidebarblock">
+<div id="def:trace" class="sidebarblock def">
 <div class="content">
-<div class="title">Définition:</div>
+<div class="title">Definition</div>
 <div class="paragraph">
-<p>Pour toute fonction \(u\) de \(H^1(\Omega)\), on
-peut définir :</p>
+<p>For any \(u\) function of \(H^1(\Omega)\), we
+can define :</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -1508,51 +1509,51 @@ peut définir :</p>
 </div>
 </div>
 </div>
-<div class="sidebarblock">
+<div id="thm:poincare" class="sidebarblock thm">
 <div class="content">
-<div class="title">Théorème: Inégalité de Poincaré</div>
+<div class="title">Theorem: Poincaré&#8217;s inequality</div>
 <div class="paragraph">
-<p>Si \(\Omega\) est borné dans au moins une direction, alors il existe une constante \(C(\Omega)\) telle que</p>
+<p>If \(\Omega\) is bounded in at least one direction, then there exists a constant \(C(\Omega)\) such that</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[\forall u \in H^1_0(\Omega), \; \|u\|_0 \le   C(\Omega)\; |u|_1.\]
+\[\forall u \in H^1_0(\Omega), \; \|u\|_0 \le C(\Omega)\; |u|_1.\]
 </div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>On en déduit que \(|.|_1\) est une norme sur \(H^1_0(\Omega)\), équivalente à la norme \(\|.\|_1\).</p>
+<p>We deduce that \(|.|_1\) is a norm on \(H^1_0(\Omega)\), equivalent to the norm \(\|.\|_1\).</p>
 </div>
 <div class="paragraph">
-<p>Le résultat précédent s’étend au cas où l’on a une condition de Dirichlet nulle seulement sur une partie de \(\partial\Omega\), si \(\Omega\) est connexe.</p>
+<p>The previous result extends to the case where we have a null Dirichlet condition only on a part of \(\partial\Omega\), if \(\Omega\) is connected.</p>
 </div>
 <div class="paragraph">
-<p>On suppose que \(\Omega\) est un ouvert borné connexe, de frontière \({\cal C}^1\) par morceaux.</p>
+<p>We assume that \(\Omega\) is a connected bounded open, of boundary \({\cal C}^1\) by pieces.</p>
 </div>
 <div class="paragraph">
-<p>Soit \(V=\left\{ v\in H^1(\Omega),\, v=0 \hbox{ sur   }\Gamma_0 \right\}\) où \(\Gamma_0\) est une partie de \(\partial\Omega\) de mesure non-nulle.</p>
+<p>Let \(V=\left\{ v\in H^1(\Omega),\, v=0 \hbox{ on }\Gamma_0 \right\}\) be where \(\Gamma_0\) is a part of \(\partial\Omega\) of non-zero measure.</p>
 </div>
 <div class="paragraph">
-<p>Alors il existe une constante \(C(\Omega)\) telle que \(\forall u \in V, \; \|u\|_{0,V} \le C(\Omega)\; |u|_{1,V}\), où \(\|.\|_{0,V}\) et \(|.|_{1,V}\) désignent les norme et semi-norme induites sur \(V\).</p>
+<p>Then there exists a constant \(C(\Omega)\) such that \(\forall u \in V, \; \|u\|_{0,V} \le C(\Omega)\; |u|_{1,V}\), where \(\|.\|_{0,V}\) and \(|.|_{1,V}\) denote the norm and semi-norm induced on \(V\).</p>
 </div>
 <div class="paragraph">
-<p>On en déduit que \(|.|_{1,V}\) est une norme sur \(V\), équivalente à la norme \(\|.\|_{1,V}\).</p>
+<p>We deduce that \(|.|_{1,V}\) is a norm on \(V\), equivalent to the norm \(\|.\|_{1,V}\).</p>
 </div>
-<div class="sidebarblock">
+<div id="thm:trace" class="sidebarblock thm">
 <div class="content">
-<div class="title">Théorème de trace</div>
+<div class="title">Theorem: Trace theorem</div>
 <div class="paragraph">
-<p>Soit D un ouvert avec bord de type.
-Il existe une constante \(c\) telle que \(\forall g \in H^{\frac{1}{2}}(\partial \Omega)\) il existe \(u_g \in H^1(\Omega)\) satisfaisant</p>
+<p>Let D be an open with type edge.
+There exists a constant \(c\) such that \(\forall g \in H^{\frac{1}{2}}(\partial \Omega)\) there exists \(u_g \in H^1(\Omega)\) satisfying</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[\gamma_0(u_g) = g \mbox{ et } \|u\|_{H^1} \leq c \|g\|_{H^\frac{1}{2}}\]
+\[\gamma_0(u_g) = g \mbox{ and } \|u\|_{H^1} \leq c \|g\|_{H^\frac{1}{2}}\]
 </div>
 </div>
 <div class="paragraph">
-<p>\(u_g\) est appelée un <strong>relèvement</strong> de \(g\) dans \(H^1(\Omega)\).</p>
+<p>\(u_g\) is called an <strong>overlap</strong> of \(g\) in \(H^1(\Omega)\).</p>
 </div>
 </div>
 </div>
@@ -1560,43 +1561,43 @@ Il existe une constante \(c\) telle que \(\forall g \in H^{\frac{1}{2}}(\partial
 </div>
 </div>
 <div class="sect1">
-<h2 id="exercices"><a class="anchor" href="#exercices"></a>5. Exercices</h2>
+<h2 id="exercises"><a class="anchor" href="#exercises"></a>4. Exercises</h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Montrer que les fonctions définies par ([eq:fonction-test1]) et
-([eq:fonction-test2]) sont bien \({\cal C}^\infty\) à support
-compact.</p>
+<p>Show that the functions defined by ([eq:test-function1]) and
+([eq:function-test2]) are \({\cal C}^\infty\) with support
+support.</p>
 </li>
 <li>
-<p>Montrer que \({\cal C}^0([a,b])\) est un espace complet
-pour la norme \(L^\infty\).</p>
+<p>Show that \({\cal C}^0([a,b])\) is a complete space
+for the norm \(L^\infty\).</p>
 </li>
 <li>
-<p>Montrer que ce n’est pas le cas pour la norme \(L^1\)
-(exhiber une suite de Cauchy non convergente dans
+<p>Show that this is not the case for \(L^1\).
+(show a non-convergent Cauchy sequence in
 \({\cal C}^0([a,b])\)).</p>
 </li>
 <li>
-<p>Démontrer que, lorsqu’elle existe, la dérivée généralisée est
+<p>Show that, when it exists, the generalized derivative is
 unique.</p>
 </li>
 <li>
-<p>Démontrer que, pour une fonction de classe \({\cal C}^1\),
-la dérivée généralisée est égale à la dérivée classique.</p>
+<p>Show that, for a function of class \({\cal C}^1\),
+the generalized derivative is equal to the classical derivative.</p>
 </li>
 <li>
-<p>Soit une fonction de \([a,b]\) vers \(\RR\),
-formée de deux branches de classe \({\cal C}^1\) sur
-\([a,c[\) et \(]c,b]\), et discontinue en
-\(c\). Montrer qu’elle n’admet pas de dérivée généralisée. (il
-faudrait alors avoir recours à la notion de distribution pour dériver
-cette fonction).</p>
+<p>Let be a function from \([a,b]\) to \(\RR\),
+formed by two branches of class \({\cal C}^1\) on
+\([a,c[\) and \(]c,b]\), and discontinuous in
+\(c\). Show that it has no generalized derivative. (you
+the notion of distribution to derive this function).
+this function).</p>
 </li>
 <li>
-<p>Montrer que \(|.|_1\) est une norme sur
-\(H^1_0(\Omega)\), équivalente à la norme
+<p>Show that \(|.|_1\) is a norm on
+\(H^1_0(\Omega)\), equivalent to the norm
 \(\|.\|_1\)</p>
 </li>
 </ol>
