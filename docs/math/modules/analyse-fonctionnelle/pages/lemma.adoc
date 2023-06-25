@@ -1,23 +1,53 @@
 = Theorems and Lemma
+:stem: latexmath
 
-NOTE: The following theorems and lemma are taken from Theory and Practice of Finite Elements by A. Ern and J.L. Guermond.
+The following theorems and lemma are taken from *Theory and Practice of Finite Elements by A. Ern and J.L. Guermond*.
 
-stem:[\Omega] is a (measurable) open set of stem:[\mathbb{R}^d] with boundary stem:[\partial \Omega]. 
+From now on, stem:[\Omega] is a (measurable) open set of stem:[\mathbb{R}^d] with boundary stem:[\partial \Omega]. 
 Whenever it is well-defined, its outward normal is denoted by stem:[n].
 
 == Embedding and Compacity
 
-[[thmB39]]
+
 .Proposition B.39 
+[.thm#thmB39]
 ****
 Let stem:[\Omega] be an open bounded set. Then, for stem:[1 \leq p<q \leq +\infty], the embedding stem:[L^q(\Omega) \subset L^p(\Omega)] is continuous.
 ****
-**Proof.** This is a consequence of Hölder's inequality.
+
+.Proof of Proposition B.39
+[%collapsible.proof#thmB39-proof]
+====
+This is a result known as the embedding of Lebesgue spaces. It states that for an open bounded set \(\Omega\) and \(1 \leq p < q \leq +\infty\), the space \(L^q(\Omega)\) is continuously embedded in \(L^p(\Omega)\). This is a consequence of Holder's inequality.
+
+To provide some context, \(L^p\) spaces are function spaces defined using a natural generalization of the \(p\)-norm for finite-dimensional vector spaces. They are important in the theory of partial differential equations, Fourier analysis, and many other areas of mathematics.
+
+The result essentially says that if a function is in \(L^q(\Omega)\) (i.e., it is 'q-integrable'), then it is also in \(L^p(\Omega)\) (i.e., it is 'p-integrable'), and the 'p-integrability' is a stronger condition than 'q-integrability' when \(p < q\). The inequality \(1 \leq p < q \leq +\infty\) is crucial here because for \(p > q\), the embedding \(L^p(\Omega) \subset L^q(\Omega)\) is not true in general.
+
+The continuous embedding means that not only every function in \(L^q(\Omega)\) is also in \(L^p(\Omega)\), but the \(L^p\)-norm of any such function is bounded by the \(L^q\)-norm of the function times a constant. This constant does not depend on the function but may depend on the set \(\Omega\).
+
+Let's assume that stem:[f \in L^q(\Omega)], and let's show that stem:[f \in L^p(\Omega)] and that the embedding is continuous. Here stem:[\Omega] is an open bounded set, and stem:[1 \leq p < q \leq +\infty].
+
+For any stem:[f \in L^q(\Omega)], we have by Hölder's inequality for stem:[r = q/p > 1] and stem:[r' = r/(r-1)] (so that stem:[1/r + 1/r' = 1]):
+
+[stem]
+\[
+\|f\|_p = \left(\int_\Omega |f|^p dx\right)^{1/p} = \left(\int_\Omega |f|^p \cdot 1 dx\right)^{1/p} \leq \left(\int_\Omega |f|^q dx\right)^{1/r} \left(\int_\Omega dx\right)^{1/r'} = \|f\|_q^{p/q} |\Omega|^{1/p},
+\]
+[end]
+
+where stem:[|\Omega|] is the measure of the set stem:[\Omega], i.e., the volume of stem:[\Omega] in the case where stem:[\Omega] is a subset of stem:[\mathbb{R}^n].
+
+So we have shown that stem:[f \in L^p(\Omega)] and the embedding is continuous because stem:[\|f\|_p \leq C \|f\|_q] with stem:[C = |\Omega|^{1/p}].
+
+This completes the proof. The key point here is that Hölder's inequality gives us a way to compare the stem:[L^p]-norm and the stem:[L^q]-norm of a function. It allows us to say that if a function is 'q-integrable' (i.e., in stem:[L^q(\Omega)]), then it is also 'p-integrable' (i.e., in stem:[L^p(\Omega)]), and gives us a bound on the stem:[L^p]-norm in terms of the stem:[L^q]-norm.
+
+====
 
 One of the key arguments in the embedding theory is the following:
 
-[[thmB40]]
 .Theorem B.40 (Sobolev). 
+[.thm#thmB40]
 ****
 Let stem:[1 \leq p<d] and denote by stem:[p^*] the number such that stem:[\frac{1}{p^*}=\frac{1}{p}-\frac{1}{d}]. Then,
 [stem]
@@ -27,10 +57,48 @@ Let stem:[1 \leq p<d] and denote by stem:[p^*] the number such that stem:[\frac{
 \end{equation*}
 ++++
 ****
-**Proof.** See [MaZ97, p. 32], [Sob63, §I.7.4], or [Bre91, p. 162].
 
-[[thmB41]]
+.Proof of Theorem B.40 (Sobolev)%collapsible
+[.proof#thmB40-proof]
+****
+The theorem you provided is known as the Sobolev embedding theorem, which is a central result in the theory of Sobolev spaces. Sobolev spaces are a type of function space equipped with a norm that measures both the size of a function and its derivatives. They play a fundamental role in the theory of partial differential equations and the calculus of variations.
+
+Here is a sketch of the proof in the case stem:[d > p > 1]:
+
+We first note that the space stem:[W^{1,p}(\mathbb{R}^d)] consists of functions that are in stem:[L^p(\mathbb{R}^d)] and whose weak derivatives are also in stem:[L^p(\mathbb{R}^d)].
+
+Let's denote by stem:[B] the unit ball in stem:[L^p(\mathbb{R}^d)] with respect to the stem:[L^p]-norm of the gradient. We can show that stem:[B] is precompact in stem:[L^{p^*}(\mathbb{R}^d)] with respect to the weak topology. This is known as the Rellich-Kondrachov theorem.
+
+Therefore, for any stem:[u \in W^{1,p}(\mathbb{R}^d)], we can find a sequence stem:[u_n \in B] such that stem:[u_n \rightharpoonup u] in stem:[L^p(\mathbb{R}^d)] (weak convergence), and stem:[u_n \to u] in stem:[L^{p^*}(\mathbb{R}^d)] (strong convergence).
+
+Since stem:[u_n \in B], we have stem:[\|\nabla u_n\|_{L^p(\mathbb{R}^d)} \leq 1]. Therefore, by the Poincaré inequality, we have
+
+[stem]
+++++
+\[
+\|u_n\|_{L^{p^*}(\mathbb{R}^d)} \leq C \|\nabla u_n\|_{L^p(\mathbb{R}^d)} \leq C,
+\]
+++++
+
+for some constant stem:[C] independent of stem:[n].
+
+Taking the limit as stem:[n \to \infty], we obtain
+
+[stem]
+++++
+\[
+\|u\|_{L^{p^*}(\mathbb{R}^d)} \leq C \|\nabla u\|_{L^p(\mathbb{R}^d)}.
+\]
+++++
+
+This proves the theorem.
+
+NOTE: This proof is a sketch and omits many technical details. The complete proof requires a deep understanding of functional analysis and measure theory, and involves several advanced results such as the Poincaré inequality and the Rellich-Kondrachov theorem. See for more details [MaZ97, p. 32], [Sob63, §I.7.4], or [Bre91, p. 162].
+****
+
+
 .Corollary B.41. 
+[.thm#thmB41]
 ****
 Let stem:[1 \leq p, q \leq+\infty]. The following embeddings are continuous:
 [stem]
@@ -43,10 +111,15 @@ W^{1, p}\left(\mathbb{R}^d\right) \subset L^q\left(\mathbb{R}^d\right) \text { i
 \end{equation*}
 ++++
 ****
-**Proof.** See [MaZ97, p. 34], [Sob63, §I.8.2], or [Bre91, p. 165].
 
-[[thmB46]]
+.Proof of Corollary B.41
+[%collapsible.proof#thmB41-proof]
+****
+See [MaZ97, p. 34], [Sob63, §I.8.2], or [Bre91, p. 165].
+****
+
 .Theorem B.46 (Rellich-Kondrachov)
+[.thm#thmB46]
 ****
 Let stem:[1 \leq p \leq+\infty] and let stem:[s \geq 0]. Let stem:[\Omega] be a bounded open set having the stem:[(s, p)] - extension property. The following injections are compact:
 
@@ -54,15 +127,20 @@ Let stem:[1 \leq p \leq+\infty] and let stem:[s \geq 0]. Let stem:[\Omega] be a 
 
 (ii) If stem:[p>d, W^{s, p}(\Omega) \subset \mathcal{C}^{0}(\bar{\Omega})]
 ****
-**Proof.** See [MaZ97], [BrS94, Chap. 1], or [Bre91, Chap. 8]. stem:[\square]
+
+.Proof of Theorem B.46 (Rellich-Kondrachov)
+[%collapsible.proof#thmB46-proof]
+****
+See [MaZ97], [BrS94, Chap. 1], or [Bre91, Chap. 8]. stem:[\square]
+****
 
 IMPORTANT: <<thmB46>> states a very useful compacity result.
 
 
 == Poincaré-like inequalities
 
-[[B61]]
 .Lemma B.61 (Poincaré). 
+[.lem#B61]
 ****
 Let stem:[1 \leq p<+\infty] and let stem:[\Omega] be a bounded open set. Then, there exists stem:[c_{p, \Omega}>0] such that
 [stem]
@@ -72,14 +150,19 @@ Let stem:[1 \leq p<+\infty] and let stem:[\Omega] be a bounded open set. Then, t
 ++++
 For stem:[p=2,] we denote stem:[c_{\Omega}=c_{2, \Omega}]
 ****
-**Proof.** We only give the proof for stem:[p<d]. 
+
+.Proof of Lemma B.61 (Poincaré)
+[%collapsible.proof#B61-proof]
+****
+We only give the proof for stem:[p<d]. 
 Let stem:[\tilde{v} \in W^{1, p}\left(\mathbb{R}^{d}\right)] be the zeroextension of stem:[v ;] see Proposition B.48. 
-Theorem B.40 implies stem:[\|\tilde{v}\|_{L^{p^{*}}\left(\mathbb{R}^{d}\right)} \leq]
+<<thmB40>> implies stem:[\|\tilde{v}\|_{L^{p^{*}}\left(\mathbb{R}^{d}\right)} \leq]
 stem:[c\|\nabla \tilde{v}\|_{L^{p}\left(\mathbb{R}^{d}\right)} .] since stem:[\Omega] is bounded and stem:[p^{*} \geq p,] we infer stem:[\|v\|_{L^{p}(\Omega)}=\|\tilde{v}\|_{L^{p}\left(\mathbb{R}^{d}\right)} \leq]
 stem:[c\|\tilde{v}\|_{L^{p *}\left(\mathbb{R}^{d}\right)},] yielding <<B61>>
+****
 
-[[LemmaB63]]
 .Lemma B63
+[.lem#LemmaB63]
 ****
 Let stem:[1 \leq p<+\infty] and stem:[\Omega] be a bounded connected open set having the stem:[(1, p)] - extension property. Let stem:[f] be a linear form on stem:[W^{1, p}(\Omega)] whose restriction on constant functions is not zero. Then, there is stem:[c_{p, \Omega}>0] such that
 [stem]
@@ -87,5 +170,10 @@ Let stem:[1 \leq p<+\infty] and stem:[\Omega] be a bounded connected open set ha
 \forall v \in W^{1, p}(\Omega), \quad c_{p, \Omega}\|v\|_{W^{1, p}(\Omega)} \leq\|\nabla v\|_{L^{p}(\Omega)}+|f(v)|
 ++++
 ****
-**Proof**. Use the Petree-Tartar Lemma. To this end, set stem:[X=W^{1, p}(\Omega), Y=] stem:[\left[L^{p}(\Omega)\right\]^{d} \times \mathbb{R}, Z=L^{p}(\Omega),] and stem:[A: X \ni v \mapsto(\nabla v, f(v)) \in Y .] Owing to
+
+.Proof of Lemma B.63
+[%collapsible.proof#LemmaB63-proof]
+****
+Use the Petree-Tartar Lemma. To this end, set stem:[X=W^{1, p}(\Omega), Y=] stem:[\left[L^{p}(\Omega)\right\]^{d} \times \mathbb{R}, Z=L^{p}(\Omega),] and stem:[A: X \ni v \mapsto(\nabla v, f(v)) \in Y .] Owing to
 Lemma B. 29 and the hypotheses on stem:[f, A] is continuous and injective. Moreover, the injection stem:[X \subset Z] is compact owing to <<thmB46>> stem:[\square]
+****
