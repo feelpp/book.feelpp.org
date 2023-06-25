@@ -4,10 +4,8 @@
 :stem: latexmath
 
 
-[[A few reminders]]
-== A few reminders
+== Basic definitions
 
-[[norms-and-scalar-products]]
 === Norms and scalar products
 
 Let stem:[E] be a vector space. +
@@ -123,13 +121,12 @@ stem:[(x_n)_n] is a *Cauchy sequence* if and only if
 ****
 
 
-.Cauchy's theorem
+.Theorem: Cauchy's theorem
 [.thm#th-conv-cauchy]
-====
-Every convergent sequence is Cauchy.
-====
+****
+Every convergent sequence is Cauchy while the reciprocal of <<th-conv-cauchy>> is false.
+****
 
-NOTE: The reciprocal of <<th-conv-cauchy>> is false.
 
 .Definition: Complete space
 [.def#def:complete-space]
@@ -159,7 +156,7 @@ A finite-dimensional Hilbert space is called a *Euclidean
 Euclidean* space.
 ****
 
-[[Functional spaces]]
+
 == Functional spaces
 
 
@@ -171,19 +168,21 @@ A *functional space* is a vector space whose elements are
 elements are functions.
 ****
 
-[example]
+
 .stem:[{\cal C}^p([a;b])]
-====
+[.examp#cp]
+****
 stem:[{\cal C}^p([a;b])] denotes the space of functions defined on the interval stem:[[a,b]], all derivatives of which up to the order stem:[p] exist and are continuous on stem:[[a,b]].
-====
+****
 
 In the following, functions will be defined on a subset of stem:[\RR^n] (most often an open denoted stem:[\Omega]), with values in stem:[\RR] or stem:[\RR^p].
 
-[example]
+
 .Temperature
-====
+[.examp#temperature]
+****
 The temperature stem:[T(x,y,z,t)] at any point of an object stem:[\bar{\Omega}\subset \RR^3] is a function of stem:[ \bar{\Omega} \times \RR \longrightarrow \RR].
-====
+****
 
 The simplest usual norms for functional spaces are
 the *norms* stem:[\bf L^p] defined by :
@@ -245,7 +244,7 @@ the bilinear form
 stem:[(u,v)_{L^2} = \int_\Omega u\, v]. This is a scalar product
 from which the norm stem:[L^2] is derived.
 
-Hence the following theorem
+Hence the following theorem that characterizes the space.
 
 
 .Theorem: stem:[L^2(\Omega)] 
@@ -254,7 +253,7 @@ Hence the following theorem
 stem:[L^2(\Omega)] is a Hilbert space.
 ****
 
-[[sec:notion-de-derivee]]
+
 == Notion of generalized derivative
 
 
@@ -287,10 +286,11 @@ Let stem:[\varphi : \Omega \rightarrow \RR].
 We call *support of stem:[\bf \varphi]* the adherence of stem:[\{ x \in \Omega / \varphi(x) \ne 0 \}].
 ****
 
-[example]
-====
-For stem:[\Omega = \]-1,1\]], and stem:[\varphi] the constant function equal to 1, stem:[\hbox{Supp}\, \varphi = \[-1,1\]].
-====
+.Example: Test function
+[.examp#test-function1]
+****
+For stem:[\Omega = \]-1,1\]], and stem:[\varphi] the constant function equal to 1, stem:[\hbox{supp}\, \varphi = [-1,1\]].
+****
 
 .Definition: Space for test functions
 [.def#def:test-functions]
@@ -300,24 +300,26 @@ Let stem:[{\cal D}(\Omega)] be the space of functions from stem:[\Omega] to stem
 stem:[{\cal D}(\Omega)] is sometimes called *test function space*.
 ****
 
-[example]
-====
+.Example: Test function space
+[.examp#test-function-space]
+****
 The most classic example in the 1-D case is the function
 
-stem:[
+[stem]
+++++
 \varphi(x) =
   \left\{
     \begin{array}{ll}
-    { e^{- \frac{1}{1-x^2}} } & \hbox{si } |x|<1
-      0 & \hbox{si } |x|1\\ge
+    { e^{- \frac{1}{1-x^2}} } & \hbox{si } |x|<1 \\
+      0 & \hbox{si } |x| \ge 1
     \end{array}
   \right.
-]
+++++
 stem:[\varphi] is a function of stem:[{\cal D}(]a,bstem:[)] for all stem:[a < -1 < 1 < b].
 
 
-NOTE: This example can easily be extended to the multi-dimensional case (stem:[n>1]).
-====
+This example can easily be extended to the multi-dimensional case (stem:[n>1]).
+
 
 Let stem:[a\in\Omega] and stem:[r>0] be such that the closed ball of center stem:[a] and radius stem:[r] is included in stem:[\Omega].
 
@@ -334,15 +336,16 @@ We then pose :
 ++++
 
 stem:[\varphi] thus defined is an element of stem:[{\cal D}(\Omega)].
+****
 
 
-.Theorem: Adherence of stem:[\overline{{\cal D}(\Omega)}]]
+.Theorem: Adherence of stem:[\overline{{\cal D}(\Omega)}]
 [.thm#thm:adherence]
 ****
 stem:[\overline{{\cal D}(\Omega) } = L^2(\Omega)]
 ****
 
-[[sec:derivee-generalisee]]
+
 === Generalized derivative
 
 
@@ -377,39 +380,44 @@ stem:[
 ]
 ****
 
-[example]
-====
+.Example: Generalized derivative
+[.examp#generalized-derivative]
+****
 Let stem:[I=\]a,b[] be a bounded interval, and stem:[c] be a point of stem:[I].
 point of stem:[I]. Consider a function stem:[u]
 formed by two branches of class stem:[{\cal C}^1], one on
-one on stem:[]a,c[], the other on stem:[]c,b[], and connecting continuously
+one on stem:[]a,c[], the other on stem:[\]c,b[], and connecting continuously
 to stem:[c]. Then
 stem:[u] has a generalized derivative defined by
 stem:[u_1(x)=u'(x)\quad \forall x\ne c]. Indeed :
 
 
-stem:[
-\forall \varphi\in {\cal D}(\]a,b[)\qquad \int_a^b u \varphi' = \int_a^c + \int_c^b = - \int_a^c u' \varphi - \int_c^b u'\varphi + \underbrace{(u(c^-)-u(c^+))}_{=0} \, \varphi(c)
-]
+[stem]
+++++
+\forall \varphi\in {\cal D}(]a,b[)\qquad \int_a^b u \varphi' = \int_a^c + \int_c^b = - \int_a^c u' \varphi - \int_c^b u'\varphi + \underbrace{(u(c^-)-u(c^+))}_{=0} \, \varphi(c)
+++++
 
-by integration by parts. The stem value:[u_1(c)] doesn't matter: we end up with the same
-the same function as stem:[L^2(I)],
-since it is defined as the equivalence class of the equivalence relation
-equivalence relation *equality almost everywhere*.
-====
+by integration by parts. 
+The value stem:[u_1(c)] doesn't matter: we end up with the same the same function as stem:[L^2(I)], since it is defined as the equivalence class of the equivalence relation equivalence relation *equality almost everywhere*.
+****
 
+We now consider the definition of higher order generalized derivatives.
 
 .Definition: Generalized derivative of order stem:[k]
 [.def#def:generalized-derivative-order-k]
 ****
 By iterating, we say that stem:[u] admits a *generalized derivative
 of order stem:[\bf k]* in stem:[L^2(I)], denoted by
-stem:[u_k], ssi stem:[{\forall \varphi\in
+stem:[u_k], ssi 
+[stem]
+++++
+{\forall \varphi\in
   {\cal D}(I), \quad \int_I u_k\;\varphi = (- 1)^k \; \int_I u \varphi^{(k)}
-  }]
+  }
+++++
 ****
 
-These definitions extend naturally to the definition of generalized partial derivatives, in the stem case:[n>1].
+These definitions extend naturally to the definition of generalized partial derivatives, in the case stem:[n>1].
 
 
 .Theorem: Uniqueness of the generalized derivative
@@ -421,11 +429,11 @@ When it exists, the generalized derivative is unique.
 
 .Theorem: generalized derivative and classical derivative
 [.thm#thm:generalized-classical]
---
+****
 When stem:[u] is of class stem:[{\cal C}^1(\bar{\Omega})], the generalized derivative is equal to the classical derivative.
---
+****
 
-[[Sobolev spaces]]
+
 == Sobolev spaces
 
 
@@ -450,10 +458,12 @@ stem:[H^1(\Omega)] is called *Sobolev space of order 1*.
 [.def#def:hm]
 ****
 For any integer stem:[m\ge 1],
-stem:[
+[stem]
+++++
 H^m(\Omega) = \left\{ u \in L^2(\Omega) \; / \; \partial^\alpha u \; \in
-  L^2(\Omega) \quad \forall \alpha =(\alpha_1,\ldots,\alpha_n) \in \N^n\hbox{
-  such that}\; |\alpha|= \alpha_1+\cdots+\alpha_n \le m \right\}]
+  L^2(\Omega) \quad \forall \alpha =(\alpha_1,\ldots,\alpha_n) \in \NN^n\hbox{
+  such that}\; |\alpha|= \alpha_1+\cdots+\alpha_n \le m \right\}
+++++  
 
 
 stem:[H^m(\Omega)] is called *Sobolev space of order stem:[\bf m].
@@ -488,7 +498,7 @@ stem:[H^m(\Omega)] by
 \hbox{ and }\qquad \| u \|_m = (u,u)_m^{1/2}]
 ++++
 
-.Theorem: stem:[H^m(\Omega)] are Hilbert spaces]
+.Theorem: stem:[H^m(\Omega)] are Hilbert spaces
 [.thm#thm:hm-hilbert]
 ****
 stem:[H^m(\Omega)] with scalar product stem:[(.,.)_m] is a Hilbert space.
@@ -507,20 +517,21 @@ stem:[{ k < m-\frac{n}{2}
   }]
 ****
 
-[example]
-====
+.Example: stem:[H^1(\Omega)] and stem:[{\cal C}^0(\bar{\Omega})]
+[.examp#h1-c0]
+****
 In particular, we see that for an interval stem:[I] of stem:[\RR],
 we have stem:[H^1(I) \subset {\cal C}^0(\bar{I})], i.e. in
 1-D, any stem:[H^1] function is continuous.
 
 The example of stem:[u(x) = x\, \sin\frac{1}{x}] for
 stem:[x\in\]0,1\]] and stem:[u(0)=0] shows that the converse is false.
-is false.
+
 
 The example of stem:[u(x,y) = | \ln (x^2+y^2) |^k] for
 stem:[0<k<1/2] shows that in dimensions greater than 1 there are
 discontinuous stem:[H^1] functions.
-====
+****
 
 [[trace-a-function]]
 === Trace of a function
@@ -553,12 +564,12 @@ stem:[H^1(\Omega)].
  * The continuous linear application, which to any function stem:[u]
 of stem:[{\cal C}^1(\bar{\Omega})] associates its trace on
 stem:[\partial\Omega], then extends into a continuous
-continuous linear application of stem:[H^1(\\Omega)] in
+continuous linear application of stem:[H^1(\Omega)] in
 stem:[L^2(\partial\Omega)], denoted stem:[\gamma_0], which we call *trace application*.
 trace application*. We say that stem:[\gamma_0(u)] *is
 the trace of stem:[u] on* stem:[\partial\Omega].
 
-NOTE: For a function stem:[u] of stem:[H^1(\Omega)] which is at the same time continuous on stem:[\bar{\Omega}], we obviously have stem:[\gamma_0(u) = u_{||partial\Omega}].
+NOTE: For a function stem:[u] of stem:[H^1(\Omega)] which is at the same time continuous on stem:[\bar{\Omega}], we obviously have stem:[\gamma_0(u) = u_{|\partial\Omega}].
 This is why stem:[u_{|\partial\Omega}] is often simply noted rather than stem:[\gamma_0(u)].
 
 
@@ -670,25 +681,35 @@ stem:[u_g] is called an *overlap* of stem:[g] in stem:[H^1(\Omega)].
 [[exercises]]
 == Exercises
 
+.Exercise: 
+[.exer#ex:1]
+****
 
-1.  Show that the functions defined by ([eq:test-function1]) and
+1. Show that the functions defined by ([eq:test-function1]) and
 ([eq:function-test2]) are stem:[{\cal C}^\infty] with support
 support.
-2.  Show that stem:[{\cal C}^0([a,b\])] is a complete space
+
+2. Show that stem:[{\cal C}^0([a,b\])] is a complete space
 for the norm stem:[L^\infty].
-3.  Show that this is not the case for stem:[L^1].
+
+3. Show that this is not the case for stem:[L^1].
 (show a non-convergent Cauchy sequence in
 stem:[{\cal C}^0([a,b\])]).
+
 4.  Show that, when it exists, the generalized derivative is
 unique.
+
 5.  Show that, for a function of class stem:[{\cal C}^1],
 the generalized derivative is equal to the classical derivative.
+
 6.  Let be a function from stem:[[a,b\]] to stem:[\RR],
 formed by two branches of class stem:[{\cal C}^1] on
 stem:[[a,c[] and stem:[\]c,b\]], and discontinuous in
 stem:[c]. Show that it has no generalized derivative. (you
-the notion of distribution to derive this function).
-this function).
+use the notion of distribution to derive this function).
+
+
 7.  Show that stem:[|.|_1] is a norm on
 stem:[H^1_0(\Omega)], equivalent to the norm
 stem:[\|.\|_1]
+****
