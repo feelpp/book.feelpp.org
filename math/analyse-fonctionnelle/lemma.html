@@ -643,20 +643,11 @@ MathJax.Hub.Config({
 <h1 class="page">Theorems and Lemma</h1>
 <div id="preamble">
 <div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The following theorems and lemma are taken from Theory and Practice of Finite Elements by A. Ern and J.L. Guermond.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>The following theorems and lemma are taken from <strong>Theory and Practice of Finite Elements by A. Ern and J.L. Guermond</strong>.</p>
 </div>
 <div class="paragraph">
-<p>\(\Omega\) is a (measurable) open set of \(\mathbb{R}^d\) with boundary \(\partial \Omega\).
+<p>From now on, \(\Omega\) is a (measurable) open set of \(\mathbb{R}^d\) with boundary \(\partial \Omega\).
 Whenever it is well-defined, its outward normal is denoted by \(n\).</p>
 </div>
 </div>
@@ -664,7 +655,7 @@ Whenever it is well-defined, its outward normal is denoted by \(n\).</p>
 <div class="sect1">
 <h2 id="_embedding_and_compacity"><a class="anchor" href="#_embedding_and_compacity"></a>1. Embedding and Compacity</h2>
 <div class="sectionbody">
-<div id="thmB39" class="sidebarblock">
+<div id="thmB39" class="sidebarblock thm">
 <div class="content">
 <div class="title">Proposition B.39</div>
 <div class="paragraph">
@@ -672,13 +663,47 @@ Whenever it is well-defined, its outward normal is denoted by \(n\).</p>
 </div>
 </div>
 </div>
+<details id="thmB39-proof" class="proof">
+<summary class="title">Proof of Proposition B.39</summary>
+<div class="content">
 <div class="paragraph">
-<p><strong>Proof.</strong> This is a consequence of Hölder&#8217;s inequality.</p>
+<p>This is a result known as the embedding of Lebesgue spaces. It states that for an open bounded set \(\Omega\) and \(1 \leq p &lt; q \leq +\infty\), the space \(L^q(\Omega)\) is continuously embedded in \(L^p(\Omega)\). This is a consequence of Holder&#8217;s inequality.</p>
 </div>
+<div class="paragraph">
+<p>To provide some context, \(L^p\) spaces are function spaces defined using a natural generalization of the \(p\)-norm for finite-dimensional vector spaces. They are important in the theory of partial differential equations, Fourier analysis, and many other areas of mathematics.</p>
+</div>
+<div class="paragraph">
+<p>The result essentially says that if a function is in \(L^q(\Omega)\) (i.e., it is 'q-integrable'), then it is also in \(L^p(\Omega)\) (i.e., it is 'p-integrable'), and the 'p-integrability' is a stronger condition than 'q-integrability' when \(p &lt; q\). The inequality \(1 \leq p &lt; q \leq +\infty\) is crucial here because for \(p &gt; q\), the embedding \(L^p(\Omega) \subset L^q(\Omega)\) is not true in general.</p>
+</div>
+<div class="paragraph">
+<p>The continuous embedding means that not only every function in \(L^q(\Omega)\) is also in \(L^p(\Omega)\), but the \(L^p\)-norm of any such function is bounded by the \(L^q\)-norm of the function times a constant. This constant does not depend on the function but may depend on the set \(\Omega\).</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s assume that \(f \in L^q(\Omega)\), and let&#8217;s show that \(f \in L^p(\Omega)\) and that the embedding is continuous. Here \(\Omega\) is an open bounded set, and \(1 \leq p &lt; q \leq +\infty\).</p>
+</div>
+<div class="paragraph">
+<p>For any \(f \in L^q(\Omega)\), we have by Hölder&#8217;s inequality for \(r = q/p &gt; 1\) and \(r' = r/(r-1)\) (so that \(1/r + 1/r' = 1\)):</p>
+</div>
+<div class="paragraph">
+<p>\[
+\|f\|<em>p = \left(\int</em>\Omega |f|^p dx\right)^{1/p} = \left(\int_\Omega |f|^p \cdot 1 dx\right)^{1/p} \leq \left(\int_\Omega |f|^q dx\right)^{1/r} \left(\int_\Omega dx\right)^{1/r'} = \|f\|_q^{p/q} |\Omega|^{1/p},
+\]</p>
+</div>
+<div class="paragraph">
+<p>where \(|\Omega|\) is the measure of the set \(\Omega\), i.e., the volume of \(\Omega\) in the case where \(\Omega\) is a subset of \(\mathbb{R}^n\).</p>
+</div>
+<div class="paragraph">
+<p>So we have shown that \(f \in L^p(\Omega)\) and the embedding is continuous because \(\|f\|_p \leq C \|f\|_q\) with \(C = |\Omega|^{1/p}\).</p>
+</div>
+<div class="paragraph">
+<p>This completes the proof. The key point here is that Hölder&#8217;s inequality gives us a way to compare the \(L^p\)-norm and the \(L^q\)-norm of a function. It allows us to say that if a function is 'q-integrable' (i.e., in \(L^q(\Omega)\)), then it is also 'p-integrable' (i.e., in \(L^p(\Omega)\)), and gives us a bound on the \(L^p\)-norm in terms of the \(L^q\)-norm.</p>
+</div>
+</div>
+</details>
 <div class="paragraph">
 <p>One of the key arguments in the embedding theory is the following:</p>
 </div>
-<div id="thmB40" class="sidebarblock">
+<div id="thmB40" class="sidebarblock thm">
 <div class="content">
 <div class="title">Theorem B.40 (Sobolev).</div>
 <div class="paragraph">
@@ -693,10 +718,65 @@ Whenever it is well-defined, its outward normal is denoted by \(n\).</p>
 </div>
 </div>
 </div>
+<div id="thmB40-proof" class="sidebarblock proof">
+<div class="content">
+<div class="title">Proof of Theorem B.40 (Sobolev)%collapsible</div>
 <div class="paragraph">
-<p><strong>Proof.</strong> See [MaZ97, p. 32], [Sob63, §I.7.4], or [Bre91, p. 162].</p>
+<p>The theorem you provided is known as the Sobolev embedding theorem, which is a central result in the theory of Sobolev spaces. Sobolev spaces are a type of function space equipped with a norm that measures both the size of a function and its derivatives. They play a fundamental role in the theory of partial differential equations and the calculus of variations.</p>
 </div>
-<div id="thmB41" class="sidebarblock">
+<div class="paragraph">
+<p>Here is a sketch of the proof in the case \(d &gt; p &gt; 1\):</p>
+</div>
+<div class="paragraph">
+<p>We first note that the space \(W^{1,p}(\mathbb{R}^d)\) consists of functions that are in \(L^p(\mathbb{R}^d)\) and whose weak derivatives are also in \(L^p(\mathbb{R}^d)\).</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s denote by \(B\) the unit ball in \(L^p(\mathbb{R}^d)\) with respect to the \(L^p\)-norm of the gradient. We can show that \(B\) is precompact in \(L^{p^*}(\mathbb{R}^d)\) with respect to the weak topology. This is known as the Rellich-Kondrachov theorem.</p>
+</div>
+<div class="paragraph">
+<p>Therefore, for any \(u \in W^{1,p}(\mathbb{R}^d)\), we can find a sequence \(u_n \in B\) such that \(u_n \rightharpoonup u\) in \(L^p(\mathbb{R}^d)\) (weak convergence), and \(u_n \to u\) in \(L^{p^*}(\mathbb{R}^d)\) (strong convergence).</p>
+</div>
+<div class="paragraph">
+<p>Since \(u_n \in B\), we have \(\|\nabla u_n\|_{L^p(\mathbb{R}^d)} \leq 1\). Therefore, by the Poincaré inequality, we have</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[
+\|u_n\|_{L^{p^*}(\mathbb{R}^d)} \leq C \|\nabla u_n\|_{L^p(\mathbb{R}^d)} \leq C,
+\]
+</div>
+</div>
+<div class="paragraph">
+<p>for some constant \(C\) independent of \(n\).</p>
+</div>
+<div class="paragraph">
+<p>Taking the limit as \(n \to \infty\), we obtain</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[
+\|u\|_{L^{p^*}(\mathbb{R}^d)} \leq C \|\nabla u\|_{L^p(\mathbb{R}^d)}.
+\]
+</div>
+</div>
+<div class="paragraph">
+<p>This proves the theorem.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This proof is a sketch and omits many technical details. The complete proof requires a deep understanding of functional analysis and measure theory, and involves several advanced results such as the Poincaré inequality and the Rellich-Kondrachov theorem. See for more details [MaZ97, p. 32], [Sob63, §I.7.4], or [Bre91, p. 162].
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div id="thmB41" class="sidebarblock thm">
 <div class="content">
 <div class="title">Corollary B.41.</div>
 <div class="paragraph">
@@ -714,10 +794,15 @@ W^{1, p}\left(\mathbb{R}^d\right) \subset L^q\left(\mathbb{R}^d\right) \text { i
 </div>
 </div>
 </div>
+<div id="thmB41-proof" class="sidebarblock proof">
+<div class="content">
+<div class="title">Proof of Corollary B.41</div>
 <div class="paragraph">
-<p><strong>Proof.</strong> See [MaZ97, p. 34], [Sob63, §I.8.2], or [Bre91, p. 165].</p>
+<p>See [MaZ97, p. 34], [Sob63, §I.8.2], or [Bre91, p. 165].</p>
 </div>
-<div id="thmB46" class="sidebarblock">
+</div>
+</div>
+<div id="thmB46" class="sidebarblock thm">
 <div class="content">
 <div class="title">Theorem B.46 (Rellich-Kondrachov)</div>
 <div class="paragraph">
@@ -731,8 +816,13 @@ W^{1, p}\left(\mathbb{R}^d\right) \subset L^q\left(\mathbb{R}^d\right) \text { i
 </div>
 </div>
 </div>
+<div id="thmB46-proof" class="sidebarblock proof">
+<div class="content">
+<div class="title">Proof of Theorem B.46 (Rellich-Kondrachov)</div>
 <div class="paragraph">
-<p><strong>Proof.</strong> See [MaZ97], [BrS94, Chap. 1], or [Bre91, Chap. 8]. \(\square\)</p>
+<p>See [MaZ97], [BrS94, Chap. 1], or [Bre91, Chap. 8]. \(\square\)</p>
+</div>
+</div>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -751,7 +841,7 @@ W^{1, p}\left(\mathbb{R}^d\right) \subset L^q\left(\mathbb{R}^d\right) \text { i
 <div class="sect1">
 <h2 id="_poincaré_like_inequalities"><a class="anchor" href="#_poincaré_like_inequalities"></a>2. Poincaré-like inequalities</h2>
 <div class="sectionbody">
-<div id="B61" class="sidebarblock">
+<div id="B61" class="sidebarblock lem">
 <div class="content">
 <div class="title">Lemma B.61 (Poincaré).</div>
 <div class="paragraph">
@@ -768,14 +858,19 @@ W^{1, p}\left(\mathbb{R}^d\right) \subset L^q\left(\mathbb{R}^d\right) \text { i
 </div>
 </div>
 </div>
+<div id="B61-proof" class="sidebarblock proof">
+<div class="content">
+<div class="title">Proof of Lemma B.61 (Poincaré)</div>
 <div class="paragraph">
-<p><strong>Proof.</strong> We only give the proof for \(p&lt;d\).
+<p>We only give the proof for \(p&lt;d\).
 Let \(\tilde{v} \in W^{1, p}\left(\mathbb{R}^{d}\right)\) be the zeroextension of \(v ;\) see Proposition B.48.
-Theorem B.40 implies \(\|\tilde{v}\|_{L^{p^{*}}\left(\mathbb{R}^{d}\right)} \leq\)
+<a href="#thmB40">Theorem B.40 (Sobolev).</a> implies \(\|\tilde{v}\|_{L^{p^{*}}\left(\mathbb{R}^{d}\right)} \leq\)
 \(c\|\nabla \tilde{v}\|_{L^{p}\left(\mathbb{R}^{d}\right)} .\) since \(\Omega\) is bounded and \(p^{*} \geq p,\) we infer \(\|v\|_{L^{p}(\Omega)}=\|\tilde{v}\|_{L^{p}\left(\mathbb{R}^{d}\right)} \leq\)
 \(c\|\tilde{v}\|_{L^{p *}\left(\mathbb{R}^{d}\right)},\) yielding <a href="#B61">Lemma B.61 (Poincaré).</a></p>
 </div>
-<div id="LemmaB63" class="sidebarblock">
+</div>
+</div>
+<div id="LemmaB63" class="sidebarblock lem">
 <div class="content">
 <div class="title">Lemma B63</div>
 <div class="paragraph">
@@ -788,9 +883,14 @@ Theorem B.40 implies \(\|\tilde{v}\|_{L^{p^{*}}\left(\mathbb{R}^{d}\right)} \leq
 </div>
 </div>
 </div>
+<div id="LemmaB63-proof" class="sidebarblock proof">
+<div class="content">
+<div class="title">Proof of Lemma B.63</div>
 <div class="paragraph">
-<p><strong>Proof</strong>. Use the Petree-Tartar Lemma. To this end, set \(X=W^{1, p}(\Omega), Y=\) \(\left[L^{p}(\Omega)\right]^{d} \times \mathbb{R}, Z=L^{p}(\Omega),\) and \(A: X \ni v \mapsto(\nabla v, f(v)) \in Y .\) Owing to
+<p>Use the Petree-Tartar Lemma. To this end, set \(X=W^{1, p}(\Omega), Y=\) \(\left[L^{p}(\Omega)\right]^{d} \times \mathbb{R}, Z=L^{p}(\Omega),\) and \(A: X \ni v \mapsto(\nabla v, f(v)) \in Y .\) Owing to
 Lemma B. 29 and the hypotheses on \(f, A\) is continuous and injective. Moreover, the injection \(X \subset Z\) is compact owing to <a href="#thmB46">Theorem B.46 (Rellich-Kondrachov)</a> \(\square\)</p>
+</div>
+</div>
 </div>
 </div>
 </div>
