@@ -219,20 +219,8 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Analyse Fonctionnelle</a>
+    <a class="nav-link" href="index.html">Functional Analysis</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#normes-et-produits-scalaires">Normes et produits scalaires</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#espaces-fonctionnels">Espaces fonctionnels</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#sec:notion-de-derivee">Dérivée Généralisée</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#espaces-de-sobolev">Espaces de Sobolev</a>
-  </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="lemma.html">Lemma</a>
   </li>
@@ -626,7 +614,7 @@ MathJax.Hub.Config({
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Feel++ Mathematics</a></li>
-    <li><a href="index.html">Analyse Fonctionnelle</a></li>
+    <li><a href="index.html">Functional Analysis</a></li>
   </ul>
 </nav>
 
@@ -652,16 +640,11 @@ MathJax.Hub.Config({
 </aside>
 <article class="doc">
 <h1 class="page">Functional analysis tools</h1>
-<div id="preamble">
+<div class="sect1">
+<h2 id="_basic_definitions"><a class="anchor" href="#_basic_definitions"></a>1. Basic definitions</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>[[A few reminders]]
-== A few reminders</p>
-</div>
-</div>
-</div>
 <div class="sect2">
-<h3 id="norms-and-scalar-products"><a class="anchor" href="#norms-and-scalar-products"></a>1. Norms and scalar products</h3>
+<h3 id="_norms_and_scalar_products"><a class="anchor" href="#_norms_and_scalar_products"></a>1.1. Norms and scalar products</h3>
 <div class="paragraph">
 <p>Let \(E\) be a vector space.<br></p>
 </div>
@@ -806,7 +789,7 @@ norm.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cauchy_sequences_and_complete_spaces"><a class="anchor" href="#_cauchy_sequences_and_complete_spaces"></a>2. Cauchy sequences and complete spaces</h3>
+<h3 id="_cauchy_sequences_and_complete_spaces"><a class="anchor" href="#_cauchy_sequences_and_complete_spaces"></a>1.2. Cauchy sequences and complete spaces</h3>
 <div id="def:cauchy-sequence" class="sidebarblock def">
 <div class="content">
 <div class="title">Definition: Cauchy sequences</div>
@@ -822,25 +805,13 @@ norm.</p>
 </div>
 </div>
 </div>
-<div id="th-conv-cauchy" class="exampleblock thm">
-<div class="title">Example 1. Cauchy&#8217;s theorem</div>
+<div id="th-conv-cauchy" class="sidebarblock thm">
 <div class="content">
+<div class="title">Theorem: Cauchy&#8217;s theorem</div>
 <div class="paragraph">
-<p>Every convergent sequence is Cauchy.</p>
+<p>Every convergent sequence is Cauchy while the reciprocal of <a href="#th-conv-cauchy">Theorem: Cauchy&#8217;s theorem</a> is false.</p>
 </div>
 </div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The reciprocal of <a href="#th-conv-cauchy">Cauchy&#8217;s theorem</a> is false.
-</td>
-</tr>
-</table>
 </div>
 <div id="def:complete-space" class="sidebarblock def">
 <div class="content">
@@ -876,10 +847,12 @@ Euclidean</strong> space.</p>
 </div>
 </div>
 </div>
-<div class="paragraph">
-<p>[[Functional spaces]]
-== Functional spaces</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_functional_spaces"><a class="anchor" href="#_functional_spaces"></a>2. Functional spaces</h2>
+<div class="sectionbody">
 <div id="def:functional-space" class="sidebarblock def">
 <div class="content">
 <div class="title">Definition: Functional space</div>
@@ -889,9 +862,9 @@ elements are functions.</p>
 </div>
 </div>
 </div>
-<div class="exampleblock">
-<div class="title">Example 2. \({\cal C}^p([a;b\))]</div>
+<div id="cp" class="sidebarblock examp">
 <div class="content">
+<div class="title">\({\cal C}^p([a;b\))]</div>
 <div class="paragraph">
 <p>\({\cal C}^p([a;b\))] denotes the space of functions defined on the interval \([a,b\)], all derivatives of which up to the order \(p\) exist and are continuous on \([a,b\)].</p>
 </div>
@@ -900,9 +873,9 @@ elements are functions.</p>
 <div class="paragraph">
 <p>In the following, functions will be defined on a subset of \(\RR^n\) (most often an open denoted \(\Omega\)), with values in \(\RR\) or \(\RR^p\).</p>
 </div>
-<div class="exampleblock">
-<div class="title">Example 3. Temperature</div>
+<div id="temperature" class="sidebarblock examp">
 <div class="content">
+<div class="title">Temperature</div>
 <div class="paragraph">
 <p>The temperature \(T(x,y,z,t)\) at any point of an object \(\bar{\Omega}\subset \RR^3\) is a function of \( \bar{\Omega} \times \RR \longrightarrow \RR\).</p>
 </div>
@@ -997,7 +970,7 @@ from which the norm \(L^2\) is derived.
 </table>
 </div>
 <div class="paragraph">
-<p>Hence the following theorem</p>
+<p>Hence the following theorem that characterizes the space.</p>
 </div>
 <div id="th-l2-hilbert" class="sidebarblock thm">
 <div class="content">
@@ -1008,8 +981,9 @@ from which the norm \(L^2\) is derived.
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="sec:notion-de-derivee"><a class="anchor" href="#sec:notion-de-derivee"></a>3. Notion of generalized derivative</h2>
+<h2 id="_notion_of_generalized_derivative"><a class="anchor" href="#_notion_of_generalized_derivative"></a>3. Notion of generalized derivative</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We&#8217;ve just defined complete functional spaces, which provide a good framework for demonstrating the existence and uniqueness of solutions to partial differential equations, as we&#8217;ll see later with the Lax-Milgram theorem.</p>
@@ -1049,10 +1023,11 @@ the variational formulation.</p>
 </div>
 </div>
 </div>
-<div class="exampleblock">
+<div id="test-function1" class="sidebarblock examp">
 <div class="content">
+<div class="title">Example: Test function</div>
 <div class="paragraph">
-<p>For \(\Omega = ]-1,1]\), and \(\varphi\) the constant function equal to 1, \(\hbox{Supp}\, \varphi = \[-1,1]\).</p>
+<p>For \(\Omega = ]-1,1]\), and \(\varphi\) the constant function equal to 1, \(\hbox{supp}\, \varphi = [-1,1]\).</p>
 </div>
 </div>
 </div>
@@ -1067,36 +1042,28 @@ the variational formulation.</p>
 </div>
 </div>
 </div>
-<div class="exampleblock">
+<div id="test-function-space" class="sidebarblock examp">
 <div class="content">
+<div class="title">Example: Test function space</div>
 <div class="paragraph">
 <p>The most classic example in the 1-D case is the function</p>
 </div>
-<div class="paragraph">
-<p>\(
-\varphi(x) =
+<div class="stemblock">
+<div class="content">
+\[\varphi(x) =
   \left\{
     \begin{array}{ll}
-    { e^{- \frac{1}{1-x^2}} } &amp; \hbox{si } |x|&lt;1
-      0 &amp; \hbox{si } |x|1\\ge
+    { e^{- \frac{1}{1-x^2}} } &amp; \hbox{si } |x|&lt;1 \\
+      0 &amp; \hbox{si } |x| \ge 1
     \end{array}
-  \right.
-\)
-\(\varphi\) is a function of \({\cal D}(\)a,b\()\) for all \(a &lt; -1 &lt; 1 &lt; b\).</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This example can easily be extended to the multi-dimensional case (\(n&gt;1\)).
-</td>
-</tr>
-</table>
+  \right.\]
 </div>
 </div>
+<div class="paragraph">
+<p>\(\varphi\) is a function of \({\cal D}(\)a,b\()\) for all \(a &lt; -1 &lt; 1 &lt; b\).</p>
+</div>
+<div class="paragraph">
+<p>This example can easily be extended to the multi-dimensional case (\(n&gt;1\)).</p>
 </div>
 <div class="paragraph">
 <p>Let \(a\in\Omega\) and \(r&gt;0\) be such that the closed ball of center \(a\) and radius \(r\) is included in \(\Omega\).</p>
@@ -1117,9 +1084,11 @@ This example can easily be extended to the multi-dimensional case (\(n&gt;1\)).
 <div class="paragraph">
 <p>\(\varphi\) thus defined is an element of \({\cal D}(\Omega)\).</p>
 </div>
+</div>
+</div>
 <div id="thm:adherence" class="sidebarblock thm">
 <div class="content">
-<div class="title">Theorem: Adherence of \(\overline{{\cal D}(\Omega)}\)]</div>
+<div class="title">Theorem: Adherence of \(\overline{{\cal D}(\Omega)}\)</div>
 <div class="paragraph">
 <p>\(\overline{{\cal D}(\Omega) } = L^2(\Omega)\)</p>
 </div>
@@ -1127,7 +1096,7 @@ This example can easily be extended to the multi-dimensional case (\(n&gt;1\)).
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:derivee-generalisee"><a class="anchor" href="#sec:derivee-generalisee"></a>3.2. Generalized derivative</h3>
+<h3 id="_generalized_derivative"><a class="anchor" href="#_generalized_derivative"></a>3.2. Generalized derivative</h3>
 <div class="paragraph">
 <p>Let \(u\in {\cal C}^1(\Omega)\) and \(\varphi \in {\cal D}(\Omega)\).</p>
 </div>
@@ -1169,8 +1138,9 @@ not necessarily bounded.</p>
 </div>
 </div>
 </div>
-<div class="exampleblock">
+<div id="generalized-derivative" class="sidebarblock examp">
 <div class="content">
+<div class="title">Example: Generalized derivative</div>
 <div class="paragraph">
 <p>Let \(I=]a,b[\) be a bounded interval, and \(c\) be a point of \(I\).
 point of \(I\). Consider a function \(u\)
@@ -1180,18 +1150,19 @@ to \(c\). Then
 \(u\) has a generalized derivative defined by
 \(u_1(x)=u'(x)\quad \forall x\ne c\). Indeed :</p>
 </div>
+<div class="stemblock">
+<div class="content">
+\[\forall \varphi\in {\cal D}(]a,b[)\qquad \int_a^b u \varphi' = \int_a^c + \int_c^b = - \int_a^c u' \varphi - \int_c^b u'\varphi + \underbrace{(u(c^-)-u(c^+))}_{=0} \, \varphi(c)\]
+</div>
+</div>
 <div class="paragraph">
-<p>\(
-\forall \varphi\in {\cal D}(]a,b[)\qquad \int_a^b u \varphi' = \int_a^c + \int_c^b = - \int_a^c u' \varphi - \int_c^b u'\varphi + \underbrace{(u(c^-)-u(c^+))}_{=0} \, \varphi(c)
-\)</p>
+<p>by integration by parts.
+The value \(u_1(c)\) doesn&#8217;t matter: we end up with the same the same function as \(L^2(I)\), since it is defined as the equivalence class of the equivalence relation equivalence relation <strong>equality almost everywhere</strong>.</p>
+</div>
+</div>
 </div>
 <div class="paragraph">
-<p>by integration by parts. The stem value:[u_1(c)] doesn&#8217;t matter: we end up with the same
-the same function as \(L^2(I)\),
-since it is defined as the equivalence class of the equivalence relation
-equivalence relation <strong>equality almost everywhere</strong>.</p>
-</div>
-</div>
+<p>We now consider the definition of higher order generalized derivatives.</p>
 </div>
 <div id="def:generalized-derivative-order-k" class="sidebarblock def">
 <div class="content">
@@ -1199,14 +1170,19 @@ equivalence relation <strong>equality almost everywhere</strong>.</p>
 <div class="paragraph">
 <p>By iterating, we say that \(u\) admits a <strong>generalized derivative
 of order \(\bf k\)</strong> in \(L^2(I)\), denoted by
-\(u_k\), ssi \({\forall \varphi\in
+\(u_k\), ssi</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[{\forall \varphi\in
   {\cal D}(I), \quad \int_I u_k\;\varphi = (- 1)^k \; \int_I u \varphi^{(k)}
-  }\)</p>
+  }\]
+</div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>These definitions extend naturally to the definition of generalized partial derivatives, in the stem case:[n&gt;1].</p>
+<p>These definitions extend naturally to the definition of generalized partial derivatives, in the case \(n&gt;1\).</p>
 </div>
 <div id="thm:uniqueness" class="sidebarblock thm">
 <div class="content">
@@ -1216,21 +1192,22 @@ of order \(\bf k\)</strong> in \(L^2(I)\), denoted by
 </div>
 </div>
 </div>
-<div id="thm:generalized-classical" class="openblock thm">
-<div class="title">Theorem: generalized derivative and classical derivative</div>
+<div id="thm:generalized-classical" class="sidebarblock thm">
 <div class="content">
+<div class="title">Theorem: generalized derivative and classical derivative</div>
 <div class="paragraph">
 <p>When \(u\) is of class \({\cal C}^1(\bar{\Omega})\), the generalized derivative is equal to the classical derivative.</p>
 </div>
 </div>
 </div>
-<div class="paragraph">
-<p>[[Sobolev spaces]]
-== Sobolev spaces</p>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_sobolev_spaces"><a class="anchor" href="#_sobolev_spaces"></a>4. Sobolev spaces</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_hm_spaces"><a class="anchor" href="#_hm_spaces"></a>3.3. \(H^m\) spaces</h3>
+<h3 id="_hm_spaces"><a class="anchor" href="#_hm_spaces"></a>4.1. \(H^m\) spaces</h3>
 <div id="def:h1" class="sidebarblock def">
 <div class="content">
 <div class="title">Definition: \(H^1(\Omega)\)</div>
@@ -1252,11 +1229,14 @@ of order \(\bf k\)</strong> in \(L^2(I)\), denoted by
 <div class="content">
 <div class="title">Definition: \(H^m(\Omega)\)</div>
 <div class="paragraph">
-<p>For any integer \(m\ge 1\),
-\(
-H^m(\Omega) = \left\{ u \in L^2(\Omega) \; / \; \partial^\alpha u \; \in
-  L^2(\Omega) \quad \forall \alpha =(\alpha_1,\ldots,\alpha_n) \in \N^n\hbox{
-  such that}\; |\alpha|= \alpha_1+\cdots+\alpha_n \le m \right\}\)</p>
+<p>For any integer \(m\ge 1\),</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[H^m(\Omega) = \left\{ u \in L^2(\Omega) \; / \; \partial^\alpha u \; \in
+  L^2(\Omega) \quad \forall \alpha =(\alpha_1,\ldots,\alpha_n) \in \NN^n\hbox{
+  such that}\; |\alpha|= \alpha_1+\cdots+\alpha_n \le m \right\}\]
+</div>
 </div>
 <div class="paragraph">
 <p>\(H^m(\Omega)\) is called *Sobolev space of order \(\bf m\).</p>
@@ -1319,7 +1299,7 @@ Let \(\|.\|_1\) be the norm associated with
 </div>
 <div id="thm:hm-hilbert" class="sidebarblock thm">
 <div class="content">
-<div class="title">Theorem: \(H^m(\Omega)\) are Hilbert spaces]</div>
+<div class="title">Theorem: \(H^m(\Omega)\) are Hilbert spaces</div>
 <div class="paragraph">
 <p>\(H^m(\Omega)\) with scalar product \((.,.)_m\) is a Hilbert space.
 is a Hilbert space [thr:8].</p>
@@ -1339,8 +1319,9 @@ example \({\cal C}^1\)), we have the inclusion :
 </div>
 </div>
 </div>
-<div class="exampleblock">
+<div id="h1-c0" class="sidebarblock examp">
 <div class="content">
+<div class="title">Example: \(H^1(\Omega)\) and \({\cal C}^0(\bar{\Omega})\)</div>
 <div class="paragraph">
 <p>In particular, we see that for an interval \(I\) of \(\RR\),
 we have \(H^1(I) \subset {\cal C}^0(\bar{I})\), i.e. in
@@ -1348,8 +1329,7 @@ we have \(H^1(I) \subset {\cal C}^0(\bar{I})\), i.e. in
 </div>
 <div class="paragraph">
 <p>The example of \(u(x) = x\, \sin\frac{1}{x}\) for
-\(x\in]0,1]\) and \(u(0)=0\) shows that the converse is false.
-is false.</p>
+\(x\in]0,1]\) and \(u(0)=0\) shows that the converse is false.</p>
 </div>
 <div class="paragraph">
 <p>The example of \(u(x,y) = | \ln (x^2+y^2) |^k\) for
@@ -1360,7 +1340,7 @@ discontinuous \(H^1\) functions.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="trace-a-function"><a class="anchor" href="#trace-a-function"></a>3.4. Trace of a function</h3>
+<h3 id="trace-a-function"><a class="anchor" href="#trace-a-function"></a>4.2. Trace of a function</h3>
 <div class="paragraph">
 <p>To be able to perform integrations by parts, which will be useful for
 for variational formulation, you need to be able to define the extension
@@ -1401,7 +1381,7 @@ boundary \(\partial\Omega\) "regular enough", then
 <p>The continuous linear application, which to any function \(u\)
 of \({\cal C}^1(\bar{\Omega})\) associates its trace on
 \(\partial\Omega\), then extends into a continuous
-continuous linear application of \(H^1(\\Omega)\) in
+continuous linear application of \(H^1(\Omega)\) in
 \(L^2(\partial\Omega)\), denoted \(\gamma_0\), which we call <strong>trace application</strong>.
 trace application*. We say that \(\gamma_0(u)\) <strong>is
 the trace of \(u\) on</strong> \(\partial\Omega\).</p>
@@ -1418,7 +1398,7 @@ the trace of \(u\) on</strong> \(\partial\Omega\).</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-For a function \(u\) of \(H^1(\Omega)\) which is at the same time continuous on \(\bar{\Omega}\), we obviously have \(\gamma_0(u) = u_{||partial\Omega}\).
+For a function \(u\) of \(H^1(\Omega)\) which is at the same time continuous on \(\bar{\Omega}\), we obviously have \(\gamma_0(u) = u_{|\partial\Omega}\).
 This is why \(u_{|\partial\Omega}\) is often simply noted rather than \(\gamma_0(u)\).
 </td>
 </tr>
@@ -1450,7 +1430,7 @@ normal derivative in the usual sense of \(u\) exists, and
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:H10"><a class="anchor" href="#sec:H10"></a>3.5. Space \(H^1_0(\Omega)\)</h3>
+<h3 id="sec:H10"><a class="anchor" href="#sec:H10"></a>4.3. Space \(H^1_0(\Omega)\)</h3>
 <div id="def:h10" class="sidebarblock def">
 <div class="content">
 <div class="title">Definition: \(H^1_0(\Omega)\)</div>
@@ -1561,8 +1541,11 @@ There exists a constant \(c\) such that \(\forall g \in H^{\frac{1}{2}}(\partial
 </div>
 </div>
 <div class="sect1">
-<h2 id="exercises"><a class="anchor" href="#exercises"></a>4. Exercises</h2>
+<h2 id="exercises"><a class="anchor" href="#exercises"></a>5. Exercises</h2>
 <div class="sectionbody">
+<div id="ex:1" class="sidebarblock exer">
+<div class="content">
+<div class="title">Exercise:</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1592,8 +1575,7 @@ the generalized derivative is equal to the classical derivative.</p>
 formed by two branches of class \({\cal C}^1\) on
 \([a,c[\) and \(]c,b]\), and discontinuous in
 \(c\). Show that it has no generalized derivative. (you
-the notion of distribution to derive this function).
-this function).</p>
+use the notion of distribution to derive this function).</p>
 </li>
 <li>
 <p>Show that \(|.|_1\) is a norm on
@@ -1601,6 +1583,8 @@ this function).</p>
 \(\|.\|_1\)</p>
 </li>
 </ol>
+</div>
+</div>
 </div>
 </div>
 </div>
