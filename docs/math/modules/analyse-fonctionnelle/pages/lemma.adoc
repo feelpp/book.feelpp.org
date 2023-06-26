@@ -60,7 +60,7 @@ Let stem:[1 \leq p<d] and denote by stem:[p^*] the number such that stem:[\frac{
 
 .Proof of Theorem B.40 (Sobolev)
 [%collapsible.proof#thmB40-proof]
-****
+====
 The theorem is known as the Sobolev embedding theorem, which is a central result in the theory of Sobolev spaces. Sobolev spaces are a type of function space equipped with a norm that measures both the size of a function and its derivatives. They play a fundamental role in the theory of partial differential equations and the calculus of variations.
 
 Here is a sketch of the proof in the case stem:[d > p > 1]:
@@ -94,7 +94,7 @@ Taking the limit as stem:[n \to \infty], we obtain
 This proves the theorem.
 
 NOTE: This proof is a sketch and omits many technical details. The complete proof requires a deep understanding of functional analysis and measure theory, and involves several advanced results such as the Poincaré inequality and the Rellich-Kondrachov theorem. See for more details [MaZ97, p. 32], [Sob63, §I.7.4], or [Bre91, p. 162].
-****
+====
 
 
 .Corollary B.41. 
@@ -114,9 +114,9 @@ W^{1, p}\left(\mathbb{R}^d\right) \subset L^q\left(\mathbb{R}^d\right) \text { i
 
 .Proof of Corollary B.41
 [%collapsible.proof#thmB41-proof]
-****
+====
 See [MaZ97, p. 34], [Sob63, §I.8.2], or [Bre91, p. 165].
-****
+====
 
 .Theorem B.46 (Rellich-Kondrachov)
 [.thm#thmB46]
@@ -126,15 +126,17 @@ Let stem:[1 \leq p \leq+\infty] and let stem:[s \geq 0]. Let stem:[\Omega] be a 
 (i) If stem:[p \leq d, W^{s, p}(\Omega) \subset L^{q}(\Omega)] for all stem:[1 \leq q<p^{*}] where stem:[\frac{1}{p^{*}}=\frac{1}{p}-\frac{s}{d}]
 
 (ii) If stem:[p>d, W^{s, p}(\Omega) \subset \mathcal{C}^{0}(\bar{\Omega})]
+
+IMPORTANT: <<thmB46>> states a very useful compacity result.
 ****
 
 .Proof of Theorem B.46 (Rellich-Kondrachov)
 [%collapsible.proof#thmB46-proof]
-****
+====
 See [MaZ97], [BrS94, Chap. 1], or [Bre91, Chap. 8]. stem:[\square]
-****
+====
 
-IMPORTANT: <<thmB46>> states a very useful compacity result.
+
 
 
 == Poincaré-like inequalities
@@ -153,13 +155,13 @@ For stem:[p=2,] we denote stem:[c_{\Omega}=c_{2, \Omega}]
 
 .Proof of Lemma B.61 (Poincaré)
 [%collapsible.proof#B61-proof]
-****
+====
 We only give the proof for stem:[p<d]. 
 Let stem:[\tilde{v} \in W^{1, p}\left(\mathbb{R}^{d}\right)] be the zeroextension of stem:[v ;] see Proposition B.48. 
 <<thmB40>> implies stem:[\|\tilde{v}\|_{L^{p^{*}}\left(\mathbb{R}^{d}\right)} \leq]
 stem:[c\|\nabla \tilde{v}\|_{L^{p}\left(\mathbb{R}^{d}\right)} .] since stem:[\Omega] is bounded and stem:[p^{*} \geq p,] we infer stem:[\|v\|_{L^{p}(\Omega)}=\|\tilde{v}\|_{L^{p}\left(\mathbb{R}^{d}\right)} \leq]
 stem:[c\|\tilde{v}\|_{L^{p *}\left(\mathbb{R}^{d}\right)},] yielding <<B61>>
-****
+====
 
 .Lemma B63
 [.lem#LemmaB63]
@@ -173,7 +175,7 @@ Let stem:[1 \leq p<+\infty] and stem:[\Omega] be a bounded connected open set ha
 
 .Proof of Lemma B.63
 [%collapsible.proof#LemmaB63-proof]
-****
+====
 Use the Petree-Tartar Lemma. To this end, set stem:[X=W^{1, p}(\Omega), Y=] stem:[\left[L^{p}(\Omega)\right\]^{d} \times \mathbb{R}, Z=L^{p}(\Omega),] and stem:[A: X \ni v \mapsto(\nabla v, f(v)) \in Y .] Owing to
 Lemma B. 29 and the hypotheses on stem:[f, A] is continuous and injective. Moreover, the injection stem:[X \subset Z] is compact owing to <<thmB46>> stem:[\square]
-****
+====
