@@ -740,7 +740,7 @@ MathJax.Hub.Config({
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>We will provide a 2D example of fluid-structure interaction taken from the articles</p>
+<p>We will provide a 2D example of fluid-structure interaction taken from the articles:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -758,7 +758,7 @@ MathJax.Hub.Config({
 <h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We will simulate the inflation of a deformable box under continuous immission of an incompressible fluid. The structure is made of one solid elastic rectangular shell which is filled through an opening.</p>
+<p>We will simulate the inflation of a deformable box under continuous emission of an incompressible fluid. The structure is made of one solid elastic rectangular shell which is filled through an opening.</p>
 </div>
 <div class="paragraph">
 <p>In this model, fluid&#8217;s boundary conditions are only of Dirichlet type. It is known that this situation is difficult to be tackled using partitioned solvers with Dirichlet-Neumann discretization of FSI coupling conditions. There are two reasons for this: the so called incompressiblity condition dilemma, and the fact that pressure&#8217;s absolute value is not known. The incompressibility condition dilemma can be described as follows: whenever the structure&#8217;s displacement is calculated, it should take into account the fluid&#8217;s volume change in the next time step to be admissible and produce an admissible interface velocity (compatible with incompressibility condition inside the fluid subdomain). In a Dirichlet-Neumann approach, this is not the case: in fact, the new interface, computed with Neumann conditions on the solid subproblem, and the new interface velocity computed through finite differences do not, a priori, satisfy such constraint. The pressure issue, finally, can be solved by prescribing a pressure value on the boundary of the fluid domain. We will perform the simulation applying a Generalized Robin-Neumann coupling condition, which will avoid these problems.</p>
@@ -878,13 +878,13 @@ MathJax.Hub.Config({
 <p>on \(\Gamma_{in}^*\), an inflow parabolic Dirichlet condition on fluid velocity;</p>
 </li>
 <li>
-<p>on \(\Gamma_{wall}^*\), a homogeneous Dirichlet condition on fluid velocity : \(\boldsymbol{u}_f = \boldsymbol{0}\);</p>
+<p>on \(\Gamma_{wall}^*\), a homogeneous Dirichlet condition on fluid velocity : \(\boldsymbol{u}_f = \boldsymbol\{0}\);</p>
 </li>
 <li>
-<p>on \(\Gamma_{ext}^*\), a homogeneous Neumann condition on solid forces \(\boldsymbol{\sigma}_s = \boldsymbol{0}\);</p>
+<p>on \(\Gamma_{ext}^*\), a homogeneous Neumann condition on solid forces \(\boldsymbol{\sigma}_s = \boldsymbol\{0}\);</p>
 </li>
 <li>
-<p>on \(\Gamma_{fixed}^*\), a zero displacement condition on the solid side \(\boldsymbol{\eta}_s = \boldsymbol{0}\) and a homogeneous Dirichlet condition on the fluid side;</p>
+<p>on \(\Gamma_{fixed}^*\), a zero displacement condition on the solid side \(\boldsymbol{\eta}_s = \boldsymbol\{0}\) and a homogeneous Dirichlet condition on the fluid side;</p>
 </li>
 <li>
 <p>on \(\Gamma_{fsi}^*\) :</p>
@@ -963,8 +963,9 @@ MathJax.Hub.Config({
 The material parameters are specified as follows:</p>
 </div>
 <div class="listingblock">
+<div class="title">fluid.json</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-fluid.json hljs" data-lang="fluid.json">    "Materials":
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">    "Materials":
     {
         "Fluid": {
             "rho":"1.1",
@@ -974,8 +975,9 @@ The material parameters are specified as follows:</p>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">solid.json</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-solid.json hljs" data-lang="solid.json">    "Materials":
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">    "Materials":
     {
 	"Solid": {
 	    "E":"7e5",
@@ -989,8 +991,9 @@ The material parameters are specified as follows:</p>
 <p>The boundary conditions, instead, are specified in the following manner:</p>
 </div>
 <div class="listingblock">
+<div class="title">fluid.json</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-fluid.json hljs" data-lang="fluid.json">    "BoundaryConditions":
+<pre class="highlightjs highlight"><code class="language-json5 hljs" data-lang="json5">    "BoundaryConditions":
     {
         "velocity":
         {
@@ -1029,8 +1032,9 @@ The material parameters are specified as follows:</p>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">solid.json</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-solid.json hljs" data-lang="solid.json">    "BoundaryConditions":
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">    "BoundaryConditions":
     {
 	"displacement":
 	{
@@ -1065,14 +1069,11 @@ The material parameters are specified as follows:</p>
 <h2 id="_video"><a class="anchor" href="#_video"></a>6. Video</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The video below shows the box inflation.</p>
+<p>The video below shows the box inflation:</p>
 </div>
 <div class="videoblock">
-<div class="title">Box inflation</div>
-<div class="stretchy-wrapper-16_9">
-<div class="content" style="margin: auto; width: 100%; height: 100%">
-<iframe width="100%" height="100%" src="https://www.youtube.com/embed/B_zZcP6lULw?rel=0&amp;autoplay=1&amp;loop=1&amp;playlist=B_zZcP6lULw&amp;;theme=light" frameborder="0" allowfullscreen></iframe>
-</div>
+<div class="content">
+<iframe width="1262" height="720" src="https://www.youtube.com/embed/B_zZcP6lULw?rel=0&amp;autoplay=1&amp;loop=1&amp;playlist=B_zZcP6lULw&amp;theme=light" frameborder="0" allowfullscreen></iframe>
 </div>
 </div>
 </div>
