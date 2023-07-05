@@ -7,6 +7,7 @@
     <link rel="canonical" href="https://docs.feelpp.org/cases/stable/csm/ribs/index.html">
     <link rel="prev" href="../rotating-winch/index.html">
     <link rel="next" href="../suspension/index.html">
+    <meta name="description" content="We study the stiffening effects of ribs on a plate.">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
@@ -601,7 +602,7 @@ MathJax.Hub.Config({
         <a class="title" href="../../../../feelpp-tutorial-dev/index.html">Feel++ Programming Tutorial</a>
       </li>
       <li class="component">
-        <a class="title" href="../../../../feelpp-project/index.html">Feel++ Template Project</a>
+        <a class="title" href="../../../../feelpp-project/index.html">Feel++ Project</a>
       </li>
       <li class="component">
         <a class="title" href="../../../../mor/stable/index.html">Model Order Reduction</a>
@@ -679,7 +680,8 @@ MathJax.Hub.Config({
 </aside>
 <article class="doc">
 <h1 class="page">Bracing with ribs</h1>
-<div id="preamble">
+<div class="sect1">
+<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The ribs have stiffening effect. So the plates are supplied with different ribs.</p>
@@ -687,22 +689,22 @@ MathJax.Hub.Config({
 </div>
 </div>
 <div class="sect1">
-<h2 id="_running_the_case"><a class="anchor" href="#_running_the_case"></a>1. Running the case</h2>
+<h2 id="_running_the_case"><a class="anchor" href="#_running_the_case"></a>2. Running the case</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The command line to run this case is</p>
 </div>
 <div id="command-line" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpirun -np 4 feelpp_toolbox_solid --case "github:{repo:toolbox,path:examples/modules/csm/examples/ribs}"</code></pre>
+<pre class="highlightjs highlight"><code class="language-mpirun hljs" data-lang="mpirun">mpirun -np 4 feelpp_toolbox_solid --case "github:{repo:toolbox,path:examples/modules/csm/examples/ribs}"</code></pre>
 </div>
 </div>
-<button class="btn" data-clipboard-target="#command-line">
-Copy command line to clipboard
-</button>
-<button class="btn" data-clipboard-text="github:{repo:toolbox,path:examples/modules/csm/examples/ribs}">
-Copy case option to clipboard
-</button>
+<div class="listingblock mpirun-caseopt">
+<div class="title">Case option</div>
+<div class="content">
+<pre>--case "github:{repo:toolbox,path:examples/modules/csm/examples/ribs}"</pre>
+</div>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -718,7 +720,7 @@ The report of the execution of the command above is available <a href="#t-beam/s
 </div>
 </div>
 <div class="sect1">
-<h2 id="_data_files"><a class="anchor" href="#_data_files"></a>2. Data files</h2>
+<h2 id="_data_files"><a class="anchor" href="#_data_files"></a>3. Data files</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The case data files are available in Github <a href="https://github.com/feelpp/toolbox/blob/master/examples/modules/csm/examples/ribs/">here</a></p>
@@ -736,7 +738,7 @@ The report of the execution of the command above is available <a href="#t-beam/s
 </div>
 </div>
 <div class="sect1">
-<h2 id="_modelgeometry"><a class="anchor" href="#_modelgeometry"></a>3. Model/Geometry</h2>
+<h2 id="_modelgeometry"><a class="anchor" href="#_modelgeometry"></a>4. Model/Geometry</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The first step is to create the model of the plate, which we can simply do in the Creo Parametric program. With this program was the fastest and easiest way to create the model.
@@ -761,10 +763,10 @@ The finished geometry (Creo) and the meshed model (Gmsh):</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_materials_and_boundary_conditions"><a class="anchor" href="#_materials_and_boundary_conditions"></a>4. Materials and boundary conditions</h2>
+<h2 id="_materials_and_boundary_conditions"><a class="anchor" href="#_materials_and_boundary_conditions"></a>5. Materials and boundary conditions</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_materials"><a class="anchor" href="#_materials"></a>4.1. Materials</h3>
+<h3 id="_materials"><a class="anchor" href="#_materials"></a>5.1. Materials</h3>
 <div class="paragraph">
 <p>The beam is made of steel, so we need to use the following data:</p>
 </div>
@@ -796,7 +798,7 @@ The finished geometry (Creo) and the meshed model (Gmsh):</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>4.2. Boundary conditions</h3>
+<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>5.2. Boundary conditions</h3>
 <div class="paragraph">
 <p>The plate is fixed with three screws (yellow &#8594; named <code>fixed</code>). The force is applied, where are the other three srews (green &#8594; named <code>load</code>).</p>
 </div>
@@ -828,10 +830,10 @@ The finished geometry (Creo) and the meshed model (Gmsh):</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_results_displacement_and_von_mises_criterions"><a class="anchor" href="#_results_displacement_and_von_mises_criterions"></a>5. Results (Displacement and Von-Mises Criterions)</h2>
+<h2 id="_results_displacement_and_von_mises_criterions"><a class="anchor" href="#_results_displacement_and_von_mises_criterions"></a>6. Results (Displacement and Von-Mises Criterions)</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_without_ribs"><a class="anchor" href="#_without_ribs"></a>5.1. Without ribs</h3>
+<h3 id="_without_ribs"><a class="anchor" href="#_without_ribs"></a>6.1. Without ribs</h3>
 <div class="paragraph">
 <p>Maximum displacement: 0.6501 mm Maximum stress: 512.4 MPa</p>
 </div>
@@ -851,9 +853,9 @@ The finished geometry (Creo) and the meshed model (Gmsh):</p>
 </tr>
 </tbody>
 </table>
-<div id="vtkjs_01623083-85d8-4693-b418-74895fee1007" style="height: 500px; width: 100%;"></div>
+<div id="vtkjs_b19e5f11-eb1a-4793-ad61-cb5f94422ce9" style="height: 500px; width: 100%;"></div>
 <script>
-feelppVtkJs.createSceneImporter("vtkjs_01623083-85d8-4693-b418-74895fee1007", {
+feelppVtkJs.createSceneImporter("vtkjs_b19e5f11-eb1a-4793-ad61-cb5f94422ce9", {
   fileURL: "https://girder.math.unistra.fr/api/v1/file/5ad4a6f5b0e9574027047d6a/download",
   objects: {
   "deformation": [
@@ -869,7 +871,7 @@ feelppVtkJs.createSceneImporter("vtkjs_01623083-85d8-4693-b418-74895fee1007", {
 </script>
 </div>
 <div class="sect2">
-<h3 id="_with_ribs"><a class="anchor" href="#_with_ribs"></a>5.2. With ribs</h3>
+<h3 id="_with_ribs"><a class="anchor" href="#_with_ribs"></a>6.2. With ribs</h3>
 <div class="paragraph">
 <p>Maximum displacement: 0.528 mm Maximum stress: 599.1 MPa</p>
 </div>
@@ -889,9 +891,9 @@ feelppVtkJs.createSceneImporter("vtkjs_01623083-85d8-4693-b418-74895fee1007", {
 </tr>
 </tbody>
 </table>
-<div id="vtkjs_6e9730ae-e9f5-41ea-b2ef-f86d441ddb50" style="height: 500px; width: 100%;"></div>
+<div id="vtkjs_d555a024-59d3-4d1f-8bd3-a5fc43bedf41" style="height: 500px; width: 100%;"></div>
 <script>
-feelppVtkJs.createSceneImporter("vtkjs_6e9730ae-e9f5-41ea-b2ef-f86d441ddb50", {
+feelppVtkJs.createSceneImporter("vtkjs_d555a024-59d3-4d1f-8bd3-a5fc43bedf41", {
   fileURL: "https://girder.math.unistra.fr/api/v1/file/5ad4a6f5b0e9574027047d6d/download",
   objects: {
   "deformation": [
@@ -907,7 +909,7 @@ feelppVtkJs.createSceneImporter("vtkjs_6e9730ae-e9f5-41ea-b2ef-f86d441ddb50", {
 </script>
 </div>
 <div class="sect2">
-<h3 id="_summary"><a class="anchor" href="#_summary"></a>5.3. Summary</h3>
+<h3 id="_summary"><a class="anchor" href="#_summary"></a>6.3. Summary</h3>
 <div class="paragraph">
 <p>The deformation of the plate is smaller (-18%) with ribs.</p>
 </div>

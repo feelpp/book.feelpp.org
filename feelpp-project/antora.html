@@ -181,7 +181,7 @@ MathJax.Hub.Config({
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Feel++ Template Project</a></h3>
+    <h3 class="title"><a href="index.html">Feel++ Project</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -189,22 +189,28 @@ MathJax.Hub.Config({
     <a class="nav-link" href="index.html">Introduction</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">{project_name} Environment</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="cmake.html">cmake environment</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="antora.html">antora environment</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="vscode.html">vscode integration</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="githubactions.html">Github Actions</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="rename.html">Renaming the project</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="jupyter.html">Jupyter Notebook</a>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -213,7 +219,7 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Feel++ Template Project</span>
+    <span class="title">Feel++ Project</span>
     <span class="version"></span>
   </div>
   <ul class="components">
@@ -326,7 +332,7 @@ MathJax.Hub.Config({
         <a class="title" href="../feelpp-tutorial-dev/index.html">Feel++ Programming Tutorial</a>
       </li>
       <li class="component is-current">
-        <a class="title" href="index.html">Feel++ Template Project</a>
+        <a class="title" href="index.html">Feel++ Project</a>
       </li>
       <li class="component">
         <a class="title" href="../mor/stable/index.html">Model Order Reduction</a>
@@ -361,7 +367,8 @@ MathJax.Hub.Config({
     <a href="../home/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="index.html">Feel++ Template Project</a></li>
+    <li><a href="index.html">Feel++ Project</a></li>
+    <li>{project_name} Environment</li>
     <li><a href="antora.html">antora environment</a></li>
   </ul>
 </nav>
@@ -396,10 +403,9 @@ It is part of the documentation of docs.feelpp.org[Feel++ docs] website.</p>
 <div class="listingblock">
 <div class="title">To generate the documentation</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"> $ cd docs
- $ npm install <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"> $ npm install <i class="conum" data-value="1"></i><b>(1)</b>
  $ npm run antora <i class="conum" data-value="2"></i><b>(2)</b>
- $ npm run serve <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+ $ npm run start <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">

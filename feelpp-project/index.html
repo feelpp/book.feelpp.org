@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+
+<head>
+        <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>{project_name} :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/feelpp-project/index.html">
@@ -96,9 +97,10 @@ MathJax.Hub.Config({
 <script>var uiRootPath = '../_'</script>
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
-  </head>
-  <body class="article">
-<header class="header">
+</head>
+
+<body class="article docs-home">
+    <header class="header">
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
       <div class="navbar-item feelpp-logo">
@@ -173,14 +175,15 @@ MathJax.Hub.Config({
     </div>
   </nav>
 </header>
-<div class="body">
-<a href="#" class="menu-expand-toggle"></a>
+
+    <div class="body">
+        <a href="#" class="menu-expand-toggle"></a>
 <div class="nav-container" data-component="feelpp-project" data-version="">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Feel++ Template Project</a></h3>
+    <h3 class="title"><a href="index.html">Feel++ Project</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -188,22 +191,28 @@ MathJax.Hub.Config({
     <a class="nav-link" href="index.html">Introduction</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">{project_name} Environment</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="cmake.html">cmake environment</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="antora.html">antora environment</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="vscode.html">vscode integration</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="githubactions.html">Github Actions</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="rename.html">Renaming the project</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="jupyter.html">Jupyter Notebook</a>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -212,7 +221,7 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Feel++ Template Project</span>
+    <span class="title">Feel++ Project</span>
     <span class="version"></span>
   </div>
   <ul class="components">
@@ -325,7 +334,7 @@ MathJax.Hub.Config({
         <a class="title" href="../feelpp-tutorial-dev/index.html">Feel++ Programming Tutorial</a>
       </li>
       <li class="component is-current">
-        <a class="title" href="index.html">Feel++ Template Project</a>
+        <a class="title" href="index.html">Feel++ Project</a>
       </li>
       <li class="component">
         <a class="title" href="../mor/stable/index.html">Model Order Reduction</a>
@@ -354,96 +363,273 @@ MathJax.Hub.Config({
     </div>
   </aside>
 </div>
-<main class="article">
-<div class="toolbar" role="navigation">
-  <button class="nav-toggle"></button>
-    <a href="../home/index.html" class="home-link"></a>
-  <nav class="breadcrumbs" aria-label="breadcrumbs">
-  <ul>
-    <li><a href="index.html">Feel++ Template Project</a></li>
-    <li><a href="index.html">Introduction</a></li>
-  </ul>
-</nav>
+        <main class="article">
+            <div class="toolbar" role="navigation">
+                <div class="toolbar-wrapper">
+                    <button class="nav-toggle"></button>
+                </div>
+            </div>
 
-  
-    <div class="edit-this-page"><a href="https://github.com/feelpp/feelpp-project/edit/master/docs/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
-  
-  <div class="page-downloads">
-  <span class="label">Download as</span>
-  <ul class="download-options">
-    <li>
-      <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
-         class="pdf-download">
-        <img class="pdf-file-icon icon" src="../_/img/pdf.svg"/> .pdf
-      </a>
-    </li>
-  </ul>
-</div>
-</div>
-
-  <div class="content">
-<aside class="toc sidebar" data-title="Contents" data-levels="2">
-  <div class="toc-menu"></div>
-</aside>
-<article class="doc">
+            <div class="content">
+                <article class="doc">
 <h1 class="page">{project_name}</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Feel++ is a C++ library for the numerical simulation of partial differential equations. It is designed to be easy to use and to extend.
-{feelpp }is a free software distributed under the terms of the GNU General Public License version 3.</p>
+<div class="paragraph lead">
+<p>{project_name} is a Feel++ project. It was created using the repository <a href="https://github.com/feelpp/feelpp-project"><code>feelpp/feelpp-project</code></a>.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_installation"><a class="anchor" href="#_installation"></a>1. Installation</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The installation procedure is as follows:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ cmake --preset default <i class="conum" data-value="1"></i><b>(1)</b>
-$ cmake --build --preset default <i class="conum" data-value="2"></i><b>(2)</b>
-$ cmake --build --preset default -t install <i class="conum" data-value="3"></i><b>(3)</b>
-$ ctest --preset default <i class="conum" data-value="4"></i><b>(4)</b>
-$ cmake --build --preset default -t package <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Configure the project</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Build the project</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Install the project</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Run the tests</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Package the project</td>
-</tr>
-</table>
-</div>
-</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Coding</dt>
+<dd>
+<p><a href="overview.html" class="xref page">Feel++ C++ and Python</a> codes are available to help you get starting with using and coding with Feel++.</p>
+</dd>
+<dt class="hdlist1">Documenting</dt>
+<dd>
+<p>The <a href="overview.html" class="xref page">documentation</a> is written using the <a href="https://docs.asciidoc.org">Asciidoc plain text format</a> and <a href="https://docs.antora.org">Antora</a> to produce the documentation website. It is here to help you start with {project_name} documentation.</p>
+</dd>
+</dl>
 </div>
 <nav class="pagination">
   <span class="next"><a href="cmake.html">cmake environment</a></span>
 </nav>
 </article>
-  </div>
-</main>
+            </div>
+
+            <div class="content">
+                <article class="doc">
+                    <div class="actions">
+                        <a href="../user/stable/install/index.html" class="button primary">Quickstart</a>
+                        <a href="../user/stable/index.html" class="button secondary">Overview</a>
+                        <a href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" class="button secondary"
+                           style="background-color: #FFA500; color: black;">Join Community</a>
+                    </div>
+                </article>
+            </div>
+
+            <div class="content">
+                <article class="doc">
+                    <h2>Recommended Resources</h2>
+                    <div class="books">
+                        <div class="book-cover">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 262.222">
+    <a href="/user/stable/index.html">
+      <linearGradient gradientUnits="userSpaceOnUse" x1="99.501" y1="2090.696" x2="99.501" y2="2352.807"
+                      id="gradient-user-manual"
+                      gradientTransform="matrix(0.795741, 0.605637, -0.762818, 1.000426, 1715.531158, -2151.904888)">
+        <stop offset="0" style="stop-color: #1ddaff;"/>
+        <stop offset="1" style="stop-color: rgba(0, 0, 0, 1)"/>
+      </linearGradient>
+      <path fill-rule="evenodd" stroke="#000" stroke-width=".111"
+            d="M 0 0 L 199.889 0 L 199.889 262.111 L 0 262.111 L 0 0 Z" style="fill: url(#gradient-user-manual);">
+        <title>background</title>
+      </path>
+      <use href="../_/img/book_cover_simple.svg#book" width="200" height="262.222" x="0" y="0"/>
+      <text x="95" y="92" style="font-size: 14px;
+    text-anchor: middle;
+    font-family: 'DejaVu Sans', serif;
+    font-weight: 800;
+    text-align: start;
+    letter-spacing: 0;
+    word-spacing: 0;
+    fill: white;
+    font-style: italic;">
+        USER MANUAL
+      </text>
+    </a>
+  </svg>
 </div>
-<footer class="footer">
+                        <div class="book-cover">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 262.222">
+    <a href="/toolboxes/stable/index.html">
+      <linearGradient gradientUnits="userSpaceOnUse" x1="99.501" y1="2090.696" x2="99.501" y2="2352.807"
+                      id="gradient-toolboxes-manual"
+                      gradientTransform="matrix(0.795741, 0.605637, -0.762818, 1.000426, 1715.531158, -2151.904888)">
+        <stop offset="0" style="stop-color: #1dffbf;"/>
+        <stop offset="1" style="stop-color: rgba(0, 0, 0, 1)"/>
+      </linearGradient>
+      <path fill-rule="evenodd" stroke="#000" stroke-width=".111"
+            d="M 0 0 L 199.889 0 L 199.889 262.111 L 0 262.111 L 0 0 Z" style="fill: url(#gradient-toolboxes-manual);">
+        <title>background</title>
+      </path>
+      <use href="../_/img/book_cover_simple.svg#book" width="200" height="262.222" x="0" y="0"/>
+      <text x="95" y="92" style="font-size: 14px;
+    text-anchor: middle;
+    font-family: 'DejaVu Sans', serif;
+    font-weight: 800;
+    text-align: start;
+    letter-spacing: 0;
+    word-spacing: 0;
+    fill: white;
+    font-style: italic;">
+        TOOLBOXES MANUAL
+      </text>
+    </a>
+  </svg>
+</div>
+                        <div class="book-cover">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 262.222">
+    <a href="/cases/stable/cfpdes/index.html">
+      <linearGradient gradientUnits="userSpaceOnUse" x1="99.501" y1="2090.696" x2="99.501" y2="2352.807"
+                      id="gradient-cases-manual"
+                      gradientTransform="matrix(0.795741, 0.605637, -0.762818, 1.000426, 1715.531158, -2151.904888)">
+        <stop offset="0" style="stop-color: #1dffbf;"/>
+        <stop offset="1" style="stop-color: rgba(0, 0, 0, 1)"/>
+      </linearGradient>
+      <path fill-rule="evenodd" stroke="#000" stroke-width=".111"
+            d="M 0 0 L 199.889 0 L 199.889 262.111 L 0 262.111 L 0 0 Z" style="fill: url(#gradient-cases-manual);">
+        <title>background</title>
+      </path>
+      <use href="../_/img/book_cover_simple.svg#book" width="200" height="262.222" x="0" y="0"/>
+      <text x="95" y="92" style="font-size: 14px;
+    text-anchor: middle;
+    font-family: 'DejaVu Sans', serif;
+    font-weight: 800;
+    text-align: start;
+    letter-spacing: 0;
+    word-spacing: 0;
+    fill: white;
+    font-style: italic;">
+        TOOLBOXES CASE STUDIES
+      </text>
+    </a>
+  </svg>
+</div>
+                        <div class="book-cover">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 262.222">
+    <a href="">
+      <linearGradient gradientUnits="userSpaceOnUse" x1="99.501" y1="2090.696" x2="99.501" y2="2352.807"
+                      id="gradient-dev-manual"
+                      gradientTransform="matrix(0.795741, 0.605637, -0.762818, 1.000426, 1715.531158, -2151.904888)">
+        <stop offset="0" style="stop-color: #50377b;"/>
+        <stop offset="1" style="stop-color: rgba(0, 0, 0, 1)"/>
+      </linearGradient>
+      <path fill-rule="evenodd" stroke="#000" stroke-width=".111"
+            d="M 0 0 L 199.889 0 L 199.889 262.111 L 0 262.111 L 0 0 Z" style="fill: url(#gradient-dev-manual);">
+        <title>background</title>
+      </path>
+      <use href="../_/img/book_cover_simple.svg#book" width="200" height="262.222" x="0" y="0"/>
+      <text x="95" y="92" style="font-size: 14px;
+    text-anchor: middle;
+    font-family: 'DejaVu Sans', serif;
+    font-weight: 800;
+    text-align: start;
+    letter-spacing: 0;
+    word-spacing: 0;
+    fill: white;
+    font-style: italic;">
+        DEV. MANUAL
+      </text>
+    </a>
+  </svg>
+</div>
+                        <div class="book-cover">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 262.222">
+    <a href="/data/stable/index.html">
+      <linearGradient gradientUnits="userSpaceOnUse" x1="99.501" y1="2090.696" x2="99.501" y2="2352.807"
+                      id="gradient-data-manual"
+                      gradientTransform="matrix(0.795741, 0.605637, -0.762818, 1.000426, 1715.531158, -2151.904888)">
+        <stop offset="0" style="stop-color: #0080FF;"/>
+        <stop offset="1" style="stop-color: rgba(0, 0, 0, 1)"/>
+      </linearGradient>
+      <path fill-rule="evenodd" stroke="#000" stroke-width=".111"
+            d="M 0 0 L 199.889 0 L 199.889 262.111 L 0 262.111 L 0 0 Z" style="fill: url(#gradient-data-manual);">
+        <title>background</title>
+      </path>
+      <use href="../_/img/book_cover_simple.svg#book" width="200" height="262.222" x="0" y="0"/>
+      <text x="95" y="92" style="font-size: 14px;
+    text-anchor: middle;
+    font-family: 'DejaVu Sans', serif;
+    font-weight: 800;
+    text-align: start;
+    letter-spacing: 0;
+    word-spacing: 0;
+    fill: white;
+    font-style: italic;">
+        DATA MANUAL
+      </text>
+    </a>
+  </svg>
+</div>
+                        <div class="book-cover">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 262.222">
+    <a href="/math/fem/index.html">
+      <linearGradient gradientUnits="userSpaceOnUse" x1="99.501" y1="2090.696" x2="99.501" y2="2352.807"
+                      id="gradient-fem-book"
+                      gradientTransform="matrix(0.795741, 0.605637, -0.762818, 1.000426, 1715.531158, -2151.904888)">
+        <stop offset="0" style="stop-color: red;"/>
+        <stop offset="1" style="stop-color: rgba(0, 0, 0, 1)"/>
+      </linearGradient>
+      <path fill-rule="evenodd" stroke="#000" stroke-width=".111"
+            d="M 0 0 L 199.889 0 L 199.889 262.111 L 0 262.111 L 0 0 Z" style="fill: url(#gradient-fem-book);">
+        <title>background</title>
+      </path>
+      <use href="../_/img/book_cover_simple.svg#book" width="200" height="262.222" x="0" y="0"/>
+      <text x="95" y="92" style="font-size: 14px;
+    text-anchor: middle;
+    font-family: 'DejaVu Sans', serif;
+    font-weight: 800;
+    text-align: start;
+    letter-spacing: 0;
+    word-spacing: 0;
+    fill: white;
+    font-style: italic;">
+        FEM
+      </text>
+    </a>
+  </svg>
+</div>
+                        <div class="book-cover">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 262.222">
+    <a href="/math/fem/index.html">
+      <linearGradient gradientUnits="userSpaceOnUse" x1="99.501" y1="2090.696" x2="99.501" y2="2352.807"
+                      id="gradient-hdg-book"
+                      gradientTransform="matrix(0.795741, 0.605637, -0.762818, 1.000426, 1715.531158, -2151.904888)">
+        <stop offset="0" style="stop-color: magenta;"/>
+        <stop offset="1" style="stop-color: rgba(0, 0, 0, 1)"/>
+      </linearGradient>
+      <path fill-rule="evenodd" stroke="#000" stroke-width=".111"
+            d="M 0 0 L 199.889 0 L 199.889 262.111 L 0 262.111 L 0 0 Z" style="fill: url(#gradient-hdg-book);">
+        <title>background</title>
+      </path>
+      <use href="../_/img/book_cover_simple.svg#book" width="200" height="262.222" x="0" y="0"/>
+      <text x="95" y="92" style="font-size: 14px;
+    text-anchor: middle;
+    font-family: 'DejaVu Sans', serif;
+    font-weight: 800;
+    text-align: start;
+    letter-spacing: 0;
+    word-spacing: 0;
+    fill: white;
+    font-style: italic;">
+        HDG
+      </text>
+    </a>
+  </svg>
+</div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="content">
+                <article class="doc">
+                    <h2>Latest news</h2>
+                    <div class="latest-news">
+                        <div class="twitter-timeline-container">
+                            <a class="twitter-timeline" href="https://twitter.com/feelpp?ref_src=twsrc%5Etfw"
+                                data-tweet-limit="3" data-height="500" data-width="420">Tweets by @feelpp</a>
+                        </div>
+                        <div class="twitter-timeline-container">
+                            <a class="twitter-timeline" href="https://twitter.com/cemosis?ref_src=twsrc%5Etfw"
+                                data-tweet-limit="3" data-height="500" data-width="420">Tweets by @cemosis</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+        </main>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+
+    <footer class="footer">
   <div class="container">
     <div class="sharethis-inline-share-buttons"></div>
     <div class="footer-links">
@@ -536,5 +722,6 @@ function toggleFullScreen() {
    }
 }
 </script>
-  </body>
+</body>
+
 </html>

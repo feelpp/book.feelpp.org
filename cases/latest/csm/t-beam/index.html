@@ -7,6 +7,7 @@
     <link rel="canonical" href="https://docs.feelpp.org/cases/stable/csm/t-beam/index.html">
     <link rel="prev" href="../sheet-rounding/index.html">
     <link rel="next" href="../vierendeel-truss/index.html">
+    <meta name="description" content="We simulate a T-beam deformation under load">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
@@ -601,7 +602,7 @@ MathJax.Hub.Config({
         <a class="title" href="../../../../feelpp-tutorial-dev/index.html">Feel++ Programming Tutorial</a>
       </li>
       <li class="component">
-        <a class="title" href="../../../../feelpp-project/index.html">Feel++ Template Project</a>
+        <a class="title" href="../../../../feelpp-project/index.html">Feel++ Project</a>
       </li>
       <li class="component">
         <a class="title" href="../../../../mor/stable/index.html">Model Order Reduction</a>
@@ -698,15 +699,15 @@ T bars are often used for general fabrication.</p>
 </div>
 <div id="command-line" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpirun -np 4 feelpp_toolbox_solid --case "github:{repo:toolbox,path:examples/modules/csm/examples/t-beam}"</code></pre>
+<pre class="highlightjs highlight"><code class="language-mpirun hljs" data-lang="mpirun">mpirun -np 4 feelpp_toolbox_solid --case "github:{repo:toolbox,path:examples/modules/csm/examples/t-beam}"</code></pre>
 </div>
 </div>
-<button class="btn" data-clipboard-target="#command-line">
-Copy command line to clipboard
-</button>
-<button class="btn" data-clipboard-text="github:{repo:toolbox,path:examples/modules/csm/examples/t-beam}">
-Copy case option to clipboard
-</button>
+<div class="listingblock mpirun-caseopt">
+<div class="title">Case option</div>
+<div class="content">
+<pre>--case "github:{repo:toolbox,path:examples/modules/csm/examples/t-beam}"</pre>
+</div>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -851,78 +852,10 @@ In the lower picture a 100x scale factor was used to make the displacement easy 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_model_3d"><a class="anchor" href="#_model_3d"></a>6.3. Model 3D</h3>
-		<div id="root" style="margin: auto; width: 100%; height: 600px;      padding: 10px;"></div>
-
-		<script>
-
-			var containerId = 'root';
-
-			var data = [
-                        {"filePath":"examples/csm/T-beam/np_24/solid.exports/Export.case","expirationDate":"2020-01-20 02:06:55","dataLoadSignature":"3fef1f5c091a4ef5f2deb1ac4449e51f0a4eb8ed92ceb46f18847ab2164a9a74ef2b941d53cd020d2770a11513928a4adfd9683b35f2823a10f665f086d1857b2af3d82a89f6e622eb2c16439394dbe698fac5ff71331896e02d6f87727ca64a69a11e697e5f78050811d5530e9344b31bc4b2f2e7fcf3e4d419f761a2a2956c"}
-			];
-
-			var configuration = {
-				connection: {
-                                        sessionManagerURL: 'http://viewer.feelpp.org:80/paraview',
-					timeout: 60,
-				},
-				render: {
-					quality: {
-						still: 100,
-						interactive: 75,
-					},
-					ratio: {
-						still: 1,
-						interactive: 0.75,
-					},
-				},
-				statisticsDisplayStatus: true,
-				visualizationParameterEditor: {
-					displayStatus: true,
-					initialOpenStatus: false,
-					sections: {
-						view: {
-							enableStatus: true,
-							initialOpenStatus: true,
-						},
-						colorMap: {
-							enableStatus: true,
-							initialOpenStatus: false,
-						},
-						camera: {
-							enableStatus: true,
-							initialOpenStatus: false,
-						},
-						legend: {
-							enableStatus: true,
-							initialOpenStatus: false,
-						},
-						grid: {
-							enableStatus: true,
-							initialOpenStatus: false,
-						},
-						filters: {
-							enableStatus: true,
-							initialOpenStatus: false,
-						},
-						others: {
-							enableStatus: true,
-							initialOpenStatus: false,
-						},
-					},
-				},
-				screenShot: {
-					format: 'png',
-					quality: 1,
-				},
-			};
-
-			var viewer = new Cemosis.Viewer(containerId, data[0].dataLoadSignature, configuration);
-		</script>
-<div id="vtkjs_bb180ff5-eb65-4182-b656-b0ac486ccd66" style="height: 500px; width: 100%;"></div>
+<h3 id="_3d_visualisation"><a class="anchor" href="#_3d_visualisation"></a>6.3. 3D Visualisation</h3>
+<div id="vtkjs_51f0bf5f-dbff-4948-a679-a93cfc4e721a" style="height: 500px; width: 100%;"></div>
 <script>
-feelppVtkJs.createSceneImporter("vtkjs_bb180ff5-eb65-4182-b656-b0ac486ccd66", {
+feelppVtkJs.createSceneImporter("vtkjs_51f0bf5f-dbff-4948-a679-a93cfc4e721a", {
   fileURL: "https://girder.math.unistra.fr/api/v1/file/5ad503e0b0e9574027047d84/download",
   objects: {
   "deformation": [

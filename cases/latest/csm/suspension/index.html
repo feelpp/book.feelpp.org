@@ -7,6 +7,7 @@
     <link rel="canonical" href="https://docs.feelpp.org/cases/stable/csm/suspension/index.html">
     <link rel="prev" href="../ribs/index.html">
     <link rel="next" href="../sensor/index.html">
+    <meta name="description" content="We simulate the displacement of the wishbones by the effect of a sinusoidal excitation.">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
@@ -600,7 +601,7 @@ MathJax.Hub.Config({
         <a class="title" href="../../../../feelpp-tutorial-dev/index.html">Feel++ Programming Tutorial</a>
       </li>
       <li class="component">
-        <a class="title" href="../../../../feelpp-project/index.html">Feel++ Template Project</a>
+        <a class="title" href="../../../../feelpp-project/index.html">Feel++ Project</a>
       </li>
       <li class="component">
         <a class="title" href="../../../../mor/stable/index.html">Model Order Reduction</a>
@@ -706,15 +707,15 @@ Nowadays they are manufactured in many design, but the effect of the main loads 
 </div>
 <div id="command-line" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpirun -np 4 feelpp_toolbox_solid --case "github:{repo:toolbox,path:examples/modules/csm/examples/suspension}"</code></pre>
+<pre class="highlightjs highlight"><code class="language-mpirun hljs" data-lang="mpirun">mpirun -np 4 feelpp_toolbox_solid --case "github:{repo:toolbox,path:examples/modules/csm/examples/suspension}"</code></pre>
 </div>
 </div>
-<button class="btn" data-clipboard-target="#command-line">
-Copy command line to clipboard
-</button>
-<button class="btn" data-clipboard-text="github:{repo:toolbox,path:examples/modules/csm/examples/suspension}">
-Copy case option to clipboard
-</button>
+<div class="listingblock mpirun-caseopt">
+<div class="title">Case option</div>
+<div class="content">
+<pre>--case "github:{repo:toolbox,path:examples/modules/csm/examples/suspension}"</pre>
+</div>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -854,15 +855,12 @@ The maximum displacement is 1.778 mm. The design of the wishbones is very good b
 </tr>
 </tbody>
 </table>
-<div class="sidebarblock">
-<div class="content">
-<div class="title">3D interactive model</div>
 <div class="paragraph">
 <p>Finally, we provide a 3D interactive model of the fishbone</p>
 </div>
-<div id="vtkjs_a1efa5df-bfd9-4d4a-a694-3e1d947aacd3" style="height: 500px; width: 100%;"></div>
+<div id="vtkjs_020feb7f-8e25-4eee-b29e-8f51cdbd0618" style="height: 500px; width: 100%;"></div>
 <script>
-feelppVtkJs.createSceneImporter("vtkjs_a1efa5df-bfd9-4d4a-a694-3e1d947aacd3", {
+feelppVtkJs.createSceneImporter("vtkjs_020feb7f-8e25-4eee-b29e-8f51cdbd0618", {
   fileURL: "https://girder.math.unistra.fr/api/v1/file/5ad4b768b0e9574027047d73/download",
   objects: {
   "deformation": [
@@ -879,8 +877,6 @@ feelppVtkJs.createSceneImporter("vtkjs_a1efa5df-bfd9-4d4a-a694-3e1d947aacd3", {
 }
 })
 </script>
-</div>
-</div>
 </div>
 </div>
 </div>

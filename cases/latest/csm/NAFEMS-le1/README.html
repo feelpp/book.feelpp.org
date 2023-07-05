@@ -7,6 +7,7 @@
     <link rel="canonical" href="https://docs.feelpp.org/cases/stable/csm/NAFEMS-le1/README.html">
     <link rel="prev" href="../solenoid/README.html">
     <link rel="next" href="../NAFEMS-le10/README.html">
+    <meta name="description" content="We simulate the NAFEMS LE1 benchmark with Feel++.">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
@@ -599,7 +600,7 @@ MathJax.Hub.Config({
         <a class="title" href="../../../../feelpp-tutorial-dev/index.html">Feel++ Programming Tutorial</a>
       </li>
       <li class="component">
-        <a class="title" href="../../../../feelpp-project/index.html">Feel++ Template Project</a>
+        <a class="title" href="../../../../feelpp-project/index.html">Feel++ Project</a>
       </li>
       <li class="component">
         <a class="title" href="../../../../mor/stable/index.html">Model Order Reduction</a>
@@ -673,8 +674,17 @@ MathJax.Hub.Config({
 <h1 class="page">NAFEMS LE1 Benchmarck</h1>
 <div id="preamble">
 <div class="sectionbody">
-<div class="paragraph">
-<p>This benchmark is extract from the <a href="http://things.maths.cam.ac.uk/computing/software/abaqus_docs/docs/v6.12/pdf_books/BENCHMARKS.pdf">Abaqus Benchmarks Manual</a>.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This benchmark is extract from the <a href="http://things.maths.cam.ac.uk/computing/software/abaqus_docs/docs/v6.12/pdf_books/BENCHMARKS.pdf">Abaqus Benchmarks Manual</a>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -694,15 +704,15 @@ MathJax.Hub.Config({
 </div>
 <div id="command-line" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mpirun -np 4 feelpp_toolbox_solid --case "github:{path:toolboxes/solid/NAFEMS-LE1}"</code></pre>
+<pre class="highlightjs highlight"><code class="language-mpirun hljs" data-lang="mpirun">mpirun -np 4 feelpp_toolbox_solid --case "github:{path:toolboxes/solid/NAFEMS-LE1}"</code></pre>
 </div>
 </div>
-<button class="btn" data-clipboard-target="#command-line">
-Copy command line to clipboard
-</button>
-<button class="btn" data-clipboard-text="github:{path:toolboxes/solid/NAFEMS-LE1}">
-Copy case option to clipboard
-</button>
+<div class="listingblock mpirun-caseopt">
+<div class="title">Case option</div>
+<div class="content">
+<pre>--case "github:{path:toolboxes/solid/NAFEMS-LE1}"</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
