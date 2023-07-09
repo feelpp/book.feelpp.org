@@ -755,15 +755,18 @@ app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) <i class="
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">app.setLogVerbosityLevel(0) <i class="conum" data-value="1"></i><b>(1)</b>
 geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+
 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) <i class="conum" data-value="2"></i><b>(2)</b>
+
 Xh=feelpp.functionSpace(mesh=mesh,space="Pch",order=1) <i class="conum" data-value="3"></i><b>(3)</b>
 P0h=feelpp.functionSpace(mesh=mesh,space="Pdh",order=0) <i class="conum" data-value="4"></i><b>(4)</b>
 u=Xh.element() <i class="conum" data-value="5"></i><b>(5)</b>
 u.on(range=feelpp.elements(mesh), expr=feelpp.expr("sin(2*pi*x)*cos(pi*y):x:y")) <i class="conum" data-value="6"></i><b>(6)</b>
+
 e = feelpp.exporter(mesh=mesh)  <i class="conum" data-value="7"></i><b>(7)</b>
-e.addScalar("a_scalar", 1.) <i class="conum" data-value="8"></i><b>(8)</b>
-e.addP1c("u",u) <i class="conum" data-value="9"></i><b>(9)</b>
-e.addP0d("pid",feelpp.pid( P0h )) <i class="conum" data-value="10"></i><b>(10)</b>
+e.add("a_scalar", 1.) <i class="conum" data-value="8"></i><b>(8)</b>
+e.add("u",u) <i class="conum" data-value="9"></i><b>(9)</b>
+e.add("pid",feelpp.pid( P0h )) <i class="conum" data-value="10"></i><b>(10)</b>
 e.save()   <i class="conum" data-value="11"></i><b>(11)</b></code></pre>
 </div>
 </div>
@@ -834,21 +837,24 @@ e.save()   <i class="conum" data-value="11"></i><b>(11)</b></code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">!ls exports/ensightgold/myapp</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from xvfbwrapper import Xvfb
+vdisplay = Xvfb()
+vdisplay.start()
+import pyvista as pv
+import os
+pv.set_jupyter_backend('panel')
+
+def pv_get_mesh(mesh_path):
+    reader = pv.get_reader(mesh_path)
+    mesh = reader.read()
+    return mesh
+def pv_plot(mesh, field="u", clim=None, cmap='viridis', cpos='xy', show_scalar_bar=True, show_edges=True):
+    mesh.plot(scalars=field, clim=clim, cmap=cmap, cpos=cpos, show_scalar_bar=show_scalar_bar, show_edges=show_edges)
+
+mesh = pv_get_mesh(f"exports/ensightgold/Exporter/Exporter.case")
+pv_plot(mesh)</code></pre>
 </div>
 </div>
-<details class="result">
-<summary class="title">Results</summary>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre>myapp-1.sos          myapp.geo.0001       myapp.u.scl.0001
-myapp-paraview-1.sos myapp.pid.scl.0001
-myapp.case           myapp.timeset</pre>
-</div>
-</div>
-</div>
-</details>
 <nav class="pagination">
   <span class="prev"><a href="integrals.html">Computing integrals</a></span>
   <span class="next"><a href="../pyfeelpptoolboxes/index.html">pyFeel++ Toolboxes</a></span>
