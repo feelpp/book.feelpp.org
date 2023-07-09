@@ -73,7 +73,7 @@ vdisplay = Xvfb()
 vdisplay.start()
 import pyvista as pv
 import os
-pv.set_jupyter_backend('panel')
+pv.set_jupyter_backend('pythreejs')
 
 def pv_get_mesh(mesh_path):
     reader = pv.get_reader(mesh_path)
