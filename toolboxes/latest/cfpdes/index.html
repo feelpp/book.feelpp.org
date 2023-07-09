@@ -717,7 +717,50 @@ MathJax.Hub.Config({
 <div class="sect1">
 <h2 id="_what_are_coefficient_form_pdes"><a class="anchor" href="#_what_are_coefficient_form_pdes"></a>1. What are Coefficient Form PDEs?</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>Coefficient forms in PDE (Partial Differential Equation) toolboxes refer to the representation of the PDE problem in terms of its coefficient functions. In the context of PDEs, the coefficients represent the properties and characteristics of the equation, such as the diffusion coefficient, convection coefficient, reaction coefficient, and others.</p>
+</div>
+<div class="paragraph">
+<p>Different types of PDEs, such as elliptic, parabolic, or hyperbolic equations, have specific coefficient forms associated with them.
+These coefficient forms capture the behavior and physical properties of the underlying phenomena being modeled.</p>
+</div>
+<div class="paragraph">
+<p>For example, in the context of the Poisson equation, a commonly encountered elliptic equation, the coefficient form is often written as:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[-\nabla \cdot (c \nabla u) + a u = f\]
+</div>
+</div>
+<div class="paragraph">
+<p>Here,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(c\) represents the diffusion coefficient,</p>
+</li>
+<li>
+<p>\(a\) represents the reaction coefficient,</p>
+</li>
+<li>
+<p>\(u\) is the unknown function, and</p>
+</li>
+<li>
+<p>\(f\) is the source term.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The coefficient form provides a structured way to express the PDE problem and allows for efficient numerical solution techniques.</p>
+</div>
+<div class="paragraph">
+<p>PDE toolboxes, such as those available in Feel++, provide functionality to handle coefficient forms of various PDEs.
+They offer tools for defining the coefficient functions, setting boundary conditions, discretizing the problem, and solving it numerically using appropriate algorithms and methods.</p>
+</div>
+<div class="paragraph">
+<p>By utilizing coefficient forms in PDE toolboxes, researchers and engineers can conveniently formulate and solve complex PDE problems with the necessary coefficients and boundary conditions, enabling the analysis and simulation of a wide range of physical phenomena.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -837,7 +880,7 @@ d_i \frac{\partial u_i}{\partial t} + \nabla \cdot \left( -c_i \nabla u_i - \alp
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(c\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">scalar or matricx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar or matrix</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">scalar or matrix</p></td>
 </tr>
 <tr>
@@ -867,12 +910,140 @@ d_i \frac{\partial u_i}{\partial t} + \nabla \cdot \left( -c_i \nabla u_i - \alp
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In the following, <code>mu</code> is a parameter defined e.g. in the <code>Parameters</code> section.
+</td>
+</tr>
+</table>
+</div>
+<div id="ex:scalar" class="sidebarblock examp">
+<div class="content">
+<div class="title">Examples of coefficients for scalar unknowns</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "Models":
+    {
+        "cfpdes":{
+            "equations":["myscalarpde"]
+        },
+        "mypde":{
+            "setup":{
+                "unknown":{
+                    "basis":"Pch1", // the unknown is a scalar field
+                    "name":"u",
+                    "symbol":"u"
+                },
+                "coefficients":{
+                    "d": "1",
+                    "c": "x+y:x:y",
+                    "c": "{x+y,x,y,x-y}:t:x:y", // 2D matrix
+                    "c": "{x+y,x,z,x,y,x-y,z,y,z*mu}:t:x:y:mu", // 3D matrix
+                    "alpha": "{x,y}:x:y",
+                    "gamma": "{x,y}:x:y",
+                    "beta": "{t+x,y}:x:y:t",
+                    "a": "x+y:x:y",
+                    "f": "x+y*t:x:y:t"
+                }
+            }
+        }
+    },
+    "Parameters":{
+        "mu": 0.5
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="ex:vectorial" class="sidebarblock examp">
+<div class="content">
+<div class="title">Examples of coefficients for vectorial unknowns</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "Models":
+    {
+        "cfpdes":{
+            "equations":["myvectorialpde"]
+        },
+        "mypde":{
+            "setup":{
+                "unknown":{
+                    "basis":"Pch1v", // the unknown is a vector field
+                    "name":"u",
+                    "symbol":"u"
+                },
+                "coefficients":{
+                    "d": "1",
+                    "c": "x+y:x:y",
+                    "c": "{x+y,x,y,x-y}:t:x:y", // 2D matrix
+                    "c": "{x+y,x,z,x,y,x-y,z,y,z*mu}:t:x:y:mu", // 3D matrix
+                    "alpha": "x*y*mu:x:y:mu", // scalar
+                    "alpha": "{x,y,y,x*mu}:x:y:mu", // 2D matrix
+                    "gamma": "{x,y,y,x}:x:y", // 2D matrix
+                    "beta": "{t+x,y}:x:y:t",
+                    "a": "x+y:x:y",
+                    "f": "{x,x+y*t}:x:y:t"
+                }
+            }
+        }
+    },
+    "Parameters":{
+        "mu": 0.5
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_initial_conditions"><a class="anchor" href="#_initial_conditions"></a>4. Initial Conditions</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>Initial condition specify the initial conditions for each unknown variable in the equations. Either expressions or fields can be used to define the initial conditions, see more details in <a href="../../stable/modeling-analysis-using-json-files.html#_initialconditions" class="xref page">toolboxes:ROOT:modeling-analysis-using-json-files.adoc#_initialconditions</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+the shape of the initial condition must be the same as the unknown shape.
+</td>
+</tr>
+</table>
+</div>
+<div id="ex:initialconditions" class="sidebarblock examp">
+<div class="content">
+<div class="title">Examples of initial conditions using an expression</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"InitialConditions":{
+    "mypde": {
+        "u": {
+            "Expression": {
+                "myic": {
+                    "markers": "Omega",
+                    "expr": "2*cos(t)*sin(x)*cos(y):t:x:y"
+                }
+            }
+        }
+    }
+},</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -901,12 +1072,16 @@ In a fluid flow problem, a Dirichlet boundary condition may specify the velocity
 <div class="paragraph">
 <p>The shape of the Dirichlet condition is the same as the unknown shape.</p>
 </div>
-<div class="stemblock">
+<div id="def:dirichlet" class="sidebarblock def">
+<div class="content">
 <div class="title">Dirichlet condition</div>
+<div class="stemblock">
 <div class="content">
 \[\begin{eqnarray*}
-u_i = g_i(u_j,x,t,\mu), \quad i=1,\dots,N, \quad j=1,\dots,N(j \neq i)
+u_i = g_i(x,t,\mu), \quad i=1,\dots,N
 \end{eqnarray*}\]
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -934,12 +1109,16 @@ It provides additional information about the behavior of the solution at the bou
 <div class="paragraph">
 <p>The shape of the Neumann condition is the same as the unknown shape.</p>
 </div>
-<div class="stemblock">
+<div id="def:neumann" class="sidebarblock def">
+<div class="content">
 <div class="title">Neumann condition</div>
+<div class="stemblock">
 <div class="content">
 \[\begin{eqnarray*}
-\frac{\partial u_i}{\partial n} = g_i(u_j,\frac{\partial u_j}{\partial x_k},x,t,\mu), \quad i=1,\dots,N, \quad j=1,\dots,N \quad k=1,\dots,d
+- c \frac{\partial u_i}{\partial n} = g_i(u_j,\frac{\partial u_j}{\partial x_k},x,t,\mu), \quad i=1,\dots,N, \quad j=1,\dots,N \quad k=0,\dots,d-1
 \end{eqnarray*}\]
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -961,17 +1140,21 @@ In a fluid flow problem, a Robin boundary condition may specify a slip coefficie
 <p>The Robin boundary condition is useful in modeling situations where the boundary is in contact with a medium that has a different thermal or mechanical behavior than the domain. It provides a more realistic and accurate description of the physical problem than using only Dirichlet or Neumann boundary conditions.</p>
 </div>
 <div class="paragraph">
-<p>The Robin conditions may depend  on the space variable \(x\), time \(t\), parameters \(\mu\) and the unknowns \(u_1, \dots, u_N\) other than the current one.</p>
+<p>The Robin conditions may depend  on the space variable \(x\), time \(t\), parameters \(\mu\).</p>
 </div>
 <div class="paragraph">
 <p>The shape of the Robin condition is the same as the unknown shape.</p>
 </div>
-<div class="stemblock">
+<div id="def:robin" class="sidebarblock def">
+<div class="content">
 <div class="title">Robin condition</div>
+<div class="stemblock">
 <div class="content">
 \[\begin{eqnarray*}
-\frac{\partial u_i}{\partial n} = \eta_i + \zeta_i u_i, \quad i=1,\dots,N
+- c \frac{\partial u_i}{\partial n} = \eta_i + \zeta_i u_i, \quad i=1,\dots,N
 \end{eqnarray*}\]
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -1215,10 +1398,7 @@ To enable them use, in the command-line or <code>.cfg</code> file, the option <c
 <div class="ulist checklist">
 <ul class="checklist">
 <li>
-<p><i class="fa fa-square-o"></i> The Poisson equation</p>
-</li>
-<li>
-<p><i class="fa fa-square-o"></i> The advection-diffusion-reaction equation</p>
+<p><i class="fa fa-check-square-o"></i> <a href="#user:python:pyfeelpptoolboxes/cfpdes.poisson.adoc" class="xref unresolved">The Poisson equation</a></p>
 </li>
 </ul>
 </div>
