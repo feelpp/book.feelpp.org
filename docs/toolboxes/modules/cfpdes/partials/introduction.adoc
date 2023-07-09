@@ -1,6 +1,38 @@
-== System of PDEs
 :cfpdes: Coefficient form PDE
 :stem: latexmath
+
+== What are Coefficient Form PDEs?
+
+
+Coefficient forms in PDE (Partial Differential Equation) toolboxes refer to the representation of the PDE problem in terms of its coefficient functions. In the context of PDEs, the coefficients represent the properties and characteristics of the equation, such as the diffusion coefficient, convection coefficient, reaction coefficient, and others.
+
+Different types of PDEs, such as elliptic, parabolic, or hyperbolic equations, have specific coefficient forms associated with them. 
+These coefficient forms capture the behavior and physical properties of the underlying phenomena being modeled.
+
+For example, in the context of the Poisson equation, a commonly encountered elliptic equation, the coefficient form is often written as:
+
+[stem]
+++++
+-\nabla \cdot (c \nabla u) + a u = f
+++++
+
+Here, 
+
+* stem:[c] represents the diffusion coefficient, 
+* stem:[a] represents the reaction coefficient, 
+* stem:[u] is the unknown function, and 
+* stem:[f] is the source term. 
+
+The coefficient form provides a structured way to express the PDE problem and allows for efficient numerical solution techniques.
+
+PDE toolboxes, such as those available in {feelpp}, provide functionality to handle coefficient forms of various PDEs. 
+They offer tools for defining the coefficient functions, setting boundary conditions, discretizing the problem, and solving it numerically using appropriate algorithms and methods.
+
+By utilizing coefficient forms in PDE toolboxes, researchers and engineers can conveniently formulate and solve complex PDE problems with the necessary coefficients and boundary conditions, enabling the analysis and simulation of a wide range of physical phenomena.
+
+
+== System of PDEs
+
 
 A lot of PDE(s) can be writen in a generic form, and depends mainly on the definition of coefficients.
 The generic form that we use is describe by the next equation, find stem:[u: \Omega \subset \mathbb{R}^d \longrightarrow \mathbb{R}^n] with stem:[d=2,3]  and stem:[n=1] (stem:[u] is a scalar field) or stem:[n=d](stem:[u] is a vector field) such that
@@ -53,7 +85,7 @@ We need also to respect some constraint on the coefficient shape as described in
 
 
 | stem:[d]      | scalar               | scalar
-| stem:[c]      | scalar or matricx    | scalar or matrix
+| stem:[c]      | scalar or matrix    | scalar or matrix
 | stem:[\alpha] | vectorial            | scalar or matrix 
 | stem:[\gamma] | vectorial            | matrix 
 | stem:[\beta]  | vectorial            | vectorial 
@@ -62,9 +94,114 @@ We need also to respect some constraint on the coefficient shape as described in
 
 |===
 
+NOTE: In the following, `mu` is a parameter defined e.g. in the `Parameters` section.
+
+.Examples of coefficients for scalar unknowns
+[.examp#ex:scalar]
+****
+[source,json]
+----
+{
+    "Models":
+    {
+        "cfpdes":{
+            "equations":["myscalarpde"]
+        },
+        "mypde":{
+            "setup":{
+                "unknown":{
+                    "basis":"Pch1", // the unknown is a scalar field
+                    "name":"u",
+                    "symbol":"u"
+                },
+                "coefficients":{
+                    "d": "1",
+                    "c": "x+y:x:y",
+                    "c": "{x+y,x,y,x-y}:t:x:y", // 2D matrix
+                    "c": "{x+y,x,z,x,y,x-y,z,y,z*mu}:t:x:y:mu", // 3D matrix
+                    "alpha": "{x,y}:x:y",
+                    "gamma": "{x,y}:x:y",
+                    "beta": "{t+x,y}:x:y:t",
+                    "a": "x+y:x:y",
+                    "f": "x+y*t:x:y:t"
+                }
+            }
+        }
+    },
+    "Parameters":{
+        "mu": 0.5
+    }
+}
+----
+****
+
+.Examples of coefficients for vectorial unknowns
+[.examp#ex:vectorial]
+****
+[source,json]
+----
+{
+    "Models":
+    {
+        "cfpdes":{
+            "equations":["myvectorialpde"]
+        },
+        "mypde":{
+            "setup":{
+                "unknown":{
+                    "basis":"Pch1v", // the unknown is a vector field
+                    "name":"u",
+                    "symbol":"u"
+                },
+                "coefficients":{
+                    "d": "1",
+                    "c": "x+y:x:y",
+                    "c": "{x+y,x,y,x-y}:t:x:y", // 2D matrix
+                    "c": "{x+y,x,z,x,y,x-y,z,y,z*mu}:t:x:y:mu", // 3D matrix
+                    "alpha": "x*y*mu:x:y:mu", // scalar
+                    "alpha": "{x,y,y,x*mu}:x:y:mu", // 2D matrix
+                    "gamma": "{x,y,y,x}:x:y", // 2D matrix
+                    "beta": "{t+x,y}:x:y:t", 
+                    "a": "x+y:x:y",
+                    "f": "{x,x+y*t}:x:y:t"
+                }
+            }
+        }
+    },
+    "Parameters":{
+        "mu": 0.5
+    }
+}
+
+----
+****
+
 
 == Initial Conditions
 
+Initial condition specify the initial conditions for each unknown variable in the equations. Either expressions or fields can be used to define the initial conditions, see more details in xref:toolboxes:ROOT:modeling-analysis-using-json-files.adoc#_initialconditions[].
+
+NOTE: the shape of the initial condition must be the same as the unknown shape.
+
+.Examples of initial conditions using an expression
+[.examp#ex:initialconditions]
+****
+[source,json]
+----
+"InitialConditions":{
+    "mypde": {
+        "u": {
+            "Expression": {
+                "myic": {
+                    "markers": "Omega",
+                    "expr": "2*cos(t)*sin(x)*cos(y):t:x:y"
+                }
+            }
+        }
+    }
+},
+----
+****
 
 == Boundary Conditions
 
@@ -85,13 +222,16 @@ The Dirichlet boundary condition is essential in determining a unique solution t
 
 The shape of the Dirichlet condition is the same as the unknown shape.
 
-[stem]
 .Dirichlet condition
+[.def#def:dirichlet]
+****
+[stem]
 ++++
 \begin{eqnarray*}
-u_i = g_i(u_j,x,t,\mu), \quad i=1,\dots,N, \quad j=1,\dots,N(j \neq i) 
+u_i = g_i(x,t,\mu), \quad i=1,\dots,N 
 \end{eqnarray*}
 ++++
+****
 
 The user provides the expression for stem:[(g_i)_{i=1\dots N}] in the `.json` file  only if Dirichlet conditions are used.
 
@@ -111,13 +251,16 @@ The Neumann conditions may depend  on the space variable stem:[x], time stem:[t]
 
 The shape of the Neumann condition is the same as the unknown shape.
 
-[stem]
 .Neumann condition
+[.def#def:neumann]
+****
+[stem]
 ++++
 \begin{eqnarray*}
-\frac{\partial u_i}{\partial n} = g_i(u_j,\frac{\partial u_j}{\partial x_k},x,t,\mu), \quad i=1,\dots,N, \quad j=1,\dots,N \quad k=1,\dots,d
+- c \frac{\partial u_i}{\partial n} = g_i(u_j,\frac{\partial u_j}{\partial x_k},x,t,\mu), \quad i=1,\dots,N, \quad j=1,\dots,N \quad k=0,\dots,d-1
 \end{eqnarray*}
 ++++
+****
 
 The user provides the expression for stem:[(g_i)_{i=1\dots N}] in the `.json` file only if Neumann conditions are used.
 
@@ -132,17 +275,20 @@ In a fluid flow problem, a Robin boundary condition may specify a slip coefficie
 
 The Robin boundary condition is useful in modeling situations where the boundary is in contact with a medium that has a different thermal or mechanical behavior than the domain. It provides a more realistic and accurate description of the physical problem than using only Dirichlet or Neumann boundary conditions.
 
-The Robin conditions may depend  on the space variable stem:[x], time stem:[t], parameters stem:[\mu] and the unknowns stem:[u_1, \dots, u_N] other than the current one.
+The Robin conditions may depend  on the space variable stem:[x], time stem:[t], parameters stem:[\mu].
 
 The shape of the Robin condition is the same as the unknown shape.
 
-[stem]
 .Robin condition
+[.def#def:robin]
+****
+[stem]
 ++++
 \begin{eqnarray*}
-\frac{\partial u_i}{\partial n} = \eta_i + \zeta_i u_i, \quad i=1,\dots,N
+- c \frac{\partial u_i}{\partial n} = \eta_i + \zeta_i u_i, \quad i=1,\dots,N
 \end{eqnarray*}
 ++++
+****
 
 The user provides the expression for stem:[(\eta_i)_{i=1\dots N}] and stem:[(\zeta_i)_{i=1\dots N}] in the `.json` file only if Robin conditions are used.
 
@@ -293,5 +439,5 @@ Examples are available https://github.com/feelpp/feelpp/tree/develop/toolboxes/c
 
 == Next steps
 
-* [ ] The Poisson equation
-* [ ] The advection-diffusion-reaction equation
+* [x] xref:user:python:pyfeelpptoolboxes/cfpdes.poisson.adoc[The Poisson equation]
+//* [x] The advection-diffusion-reaction equation

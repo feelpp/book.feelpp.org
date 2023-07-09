@@ -26,13 +26,17 @@
     //"image": "ghcr.io/feelpp/feelpp-env:fedora-36",
     //"image": "ghcr.io/feelpp/feelpp-env:fedora-37",
     // Add the IDs of extensions you want installed when the container is created in the array below.
-    "extensions": [
-        "ms-vscode.cpptools",
-        "ms-vscode.cmake-tools",
-        "josetr.cmake-language-support-vscode",
-        "asciidoctor.asciidoctor-vscode",
-        "ms-python.python",
-        "ms-toolsai.jupyter",
-        "ms-vsliveshare.vsliveshare"
-    ]
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "josetr.cmake-language-support-vscode",
+                "asciidoctor.asciidoctor-vscode",
+                "ms-python.python",
+                "ms-toolsai.jupyter",
+                "ms-vsliveshare.vsliveshare"
+            ]
+        }
+    }
 }
