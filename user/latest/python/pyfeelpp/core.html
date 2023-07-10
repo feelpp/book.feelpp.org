@@ -661,7 +661,7 @@ MathJax.Hub.Config({
 <p>handle the command line options</p>
 </li>
 <li>
-<p>download and upload data from and to Github and/or Girder</p>
+<p>download and upload data from and to GitHub and/or Girder</p>
 </li>
 </ul>
 </div>
@@ -683,28 +683,6 @@ import sys
 app = fpp.Environment(["myapp"],config=fpp.localRepository(""))</code></pre>
 </div>
 </div>
-<details class="result">
-<summary class="title">Results</summary>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre>[ Starting Feel++ ] application myapp version 0.1 date 2022-Nov-04
-[feelpp] create Feel++ root repository: /scratch/jupyter/feelppdb
-
-[feelpp] create Feel++ geo repository: /scratch/jupyter/feelppdb/geo
-
-[feelpp] create Feel++ results directory: /scratch/jupyter/feelppdb/np_1
-
-[feelpp] create Feel++ expressions directory: /scratch/jupyter/feelppdb/exprs
-
-[feelpp] create Feel++ logs directory: /scratch/jupyter/feelppdb/np_1/logs
-
- . myapp files are stored in /scratch/jupyter/feelppdb/np_1
- .. logfiles :/scratch/jupyter/feelppdb/np_1/logs</pre>
-</div>
-</div>
-</div>
-</details>
 <div class="listingblock">
 <div class="title">Query the app about the current environment</div>
 <div class="content">
@@ -713,18 +691,6 @@ print("isMasterRank:",app.isMasterRank() )
 print("is parallel: ",app.isParallel() )</code></pre>
 </div>
 </div>
-<details class="result">
-<summary class="title">Results</summary>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre>pid: 0
-isMasterRank: True
-is parallel:  False</pre>
-</div>
-</div>
-</div>
-</details>
 </div>
 </div>
 <div class="sect1">
@@ -740,16 +706,6 @@ is parallel:  False</pre>
 print("downloaded Feel++ README.adoc from Github: ",readme)</code></pre>
 </div>
 </div>
-<details class="result">
-<summary class="title">Results</summary>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre>downloaded Feel++ README.adoc from Github:  /scratch/jupyter/feelppdb/downloads/README.adoc</pre>
-</div>
-</div>
-</div>
-</details>
 <div class="paragraph">
 <p>The code will get the file <code>README.adoc</code> from the toplevel Feel++ github directory downloaded</p>
 </div>
@@ -781,21 +737,6 @@ print(df.head())</code></pre>
 </tr>
 </table>
 </div>
-<details class="result">
-<summary class="title">Results</summary>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre>       TIME      Y_CM
-0  0.001538  3.991736
-1  0.013846  3.983471
-2  0.022432  3.959772
-3  0.030984  3.925082
-4  0.038925  3.881016</pre>
-</div>
-</div>
-</div>
-</details>
 <div class="paragraph">
 <p>We can now use plotly to plot the data</p>
 </div>
@@ -806,17 +747,6 @@ fig = px.scatter(df,x="TIME", y="Y_CM", title="y-displacement of the center of m
 fig.show()</code></pre>
 </div>
 </div>
-<details class="result">
-<summary class="title">Results</summary>
-<div class="content">
-<div class="imageblock">
-<div class="content">
-<img src="../_images/core-ydisp.png" alt="core ydisp">
-</div>
-<div class="title">Figure 1. Plot the \(displacement\) of the cylinder over time</div>
-</div>
-</div>
-</details>
 <div class="sect2">
 <h3 id="_next_steps"><a class="anchor" href="#_next_steps"></a>2.1. Next steps</h3>
 <div class="ulist checklist">
