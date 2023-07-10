@@ -7,6 +7,7 @@
     "version": "node_modules/.bin/antora --version",
     "build": "npx antora --stacktrace --fetch site.yml ",
     "dev-serve": "node_modules/.bin/antora --stacktrace --fetch site-dev.yml ; node-srv -p 8010 build/site",
+    "start": "http-server build/site -d -i",
     "serve": "node-srv -p 8011 build/site"
   },
   "devDependencies": {
@@ -21,6 +22,7 @@
     "asciidoctor-jupyter": "^0.5.0",  
     "asciidoctor-kroki": "^0.16.0",
     "handlebars-utils": "^1.0.6",
-    "node-srv": "^3.0.3"
+    "node-srv": "^3.0.3",
+    "http-server": "^14.1.1"
   }
 }
