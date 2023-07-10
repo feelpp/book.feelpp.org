@@ -16,6 +16,8 @@
 <script src="../../../../_/js/vendor/tabs-block-behavior.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2" charset="utf-8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7" charset="utf-8"></script>
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -683,6 +685,23 @@ import sys
 app = fpp.Environment(["myapp"],config=fpp.localRepository(""))</code></pre>
 </div>
 </div>
+<details>
+<summary class="title">Results</summary>
+<div class="content">
+<div class="literalblock dynamic-py-result">
+<div class="content">
+<pre>---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+File <ipython-input-1-867032c5f25a>:1
+----> 1 import feelpp as fpp
+      2 import sys
+      3 app = fpp.Environment(["myapp"],config=fpp.localRepository(""))
+
+ModuleNotFoundError: No module named 'feelpp'</pre>
+</div>
+</div>
+</div>
+</details>
 <div class="listingblock">
 <div class="title">Query the app about the current environment</div>
 <div class="content">
@@ -691,6 +710,23 @@ print("isMasterRank:",app.isMasterRank() )
 print("is parallel: ",app.isParallel() )</code></pre>
 </div>
 </div>
+<details>
+<summary class="title">Results</summary>
+<div class="content">
+<div class="literalblock dynamic-py-result">
+<div class="content">
+<pre>---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+File <ipython-input-1-5c3d46b77d2e>:1
+----> 1 print("pid:",app.worldComm().localRank() )
+      2 print("isMasterRank:",app.isMasterRank() )
+      3 print("is parallel: ",app.isParallel() )
+
+NameError: name 'app' is not defined</pre>
+</div>
+</div>
+</div>
+</details>
 </div>
 </div>
 <div class="sect1">
@@ -706,6 +742,22 @@ print("is parallel: ",app.isParallel() )</code></pre>
 print("downloaded Feel++ README.adoc from Github: ",readme)</code></pre>
 </div>
 </div>
+<details>
+<summary class="title">Results</summary>
+<div class="content">
+<div class="literalblock dynamic-py-result">
+<div class="content">
+<pre>---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+File <ipython-input-1-72affa4c57d9>:1
+----> 1 readme=fpp.download( "github:{repo:feelpp,path:README.adoc}", worldComm=app.worldCommPtr() )[0]
+      3 print("downloaded Feel++ README.adoc from Github: ",readme)
+
+NameError: name 'fpp' is not defined</pre>
+</div>
+</div>
+</div>
+</details>
 <div class="paragraph">
 <p>The code will get the file <code>README.adoc</code> from the toplevel Feel++ github directory downloaded</p>
 </div>
@@ -721,6 +773,23 @@ df.columns = df.columns.str.replace(' ', '')
 print(df.head())</code></pre>
 </div>
 </div>
+<details>
+<summary class="title">Results</summary>
+<div class="content">
+<div class="literalblock dynamic-py-result">
+<div class="content">
+<pre>---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+File <ipython-input-1-fe21b9fc83a2>:1
+----> 1 acsv=fpp.download( "github:{repo:feelpp,path:toolboxes/fluid/cases/moving_body/gravity/cylinder_under_gravity/curve_comparison.csv}", worldComm=app.worldCommPtr() )[0]
+      2 import pandas as pd
+      3 df = pd.read_csv(acsv, sep=",")
+
+NameError: name 'fpp' is not defined</pre>
+</div>
+</div>
+</div>
+</details>
 <div class="colist arabic">
 <table>
 <tr>
@@ -747,6 +816,34 @@ fig = px.scatter(df,x="TIME", y="Y_CM", title="y-displacement of the center of m
 fig.show()</code></pre>
 </div>
 </div>
+<details>
+<summary class="title">Results</summary>
+<div class="content">
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+File <ipython-input-1-77f998544f4e>:1
+----> 1 import plotly.express as px
+      2 fig = px.scatter(df,x="TIME", y="Y_CM", title="y-displacement of the center of mass(CM) of the cylinder",labels={"TIME":"t (s)","Y_CM":r'y-displacement (m)'})
+      3 import sys
+
+File /opt/hostedtoolcache/Python/3.10.12/x64/lib/python3.10/site-packages/plotly/express/__init__.py:10
+      8 pd = optional_imports.get_module("pandas")
+      9 if pd is None:
+---> 10     raise ImportError(
+     11         """\
+     12 Plotly express requires pandas to be installed."""
+     13     )
+     15 from ._imshow import imshow
+     16 from ._chart_types import (  # noqa: F401
+     17     scatter,
+     18     scatter_3d,
+   (...)
+     51     density_mapbox,
+     52 )
+
+ImportError: Plotly express requires pandas to be installed.
+</div>
+</details>
 <div class="sect2">
 <h3 id="_next_steps"><a class="anchor" href="#_next_steps"></a>2.1. Next steps</h3>
 <div class="ulist checklist">
