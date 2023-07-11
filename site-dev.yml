@@ -58,6 +58,9 @@ content:
 #      - v0.105
     start_path: examples
   - url: ../toolbox
+    branches: develop
+    start_path: toolboxes    
+  - url: ../toolbox
     branches: master
     start_path: contribute
   - url: ./
@@ -71,12 +74,15 @@ content:
   - url: ./
     branches: develop
     start_path: docs/salome/
+  - url: ../Antora/antora-ui
+    branches: mais 
+    start_path: docs/    
 #  - url: ./
 #    branches: mor-module
 #    start_path: docs/mor/
-urls:
-  latest_version_segment: stable
-  latest_version_segment_strategy: redirect:to
+#urls:
+#  latest_version_segment: stable
+#  latest_version_segment_strategy: redirect:to
 ui:
   bundle:
     url: https://github.com/feelpp/antora-ui/releases/latest/download/ui-bundle.zip #https://gitlab.com/feelpp/antora-ui-default/-/jobs/artifacts/feelpp/raw/build/ui-bundle.zip?job=bundle-stable
@@ -87,7 +93,7 @@ antora:
   - '@antora/collector-extension'
 asciidoc:
   attributes:
-    page-component-order: '!home, !ROOT, user, dev, data, math, toolboxes, cases, *'
+    page-component-order: '!home, !ROOT, user, toolboxes, feelpp-project, dev, data, math, *'
     version: 0.110
     feelpp-git-tag: develop
     deploymentRoot: ""

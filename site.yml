@@ -63,16 +63,10 @@ content:
     tags:
     - v0.110
     - v0.109
-#    - v0.108
-#    - v0.107
-#    - v0.106
-#    - v0.105
-    start_path: examples
-  # - url: https://github.com/feelpp/toolbox
-  #   branches: master
-  #   tags:
-  #   - v*
-  #   start_path: benchmarks
+    start_path: cases
+  - url: https://github.com/feelpp/toolbox
+    branches: [develop]
+    start_path: toolboxes
   - url: https://github.com/feelpp/toolbox
     branches: master
     start_path: contribute
@@ -104,7 +98,7 @@ antora:
   - '@antora/collector-extension'
 asciidoc:
   attributes:
-    page-component-order: '!home, !ROOT, user, dev, data, math, toolboxes, cases, *'
+    page-component-order: '!home, !ROOT, user, toolboxes, feelpp-project, dev, data, math, *'
     page-pagination: ''
     kroki-fetch-diagram: true
     feelpp-git-tag: develop
