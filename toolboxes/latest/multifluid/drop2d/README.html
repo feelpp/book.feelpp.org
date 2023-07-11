@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>2D Drops Benchmark :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/multifluid/drop2d/README.html">
+    <meta name="generator" content="Antora 3.1.4">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+<script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
+
+<script src="../../../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../../../_/js/vendor/tabs-block-behavior.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+
+  TeX: {
+      Macros: {
+      RR: "{\\mathbb R}",
+      NN: "{\\mathbb N}",
+      Nso: "{N_{\\mathrm{so}}}",
+      Nma: "{N_{\\mathrm{ma}}}",
+      Nno: "{N_{\\mathrm{no}}}",
+      Ne: "{N_{\\mathrm{e}}}",
+      Ilag: ["{\\mathcal{I}^{\\mathrm{lag}}_{#1}}",1],
+      calTh: "{\\mathcal{T}_h}",
+      Ck: ["{\\mathcal{C}^{#1}}",1],
+      Pk: ["{\\mathcal{P}^{#1}}",1],
+      Qk: ["{\\mathcal{Q}^{#1}}",1],
+      Pch: ["{P^{#1}_{c,h}}",1],
+      Pcho: ["{P^{#1}_{c,h,0}}",1],
+      Qch: ["{Q^{#1}_{c,h}}",1],
+      Ich: ["{\\mathcal{I}^{#1}_{c,h}#2}",2],
+      poly: ["{\\mathbb{#1}}",1],
+      nf: "{n_f}",
+      ngeo: "{n_{\\mathrm{geo}}}",
+      geo: "{\\mathrm{geo}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      dim: ["{\\operatorname{dim}(#1)}",1],
+      opdim: "{\\operatorname{dim}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      poly: ["{\\mathbb{#1}",1],
+      R: ["{\\mathbb{R}^{#1}}",1],
+      set: ["{\\left\\{#1\\right\\}}",1],
+      diam: "{\\operatorname{diam}}",
+      jump: ["{[\\![ #1 ]\\!]}",1],
+      Next: "{\\mathrm{n}}",
+      essinf: "{\\operatorname{ess}\\, \\operatorname{inf}}",
+      tr: "{\\operatorname{tr}}",
+      Id: "{\\mathcal{I}}",
+      disp: ["{\\mathbf{#1}}",1],
+      stresst: ["{\\mathbf{\\sigma(#1)}}",1],
+      deformt: ["{\\mathbf{\\varepsilon(#1)}}",1],
+      domain: "{\\Omega}",
+      prect: ["{\\left\\(#1\\right\\)}",1],
+      ds: "",
+      bold: ["{\\bf #1}",1],
+      p: "{\\mathrm{p}}",
+      q:"{\\mathbf{q}}",
+      n:"{\\mathbf{n}}",
+      T:"{\\mathcal{T}}",
+      F:"{\\mathcal{F}}",
+      P:"{\\mathcal{P}}",
+      v:"{\\mathbf{v}}"
+  },
+  extensions: ["mhchem.js"] }
+});
+</script>
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML'>
+</script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
+<script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
+<script>var uiRootPath = '../../../../_'</script>
+
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item feelpp-logo">
+        <a href="https://docs.feelpp.org"><img src="../../../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <form class="search">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Search Feel++ Docs" class="query" id="search-query">
+          </form>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Manuals</div>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://docs.feelpp.org/user/">User</a>
+            <a class="navbar-item" href="https://docs.feelpp.org/dev/">Developer</a>
+            <a class="navbar-item" href="https://docs.feelpp.org/toolbox/">Toolbox</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link" data-title="Support">
+            <span class="icon"><img src="../../../../_/img/octicons-24.svg#view-comment-discussion"></span>
+          </div>
+          <div class="navbar-dropdown is-right">
+            <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../../_/img/slack-icon.svg"></span>
+              <span>Chat</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span>Discussions</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span>Source</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-hash"></span>
+              <span>Tweets</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-bug"></span>
+              <span>Issues</span>
+            </a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable download-item">
+            <div class="navbar-item"><a href="../../../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="https://www.cemosis.fr">
+            <img class="cemosis-logo"  src="../../../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<a href="#" class="menu-expand-toggle"></a>
+<div class="nav-container" data-component="toolboxes" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Toolboxes Manual</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../csm/README.html">Computational Solid Mechanics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../cfd/README.html">Computational Fluid Mechanics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../heat/README.html">Heat Transfer</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../heatfluid/README.html">Heat &amp; Fluid</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../fsi/README.html">Fluid Structure Interaction</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../electric/README.html">Electric</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../thermoelectric/README.html">Thermo-Electric</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../maxwell/README.html">Maxwell</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Multifluid Flow</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../hdg/README.html">Hybrized Discontinuous Galerkin</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Toolboxes Manual</span>
+    <span class="version">latest</span>
+  </div>
+  <ul class="components">
+      <li class="component">
+        <a class="title" href="../../../../user/latest/index.html">Feel++ User Manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../user/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../../user/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../../user/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component is-current">
+        <a class="title" href="../../index.html">Toolboxes Manual</a>
+          <ul class="versions">
+              <li class="version is-current is-latest">
+                <a href="../../index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../feelpp-project/index.html">Feel++ Project</a>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../dev/latest/index.html">Developer manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../dev/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../../dev/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../../dev/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../data/latest/index.html">Data Manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../data/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../../data/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../../data/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../math/index.html">Feel++ Mathematics</a>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../angiotk/0.1/index.html">AngioTK User Manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../angiotk/0.1/index.html">0.1</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../salome/current/index.html">Feel++ and Salome</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../salome/current/index.html">current</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../feelpp/0.110/index.html">Feel++ Documentation</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../feelpp/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../../feelpp/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../feelpp-tutorial-dev/index.html">Feel++ Programming Tutorial</a>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../cases/0.110/index.html">Feel++ Toolbox Cases Guide</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../cases/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../../cases/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../toolboxes-old/latest/index.html">Feel++ Toolboxes Manual (<= 0.110)</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../toolboxes-old/latest/index.html">latest</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../mor/latest/index.html">Model Order Reduction</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../mor/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../../mor/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../../mor/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../contribute/index.html">Toolbox Contribution Guide</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../contribute/index.html">master</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../cases-old/latest/index.html">Toolboxes Case Studies (<= 0.110)</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../cases-old/latest/index.html">latest</a>
+              </li>
+          </ul>
+      </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button class="nav-toggle"></button>
+    <a href="../../../../home/index.html" class="home-link"></a>
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Toolboxes Manual</a></li>
+    <li><a href="README.html">2D Drops Benchmark</a></li>
+  </ul>
+</nav>
+
+  <div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
+  <div class="version-menu">
+    <a class="version is-current" href="README.html">latest</a>
+    <a class="version is-missing" href="../../../0.110/index.html">0.110</a>
+    <a class="version is-missing" href="../../../0.109/index.html">0.109</a>
+  </div>
+</div>
+
+    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/develop/toolboxes/modules/multifluid/pages/drop2d/README.adoc">Edit this Page</a></div>
+  
+  <div class="page-downloads">
+  <span class="label">Download as</span>
+  <ul class="download-options">
+    <li>
+      <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
+         class="pdf-download">
+        <img class="pdf-file-icon icon" src="../../../../_/img/pdf.svg"/> .pdf
+      </a>
+    </li>
+  </ul>
+</div>
+</div>
+
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">2D Drops Benchmark</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This benchmark has been proposed and realised by <a href="#Hysing">[Hysing]</a>. It allows us to verify our level set code, our Navier-Stokes solver and how they couple together.</p>
+</div>
+<div class="paragraph">
+<p>Computer codes, used for the acquisition of results, are from <a href="#Doyeux">[Doyeux]</a>, with the use of
+<a href="#Chabannes">[Chabannes]</a>'s Navier-Stokes code.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_problem_description"><a class="anchor" href="#_problem_description"></a>1. Problem Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We want to simulate the rising of a 2D bubble in a Newtonian fluid. The bubble, made of a specific fluid, is placed into a second one, with a  higher density. Like this, the bubble, due to its lowest density and by the action of gravity, rises.</p>
+</div>
+<div class="paragraph">
+<p>The equations used to define fluid bubble rising in an other are the Navier-Stokes for the fluid and the advection one for the level set method.
+As for the bubble rising, two forces are defined :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The gravity force : \(\boldsymbol{f}_g=\rho_\phi\boldsymbol{g}\)</p>
+</li>
+<li>
+<p>The surface tension force : \(\boldsymbol{f}_{st}=\int_\Gamma\sigma\kappa\boldsymbol{ n } \)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We denote \( \Omega\times\rbrack0,3\rbrack \) the interest domain with \( \Omega=(0,1)\times(0,2) \). \(\Omega\) can be decompose into \(\Omega_1\), the domain outside the bubble and \(\Omega_2\) the domain inside the bubble and \(\Gamma\) the interface between these two.</p>
+</div>
+<div id="ImageModelingCFD2dBubble" class="imageblock text-center">
+<div class="content">
+<img src="../_images/drop2d/2DBubble.png" alt="2D Bubble Geo" width="300">
+</div>
+<div class="title">Figure 1. Geometry used in 2D Bubble Benchmark</div>
+</div>
+<div class="paragraph">
+<p>Durig this benchmark, we will study two different cases : the first one with a ellipsoidal bubble and the second one with a squirted bubble.</p>
+</div>
+<div class="sect2">
+<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>1.1. Boundary conditions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>On the lateral walls, we imposed slip conditions</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{eqnarray}
+\boldsymbol{u}\cdot\boldsymbol{n}&amp;=&amp;0 \\
+t\cdot(\nabla\boldsymbol{u}+^t\nabla\boldsymbol{u})\cdot \boldsymbol{n}&amp;=&amp;0
+\end{eqnarray}\]
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>On the horizontal walls, no slip conditions are imposed : \(\boldsymbol{u}=0 \)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_initial_conditions"><a class="anchor" href="#_initial_conditions"></a>1.2. Initial conditions</h3>
+<div class="paragraph">
+<p>In order to let the bubble rise, its density must be inferior to the density of the exterior fluid, so
+\(\rho_1&gt;\rho_2\)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_inputs"><a class="anchor" href="#_inputs"></a>2. Inputs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following table displays the various fixed and variables
+parameters of this test-case.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Fixed and Variable Input Parameters</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-center valign-top">Nominal Value</th>
+<th class="tableblock halign-left valign-top">Units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\boldsymbol{g}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gravity acceleration</p></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>\((0,0.98)\)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(m/s^2\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(l\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">length domain</p></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>\(1\)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(m\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(h\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">height domain</p></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>\(2\)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(m\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(r\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bubble radius</p></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>\(0.25\)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(m\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(B_c\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bubble center</p></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>\((0.5,0.5)\)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(m\)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_outputs"><a class="anchor" href="#_outputs"></a>3. Outputs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the first place, the quantities we want to measure are \(X_c\) the position of the center of the mass of the bubble, the velocity of the center of the mass \(U_c\) and the circularity \(c\), define as the ratio between the perimeter of a circle and the perimeter of the bubble. They can be expressed by</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\boldsymbol{X}_c = \dfrac{ \displaystyle \int_{\Omega_2} \boldsymbol{x}}{ \displaystyle \int_{\Omega_2} 1 } = \dfrac{ \displaystyle \int_\Omega \boldsymbol{x} (1-H_\varepsilon(\phi))}{ \displaystyle \int_\Omega (1-H_\varepsilon(\phi)) }\]
+</div>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\boldsymbol{U}_c = \dfrac{\displaystyle \int_{\Omega_2} \boldsymbol{u}}{ \displaystyle \int_{\Omega_2} 1 }  = \dfrac{\displaystyle \int_\Omega \boldsymbol{u} (1-H_\varepsilon(\phi))}{ \displaystyle \int_\Omega (1-H_\varepsilon(\phi)) }\]
+</div>
+</div>
+<div class="stemblock">
+<div class="content">
+\[c = \dfrac{\left(4 \pi  \displaystyle \int_{\Omega_2} 1 \right)^{\frac{1}{2}}}{ \displaystyle \int_{\Gamma} 1} = \dfrac{ \left(4 \pi  \displaystyle \int_{\Omega} (1 - H_\varepsilon(\phi)) \right) ^{\frac{1}{2}}}{ \displaystyle \int_{\Omega} \delta_\varepsilon(\phi)}\]
+</div>
+</div>
+<div class="paragraph">
+<p>After that, we interest us to quantitative points for comparison as \(c_{min}\), the minimum  of the circularity and \(t_{c_{min}}\), the time needed to obtain this minimum, \(u_{c_{max}}\) and \(t_{u_{c_{max}}}\) the maximum velocity and the time to attain it, or \(y_c(t=3)\) the position of the bubble at the final time step. We add a second maximum velocity \(u_{max}\) and \(u_{c_{max_2}}\) and its time \(t_{u_{c_{max_2}}}\) for the second test on the squirted bubble.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_discretization"><a class="anchor" href="#_discretization"></a>4. Discretization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the parameters associate to the two cases, which interest us here.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Case</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\rho_1\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\rho_2\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_1\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_2\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\sigma\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Re</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(E_0\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ellipsoidal bubble (1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">24.5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">35</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">squirted bubble (2)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.96</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">35</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">125</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_implementation"><a class="anchor" href="#_implementation"></a>5. Implementation</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_results"><a class="anchor" href="#_results"></a>6. Results</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_test_1"><a class="anchor" href="#_test_1"></a>6.1. Test 1</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_test_2"><a class="anchor" href="#_test_2"></a>6.2. Test 2</h3>
+<div class="paragraph">
+<p>We describe the different quantitative results for the two studied cases.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Results comparison between benchmark values and our results for the ellipsoidal case</caption>
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.667%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">h</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(c_{min}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(t_{c_{min}}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(u_{c_{max}}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(t_{u_{c_{max}}}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(y_c(t=3)\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lower bound</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.9011</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.8750</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2417</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.9213</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0799</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">upper bound</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.9013</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.9041</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2421</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.9313</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0817</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.02</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.8981</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.925</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2400</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.9280</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0787</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.8999</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2410</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.9252</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0812</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.00875</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.89998</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2410</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.9259</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0814</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.0075</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.9001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2412</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.9251</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0812</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.00625</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.8981</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2412</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.9248</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0815</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Results comparison between benchmark values and our results for the squirted case</caption>
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">h</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(c_{min}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(t_{c_{min}}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(u_{c_{max_1}}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(t_{u_{c_{max_1}}}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(u_{c_{max_2}}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(t_{u_{c_{max_2}}}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(y_c(t=3)\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lower bound</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.4647</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.4004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2502</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.7281</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2393</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.9844</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1249</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">upper bound</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.5869</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2524</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.7332</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2440</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0705</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1380</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.02</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.4744</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.995</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2464</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.7529</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2207</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.8319</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0810</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.4642</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.995</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2493</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.7559</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2315</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.8522</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1012</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.00875</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.4629</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.995</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2494</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.7565</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2324</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.8622</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1047</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.0075</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.4646</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.995</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2495</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.7574</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2333</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.8739</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1111</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.00625</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.4616</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.995</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2496</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.7574</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2341</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.8828</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1186</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_conclusion"><a class="anchor" href="#_conclusion"></a>6.3. Conclusion</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bibliography"><a class="anchor" href="#_bibliography"></a>7. Bibliography</h2>
+<div class="sectionbody">
+<div class="ulist bibliography">
+<div class="title">References for this benchmark</div>
+<ul class="bibliography">
+<li>
+<p><a id="Hysing"></a>[Hysing] S. Hysing, S. Turek, D. Kuzmin, N. Parolini, E. Burman, S. Ganesan, and L. Tobiska, <em>Quantitative benchmark computations of two-dimensional bubble dynamics</em>, International Journal for Numerical Methods in Fluids, 2009.</p>
+</li>
+<li>
+<p><a id="Chabannes"></a>[Chabannes] V. Chabannes, <em>Vers la simulation numérique des écoulements sanguins</em>, Équations aux dérivées partielles. PhD thesis, Université de Grenoble, 2013.</p>
+</li>
+<li>
+<p><a id="Doyeux"></a>[Doyeux] V. Doyeux, <em>Modélisation et simulation de systèmes multi-fluides, Application aux écoulements sanguins</em>, PhD thesis, Université de Grenoble, 2014.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="sharethis-inline-share-buttons"></div>
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.cemosis.fr" class="icon">
+            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.cemosis.fr" target="_blank" rel="noopener">Projects Documentation</a></li>
+          <li><a href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">Forums(Slack)</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://www.cemosis.fr" target="_blank" rel="noopener">Cemosis</a></li>
+          <li><a href="https://www.cemosis.fr/news" target="_blank" rel="noopener">News</a></li>
+          <li><a href="https://www.cemosis.fr/projects" target="_blank" rel="noopener">Projects</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.feelpp.org" target="_blank" rel="noopener">Feel++ Documentation</a></li>
+          <li><a href="http://docs.feelpp.org/user/">Get Started</a></li>
+          <li><a href="http://docs.feelpp.org/user//install/distributions/">Downloads</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="facebook" class="cls-1" d="M29,0H3A2.652,2.652,0,0,0,0,3V29a2.652,2.652,0,0,0,3,3H16V18H12V14h4V12a6.452,6.452,0,0,1,6-6h4v4H22a2.151,2.151,0,0,0-2,2v2h6l-1,4H20V32h9a2.652,2.652,0,0,0,3-3V3A2.652,2.652,0,0,0,29,0Z"/></svg>
+            <a href="https://www.facebook.com/cemosis.fr" class="icon">
+            Facebook
+            </a>
+          </li>
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32.1 26.1"> <path id="twitter" class="cls-1" d="M32,7.1a11.836,11.836,0,0,1-3.8,1,6.462,6.462,0,0,0,2.9-3.6,12.606,12.606,0,0,1-4.2,1.6A6.492,6.492,0,0,0,22.1,4a6.594,6.594,0,0,0-6.6,6.6,7.719,7.719,0,0,0,.2,1.5A18.458,18.458,0,0,1,2.2,5.2a6.294,6.294,0,0,0-.9,3.3A6.765,6.765,0,0,0,4.2,14a6.109,6.109,0,0,1-3-.8v.1a6.543,6.543,0,0,0,5.3,6.4,4.678,4.678,0,0,1-1.7.2,4.869,4.869,0,0,1-1.2-.1,6.679,6.679,0,0,0,6.1,4.6,12.917,12.917,0,0,1-8.2,2.8,9.151,9.151,0,0,1-1.6-.1,18.438,18.438,0,0,0,10.1,3c12.1,0,18.7-10,18.7-18.7v-.8A13.336,13.336,0,0,0,32,7.2Z" transform="translate(0.1 -4)"/></svg>
+            <a href="https://twitter.com/cemosis" class="icon">
+              Twitter
+            </a>
+          </li>
+          <li>
+          <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="linkedin" class="cls-1" d="M29,0H3A3.076,3.076,0,0,0,0,3V29a3.009,3.009,0,0,0,3,3H29a2.946,2.946,0,0,0,3-3V3A3.009,3.009,0,0,0,29,0ZM12,26H8V12h4ZM10,10a2,2,0,1,1,2-2A2.006,2.006,0,0,1,10,10ZM26,26H22V18a2,2,0,0,0-4,0v8H14V12h4v2.5c.8-1.1,2.1-2.5,3.5-2.5A4.736,4.736,0,0,1,26,17Z"/></svg>
+              <a href="https://www.linkedin.com/company/cemosis" class="icon">
+             Linkedin
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <div class="footer-terms-copyright">
+          <span>© 2023 Cemosis, Université de Strasbourg</span>
+      </div>
+      <div class="footer-terms-links">
+        <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>
+        <a href="https://www.cemosis.fr/privacy-policy">Privacy Policy</a>
+        <a href="https://www.cemosis.fr/cookie-policy">Cookie Policy</a>
+        <a href="https://www.cemosis.fr/support-policy">Support Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
+
+
+<script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+
+<script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">
+</script>
+
+<script type="text/javascript">
+function toggleFullScreen() {
+   var doc = window.document;
+   var docEl = doc.documentElement;
+
+   var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+   var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+   if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+       requestFullScreen.call(docEl);
+   }
+   else {
+       cancelFullScreen.call(doc);
+   }
+}
+</script>
+  </body>
+</html>
