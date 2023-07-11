@@ -27,7 +27,7 @@ jobs:
         asciidoctor -v
 
     - name: Build
-      run: npm run build 
+      run: npm run antora
       env:
         FEELPP_GITHUB_TOKEN: ${{ secrets.DOCS_GITHUB_KEY }}
         GITHUB_OAUTH: ${{ secrets.DOCS_GITHUB_KEY }}
