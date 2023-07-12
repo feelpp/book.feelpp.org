@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Computational Solid Mechanics :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/csm/manual.html">
+    <meta name="description" content="Computational Solid Mechanics toolbox user Manual">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
@@ -232,7 +233,7 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../multifluid/index.html">Multifluid Flow</a>
+    <a class="nav-link" href="../multifluid/manual.html">Multifluid Flow</a>
   </li>
 </ul>
   </li>
@@ -439,25 +440,332 @@ MathJax.Hub.Config({
 </aside>
 <article class="doc">
 <h1 class="page">Computational Solid Mechanics</h1>
-<div class="paragraph">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
 <p>Welcome to the Computational Solid Mechanics(CSM) toolbox.
-This chapter explains how to use the Solid Mechanics interface to simulate and analyze applications involving solid mechanics. The interface is used for stress analysis and general solid mechanics simulation but also can be coupled with other types of physics such as the computational fluid dynamics, see <a href="#toolboxes:fsi:index.adoc" class="xref unresolved">here</a>.</p>
+This chapter explains how to use the Solid Mechanics interface to simulate and analyze applications involving solid mechanics. The interface is used for stress analysis and general solid mechanics simulation but also can be coupled with other types of physics such as the computational fluid dynamics, see <a href="../fsi/manual.html" class="xref page">here</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_csm_toolbox"><a class="anchor" href="#_csm_toolbox"></a>1. CSM Toolbox</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_models"><a class="anchor" href="#_models"></a>1.1. Models</h3>
+<div class="paragraph">
+<p>The solid mechanics model can be selected in json file :</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing : select solid model</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Models": { "equations":"Hyper-Elasticity" }</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Table of Models for <code>model</code> option</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Model</th>
+<th class="tableblock halign-left valign-top">Name in json</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Linear Elasticity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Elasticity</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hyper Elasticity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Hyper-Elasticity</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>When materials are close to incompressibility, formulations in
+displacement/pressure are available.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Table of Models for <code>material_law</code> with hyper elasticity model</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Model</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Volumic law</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Saint-Venant-Kirchhoff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SaintVenantKirchhoff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">classic, simo1985</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NeoHookean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NeoHookean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">classic, simo1985</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>option: <code>mechanicalproperties.compressible.volumic_law</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_materials"><a class="anchor" href="#_materials"></a>1.2. Materials</h3>
+<div class="paragraph">
+<p>The Lamé coefficients are deduced from the Young&#8217;s modulus \(E_s\) and the Poisson&#8217;s ratio \(\nu_s\) of the material we work on and can be expressed as</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\lambda_s = \frac{E_s\nu_s}{(1+\nu_s)(1-2\nu_s)}
+\hspace{0.5 cm}
+,
+\hspace{0.5 cm}
+\mu_s = \frac{E_s}{2(1+\nu_s)}\]
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Materials section</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Materials":
+{
+    "&lt;name&gt;":
+    {
+        "E":"1.4e6",
+        "nu":"0.4",
+        "rho":"1e3"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>E</code> stands for the Young&#8217;s modulus in Pa, <code>nu</code> the Poisson&#8217;s ratio (
+dimensionless ) and <code>rho</code> the density in \(kg \cdot m^{-3}\).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>1.3. Boundary Conditions</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Boundary conditions</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Options</th>
+<th class="tableblock halign-left valign-top">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dirichlet</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">faces, edges and component-wise</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"Dirichlet"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Neumann</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar, vectorial</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"Neumann_scalar" or "Neumann_vectorial"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pressure follower ,</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nonlinear boundary condition set in deformed domain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TODO</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Robin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TODO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TODO</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_body_forces"><a class="anchor" href="#_body_forces"></a>1.4. Body forces</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Volumic forces</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Options</th>
+<th class="tableblock halign-left valign-top">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Expression</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vectorial</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"VolumicForces"</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_post_process"><a class="anchor" href="#_post_process"></a>1.5. Post Process</h3>
+<div class="sect3">
+<h4 id="_exports_for_visualisation"><a class="anchor" href="#_exports_for_visualisation"></a>1.5.1. Exports for visualisation</h4>
+<div class="paragraph">
+<p>The fields allowed to be exported in the <code>Fields</code> section are:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="solid.html" class="xref page">Toolbox Application</a></p>
+<p>displacement</p>
 </li>
 <li>
-<p><a href="toolbox.html" class="xref page">Toolbox Configuration</a></p>
+<p>velocity</p>
 </li>
 <li>
-<p><a href="theory.html" class="xref page">Toolbox Theory</a></p>
+<p>acceleration</p>
 </li>
 <li>
-<p><a href="README.html" class="xref page">Cases and Benchmarks</a></p>
+<p>stress or normal-stress</p>
+</li>
+<li>
+<p>pressure</p>
+</li>
+<li>
+<p>material-properties</p>
+</li>
+<li>
+<p>pid</p>
+</li>
+<li>
+<p>fsi</p>
+</li>
+<li>
+<p>von-mises-criterion</p>
+</li>
+<li>
+<p>tresca-criterion</p>
+</li>
+<li>
+<p>principal-stresses</p>
+</li>
+<li>
+<p>all</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_measures"><a class="anchor" href="#_measures"></a>1.5.2. Measures</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Points</p>
+</li>
+<li>
+<p>Maximum</p>
+</li>
+<li>
+<p>Minimum</p>
+</li>
+<li>
+<p>VolumeVariation</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_points"><a class="anchor" href="#_points"></a>Points</h5>
+<div class="paragraph">
+<p>Same syntax as Fluid Mechanics with available Fields :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>displacement</p>
+</li>
+<li>
+<p>velocity</p>
+</li>
+<li>
+<p>acceleration</p>
+</li>
+<li>
+<p>pressure</p>
+</li>
+<li>
+<p>principal-stress-0</p>
+</li>
+<li>
+<p>principal-stress-1</p>
+</li>
+<li>
+<p>principal-stress-2</p>
+</li>
+<li>
+<p>sigma_xx, sigma_xy, &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_maximumminimum"><a class="anchor" href="#_maximumminimum"></a>Maximum/Minimum</h5>
+<div class="paragraph">
+<p>The maximum and minimum can be evaluated and saved in a .csv file. The user needs to define (i) &lt;Type&gt; ("Maximum" or "Minimum"),
+(ii) "&lt;tag&gt;" representing this data in the .csv file, (iii) "&lt;marker&gt;" representing the name of marked entities and (iv) the fields where extrema are computed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"&lt;Type&gt;":
+{
+    "&lt;tag&gt;":
+    {
+        "markers":"marker&gt;",
+        "fields":["displacement","velocity"]
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_volume_variation"><a class="anchor" href="#_volume_variation"></a>Volume variation</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"VolumeVariation":&lt;marker&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_run_simulations"><a class="anchor" href="#_run_simulations"></a>1.6. Run simulations</h3>
+<div class="paragraph">
+<p>Avalaible application :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>feelpp_toolbox_solid</code></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>mpirun -np 4 feelpp_toolbox_solid --config-file=&lt;myfile.cfg&gt;</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </article>
   </div>

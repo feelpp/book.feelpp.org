@@ -3,16 +3,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Oscillating cylinder :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/cfd/oscillating_cylinder/README.html">
-    <meta name="description" content="Numerical grid deformation Benchmark.">
+    <title>Thermo-Electric :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/thermoelectric/manual.html">
+    <meta name="description" content="Thermo-Electric toolbox user manual">
     <meta name="generator" content="Antora 3.1.4">
-    <link rel="stylesheet" href="../../../../_/css/site.css">
-<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+<link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
-<script src="../../../../_/js/vendor/tabs-block-extension.js"></script>
-<script src="../../../../_/js/vendor/tabs-block-behavior.js"></script>
+<script src="../../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../../_/js/vendor/tabs-block-behavior.js"></script>
 
 
 
@@ -93,7 +93,7 @@ MathJax.Hub.Config({
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
 <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
-<script>var uiRootPath = '../../../../_'</script>
+<script>var uiRootPath = '../../../_'</script>
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
   </head>
@@ -102,7 +102,7 @@ MathJax.Hub.Config({
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
       <div class="navbar-item feelpp-logo">
-        <a href="https://docs.feelpp.org"><img src="../../../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
+        <a href="https://docs.feelpp.org"><img src="../../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -128,37 +128,37 @@ MathJax.Hub.Config({
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link" data-title="Support">
-            <span class="icon"><img src="../../../../_/img/octicons-24.svg#view-comment-discussion"></span>
+            <span class="icon"><img src="../../../_/img/octicons-24.svg#view-comment-discussion"></span>
           </div>
           <div class="navbar-dropdown is-right">
             <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../../../_/img/slack-icon.svg"></span>
+              <span class="icon"><img src="../../../_/img/slack-icon.svg"></span>
               <span>Chat</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-discussion-closed"></span>
               <span>Discussions</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-mark-github"></span>
               <span>Source</span>
             </a>
             <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-hash"></span>
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-hash"></span>
               <span>Tweets</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
-              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-bug"></span>
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-bug"></span>
               <span>Issues</span>
             </a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable download-item">
-            <div class="navbar-item"><a href="../../../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
+            <div class="navbar-item"><a href="../../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
         </div>
         <div class="navbar-item">
           <a class="navbar-brand"  href="https://www.cemosis.fr">
-            <img class="cemosis-logo"  src="../../../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
+            <img class="cemosis-logo"  src="../../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
           </a>
         </div>
       </div>
@@ -172,75 +172,75 @@ MathJax.Hub.Config({
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../../index.html">Toolboxes Manual</a></h3>
+    <h3 class="title"><a href="../index.html">Toolboxes Manual</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../csm/README.html">Computational Solid Mechanics</a>
+    <a class="nav-link" href="../csm/README.html">Computational Solid Mechanics</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../README.html">Computational Fluid Mechanics</a>
+    <a class="nav-link" href="../cfd/README.html">Computational Fluid Mechanics</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../heat/README.html">Heat Transfer</a>
+    <a class="nav-link" href="../heat/README.html">Heat Transfer</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../heatfluid/README.html">Heat &amp; Fluid</a>
+    <a class="nav-link" href="../heatfluid/README.html">Heat &amp; Fluid</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../fsi/README.html">Fluid Structure Interaction</a>
+    <a class="nav-link" href="../fsi/README.html">Fluid Structure Interaction</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../electric/README.html">Electric</a>
+    <a class="nav-link" href="../electric/README.html">Electric</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../thermoelectric/README.html">Thermo-Electric</a>
+    <a class="nav-link" href="README.html">Thermo-Electric</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../maxwell/README.html">Maxwell</a>
+    <a class="nav-link" href="../maxwell/README.html">Maxwell</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../multifluid/manual.html">Multifluid Flow</a>
+    <a class="nav-link" href="../multifluid/manual.html">Multifluid Flow</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../hdg/README.html">Hybrized Discontinuous Galerkin</a>
+    <a class="nav-link" href="../hdg/README.html">Hybrized Discontinuous Galerkin</a>
   </li>
 </ul>
   </li>
@@ -254,143 +254,143 @@ MathJax.Hub.Config({
   </div>
   <ul class="components">
       <li class="component">
-        <a class="title" href="../../../../user/latest/index.html">Feel++ User Manual</a>
+        <a class="title" href="../../../user/latest/index.html">Feel++ User Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../../../user/latest/index.html">latest</a>
+                <a href="../../../user/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../../../user/0.110/index.html">0.110</a>
+                <a href="../../../user/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../../../user/0.109/index.html">0.109</a>
+                <a href="../../../user/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component is-current">
-        <a class="title" href="../../index.html">Toolboxes Manual</a>
+        <a class="title" href="../index.html">Toolboxes Manual</a>
           <ul class="versions">
               <li class="version is-current is-latest">
-                <a href="../../index.html">latest</a>
+                <a href="../index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../../0.110/index.html">0.110</a>
+                <a href="../../0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../../0.109/index.html">0.109</a>
+                <a href="../../0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../../../feelpp-project/index.html">Feel++ Project</a>
+        <a class="title" href="../../../feelpp-project/index.html">Feel++ Project</a>
       </li>
       <li class="component">
-        <a class="title" href="../../../../dev/latest/index.html">Developer manual</a>
+        <a class="title" href="../../../dev/latest/index.html">Developer manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../../../dev/latest/index.html">latest</a>
+                <a href="../../../dev/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../../../dev/0.110/index.html">0.110</a>
+                <a href="../../../dev/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../../../dev/0.109/index.html">0.109</a>
+                <a href="../../../dev/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../../../data/latest/index.html">Data Manual</a>
+        <a class="title" href="../../../data/latest/index.html">Data Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../../../data/latest/index.html">latest</a>
+                <a href="../../../data/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../../../data/0.110/index.html">0.110</a>
+                <a href="../../../data/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../../../data/0.109/index.html">0.109</a>
+                <a href="../../../data/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../../../math/index.html">Feel++ Mathematics</a>
+        <a class="title" href="../../../math/index.html">Feel++ Mathematics</a>
       </li>
       <li class="component">
-        <a class="title" href="../../../../angiotk/0.1/index.html">AngioTK User Manual</a>
+        <a class="title" href="../../../angiotk/0.1/index.html">AngioTK User Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../../../angiotk/0.1/index.html">0.1</a>
+                <a href="../../../angiotk/0.1/index.html">0.1</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../../../salome/current/index.html">Feel++ and Salome</a>
+        <a class="title" href="../../../salome/current/index.html">Feel++ and Salome</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../../../salome/current/index.html">current</a>
+                <a href="../../../salome/current/index.html">current</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../../../feelpp/0.110/index.html">Feel++ Documentation</a>
+        <a class="title" href="../../../feelpp/0.110/index.html">Feel++ Documentation</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../../../feelpp/0.110/index.html">0.110</a>
+                <a href="../../../feelpp/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../../../feelpp/0.109/index.html">0.109</a>
+                <a href="../../../feelpp/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../../../feelpp-tutorial-dev/index.html">Feel++ Programming Tutorial</a>
+        <a class="title" href="../../../feelpp-tutorial-dev/index.html">Feel++ Programming Tutorial</a>
       </li>
       <li class="component">
-        <a class="title" href="../../../../cases/0.110/index.html">Feel++ Toolbox Cases Guide</a>
+        <a class="title" href="../../../cases/0.110/index.html">Feel++ Toolbox Cases Guide</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../../../cases/0.110/index.html">0.110</a>
+                <a href="../../../cases/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../../../cases/0.109/index.html">0.109</a>
+                <a href="../../../cases/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../../../toolboxes-old/latest/index.html">Feel++ Toolboxes Manual (<= 0.110)</a>
+        <a class="title" href="../../../toolboxes-old/latest/index.html">Feel++ Toolboxes Manual (<= 0.110)</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../../../toolboxes-old/latest/index.html">latest</a>
+                <a href="../../../toolboxes-old/latest/index.html">latest</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../../../mor/latest/index.html">Model Order Reduction</a>
+        <a class="title" href="../../../mor/latest/index.html">Model Order Reduction</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../../../mor/latest/index.html">latest</a>
+                <a href="../../../mor/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../../../mor/0.110/index.html">0.110</a>
+                <a href="../../../mor/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../../../mor/0.109/index.html">0.109</a>
+                <a href="../../../mor/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../../../contribute/index.html">Toolbox Contribution Guide</a>
+        <a class="title" href="../../../contribute/index.html">Toolbox Contribution Guide</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../../../contribute/index.html">master</a>
+                <a href="../../../contribute/index.html">master</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../../../cases-old/latest/index.html">Toolboxes Case Studies (<= 0.110)</a>
+        <a class="title" href="../../../cases-old/latest/index.html">Toolboxes Case Studies (<= 0.110)</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../../../cases-old/latest/index.html">latest</a>
+                <a href="../../../cases-old/latest/index.html">latest</a>
               </li>
           </ul>
       </li>
@@ -402,24 +402,24 @@ MathJax.Hub.Config({
 <main class="article">
 <div class="toolbar" role="navigation">
   <button class="nav-toggle"></button>
-    <a href="../../../../home/index.html" class="home-link"></a>
+    <a href="../../../home/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../../index.html">Toolboxes Manual</a></li>
-    <li><a href="README.html">Oscillating cylinder</a></li>
+    <li><a href="../index.html">Toolboxes Manual</a></li>
+    <li><a href="manual.html">Thermo-Electric</a></li>
   </ul>
 </nav>
 
   <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
   <div class="version-menu">
-    <a class="version is-current" href="README.html">latest</a>
-    <a class="version is-missing" href="../../../0.110/index.html">0.110</a>
-    <a class="version is-missing" href="../../../0.109/index.html">0.109</a>
+    <a class="version is-current" href="manual.html">latest</a>
+    <a class="version is-missing" href="../../0.110/index.html">0.110</a>
+    <a class="version is-missing" href="../../0.109/index.html">0.109</a>
   </div>
 </div>
 
-    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/develop/toolboxes/modules/cfd/pages/oscillating_cylinder/README.adoc">Edit this Page</a></div>
+    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/develop/toolboxes/modules/thermoelectric/pages/manual.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -427,7 +427,7 @@ MathJax.Hub.Config({
     <li>
       <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
          class="pdf-download">
-        <img class="pdf-file-icon icon" src="../../../../_/img/pdf.svg"/> .pdf
+        <img class="pdf-file-icon icon" src="../../../_/img/pdf.svg"/> .pdf
       </a>
     </li>
   </ul>
@@ -439,147 +439,251 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Oscillating cylinder</h1>
+<h1 class="page">Thermo-Electric</h1>
 <div id="preamble">
 <div class="sectionbody">
-<div class="paragraph">
-<p>Analysis Type: Numerical grid deformation Benchmark</p>
+<div class="paragraph lead">
+<p>Welcome to the Thermo-Electric toolbox</p>
 </div>
-<div class="admonitionblock warning">
+<div class="paragraph">
+<p>The Thermoelectric toolbox combines  the Electric Currents toolbox with the Heat Transfer toolbox to model resistive heating and heating due to dielectric losses.
+The multiphysics couplings add the electromagnetic power dissipation as a heat source, and the electromagnetic material properties can depend on the temperature.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="README.html#benchmarks" class="xref page">&gt; Benchmarks</a></p>
+</li>
+<li>
+<p><a href="README.html#cases" class="xref page">&gt; Cases</a></p>
+</li>
+<li>
+<p><a href="thermoelectric.html" class="xref page">Toolbox Application</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_thermo_electric_toolbox"><a class="anchor" href="#_thermo_electric_toolbox"></a>1. Thermo-Electric Toolbox</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section focuses on defining and solving of a thermo-electric model, which couples heat transfer and electrostatic models.
+The current flow inside an electrical conductor leads to the heating of the material, due to Joule effect.
+The temperature in the conductor can be deduced from the standard heat equation whose source term reads from the electrical potential to mimic the Joule effect.</p>
+</div>
+<div class="paragraph">
+<p>In the following sections, the domain is denoted by \(\Omega \subset \mathbb{R}^d\), \(d=2,3\) and its border by \(\Gamma\).</p>
+</div>
+<div class="sect2">
+<h3 id="_electrostatic_problem"><a class="anchor" href="#_electrostatic_problem"></a>1.1. Electrostatic problem</h3>
+<div class="paragraph">
+<p>The electrostatic model consists in a diffusion equation. The electrical potential \(V\) satisfies</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\nabla\cdot(-\sigma\nabla V) = 0 ~~\text{in}~~ \Omega\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\sigma\) is the electrical conductivity.</p>
+</div>
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-this benchmark has been published by NAFEMS, it has not yet been implemented/tested using Feel++
+The electrical conductivity \(\sigma\) often depends on the temperature. The thermo-electric model becomes non-linear in this case.
 </td>
 </tr>
 </table>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>CFD simulations often require moving boundaries either to model the prescribed motion of the structural elements (e.g. closure of a valve) or the direct response of the body to the fluid motion (e.g. a cylinder in cross-flow).
-When the so-called body fitted numerical meshes and underlying models are used, the numerical grid has to follow such boundary motion.
-This requires the numerical grid to deform without losing the ability to discretize the fluid flow equations and to reach a converging solution.</p>
+<p>The current flow within the conductor is modeled by a difference in electrical potential between the current input \(\Gamma_{in} \subset \Gamma\) and the current output \(\Gamma_{out} \subset \Gamma\).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(V=0 ~~\text{on}~~ \Gamma_{in}\)</p>
+</li>
+<li>
+<p>\(V=V_{out} ~~\text{on}~~ \Gamma_{out}\).</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>The quality of the numerical grid is often judged by the size and distribution of the control volume angles.
-If any element angle becomes too small or even negative, the numerical simulation will fail.
-Although the numerical grid deformation may decrease the minimum size of the control volume angle, any periodic deformations shall not lead to its permanent reduction.</p>
+<p>We consider in this model that all other boundaries are electrically insulating. This conditions reads from the current density \(\mathbf{j} = - \sigma \nabla V\) as</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(\mathbf{j}\cdot\mathbf{n} = -\sigma\nabla V\cdot\mathbf{n} = 0 ~~\text{on}~~ \Gamma  \setminus (\Gamma_{in} \cup \Gamma_{out})\).</p>
+</li>
+</ul>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_objectives"><a class="anchor" href="#_objectives"></a>2. Objectives</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Test the grid deformation capability by examining the extent of permanent element deformation due to periodic boundary displacements.
-Minimal face angle of all control volumes in the simulation domain can be used to characterize performance of the grid deformation algorithm.</p>
+<p>The local form of Joule&#8217;s law defines the heat source corresponding to Joule effect as the dot product of the current density \(\mathbf{j} = - \sigma \nabla V\) by the electric field \(E=-\nabla V\).
+This product \(P = \sigma \nabla V \cdot \nabla V\) will be the source term of the heat equation defined in the next section.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_heat_transfer_problem"><a class="anchor" href="#_heat_transfer_problem"></a>1.2. Heat transfer problem</h3>
+<div class="paragraph">
+<p>The temperature \(T\) satisfies the standard heat equation with the previously introduced Joule effect as source term,</p>
 </div>
-<div class="sect1">
-<h2 id="_geometry"><a class="anchor" href="#_geometry"></a>3. Geometry</h2>
-<div class="sectionbody">
-<div class="imageblock">
+<div class="stemblock">
 <div class="content">
-<img src="../_images/oscillating_cylinder/geometry.png" alt="Geometry">
+\[\nabla\cdot(-k\nabla T) = \sigma\nabla V\cdot \nabla V ~~\text{in}~~ \Omega\]
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Cylinder diameter \(\left(2 \mathrm{R}_{1}\right)\) is \(0.2 \mathrm{m}\)</p>
-</li>
-<li>
-<p>Domain length \((\mathrm{H} 4+\mathrm{H} 5)\) and width \((\mathrm{V} 2+\mathrm{V} 3)\) are \(1.6 \mathrm{m}\)</p>
-</li>
-<li>
-<p>Domain height is \(0.2 \mathrm{m}\).</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_case_definition"><a class="anchor" href="#_case_definition"></a>4. Case Definition</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Sinusoidal oscillations in the y-direction are forced by prescribing a displacement function \(\Delta y=A_{y} \sin (2 \pi f t)\) to the cylinder where:</p>
+<p>where \(k\) is the thermal conductivity.<br></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>\(A_{y}\) is the displacement amplitude set to \(0.2 \mathrm{m}\)</p>
-</li>
-<li>
-<p>\(\cdot f\) is the forced oscillation frequency set to \(20 \mathrm{Hz}\) (the oscillation frequency does not influence the grid deformation although it determines the size of the integration timestep):</p>
-</li>
-<li>
-<p>\(t\) is time.</p>
-</li>
-</ul>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+As for the electrical conductivity \(\sigma\), the thermal conductivity \(k\) can also depends on temperature.
+</td>
+</tr>
+</table>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_fluid_properties"><a class="anchor" href="#_fluid_properties"></a>5. Fluid Properties</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Not applicable; the test scenario is limited to the grid deformation capability of the simulation algorithm.</p>
+<p>The thermal flux can eventually be controled by a water cooling process which limit the heating.
+The thermal exchange between the electrical conductor and the cooling water is governed by a convection phenomenon involving a heat transfert coefficient \(h\) and the water temperature \(T_c\).
+This cooling process is handled by a Robin condition on the cooled regions \(\Gamma_{c} \subset \Gamma\)</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_initial_conditions"><a class="anchor" href="#_initial_conditions"></a>6. Initial Conditions</h2>
-<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>Zero displacement \((\Delta y=0)\) of the cylinder walls.</p>
+<p>\(-k\nabla T\cdot\mathbf{n} = h(T-T_c) ~~\text{on}~~ \Gamma_{C}\)</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>7. Boundary Conditions</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Zero displacement \((\Delta x=0, \Delta y=0)\) for the external domain boundaries at \(\mathrm{x}_{\min }, \mathrm{x}_{\max }, \mathrm{y}_{\min }\) and \(\mathrm{y}_{\max }\)</p>
-</li>
-<li>
-<p>Prescribed grid displacement \(\left(\Delta x=0, \Delta y=A_{y} \sin (2 \pi f t)\right)\) for the cylinder walls; Symmetry or equivalent conditions for any motion in the z-direction.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_output"><a class="anchor" href="#_output"></a>8. Output</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Investigate the minimum face angle using:</p>
+<p>We consider that the thermal exchanges are limited to the cooled region, which amounts to apply an homogeneous Neumann condition on all other boundaries.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Diagram of the minimum face angle as a function of the simulated time</p>
-</li>
-<li>
-<p>Diagram of the minimum face angle as a function of the displacement;</p>
-</li>
-<li>
-<p>Minimum face angle change per period. In general, the smaller the change of the minimum angle, the better the gi deformation algorithm.</p>
+<p>\(-k\nabla T\cdot \mathbf{n} = 0 ~~\text{on}~~ \Gamma \setminus \Gamma_{C}\)</p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_thermo_electric_toolbox_2"><a class="anchor" href="#_thermo_electric_toolbox_2"></a>2. Thermo-Electric toolbox</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_notations"><a class="anchor" href="#_notations"></a>2.1. Notations</h3>
+<div class="paragraph">
+<p>In the thermo-electric model, we have 4 parameters</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(\sigma\) the electrical conductivity</p>
+</li>
+<li>
+<p>\(k\) the thermal conductivity</p>
+</li>
+<li>
+<p>\(T_c\) the water cooling temperature</p>
+</li>
+<li>
+<p>\(h\) the heat transfer coefficient</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+These parameters can be scalars of fields.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We gather in the following table parameter ranges, nominal values as well as units for \(\sigma, k, T_c, h\).</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Table of parameters for the simulation</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ranges</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nominal value</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Units</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\sigma\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\([52.10^{6};58.10^{6}\)]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(53\cdot 10^{6}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(S \cdot m^{-1}\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(k\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\([360;380\)]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(370\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(W\cdot m^{-1} \cdot K^{-1}$\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(T_c\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\([293;310\)]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(300\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">K</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(h\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\([70000;90000\)]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(850000\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(W \cdot m^{-2} \cdot K^{-1}\)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>In the linear case, we first solve for \(V\) and then  for \(T\) using \(V\) to compute the Joule effect that generates heat inside \(\Omega\).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_the_thermo_electric_application"><a class="anchor" href="#_running_the_thermo_electric_application"></a>2.2. Running the Thermo-electric application</h3>
+<div class="paragraph">
+<p>Using <a href="../02-docker/README.adoc">Docker</a>,
+you can run Feel++ model application and in particular the thermo-electric model using the following command</p>
+</div>
+<div class="listingblock">
+<div class="title">Docker command</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ docker run -it -v $HOME/feel:/feel feelpp/feelpp-toolboxes:latest</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then type the following command in docker environment to run the model</p>
+</div>
+<div class="listingblock">
+<div class="title">Running Thermo-Electric model</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ cd Testcases/models/thermoelectric/test
+$ mpirun -np 4 /usr/local/bin/feelpp_toolbox_thermoelectric_3d --config-file model.cfg</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -594,7 +698,7 @@ Minimal face angle of all control volumes in the simulation domain can be used t
       <div class="col">
         <div class="footer-logo">
           <a href="https://www.cemosis.fr" class="icon">
-            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+            <img src="../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
           </a>
         </div>
       </div>
@@ -654,14 +758,14 @@ Minimal face angle of all control volumes in the simulation domain can be used t
     </div>
   </div>
 </footer>
-<script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
 
 
-<script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../../../_/js/vendor/fontawesome.js"></script>
-<script async src="../../../../_/js/vendor/highlight.js"></script>
+<script async src="../../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
 
-<script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">
+<script async id="search-script" src="../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../_/css/vendor/docsearch.css">
 </script>
 
 <script type="text/javascript">

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Electrostatics toolbox :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/electric/manual.html">
+    <meta name="description" content="Electrostatics toolbox user manual">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
@@ -232,7 +233,7 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../multifluid/index.html">Multifluid Flow</a>
+    <a class="nav-link" href="../multifluid/manual.html">Multifluid Flow</a>
   </li>
 </ul>
   </li>
@@ -439,6 +440,8 @@ MathJax.Hub.Config({
 </aside>
 <article class="doc">
 <h1 class="page">Electrostatics toolbox</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph lead">
 <p>Welcome to the Electrostatics toolbox.</p>
 </div>
@@ -447,26 +450,87 @@ MathJax.Hub.Config({
 It is used to model charge conservation under static conditions.
 It is often coupled in our applications with the <a href="#toolbox:thermoelectric">Heat Transfert toolbox</a> to model joule heating.</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/hifimagnet-1.jpeg" alt="Electric  Field">
 </div>
+</div>
+<div class="sect1">
+<h2 id="_electric_toolbox"><a class="anchor" href="#_electric_toolbox"></a>1. Electric Toolbox</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_models"><a class="anchor" href="#_models"></a>1.1. Models</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_materials"><a class="anchor" href="#_materials"></a>1.2. Materials</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>1.3. Boundary Conditions</h3>
+<div class="sect3">
+<h4 id="_dirichlet"><a class="anchor" href="#_dirichlet"></a>1.3.1. Dirichlet</h4>
+<div class="stemblock">
+<div class="content">
+\[T = g \quad \text{ on } \Gamma\]
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_neumann"><a class="anchor" href="#_neumann"></a>1.3.2. Neumann</h4>
+<div class="stemblock">
+<div class="content">
+\[-k \nabla T \cdot \boldsymbol{n} = g \quad \text{ on } \Gamma\]
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_robin"><a class="anchor" href="#_robin"></a>1.3.3. Robin</h4>
+<div class="stemblock">
+<div class="content">
+\[-k \nabla T \cdot \boldsymbol{n} = h \left( T - g \right) \quad \text{ on } \Gamma\]
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_initial_conditions"><a class="anchor" href="#_initial_conditions"></a>1.4. Initial Conditions</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_post_processing"><a class="anchor" href="#_post_processing"></a>1.5. Post Processing</h3>
+<div class="sect3">
+<h4 id="_exports"><a class="anchor" href="#_exports"></a>1.5.1. Exports</h4>
+<div class="paragraph">
+<p>The fields allowed to be exported in the <code>fields</code> section are:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="electric.html" class="xref page">Toolbox Application</a></p>
-</li>
-<li>
-<p><a href="toolbox.html" class="xref page">Toolbox Configuration</a></p>
-</li>
-<li>
-<p><a href="theory.html" class="xref page">Theory</a></p>
-</li>
-<li>
-<p><a href="README.html" class="xref page">Cases and Benchmarks</a></p>
+<p>pid</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_measures"><a class="anchor" href="#_measures"></a>1.5.2. Measures</h4>
+<div class="sect4">
+<h5 id="_normal_electric_flux"><a class="anchor" href="#_normal_electric_flux"></a>Normal-Electric-Flux</h5>
+
+</div>
+<div class="sect4">
+<h5 id="_evaluation_at_points"><a class="anchor" href="#_evaluation_at_points"></a>Evaluation at points</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>electric field</p>
+</li>
+<li>
+<p>current</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </article>
   </div>

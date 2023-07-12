@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>What is Heat Transfer? :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/heat/introduction.html">
+    <title>Heat transfer Modeling and Theory :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/heat/modeling.html">
+    <meta name="description" content="Electrostatics toolbox application manual">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
@@ -405,20 +406,20 @@ MathJax.Hub.Config({
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Toolboxes Manual</a></li>
-    <li><a href="introduction.html">What is Heat Transfer?</a></li>
+    <li><a href="modeling.html">Heat transfer Modeling and Theory</a></li>
   </ul>
 </nav>
 
   <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
   <div class="version-menu">
-    <a class="version is-current" href="introduction.html">latest</a>
-    <a class="version" href="../../0.110/heat/introduction.html">0.110</a>
-    <a class="version" href="../../0.109/heat/introduction.html">0.109</a>
+    <a class="version is-current" href="modeling.html">latest</a>
+    <a class="version is-missing" href="../../0.110/index.html">0.110</a>
+    <a class="version is-missing" href="../../0.109/index.html">0.109</a>
   </div>
 </div>
 
-    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/develop/toolboxes/modules/heat/pages/introduction.adoc">Edit this Page</a></div>
+    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/develop/toolboxes/modules/heat/pages/modeling.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -438,10 +439,12 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">What is Heat Transfer?</h1>
+<h1 class="page">Heat transfer Modeling and Theory</h1>
 <div class="sect1">
-<h2 id="_heat_transfer_modes"><a class="anchor" href="#_heat_transfer_modes"></a>1. Heat transfer modes</h2>
+<h2 id="_what_is_heat_transfer"><a class="anchor" href="#_what_is_heat_transfer"></a>1. What is Heat Transfer?</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_heat_transfer_modes"><a class="anchor" href="#_heat_transfer_modes"></a>1.1. Heat transfer modes</h3>
 <div class="paragraph lead">
 <p>Heat transfer is the energy transfer process as a result of temperature difference.</p>
 </div>
@@ -533,10 +536,8 @@ As a result, the heat will conduct through the solid and dissipate into the atmo
 Such identification of boundary conditions is necessary in order to solve the conduction equation.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_why_thermal_analysis"><a class="anchor" href="#_why_thermal_analysis"></a>2. Why thermal analysis?</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_why_thermal_analysis"><a class="anchor" href="#_why_thermal_analysis"></a>1.2. Why thermal analysis?</h3>
 <div class="paragraph">
 <p>There are many reasons for undertaking thermal analyses.
 In the context of engineering and in its simplest form, thermal analysis may be used to</p>
@@ -567,8 +568,8 @@ Contrasting examples include microelectronic components that are subjected to a 
 </li>
 </ul>
 </div>
-<div class="sect2">
-<h3 id="_heat_transfert_and_structural_snalysis"><a class="anchor" href="#_heat_transfert_and_structural_snalysis"></a>2.1. Heat transfert and Structural Snalysis</h3>
+<div class="sect3">
+<h4 id="_heat_transfert_and_structural_snalysis"><a class="anchor" href="#_heat_transfert_and_structural_snalysis"></a>1.2.1. Heat transfert and Structural Snalysis</h4>
 <div class="paragraph">
 <p>The coupling of heat transfer and structural analysis comprises a common application:
 A structure or a material either contracts or expands when subjected to temperature changes.</p>
@@ -589,8 +590,8 @@ In most practical applications, the contraction or expansion of the structure is
 This can be important where thermally induced stresses may cause failure, where thermal distortion control is a requirement, or where residual stresses need to be evaluated in the case of components that are cooled (e.g. castings, heat treatment etc.).</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_heat_transfer_and_other_physics"><a class="anchor" href="#_heat_transfer_and_other_physics"></a>2.2. Heat transfer and Other Physics</h3>
+<div class="sect3">
+<h4 id="_heat_transfer_and_other_physics"><a class="anchor" href="#_heat_transfer_and_other_physics"></a>1.2.2. Heat transfer and Other Physics</h4>
 <div class="paragraph">
 <p>More complex systems also require thermal analysis:</p>
 </div>
@@ -608,10 +609,8 @@ This can be important where thermally induced stresses may cause failure, where 
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_purpose_of_thermal_analysis"><a class="anchor" href="#_purpose_of_thermal_analysis"></a>3. Purpose of Thermal Analysis</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_purpose_of_thermal_analysis"><a class="anchor" href="#_purpose_of_thermal_analysis"></a>1.3. Purpose of Thermal Analysis</h3>
 <div class="paragraph">
 <p>Before an analysis is undertaken, it is important to establish the purpose of the investigation, since this motivates the study and defines some of the inputs and the output requirements from the analysis.
 * if temperature limits are a concern, then the temperature field throughout the system is the important output.
@@ -684,6 +683,520 @@ This, similar to a structural analysis, the model input comprises abstracted geo
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_nomenclature_and_units"><a class="anchor" href="#_nomenclature_and_units"></a>2. Nomenclature and Units</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Notations and units</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Notation</th>
+<th class="tableblock halign-left valign-top">Quantity</th>
+<th class="tableblock halign-left valign-top">Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(A\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Area</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(m^{2}=10^{6} \mathrm{mm}^{2}=10^{4} \mathrm{cm}^{2}\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\rho\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Density</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(k g / m^{3}=10^{3} g / c m^{3}\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(t\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(S\) (second)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(T\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Temperature</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(C\) (degree Celsius), \(K\) (degree Kelvin)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(C_p\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specific heat</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(J / k g C=J / k g K\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(k\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conductivity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(W / m C=W / m K\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(h\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Convection heat transfer coefficient</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(W / m^{2} C=W / m^{2} K\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(q\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rate of heat transfer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(W\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\sigma\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stefan Boltzmann constant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(W / m^{2} K^{4}\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mathcal{E}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Emmissivity</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Typical values of the convection heat transfer coefficient</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Process</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(h\) \(\left(\mathrm{W} / \mathrm{m}^{2} \cdot \mathrm{K}\right)\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Free convection</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gases</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(2-25\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Liquids</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(50-1000\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Forced convection</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gases</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(25-250\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Liquids</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(100-20,000\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Convection with phase change</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boiling or condensation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(2500-100,000\)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_heat_transfer_theory"><a class="anchor" href="#_heat_transfer_theory"></a>3. Heat Transfer Theory</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Assumptions</p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> you are familiar with heat transfer and have read the <a href="introduction.html" class="xref page">introduction</a>.</p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> you have read the <a href="units.html" class="xref page">notations, units</a> and <a href="glossary.html" class="xref page">glossary</a>.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_equations"><a class="anchor" href="#_equations"></a>3.1. Equations</h3>
+<div class="stemblock">
+<div class="title">heat equation</div>
+<div class="content">
+\[\rho C_p \frac{\partial T}{\partial t} - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega\]
+</div>
+</div>
+<div class="paragraph">
+<p>which is completed with boundary conditions and initial value</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\text{at } t=0, \quad T(x,0) = T_0(x)\]
+</div>
+</div>
+<div class="sect3">
+<h4 id="_convective_heat_transfer"><a class="anchor" href="#_convective_heat_transfer"></a>3.1.1. Convective heat transfer</h4>
+<div class="stemblock">
+<div class="title">convective heat equation</div>
+<div class="content">
+\[\rho C_p \left( \frac{\partial T}{\partial t} + \boldsymbol{u} \cdot \nabla T \right) - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega\]
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_steady_case"><a class="anchor" href="#_steady_case"></a>3.1.2. Steady case</h4>
+<div class="stemblock">
+<div class="title">steady heat equation</div>
+<div class="content">
+\[ - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega\]
+</div>
+</div>
+<div class="stemblock">
+<div class="title">steady convective heat equation</div>
+<div class="content">
+\[\rho C_p  \boldsymbol{u} \cdot \nabla T - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega\]
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_multi_materials"><a class="anchor" href="#_multi_materials"></a>3.1.3. Multi-materials</h4>
+<div class="paragraph">
+<p>Given a domain \(\Omega \subset \mathbb{R}^d, d=1,2,3\), \(\Omega\) is partitioned into \(N_r\) regions \(\Omega_i,i=1,\ldots,N_r\) corresponding to different materials (solid or fluid). We consider \(\rho_i\), \(C_{p,i}\) and \(k_i\) the material properties defined in each regions \(\Omega_i\). We define also  \(\boldsymbol{n}_i\) the outward unit normal vector associated to the boundary \(\partial \Omega_i\).</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{eqnarray}
+\rho_i C_{p,i} \frac{\partial T}{\partial t} - \nabla \cdot \left( k_i \nabla T \right) &amp;=&amp; Q, \quad &amp;\text{ in }&amp; \Omega_i,i=1,\ldots,N_r \\
+T_{|_{\Omega_i}} &amp;=&amp; T_{|_{\Omega_j}}, \quad &amp;\text{ on }&amp; \partial \Omega_i \cap \Omega_j = \Gamma_{ ij}, \forall i \neq j \\
+-k_i \nabla T  \cdot \boldsymbol{n}_i &amp;=&amp; k_j \nabla T \cdot \boldsymbol{n}_j, \quad &amp;\text{ on }&amp; \partial \Omega_i \cap \Omega_j = \Gamma_{ ij}, \forall i \neq j \\
+\end{eqnarray}\]
+</div>
+</div>
+<div class="paragraph">
+<p>We assume the operator \(\mathcal{L}\) tel que \(\mathcal{L} T = \rho_i C_{p,i} \frac{\partial T}{\partial t} - \nabla \cdot \left( k_i \nabla T \right)\) is elliptical.</p>
+</div>
+<div class="paragraph">
+<p>We multiply \(\mathcal{L} u = Q\) by a function test \(v \in \mathbf{V}\) and integrates by part on \(\Omega_i\). Which give:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\rho C_{p,i} \displaystyle \int_{\Omega_i} \frac{\partial T}{\partial t} v - \int_{\Omega_i} \nabla \cdot \left[ k_i \nabla T \right] v = \int_{\Omega_i} Qv, \quad \forall v \in H^1_0(\Omega) \quad for i = 1, \cdots , N_r\]
+</div>
+</div>
+<div class="paragraph">
+<p>By the formula of Green, we get</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\rho C_{p,i} \displaystyle \int_{\Omega_i} \frac{\partial T}{\partial t} v + \int_{\Omega_i} k_i(y) \nabla T \cdot \nabla v- \int_{\partial \Omega} k_i \nabla T \cdot \boldsymbol{n}_i v = \int_{\Omega_i} Qv \quad \forall v \in \mathbf{V}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Additivity of the integral, we have</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\sum_{ i=1}^{N_r} \left( \rho C_{p,i} \displaystyle \int_{\Omega_i} \frac{\partial T}{\partial t} v + \int_{\Omega_i} k_i \nabla T \cdot \nabla v- \int_{\partial \Omega_i} k_i \nabla T \cdot \boldsymbol{n}_i v \right) = \sum_{ i=1}^{N_r} \left( \int_{\Omega_i} Qv \right) \forall v \in \mathbf{V}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Note that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\bigcup_{ i=1}^{ N } \partial \Omega_i = \bigcup_{ i,j} \Gamma_{ ij} \cup \partial \Omega\]
+</div>
+</div>
+<div class="paragraph">
+<p>Use the conditions in the interfaces, we get</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\sum_{ i=1}^{N_r} \left( \rho C_{p,i} \displaystyle \int_{\Omega_i} \frac{\partial T}{\partial t} v + \int_{\Omega_i} k_i \nabla T \cdot \nabla v- \int_{\partial \Omega} k_i \nabla T \cdot \boldsymbol{n} v \right) = \sum_{ i=1}^{N_r} \left( \int_{\Omega_i} Qv \right) \forall v \in \mathbf{V}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Using the implicit Euler method for the time term:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\frac{\partial T}{\partial t} (t^{ k+1}) \approx \frac{ T (t^{ k+1}) - T(t^k)}{ dt} \quad \forall t^k \in \mathbb{ R^+} \text{ et } k \in \mathbb{N}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Denoting \(T^k = T(t^k)\), we write the formula in  \(t^{ k+1}\), we obtain:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\sum_{ i=1}^{N_r} \left( \rho C_{p,i} \displaystyle \int_{\Omega_i} \frac{ T^{k+1}}{dt} v + \int_{\Omega_i} k_i \nabla T^{k+1} \cdot \nabla v - \int_{\partial \Omega} k_i \nabla T^{k+1} \cdot \boldsymbol{n} v \right) = \sum_{ i=1}^{N_r} \left( \int_{\Omega_i} \frac{T^{k}}{dt} v + \int_{\Omega_i} Qv \right) \quad \forall v \in \mathbf{V}\]
+</div>
+</div>
+<div class="paragraph">
+<p>So, the weak wording becomes:</p>
+</div>
+<div class="stemblock">
+<div class="title">The weak formulation</div>
+<div class="content">
+\[\text{ On cherche } T \in \mathbf{H} \text{ telle que:}
+
+\\
+a(T^{k+1}, v) = l(v) \quad \forall v \in \mathbf{V}
+
+\\
+\text{ and} \quad
+
+a(T^{k+1}, v) = \sum_{ i=1}^{N_r} \left( \rho C_{p,i} \displaystyle \int_{\Omega_i} \frac{ T^{k+1}}{dt} v + \int_{\Omega_i} k_i \nabla T^{k+1} \cdot \nabla v - \int_{\partial \Omega} k_i \nabla T^{k+1} \cdot \boldsymbol{n} v \right)
+
+\\
+
+l(v) = \sum_{ i=1}^{N_r} \left( \int_{\Omega_i} \frac{T^{k}}{dt} v + \int_{\Omega_i} Qv \right)\]
+</div>
+</div>
+<div class="paragraph">
+<p>So we have \(a(u_{k+1},v)\) a continuous bilinear form coercive in  \(v \in \mathbf{V}\) and \(l(\phi)\) a continuous linear form . We are in a Hilbert space, so we have all the conditions for the application of the Lax-Milgram theorem. So this problem is well posed.</p>
+</div>
+<div class="paragraph">
+<p>Correct approximation:</p>
+</div>
+<div class="paragraph">
+<p>We use the Galerkin approximation method:</p>
+</div>
+<div class="paragraph">
+<p>Let \(\{ \mathcal{T}_h \}\) a family of meshes of \(:\Omega\).</p>
+</div>
+<div class="paragraph">
+<p>Let \(\{ \mathcal{K}, P, \sum \}\) a finite element of Lagrange of reference of the degree \(k \geq 1\).</p>
+</div>
+<div class="paragraph">
+<p>Let \(P^k_{c,h}\) the conforming approximation space defined by</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[P^k_{ c,h} = \{ v \in C^0(\Omega), \forall \mathcal{K} \in \mathcal{T}_h, v|_{\mathcal{K}} \in \mathbb{P}_k(\mathcal{K}) \}\]
+</div>
+</div>
+<div class="paragraph">
+<p>To obtain a conformal approximation in V, we add the boundary conditions</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[V_h = P^k_{c,h} \cap V\]
+</div>
+</div>
+<div class="paragraph">
+<p>Discrete problem is written:</p>
+</div>
+<div class="stemblock">
+<div class="title">Problème discrète</div>
+<div class="content">
+\[\text{ Find } T_h \in V_h \text{ such that}
+
+\\
+
+a(T_h, v_h) = l(v_h) \quad \forall v_h \in V_h\]
+</div>
+</div>
+<div class="paragraph">
+<p>Let \(\{ \varphi_1, \varphi_2, ..., \varphi_N \}\) the base of \(V_h\). An element \(T_h \in V_h\) is written as</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[T_h = \sum^{N}_{l=1} T_l \varphi_l\]
+</div>
+</div>
+<div class="paragraph">
+<p>Using \(v\) as a basic function of \(V_h\), our problem becomes</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\sum_{ i=1}^{N_r}  \left( \rho C_{p,i} \displaystyle \int_{\Omega_{i}} \sum_{ l=1}^N T^{k+1}_l \frac{ \varphi_l }{dt} \varphi_j + \int_{\Omega_i} k_i \sum_{ l=1}^N T^{k+1}_l \nabla \varphi_l \cdot \nabla \varphi_j - \int_{\partial \Omega} k_i \sum_{ l=1}^N T^{k+1}_l \nabla \varphi_l \cdot \boldsymbol{n} \varphi_j \right) = \sum_{ i=1}^{N_r} \left( \int_{\Omega_i} \sum_{ l=1}^N T^{k}_l \frac{ \varphi_l }{dt} \varphi_j + \int_{\Omega_i} Q \varphi_j \right)\]
+</div>
+</div>
+<div class="paragraph">
+<p>The variational problem of approximation is then equivalent to a linear system</p>
+</div>
+<div class="stemblock">
+<div class="title">Algebraic problem</div>
+<div class="content">
+\[\text{Determine } T_l \text{ satisfying}
+\\
+\sum_{ l=1}^N a(\varphi_l, \varphi_j) T^{k+1}_l = l(\varphi_j) \forall j = 1, \cdots , N\]
+</div>
+</div>
+<div class="paragraph">
+<p>Introduce</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[A = (a(\varphi_i , \varphi_j)), \quad 1 \leq i,j \leq N ,
+
+\\
+
+U^{k+1} = (T_1^{k+1}, T_2^{k+1}, ..., T_N^{k+1}) \in \mathbb{R}^{N},
+
+\\
+
+F = (l(\varphi_1), l(\varphi_2), ..., l(\varphi_N)) \in \mathbb{R}^{N}\]
+</div>
+</div>
+<div class="paragraph">
+<p>We write the system in matrix form</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[AU = F\]
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_variational_formulation_and_discretization_of_the_heat_equation_with_radiative_boundary_conditions_on_several_surfaces"><a class="anchor" href="#_variational_formulation_and_discretization_of_the_heat_equation_with_radiative_boundary_conditions_on_several_surfaces"></a>3.1.4. Variational formulation and discretization of the heat equation with radiative boundary conditions on several surfaces</h4>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Radiative heat transfer is not yet available in the toolboxes. An application implementing radiative heat is currently available in feelpp/doc/manual/heat.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let \(\partial\Omega_D\) and \(\partial \Omega_N\) be the portions of the boundary where Dirichlet and Neumann boundary conditions are applied, respectively. Let us write the variational formulation of the heat equation: find \(T \in H^1((0,T);H^1(\Omega))\) such that, for all \(\phi \in H^1_{0,\partial \Omega_D}(\Omega)\)</p>
+</div>
+<div id="heat_eq_variational" class="exampleblock">
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[\int_\Omega \rho c_p \partial_t T \phi + \int_\Omega k \nabla T \cdot \nabla \phi + \int_{\partial \Omega_R} k \nabla T \cdot \vec{n} \phi = \int_\Omega S \phi - \int_{\partial \Omega_N} k \nabla T \cdot \vec{n} \phi.\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>When the radiative boundary \(\partial \Omega_R\) is composed of several subsurfaces that can exchange heat through radiation, the associated radiative boundary condition is complex. In fact, each surface receives heat contributions from the other ones, proportionally to the values of the corresponding view factors. From Modest&#8217;s book <a href="#Radiative_heat_transfer">[Radiative_heat_transfer]</a>, equation (5.28), the radiative heat flux at point \(x\) of \(\partial \Omega_R\) is</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[\frac{q(x)}{\epsilon(x)} - \int_{\partial \Omega_R} (\frac{1}{\epsilon(x')}-1)q(x')dF_{x-x'} = E_b(x) -  \int_{\partial \Omega_R} E_b(x') dF_{x-x'}.\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>In this equation, \(q=\nabla T \cdot \vec{n}, E_b(x)=\sigma T^4\), \(\epsilon(x)\) is the emittance and \(dF_{x-x'}\) is the view factor between the infinitesimal areas surrounding points \(x,x'\).</p>
+</div>
+<div class="paragraph">
+<p>Let us now propose a variational formulation for this equation. Let \(\psi \in \mathbb{P}^0_{d}(\partial \Omega_R)\) be discontinuous, piecewise constant basis functions. Functions \(\psi\) are elementwise discontinuous; however, one could choose to work, as a first approximation, with \(\Psi \in P\), where \(P\) a space of discontinuous, piecewise constant basis functions, where discontinuities are not elementwise, but for example discontinuous in correspondence of different radiating surfaces. In the following, we will use \(\psi\) to denote test functions and \(N_h\) to denote the cardinality of the test space. We have</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[\begin{multline}
+\int_{\partial \Omega_R} \frac{q(x)}{\epsilon(x)} \psi_j - \int_{\partial \Omega_R}\int_{\partial \Omega_R} (\frac{1}{\epsilon(x')}-1)q(x')dF_{x-x'} \psi_j \\
+= \int_{\partial \Omega_R}  E_b(x) \psi_j-   \int_{\partial \Omega_R} \int_{\partial \Omega_R} E_b(x') dF_{x-x'} \psi_j.
+\end{multline}\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>By decomposing \(q(x)=\sum_{i=0}^{N_h} q_i \psi_i(x)\), the first term of the left-hand side gives rise to a mass matrix \(M_{ij} = \int_{\partial \Omega_R} \epsilon_i^{-1} \psi_i\psi_j\).
+The non-linearity in \(q\) is handled iteratively: the second term on the left-hand side is treated explicitly and moved to the right-hand side. It can be decomposed as a function of coefficients \(q_i\) as \(N_{j}(q) = \int_{\partial \Omega_R} \Big( \sum_{A_k} \frac{1}{A_k} \int_{A_k} (\frac{1}{\epsilon_k}-1) q_k F_{ik} \, dA \Big)\psi_j\).
+The right-hand side is of the form \(D_j(T) = \int_{\partial \Omega_R} ( \sigma T^4 + \sum_{A_k} \frac{1}{A_k} \int_{A_k} T^4_k F_{jk} \, dA) \psi_j\).</p>
+</div>
+<div class="paragraph">
+<p>Due to the presence of the fourth power of the temperature and the non-linearity of the equation with respect to temperature and heat flux, two nested iterative loops are proposed. In the following algorithm, \(n\) denotes time indices, \(k\) denotes the indices of the temperature loop and \(l\) denotes the indices of the flux loop.</p>
+</div>
+<div class="literalblock pseudocode">
+<div class="title">Double iterative loop</div>
+<div class="content">
+<pre>\begin{algorithm}
+    \caption{Solution of the heat equation with radiative BC on the timestep $\Delta t$.}
+    \begin{algorithmic}
+    \STATE $T^{n}=T^{n,0}$, $q^{n}=q^{n,0,0}$
+    \STATE $T^{n+1,0} = Heat_{\Delta t}(T^n,q^{n})$;
+    \STATE $q^{n+1,0,0} = q^{n}$
+    \WHILE{$||T^{n+1,k+1} -T^{n+1,k}||/||T^{n+1,0}|| &gt; \tau_T$}
+        \STATE $T^{n+1,k} \leftarrow T^{n+1,k+1}$
+        \STATE $q^{n+1,k,0} = M_{ij}^{-1} (D_j(T^{n+1,k})-N_{ij}(q^{n+1,k+1,0}))$
+        \WHILE{$||q^{n+1,k,l} -q^{n+1,k,l-1}||/||q^{n+1,k,0}|| &gt; \tau_q$}
+            \STATE $q^{n+1,k,l-1} \leftarrow q^{n+1,k,l}$
+            \STATE $q^{n+1,k,l} = M_{ij}^{-1} (D_j(T^{n+1,k})-N_{j}(q^{n+1,k,l-1}))$
+        \ENDWHILE
+        \STATE $q^{n+1,k+1,0} \leftarrow q^{n+1,k,l}$
+        \STATE $T^{n+1,k+1} = Heat_{\Delta t}(T^{n+1,k},q^{n+1,k+1,0})$
+    \ENDWHILE
+    \STATE $T^{n+1} \leftarrow T^{n+1,k+1}$
+    \STATE $q^{n+1} \leftarrow q^{n+1,k+1,0}$
+    \end{algorithmic}
+\end{algorithm}</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bibliography"><a class="anchor" href="#_bibliography"></a>3.2. Bibliography</h3>
+<div class="paragraph">
+<p><a href="#Radiative_heat_transfer">[Radiative_heat_transfer]</a> Modest, M.F., <em>Radiative Heat Transfer</em>, Elsevier Science (2013) <a href="https://doi.org/10.1016/C2010-0-65874-3" class="bare">doi.org/10.1016/C2010-0-65874-3</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_glossary"><a class="anchor" href="#_glossary"></a>Glossary</h2>
+<div class="sectionbody">
+<div class="dlist glossary">
+<dl>
+<dt>Conductivity</dt>
+<dd>
+<p>Conductivity of a solid is the heat flow per unit area in the normal direction within the solid body as a result of temperature difference.</p>
+</dd>
+<dt>Heat flux(conduction)</dt>
+<dd>
+<p>The heat flux by conduction \(q''(W/m2)\) is the heat transfer rate per unit area perpendicular to the direction of transfer, and it is proportional to the temperature gradient in this direction. We have the Fourier law in the multi-dimensional case:</p>
+<div class="stemblock">
+<div class="content">
+\[q'' = -k \nabla T\]
+</div>
+</div>
+</dd>
+<dt>Heat Rate(conduction)</dt>
+<dd>
+<p>The heat rate by conduction, \(q (W)\), through a plane wall of area \(A\) is then the product of
+the flux and the area, \(q = q'' \cdot A\).</p>
+</dd>
+<dt>Specific heat</dt>
+<dd>
+<p>It is the energy required to raise the temperature of unit mass through one degree temperature rise.</p>
+</dd>
+<dt>Adiabatic condition</dt>
+<dd>
+<p>An adiabatic condition means that heat is not allowed to transfer across the boundary. In other words it means a perfectly insulated boundary. Symmetry boundaries are adiabatic.</p>
+</dd>
+<dt>Emmissivity</dt>
+<dd>
+<p>This terminology is used in the context of radiation. It is the ratio of the total energy emitted by a surface to the total energy emitted by a black surface at the same temperature.</p>
+</dd>
+<dt>View factor</dt>
+<dd>
+<p>In the radiation heat transfer context, it is the ratio of the energy incident on the second body to the energy emitted by the first body. Sometimes, it is also referred to as a geometric factor or form factor.</p>
+</dd>
+<dt>Thermal stress</dt>
+<dd>
+<p>Stress induced in a structure or body as a result of thermal loading.</p>
+</dd>
+<dt>Phase change</dt>
+<dd>
+<p>Substance subjected to temperature changes may transfer from solid state to liquid and/or gaseous state. During change of phase the latent heat is either released or absorbed.</p>
+</dd>
+</dl>
+</div>
 </div>
 </div>
 </article>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Heat Transfer :: Feel++ Docs</title>
+    <title>Heat Transfer Theory :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/heat/theory.html">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
@@ -232,7 +232,7 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../multifluid/index.html">Multifluid Flow</a>
+    <a class="nav-link" href="../multifluid/manual.html">Multifluid Flow</a>
   </li>
 </ul>
   </li>
@@ -405,7 +405,7 @@ MathJax.Hub.Config({
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Toolboxes Manual</a></li>
-    <li><a href="theory.html">Heat Transfer</a></li>
+    <li><a href="theory.html">Heat Transfer Theory</a></li>
   </ul>
 </nav>
 
@@ -438,11 +438,11 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Heat Transfer</h1>
+<h1 class="page">Heat Transfer Theory</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Assumtions</p>
+<p>Assumptions</p>
 </div>
 <div class="ulist checklist">
 <ul class="checklist">
@@ -751,17 +751,19 @@ The right-hand side is of the form \(D_j(T) = \int_{\partial \Omega_R} ( \sigma 
 <div class="paragraph">
 <p>Due to the presence of the fourth power of the temperature and the non-linearity of the equation with respect to temperature and heat flux, two nested iterative loops are proposed. In the following algorithm, \(n\) denotes time indices, \(k\) denotes the indices of the temperature loop and \(l\) denotes the indices of the flux loop.</p>
 </div>
-<pre id="radiative" style="display:hidden;">
-\begin{algorithm}
+<div class="literalblock pseudocode">
+<div class="title">Double iterative loop</div>
+<div class="content">
+<pre>\begin{algorithm}
     \caption{Solution of the heat equation with radiative BC on the timestep $\Delta t$.}
     \begin{algorithmic}
     \STATE $T^{n}=T^{n,0}$, $q^{n}=q^{n,0,0}$
     \STATE $T^{n+1,0} = Heat_{\Delta t}(T^n,q^{n})$;
     \STATE $q^{n+1,0,0} = q^{n}$
-    \WHILE{$||T^{n+1,k+1} -T^{n+1,k}||/||T^{n+1,0}|| > \tau_T$}
+    \WHILE{$||T^{n+1,k+1} -T^{n+1,k}||/||T^{n+1,0}|| &gt; \tau_T$}
         \STATE $T^{n+1,k} \leftarrow T^{n+1,k+1}$
         \STATE $q^{n+1,k,0} = M_{ij}^{-1} (D_j(T^{n+1,k})-N_{ij}(q^{n+1,k+1,0}))$
-        \WHILE{$||q^{n+1,k,l} -q^{n+1,k,l-1}||/||q^{n+1,k,0}|| > \tau_q$}
+        \WHILE{$||q^{n+1,k,l} -q^{n+1,k,l-1}||/||q^{n+1,k,0}|| &gt; \tau_q$}
             \STATE $q^{n+1,k,l-1} \leftarrow q^{n+1,k,l}$
             \STATE $q^{n+1,k,l} = M_{ij}^{-1} (D_j(T^{n+1,k})-N_{j}(q^{n+1,k,l-1}))$
         \ENDWHILE
@@ -771,8 +773,9 @@ The right-hand side is of the form \(D_j(T) = \int_{\partial \Omega_R} ( \sigma 
     \STATE $T^{n+1} \leftarrow T^{n+1,k+1}$
     \STATE $q^{n+1} \leftarrow q^{n+1,k+1,0}$
     \end{algorithmic}
-\end{algorithm}
-</pre>
+\end{algorithm}</pre>
+</div>
+</div>
 </div>
 </div>
 </div>

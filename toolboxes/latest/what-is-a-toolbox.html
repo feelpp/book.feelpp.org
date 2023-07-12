@@ -232,7 +232,7 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="multifluid/index.html">Multifluid Flow</a>
+    <a class="nav-link" href="multifluid/manual.html">Multifluid Flow</a>
   </li>
 </ul>
   </li>
@@ -444,11 +444,11 @@ MathJax.Hub.Config({
 <div class="paragraph">
 <p>Feel++ comes with toolboxes. What are they ?</p>
 </div>
-<div class="sidebarblock">
+<div id="toolbox" class="sidebarblock def">
 <div class="content">
 <div class="title">Definition: A Feel++ Toolbox</div>
 <div class="paragraph">
-<p>For a given set of partial differential equations for a given physics (<em>e.g.</em> <a href="#toolboxes:cfd:index.adoc" class="xref unresolved">computational fluid dynamics</a>) or set of physics (<em>e.g.</em> <a href="#toolboxes:fsi:index.adoc" class="xref unresolved">fluid structure interaction</a>), a Feel++ toolbox provides:</p>
+<p>For a given set of partial differential equations for a given physics (<em>e.g.</em> <a href="cfd/manual.html" class="xref page">computational fluid dynamics</a>) or set of physics (<em>e.g.</em> <a href="fsi/manual.html" class="xref page">fluid structure interaction</a>), a Feel++ toolbox provides:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -487,22 +487,22 @@ In the following table, we have listed for each toolbox the name of executable a
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#toolboxes:heat:index.adoc" class="xref unresolved">Heat Transfer</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="heat/manual.html" class="xref page">Heat Transfer</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>feelpp_toolbox_heat</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>heat</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#toolboxes:cfd:index.adoc" class="xref unresolved">Computational Fluid Dynamics</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="cfd/manual.html" class="xref page">Computational Fluid Dynamics</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>feelpp_toolbox_fluid</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>fluid</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#toolboxes:csm:index.adoc" class="xref unresolved">Computational Solid Mechanics</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="csm/manual.html" class="xref page">Computational Solid Mechanics</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>feelpp_toolbox_solid</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>solid</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="thermoelectric/index.html" class="xref page">Fluid Structure Interaction in 3d</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="thermoelectric/manual.html" class="xref page">Fluid Structure Interaction in 3d</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>feelpp_toolbox_thermoelectric</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>thermo-electric</code></p></td>
 </tr>
@@ -512,12 +512,12 @@ In the following table, we have listed for each toolbox the name of executable a
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>heat-fluid</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#toolboxes:fsi:index.adoc" class="xref unresolved">Fluid Structure Interaction in 2d</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="fsi/manual.html" class="xref page">Fluid Structure Interaction in 2d</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>feelpp_toolbox_fsi_2d</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>fsi</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#toolboxes:fsi:index.adoc" class="xref unresolved">Fluid Structure Interaction in 3d</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="fsi/manual.html" class="xref page">Fluid Structure Interaction in 3d</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>feelpp_toolbox_fsi_3d</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>fsi</code></p></td>
 </tr>
@@ -537,7 +537,7 @@ In the following examples, we have used the executable of fluid mechanics toolbo
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_toolbox_fluid --config-file myfile.cfg</code></pre>
+<pre class="highlightjs highlight"><code class="language-mpirun hljs" data-lang="mpirun">mpirun -np 4 feelpp_toolbox_fluid --config-file myfile.cfg</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -545,7 +545,7 @@ In the following examples, we have used the executable of fluid mechanics toolbo
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_toolbox_fluid --case mydir</code></pre>
+<pre class="highlightjs highlight"><code class="language-mpirun hljs" data-lang="mpirun">mpirun -np 4 feelpp_toolbox_fluid --case mydir</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -553,7 +553,13 @@ In the following examples, we have used the executable of fluid mechanics toolbo
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_toolbox_fluid --case mydir --case.config-file myfile.cfg</code></pre>
+<pre class="highlightjs highlight"><code class="language-mpirun hljs" data-lang="mpirun">mpirun -np 4 feelpp_toolbox_fluid --case mydir --case.config-file myfile.cfg</code></pre>
+</div>
+</div>
+<div class="listingblock mpirun-caseconfigfileopt">
+<div class="title">Case config file option</div>
+<div class="content">
+<pre>--case.config-file myfile.cfg</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -561,7 +567,19 @@ In the following examples, we have used the executable of fluid mechanics toolbo
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_toolbox_fluid --case "github:{path:toolboxes/fluid/TurekHron}" --case.config-file cfd2.cfg</code></pre>
+<pre class="highlightjs highlight"><code class="language-mpirun hljs" data-lang="mpirun">mpirun -np 4 feelpp_toolbox_fluid --case "github:{path:toolboxes/fluid/TurekHron}" --case.config-file cfd2.cfg</code></pre>
+</div>
+</div>
+<div class="listingblock mpirun-caseopt">
+<div class="title">Case option</div>
+<div class="content">
+<pre>--case "github:{path:toolboxes/fluid/TurekHron}"</pre>
+</div>
+</div>
+<div class="listingblock mpirun-caseconfigfileopt">
+<div class="title">Case config file option</div>
+<div class="content">
+<pre>--case.config-file cfd2.cfg</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -610,7 +628,19 @@ In the following examples, we have used the executable of fluid mechanics toolbo
 </table>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_toolbox_fluid --case "github:{owner:feelpp,repo:feelpp,branch:develop,path:toolboxes/fluid/TurekHron,token:xxxxx}" --case.config-file cfd2.cfg</code></pre>
+<pre class="highlightjs highlight"><code class="language-mpirun hljs" data-lang="mpirun">mpirun -np 4 feelpp_toolbox_fluid --case "github:{owner:feelpp,repo:feelpp,branch:develop,path:toolboxes/fluid/TurekHron,token:xxxxx}" --case.config-file cfd2.cfg</code></pre>
+</div>
+</div>
+<div class="listingblock mpirun-caseopt">
+<div class="title">Case option</div>
+<div class="content">
+<pre>--case "github:{owner:feelpp,repo:feelpp,branch:develop,path:toolboxes/fluid/TurekHron,token:xxxxx}"</pre>
+</div>
+</div>
+<div class="listingblock mpirun-caseconfigfileopt">
+<div class="title">Case config file option</div>
+<div class="content">
+<pre>--case.config-file cfd2.cfg</pre>
 </div>
 </div>
 </div>

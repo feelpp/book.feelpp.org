@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Heat Transfer :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/heat/manual.html">
+    <meta name="description" content="Heat Transfer toolbox user Manual">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
@@ -232,7 +233,7 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../multifluid/index.html">Multifluid Flow</a>
+    <a class="nav-link" href="../multifluid/manual.html">Multifluid Flow</a>
   </li>
 </ul>
   </li>
@@ -439,8 +440,428 @@ MathJax.Hub.Config({
 </aside>
 <article class="doc">
 <h1 class="page">Heat Transfer</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph lead">
 <p>Welcome to the Heat Transfer toolbox.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_heat_toolbox"><a class="anchor" href="#_heat_toolbox"></a>1. Heat Toolbox</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_models"><a class="anchor" href="#_models"></a>1.1. Models</h3>
+<div class="paragraph">
+<p>The model used by default with the heat toolbox is represented by this equation</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\rho C_p \frac{\partial T}{\partial t} + \nabla \cdot \boldsymbol{q}= Q, \quad \text{ in } \Omega\]
+</div>
+</div>
+<div class="paragraph">
+<p>with the following properties :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(q=-k \nabla T\) is the conductive heat flux,</p>
+</li>
+<li>
+<p>\(Q=0\) is heat source by default equal to 0,</p>
+</li>
+<li>
+<p>\(\Omega\) the domain where the model is applied (.i.e. the materials).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For a steady-state problem, the temperature does not change with time, and the first term disappears.</p>
+</div>
+<div class="sect3">
+<h4 id="_heat_sources"><a class="anchor" href="#_heat_sources"></a>1.1.1. Heat sources</h4>
+<div class="paragraph">
+<p>The source term \(Q\) in the heat equation is used to model internal heat generation and absorption with positive and negative values respectively.</p>
+</div>
+<div class="paragraph">
+<p>For adding a heat source term in the model, a JSON key called <code>heat-sources</code> must be added and the JSON value associated can be</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a string: explicit expression of \(Q\),</p>
+</li>
+<li>
+<p>a JSON object: setup one heat source,</p>
+</li>
+<li>
+<p>an array of JSON object : \(Q\) is composed of several heat sources.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We also consider two ways for defined a heat source :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>from an explicit expression of the heat source</p>
+</li>
+<li>
+<p>from an expression of the heat rate \(P\). In this case, \(Q = P/V\), where \(V\) is the volume of the material belongs to this model.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The setup of a heat source is defined from the properties listed in the next table.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Keyword</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">possible values : <code>heat-source</code>, <code>heat-rate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>heat-source</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expression with respect to the type used</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The term \(Q\) can be also split into \(N\) terms (for example due to the multiple physics). The term \(Q\) can be written as \(Q=\sum_{i=1}^N Q_i\).
+This setup can be done by using an array of JSON objects for the <code>heat-sources</code> entry. And each JSON object corresponds to the previous description of one heat source.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "Models": {
+    "heat": [
+      { <i class="conum" data-value="1"></i><b>(1)</b>
+        "name": "heat1",
+        "materials": [
+          "mymatA",
+          "mymatB"
+        ],
+        "setup": {
+          "heat-sources": [ <i class="conum" data-value="2"></i><b>(2)</b>
+            { <i class="conum" data-value="3"></i><b>(3)</b>
+              "type": "heat-source",
+              "expr": "3"
+            },
+            { <i class="conum" data-value="4"></i><b>(4)</b>
+              "type": "heat-rate",
+              "expr": "2*exp(t):t"
+            }
+          ]
+        }
+      },
+      { <i class="conum" data-value="5"></i><b>(5)</b>
+        "name": "heat2",
+        "materials": [
+          "mymatC"
+        ],
+        "setup": {
+          "heat-sources": { <i class="conum" data-value="6"></i><b>(6)</b>
+            "expr": "30"
+          }
+        }
+      }
+    ]
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>setup of first model called <code>heat1</code> on materials <code>mymatA</code> and <code>mymatB</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>heat sources will be composed of 2 terms that we will call \(Q_1\) and \(Q_2\) (with \(Q=Q_1+Q_2\))</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>we define \(Q_1=3\)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>we define \(Q_2=2*exp(t)/V\) with \(V\) the measure of materials <code>mymatA</code> and <code>mymatB</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>setup of second model called <code>heat2</code> on materials <code>mymatC</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>we define one heat source with \(Q=30\)</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_convective_heat_transfert"><a class="anchor" href="#_convective_heat_transfert"></a>1.1.2. Convective heat transfert</h4>
+<div class="paragraph">
+<p>Modeling heat transfer in fluid requires taking into account the convective effect in the heat equation. The heat equation is written as :</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\rho C_p \frac{\partial T}{\partial t} + \underbrace{\rho C_p \boldsymbol{u} \cdot \nabla T}_{\text{new term}} + \nabla \cdot \mathbf{q}= Q, \quad \text{ in } \Omega\]
+</div>
+</div>
+<div class="paragraph">
+<p>with \(\boldsymbol{u}\) the fluid velocity.</p>
+</div>
+<div class="paragraph">
+<p>For adding this feature to the model, a <code>convection</code> section should be added.
+The value can be a string corresponding to velocity expression.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "Models": {
+    "heat": {
+      "setup": {
+        "convection": "{-30*(y+-0.7)*(y-0.5)*(y&gt;0.5)*(y&lt;0.7),0}:y"
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_materials"><a class="anchor" href="#_materials"></a>1.2. Materials</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Materials properties defined in the heat toolbox (symbols are given without components suffix)</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thermal-conductivity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">k</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar or matrix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thermal conductivity</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">density</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rho</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">density</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thermal-expansion</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">beta</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thermal expansion</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">specific-heat-capacity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">specific heat capacity</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_fields_and_symbols_expressions"><a class="anchor" href="#_fields_and_symbols_expressions"></a>1.3. Fields and symbols expressions</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Fields available</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">temperature</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the temperature field</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Symbols expressions by considering <code>heat</code> as the keyword used with the toolbox</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_T</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(T\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_grad_T_0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{\partial T}{\partial x}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the first component of gradient of temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_grad_T_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{\partial T}{\partial y}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the second component of gradient of temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_grad_T_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{\partial T}{\partial z}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the third component of gradient of temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_dn_T</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\nabla T \cdot \boldsymbol{n}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the normal derivative of temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">heat_nflux</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(-k \nabla T \cdot \boldsymbol{n}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the normal flux</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>1.4. Boundary Conditions</h3>
+<div class="sect3">
+<h4 id="_temperature_imposed"><a class="anchor" href="#_temperature_imposed"></a>1.4.1. Temperature imposed</h4>
+<div class="stemblock">
+<div class="content">
+\[T = g \quad \text{ on } \Gamma\]
+</div>
+</div>
+<div class="paragraph">
+<p>JSON keywords : <code>temperature</code>, <code>temperature_imposed</code></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. JSON properties of boundary condition temperature imposed</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mesh marker where the BC is applied</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code>, <code>JSON</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name given to the BC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expression of <code>g</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "BoundaryConditions": {
+    "heat": { <i class="conum" data-value="1"></i><b>(1)</b>
+      "temperature": { <i class="conum" data-value="2"></i><b>(2)</b>
+        "bc1": { <i class="conum" data-value="3"></i><b>(3)</b>
+          "markers": "gamma1", <i class="conum" data-value="4"></i><b>(4)</b>
+          "expr": "293-10*(y-1)*(y+1):y" <i class="conum" data-value="5"></i><b>(5)</b>
+        },
+        "bc2": { <i class="conum" data-value="6"></i><b>(6)</b>
+          "expr": "293+0.38*t:t"
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the toolbox identity</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>JSON keyword for defining this kind of boundary condition</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>name given to a boundary condition of type temperature imposed</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>marker names where the boundary condition is applied</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>the expression of the temperature imposed</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>another boundary condition of type temperature imposed where the marker used will be the name (i.e. <code>bc2</code>)</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -449,35 +870,577 @@ MathJax.Hub.Config({
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-An extension to moisture transfer modeling and simulation is being developed and should be available in September 2020.
+The temperature imposed can be applied on all kind of marked entities (elements,faces,edges,points)
 </td>
 </tr>
 </table>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="introduction.html" class="xref page">What is Heat Transfer?</a></p>
-</li>
-<li>
-<p><a href="units.html" class="xref page">What are the Notations and Units?</a></p>
-</li>
-<li>
-<p><a href="theory.html" class="xref page">Toolbox Theory</a></p>
-</li>
-<li>
-<p><a href="glossary.html" class="xref page">A Heat Transfer Glossary</a></p>
-</li>
-<li>
-<p><a href="heat.html" class="xref page">Toolbox Application</a></p>
-</li>
-<li>
-<p><a href="toolbox.html" class="xref page">Toolbox Configuration</a></p>
-</li>
-<li>
-<p><a href="README.html" class="xref page">Cases and Benchmarks</a></p>
-</li>
-</ul>
+</div>
+<div class="sect3">
+<h4 id="_heat_flux"><a class="anchor" href="#_heat_flux"></a>1.4.2. Heat flux</h4>
+<div class="stemblock">
+<div class="content">
+\[k \nabla T \cdot \boldsymbol{n} = g \quad \text{ on } \Gamma\]
+</div>
+</div>
+<div class="paragraph">
+<p>JSON keywords : <code>heat_flux</code>, <code>flux</code></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. JSON properties of boundary condition heat flux</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mesh marker where the BC is applied</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code>, <code>JSON</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name given to the BC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expression of <code>g</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "BoundaryConditions": {
+    "heat": {
+      "flux": {
+        "bc1": {
+          "markers": [
+            "MarkerNeumann_1",
+            "MarkerNeumann_2"
+          ],
+          "expr": "34*t:t"
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The expression given to the heat flux boundary condition can depend on the unknown (i.e. any symbols depending on the temperature).
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_convective_heat_flux"><a class="anchor" href="#_convective_heat_flux"></a>1.4.3. Convective heat flux</h4>
+<div class="stemblock">
+<div class="content">
+\[-k \nabla T \cdot \boldsymbol{n} = h \left( T - g \right) \quad \text{ on } \Gamma\]
+</div>
+</div>
+<div class="paragraph">
+<p>JSON keywords : <code>convective_heat_flux</code></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. JSON properties of boundary condition convective heat flux</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mesh marker where the BC is applied</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code>, <code>JSON</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name given to the BC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>h</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expression of <code>h</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Text</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expression of <code>g</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "BoundaryConditions": {
+    "heat": {
+      "convective_heat_flux": {
+        "bc1": {
+          "h": "16",
+          "Text": "287"
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The expressions given to the convective heat flux boundary condition can depend on the unknown but the automatic differentiation is not implemented here, so the jacobian will be inexact if a Newton solver is used.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_radiative_heat_flux"><a class="anchor" href="#_radiative_heat_flux"></a>1.4.4. Radiative heat flux</h4>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Radiative heat transfer is not yet available in the toolboxes. An application implementing radiative heat is currently available in feelpp/doc/manual/heat.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>New sections in the JSON configuration file are necessary.
+Firstly, the "Coating" section, which contains information about the radiative properties of the emitting surfaces, especially the value of the emissivity constant \(\epsilon\).</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. JSON properties of Coating section</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">list of mesh markers associated to a radiative surface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>epsilon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">value of the emissivity of the radiative surface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "Coating":{
+    "materialName": {
+        "markers": [
+            "markerName"
+        ],
+        "epsilon": "0.5"
+    }
+}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Secondly, the "radiative_enclosure_heat_flux" and "radiative_blackbody_heat_flux" sections, inside the "BoundaryConditions" section, which specify the decomposition of the radiating boundaries into cavities, independent of each other, open or closed, where the radiative boundary conditions are imposed.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 8. JSON properties of the "radiative_enclosure_heat_flux/CavityName" section</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Values</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>enclosure</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies if the cavity is isolated (closed) or if it communicates with a black body (open)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>open</code>, <code>closed</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">list of mesh markers associated to a radiative surface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sigma</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stefan-Boltzmann constant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Tref</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reference temperature of the black body (only for open enclosures)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>viewfactors</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Information for the computation/loading of view factors of the cavity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JSON</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. JSON properties of the "radiative_enclosure_heat_flux/CavityName/viewfactors" section</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Values</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies if view factors have to be computed or loaded from file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>compute</code>, <code>load</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>filename</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File name for the computation of view factors (JSON format) or loading (CSV)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. JSON properties of the "radiative_blackbody_heat_flux/CavityName" section</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Values</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">list of mesh markers associated to a radiative surface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sigma</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stefan-Boltzmann constant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Tref</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reference temperature of the black body (only for open enclosures)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "BoundaryConditions": {
+    "heat": {
+      "radiative_enclosure_heat_flux": {
+              "Cavity": {
+                  "enclosure": "closed",
+                  "markers": ["InnerTop", "LowerTop","LeftTop","RightTop"],
+                  "sigma": "sigma:sigma",
+                  "Tref": "Tref_C+273.15:Tref_C",
+                  "viewfactors": {
+                      "status":"load",
+                      "filename":"$cfgdir/VF_Matrix_Cavity_1.csv"
+                      // "status":"compute",
+                      // "filename":"$cfgdir/rectangular_cavity_vf.json"
+                  }
+            }
+          },
+        "radiative_blackbody_heat_flux": {
+                "Gamma_BBC_1": {
+                    "markers": ["Gamma_B_11","Gamma_B_12"],
+                    "Tref": "Tref_C+273.15:Tref_C",
+                    "sigma": "sigma:sigma"
+                }
+        }
+      }
+   }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, an additional JSON file per cavity is necessary if the view factor matrix needs to be computed. This file will specify the algorithm to be use in order to compute the view factors, and the markers forming the cavity.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 11. JSON properties for the computation of view factors</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Value Type</th>
+<th class="tableblock halign-left valign-top">Values</th>
+<th class="tableblock halign-left valign-top">Is Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Choose between raytracing (obstructed and non-obstructed cavities) and quadrature (only non-obstructed cavities)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Raytracing</code>, <code>UnobstructedPlanar</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>algorithm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Choose the algorithm (only for UnobstructedPlanar) between DoubleAreaIntegration (2D) and SingleAreaIntegration (3D)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DoubleAreaIntegration</code>, <code>SingleAreaIntegration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quadrature_order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Quadrature order (only for UnobstructedPlanar)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>int</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">list of mesh markers associated to the cavity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array of string</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+     "viewfactor": {
+         "type": "UnobstructedPlanar",
+         "algorithm":"DoubleAreaIntegration",
+         "quadrature_order":2,
+         "markers":["RadiativeSurface1", "RadiativeSurface2","RadiativeSurface3"],
+         "description": "The viewfactor of a closed triangular cavity."
+     }
+ }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_initial_conditions"><a class="anchor" href="#_initial_conditions"></a>1.5. Initial Conditions</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_post_processing"><a class="anchor" href="#_post_processing"></a>1.6. Post Processing</h3>
+<div class="sect3">
+<h4 id="_exports"><a class="anchor" href="#_exports"></a>1.6.1. Exports</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 12. Fields allowed to be exported in the <code>fields</code> section are:</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">temperature</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the temperature field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">velocity-convection</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the gradient of temperature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the mesh partitioning</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all fields available</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+All materials properties given in the section <a href="#_materials">Materials</a> can be also exported by specifying the name in the <code>fields</code> entry.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_measures"><a class="anchor" href="#_measures"></a>1.6.2. Measures</h4>
+<div class="sect4">
+<h5 id="_normal_heat_flux"><a class="anchor" href="#_normal_heat_flux"></a>Normal-Heat-Flux</h5>
+<div class="listingblock">
+<div class="title">Example of a <code>Parameters</code> section</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "Normal-Heat-Flux": { <i class="conum" data-value="1"></i><b>(1)</b>
+    "bottom": { <i class="conum" data-value="2"></i><b>(2)</b>
+      "markers": [ <i class="conum" data-value="3"></i><b>(3)</b>
+        "bottom1",
+        "bottom2"
+      ],
+      "direction": "inward" <i class="conum" data-value="4"></i><b>(4)</b>
+    },
+    "top": { <i class="conum" data-value="5"></i><b>(5)</b>
+      "direction": "inward"
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>kind of measure</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>name of measure</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>surface markers where the measure is computed</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>direction : <code>inward</code> or <code>outward</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>another measure applied on surface marker called top (because when markers is no present, the name is used as marker name)</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_stabilization_methods"><a class="anchor" href="#_stabilization_methods"></a>1.7. Stabilization methods</h3>
+<div class="sect3">
+<h4 id="_gls_family"><a class="anchor" href="#_gls_family"></a>1.7.1. GLS family</h4>
+
+</div>
+</div>
+</div>
 </div>
 </article>
   </div>

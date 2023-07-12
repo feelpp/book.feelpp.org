@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Maxwell&#8217;s equations :: Feel++ Docs</title>
+    <title>Maxwell modeling and theory :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/maxwell/Maxwell.html">
+    <meta name="description" content="Maxwell toolbox theoretical backgrounda">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
@@ -232,7 +233,7 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../multifluid/index.html">Multifluid Flow</a>
+    <a class="nav-link" href="../multifluid/manual.html">Multifluid Flow</a>
   </li>
 </ul>
   </li>
@@ -405,7 +406,7 @@ MathJax.Hub.Config({
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Toolboxes Manual</a></li>
-    <li><a href="Maxwell.html">Maxwell&#8217;s equations</a></li>
+    <li><a href="Maxwell.html">Maxwell modeling and theory</a></li>
   </ul>
 </nav>
 
@@ -438,43 +439,7 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Maxwell&#8217;s equations</h1>
-<div id="toc" class="toc">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_differential_form_of_maxwell_equations">1. Differential form of Maxwell equations</a>
-<ul class="sectlevel2">
-<li><a href="#_variables_symbols_and_units">1.1. Variables, symbols and units</a></li>
-<li><a href="#_constitutive_relations">1.2. Constitutive relations</a></li>
-<li><a href="#_classification_of_maxwells_equations">1.3. Classification of Maxwell&#8217;s Equations</a></li>
-</ul>
-</li>
-<li><a href="#_magnetostatic_problem_formulation">2. Magnetostatic problem formulation</a></li>
-<li><a href="#_vector_potential_formulation_for_magnetostatic">3. Vector Potential formulation for magnetostatic</a>
-<ul class="sectlevel2">
-<li><a href="#_benchmark">3.1. Benchmark</a></li>
-<li><a href="#_regularized_point_system">3.2. Regularized point system</a></li>
-<li><a href="#_saddle_point_system">3.3. Saddle point system</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div id="preamble">
-<div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-We present here the Maxwell equations
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
+<h1 class="page">Maxwell modeling and theory</h1>
 <div class="sect1">
 <h2 id="_differential_form_of_maxwell_equations"><a class="anchor" href="#_differential_form_of_maxwell_equations"></a>1. Differential form of Maxwell equations</h2>
 <div class="sectionbody">
@@ -884,10 +849,755 @@ In case where the media is linear, the term \(-\nabla\times\mathbf{I}\) disappea
 </table>
 </div>
 <div class="paragraph">
-<p>The strategy to solve this equation is discussed in the <a href="#Strategy">Strategy Chapter</a>.</p>
+<p>The strategy to solve this equation is discussed the following section.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="MaxwellStrategyChapter"><a class="anchor" href="#MaxwellStrategyChapter"></a>4. Resolution strategy</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Resolution strategy for Maxwell equations
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
-<h3 id="_benchmark"><a class="anchor" href="#_benchmark"></a>3.1. Benchmark</h3>
+<h3 id="_polarisation_method"><a class="anchor" href="#_polarisation_method"></a>4.1. Polarisation method</h3>
+<div class="paragraph">
+<p>Design and simulation of electrical engineering applications containing ferromagnetic parts require the accurate modeling of hysteresis characteristics and the implementation of the models and solve the nonlinear partial differential equations derived from Maxwell’s equations.</p>
+</div>
+<div class="paragraph">
+<p>The partial differential equations are generally nonlinear because of the nonlinear characteristics of ferromagnetic materials.</p>
+</div>
+<div class="paragraph">
+<p>The numerical analysis of electromagnetic fields can be characterized by the electric and magnetic field intensities and flux densities formulated by Maxwell’s equations, which are the collection of partial differential equations of the electric field intensity \(\mathbf{E}\), the magnetic field intensity \(\mathbf{H}\), the electric flux density \(\mathbf{D}\) and the magnetic flux density \(\mathbf{B}\).</p>
+</div>
+<div class="paragraph">
+<p>Constitutive relations between the above quantities are defined to take into account the macroscopic properties of the medium.</p>
+</div>
+<div class="paragraph">
+<p>We consider a constitutive relation between the magnetic field intensity and the magnetic flux density which is nonlinear , given by the operator \(\mathbf{B} = \mathcal{B}(\mathbf{H})\) or equivalently \(\mathbf{H} = \mathcal{B}^{−1}(\mathbf{B})\). These nonlinear characteristics can be reformulated by introducing the <strong>polarization method</strong> and the resulting system of nonlinear equations can be solved using <strong>fixed point iterations</strong>.</p>
+</div>
+<div class="paragraph">
+<p>According to the polarization method, the magnetic flux density can be split in two parts as</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{B} = \mu \mathbf{H} + \mathbf{R}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\mu \mathbf{H}\) is a linear term, \(\mu\) is constant and the nonlinearity is in the second term \(\mathbf{R}\). It is a magnetic flux density like quantity.</p>
+</div>
+<div class="paragraph">
+<p>The question is the appropriate value of the parameter \(\mu\). This representation can be reformulated as</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{R} = \mathbf{B}-\mu \mathbf{H} = \mathbf{B}-\mu \mathcal{B}^{-1}(\mathbf{B})\]
+</div>
+</div>
+<div class="paragraph">
+<p>Here, the inverse type hysteresis characteristics are used.</p>
+</div>
+<div class="paragraph">
+<p>It is important to note that the nonlinear equations are solved by iterative methods, the \(n\)-th iteration is denoted by the superscript \((n)\) in the following.
+By using the various formula in the constitutive relations defined in Maxwell’s equations, the solution of the nonlinear partial differential equations with appropriate boundary conditions can be formulated as</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{B}^{(n)} = \mathcal{M}(\mathbf{R}^{(n-1)})\]
+</div>
+</div>
+<div class="paragraph">
+<p>where the operator \(\mathcal{M}\) represents the set of Maxwell’s equations and the boundary conditions. The starting \(\mathbf{R}^{(0)}\) is arbitrary. The value of electromagnetic field quantities in the \(n\)-th step are depending on the value of \(\mathbf{R}\) in the \((n − 1)\)-th step and they represent source like quantities.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The source of electromagnetic fields (e.g. the electric current density \(\mathbf{J}\)) is not changing during fixed point iteration, i.e. the fixed point iteration has no particular physical meaning.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_abstract_fixed_point_iteration"><a class="anchor" href="#_abstract_fixed_point_iteration"></a>4.1.1. Abstract fixed point iteration</h4>
+<div class="paragraph">
+<p>It may be better to use the reluctivity \(\nu\) when applying the inverse hysteresis model, because \(\nu(B) = \frac{\partial H}{\partial B}\).
+Let us now multiply the relation above by \(\nu_{\mathrm{o}} = 1/\mu_{\mathrm{o}}\), we have</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\nu_{\mathrm{o}} \mathbf{B} = \mathbf{H} + \nu_{\mathrm{o}}\mathbf{R},\]
+</div>
+</div>
+<div class="paragraph">
+<p>hence</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{H} = \nu_{\mathrm{o}} \mathbf{B} - \nu_{\mathrm{o}}\mathbf{R}  = \nu_{\mathrm{o}} \mathbf{B} + \mathbf{I}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\mathbf{I}= -\nu_{\mathrm{o}}\mathbf{R}\), \(\nu_{\mathrm{o}}=\frac{\nu_{\mathrm{min}}+\nu_{\mathrm{max}}}{2}\) and \(\nu_{\mathrm{min}}\) and \(\nu_{\mathrm{max}}\) are the minimum and maximum slope of the inverse of the hysteresis characteristics.
+We have  \(\nu_{\mathrm{min}} = 1/\mu_{\mathrm{max}}\)  and \(\nu_{\mathrm{max}}=1/\mu_{\mathrm{min}}\).</p>
+</div>
+<div class="paragraph">
+<p>The nonlinear fixed point iteration can be summarized as follows.
+The iteration can be started by an arbitrary value of \(\mathbf{I}^{(0)}\), then for \(n &gt; 0\) we do,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the magnetic flux density \(\mathbf{B}^{(n)}\) can be calculated by solving the partial differential equations obtained from Maxwell’s equations and using \(\mathbf{I}^{(n−1)}\), in other words,</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{B}^{(n)} =\mathcal{M}({\mathbf{I}^{(n−1)}}),\]
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the magnetic field intensity \(\mathbf{H}^{(n)}\) can be calculated by applying the inverse type
+hysteresis model, \(\mathbf{H}^{(n)} = \mathcal{B}^{−1}(\mathbf{B}^{(n)}),\)</p>
+</li>
+<li>
+<p>the nonlinear residual term can be updated by using the magnetic flux density and
+magnetic field intensity,</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{I}^{(n)} = \mathbf{H}^{(n)} − \nu_{\mathrm{o}} \mathbf{B}^{(n)} = \mathcal{B}^{−1}({\mathbf{B}^{(n)}}) − \nu_{\mathrm{o}} \mathbf{B}^{(n)}\]
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>and the sequence defined by steps (i)–(iii) must be repeated until convergence.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Convergence criterion can be \(||\mathbf{I}^{(n)} − \mathbf{I}^{(n−1)}|| &lt; \varepsilon\), where \(\varepsilon\) is the tolerance.
+Convergence criterion can be also defined by using the magnetic field intensity or the magnetic flux density.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_fixed_point_iteration_for_the_a_formulation"><a class="anchor" href="#_fixed_point_iteration_for_the_a_formulation"></a>4.1.2. Fixed point iteration for the \(A\) formulation</h4>
+<div class="paragraph">
+<p>Recall that we have</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\nabla \times (\nu_{\mathrm{o}} \nabla \times \mathbf{A} ) = \mathbf{J} - \nabla \times \mathbf{I}\quad \text{ in } \Omega\]
+</div>
+</div>
+<div class="paragraph">
+<p>associated to proper boundary conditions for \(\mathbf{A}\).
+The fixed point iteration algorithm reads</p>
+</div>
+<div class="paragraph">
+<p>We start with arbitrary \(\mathbf{I}^{(0)}\) and then for \(n &gt; 0\)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>solve</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\nabla \times (\nu_{\mathrm{o}} \nabla \times \mathbf{A}^{(n)} ) = \mathbf{J} - \nabla \times \mathbf{I}^{(n-1)}\quad \text{ in } \Omega\]
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>compute</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{B}^{(n)}=\nabla \times \mathbf{A}^{(n)}\]
+</div>
+</div>
+<div class="paragraph">
+<p>*compute the residual</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{I}^{(n)} = \mathcal{B}^{−1}({\mathbf{B}^{(n)}}) − \nu_{\mathrm{o}} \mathbf{B}^{(n)}\]
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>repeat steps i-iii until convergence, e.g.</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[||\mathbf{I}^{(n)}-\mathbf{I}^{(n-1)}|| &lt; \varepsilon\]
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_picard_method"><a class="anchor" href="#_picard_method"></a>4.2. Picard method</h3>
+<div class="paragraph">
+<p>The main benefit for the polarization method is to keep the matrix constant.
+There is no need to rebuild a preconditioner and to assemble again and again the matrix.
+Actually, as long as the volume of the non linear concrete is small against the total volume, the gain is proportionnaly small.</p>
+</div>
+<div class="paragraph">
+<p>Generaly, the non linear law links the magnetic field magnitude \(\mathbf{\| B\|}\)  to the magnetic field intensity \(\mathbf{\| H\|}\).
+In other word, we have an isotropic concrete.
+That is we have the relation \(B = \mu(H) H\) instead of \(\mathbf{\| B\|} = \mu(\mathbf{\| H\|}) \mathbf{H}\).</p>
+</div>
+<div class="paragraph">
+<p>One can write:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+B &amp;= \mu(H) H, \\
+  &amp;= \mu_r \mu_0 H,
+\end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\mu_r\) is the relative magnetic permeability.</p>
+</div>
+<div class="paragraph">
+<p>We denote with \(\mu(H)\) the interpolation of the data.
+It is defined thanks to a \(P_1\) or Akima&#8217;s interpolation of the dataset \(B-\frac{H}{B}\).</p>
+</div>
+<div class="paragraph">
+<p>The Picard algorithm reads:</p>
+</div>
+<div class="paragraph">
+<p>Given an initial \(\mu_r^{(0)}\) chosen arbitrarily:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>solve</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\nabla \times \left(\frac{1}{\mu_r^{(n)}} \nabla \times \mathbf{A}^{(n)} \right) = \mu_0 \mathbf{J}\quad \text{ in } \Omega\]
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>compute</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[B^{(n)}=\|\nabla \times \mathbf{A}^{(n)}\|\]
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>compute</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[H^{(n)} = \frac{B^{(n)}}{\mu_0 \mu_r^{(n)}}\]
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>compute</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mu_r^{(n+1)} = \frac{\mu(H^{(n)})}{\mu_0}\]
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>repeat steps i-iii until convergence, e.g.</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[||\mathbf{B}^{(n)}-\mathbf{B}^{(n-1)}|| &lt; \varepsilon\]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_linking_picard_to_the_polarization"><a class="anchor" href="#_linking_picard_to_the_polarization"></a>4.3. Linking Picard to the Polarization</h3>
+<div class="paragraph">
+<p>The polarization method has some evident advantages.
+Our benchmarks (to come) has shown that algorithm is less robust than the Picard one.</p>
+</div>
+<div class="paragraph">
+<p>We note here an idea we do not have yet implemented that should circumvent the Polarization problem.</p>
+</div>
+<div class="paragraph">
+<p>We want to transfer from the right hand side to the matrix the non linearity.
+When a criteria we need to define is reached, we construct \(\mu_{N}\)</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+B &amp;= \mu_0 \mu_{opt} H + I \\
+  &amp;= \mu_0 \mu_{N} H \\
+\mu_{N} &amp;= \mu_{opt} + \frac{1}{\mu_0} \frac{I}{H}
+\end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>And then we start a new Polarization algorithm with an initial \(\mathbf{I}\) set to zero.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_formulations"><a class="anchor" href="#_formulations"></a>4.4. Formulations</h3>
+<div class="sect3">
+<h4 id="_saddle_point_formulation"><a class="anchor" href="#_saddle_point_formulation"></a>4.4.1. Saddle-point formulation</h4>
+<div class="paragraph">
+<p>The first possibility is to add a constraint on the divergence using the Coulomb gauge, \( \nabla \cdot \mathbf{A} = 0 \). It is managed by a scalar Lagrange multiplier, giving the saddle-point problem:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+\nabla\times\nu_0\nabla\times\mathbf{A} + \nabla p &amp;= \mathbf{J} - \nabla\times\mathbf{I} &amp;\text{ in } \Omega\\
+\nabla\cdot\mathbf{A} &amp;= 0 &amp;\text{ in } \Omega\\
+\mathbf{A}\times\mathbf{n} &amp;= \mathbf{A}_D &amp;\text{ on } \partial\Omega\\
+p &amp;= 0 &amp;\text{ on } \partial\Omega
+\end{aligned}\]
+</div>
+</div>
+<div class="sect4">
+<h5 id="_variational_formulation"><a class="anchor" href="#_variational_formulation"></a>Variational formulation</h5>
+<div class="paragraph">
+<p>The variational formulation the consists in finding \((\mathbf{A},p) \in ( X \subset H(\mathrm{curl},\Omega) \times H^1_0(\Omega))\) (see <a href="../Appendix/Notations.adoc">Notations</a>) such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+  &amp;\int_{\Omega}\nu_0(\nabla \times \mathbf{A}) \cdot (\nabla \times \mathbf{v})
+    + \int_{\delta \Omega}\nu_0 (\nabla \times \mathbf{A}) \cdot (\mathbf{v} \times \mathbf{n})
+    + \int_{\Omega} \mathbf{v} \cdot \nabla p = \int_{\Omega} \mathbf{J} \cdot \mathbf{v}- \int_{\Omega} (\nabla \times \mathbf{I})\cdot \mathbf{v} ~~\forall \mathbf{v}  \in Y \\
+  &amp;\int_{\Omega} \mathbf{A} \cdot \nabla q = 0 ~~\forall q \in H^1_0(\Omega)
+\end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>The Dirichlet boundary condition on \(\mathbf{A}\) imposed on strong form vanishes the boundary term of and the condition is directly taken into account in the definition of the function space \(X = H_{\mathbf{A}_D}(\mathrm{curl},\Omega) = \{ \mathbf{v} \in H(\mathrm{curl},\Omega) \mid \mathbf{v} \times \mathbf{n} = \mathbf{A}_D ~\text{on} ~\partial \Omega\}\).
+The variational formulation then consists in finding \((\mathbf{A},p) \in ( H_{\mathbf{A}_D}(\mathrm{curl},\Omega) \times H^1_0(\Omega))\) such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+  &amp; \int_{\Omega}\nu_0(\nabla \times \mathbf{A}) \cdot (\nabla \times \mathbf{v})
+    + \int_{\Omega} \mathbf{v} \cdot \nabla p = \int_{\Omega} \mathbf{J} \cdot \mathbf{v} - \int_{\Omega} (\nabla \times \mathbf{I})\cdot \mathbf{v}  ~~\forall \mathbf{v} \in H_{0}(\mathrm{curl},\Omega) \\
+  &amp; \int_{\Omega} \mathbf{A} \cdot \nabla q = 0 ~~\forall q \in H^1_0(\Omega)
+\end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>We can also impose the Dirichlet boundary conditions on weak form, adding symetrization and penalisation terms and then avoiding to add condition in \(X\) function space, i.e. \(X = H(\mathrm{curl},\Omega)\). As previously, \(\gamma\) is the penalisation coefficient and \(h_s\) the mesh size. The variational formulation consists then in finding \(\mathbf{A} \in H(\mathrm{curl},\Omega)\) such that \(\forall (\mathbf{v},q) \in H(\mathrm{curl},\Omega)\times H^1_0(\Omega)\)</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+  \int_{\Omega}\nu(\nabla \times \mathbf{A}) \cdot (\nabla \times \mathbf{v})
+  + \int_{\delta \Omega}\nu (\nabla \times \mathbf{A}) \cdot (\mathbf{v} \times \mathbf{n})&amp;\\
+  + \int_{\delta \Omega}\nu (\nabla \times \mathbf{v}) \cdot (\mathbf{A} \times \mathbf{n})
+  + \int_{\delta \Omega} \frac{\gamma}{h_s} \nu (\mathbf{v} \times \mathbf{n}) \cdot (\mathbf{A} \times \mathbf{n})&amp; \\
+  + \int_{\Omega} \mathbf{v} \cdot \nabla p
+  &amp;= \int_{\Omega} \mathbf{J} \cdot \mathbf{v}
+  - \int_{\Omega} (\nabla \times \mathbf{I})\cdot \mathbf{v}\\
+  &amp;+ \int_{\delta \Omega}\nu (\nabla \times \mathbf{v}) \cdot \mathbf{A}_D
+  + \int_{\delta \Omega} \frac{\gamma}{h_s} \nu (\mathbf{v} \times \mathbf{n}) \cdot \mathbf{A}_D\\
+  \int_{\Omega} \mathbf{A} \cdot \nabla q &amp;= 0
+  \end{align}\]
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_discretization"><a class="anchor" href="#_discretization"></a>Discretization</h5>
+<div class="paragraph">
+<p>Since \(\mathbf{A}\) must be in \(H(\mathrm{curl},\Omega)\), we need to use Nédélec elements, see <a href="../Appendix/Notations.adoc">Notations</a>. On the strong form, the discrete problem becomes:<br>
+Find \((\mathbf{A}_h,p_h)\in (H_{\mathbf{A}_D,h}(\mathrm{curl},\Omega)\times P_{c,h}^1(\Omega))\) such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+  &amp; \int_{\Omega}\nu_0(\nabla \times \mathbf{A}_h) \cdot (\nabla \times \mathbf{v}_h)
+    + \int_{\Omega} \mathbf{v}_h \cdot \nabla p_h = \int_{\Omega} \mathbf{J} \cdot \mathbf{v}_h - \int_{\Omega} (\nabla \times \mathbf{I})\cdot \mathbf{v}_h  ~~\forall \mathbf{v}_h \in H_{0,h}(\mathrm{curl},\Omega) \\
+  &amp; \int_{\Omega} \mathbf{A}_h \cdot \nabla q_h = 0 ~~\forall q_h \in P_{0,c,h}^1(\Omega)
+\end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>On the weak form, the discrete problem becomes:<br>
+Find \((\mathbf{A}_h,p_h)\in (H_{h}(\mathrm{curl},\Omega)\times P_{c,h}^1(\Omega))\) such that   \(\forall (\mathbf{v}_h,q_h) \in H_h(\mathrm{curl},\Omega)\times P^1_{0,c,h}(\Omega)\)</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+  \int_{\Omega}\nu(\nabla \times \mathbf{A}_h) \cdot (\nabla \times \mathbf{v}_h)
+  + \int_{\delta \Omega}\nu (\nabla \times \mathbf{A}_h) \cdot (\mathbf{v}_h \times \mathbf{n})&amp;\\
+  + \int_{\delta \Omega}\nu (\nabla \times \mathbf{v}_h) \cdot (\mathbf{A}_h \times \mathbf{n})
+  + \int_{\delta \Omega} \frac{\gamma}{h_s} \nu (\mathbf{v}_h \times \mathbf{n}) \cdot (\mathbf{A}_h \times \mathbf{n})&amp; \\
+  + \int_{\Omega} \mathbf{v}_h \cdot \nabla p_h
+  &amp;= \int_{\Omega} \mathbf{J} \cdot \mathbf{v}_h
+  - \int_{\Omega} (\nabla \times \mathbf{I})\cdot \mathbf{v}_h\\
+  &amp;+ \int_{\delta \Omega}\nu (\nabla \times \mathbf{v}_h) \cdot \mathbf{A}_D
+  + \int_{\delta \Omega} \frac{\gamma}{h_s} \nu (\mathbf{v}_h \times \mathbf{n}) \cdot \mathbf{A}_D\\
+  \int_{\Omega} \mathbf{A}_h \cdot \nabla q_h &amp;= 0
+  \end{align}\]
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_regularized_formulation"><a class="anchor" href="#_regularized_formulation"></a>4.4.2. Regularized formulation</h4>
+<div class="paragraph">
+<p>The second way consists of considering the ungauged problem as a special case of the time harmonic Maxwell&#8217;s equations.
+Then using a Fourier transform, we can write the problem as:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+\nabla\times\nu_0\nabla\times\mathbf{A} + \varepsilon\mathbf{A} &amp;= \mathbf{J} - \nabla\times\mathbf{I} &amp;\text{ in } \Omega\\
+\mathbf{A}\times\mathbf{n} &amp;= \mathbf{A}_D &amp;\text{ on } \partial\Omega
+\end{aligned}\]
+</div>
+</div>
+<div class="sect4">
+<h5 id="_variational_formulation_2"><a class="anchor" href="#_variational_formulation_2"></a>Variational formulation</h5>
+<div class="paragraph">
+<p>The variational formulation obtained consists in finding \(\mathbf{A} \in X \subset H(\mathrm{curl},\Omega)\) such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+  \int_{\Omega}\nu_0(\nabla \times \mathbf{A}) \cdot (\nabla \times \mathbf{v})
+  + \int_{\delta \Omega}\nu_0 (\nabla \times \mathbf{A}) \cdot (\mathbf{v} \times \mathbf{n} )
+  + \int_{\Omega}\varepsilon \mathbf{A} \cdot \mathbf{v}  = \int_{\Omega} \mathbf{J} \cdot \mathbf{v} - \int_{\Omega} (\nabla \times \mathbf{I}) \cdot \mathbf{v} ~\forall \mathbf{v} \in Y
+\end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Imposing the Dirichlet boundary condition on strong form, removes the boundary term and the condition is inherent to he function space \(X = H(\mathbf{A}_D,\mathrm{curl},\Omega)\). The variational formulation becomes : Find \(\mathbf{A} \in H_{\mathbf{A}_D}(\mathrm{curl},\Omega)\) such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+  \int_{\Omega}\nu_0(\nabla \times \mathbf{A}) \cdot (\nabla \times \mathbf{v})
+  + \int_{\Omega}\varepsilon \mathbf{A} \cdot \mathbf{v}  = \int_{\Omega} \mathbf{J} \cdot \mathbf{v} - \int_{\Omega} (\nabla \times \mathbf{I}) \cdot \mathbf{v} \quad \forall \mathbf{v} \in H_{0}(\mathrm{curl},\Omega)
+\end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>We can also impose the Dirichlet boundary conditions on weak form, adding symetrization and penalisation terms and then avoiding to add condition in \(X\) function space, i.e. \(X = H(\mathrm{curl},\Omega)\). As previously, \(\gamma\) is the penalisation coefficient and \(h_s\) the mesh size. The variational formulation consists then in finding \(\mathbf{A} \in H(\mathrm{curl},\Omega)\) such that \(\forall \mathbf{v} \in H(\mathrm{curl},\Omega)\)</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align*}
+  \int_{\Omega}\nu(\nabla \times \mathbf{A}) \cdot (\nabla \times \mathbf{v})
+  + \int_{\delta \Omega}\nu (\nabla \times \mathbf{A}) \cdot (\mathbf{v} \times \mathbf{n} )&amp;\\
+  + \int_{\delta \Omega}\nu (\nabla \times \mathbf{v}) \cdot (\mathbf{A} \times \mathbf{n} )
+  + \int_{\delta \Omega} \frac{\gamma}{h_s} \nu  (\mathbf{v} \times \mathbf{n} ) \cdot (\mathbf{A} \times \mathbf{n} )&amp;\\
+  + \int_{\Omega}\alpha \mathbf{A} \cdot \mathbf{v}
+  &amp;= \int_{\Omega} \mathbf{J} \cdot \mathbf{v}
+  - \int_{\Omega} (\nabla \times \mathbf{I}) \cdot \mathbf{v} \\
+  &amp;+ \int_{\delta \Omega}\nu (\nabla \times \mathbf{v}) \cdot \mathbf{A}_D
+  + \int_{\delta \Omega} \frac{\gamma}{h_s} \nu  (\mathbf{v} \times \mathbf{n} ) \cdot \mathbf{A}_D
+\end{align*}\]
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_discretization_2"><a class="anchor" href="#_discretization_2"></a>Discretization</h5>
+<div class="paragraph">
+<p>On strong form, the discrete problem is: find \(\mathbf{A}_h\in H_{\mathbf{A}_D,h}(\mathrm{curl},\Omega)\) such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{aligned}
+  \int_{\Omega}\nu_0(\nabla \times \mathbf{A}_h) \cdot (\nabla \times \mathbf{v}_h)
+  + \int_{\Omega}\varepsilon \mathbf{A}_h \cdot \mathbf{v}_h  = \int_{\Omega} \mathbf{J} \cdot \mathbf{v}_h - \int_{\Omega} (\nabla \times \mathbf{I}) \cdot \mathbf{v}_h \quad \forall \mathbf{v}_h \in H_{0,h}(\mathrm{curl},\Omega)
+\end{aligned}\]
+</div>
+</div>
+<div class="paragraph">
+<p>On weak form, the discrete problem is : find \(\mathbf{A}_h\in H(\mathrm{curl},\Omega)\) such that \(\forall \mathbf{v}_h \in H(\mathrm{curl},\Omega)\)</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+  \int_{\Omega}\nu(\nabla \times \mathbf{A}_h) \cdot (\nabla \times \mathbf{v}_h)
+  + \int_{\delta \Omega}\nu (\nabla \times \mathbf{A}_h) \cdot (\mathbf{v}_h \times \mathbf{n} )&amp;\\
+  + \int_{\delta \Omega}\nu (\nabla \times \mathbf{v}_h) \cdot (\mathbf{A}_h \times \mathbf{n} )
+  + \int_{\delta \Omega} \frac{\gamma}{h_s} \nu  (\mathbf{v}_h \times \mathbf{n} ) \cdot (\mathbf{A}_h \times \mathbf{n} )&amp; \\
+  + \int_{\Omega}\alpha \mathbf{A}_h \cdot \mathbf{v}_h
+  &amp;= \int_{\Omega} \mathbf{J} \cdot \mathbf{v}_h
+  - \int_{\Omega} (\nabla \times \mathbf{I}) \cdot \mathbf{v}_h \\
+  &amp;+ \int_{\delta \Omega}\nu (\nabla \times \mathbf{v}_h) \cdot \mathbf{A}_D
+  + \int_{\delta \Omega} \frac{\gamma}{h_s} \nu  (\mathbf{v}_h \times \mathbf{n} ) \cdot \mathbf{A}_D
+\end{align}\]
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solver_and_preconditionner"><a class="anchor" href="#_solver_and_preconditionner"></a>4.5. Solver and Preconditionner</h3>
+<div class="paragraph">
+<p>There are many methods available to solve the saddle-point formulation, using iterative solvers.
+Considering the number of non zero entries in the matrix to inverse due to the use of edge based finite elements, this method proves to be inefficient for this problem.</p>
+</div>
+<div class="paragraph">
+<p>A block diagonal preconditioning approach for the time-harmonic Maxwell equations is introduced in &lt;<a href="#Greif07">Greif-Schötzau</a>&gt;.
+Combined with a nodal auxiliary space preconditioning technique proposed in &lt;<a href="#Xu07">Hiptmair Xu</a>&gt; specifically designed for \(H(\mathrm{curl})\)-conforming finite element, this method gives attractive performance results detailed in &lt;<a href="#Li2010">Li</a>&gt;.</p>
+</div>
+<div class="paragraph">
+<p>This section describes the main ingredients of preconditioning method introduced in &lt;<a href="#Li2010">Li</a>&gt;.
+Based on the saddle point formulation, the magnetostatic problem reads on the form \(\mathcal{K} \mathbf{x} = \mathbf{b}\)</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\underbrace{
+    \begin{pmatrix}
+      \mathcal{A} &amp; \mathcal{B}^{T} \\
+      \mathcal{B} &amp; 0
+    \end{pmatrix}
+  }_{\mathcal{K}}
+  \underbrace{
+    \begin{pmatrix}
+      \mathbf{A} \\
+      p
+    \end{pmatrix}
+  }_{x}
+  =
+  \underbrace{
+  \begin{pmatrix}
+      \mathbf{f} \\
+      0
+    \end{pmatrix}
+  }_{b}\]
+</div>
+</div>
+<div class="paragraph">
+<p>The solving of this system is performed at two solver "levels". An outer solver dealing with the resolution of the previous system with the block diagonal preconditioner &lt;<a href="#Greif07">Greif-Schötzau</a>&gt;, and an inner solver dealing with the application of auxiliary space preconditioning technique &lt;<a href="#Xu07">Hiptmair-Xu</a>&gt; to the first block of the latter.</p>
+</div>
+<div class="sect3">
+<h4 id="_outer_solver"><a class="anchor" href="#_outer_solver"></a>4.5.1. Outer solver</h4>
+<div class="paragraph">
+<p>The block diagonal preconditioner proposed in &lt;<a href="#Greif07">Greif-Schötzau</a>&gt; consists in</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[  \mathcal{P}_{\mathcal{M},\mathcal{L}} =
+  \begin{pmatrix}
+      \mathcal{P}_{\mathcal{M}} &amp; 0 \\
+      0 &amp; \mathcal{L}
+    \end{pmatrix}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[  \mathcal{P}_{\mathcal{M}} = \mathcal{A} + \mathcal{M} ~\text{with} ~\mathcal{M}_{i,j} = \displaystyle{ \int_{\Omega} \psi_j \cdot \psi_i },  ~~1 \leqslant i,j \leqslant n\]
+</div>
+</div>
+<div class="paragraph">
+<p>and \(\mathcal{L}\) the scalar Laplacian on \(Q_h\) defined as</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[  \mathcal{L} = \displaystyle{ \int_{\Omega} \nabla \phi_j \cdot \nabla \phi_i }, ~~1 \leqslant i,j \leqslant m\]
+</div>
+</div>
+<div class="paragraph">
+<p>The outer solver for \(\mathcal{K}\mathbf{x}=\mathbf{b}\) is a preconditioned MINRES, using previously defined \(\mathcal{P}_{\mathcal{M},\mathcal{L}}\) as preconditioner.
+The linear system to solve then reads \(\mathcal{P}_{\mathcal{M},\mathcal{L}} ~\mathcal{K} \mathbf{x} = \mathcal{P}_{\mathcal{M},\mathcal{L}} ~\mathbf{b}\)</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[    \underbrace{
+    \begin{pmatrix}
+      \mathcal{P}_{\mathcal{M}} &amp; 0 \\
+      0 &amp; \mathcal{L}
+    \end{pmatrix}
+  }_{\mathcal{P}_{\mathcal{M},\mathcal{L}}}
+  \underbrace{
+    \begin{pmatrix}
+      \mathbf{v} \\
+      q
+    \end{pmatrix}
+  }_{x_{out}}
+  =
+  \underbrace{
+    \begin{pmatrix}
+      \mathbf{c} \\
+      d
+    \end{pmatrix}
+  }_{b_{out}}\]
+</div>
+</div>
+<div class="paragraph">
+<p>This linear system is solved block by block, using subspace solvers. The block \((1,1)\) consists in the linear system</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[  \mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}\]
+</div>
+</div>
+<div class="paragraph">
+<p>and the block \((2,2)\) is the linear system</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[  \mathcal{L} q = d\]
+</div>
+</div>
+<div class="paragraph">
+<p>The resolution of both systems gives the solution \((\mathbf{v},q)\) from which we conclude current MINRES iteration updating \(\mathbf{x}\) in \(\mathcal{K}\mathbf{x}=\mathbf{b}\).
+The same process can then applied for each MINRES iteration, until convergence.</p>
+</div>
+<div class="paragraph">
+<p>While the solving of the scalar elliptic problem \(\mathcal{L} q = d\) can be efficiently performed with standard methods, the  \(H(\mathrm{curl})\)-conforming linear system \(\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}\) of the outer problem is more tricky.
+This bottleneck can be overcomed using a second level of preconditioning, applying the effective auxiliary space preconditioning method &lt;<a href="#Xu07">Hiptmair and Xu</a>&gt; to the inner problem \(\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}\).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_inner_solver"><a class="anchor" href="#_inner_solver"></a>4.5.2. Inner solver</h4>
+<div class="paragraph">
+<p>The preconditioning method proposed in &lt;<a href="#Xu07">Hiptmair and Xu</a>&gt; is used to solve the linear system \(\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}\).</p>
+</div>
+<div class="paragraph">
+<p>This system is solved using a preconditioned conjugate gradient (CG) and then reads \(\mathcal{P}_{V} \mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathcal{P}_{V} \mathbf{c}\), where \(\mathcal{P}_{V}\) is the preconditioner to be descibed.
+The linear system to solve then becomes</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[  \mathcal{P}_{V} \mathbf{w} = \mathbf{r}\]
+</div>
+</div>
+<div class="paragraph">
+<p>The preconditioner \(\mathcal{P}_{V}\) is defined such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[  \mathcal{P}_{V}^{-1} = diag(\mathcal{P}_{\mathcal{M}})^{-1} + P(\bar{\mathcal{L}} + \bar{\mathcal{Q}})^{-1}P^{T} + C(\bar{\mathcal{L}}^{-1})C^{T}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\bar{\mathcal{L}} = \frac{1}{\mu} diag(\mathcal{L},\mathcal{L},\mathcal{L})\]
+</div>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[  \bar{\mathcal{Q}} = diag(\mathcal{M},\mathcal{M},\mathcal{M})\]
+</div>
+</div>
+<div class="paragraph">
+<p>The matrix \(C\) is composed by the coefficients of the gradient of \(Q_h\) basis functions \(\phi_j\) in the \(H(\mathrm{curl})\)-conforming space \(V_h\)</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[  C = \{ C_{i,j} \} ~1 \leqslant i \leqslant n, ~1 \leqslant j \leqslant m ~\text{such that} ~ \nabla \phi_j = \sum \limits_{i=1}^{n} C_{i,j} \psi_i ~1 \leqslant j \leqslant m\]
+</div>
+</div>
+<div class="paragraph">
+<p>and the matrix \(P\) is the nodal interpolation operator \(\Pi_{h}^{\mathrm{curl}}\) from \(Q_h^3\) to \(V_h\).</p>
+</div>
+<div class="paragraph">
+<p>From the definition of \(\mathcal{P}_V\), the linear system \(\mathcal{P}_{V} \mathbf{w} = \mathbf{r}\) gives</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[  \mathbf{w} = diag(\mathcal{P}_{\mathcal{M}})^{-1} \mathbf{r} + P\mathbf{y} + C \mathbf{z}
+  ~~\text{with} ~\mathbf{y} = (\bar{\mathcal{L}} + \bar{\mathcal{Q}})^{-1}P^{T}\mathbf{r}
+  ~~\text{and} ~\mathbf{z} = \bar{\mathcal{L}}^{-1} C^{T} \mathbf{r}\]
+</div>
+</div>
+<div class="paragraph">
+<p>The terms \(\mathbf{y}\) and \(\mathbf{z}\) are computed by solving two linear systems</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+   &amp; (\bar{\mathcal{L}} + \bar{\mathcal{Q}}) \mathbf{y} = P^{T}\mathbf{r} \\
+   &amp; \mathcal{L} \mathbf{z} = C^{T} \mathbf{r}
+\end{align}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Then, \(\mathbf{w}\) can be updated by solving both systems which solves the linear system \(\mathcal{P}_{\mathcal{M}} \mathbf{v} = \mathbf{c}\).</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_references"><a class="anchor" href="#_references"></a>References</h3>
+<div class="ulist bibliography">
+<ul class="bibliography">
+<li>
+<p><a id="Greif07"></a>[Greif07] Preconditioners for the discretized time‐harmonic Maxwell equations in mixed form
+C Greif, D Schötzau - Numerical Linear Algebra, 2007 - Wiley</p>
+</li>
+<li>
+<p><a id="Xu07"></a>[Xu07] Nodal auxiliary space preconditioning in H (curl) and H (div) spaces, R Hiptmair, J Xu, SIAM Journal on Numerical Analysis 45 (6), 2483-2509</p>
+</li>
+<li>
+<p><a id="Li2010"></a>[Li2010] &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_benchmark"><a class="anchor" href="#_benchmark"></a>5. Benchmark</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>We benchmark here our implementation.</p>
 </div>
@@ -906,9 +1616,8 @@ In case where the media is linear, the term \(-\nabla\times\mathbf{I}\) disappea
 \end{aligned}\]
 </div>
 </div>
-</div>
 <div class="sect2">
-<h3 id="_regularized_point_system"><a class="anchor" href="#_regularized_point_system"></a>3.2. Regularized point system</h3>
+<h3 id="_regularized_point_system"><a class="anchor" href="#_regularized_point_system"></a>5.1. Regularized point system</h3>
 <div class="stemblock">
 <div class="content">
 \[\begin{aligned}
@@ -919,7 +1628,7 @@ In case where the media is linear, the term \(-\nabla\times\mathbf{I}\) disappea
 </div>
 </div>
 <div class="sect2">
-<h3 id="_saddle_point_system"><a class="anchor" href="#_saddle_point_system"></a>3.3. Saddle point system</h3>
+<h3 id="_saddle_point_system"><a class="anchor" href="#_saddle_point_system"></a>5.2. Saddle point system</h3>
 <div class="stemblock">
 <div class="content">
 \[\begin{aligned}
@@ -932,8 +1641,12 @@ In case where the media is linear, the term \(-\nabla\times\mathbf{I}\) disappea
 </div>
 <div class="paragraph">
 <p>The boundary condition can apply with penalization or elimination.
-We compare both results:
-<span class="image"><img src="_images/convergence_saddle.png" alt="Saddle Point system convergence"></span></p>
+We compare both results:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/convergence_saddle.png" alt="Saddle Point system convergence">
+</div>
 </div>
 </div>
 </div>

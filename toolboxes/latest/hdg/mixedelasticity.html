@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Feel++ Docs</title>
+    <title>Mixed Elasticity :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/hdg/mixedelasticity.html">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
@@ -232,7 +232,7 @@ MathJax.Hub.Config({
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../multifluid/index.html">Multifluid Flow</a>
+    <a class="nav-link" href="../multifluid/manual.html">Multifluid Flow</a>
   </li>
 </ul>
   </li>
@@ -403,6 +403,10 @@ MathJax.Hub.Config({
   <button class="nav-toggle"></button>
     <a href="../../../home/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Toolboxes Manual</a></li>
+    <li><a href="mixedelasticity.html">Mixed Elasticity</a></li>
+  </ul>
 </nav>
 
   <div class="page-versions">
@@ -434,11 +438,10 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Mixed Elasticity</h1>
 <div class="sect1">
-<h2 id="_mixed_elasticity"><a class="anchor" href="#_mixed_elasticity"></a>1. Mixed Elasticity</h2>
+<h2 id="_notations_and_units"><a class="anchor" href="#_notations_and_units"></a>1. Notations and units</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_notations_and_units"><a class="anchor" href="#_notations_and_units"></a>1.1. Notations and units</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -468,8 +471,10 @@ MathJax.Hub.Config({
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="_equations"><a class="anchor" href="#_equations"></a>1.2. Equations</h3>
+</div>
+<div class="sect1">
+<h2 id="_equations"><a class="anchor" href="#_equations"></a>2. Equations</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Mixed Elasticity equations are</p>
 </div>
@@ -508,14 +513,16 @@ MathJax.Hub.Config({
 & c_1 = \dfrac{1}{2\mu} & c_2 = \dfrac{-\lambda}{2\mu \left( 3\lambda + 2\mu  \right)}
 \end{align}
 </div>
-<div class="sect2">
-<h3 id="_mixedelasticity_toolbox"><a class="anchor" href="#_mixedelasticity_toolbox"></a>1.3. MixedElasticity Toolbox</h3>
+</div>
+<div class="sect1">
+<h2 id="_mixedelasticity_toolbox"><a class="anchor" href="#_mixedelasticity_toolbox"></a>3. MixedElasticity Toolbox</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The model is described in a json file which path is given by the option <code>mixedelasticity.model_json</code>.
 The construction of this file is detailed in the following sections.</p>
 </div>
-<div class="sect3">
-<h4 id="_models"><a class="anchor" href="#_models"></a>1.3.1. Models</h4>
+<div class="sect2">
+<h3 id="_models"><a class="anchor" href="#_models"></a>3.1. Models</h3>
 <div class="paragraph">
 <p>The models are not considered for now.</p>
 </div>
@@ -526,8 +533,8 @@ The construction of this file is detailed in the following sections.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_materials"><a class="anchor" href="#_materials"></a>1.3.2. Materials</h4>
+<div class="sect2">
+<h3 id="_materials"><a class="anchor" href="#_materials"></a>3.2. Materials</h3>
 <div class="paragraph">
 <p>In this part we define the two Lamé parameters \(\lambda\) and \(\mu\) and the mass density \(\rho\).
 It is always necessary to define also the material we work on.</p>
@@ -548,8 +555,8 @@ It is always necessary to define also the material we work on.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>1.3.3. Boundary Conditions</h4>
+<div class="sect2">
+<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>3.3. Boundary Conditions</h3>
 <div class="paragraph">
 <p>All boundary conditions are described in the same way</p>
 </div>
@@ -576,8 +583,8 @@ It is always necessary to define also the material we work on.</p>
 <div class="paragraph">
 <p>Different types of boundary condition are available.</p>
 </div>
-<div class="sect4">
-<h5 id="_dirichlet_condition"><a class="anchor" href="#_dirichlet_condition"></a>Dirichlet condition</h5>
+<div class="sect3">
+<h4 id="_dirichlet_condition"><a class="anchor" href="#_dirichlet_condition"></a>3.3.1. Dirichlet condition</h4>
 <div class="stemblock">
 <div class="content">
 \[\uu = \ug_D\]
@@ -606,8 +613,8 @@ It is always necessary to define also the material we work on.</p>
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_neumann_condition"><a class="anchor" href="#_neumann_condition"></a>Neumann condition</h5>
+<div class="sect3">
+<h4 id="_neumann_condition"><a class="anchor" href="#_neumann_condition"></a>3.3.2. Neumann condition</h4>
 <div class="stemblock">
 <div class="content">
 \[\usigma\;\un = \ug_N\]
@@ -636,8 +643,8 @@ It is always necessary to define also the material we work on.</p>
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_integral_boundary_condition"><a class="anchor" href="#_integral_boundary_condition"></a>Integral boundary condition</h5>
+<div class="sect3">
+<h4 id="_integral_boundary_condition"><a class="anchor" href="#_integral_boundary_condition"></a>3.3.3. Integral boundary condition</h4>
 <div class="stemblock">
 <div class="content">
 \[\int_{\Gamma_I} \usigma \; \un = \underline{\mathbf{F}}_{target}\]
@@ -667,8 +674,8 @@ It is always necessary to define also the material we work on.</p>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_source_term"><a class="anchor" href="#_source_term"></a>1.3.4. Source Term</h4>
+<div class="sect2">
+<h3 id="_source_term"><a class="anchor" href="#_source_term"></a>3.4. Source Term</h3>
 <div class="paragraph">
 <p>The source term \(\underline{\mathbf{F}}_{ext}\) is treated as a boundary condition.</p>
 </div>
@@ -695,8 +702,8 @@ It is always necessary to define also the material we work on.</p>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="_post_process"><a class="anchor" href="#_post_process"></a>1.3.5. Post Process</h4>
+<div class="sect2">
+<h3 id="_post_process"><a class="anchor" href="#_post_process"></a>3.5. Post Process</h3>
 <div class="paragraph">
 <p>Two fields can be exported, the displacement \(\uu\) and the stress \(\usigma\).</p>
 </div>
@@ -736,8 +743,10 @@ It is always necessary to define also the material we work on.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_create_applications"><a class="anchor" href="#_create_applications"></a>1.4. Create applications</h3>
+</div>
+<div class="sect1">
+<h2 id="_create_applications"><a class="anchor" href="#_create_applications"></a>4. Create applications</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>In order to solve linear elasticity problem, an application should contain at least</p>
 </div>
@@ -755,19 +764,20 @@ ME-&gt;exportResults();</code></pre>
 <p>The assembling for the constant part is inside the initialization, while the assembling of the non-constant part (e.g. the right hand side) is in the solve method.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_run_simulations"><a class="anchor" href="#_run_simulations"></a>1.5. Run simulations</h3>
+</div>
+<div class="sect1">
+<h2 id="_run_simulations"><a class="anchor" href="#_run_simulations"></a>5. Run simulations</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Programme available to run simulations:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>feelpp_toolbox_mixed-elasticity-model_3DP{&lt;polynomial_order&gt;}_G{&lt;geometric_order&gt;}`</pre>
+<pre>mpirun -np 4 feelpp_toolbox_mixed-elasticity-model_3DP{&lt;polynomial_order&gt;}_G{&lt;geometric_order&gt;}`</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>with  <polynomial_order>=0,1,2,3,4  and  <geometric_order>=1,2 .</p>
-</div>
 </div>
 </div>
 </div>
