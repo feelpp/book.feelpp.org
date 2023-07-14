@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Backward Step :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/cfd/backwardstep/index.html">
+    <meta name="description" content="We simulate the 2D and 3D flows past a backward step.">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
@@ -449,23 +450,22 @@ MathJax.Hub.Config({
 <div class="sect1">
 <h2 id="_description"><a class="anchor" href="#_description"></a>1. Description</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Problem summary :</p>
-</li>
-</ul>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Problem summary</dt>
+<dd>
+<p>Let us consider the backward-facing step benchmark illustrated in Figure <a href="#fig:step">1</a>, which is an example of an inflow/outflow problem. The inflow is at \(x=-1\) and the outflow is at \(x=5\) for \(Re=10\) and \(Re=100\), at \(x=10\) for \(Re=200\) and at \(x=20\) for \(Re=400\).</p>
+</dd>
+</dl>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/backwardstep/geometry.svg" alt="geometry">
+</div>
+<div class="title">Figure 1. 2D Geometry</div>
 </div>
 <div class="paragraph">
-<p>Let us consider the backward-facing step benchmark illustrated in Figure <a href="#fig:step">1</a>, which is an example of an inflow/outflow problem.
-The inflow is at \(x=-1\) and the outflow is at \(x=5\) for \(Re=10\) and \(Re=100\), at \(x=10\) for \(Re=200\) and at \(x=20\) for \(Re=400\).</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Associated EDP</p>
-</li>
-</ul>
+<p>The mathematical model reads as follows:</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -516,7 +516,7 @@ u_z=0\]
 <div class="ulist">
 <ul>
 <li>
-<p>Initial condition: The initial iterate (\mathbf{u}_0, p_0) is obtained by solving the corresponding discrete Stokes problem.</p>
+<p>Initial condition: The initial iterate \((\mathbf{u}_0, p_0)\) is obtained by solving the corresponding discrete Stokes problem.</p>
 </li>
 </ul>
 </div>
@@ -573,31 +573,29 @@ u_z=0\]
 </tr>
 </tbody>
 </table>
-<div class="ulist">
-<ul>
-<li>
-<p>Solver and preconditioner used:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Gmsh: mesh generation</p>
-</li>
-<li>
-<p>Metis: partitioner</p>
-</li>
-<li>
-<p>Paraview: post process</p>
-</li>
-<li>
-<p>PCD: preconditioner (GAMG for A_p and M_p sub-problems, as for F_u we coupled Fieldsplit with block Jacobi. For each components of F_u we applied a GAMG preconditioner for Re=10, 100 and  Re=200. As for Re=400 we used the DD method GASM with LU in the subdomains for the components of F_u sub-matrix. (We used a relative tolerance of 10^{-6} for each sub-problem).</p>
-</li>
-<li>
-<p>GCR: solver</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Mesh generation</dt>
+<dd>
+<p>Gmsh</p>
+</dd>
+<dt class="hdlist1">Partitioner</dt>
+<dd>
+<p>Metis</p>
+</dd>
+<dt class="hdlist1">PostProcessing</dt>
+<dd>
+<p>Paraview</p>
+</dd>
+<dt class="hdlist1">Preconditioner</dt>
+<dd>
+<p>PCD (GAMG for A_p and M_p sub-problems, as for F_u we coupled Fieldsplit with block Jacobi. For each components of F_u we applied a GAMG preconditioner for Re=10, 100 and  Re=200. As for Re=400 we used the DD method GASM with LU in the subdomains for the components of F_u sub-matrix. (We used a relative tolerance of 10^{-6} for each sub-problem).</p>
+</dd>
+<dt class="hdlist1">Solver</dt>
+<dd>
+<p>GCR</p>
+</dd>
+</dl>
 </div>
 <div class="paragraph">
 <p>The stopping criterion of the nonlinear iteration is when the vector Euclidean norm of the nonlinear residual reaches  a relative error of 10^{-6}, that is</p>
