@@ -688,6 +688,16 @@ import sys
 app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
+<details>
+<summary class="title">Results</summary>
+<div class="content">
+<div class="literalblock dynamic-py-result">
+<div class="content">
+<pre></pre>
+</div>
+</div>
+</div>
+</details>
 <div class="colist arabic">
 <table>
 <tr>
@@ -712,9 +722,19 @@ e = feelpp.exporter(mesh=mesh)  <i class="conum" data-value="7"></i><b>(7)</b>
 e.add("a_scalar", 1.) <i class="conum" data-value="8"></i><b>(8)</b>
 e.add("u",u) <i class="conum" data-value="9"></i><b>(9)</b>
 e.add("pid",feelpp.pid( P0h )) <i class="conum" data-value="10"></i><b>(10)</b>
-e.save()   <i class="conum" data-value="11"></i><b>(11)</b></code></pre>
+e.save() <i class="conum" data-value="11"></i><b>(11)</b></code></pre>
 </div>
 </div>
+<details>
+<summary class="title">Results</summary>
+<div class="content">
+<div class="literalblock dynamic-py-result">
+<div class="content">
+<pre></pre>
+</div>
+</div>
+</div>
+</details>
 <div class="colist arabic">
 <table>
 <tr>
@@ -763,17 +783,6 @@ e.save()   <i class="conum" data-value="11"></i><b>(11)</b></code></pre>
 </tr>
 </table>
 </div>
-<details class="result">
-<summary class="title">Results</summary>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre>[loadMesh] Loading mesh in format geo+msh: "/Users/prudhomm/Downloads/feelppdb/downloads/feelpp2d.geo"
-[loadMesh] Use default geo desc: /Users/prudhomm/Downloads/feelppdb/downloads/feelpp2d.geo 0.1</pre>
-</div>
-</div>
-</div>
-</details>
 <div class="paragraph">
 <p>The results are stored in the directory <code>feelppdb</code> and can be visualized with <a href="https://paraview.org">ParaView</a> or EnSight.</p>
 </div>
@@ -793,13 +802,22 @@ def pv_get_mesh(mesh_path):
     reader = pv.get_reader(mesh_path)
     mesh = reader.read()
     return mesh
+
 def pv_plot(mesh, field="u", clim=None, cmap='viridis', cpos='xy', show_scalar_bar=True, show_edges=True):
     mesh.plot(scalars=field, clim=clim, cmap=cmap, cpos=cpos, show_scalar_bar=show_scalar_bar, show_edges=show_edges)
 
+plotter = pv.Plotter()
 mesh = pv_get_mesh(f"exports/ensightgold/Exporter/Exporter.case")
-pv_plot(mesh)</code></pre>
+plotter.add_mesh(mesh, scalars="u", clim=None, cmap="viridis", show_scalar_bar=True, show_edges=True)
+plotter.show()</code></pre>
 </div>
 </div>
+<details>
+<summary class="title">Results</summary>
+<div class="content">
+
+</div>
+</details>
 <nav class="pagination">
   <span class="prev"><a href="integrals.html">Computing integrals</a></span>
   <span class="next"><a href="../pyfeelpptoolboxes/index.html">pyFeel++ Toolboxes</a></span>
