@@ -1,13 +1,14 @@
-:cfpdes: Coefficient Form PDEs 
+:cfpdes: Coefficient Form PDEs
 = The Poisson equation with {cfpdes} toolbox
 :feelpp: Feel++
 :stem: latexmath
 :page-jupyter: true
 :page-plotly: true
+:!dynamic-blocks:
 
 == Introduction
 
-This page is devoted to the finite element approximation of coercive problems. 
+This page is devoted to the finite element approximation of coercive problems.
 
 The prototype is the Dirichlet problem: given a function stem:[f: \Omega \rightarrow \mathbb{R}],  look for a function stem:[u: \Omega \rightarrow \mathbb{R}] such that
 [[laplace]]
@@ -20,32 +21,32 @@ u & =0 & & \text { on } \partial \Omega,
 \end{aligned}
 \end{equation*}
 ++++
-where stem:[\Delta u=\sum_{i=1}^d \partial_{i i}^2 u] is the Laplacian of stem:[u]. 
+where stem:[\Delta u=\sum_{i=1}^d \partial_{i i}^2 u] is the Laplacian of stem:[u].
 
 Equation <<laplace>>, which imposes the nullity of the solution stem:[u] on the domain boundary, is called a homogeneous Dirichlet boundary condition.
 
-Other boundary conditions (non-homogeneous Dirichlet, Neumann or Robin) are possible and will be discussed later on. 
+Other boundary conditions (non-homogeneous Dirichlet, Neumann or Robin) are possible and will be discussed later on.
 
-The problem is used in many physical models, in particular 
+The problem is used in many physical models, in particular
 
 - in heat transfer where stem:[u] represents the temperature,
-- in electrostatics where stem:[u] represents an electric potential, 
-- in mechanics where stem:[u] represents a vertical membrane displacement, and 
-- in hydraulics where stem:[u] represents a charge in a Darcy flow. 
+- in electrostatics where stem:[u] represents an electric potential,
+- in mechanics where stem:[u] represents a vertical membrane displacement, and
+- in hydraulics where stem:[u] represents a charge in a Darcy flow.
 
 A second example of a coercive problem is the advection-diffusion-reaction equations with dominant diffusion which we shall study xref:pyfeelpptoolboxes/cfpdes.adr.adoc[here].
 
-A third example is provided by the mechanics of continuous deformable media in the framework of linear elasticity which we shall study xref:pyfeelpptoolboxes/cfpdes.linearelasticity.adoc[here]. 
-In this case, the unknown is a function stem:[u: \Omega \rightarrow \mathbb{R}^d] which represents a displacement field. 
+A third example is provided by the mechanics of continuous deformable media in the framework of linear elasticity which we shall study xref:pyfeelpptoolboxes/cfpdes.linearelasticity.adoc[here].
+In this case, the unknown is a function stem:[u: \Omega \rightarrow \mathbb{R}^d] which represents a displacement field.
 
 
-NOTE: Coercive problems provided the first framework for the application of the finite element method, when engineers used this method in the 1950's to approximate the solution of deformable continuum mechanics problems. 
+NOTE: Coercive problems provided the first framework for the application of the finite element method, when engineers used this method in the 1950's to approximate the solution of deformable continuum mechanics problems.
 
 The mathematical analysis of coercivity problems is relatively simple since it is based on the Lax-Milgram lemma.
 
 == The mathematical framework
 
-We assume for simplicity that the data stem:[f] is in stem:[L^2(\Omega)]. 
+We assume for simplicity that the data stem:[f] is in stem:[L^2(\Omega)].
 The weak formulation of the  <<laplace,homogeneous Dirichlet problem>> is the following:
 [[laplace-varf]]
 [stem]
@@ -70,14 +71,14 @@ a(u, w)=f(w), \quad \forall w \in V .
 ++++
 
 
-The space stem:[V] equipped with the norm stem:[\|\cdot\|_{1, \Omega}] (defined by stem:[\|v\|_{1, \Omega}=\left(\|v\|_{0, \Omega}^2+\|\nabla v\|_{0, \Omega}^2\right)^{1 / 2}] for stem:[v \in V] ) is a Hilbert space and the forms stem:[a] and stem:[f] are continuous on stem:[V \times V] and stem:[V], respectively. 
-The only non-trivial property to establish the well-posedness of <<laplace-varf>> is the coercivity of stem:[a] on stem:[H_0^1(\Omega)]. 
-This results from the following inequality 
+The space stem:[V] equipped with the norm stem:[\|\cdot\|_{1, \Omega}] (defined by stem:[\|v\|_{1, \Omega}=\left(\|v\|_{0, \Omega}^2+\|\nabla v\|_{0, \Omega}^2\right)^{1 / 2}] for stem:[v \in V] ) is a Hilbert space and the forms stem:[a] and stem:[f] are continuous on stem:[V \times V] and stem:[V], respectively.
+The only non-trivial property to establish the well-posedness of <<laplace-varf>> is the coercivity of stem:[a] on stem:[H_0^1(\Omega)].
+This results from the following inequality
 
 [[lem:1]]
 .Lemma: Poincaré inequality
 ****
-Let stem:[\Omega] be a bounded open of stem:[\mathbb{R}^d]. 
+Let stem:[\Omega] be a bounded open of stem:[\mathbb{R}^d].
 There exists a constant stem:[\ell_{\Omega}] such that
 [stem]
 ++++
@@ -99,14 +100,14 @@ The Poincaré inequality implies the coercivity of the bilinear form stem:[a] on
 
 The Lax-Milgram lemma allows us to conclude that the <<laplace-varf,problem>> is well-posed.
 
-=== Conforming Approximation 
+=== Conforming Approximation
 
 
-We consider a conformal approximation of <<laplace-varf,problem>>  by Lagrange finite elements. 
-We assume for simplicity that stem:[\Omega] is a stem:[\mathbb{R}^2] polygon or a stem:[\mathbb{R}^3] polyhedron. 
-We consider a regular and conformal family of affine meshes of stem:[\Omega] which we denote stem:[\left\{\mathcal{T}_h\right\}_{h>0}]. 
+We consider a conformal approximation of <<laplace-varf,problem>>  by Lagrange finite elements.
+We assume for simplicity that stem:[\Omega] is a stem:[\mathbb{R}^2] polygon or a stem:[\mathbb{R}^3] polyhedron.
+We consider a regular and conformal family of affine meshes of stem:[\Omega] which we denote stem:[\left\{\mathcal{T}_h\right\}_{h>0}].
 
-We choose as finite element of reference stem:[\left\{\widehat{K}, \widehat{P}, \widehat{\Sigma}\right\}] a finite element of Lagrange such that stem:[\mathbb{P}_k \subset \widehat{P}] and stem:[k+1>\frac{d}{2}] 
+We choose as finite element of reference stem:[\left\{\widehat{K}, \widehat{P}, \widehat{\Sigma}\right\}] a finite element of Lagrange such that stem:[\mathbb{P}_k \subset \widehat{P}] and stem:[k+1>\frac{d}{2}]
 
 We pose
 [stem]
@@ -115,7 +116,7 @@ We pose
 P_{\mathrm{c}, h}^k=\left\{v_h \in \mathcal{C}^0(\bar{\Omega}); \forall K \in \mathcal{T}_h, v_h \circ T_K \in \widehat{P}\right\}
 \end{equation*}
 ++++
-where stem:[T_K] is the geometric transformation sending stem:[\widehat{K}] into stem:[K]. 
+where stem:[T_K] is the geometric transformation sending stem:[\widehat{K}] into stem:[K].
 The space stem:[P_{\mathrm{c}, h}^k] is the space of the functions of stem:[\mathcal{C}^0(\bar{\Omega})] which are continuous on the boundary of stem:[\Omega] and which are piecewise polynomials of degree stem:[k] on each element of stem:[\mathcal{T}_h].
 
 In order to construct an approximation space which is included in stem:[V=H_0^1(\Omega)], we pose
@@ -126,7 +127,7 @@ V_h=P_{\mathrm{c}, h}^k \cap H_0^1(\Omega)
 \end{equation*}
 ++++
 
-The elements of stem:[V_h] are the functions of stem:[P_{\mathrm{c}, h}^k] which are stem:[0] on the boundary of stem:[\Omega]. 
+The elements of stem:[V_h] are the functions of stem:[P_{\mathrm{c}, h}^k] which are stem:[0] on the boundary of stem:[\Omega].
 
 
 We consider the following approximate problem:
@@ -142,9 +143,9 @@ a\left(u_h, v_h\right)=f\left(v_h\right), \quad \forall v_h \in V_h,
 which is clearly well-posed since stem:[a] is coercive on stem:[V] and stem:[V_h \subset V].
 
 [[thm:1]]
-.Convergence theorem of the conforming approximation 
+.Convergence theorem of the conforming approximation
 ****
-With the above assumptions, we suppose that the unique solution stem:[u] of <<laplace-varf, the problem>> is in stem:[H^{k+1}(\Omega) \cap H_0^1(\Omega)]. 
+With the above assumptions, we suppose that the unique solution stem:[u] of <<laplace-varf, the problem>> is in stem:[H^{k+1}(\Omega) \cap H_0^1(\Omega)].
 Then there exists a constant stem:[c] such that for all stem:[h],
 [[thm:1:1]]
 [stem]
@@ -170,19 +171,19 @@ Moreover, if  <<laplace-varf, the problem>> is regularizing, there exists a cons
 .Notes on the proof
 [%collapsible]
 ====
-The <<thm:1:1>> results from the lemma of Céa  and an interpolation theorem. 
+The <<thm:1:1>> results from the lemma of Céa  and an interpolation theorem.
 Indeed, we have
 [stem]
 ++++
 \begin{equation*}
 \begin{aligned}
-\left\|u-u_h\right\|_{1, \Omega} & \leq c \inf _{v_h \in V_h}\left\|u-v_h\right\|_{1, \Omega} \\ 
-& \leq c\left\|u-\mathcal{I}_h^{\mathrm{Lag}} u\right\|_{1, \Omega} \\ 
+\left\|u-u_h\right\|_{1, \Omega} & \leq c \inf _{v_h \in V_h}\left\|u-v_h\right\|_{1, \Omega} \\
+& \leq c\left\|u-\mathcal{I}_h^{\mathrm{Lag}} u\right\|_{1, \Omega} \\
 & \leq c h^k|u|_{k+1, \Omega}
 \end{aligned}
 \end{equation*}
 ++++
-where stem:[\mathcal{I}_h^{\mathrm{Lag}}] is the Lagrangian interpolation operator. 
+where stem:[\mathcal{I}_h^{\mathrm{Lag}}] is the Lagrangian interpolation operator.
 
 Moreover, the <<thm:1:2>> follows from the Aubin-Nitsche lemma which allows us to state that
 [stem]
@@ -216,7 +217,7 @@ We now consider an example to illustrate the <<thm:1,previous theorem>>.
 
 We start by initializing the {feelpp} environment.
 
-[[code:1]]  
+[[code:1]]
 [%dynamic,python]
 ----
 import sys
@@ -255,7 +256,7 @@ def generateGeometry(filename,dim=2,hsize=0.1):
         Characteristic Length{ PointsOf{ Surface{1}; } } = h;
         Physical Curve("Gamma_D") = {1,2,3,4};
         Physical Surface("Omega") = {1};
-        """ 
+        """
     elif dim==3 :
         geo+="""
         Box(1) = {0, 0, 0, 1, 1, 1};
@@ -288,21 +289,21 @@ def getMesh(filename,hsize=0.05,dim=2,verbose=False):
     mesh = feelpp.load(feelpp.mesh(dim=dim,realdim=dim), filename, hsize)
     return mesh
 
-# generate 2D abd 3D meshes    
-for dim in [2,3]:    
+# generate 2D abd 3D meshes
+for dim in [2,3]:
     mesh = getMesh(f"omega-{dim}d.geo",hsize=0.1,dim=dim,verbose=True)
 ----
 
 
-Then we consider the following right hand side stem:[f] and the exact solution stem:[u(x,y) = \sin(2 \pi x) \sin(2 \pi y)] such that 
+Then we consider the following right hand side stem:[f] and the exact solution stem:[u(x,y) = \sin(2 \pi x) \sin(2 \pi y)] such that
 [stem]
 ++++
 f=-\Delta u = 8 \pi^2 \sin(2 \pi x) \sin(2 \pi y)
 ++++
-that way we can check the <<thm:1>> with the exact solution. 
+that way we can check the <<thm:1>> with the exact solution.
 
 The {cfpdes} toolbox allows to solve the problem <<laplace-varf,problem>> with the following code:
-    
+
 [[code:3]]
 [%dynamic,python]
 ----
@@ -410,7 +411,7 @@ for dim in [2,3]:
 We can proceed with the visualisation of the field `u` using the following code using `pyvista`:
 
 [[code:4]]
-[%dynamica,python]
+[%dynamic,python]
 ----
 from xvfbwrapper import Xvfb # <1>
 vdisplay = Xvfb()
@@ -418,11 +419,13 @@ vdisplay.start()
 
 import pyvista as pv # <2>
 import os
+
 pv.set_jupyter_backend('panel') # <3>
 def pv_get_mesh(mesh_path):
     reader = pv.get_reader(mesh_path)
     mesh = reader.read()
     return mesh
+
 def pv_plot(mesh, field, clim=None, cmap='viridis', cpos='xy', show_scalar_bar=True, show_edges=True):
     mesh.plot(scalars=field, clim=clim, cmap=cmap, cpos=cpos, show_scalar_bar=show_scalar_bar, show_edges=show_edges)
 
@@ -453,7 +456,7 @@ myplots(dim=2,factor=0.5)
 In 3D, the plots are more difficult to visualise. We can use the `pyvista` package to visualise the mesh and the field `u`:
 
 [[code:4]]
-[%dynamica,python]
+[%dynamic,python]
 ----
 myplots(dim=3)
 ----
@@ -512,8 +515,8 @@ df3d=runConvergenceAnalysis(json=laplacian_json,dim=3,hs=[0.1,0.05,0.03],orders=
 Again, we observe that the proper convergence rates are obtained.
 
 
-Finally we postprocess the results using plotly. 
-The following code allows to 
+Finally we postprocess the results using plotly.
+The following code allows to
 
 - plot the error in stem:[L^2] and stem:[H^1] norms in plotly
 - display the convergence rates in the legend of the plot
@@ -572,14 +575,14 @@ Given a function stem:[f \in L^2(\Omega)] and a function stem:[g \in \mathcal{C}
 
 [NOTE]
 ====
-We can take stem:[g] in the fractional Sobolev space stem:[H^{\frac{1}{2}}(\partial \Omega)] defined as 
+We can take stem:[g] in the fractional Sobolev space stem:[H^{\frac{1}{2}}(\partial \Omega)] defined as
 [stem]
 ++++
 H^{\frac{1}{2}}(\partial \Omega)=\left\{v \in L^2(\partial \Omega) ; \frac{v(x)-v(y)}{\|x-y\|^{\frac{d+1}{2}}} \in L^2(\partial \Omega \times \partial \Omega)\right\}.
 ++++
 ====
 
-The hypothesis stem:[g \in \mathcal{C}^{0,1}(\partial \Omega)] allows us to assert that there exists a lifting stem:[u_g] of stem:[g] in stem:[H^1(\Omega)], that is to say that there exists a function stem:[u_g] in stem:[H^1(\Omega)] such that stem:[\left.u_g\right|_{\partial \Omega}=g]. 
+The hypothesis stem:[g \in \mathcal{C}^{0,1}(\partial \Omega)] allows us to assert that there exists a lifting stem:[u_g] of stem:[g] in stem:[H^1(\Omega)], that is to say that there exists a function stem:[u_g] in stem:[H^1(\Omega)] such that stem:[\left.u_g\right|_{\partial \Omega}=g].
 
 Under these conditions, we perform the change of unknown stem:[u_0=u-u_g] and consider the following weak formulation:
 
@@ -595,14 +598,14 @@ a\left(u_0, w\right)=f(w)-a\left(u_g, w\right), \quad \forall w \in H_0^1(\Omega
 ++++
 
 By the Lax-Milgram lemma, this problem is well posed.
-We are interested in a conformal approximation of <<laplace-dir,the problem>> by Lagrange finite elements. 
+We are interested in a conformal approximation of <<laplace-dir,the problem>> by Lagrange finite elements.
 We use the discrete framework described previously.
-We suppose that the data stem:[g] is regular enough to admit a lifting stem:[u_g] in stem:[\mathcal{C}^0(\bar{\Omega}) \cap H^1(\Omega)]. 
+We suppose that the data stem:[g] is regular enough to admit a lifting stem:[u_g] in stem:[\mathcal{C}^0(\bar{\Omega}) \cap H^1(\Omega)].
 We denote stem:[\mathcal{I}_h^{\mathrm{Lag}}] the interpolation operator associated with the mesh stem:[\mathcal{T}_h] and the finite Lagrangian element of reference stem:[\widehat{K}, \widehat{P}, \widehat{\Sigma}}].
-Recall that stem:[P_{\mathrm{c}, h}^k] denotes the stem:[H^1]-conformal space based on this finite element and that stem:[V_h] is the stem:[H_0^1]-conformal approximation space defined in (5.9). 
+Recall that stem:[P_{\mathrm{c}, h}^k] denotes the stem:[H^1]-conformal space based on this finite element and that stem:[V_h] is the stem:[H_0^1]-conformal approximation space defined in (5.9).
 
-Let stem:[N=\operatorname{dim} P_{\mathrm{c}, h}^k] be given. 
-We denote by stem:[\left\{\varphi_1, \ldots, \varphi_N\right\}] the nodal basis of stem:[P_{\mathrm{c}, h}^k] and by stem:[\left\{a_1, \ldots, a_N\right\}] the associated nodes. 
+Let stem:[N=\operatorname{dim} P_{\mathrm{c}, h}^k] be given.
+We denote by stem:[\left\{\varphi_1, \ldots, \varphi_N\right\}] the nodal basis of stem:[P_{\mathrm{c}, h}^k] and by stem:[\left\{a_1, \ldots, a_N\right\}] the associated nodes.
 By definition, for stem:[u \in \mathcal{C}^0(\bar{\Omega})], we have
 [stem]
 ++++
@@ -629,8 +632,8 @@ a\left(u_{0 h}, w_h\right)=f\left(w_h\right)-a\left(\mathcal{I}_h^{\mathrm{Lag}}
 \end{array}\right.
 \end{equation*}
 ++++
-which is clearly well posed. 
-We pose stem:[u_h=u_{0 h}+\mathcal{I}_h^{\mathrm{Lag}} u_g] so that stem:[\left.u_h\right|_{partial \Omega}] coincides with the Lagrange interpolated surface of stem:[g]. 
+which is clearly well posed.
+We pose stem:[u_h=u_{0 h}+\mathcal{I}_h^{\mathrm{Lag}} u_g] so that stem:[\left.u_h\right|_{partial \Omega}] coincides with the Lagrange interpolated surface of stem:[g].
 
 stem:[u_h] is the solution of the problem
 [stem]
@@ -649,7 +652,7 @@ IMPORTANT: For any surface node stem:[x_i \in \partial \Omega], then stem:[u_h\l
 [[thm:1:3]]
 .Convergence theorem for the inhomogeneous Dirichlet problem
 ****
-With the above assumptions, assume that the unique solution stem:[u] of <<laplace-dir>> is in stem:[H^{k+1}(\Omega) \cap H_0^1(\Omega)]. 
+With the above assumptions, assume that the unique solution stem:[u] of <<laplace-dir>> is in stem:[H^{k+1}(\Omega) \cap H_0^1(\Omega)].
 Then there exists a constant stem:[c] such that for all stem:[h],
 [stem]
 ++++
@@ -666,12 +669,12 @@ Moreover, if <<laplace-dir,the problem>> is regularizing, there exists a constan
 ++++
 ****
 
-==== Example 
+==== Example
 
 Then we consider the stem:[\mathbb{R}^2] domain stem:[\Omega] defined by stem:[\Omega=\left\{x \in \mathbb{R}^2; 0 \leq x_1 \leq 1, 0 \leq x_2 \leq 1\right\}].
 We consider the following mesh stem:[\mathcal{T}_h] of stem:[\Omega] with stem:[h=0.1].
 
-We shall replace the exact solution by stem:[u(x,y)=\sin(2\pi x) \cos(2\pi y)] which yields 
+We shall replace the exact solution by stem:[u(x,y)=\sin(2\pi x) \cos(2\pi y)] which yields
 [stem]
 ++++
 f=\Delta u=4\pi^2 \sin(2\pi x) \cos(2\pi y).
@@ -710,7 +713,7 @@ laplacian(hsize=0.1,json=laplacian_g_json(dim=3,order=1),dim=3)
 
 We can then plot the 2D results
 
-[%dynamica,python]
+[%dynamic,python]
 ----
 # plot the 2D results
 myplots(dim=2)
@@ -718,7 +721,7 @@ myplots(dim=2)
 
 and plot the 3D results
 
-[%dynamica,python]
+[%dynamic,python]
 ----
 # plot the 3D results
 myplots(dim=3)
@@ -756,7 +759,7 @@ Given a strictly positive real stem:[\lambda], a function stem:[f \in L^2(\Omega
 \end{aligned}
 \end{equation*}
 ++++
-where stem:[\partial_n u] denotes the normal derivative of stem:[u] on the boundar. 
+where stem:[\partial_n u] denotes the normal derivative of stem:[u] on the boundar.
 
 NOTE: By noting stem:[n=\left(n_1, \ldots, n_d\right)^T] the Cartesian coordinates of the exterior normal at a point of the boundary, we have by definition stem:[\partial_n u=n \cdot \nabla u=\sum_{i=1}^d n_i \partial_i u].
 
@@ -787,8 +790,8 @@ f_{\mathrm{N}}(w)=\int_{\Omega} f w+\int_{\partial \Omega} g w
 \end{equation*}
 ++++
 The well-posedness of <<laplace-N-vf, the weak formulation>> results from the coercivity of the bilinear form stem:[a_{\mathrm{N}} \operatorname{on} H^1(\Omega)].
-The <<laplace-N-vf,problem>> can be approximated by Lagrange finite elements. 
-We take the discrete framework described for the <<_conforming_approximation>>. 
+The <<laplace-N-vf,problem>> can be approximated by Lagrange finite elements.
+We take the discrete framework described for the <<_conforming_approximation>>.
 We consider the following approximated problem:
 [[laplace-N-approx]]
 [stem]
@@ -800,13 +803,13 @@ a_{\mathrm{N}}\left(u_h, w_h\right)=f_{\mathrm{N}}\left(w_h\right), \quad \foral
 \end{array}\right.
 \end{equation*}
 ++++
-which is clearly **well-posed**. 
+which is clearly **well-posed**.
 
-IMPORTANT: An important difference between the Neumann boundary condition and the Dirichlet boundary condition is that the former is not imposed explicitly in the space where the solution is sought but results from the fact that the test functions in <<laplace-N-vf, the variational formulation>> can take zero values at the edge. This difference is reflected in the finite element approximation by the fact that the solution stem:[u_h] of <<laplace-N-approx,the discrete Neumann problem>> satisfies the Neumann boundary condition in an approximate way and not in an exact way. 
+IMPORTANT: An important difference between the Neumann boundary condition and the Dirichlet boundary condition is that the former is not imposed explicitly in the space where the solution is sought but results from the fact that the test functions in <<laplace-N-vf, the variational formulation>> can take zero values at the edge. This difference is reflected in the finite element approximation by the fact that the solution stem:[u_h] of <<laplace-N-approx,the discrete Neumann problem>> satisfies the Neumann boundary condition in an approximate way and not in an exact way.
 
 Finally, the convergence analysis of the  <<laplace-N-approx,approximatio problem>> leads, under the assumptions of <<thm:1,Theorem>>, to the same estimates as for the homogeneous Dirichlet problem.
 
-We can also consider, at the cost of some technical difficulties, the Neumann problem with stem:[\lambda=0]. 
+We can also consider, at the cost of some technical difficulties, the Neumann problem with stem:[\lambda=0].
 We look for a function stem:[u: \Omega \rightarrow \mathbb{R}] such that
 [[laplace-N-0]]
 [stem]
@@ -830,7 +833,7 @@ We observe that a necessary condition for the existence of a solution is that th
 \int_{\Omega} f+\int_{\partial \Omega} g=0
 \end{equation*}
 ++++
-since stem:[\int_{\Omega} f+\int_{\partial \Omega} g=-\int_{\Omega} \Delta u+\int_{\partial \Omega} \partial_n u=0] according to the divergence theorem. 
+since stem:[\int_{\Omega} f+\int_{\partial \Omega} g=-\int_{\Omega} \Delta u+\int_{\partial \Omega} \partial_n u=0] according to the divergence theorem.
 ====
 
 [NOTE]
@@ -846,7 +849,7 @@ The divergence theorem expresses the fact that for any stem:[\phi] vector field 
 In particular, taking stem:[\phi=\nabla u] where stem:[u] is a sufficiently regular function, we get stem:[\int_{\Omega} \Delta u=\int_{\partial \Omega} \partial_n u].
 ====
 
-A solution of the <<laplace-N-0,problem>> with the <<laplace-N-cond,condition>>  is only determined to within one additive constant. 
+A solution of the <<laplace-N-0,problem>> with the <<laplace-N-cond,condition>>  is only determined to within one additive constant.
 We should then look for the solution in the functional space
 [stem]
 ++++
@@ -870,9 +873,9 @@ with the bilinear form $a$ such that stem:[a(v, w)=\int_{\Omega} \nabla v \cdot 
 The well-posedness of <<laplace-N-0-vf,problem>> results from the coercivity of the bilinear form a on stem:[H_*^1(\Omega)], this last property being itself a consequence of the inequality below.
 
 [[lem:2]]
-.Lemma: Poincaré-Wirtinger inequality. 
+.Lemma: Poincaré-Wirtinger inequality.
 ****
-Let stem:[\Omega] be a bounded open of stem:[\mathbb{R}^d]. 
+Let stem:[\Omega] be a bounded open of stem:[\mathbb{R}^d].
 There exists a constant stem:[\ell_{\Omega}^{\prime \prime}] such that
 [stem]
 ++++
@@ -894,7 +897,7 @@ a\left(u_h, w_h\right)=f_{\mathrm{N}}\left(w_h\right), \quad \forall w_h \in P_{
 \end{equation*}
 ++++
 
-NOTE: the approximation space stem:[P_{\mathrm{c}, h}^k] is not conformal in stem:[H_*^1(\Omega)] and that the linear system associated to the <<discrete problem,laplace-N-0-vf-approx>> is singular. 
+NOTE: the approximation space stem:[P_{\mathrm{c}, h}^k] is not conformal in stem:[H_*^1(\Omega)] and that the linear system associated to the <<discrete problem,laplace-N-0-vf-approx>> is singular.
 
 By noting this linear system in the form
 [[laplace-N-0-approx-sys]]
@@ -904,10 +907,10 @@ By noting this linear system in the form
 \mathcal{A}^* U=F^*
 \end{equation*}
 ++++
-and introducing the vector stem:[Z=(1, \ldots, 1)^T \in \mathbb{R}^N] where stem:[N=\operatorname{dim} P_{\mathrm{c}, h}^k], we find that stem:[\operatorname{Ker}\left(\mathcal{A}^*\right)=\operatorname{span}(Z), \operatorname{Im}\left(\mathcal{A}^*\right)=Z^{\perp}] and stem:[F^* \in Z^{\perp}]. 
-Therefore, the <<laplace-N-0-approx-sys,linear system>>  has infinitely many solutions. 
-One of them can be approximated using an iterative method, for example the conjugate gradient method. 
-We denote by stem:[U^{\circ}] the approximation provided by the iterative method. 
+and introducing the vector stem:[Z=(1, \ldots, 1)^T \in \mathbb{R}^N] where stem:[N=\operatorname{dim} P_{\mathrm{c}, h}^k], we find that stem:[\operatorname{Ker}\left(\mathcal{A}^*\right)=\operatorname{span}(Z), \operatorname{Im}\left(\mathcal{A}^*\right)=Z^{\perp}] and stem:[F^* \in Z^{\perp}].
+Therefore, the <<laplace-N-0-approx-sys,linear system>>  has infinitely many solutions.
+One of them can be approximated using an iterative method, for example the conjugate gradient method.
+We denote by stem:[U^{\circ}] the approximation provided by the iterative method.
 The solution of the <<laplace-N-0-approx-sys,linear system>> whose components have zero mean is obtained by posing
 [[laplace-N-0-approx-sol]]
 [stem]
@@ -987,7 +990,7 @@ Given a function stem:[f \in L^2(\Omega)] and a function stem:[g \in L^2(\partia
 \end{aligned}
 \end{equation*}
 ++++
-where stem:[\gamma_R>0] is a real parameter. 
+where stem:[\gamma_R>0] is a real parameter.
 
 NOTE: More generally, consider a function stem:[\gamma_R \in L^{\infty}(\partial \Omega)] such that stem:[\gamma_R(x) \geq \gamma_0>0] for almost all stem:[x \in \partial \Omega].
 
@@ -1016,7 +1019,7 @@ The well-posedness of <<laplace-R-weak,weak problem>> results from the coercivit
 \forall v \in H^1(\Omega), \quad\|v\|_{0, \Omega} \leq \rho_{\Omega} \left(\|nabla v|_{0, \Omega}+\|v\|_{0, \partial \Omega}\right) .
 \end{equation*}
 ++++
-Starting from the initial discrete framework, we are interested in an approximation  by Lagrange finite elements. 
+Starting from the initial discrete framework, we are interested in an approximation  by Lagrange finite elements.
 We consider the following approximated problem:
 [[laplace-R-vf-approx]]
 [stem]
@@ -1028,9 +1031,9 @@ a_{\mathrm{R}}\left(u_h, w_h\right)=f_{\mathrm{N}}\left(w_h\right), \quad \foral
 \end{array}\right.
 \end{equation*}
 ++++
-which is clearly well-posed. 
+which is clearly well-posed.
 
-NOTE: As with the Neumann boundary condition, the Robin boundary condition results from the fact that the test functions can take non-zero values at the edge; the condition is not exactly satisfied by the discrete solution stem:[u_h] but only in an approximate way. 
+NOTE: As with the Neumann boundary condition, the Robin boundary condition results from the fact that the test functions can take non-zero values at the edge; the condition is not exactly satisfied by the discrete solution stem:[u_h] but only in an approximate way.
 
 Finally, the convergence analysis for the stem:[u_h]  leads, under the assumptions of <<thm:1,the theorem>, to the same estimates as for the homogeneous Dirichlet problem.
 
@@ -1039,7 +1042,7 @@ Finally, the convergence analysis for the stem:[u_h]  leads, under the assumptio
 We consider the following problem in the unit square stem:[\Omega=[0,1\]^d, d=2] with  exact solution stem:[u(x,y)=\sin(2\pi x)\, \sin(2\pi y)]. We consider stem:[\gamma_R=1]
 We then compute stem:[f] and stem:[g_R] such that stem:[u] is the solution of the problem <<laplace-R-strong,above>>.
 
-We have 
+We have
 [stem]
 ++++
 \begin{equation*}
@@ -1068,7 +1071,7 @@ def laplacian_gR_json(dim,order=1):
                                                              }
                                                         }
     return j
-        
+
 # in 2D
 laplacian(hsize=0.1,json=laplacian_gR_json(dim=2,order=1),dim=2)
 ----
@@ -1091,18 +1094,18 @@ Consider a differential operator of the form
 \mathcal{L} u=-\nabla \cdot(\sigma \cdot \nabla u)+\beta \cdot \nabla u+\mu u,
 \end{equation*}
 ++++
-where $\sigma, \beta$ and $\mu$ are functions defined on $\Omega$ and with values in $\mathbb{R}^{d, d}, \mathbb{R}^d$ and $\mathbb{R}$ respectively. 
-The <<laplace-ADR-op,operator>>  is used, for example, in the modeling of advection-diffusion-reaction problems; the first term of the right-hand side is the diffusive term, the second the advective term and the third the reactive term. 
+where $\sigma, \beta$ and $\mu$ are functions defined on $\Omega$ and with values in $\mathbb{R}^{d, d}, \mathbb{R}^d$ and $\mathbb{R}$ respectively.
+The <<laplace-ADR-op,operator>>  is used, for example, in the modeling of advection-diffusion-reaction problems; the first term of the right-hand side is the diffusive term, the second the advective term and the third the reactive term.
 
 NOTE: The advective term is sometimes called the "convective" term and the equation is then called the convection-diffusion-reaction equation.
 
 
 NOTE: The stem:[\mathcal{L}] operator is used in many domais such as fluid mechanics, heat transfer, finance, chemistry, etc.
 
-In the following, we assume that stem:[\sigma \in\left[L^{\infty}(\Omega)\right\]^{d, d}, \beta \in\left[L^{\infty}(\Omega)\right\]^d, \nabla \cdot \beta \in L^{\infty}(\Omega)] and stem:[\mu \in L^{\infty}(\Omega)]. 
+In the following, we assume that stem:[\sigma \in\left[L^{\infty}(\Omega)\right\]^{d, d}, \beta \in\left[L^{\infty}(\Omega)\right\]^d, \nabla \cdot \beta \in L^{\infty}(\Omega)] and stem:[\mu \in L^{\infty}(\Omega)].
 Moreover, we assume that the operator stem:[\mathcal{L}] is elliptic in the following sense.
 
-.Definition: Elliptic operator. 
+.Definition: Elliptic operator.
 ****
 The <<laplace-ADR-op,operator stem:[\mathcal{L}]>> is said to be **elliptic** if there exists a constant stem:[\sigma_0>0] such that, almost everywhere in stem:[\Omega],
 [stem]
@@ -1143,7 +1146,7 @@ with the bilinear form stem:[a_{\sigma \beta \mu}] such that for all stem:[(v, w
 a_{\sigma \beta \mu}(v, w)=\int_{\Omega} \nabla w \cdot \sigma \cdot \nabla v+w(\beta \cdot \nabla v)+\mu w v
 \end{equation*}
 ++++
-We pose stem:[p=\inf {\operatorname{ess}}{ }_{x \in \Omega}\left(\mu-\frac{1}{2} \nabla \cdot \beta\right)] and we recall that stem:[\ell_{\Omega}] is the constant intervening in the Poincaré inequality above. 
+We pose stem:[p=\inf {\operatorname{ess}}{ }_{x \in \Omega}\left(\mu-\frac{1}{2} \nabla \cdot \beta\right)] and we recall that stem:[\ell_{\Omega}] is the constant intervening in the Poincaré inequality above.
 
 NOTE: For a function stem:[f \in L^{\infty}(\Omega), \inf \operatorname{ess}_{x \in \Omega} f(x)=\sup \left\{ M \in \mathbb{R}_{+}; f(x) \geq M \text{ almost\ everywhere\ in\ } \Omega\right\}].
 
@@ -1155,11 +1158,11 @@ Then, we show that under the condition
 \sigma_0+\min \left(0, \ell_{\Omega} p\right)>0
 \end{equation*}
 ++++
-the bilinear form stem:[a_{\sigma \beta \mu}] is coercive on stem:[H_0^1(\Omega)], so that, thanks to the Lax-Milgram lemma, the <<laplace-ADR-weak,problem>>  is well posed. 
+the bilinear form stem:[a_{\sigma \beta \mu}] is coercive on stem:[H_0^1(\Omega)], so that, thanks to the Lax-Milgram lemma, the <<laplace-ADR-weak,problem>>  is well posed.
 The <<laplace-ADR-condition,condition>>  being a minimization of stem:[\sigma_0], we retain that the coercivity is guaranteed provided that stem:[\sigma_0] is sufficiently large, i.e. in the *dominant diffusion regime*.
 
-The conformal approximation  by Lagrangian finite elements uses the discrete framework introduced for the Laplacian. 
-Finally, one can consider instead of non-homogeneous Dirichlet, Neumann or Robin boundary conditions. 
+The conformal approximation  by Lagrangian finite elements uses the discrete framework introduced for the Laplacian.
+Finally, one can consider instead of non-homogeneous Dirichlet, Neumann or Robin boundary conditions.
 
 IMPORTANT: Convergence results are obtained in the same way as for the Laplacian, with the same assumptions on the mesh and the finite element space in the case of diffusion dominated problems, we shall see in xref:cfpdes.adr.adoc[] that the mesh and finite element space must be adapted to the problem in the case of advection dominated problems.
 
@@ -1185,7 +1188,7 @@ laplacian(hsize=0.1,json=adr_json(dim=2,order=1,c=1),dim=2)
 
 We can plot the solution:
 
-[%dynamica,python]
+[%dynamic,python]
 ----
 myplots(dim=2,field="cfpdes.laplace.u")
 ----
@@ -1194,7 +1197,7 @@ and obtain the convergence rates as follows:
 
 [%dynamic,python]
 ----
-# run the 2D convergence analysis with c=1 
+# run the 2D convergence analysis with c=1
 df=runConvergenceAnalysis(json=lambda dim,order: adr_json(dim=dim,order=order,c=1),dim=2,verbose=True)
 ----
 
