@@ -19,9 +19,15 @@ In this 2D and 3D example, we
 import feelpp
 import sys,os
 import spdlog as spd
+from feelpp.timing import tic, toc
+
 logger = spd.ConsoleLogger('Logger', False, True, True) 
 logger.set_level(spd.LogLevel.TRACE)
+
+tic()
 app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) # <1>
+toc("init Feel++")
+
 logger.info(f"Feel++ version: {feelpp.Info.version()}")
 ----
 <1> The {feelpp} environment is initiated with the name of the application and the path to the local repository where the results will be stored.
@@ -31,7 +37,9 @@ logger.info(f"Feel++ version: {feelpp.Info.version()}")
 app.setLogVerbosityLevel(0) # <1>
 geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
 
+tic()
 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) # <2>
+toc("load mesh")
 logger.info(f"mesh loaded")
 
 Xh=feelpp.functionSpace(mesh=mesh,space="Pch",order=1) # <3>
@@ -80,8 +88,21 @@ def pv_get_mesh(mesh_path):
 plotter = pv.Plotter()
 plotter.show_axes()
 mesh = pv_get_mesh(f"exports/ensightgold/Exporter/Exporter.case")
-actor=plotter.add_mesh(mesh, scalars="u", clim=None, cmap="viridis", show_scalar_bar=True, show_edges=True)
-actor = plotter.add_orientation_widget(pv.Arrow(), color='r')
+plotter.add_mesh(mesh, scalars="u", clim=None, cmap="viridis", show_scalar_bar=True, show_edges=True)
+plotter.camera_position = 'xy'
+axes = pv.create_axes_marker(
+                                line_width=4,
+                                ambient=0.0,
+                                x_color="#378df0",
+                                y_color="#ab2e5d",
+                                z_color="#f7fb9a",
+                                xlabel="X Axis",
+                                ylabel="Y Axis",
+                                zlabel="Z Axis",
+                                label_size=(0.1, 0.1), label_color="#aaaaaa",
+                            )
+plotter.add_actor(axes)
+
 plotter.show()
 ----
 
