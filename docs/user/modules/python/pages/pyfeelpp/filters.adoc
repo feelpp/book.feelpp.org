@@ -17,8 +17,12 @@ In this 2D and 3D example, we
 [%dynamic,python]
 ----
 import feelpp
-import sys
+import sys,os
+import spdlog as spd
+logger = spd.ConsoleLogger('Logger', False, True, True) 
+logger.set_level(spd.LogLevel.TRACE)
 app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) # <1>
+logger.info(f"Feel++ version: {feelpp.Info.version()}")
 ----
 <1> The {feelpp} environment is initiated with the name of the application and the path to the local repository where the results will be stored.
 
@@ -28,17 +32,20 @@ app.setLogVerbosityLevel(0) # <1>
 geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
 
 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) # <2>
+logger.info(f"mesh loaded")
 
 Xh=feelpp.functionSpace(mesh=mesh,space="Pch",order=1) # <3>
 P0h=feelpp.functionSpace(mesh=mesh,space="Pdh",order=0) # <4>
 u=Xh.element() # <5>
 u.on(range=feelpp.elements(mesh), expr=feelpp.expr("sin(2*pi*x)*cos(pi*y):x:y")) # <6>
+logger.info(f"functionspace built and u created")
 
 e = feelpp.exporter(mesh=mesh)  # <7>
 e.add("a_scalar", 1.) # <8>
 e.add("u",u) # <9>
 e.add("pid",feelpp.pid( P0h )) # <10>
 e.save() # <11>
+logger.info(f"export done")
 ----
 <1> The verbosity level is set to 0 (only `VLOG(level)` with `level <= 0` are displayed)
 <2> The mesh is loaded from the {uri-github-feelpp} repository
@@ -70,12 +77,11 @@ def pv_get_mesh(mesh_path):
     mesh = reader.read()
     return mesh
 
-def pv_plot(mesh, field="u", clim=None, cmap='viridis', cpos='xy', show_scalar_bar=True, show_edges=True):
-    mesh.plot(scalars=field, clim=clim, cmap=cmap, cpos=cpos, show_scalar_bar=show_scalar_bar, show_edges=show_edges)
-
 plotter = pv.Plotter()
+plotter.show_axes()
 mesh = pv_get_mesh(f"exports/ensightgold/Exporter/Exporter.case")
-plotter.add_mesh(mesh, scalars="u", clim=None, cmap="viridis", show_scalar_bar=True, show_edges=True)
+actor=plotter.add_mesh(mesh, scalars="u", clim=None, cmap="viridis", show_scalar_bar=True, show_edges=True)
+actor = plotter.add_orientation_widget(pv.Arrow(), color='r')
 plotter.show()
 ----
 
