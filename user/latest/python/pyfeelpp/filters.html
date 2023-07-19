@@ -686,9 +686,15 @@ MathJax.Hub.Config({
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
 import sys,os
 import spdlog as spd
+from feelpp.timing import tic, toc
+
 logger = spd.ConsoleLogger('Logger', False, True, True)
 logger.set_level(spd.LogLevel.TRACE)
+
+tic()
 app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) <i class="conum" data-value="1"></i><b>(1)</b>
+toc("init Feel++")
+
 logger.info(f"Feel++ version: {feelpp.Info.version()}")</code></pre>
 </div>
 </div>
@@ -697,7 +703,14 @@ logger.info(f"Feel++ version: {feelpp.Info.version()}")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre></pre>
+<pre>---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+File <ipython-input-1-ec17f70a2464>:1
+----> 1 import feelpp
+      2 import sys,os
+      3 import spdlog as spd
+
+ModuleNotFoundError: No module named 'feelpp'</pre>
 </div>
 </div>
 </div>
@@ -715,7 +728,9 @@ logger.info(f"Feel++ version: {feelpp.Info.version()}")</code></pre>
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">app.setLogVerbosityLevel(0) <i class="conum" data-value="1"></i><b>(1)</b>
 geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
 
+tic()
 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) <i class="conum" data-value="2"></i><b>(2)</b>
+toc("load mesh")
 logger.info(f"mesh loaded")
 
 Xh=feelpp.functionSpace(mesh=mesh,space="Pch",order=1) <i class="conum" data-value="3"></i><b>(3)</b>
@@ -737,7 +752,14 @@ logger.info(f"export done")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre></pre>
+<pre>---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+File <ipython-input-1-c526d228d0f1>:1
+----> 1 app.setLogVerbosityLevel(0)
+      2 geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+      4 tic()
+
+NameError: name 'app' is not defined</pre>
 </div>
 </div>
 </div>
@@ -813,8 +835,21 @@ def pv_get_mesh(mesh_path):
 plotter = pv.Plotter()
 plotter.show_axes()
 mesh = pv_get_mesh(f"exports/ensightgold/Exporter/Exporter.case")
-actor=plotter.add_mesh(mesh, scalars="u", clim=None, cmap="viridis", show_scalar_bar=True, show_edges=True)
-actor = plotter.add_orientation_widget(pv.Arrow(), color='r')
+plotter.add_mesh(mesh, scalars="u", clim=None, cmap="viridis", show_scalar_bar=True, show_edges=True)
+plotter.camera_position = 'xy'
+axes = pv.create_axes_marker(
+                                line_width=4,
+                                ambient=0.0,
+                                x_color="#378df0",
+                                y_color="#ab2e5d",
+                                z_color="#f7fb9a",
+                                xlabel="X Axis",
+                                ylabel="Y Axis",
+                                zlabel="Z Axis",
+                                label_size=(0.1, 0.1), label_color="#aaaaaa",
+                            )
+plotter.add_actor(axes)
+
 plotter.show()</code></pre>
 </div>
 </div>
