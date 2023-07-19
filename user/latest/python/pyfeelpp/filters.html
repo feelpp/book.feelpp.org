@@ -684,8 +684,12 @@ MathJax.Hub.Config({
 <div class="title">Example to build a mesh and function space, create an element and visualize them in ParaView</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
-import sys
-app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+import sys,os
+import spdlog as spd
+logger = spd.ConsoleLogger('Logger', False, True, True)
+logger.set_level(spd.LogLevel.TRACE)
+app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) <i class="conum" data-value="1"></i><b>(1)</b>
+logger.info(f"Feel++ version: {feelpp.Info.version()}")</code></pre>
 </div>
 </div>
 <details>
@@ -712,17 +716,20 @@ app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) <i class="
 geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
 
 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) <i class="conum" data-value="2"></i><b>(2)</b>
+logger.info(f"mesh loaded")
 
 Xh=feelpp.functionSpace(mesh=mesh,space="Pch",order=1) <i class="conum" data-value="3"></i><b>(3)</b>
 P0h=feelpp.functionSpace(mesh=mesh,space="Pdh",order=0) <i class="conum" data-value="4"></i><b>(4)</b>
 u=Xh.element() <i class="conum" data-value="5"></i><b>(5)</b>
 u.on(range=feelpp.elements(mesh), expr=feelpp.expr("sin(2*pi*x)*cos(pi*y):x:y")) <i class="conum" data-value="6"></i><b>(6)</b>
+logger.info(f"functionspace built and u created")
 
 e = feelpp.exporter(mesh=mesh)  <i class="conum" data-value="7"></i><b>(7)</b>
 e.add("a_scalar", 1.) <i class="conum" data-value="8"></i><b>(8)</b>
 e.add("u",u) <i class="conum" data-value="9"></i><b>(9)</b>
 e.add("pid",feelpp.pid( P0h )) <i class="conum" data-value="10"></i><b>(10)</b>
-e.save() <i class="conum" data-value="11"></i><b>(11)</b></code></pre>
+e.save() <i class="conum" data-value="11"></i><b>(11)</b>
+logger.info(f"export done")</code></pre>
 </div>
 </div>
 <details>
@@ -803,12 +810,11 @@ def pv_get_mesh(mesh_path):
     mesh = reader.read()
     return mesh
 
-def pv_plot(mesh, field="u", clim=None, cmap='viridis', cpos='xy', show_scalar_bar=True, show_edges=True):
-    mesh.plot(scalars=field, clim=clim, cmap=cmap, cpos=cpos, show_scalar_bar=show_scalar_bar, show_edges=show_edges)
-
 plotter = pv.Plotter()
+plotter.show_axes()
 mesh = pv_get_mesh(f"exports/ensightgold/Exporter/Exporter.case")
-plotter.add_mesh(mesh, scalars="u", clim=None, cmap="viridis", show_scalar_bar=True, show_edges=True)
+actor=plotter.add_mesh(mesh, scalars="u", clim=None, cmap="viridis", show_scalar_bar=True, show_edges=True)
+actor = plotter.add_orientation_widget(pv.Arrow(), color='r')
 plotter.show()</code></pre>
 </div>
 </div>
