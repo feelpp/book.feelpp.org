@@ -1,0 +1,124 @@
+= Thermal simulation of 3D building
+:stem: latexmath
+:page-tags: case
+:page-illustration: 3d_building.png
+:description: We create a reduced order model for the thermal simulation of a 3D building using the stationary heat equation.
+:uri-data: https://github.com/feelpp/feelpp/blob/develop/mor/examples/thermalbuilding/
+
+== Description
+
+Based on the solution of the stationary heat equation, we create a reduced order model for the simulation of heat exchanges in a 3D building. 
+
+The building is composed of a corridor and 5 rooms, each of which contains a heating unit. Internal walls and doors are modelled as having finite thickness, while external walls properties (thickness and insulation) are encoded in the boundary conditions of the problem.
+
+// Image
+
+=== Mathematical model
+
+Let stem:[\Omega \subset \mathbb{R}^3] be the region occupied by the building, and denote stem:[\Omega_i], stem:[i=0,1,2] its subregions occupied by the air, the internal walls and the internal doors, such that stem:[\Omega = \cup_{i=0}^2 \Omega_i]. Let stem:[k_i] be the thermal conductivities associated with the subregions.
+
+The external boundary of the domain stem:[\partial \Omega] is decomposed into two parts: stem:[\partial \Omega_{ext}], which corresponds to external walls, and stem:[\partial \Omega_D] which corresponds to the front door. We denote by stem:[\Gamma_i] the boundary of the stem:[i-]th heating unit, stem:[i=0,...,4]. The problem writes as
+
+[stem]
+++++
+\begin{equation}
+\begin{aligned}
+- \nabla \cdot (k_i\nabla u) &= 0, \quad &\text{on }\Omega_i \\
+u &= \mu_i \quad &\text{on }\Gamma_i, i=0,...,4, \\
+-  k_0 \nabla u \cdot \vec{n} &= \mu_6 (u - \mu_5), \quad &\text{on }\partial \Omega_{ext},\\
+-  k_0 \nabla u \cdot \vec{n} &= \sigma (u - \mu_5), \quad &\text{on }\partial \Omega_{D}.
+\end{aligned}
+\end{equation}
+++++
+where stem:[\sigma] is the convective heat exchange coefficient associated with the front door.
+
+The parameters stem:[\mu_i] correspond to 
+
+* stem:[\mu_i \in (300,340)], for stem:[i=0,...,4], are the surface temperatures of the heating units (in Kelvin);
+* stem:[\mu_5 \in (270,290)] is the external temperature (in Kelvin);
+* stem:[\mu_6] is a function of the external wall thickness. The wall is composed of two layers: a cinder layer of thickness stem:[l_{cinder} \in (0.1,0.3) m] and an insulation layer of thickness stem:[l_{insulation} \in (0.1,0.2) m], and
+
+[stem]
+++++
+\mu_6 = \frac{1}{0.06 + \frac{0.01}{0.5} + \frac{l_{cinder}}{0.8} + \frac{l_{insulation}}{0.032} + \frac{0.016}{0.313} + 0.14}.
+++++
+
+=== Construction of the affine decomposition
+
+The problem presents an affine dependence on the parameters, hence we can explicity compute the terms of the correspondent affine decomposition
+
+[stem]
+++++
+\sum_{i = 0}^{N_A} \theta^A_i(\mu) A_i(u,v) = \sum_{j = 0}^{N_F} \theta^F_j(\mu) F_j(v),
+++++
+where stem:[N_A = 1] and stem:[N_F = 6].
+
+The first product on the left-hand side is given by stem:[\theta^A_0(\mu) = 1] and 
+
+[stem]
+++++
+\begin{equation}
+\begin{aligned}
+A_0(u,v) &= \sum_{i=0}^{N_m} \int_{\Omega_i} k_i \nabla u \cdot \nabla v + \\
+ & - \int_{\partial \Omega_{ext}} k_0 (\nabla u v + \nabla v u )\cdot \vec{n} +  \\
+ & + \int_{\partial \Omega_{ext}} k_0 \frac{\gamma}{h} u v  +\\
+ & + \int_{\partial \Omega_D} uv, 
+\end{aligned}
+\end{equation}
+++++ 
+
+where stem:[\gamma] is the Nitsche penalty parameter and stem:[h] is the local mesh size.
+
+The second product is given by stem:[\theta^A_1(\mu) = \mu_6] and
+
+[stem]
+++++
+A_1(u,v) = \int_{\partial \Omega_{ext}} u v.
+++++
+
+The terms on the right-hand side are stem:[\theta^F_i(\mu) = \mu_i] for stem:[i=0,...,4], corresponding to the temperatures of the heating units, stem:[\theta^F_5(\mu) = \mu_5\mu_6], corresponding to the temperature on the internal surface of the external walls, and stem:[\theta^F_6(\mu) = \mu_5], corresponding to the external temperature. The corresponding linear forms are 
+
+[stem]
+++++
+\begin{equation}
+\begin{aligned}
+F_i (v) &= k_0 \int_{\Gamma_i} -\nabla v \cdot \vec{n} + \frac{\gamma}{h} v, \quad i = 0,...,4\\
+F_5 (v) &= \int_{\partial \Omega_{ext}} v,\\
+F_6 (v) &= \int_{\partial \Omega_D} \sigma v.
+\end{aligned}
+\end{equation}
+++++
+
+=== Geometry
+
+image::heat_3d.png[]
+
+The geometry file can be found in Github link:{uri-data}/thermalbuilding/thermalbuilding.geo[here].
+
+== Output
+
+The output corresponds to the air mean temperature, and it is computed as 
+
+[stem]
+++++
+\begin{equation}
+s(\mu) = \frac{1}{|\Omega_0|} \int_{\Omega_0} u.
+\end{equation}
+++++
+
+== Parameters
+
+The table displays the various fixed and variables parameters of this test-case.
+
+.Table of model order reduction parameters
+[width="100%"]
+|=======================================================================
+| Name         | Description                    | Range                 | Units
+| stem:[\mu_0] | Heater temperature living room | stem:[[300,340]]      | stem:[K]
+| stem:[\mu_1] | Heater temperature kitchen     | stem:[[300,340]]      | stem:[K]
+| stem:[\mu_2] | Heater temperature bedroom 1   | stem:[[300,340]]      | stem:[K]
+| stem:[\mu_3] | Heater temperature bedroom 2   | stem:[[300,340]]      | stem:[K]
+| stem:[\mu_4] | Heater temperature bathroom    | stem:[[300,340]]      | stem:[K]
+| stem:[\mu_5] | External temperature           | stem:[[270,290]]      | stem:[K]
+| stem:[\mu_6] | Exchange coefficient external walls |                  | 
+|=======================================================================
