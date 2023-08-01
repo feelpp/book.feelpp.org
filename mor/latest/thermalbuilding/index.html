@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-      <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Fluid Structure Interaction :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/cases-old/latest/fsi/README.html">
-    <link rel="prev" href="../heatfluid/README.html">
-    <link rel="next" href="../electric/README.html">
+    <title>Thermal simulation of 3D building :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/mor/latest/thermalbuilding/index.html">
+    <link rel="prev" href="../thermalfin/index.html">
+    <meta name="description" content="We create a reduced order model for the thermal simulation of a 3D building using the stationary heat equation.">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
@@ -97,8 +97,8 @@ MathJax.Hub.Config({
 <script>var uiRootPath = '../../../_'</script>
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
-</head>
-<body class="article docs-case-study">
+  </head>
+  <body class="article">
 <header class="header">
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
@@ -166,92 +166,58 @@ MathJax.Hub.Config({
     </div>
   </nav>
 </header>
-
 <div class="body">
-  <a href="#" class="menu-expand-toggle"></a>
-<div class="nav-container" data-component="cases-old" data-version="latest">
+<a href="#" class="menu-expand-toggle"></a>
+<div class="nav-container" data-component="mor" data-version="latest">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../index.html">Toolboxes Case Studies (&lt;&#x3D; 0.110)</a></h3>
+    <h3 class="title"><a href="../index.html">Model Order Reduction</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="#index.adoc">Coefficient Form PDEs Cases</a>
+    <a class="nav-link" href="../toolboxmor.html">ToolboxMor</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../../toolboxes/latest/cfpdes/index.html">Manual</a>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../toolboxmor.html#_creating_a_model_from_scratch">Creating a model from scratch</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../toolboxmor.html#_creating_a_model_from_a_toolbox">Creating a model from a toolbox</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../toolboxmor.html#_configuration">Configuration</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../csm/README.html">Computational Solid Mechanics</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../pbdw.html">PBDW</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../pbdw.html#_sensors">Sensors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../pbdw.html#_using_pbdw">Using PBDW</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../cfd/README.html">Computational Fluid Mechanics</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html#_cases">Cases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../opusheat/index.html">OpusHeat</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../thermalfin/index.html">ThermalFin</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="index.html">Thermal simulation of 3D building</a>
   </li>
 </ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../heat/README.html">Heat Transfer</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../heatfluid/README.html">Heat &amp; Fluid</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="README.html">Fluid Structure Interaction</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../electric/README.html">Electric</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../thermoelectric/README.html">Thermo-Electric</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../maxwell/README.html">Maxwell</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../multifluid/index.html">Multifluid Flow</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../hdg/README.html">Hybrized Discontinuous Galerkin</a>
   </li>
 </ul>
   </li>
@@ -260,7 +226,7 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Toolboxes Case Studies (&lt;&#x3D; 0.110)</span>
+    <span class="title">Model Order Reduction</span>
     <span class="version">latest</span>
   </div>
   <ul class="components">
@@ -375,17 +341,17 @@ MathJax.Hub.Config({
               </li>
           </ul>
       </li>
-      <li class="component">
-        <a class="title" href="../../../mor/latest/index.html">Model Order Reduction</a>
+      <li class="component is-current">
+        <a class="title" href="../index.html">Model Order Reduction</a>
           <ul class="versions">
-              <li class="version is-latest">
-                <a href="../../../mor/latest/index.html">latest</a>
+              <li class="version is-current is-latest">
+                <a href="../index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../../mor/0.110/index.html">0.110</a>
+                <a href="../../0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../../mor/0.109/index.html">0.109</a>
+                <a href="../../0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -397,11 +363,11 @@ MathJax.Hub.Config({
               </li>
           </ul>
       </li>
-      <li class="component is-current">
-        <a class="title" href="../index.html">Toolboxes Case Studies (<= 0.110)</a>
+      <li class="component">
+        <a class="title" href="../../../cases-old/latest/index.html">Toolboxes Case Studies (<= 0.110)</a>
           <ul class="versions">
-              <li class="version is-current is-latest">
-                <a href="../index.html">latest</a>
+              <li class="version is-latest">
+                <a href="../../../cases-old/latest/index.html">latest</a>
               </li>
           </ul>
       </li>
@@ -410,98 +376,305 @@ MathJax.Hub.Config({
     </div>
   </aside>
 </div>
-  <main class="article">
-    <div class="toolbar" role="navigation">
-      <button class="nav-toggle"></button>
-        <a href="../../../home/index.html" class="home-link"></a>
-      <nav class="breadcrumbs" aria-label="breadcrumbs">
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button class="nav-toggle"></button>
+    <a href="../../../home/index.html" class="home-link"></a>
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../index.html">Toolboxes Case Studies (<= 0.110)</a></li>
-    <li><a href="README.html">Fluid Structure Interaction</a></li>
+    <li><a href="../index.html">Model Order Reduction</a></li>
+    <li><a href="../index.html#_cases">Cases</a></li>
+    <li><a href="index.html">Thermal simulation of 3D building</a></li>
   </ul>
 </nav>
-    </div>
 
-    <div class="content">
-      <article class="doc">
-          <h1 class="page">Fluid Structure Interaction</h1>
-          <h2 id="benchmarks">Benchmarks</h2>
-          <div class="benchmarks">
-              <div class="benchmark"><a class="page-card" href="TurekHron/README.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/TurekHron/TurekHronFSIGeometry.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Turek-Hron FSI Benchmark</h4>
-      <p class="page-card-description"></p>
-    </div>
-</a>
-</div>
-              <div class="benchmark">  <div class="empty"></div>
-</div>
-              <div class="benchmark">  <div class="empty"></div>
-</div>
-          </div>
-          <h2 id="cases">Cases</h2>
-          <div class="cases">
-              <div class="case"><a class="page-card" href="lid-driven-cavity/README.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/lid-driven-cavity/LidDriven.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Lid-driven Cavity Flow benchmark</h4>
-      <p class="page-card-description"></p>
-    </div>
-</a>
-</div>
-              <div class="case"><a class="page-card" href="structure/README.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/structure/struc325vel.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Inflatable structure</h4>
-      <p class="page-card-description"></p>
-    </div>
-</a>
-</div>
-              <div class="case"><a class="page-card" href="box/README.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/box/box_pressureA10s.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Inflatable box</h4>
-      <p class="page-card-description"></p>
-    </div>
-</a>
-</div>
-              <div class="case"><a class="page-card" href="wavepressure2d/README.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/wavepressure2d/ElasticTube.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Wave Pressure 2D</h4>
-      <p class="page-card-description"></p>
-    </div>
-</a>
-</div>
-              <div class="case"><a class="page-card" href="wavepressure3d/README.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/wavepressure3d/3DElasticTubeSection.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Wave Pressure 3D</h4>
-      <p class="page-card-description"></p>
-    </div>
-</a>
-</div>
-              <div class="case">  <div class="empty"></div>
-</div>
-          </div>
-      </article>
-    </div>
-  </main>
+  <div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
+  <div class="version-menu">
+    <a class="version is-current" href="index.html">latest</a>
+    <a class="version is-missing" href="../../0.110/index.html">0.110</a>
+    <a class="version is-missing" href="../../0.109/index.html">0.109</a>
+  </div>
 </div>
 
+    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/mor/modules/thermalbuilding/pages/index.adoc">Edit this Page</a></div>
+  
+  <div class="page-downloads">
+  <span class="label">Download as</span>
+  <ul class="download-options">
+    <li>
+      <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
+         class="pdf-download">
+        <img class="pdf-file-icon icon" src="../../../_/img/pdf.svg"/> .pdf
+      </a>
+    </li>
+  </ul>
+</div>
+</div>
+
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Thermal simulation of 3D building</h1>
+<div class="sect1">
+<h2 id="_description"><a class="anchor" href="#_description"></a>1. Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Based on the solution of the stationary heat equation, we create a reduced order model for the simulation of heat exchanges in a 3D building.</p>
+</div>
+<div class="paragraph">
+<p>The building is composed of a corridor and 5 rooms, each of which contains a heating unit. Internal walls and doors are modelled as having finite thickness, while external walls properties (thickness and insulation) are encoded in the boundary conditions of the problem.</p>
+</div>
+<div class="sect2">
+<h3 id="_mathematical_model"><a class="anchor" href="#_mathematical_model"></a>1.1. Mathematical model</h3>
+<div class="paragraph">
+<p>Let \(\Omega \subset \mathbb{R}^3\) be the region occupied by the building, and denote \(\Omega_i\), \(i=0,1,2\) its subregions occupied by the air, the internal walls and the internal doors, such that \(\Omega = \cup_{i=0}^2 \Omega_i\). Let \(k_i\) be the thermal conductivities associated with the subregions.</p>
+</div>
+<div class="paragraph">
+<p>The external boundary of the domain \(\partial \Omega\) is decomposed into two parts: \(\partial \Omega_{ext}\), which corresponds to external walls, and \(\partial \Omega_D\) which corresponds to the front door. We denote by \(\Gamma_i\) the boundary of the \(i-\)th heating unit, \(i=0,...,4\). The problem writes as</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation}
+\begin{aligned}
+- \nabla \cdot (k_i\nabla u) &amp;= 0, \quad &amp;\text{on }\Omega_i \\
+u &amp;= \mu_i \quad &amp;\text{on }\Gamma_i, i=0,...,4, \\
+-  k_0 \nabla u \cdot \vec{n} &amp;= \mu_6 (u - \mu_5), \quad &amp;\text{on }\partial \Omega_{ext},\\
+-  k_0 \nabla u \cdot \vec{n} &amp;= \sigma (u - \mu_5), \quad &amp;\text{on }\partial \Omega_{D}.
+\end{aligned}
+\end{equation}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\sigma\) is the convective heat exchange coefficient associated with the front door.</p>
+</div>
+<div class="paragraph">
+<p>The parameters \(\mu_i\) correspond to</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(\mu_i \in (300,340)\), for \(i=0,...,4\), are the surface temperatures of the heating units (in Kelvin);</p>
+</li>
+<li>
+<p>\(\mu_5 \in (270,290)\) is the external temperature (in Kelvin);</p>
+</li>
+<li>
+<p>\(\mu_6\) is a function of the external wall thickness. The wall is composed of two layers: a cinder layer of thickness \(l_{cinder} \in (0.1,0.3) m\) and an insulation layer of thickness \(l_{insulation} \in (0.1,0.2) m\), and</p>
+</li>
+</ul>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mu_6 = \frac{1}{0.06 + \frac{0.01}{0.5} + \frac{l_{cinder}}{0.8} + \frac{l_{insulation}}{0.032} + \frac{0.016}{0.313} + 0.14}.\]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_construction_of_the_affine_decomposition"><a class="anchor" href="#_construction_of_the_affine_decomposition"></a>1.2. Construction of the affine decomposition</h3>
+<div class="paragraph">
+<p>The problem presents an affine dependence on the parameters, hence we can explicity compute the terms of the correspondent affine decomposition</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\sum_{i = 0}^{N_A} \theta^A_i(\mu) A_i(u,v) = \sum_{j = 0}^{N_F} \theta^F_j(\mu) F_j(v),\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(N_A = 1\) and \(N_F = 6\).</p>
+</div>
+<div class="paragraph">
+<p>The first product on the left-hand side is given by \(\theta^A_0(\mu) = 1\) and</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation}
+\begin{aligned}
+A_0(u,v) &amp;= \sum_{i=0}^{N_m} \int_{\Omega_i} k_i \nabla u \cdot \nabla v + \\
+ &amp; - \int_{\partial \Omega_{ext}} k_0 (\nabla u v + \nabla v u )\cdot \vec{n} +  \\
+ &amp; + \int_{\partial \Omega_{ext}} k_0 \frac{\gamma}{h} u v  +\\
+ &amp; + \int_{\partial \Omega_D} uv,
+\end{aligned}
+\end{equation}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\gamma\) is the Nitsche penalty parameter and \(h\) is the local mesh size.</p>
+</div>
+<div class="paragraph">
+<p>The second product is given by \(\theta^A_1(\mu) = \mu_6\) and</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[A_1(u,v) = \int_{\partial \Omega_{ext}} u v.\]
+</div>
+</div>
+<div class="paragraph">
+<p>The terms on the right-hand side are \(\theta^F_i(\mu) = \mu_i\) for \(i=0,...,4\), corresponding to the temperatures of the heating units, \(\theta^F_5(\mu) = \mu_5\mu_6\), corresponding to the temperature on the internal surface of the external walls, and \(\theta^F_6(\mu) = \mu_5\), corresponding to the external temperature. The corresponding linear forms are</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation}
+\begin{aligned}
+F_i (v) &amp;= k_0 \int_{\Gamma_i} -\nabla v \cdot \vec{n} + \frac{\gamma}{h} v, \quad i = 0,...,4\\
+F_5 (v) &amp;= \int_{\partial \Omega_{ext}} v,\\
+F_6 (v) &amp;= \int_{\partial \Omega_D} \sigma v.
+\end{aligned}
+\end{equation}\]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_geometry"><a class="anchor" href="#_geometry"></a>1.3. Geometry</h3>
+<div class="imageblock">
+<div class="content">
+<img src="_images/heat_3d.png" alt="heat 3d">
+</div>
+</div>
+<div class="paragraph">
+<p>The geometry file can be found in Github <a href="https://github.com/feelpp/feelpp/blob/develop/mor/examples/thermalbuilding//thermalbuilding/thermalbuilding.geo">here</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_output"><a class="anchor" href="#_output"></a>2. Output</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The output corresponds to the air mean temperature, and it is computed as</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation}
+s(\mu) = \frac{1}{|\Omega_0|} \int_{\Omega_0} u.
+\end{equation}\]
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_parameters"><a class="anchor" href="#_parameters"></a>3. Parameters</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The table displays the various fixed and variables parameters of this test-case.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Table of model order reduction parameters</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Range</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Units</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_0\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Heater temperature living room</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\([300,340\)]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_1\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Heater temperature kitchen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\([300,340\)]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_2\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Heater temperature bedroom 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\([300,340\)]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_3\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Heater temperature bedroom 2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\([300,340\)]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_4\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Heater temperature bathroom</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\([300,340\)]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_5\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External temperature</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\([270,290\)]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_6\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exchange coefficient external walls</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Table of constant parameters</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Range</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Units</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\gamma\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boundary conditions using Nitsche method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\([10\)]</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\k_0\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Air conductivity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(1\)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\k_1\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conductivity - internal walls</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(0.25\)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\k_2\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conductivity - internal doors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(0.13\)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\sigma\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Heat transfer coefficient - front door</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{1.0}{0.06+\frac{0.06}{0.150}+\frac{0.1}{0.029}+0.14}\)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../thermalfin/index.html">ThermalFin</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
 <footer class="footer">
   <div class="container">
     <div class="sharethis-inline-share-buttons"></div>
@@ -595,5 +768,5 @@ function toggleFullScreen() {
    }
 }
 </script>
-</body>
+  </body>
 </html>
