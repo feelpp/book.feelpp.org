@@ -129,7 +129,7 @@ The table displays the various fixed and variables parameters of this test-case.
 [width="100%"]
 |=======================================================================
 | Name         | Description                    | Value                 
-| stem:[\gamma] | Boundary conditions using Nitsche method | stem:[[10]]
+| stem:[\gamma] | Boundary conditions using Nitsche method | stem:[10]
 | stem:[k_0] | Air conductivity     | stem:[1]
 | stem:[k_1] | Conductivity - internal walls | stem:[0.25]
 | stem:[k_2] | Conductivity - internal doors  | stem:[0.13]
@@ -153,6 +153,8 @@ with open('thermalbuilding.fpp','wb') as f:
 .Create the online model, choose randomly 4 parameter vectors and simulate them using a reduced basis of 10 elements
 [source,python]
 ----
+import feelpp
+from feelpp.mor import *
 ms=feelpp.mor.MORModels("thermalbuilding.fpp")
 muspace = ms.parameterSpace()
 sampling = muspace.sampling()
