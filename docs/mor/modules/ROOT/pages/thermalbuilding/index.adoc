@@ -142,7 +142,7 @@ The table displays the various fixed and variables parameters of this test-case.
 It is possible to download this page as a Jupyter notebook and run it in an environment that contains a local installation of {feelpp} and its Python wrappers. The offline creation of the reduced basis has already been performed, and an archive is downloaded from Girder. It contains the basis, the model and the configuration files that are necessary for the online simulation.
 
 .Download the archive from Girder
-[source,python]
+[%dynamic,python]
 ----
 import requests
 r=requests.get("https://girder.math.unistra.fr/api/v1/item/64d60522b0e9570499e1eaa1/download")
@@ -151,7 +151,7 @@ with open('thermalbuilding.fpp','wb') as f:
 ----
 
 .Create the online model, choose randomly 4 parameter vectors and simulate them using a reduced basis of 10 elements
-[source,python]
+[%dynamic,python]
 ----
 import feelpp
 from feelpp.mor import *
@@ -163,7 +163,7 @@ r=ms.run(sampling,{"N":10})
 ----
 
 .Print the outputs and the associated parameter vector
-[source,python]
+[%dynamic,python]
 ----
 for i in range(len(r)):
     print("-------------------")
