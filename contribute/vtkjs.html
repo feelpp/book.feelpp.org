@@ -169,12 +169,12 @@ MathJax.Hub.Config({
 </header>
 <div class="body">
 <a href="#" class="menu-expand-toggle"></a>
-<div class="nav-container" data-component="contribute" data-version="master">
+<div class="nav-container" data-component="contribute" data-version="">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Toolbox Contribution Guide</a></h3>
+    <h3 class="title"><a href="index.html">Toolboxes Contribution Guide</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
@@ -263,8 +263,8 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Toolbox Contribution Guide</span>
-    <span class="version">master</span>
+    <span class="title">Toolboxes Contribution Guide</span>
+    <span class="version"></span>
   </div>
   <ul class="components">
       <li class="component">
@@ -313,18 +313,7 @@ MathJax.Hub.Config({
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../data/latest/index.html">Data Manual</a>
-          <ul class="versions">
-              <li class="version is-latest">
-                <a href="../data/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../data/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../data/0.109/index.html">0.109</a>
-              </li>
-          </ul>
+        <a class="title" href="../data/index.html">Data Manual</a>
       </li>
       <li class="component">
         <a class="title" href="../math/index.html">Feel++ Mathematics</a>
@@ -344,12 +333,7 @@ MathJax.Hub.Config({
           </ul>
       </li>
       <li class="component is-current">
-        <a class="title" href="index.html">Toolbox Contribution Guide</a>
-          <ul class="versions">
-              <li class="version is-current is-latest">
-                <a href="index.html">master</a>
-              </li>
-          </ul>
+        <a class="title" href="index.html">Toolboxes Contribution Guide</a>
       </li>
   </ul>
 </div>
@@ -362,14 +346,14 @@ MathJax.Hub.Config({
     <a href="../home/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="index.html">Toolbox Contribution Guide</a></li>
+    <li><a href="index.html">Toolboxes Contribution Guide</a></li>
     <li>How to contribute</li>
     <li><a href="vtkjs.html">Vtkjs files?</a></li>
   </ul>
 </nav>
 
   
-    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/master/contribute/modules/ROOT/pages/vtkjs.adoc">Edit this Page</a></div>
+    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/develop/contribute/modules/ROOT/pages/vtkjs.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -423,7 +407,7 @@ See</p>
 <p><i class="fa fa-check-square-o"></i> <a href="girder/README.html" class="xref page">how to contribute data using Girder</a></p>
 </li>
 <li>
-<p><i class="fa fa-check-square-o"></i> and the <a href="../data/latest/index.html" class="xref page">Data manual</a> to understand Feel++ data management.</p>
+<p><i class="fa fa-check-square-o"></i> and the <a href="#data:ROOT:manual.adoc" class="xref unresolved">Data manual</a> to understand Feel++ data management.</p>
 </li>
 </ul>
 </div>
@@ -459,60 +443,61 @@ the Vtkjs file is provided by the <code>supplemental-ui</code> directory.
 <div class="sect1">
 <h2 id="_use_webgl_rendering_with_vtk_js"><a class="anchor" href="#_use_webgl_rendering_with_vtk_js"></a>3. Use WebGL rendering with VTK-js</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>We rely on an Asciidoctor extension to render VTK-js visualization.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Create a <code>div</code> with an <code>id</code> where you want to place the WebGL window.</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">&lt;div id="vtkVisuSection1" ... &lt;/div&gt;</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Then, you can call the function <code>feelppVtkJs.createSceneImporter( divId, options )</code>. The first argument <code>divId</code> is
-the <code>id</code> of the <code>div</code> defined previouly. The second argument <code>options</code> collect the rendering properties :</p>
-<div class="ulist">
-<ul>
-<li>
-<p><code>fileURL</code> : [mandatory] the url of a vtkjs file</p>
-</li>
-<li>
-<p><code>objects</code> : description of objects to visualize.</p>
-</li>
-</ul>
-</div>
+<p>Create a <code>vtkjs</code> block with a file URL:</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>  objects: { "deformation":[ { scene:"displacement" }, { scene:"von_mises" }, { scene:"pid" } ],
-              "geometry":[ { scene:"geo_initial", name:"solid" } ] }</pre>
+<pre class="highlightjs highlight"><code class="language-adoc hljs" data-lang="adoc">[vtkjs,https://mydb.com/myfile.vtkjs]
+----
+----</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>onlyOneObject</code> : [default=false] rendering is done for only one object of the scene (only work if <code>objects</code> is not given)</p>
+<p>Define how objects will be visualized:</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">&lt;script type="text/javascript"&gt;
-feelppVtkJs.createSceneImporter( vtkVisuSection1,
-  { fileURL: "https://mydb.com/myfile.vtkjs",
-    objects: { "deformation":[ { scene:"displacement" }, { scene:"von_mises" }, { scene:"pid" } ],
-               "geometry":[ { scene:"geo_initial", name:"solid" } ] } } );
-&lt;/script&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-adoc hljs" data-lang="adoc">[vtkjs,https://mydb.com/myfile.vtkjs]
+----
+{
+  "deformation": [
+    {
+      "scene": "displacement"
+    },
+    {
+      "scene": "von_mises"
+    },
+    {
+      "scene": "pid"
+    }
+  ],
+  "geometry": [
+    {
+      "scene": "geo_initial",
+      "name": "solid"
+    }
+  ]
+}
+----</code></pre>
 </div>
 </div>
-<div class="admonitionblock warning">
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 Each <code>scene</code> option corresponds to the entries in Paraview' left panel (default is <code>Export.case</code>). We advise you to rename each scene consistently with its content before running the Python script.
@@ -526,16 +511,27 @@ Each <code>scene</code> option corresponds to the entries in Paraview' left pane
 <h2 id="_an_example_with_asciidoc_in_the_feel_book"><a class="anchor" href="#_an_example_with_asciidoc_in_the_feel_book"></a>4. An example with Asciidoc in the Feel++ book</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The example of Vtkjs visualization below is taken from <a href="../cases/0.110/csm/torsion-bar/README.html" class="xref page">the Torsion Bar</a> example.</p>
+<p>The example of Vtkjs visualization below is taken from <a href="#toolboxes:csm:torsion-bar/README.adoc" class="xref unresolved">the Torsion Bar</a> example.</p>
 </div>
-<div class="stretchy-wrapper-16_9">
-<div id="vtkVisuSection1" style="margin: auto; width: 100%; height: 100%;      padding: 10px;"></div>
-</div>
-<script type="text/javascript">
-feelppVtkJs.createSceneImporter( vtkVisuSection1, {
-                                 fileURL: "https://girder.math.unistra.fr/api/v1/file/5a687a58b0e9570150cb252d/download",
-                                 objects: { "object":[ { scene:"displacement" }, { scene:"von_mises_criterions",name:"von_mises" }, { scene:"pid" } ] }
-                                 } );
+<div id="vtkjs_b70864d5-f226-497f-a01f-84cbd21b2277" style="height: 500px; width: 100%;"></div>
+<script>
+feelppVtkJs.createSceneImporter("vtkjs_b70864d5-f226-497f-a01f-84cbd21b2277", {
+  fileURL: "https://girder.math.unistra.fr/api/v1/file/5a687a58b0e9570150cb252d/download",
+  objects: {
+  "object": [
+    {
+      "scene": "displacement"
+    },
+    {
+      "scene": "von_mises_criterions",
+      "name": "von_mises"
+    },
+    {
+      "scene": "pid"
+    }
+  ]
+}
+})
 </script>
 </div>
 </div>
