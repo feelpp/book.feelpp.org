@@ -36,7 +36,7 @@ for i in range(len(r)):
 
         outputs[str_time] = time
         outputs[str_output] = np.array(r[i][o].outputs())
-        outputs[str_error] = np.array(r[i][o].errors())
+        outputs[str_error] = [np.array(r[i][o].errors())]
 
 
     output_frame = df(data=outputs)
