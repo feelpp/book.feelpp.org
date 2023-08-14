@@ -520,55 +520,6 @@ MathJax.Hub.Config({
         <a class="title" href="../../../../math/index.html">Feel++ Mathematics</a>
       </li>
       <li class="component">
-        <a class="title" href="../../../../angiotk/0.1/index.html">AngioTK User Manual</a>
-          <ul class="versions">
-              <li class="version is-latest">
-                <a href="../../../../angiotk/0.1/index.html">0.1</a>
-              </li>
-          </ul>
-      </li>
-      <li class="component">
-        <a class="title" href="../../../../salome/current/index.html">Feel++ and Salome</a>
-          <ul class="versions">
-              <li class="version is-latest">
-                <a href="../../../../salome/current/index.html">current</a>
-              </li>
-          </ul>
-      </li>
-      <li class="component">
-        <a class="title" href="../../../../feelpp/0.110/index.html">Feel++ Documentation</a>
-          <ul class="versions">
-              <li class="version is-latest">
-                <a href="../../../../feelpp/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../feelpp/0.109/index.html">0.109</a>
-              </li>
-          </ul>
-      </li>
-      <li class="component">
-        <a class="title" href="../../../../feelpp-tutorial-dev/index.html">Feel++ Programming Tutorial</a>
-      </li>
-      <li class="component">
-        <a class="title" href="../../../../cases/0.110/index.html">Feel++ Toolbox Cases Guide</a>
-          <ul class="versions">
-              <li class="version is-latest">
-                <a href="../../../../cases/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../cases/0.109/index.html">0.109</a>
-              </li>
-          </ul>
-      </li>
-      <li class="component">
-        <a class="title" href="../../../../toolboxes-old/latest/index.html">Feel++ Toolboxes Manual (<= 0.110)</a>
-          <ul class="versions">
-              <li class="version is-latest">
-                <a href="../../../../toolboxes-old/latest/index.html">latest</a>
-              </li>
-          </ul>
-      </li>
-      <li class="component">
         <a class="title" href="../../../../mor/latest/index.html">Model Order Reduction</a>
           <ul class="versions">
               <li class="version is-latest">
@@ -587,14 +538,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../../../contribute/index.html">master</a>
-              </li>
-          </ul>
-      </li>
-      <li class="component">
-        <a class="title" href="../../../../cases-old/latest/index.html">Toolboxes Case Studies (<= 0.110)</a>
-          <ul class="versions">
-              <li class="version is-latest">
-                <a href="../../../../cases-old/latest/index.html">latest</a>
               </li>
           </ul>
       </li>
@@ -665,6 +608,16 @@ import sys
 app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))</code></pre>
 </div>
 </div>
+<details>
+<summary class="title">Results</summary>
+<div class="content">
+<div class="literalblock dynamic-py-result">
+<div class="content">
+<pre></pre>
+</div>
+</div>
+</div>
+</details>
 </div>
 </div>
 <div class="sect1">
@@ -718,45 +671,12 @@ print("geo file: {}".format(geo))
 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)</code></pre>
 </div>
 </div>
-<details class="result">
+<details>
 <summary class="title">Results</summary>
 <div class="content">
-<div class="listingblock">
+<div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>[ Starting Feel++ ] application myapp version 0.1 date 2022-Nov-07
- . myapp files are stored in /scratch/jupyter/feelppdb/np_1
- .. logfiles :/scratch/jupyter/feelppdb/np_1/logs
-Output exceeds the size limit. Open the full output data in a text editor
-geo file: /scratch/jupyter/feelppdb/downloads/feelpp2d.geo
-[loadMesh] Loading mesh in format geo+msh: "/scratch/jupyter/feelppdb/downloads/feelpp2d.geo"
-[loadMesh] Use default geo desc: /scratch/jupyter/feelppdb/downloads/feelpp2d.geo 0.1
-Info    : Reading 'feelpp2d.geo'...
-Info    : Done reading 'feelpp2d.geo'
-Info    : Meshing 1D...
-Info    : [  0%] Meshing curve 1 (Line)
-Info    : [ 10%] Meshing curve 2 (Line)
-Info    : [ 10%] Meshing curve 3 (Line)
-Info    : [ 10%] Meshing curve 4 (Line)
-Info    : [ 10%] Meshing curve 5 (Line)
-Info    : [ 10%] Meshing curve 6 (Line)
-Info    : [ 10%] Meshing curve 7 (Line)
-Info    : [ 20%] Meshing curve 8 (Line)
-Info    : [ 20%] Meshing curve 9 (Line)
-Info    : [ 20%] Meshing curve 10 (Line)
-Info    : [ 20%] Meshing curve 11 (Line)
-Info    : [ 20%] Meshing curve 12 (Line)
-Info    : [ 20%] Meshing curve 13 (Line)
-Info    : [ 20%] Meshing curve 14 (Line)
-Info    : [ 30%] Meshing curve 15 (Line)
-Info    : [ 30%] Meshing curve 16 (Line)
-Info    : [ 30%] Meshing curve 17 (Line)
-Info    : [ 30%] Meshing curve 18 (Line)
-Info    : [ 30%] Meshing curve 19 (Line)
-...
-Info    : Done meshing 2D (Wall 0.106645s, CPU 0.106853s)
-Info    : 2867 nodes 5812 elements
-Info    : Writing 'feelpp2d.msh'...
-Info    : Done writing 'feelpp2d.msh'</pre>
+<pre>geo file: /scratch/prudhomm/actions-runner-1/_work/book.feelpp.org/book.feelpp.org/feelppdb/downloads/feelpp2d.geo</pre>
 </div>
 </div>
 </div>
@@ -818,20 +738,20 @@ The following methods are to use on the mesh object (<code>mesh</code> in the pr
 <div class="listingblock">
 <div class="title">Query the mesh information</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">print("dimention: {}".format(mesh.dimension()))
-print("number of elements: {}".format(mesh.numGlobalElements()))
-print("number of faces: {}".format(mesh.numGlobalFaces()))
-print("hmin: {}".format(mesh.hMin()))
-print("havg: {}".format(mesh.hAverage()))
-print("hmax: {}".format(mesh.hMax()))
-print("measure: {}".format(mesh.measure()))
-print("measure of boundary: {}".format(mesh.measureBoundary()))</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">print(f"dimention: {mesh.dimension()}")
+print(f"number of elements: {mesh.numGlobalElements()}")
+print(f"number of faces: {mesh.numGlobalFaces()}")
+print(f"hmin: {mesh.hMin()}")
+print(f"havg: {mesh.hAverage()}")
+print(f"hmax: {mesh.hMax()}")
+print(f"measure: {mesh.measure()}")
+print(f"measure of boundary: {mesh.measureBoundary()}")</code></pre>
 </div>
 </div>
-<details class="result">
+<details>
 <summary class="title">Results</summary>
 <div class="content">
-<div class="listingblock">
+<div class="literalblock dynamic-py-result">
 <div class="content">
 <pre>dimention: 2
 number of elements: 5134
@@ -877,25 +797,20 @@ measure of boundary: 1497.0959239128888</pre>
 </li>
 </ul>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">mesh.saveHDF5("mesh.h5")
-mesh.loadHDF5("mesh.h5")</code></pre>
-</div>
-</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_ranges"><a class="anchor" href="#_ranges"></a>3. Ranges</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><code>elements</code> : <code>feelpp.elements(mesh)</code> : get iterator over the elements of the mesh</p>
-</li>
-<li>
-<p><code>markedelements</code> :</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>elements</code></dt>
+<dd>
+<p><code>feelpp.elements(mesh)</code> : get iterator over the elements of the mesh</p>
+</dd>
+<dt class="hdlist1"><code>markedelements</code></dt>
+<dd>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -909,12 +824,13 @@ mesh.loadHDF5("mesh.h5")</code></pre>
 </li>
 </ol>
 </div>
-</li>
-<li>
-<p><code>faces</code> (???)</p>
-</li>
-<li>
-<p><code>markedfaces</code> :</p>
+</dd>
+<dt class="hdlist1"><code>faces</code></dt>
+<dd>
+<p><code>feelpp.faces(mesh)</code> : get iterator over the faces of the mesh</p>
+</dd>
+<dt class="hdlist1"><code>markedfaces</code></dt>
+<dd>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -925,11 +841,12 @@ mesh.loadHDF5("mesh.h5")</code></pre>
 </li>
 </ol>
 </div>
-</li>
-<li>
-<p><code>boundaryfaces</code> : <code>feelpp.boundaryfaces(mesh)</code>: get iterator over the boundary faces of the mesh</p>
-</li>
-</ul>
+</dd>
+<dt class="hdlist1"><code>boundaryfaces</code></dt>
+<dd>
+<p><code>feelpp.boundaryfaces(mesh)</code>: get iterator over the boundary faces of the mesh</p>
+</dd>
+</dl>
 </div>
 <div class="paragraph">
 <p>A first example with ranges:</p>
@@ -942,10 +859,10 @@ r = feelpp.boundaryfaces(mesh)
 print("mesh boundary faces:", feelpp.nelements(r))</code></pre>
 </div>
 </div>
-<details class="result">
+<details>
 <summary class="title">Results</summary>
 <div class="content">
-<div class="listingblock">
+<div class="literalblock dynamic-py-result">
 <div class="content">
 <pre>mesh elts: 5134
 mesh boundary faces: 610</pre>
@@ -964,15 +881,16 @@ mesh boundary faces: 610</pre>
 i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
 i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
 i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")
-print("i1 = {}, i2 = {}, i3 = {}".format(i1,i2,i3))</code></pre>
+
+print(f"i1 = {i1}, i2 = {i2}, i3 = {i3}")</code></pre>
 </div>
 </div>
-<details class="result">
+<details>
 <summary class="title">Results</summary>
 <div class="content">
-<div class="listingblock">
+<div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>i1 = [3.24282386], i2 = [149.465], i3 = [0.]</pre>
+<pre>i1 = [3.24282386], i2 = [41.6], i3 = [0.]</pre>
 </div>
 </div>
 </div>
