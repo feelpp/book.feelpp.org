@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>2D Advection-diffusion with Taylor-Green Vortex :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/cfpdes/taylor-green-vortex/index.html">
+    <meta name="description" content="We simulate the 2D Taylor-Green vortex.">
+    <meta name="generator" content="Antora 3.1.4">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+<script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
+
+<script src="../../../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../../../_/js/vendor/tabs-block-behavior.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+
+  TeX: {
+      Macros: {
+      RR: "{\\mathbb R}",
+      NN: "{\\mathbb N}",
+      Nso: "{N_{\\mathrm{so}}}",
+      Nma: "{N_{\\mathrm{ma}}}",
+      Nno: "{N_{\\mathrm{no}}}",
+      Ne: "{N_{\\mathrm{e}}}",
+      Ilag: ["{\\mathcal{I}^{\\mathrm{lag}}_{#1}}",1],
+      calTh: "{\\mathcal{T}_h}",
+      Ck: ["{\\mathcal{C}^{#1}}",1],
+      Pk: ["{\\mathcal{P}^{#1}}",1],
+      Qk: ["{\\mathcal{Q}^{#1}}",1],
+      Pch: ["{P^{#1}_{c,h}}",1],
+      Pcho: ["{P^{#1}_{c,h,0}}",1],
+      Qch: ["{Q^{#1}_{c,h}}",1],
+      Ich: ["{\\mathcal{I}^{#1}_{c,h}#2}",2],
+      poly: ["{\\mathbb{#1}}",1],
+      nf: "{n_f}",
+      ngeo: "{n_{\\mathrm{geo}}}",
+      geo: "{\\mathrm{geo}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      dim: ["{\\operatorname{dim}(#1)}",1],
+      opdim: "{\\operatorname{dim}}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      poly: ["{\\mathbb{#1}",1],
+      R: ["{\\mathbb{R}^{#1}}",1],
+      set: ["{\\left\\{#1\\right\\}}",1],
+      diam: "{\\operatorname{diam}}",
+      jump: ["{[\\![ #1 ]\\!]}",1],
+      Next: "{\\mathrm{n}}",
+      essinf: "{\\operatorname{ess}\\, \\operatorname{inf}}",
+      tr: "{\\operatorname{tr}}",
+      Id: "{\\mathcal{I}}",
+      disp: ["{\\mathbf{#1}}",1],
+      stresst: ["{\\mathbf{\\sigma(#1)}}",1],
+      deformt: ["{\\mathbf{\\varepsilon(#1)}}",1],
+      domain: "{\\Omega}",
+      prect: ["{\\left\\(#1\\right\\)}",1],
+      ds: "",
+      bold: ["{\\bf #1}",1],
+      p: "{\\mathrm{p}}",
+      q:"{\\mathbf{q}}",
+      n:"{\\mathbf{n}}",
+      T:"{\\mathcal{T}}",
+      F:"{\\mathcal{F}}",
+      P:"{\\mathcal{P}}",
+      v:"{\\mathbf{v}}"
+  },
+  extensions: ["mhchem.js"] }
+});
+</script>
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML'>
+</script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
+<script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
+<script>var uiRootPath = '../../../../_'</script>
+
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item feelpp-logo">
+        <a href="https://docs.feelpp.org"><img src="../../../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <form class="search">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Search Feel++ Docs" class="query" id="search-query">
+          </form>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Manuals</div>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://docs.feelpp.org/user/">User</a>
+            <a class="navbar-item" href="https://docs.feelpp.org/dev/">Developer</a>
+            <a class="navbar-item" href="https://docs.feelpp.org/toolbox/">Toolbox</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link" data-title="Support">
+            <span class="icon"><img src="../../../../_/img/octicons-24.svg#view-comment-discussion"></span>
+          </div>
+          <div class="navbar-dropdown is-right">
+            <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../../_/img/slack-icon.svg"></span>
+              <span>Chat</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span>Discussions</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span>Source</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-hash"></span>
+              <span>Tweets</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-bug"></span>
+              <span>Issues</span>
+            </a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable download-item">
+            <div class="navbar-item"><a href="../../../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="https://www.cemosis.fr">
+            <img class="cemosis-logo"  src="../../../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<a href="#" class="menu-expand-toggle"></a>
+<div class="nav-container" data-component="toolboxes" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Toolboxes Manual</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Coefficient Form PDEs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../csm/index.html">Computational Solid Mechanics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../cfd/index.html">Computational Fluid Mechanics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../heat/index.html">Heat Transfer</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../heatfluid/index.html">Heat &amp; Fluid</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../fsi/index.html">Fluid Structure Interaction</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../electric/index.html">Electric</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../thermoelectric/index.html">Thermo-Electric</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../maxwell/index.html">Maxwell</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../hdg/index.html">Hybrized Discontinuous Galerkin</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Toolboxes Manual</span>
+    <span class="version">latest</span>
+  </div>
+  <ul class="components">
+      <li class="component">
+        <a class="title" href="../../../../user/latest/index.html">Feel++ User Manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../user/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../../user/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../../user/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component is-current">
+        <a class="title" href="../../index.html">Toolboxes Manual</a>
+          <ul class="versions">
+              <li class="version is-current is-latest">
+                <a href="../../index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../feelpp-project/index.html">Feel++ Project</a>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../dev/latest/index.html">Developer manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../dev/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../../dev/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../../dev/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../data/latest/index.html">Data Manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../data/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../../data/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../../data/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../math/index.html">Feel++ Mathematics</a>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../mor/latest/index.html">Model Order Reduction</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../mor/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../../mor/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../../mor/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../../contribute/index.html">Toolbox Contribution Guide</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../../contribute/index.html">master</a>
+              </li>
+          </ul>
+      </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button class="nav-toggle"></button>
+    <a href="../../../../home/index.html" class="home-link"></a>
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Toolboxes Manual</a></li>
+    <li><a href="index.html">2D Advection-diffusion with Taylor-Green Vortex</a></li>
+  </ul>
+</nav>
+
+  <div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
+  <div class="version-menu">
+    <a class="version is-current" href="index.html">latest</a>
+    <a class="version is-missing" href="../../../0.110/index.html">0.110</a>
+    <a class="version is-missing" href="../../../0.109/index.html">0.109</a>
+  </div>
+</div>
+
+    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/develop/toolboxes/modules/cfpdes/pages/taylor-green-vortex/index.adoc">Edit this Page</a></div>
+  
+  <div class="page-downloads">
+  <span class="label">Download as</span>
+  <ul class="download-options">
+    <li>
+      <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
+         class="pdf-download">
+        <img class="pdf-file-icon icon" src="../../../../_/img/pdf.svg"/> .pdf
+      </a>
+    </li>
+      <li>
+        <a href="#"
+           title="Download Jupyter Notebook" data-toggle="tooltip" data-placement="left" class="jupyter-download">
+          <img class="jupyter-file-icon icon" src="../../../../_/img/jupyter-logo.svg"/> .ipynb
+        </a>
+      </li>
+  </ul>
+</div>
+</div>
+
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">2D Advection-diffusion with Taylor-Green Vortex</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p>This page can be downloaded as a pdf file or as a Jupyter notebook file by clicking on the corresponding icons in the toolbar.
+It exemplifies the usage of the Coefficient form PDE toolbox in Python.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We study the solution of a 2D advection-diffusion equation (used to model the dispersion of a contaminant) in presence of a Taylor-Green vortex \(\beta(x,t)\). The problem can be solved for different values of the diffusion coefficient \(\mu\).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_advection_diffusion_with_taylor_green_vortex"><a class="anchor" href="#_advection_diffusion_with_taylor_green_vortex"></a>2. Advection-diffusion with Taylor-Green Vortex</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The problem is defined on the spatial domain \(\Omega = (-1, 1)^2\) with Dirichlet boundary \(\Gamma_D := (-1, 1) \times \{-1\}\) and Neumann boundary \(\Gamma_N := \partial\Omega \setminus \Gamma_D\). The governing parametric PDE (pPDE) can be described as follows:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+    &amp;\partial_t c - \mu\Delta c + \beta \cdot \nabla c = 0 &amp;&amp;\text{in } \Omega \times (0, T), \\
+    &amp;\nabla c(x, t; \mu) \cdot n = 0 &amp;&amp;\text{on } \Gamma_N \times (0, T), \\
+    &amp;c(x, t; \mu) = 0 &amp;&amp;\text{on } \Gamma_D \times (0, T), \\
+    &amp;c(x, 0; \mu) = c_0(x; \mu) &amp;&amp;\text{in } \Omega.
+\end{align}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Where, the velocity field \(\beta := (\sin(\pi x_1) \cos(\pi x_2), -\cos(\pi x_1) \sin(\pi x_2))^{\top}\), \(x = (x_1, x_2)\), is a solenoidal field. The initial condition, \(c_0(\cdot; \mu): \Omega \rightarrow \mathbb{R}\), is given by the sum of three Wendland functions \(\bar{\psi}_{2,1}^i\) of radius 0.4 and centers located at \((-0.6, -0.6)\), \((0, 0)\) and \((0.6, 0.6)\).
+The Wendland functions are radial functions with compact support on the unit ball, and \(\psi_{2,1}(r)\) has the following closed form</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\psi_{2,1}(r)=(3r + 1) \max \{0,(1-r)^3\}.\]
+</div>
+</div>
+<div class="paragraph">
+<p>Appropriate transformations have been applied to \(\psi_{2,1}(r)\) in order to get the scaled and translated Wendland functions \(\bar{\psi}_{2,1}^i\).</p>
+</div>
+<div class="paragraph">
+<p>The velocity field \(\beta\), the initial condition \(c_0(\cdot; \mu)\), and the boundaries are illustrated in the following figure.</p>
+</div>
+<div class="imageblock text-center text-center">
+<div class="content">
+<img src="../_images/taylor-green-vortex/initial_condition.png" alt="initial condition" width="80%">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_the_simulation"><a class="anchor" href="#_configuring_the_simulation"></a>3. Configuring the simulation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_setting_up_the_feel_environment"><a class="anchor" href="#_setting_up_the_feel_environment"></a>3.1. Setting up the Feel++ Environment</h3>
+<div class="paragraph">
+<p>To set up the Feel++ environment, we create an environment and set the associated repository for the results.</p>
+</div>
+<div class="listingblock">
+<div class="title">Set the Feel++ environment with a global repository</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import sys
+import feelpp
+import feelpp.toolboxes.core as tb
+from feelpp.toolboxes.cfpdes import *
+
+sys.argv = ["feelpp_cfpdes_Taylor_Green"]
+e = feelpp.Environment(sys.argv,
+                        opts=tb.toolboxes_options("coefficient-form-pdes", "cfpdes"),
+                        config=feelpp.globalRepository("cfpdes-Taylor_Green"))</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>[ Starting Feel++ ] application feelpp_cfpdes_Taylor_Green
+ . feelpp_cfpdes_Taylor_Green files are stored in /home/feelppdb/cfpdes-Taylor_Green/np_1
+ .. logfiles :/home/feelppdb/cfpdes-Taylor_Green/np_1/logs</pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect2">
+<h3 id="_geometry_and_mesh"><a class="anchor" href="#_geometry_and_mesh"></a>3.2. Geometry and Mesh</h3>
+<div class="paragraph">
+<p>We will construct a geometric domain for our Finite Element Model.</p>
+</div>
+<div class="paragraph">
+<p>In the 2D case, the domain is a square with side lengths of 2 units, centered at the origin, and can be represented as <code>[-1,1]</code><sup>2</sup>
+. The bottom edge is designated as the Dirichlet boundary (\(\Gamma_D\)), while the left, top, and right edges form the Neumann boundary (\(\Gamma_N\)).</p>
+</div>
+<div class="paragraph">
+<p>We propose also the creation of a 3D case, where the domain is the cube <code>[-1,1]</code><sup>3</sup>. One face of the cube is assigned as the Dirichlet boundary (\(\Gamma_D\)), and the rest of the faces form the Neumann boundary (\(\Gamma_N\)).</p>
+</div>
+<div class="paragraph">
+<p>Both the 2D and 3D geometries allow for customization of mesh sizes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def generateGeometry(filename, dim=2, hsize=0.1):
+    """create gmsh mesh
+
+    Args:
+        filename (str): name of the file
+        dim (int): dimension of the mesh
+        hsize (float): mesh size
+    """
+    geo = """SetFactory("OpenCASCADE");
+    h = {};
+    dim = {};
+    """.format(hsize, dim)
+    if dim == 2:
+        geo += """
+        Rectangle(1) = {-1, -1, 0, 2, 2, 0};
+        Characteristic Length{ PointsOf{ Surface{1}; } } = h;
+        Physical Curve("Gamma_D") = {1};
+        Physical Curve("Gamma_N") = {2,3,4};
+        Physical Surface("Omega") = {1};
+        """
+    elif dim == 3:
+        geo += """
+        Box(1) = {-1, -1, -1, 2, 2, 2};
+        Characteristic Length{ PointsOf{ Volume{1}; } } = h;
+        Physical Surface("Gamma_D") = {5};
+        Physical Surface("Gamma_N") = {1,2,3,4,6};
+        Physical Volume("Omega") = {1};
+        """
+    with open(filename, 'w') as f:
+        # Write the string to the file
+        f.write(geo)
+
+def getMesh(filename, hsize=0.05, dim=2, verbose=False):
+    """create mesh
+
+    Args:
+        filename (str): name of the file
+        hsize (float): mesh size
+        dim (int): dimension of the mesh
+        verbose (bool): verbose mode
+    """
+    import os
+    for ext in [".msh",".geo"]:
+        f = os.path.splitext(filename)[0] + ext
+        if os.path.exists(f):
+            os.remove(f)
+    if verbose:
+        print(f"generate mesh {filename} with hsize={hsize} and dimension={dim}")
+    generateGeometry(filename=filename, dim=dim, hsize=hsize)
+    mesh = feelpp.load(feelpp.mesh(dim=dim, realdim=dim), filename, hsize)
+    return mesh</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_defining_model_properties"><a class="anchor" href="#_defining_model_properties"></a>3.3. Defining Model Properties</h3>
+<div class="paragraph">
+<p>The next step is to define the model properties. We achieve this by creating a JSON file containing the following information:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The PDE coefficients, which follow the format: \(d \frac{\partial u}{\partial t} + \nabla \cdot (-c \nabla u - \alpha u + \gamma) + \beta \cdot \nabla u + a u = f\), more details about the coefficients can be found in the <a href="https://docs.feelpp.org/user/latest/python/pyfeelpptoolboxes/cfpdes.index.html" target="_blank" rel="noopener">CFPDEs documentation</a>.</p>
+</li>
+<li>
+<p>The approximation space (e.g., continuous piecewise polynomial finite elements \(P^k \text{ for } k=0,1,2\))</p>
+</li>
+<li>
+<p>Domain and boundary conditions, using the markers defined previously in the geometry file.</p>
+</li>
+<li>
+<p>Initial condition</p>
+</li>
+<li>
+<p>Post-processing (e.g., exporting the solution, computing the error, &#8230;&#8203;)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>More details about modelling using JSON files can be found in the <a href="https://docs.feelpp.org/toolboxes/0.109/modeling-analysis-using-json-files.html" target="_blank" rel="noopener">JSON documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>In the following code, we created a lambda function called <code>Taylor_Green_json</code> to generate the JSON file depending on the polynomial order <code>k</code> and the diffusion coefficient \(\mu=\frac{1}{Pe}\).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">Taylor_Green_json = lambda order,dim=2,mu=(1/30),name="c":  {
+    "Name": "Taylor_Green",
+    "ShortName": "Taylor_Green",
+    "Models":
+    {
+        f"cfpdes-{dim}d":
+        {
+            "equations":"AdvDiff"
+        },
+        "AdvDiff":{
+            "setup":{
+                "unknown":{
+                    "basis":f"Pch{order}",
+                    "name":f"{name}",
+                    "symbol":"c"
+                },
+                "coefficients":{
+                    "d":"1.",
+                    "c":f"{mu}",
+                    "beta":"{sin(pi*x)*cos(pi*y),-cos(pi*x)*sin(pi*y)}:x:y" if dim==2 else "{sin(pi*x)*cos(pi*y)*cos(pi*z),-0.5*cos(pi*x)*sin(pi*y)*cos(pi*z),-0.5*cos(pi*x)*cos(pi*y)*sin(pi*z)}:x:y:z",
+                    "f":"0."
+                }
+            }
+        }
+    },
+
+    "Materials":
+    {
+        "Omega":
+        {
+            "markers":["Omega"]
+        }
+    },
+    "BoundaryConditions":
+    {
+        "AdvDiff":
+        {
+            "Dirichlet":
+            {
+                "g":
+                {
+                    "markers":["Gamma_D"],
+                    "expr":"0"
+                }
+            },
+            "Neumann":{
+                "m":
+                {
+                    "markers":["Gamma_N"],
+                    "expr":"0"
+                }
+            }
+        }
+    },
+    "InitialConditions":
+    {
+        "AdvDiff":
+        {
+            f"{name}":
+            {
+                "Expression":
+                {
+                    "wendland":
+                    {
+                        "markers":["Omega"],
+                        "expr":"((1-2.5*sqrt((x+0.6)^2+(y+0.6)^2))&gt;0)*(1-2.5*sqrt((x+0.6)^2+(y+0.6)^2))^3*(3*(2.5*sqrt((x+0.6)^2+(y+0.6)^2))+1)+((1-2.5*sqrt((x)^2+(y)^2))&gt;0)*(1-2.5*sqrt((x)^2+(y)^2))^3*(3*(2.5*sqrt((x)^2+(y)^2))+1)+((1-2.5*sqrt((x-0.6)^2+(y-0.6)^2))&gt;0)*(1-2.5*sqrt((x-0.6)^2+(y-0.6)^2))^3*(3*(2.5*sqrt((x-0.6)^2+(y-0.6)^2))+1):x:y" if dim==2 else "((1-2.5*sqrt((x+0.6)^2+(y+0.6)^2+(z+0.6)^2))&gt;0)*(1-2.5*sqrt((x+0.6)^2+(y+0.6)^2+(z+0.6)^2))^3*(3*(2.5*sqrt((x+0.6)^2+(y+0.6)^2+(z+0.6)^2))+1)+((1-2.5*sqrt((x)^2+(y)^2+(z)^2))&gt;0)*(1-2.5*sqrt((x)^2+(y)^2+(z)^2))^3*(3*(2.5*sqrt((x)^2+(y)^2+(z)^2))+1)+((1-2.5*sqrt((x-0.6)^2+(y-0.6)^2+(z-0.6)^2))&gt;0)*(1-2.5*sqrt((x-0.6)^2+(y-0.6)^2+(z-0.6)^2))^3*(3*(2.5*sqrt((x-0.6)^2+(y-0.6)^2+(z-0.6)^2))+1):x:y:z"
+                    }
+                }
+            }
+        }
+    },
+    "PostProcess":
+    {
+        f"cfpdes-{dim}d":
+        {
+            "Exports":
+            {
+                "fields":["all"]
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_using_the_json_file"><a class="anchor" href="#_example_using_the_json_file"></a>3.3.1. Example: Using the JSON File</h4>
+<div class="paragraph">
+<p>Let&#8217;s use the <code>Taylor_Green_json</code> function to generate a JSON file with specific parameters:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Polynomial order: 2</p>
+</li>
+<li>
+<p>Dimension: 2</p>
+</li>
+<li>
+<p>Mu: 1/30</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">Taylor_Green_json(order=2, dim=2, mu=1/30, name="c")</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>{'Name': 'Taylor_Green',
+ 'ShortName': 'Taylor_Green',
+ 'Models': {'cfpdes-2d': {'equations': 'AdvDiff'},
+  'AdvDiff': {'setup': {'unknown': {'basis': 'Pch2',
+     'name': 'c',
+     'symbol': 'c'},
+    'coefficients': {'d': '1.',
+     'c': '0.03333333333333333',
+     'beta': '{sin(pi*x)*cos(pi*y),-cos(pi*x)*sin(pi*y)}:x:y',
+     'f': '0.'}}}},
+ 'Materials': {'Omega': {'markers': ['Omega']}},
+ 'BoundaryConditions': {'AdvDiff': {'Dirichlet': {'g': {'markers': ['Gamma_D'],
+     'expr': '0'}},
+   'Neumann': {'m': {'markers': ['Gamma_N'], 'expr': '0'}}}},
+ 'InitialConditions': {'AdvDiff': {'c': {'Expression': {'wendland': {'markers': ['Omega'],
+      'expr': '((1-2.5*sqrt((x+0.6)^2+(y+0.6)^2))&gt;0)*(1-2.5*sqrt((x+0.6)^2+(y+0.6)^2))^3*(3*(2.5*sqrt((x+0.6)^2+(y+0.6)^2))+1)+((1-2.5*sqrt((x)^2+(y)^2))&gt;0)*(1-2.5*sqrt((x)^2+(y)^2))^3*(3*(2.5*sqrt((x)^2+(y)^2))+1)+((1-2.5*sqrt((x-0.6)^2+(y-0.6)^2))&gt;0)*(1-2.5*sqrt((x-0.6)^2+(y-0.6)^2))^3*(3*(2.5*sqrt((x-0.6)^2+(y-0.6)^2))+1):x:y'}}}}},
+ 'PostProcess': {'cfpdes-2d': {'Exports': {'fields': ['all']}}}}</pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_time_scheme"><a class="anchor" href="#_time_scheme"></a>3.4. Time Scheme</h3>
+<div class="paragraph">
+<p>The time scheme is defined in a <code>.cfg</code> file.</p>
+</div>
+<div class="paragraph">
+<p>The Model CFG (.cfg) files allow to pass command line options to Feel++ applications. In particular, it allows to</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>setup the output directory</p>
+</li>
+<li>
+<p>setup the mesh</p>
+</li>
+<li>
+<p>setup the time scheme</p>
+</li>
+<li>
+<p>define the solution strategy and configure the linear/non-linear algebraic solvers.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>and other options that are specific to the toolbox being used.</p>
+</div>
+<div class="paragraph">
+<p>For further details, see the <a href="https://docs.feelpp.org/toolboxes/0.109/parametrized-simulation-using-cfg-files.html">CFG documentation</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">Taylor_Green_cfg = lambda time_order=2, t0=0, T=0.2, dt=0.1: f"""
+case.dimensions=2
+[cfpdes]
+#filename=$cfgdir/Taylor_Green.json
+pc-type=gamg
+ksp-converged-reason=
+#verbose=1
+#solver=Newton
+snes-monitor=1
+reuse-prec=1
+#use-cst-matrix=0
+#use-cst-vector=0
+#snes-line-search-type=l2#basic
+[cfpdes.AdvDiff]
+#time-stepping=Theta
+#stabilization=1
+#stabilization.type=unusual-gls #supg#unusual-gls #gls
+[cfpdes.AdvDiff.bdf]
+order={time_order}
+
+[ts]
+time-initial={t0}
+time-step={dt}
+time-final={T}
+restart.at-last-save=true
+"""</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_using_the_cfg_file"><a class="anchor" href="#_example_using_the_cfg_file"></a>3.4.1. Example: Using the CFG File</h4>
+<div class="paragraph">
+<p>In this scheme, we use a Backward Differentiation Formula (BDF) of order 2. The time step is 0.01 and the final time is T=2.5s.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">cfg_str = Taylor_Green_cfg(time_order=2, t0=0, T=2.5, dt=0.01)
+with open("Taylor_Green.cfg", "w") as f:
+    f.write(cfg_str)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_solving_the_problem_and_exporting_the_results"><a class="anchor" href="#_solving_the_problem_and_exporting_the_results"></a>4. Solving the Problem and Exporting the Results</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To solve the problem, we define a function called <code>SolveTG</code> which takes the mesh size, JSON and cfg files as inputs, initializes the problem (mesh, properties, and configuration), solves it iteratively for each time step, and exports the results.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def SolveTG(hsize, json, cfg, dim=2, verbose=False, measure=False):
+    if verbose:
+        print(f"Solving the Taylor green vortex advection-diffusion problem for hsize = {hsize}...")
+
+    feelpp.Environment.setConfigFile(cfg)
+    AdvDiff = cfpdes(dim=dim, keyword=f"cfpdes-{dim}d")
+    AdvDiff.setMesh(getMesh(f"omega-{dim}d.geo", hsize=hsize, dim=dim, verbose=verbose))
+    AdvDiff.setModelProperties(json)
+    AdvDiff.init(buildModelAlgebraicFactory=True)
+    AdvDiff.printAndSaveInfo()
+    measures = []
+    AdvDiff.startTimeStep()
+
+    if AdvDiff.isStationary():
+        AdvDiff.solve()
+        AdvDiff.exportResults()
+    else:
+        while not AdvDiff.timeStepBase().isFinished():
+            if AdvDiff.worldComm().isMasterRank():
+                print("============================================================\n")
+                print(f"time simulation: {AdvDiff.time()} s\n")
+                print("============================================================\n")
+
+            AdvDiff.solve()
+            AdvDiff.exportResults()
+
+            if measure:
+                measures.append(AdvDiff.postProcessMeasures().values())
+            AdvDiff.updateTimeStep()
+
+    if measure:
+        return measures</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_usage"><a class="anchor" href="#_example_usage"></a>4.1. Example Usage</h3>
+<div class="paragraph">
+<p>Now, let&#8217;s see an example of how to use the <code>SolveTG</code> function to solve the Taylor-Green Vortex problem with specific parameters.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>0.04</code>: Mesh size.</p>
+</li>
+<li>
+<p><code>order=2</code>: Order of the polynomial used in the approximation space.</p>
+</li>
+<li>
+<p><code>dim=2</code>: Dimension of the problem.</p>
+</li>
+<li>
+<p><code>mu=1/30</code>: Value of the diffusion coefficient \(\mu\).</p>
+</li>
+<li>
+<p><code>"Taylor_Green.cfg"</code>: The name of the configuration file that we generated in the previous section.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">SolveTG(0.04, Taylor_Green_json(order=2, dim=2, mu=1/30, name="c"), "Taylor_Green.cfg")</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The choice of the mesh size is not arbitrary and is based on the following criteria:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>An advection-diffusion problem is said to be <strong>convection-dominated</strong> when the advection term dominates the diffusion term. In this case, the solution and its gradient are not bounded, in other words, the solution is not stable.</p>
+</li>
+<li>
+<p>This phenomenon is captured by the numerical Péclet number \(Pe_{num} = \frac{||\beta||_{L^\infty} h}{2 \mu}\), where \(h\) is the mesh size and \(||\beta||_{L^\infty}\) is the \(L^\infty\) norm of the velocity field \(\beta\). We aim to choose a mesh size such that \(Pe_{num} \leq 1\).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In our case, we have \(||\beta||_{L^\infty} = 1\) and \(\mu \in P := [1/50, 1/10\)]. Therefore, we need to choose \(h\) such that \(h \leq 0.04\).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_visualizing_the_results_in_the_notebook"><a class="anchor" href="#_visualizing_the_results_in_the_notebook"></a>5. Visualizing the Results in the Notebook</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once the Taylor-Green Vortex problem is solved, it&#8217;s useful to visualize the results to gain insights into the behavior of the solution over time. In this section, we use <code>pyvista</code> library for visualization directly within the notebook. We will be displaying the solution at different time instances.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To run this visualization, you need to have the <code>pyvista</code> and <code>xvfbwrapper</code> Python packages installed.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import vtk
+import pyvista as pv
+import numpy as np
+import os
+
+try:
+    from xvfbwrapper import Xvfb
+    vdisplay = Xvfb()
+    vdisplay.start()
+except:
+    print("Please install 'xvfbwrapper' Python package")
+    exit(0)
+
+# Define the path to the case file directory
+case_path = os.path.abspath("cfpdes-2d.exports/Export.case")
+
+# Create the EnSight reader
+reader = vtk.vtkEnSightGoldBinaryReader()
+reader.SetCaseFileName(case_path)
+reader.ReadAllVariablesOn()
+reader.Update()
+
+# Extract the number of time steps
+num_time_steps = reader.GetTimeSets().GetItem(0).GetNumberOfTuples()
+
+# Create the Plotter
+plotter = pv.Plotter()
+
+# Specify the desired time steps
+desired_times = [0.2, 0.8, 1.4, 2.0, 2.0]
+
+# Get the time values as a list
+time_values = [reader.GetTimeSets().GetItem(0).GetValue(i) for i in range(num_time_steps)]
+
+# Loop through the desired time steps
+for time in desired_times:
+    closest_time = min(time_values, key=lambda x: abs(x - time))
+
+    # Set the reader's time step
+    reader.SetTimeValue(closest_time)
+    reader.Update()
+
+    # Convert the output to a PyVista mesh
+    mesh = pv.wrap(reader.GetOutput())
+
+    # Rescale the scalar data
+    block_id = 0
+    block = mesh[block_id]
+    scalars = block.point_data["cfpdes.AdvDiff.c"]
+    scalars /= np.max(np.abs(scalars))
+
+    # Add the rescaled mesh to the Plotter
+    plotter.add_mesh(block, scalars=scalars, cmap="viridis", show_edges=False)
+    plotter.view_xy()
+
+    # Show the plot
+    plotter.show()</code></pre>
+</div>
+</div>
+<details class="result">
+<summary class="title">Results</summary>
+<div class="content">
+<div class="paragraph">
+<p>time=0.2s</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/taylor-green-vortex/Notebookt02.png" alt="Notebookt02" width="50%">
+</div>
+</div>
+<div class="paragraph">
+<p>time=0.8s</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/taylor-green-vortex/Notebookt08.png" alt="Notebookt08" width="50%">
+</div>
+</div>
+<div class="paragraph">
+<p>time=1.4s</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/taylor-green-vortex/Notebookt14.png" alt="Notebookt14" width="50%">
+</div>
+</div>
+<div class="paragraph">
+<p>time=2.0s</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/taylor-green-vortex/Notebookt2.png" alt="Notebookt2" width="50%">
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="sharethis-inline-share-buttons"></div>
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.cemosis.fr" class="icon">
+            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.cemosis.fr" target="_blank" rel="noopener">Projects Documentation</a></li>
+          <li><a href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">Forums(Slack)</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://www.cemosis.fr" target="_blank" rel="noopener">Cemosis</a></li>
+          <li><a href="https://www.cemosis.fr/news" target="_blank" rel="noopener">News</a></li>
+          <li><a href="https://www.cemosis.fr/projects" target="_blank" rel="noopener">Projects</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.feelpp.org" target="_blank" rel="noopener">Feel++ Documentation</a></li>
+          <li><a href="http://docs.feelpp.org/user/">Get Started</a></li>
+          <li><a href="http://docs.feelpp.org/user//install/distributions/">Downloads</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="facebook" class="cls-1" d="M29,0H3A2.652,2.652,0,0,0,0,3V29a2.652,2.652,0,0,0,3,3H16V18H12V14h4V12a6.452,6.452,0,0,1,6-6h4v4H22a2.151,2.151,0,0,0-2,2v2h6l-1,4H20V32h9a2.652,2.652,0,0,0,3-3V3A2.652,2.652,0,0,0,29,0Z"/></svg>
+            <a href="https://www.facebook.com/cemosis.fr" class="icon">
+            Facebook
+            </a>
+          </li>
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32.1 26.1"> <path id="twitter" class="cls-1" d="M32,7.1a11.836,11.836,0,0,1-3.8,1,6.462,6.462,0,0,0,2.9-3.6,12.606,12.606,0,0,1-4.2,1.6A6.492,6.492,0,0,0,22.1,4a6.594,6.594,0,0,0-6.6,6.6,7.719,7.719,0,0,0,.2,1.5A18.458,18.458,0,0,1,2.2,5.2a6.294,6.294,0,0,0-.9,3.3A6.765,6.765,0,0,0,4.2,14a6.109,6.109,0,0,1-3-.8v.1a6.543,6.543,0,0,0,5.3,6.4,4.678,4.678,0,0,1-1.7.2,4.869,4.869,0,0,1-1.2-.1,6.679,6.679,0,0,0,6.1,4.6,12.917,12.917,0,0,1-8.2,2.8,9.151,9.151,0,0,1-1.6-.1,18.438,18.438,0,0,0,10.1,3c12.1,0,18.7-10,18.7-18.7v-.8A13.336,13.336,0,0,0,32,7.2Z" transform="translate(0.1 -4)"/></svg>
+            <a href="https://twitter.com/cemosis" class="icon">
+              Twitter
+            </a>
+          </li>
+          <li>
+          <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="linkedin" class="cls-1" d="M29,0H3A3.076,3.076,0,0,0,0,3V29a3.009,3.009,0,0,0,3,3H29a2.946,2.946,0,0,0,3-3V3A3.009,3.009,0,0,0,29,0ZM12,26H8V12h4ZM10,10a2,2,0,1,1,2-2A2.006,2.006,0,0,1,10,10ZM26,26H22V18a2,2,0,0,0-4,0v8H14V12h4v2.5c.8-1.1,2.1-2.5,3.5-2.5A4.736,4.736,0,0,1,26,17Z"/></svg>
+              <a href="https://www.linkedin.com/company/cemosis" class="icon">
+             Linkedin
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <div class="footer-terms-copyright">
+          <span>© 2023 Cemosis, Université de Strasbourg</span>
+      </div>
+      <div class="footer-terms-links">
+        <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>
+        <a href="https://www.cemosis.fr/privacy-policy">Privacy Policy</a>
+        <a href="https://www.cemosis.fr/cookie-policy">Cookie Policy</a>
+        <a href="https://www.cemosis.fr/support-policy">Support Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
+
+
+<script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+
+<script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">
+</script>
+
+<script type="text/javascript">
+function toggleFullScreen() {
+   var doc = window.document;
+   var docEl = doc.documentElement;
+
+   var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+   var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+   if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+       requestFullScreen.call(docEl);
+   }
+   else {
+       cancelFullScreen.call(doc);
+   }
+}
+</script>
+  </body>
+</html>
