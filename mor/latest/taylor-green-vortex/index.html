@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Thermal simulation of 3D building :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/mor/latest/thermalbuilding/index.html">
-    <meta name="description" content="We create a reduced order model for the thermal simulation of a 3D building using the stationary heat equation.">
+    <title>2D Advection-diffusion with Taylor-Green Vortex :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/mor/latest/taylor-green-vortex/index.html">
+    <meta name="description" content="We simulate the 2D Taylor-Green vortex.">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
@@ -265,7 +265,7 @@ MathJax.Hub.Config({
   </div>
 </div>
 
-    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/mor/modules/ROOT/pages/thermalbuilding/index.adoc">Edit this Page</a></div>
+    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/mor/modules/ROOT/pages/taylor-green-vortex/index.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -277,7 +277,7 @@ MathJax.Hub.Config({
       </a>
     </li>
       <li>
-        <a href="../_attachments/thermalbuilding/index.ipynb"
+        <a href="../_attachments/taylor-green-vortex/index.ipynb"
            title="Download Jupyter Notebook" data-toggle="tooltip" data-placement="left" class="jupyter-download">
           <img class="jupyter-file-icon icon" src="../../../_/img/jupyter-logo.svg"/> .ipynb
         </a>
@@ -291,248 +291,195 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Thermal simulation of 3D building</h1>
+<h1 class="page">2D Advection-diffusion with Taylor-Green Vortex</h1>
 <div class="sect1">
-<h2 id="_description"><a class="anchor" href="#_description"></a>1. Description</h2>
+<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Based on the solution of the stationary heat equation, we create a reduced order model for the simulation of heat exchanges in a 3D building.</p>
+<p>We study the solution of a 2D advection-diffusion equation (used to model the dispersion of a contaminant) in presence of a Taylor-Green vortex \(\beta(x,t)\). The problem can be solved for different values of the diffusion coefficient \(\mu\).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_advection_diffusion_with_taylor_green_vortex"><a class="anchor" href="#_advection_diffusion_with_taylor_green_vortex"></a>2. Advection-diffusion with Taylor-Green Vortex</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The problem is defined on the spatial domain \(\Omega = (-1, 1)^2\) with Dirichlet boundary \(\Gamma_D := (-1, 1) \times \{-1\}\) and Neumann boundary \(\Gamma_N := \partial\Omega \setminus \Gamma_D\). The governing parametric PDE (pPDE) can be described as follows:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+    &amp;\partial_t c - \mu\Delta c + \beta \cdot \nabla c = 0 &amp;&amp;\text{in } \Omega \times (0, T), \\
+    &amp;\nabla c(x, t; \mu) \cdot n = 0 &amp;&amp;\text{on } \Gamma_N \times (0, T), \\
+    &amp;c(x, t; \mu) = 0 &amp;&amp;\text{on } \Gamma_D \times (0, T), \\
+    &amp;c(x, 0; \mu) = c_0(x; \mu) &amp;&amp;\text{in } \Omega,
+\end{align}\]
+</div>
 </div>
 <div class="paragraph">
-<p>The building is composed of a corridor and 5 rooms, each of which contains a heating unit. Internal walls and doors are modelled as having finite thickness, while external walls properties (thickness and insulation) are encoded in the boundary conditions of the problem.</p>
+<p>where the velocity field \(\beta := (\sin(\pi x_1) \cos(\pi x_2), -\cos(\pi x_1) \sin(\pi x_2))^{\top}\), \(x = (x_1, x_2)\), is a solenoidal field. The initial condition, \(c_0(\cdot; \mu): \Omega \rightarrow \mathbb{R}\), is given by the sum of three Wendland functions \(\bar{\psi}_{2,1}^i\) of radius 0.4 and centers located at \((-0.6, -0.6)\), \((0, 0)\) and \((0.6, 0.6)\).
+The Wendland functions are radial functions with compact support on the unit ball, and \(\psi_{2,1}(r)\) has the following closed form</p>
 </div>
-<div class="sect2">
-<h3 id="_mathematical_model"><a class="anchor" href="#_mathematical_model"></a>1.1. Mathematical model</h3>
-<div class="paragraph">
-<p>Let \(\Omega \subset \mathbb{R}^3\) be the region occupied by the building, and denote \(\Omega_i\), \(i=0,1,2\) its subregions occupied by the air, the internal walls and the internal doors, such that \(\Omega = \cup_{i=0}^2 \Omega_i\). Let \(k_i\) be the thermal conductivities associated with the subregions.</p>
+<div class="stemblock">
+<div class="content">
+\[\psi_{2,1}(r)=(3r + 1) \max \{0,(1-r)^3\}.\]
+</div>
 </div>
 <div class="paragraph">
-<p>The external boundary of the domain \(\partial \Omega\) is decomposed into two parts: \(\partial \Omega_{ext}\), which corresponds to external walls, and \(\partial \Omega_D\) which corresponds to the front door. We denote by \(\Gamma_i\) the boundary of the \(i-\)th heating unit, \(i=0,...,4\). The problem writes as</p>
+<p>Appropriate transformations have been applied to \(\psi_{2,1}(r)\) in order to get the scaled and translated Wendland functions \(\bar{\psi}_{2,1}^i\).</p>
+</div>
+<div class="paragraph">
+<p>The velocity field \(\beta\), the initial condition \(c_0(\cdot; \mu)\), and the boundaries are illustrated in the following figure.</p>
+</div>
+<div class="imageblock text-center text-center">
+<div class="content">
+<img src="../_images/taylor-green-vortex/initial_condition.png" alt="initial condition" width="80%">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mathematical_formulation_for_the_reduced_order_problem"><a class="anchor" href="#_mathematical_formulation_for_the_reduced_order_problem"></a>3. Mathematical formulation for the reduced order problem</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Given a value for \(\mu \in \mathcal{P} \subset \mathbb{R}^p\), we solve the weak formulation of the previous problem by finding \(c(t;\mu) \in V\) such that:</p>
 </div>
 <div class="stemblock">
 <div class="content">
 \[\begin{equation}
-\begin{aligned}
-- \nabla \cdot (k_i\nabla u) &amp;= 0, \quad &amp;\text{on }\Omega_i \\
-u &amp;= \mu_i \quad &amp;\text{on }\Gamma_i, i=0,...,4, \\
--  k_0 \nabla u \cdot \vec{n} &amp;= \mu_6 (u - \mu_5), \quad &amp;\text{on }\partial \Omega_{ext},\\
--  k_0 \nabla u \cdot \vec{n} &amp;= \sigma (u - \mu_5), \quad &amp;\text{on }\partial \Omega_{D}.
-\end{aligned}
+    m(\partial_t c(t;\mu),v) + a(c(t;\mu),v;\mu) = \underbrace{f(v;t;\mu)}_{=0 \text{ in our case}} \quad \forall v \in V \quad \text{and } t \in \mathcal{I}
+    \label{eq:ExactParamPb}
 \end{equation}\]
 </div>
 </div>
 <div class="paragraph">
-<p>where \(\sigma\) is the convective heat exchange coefficient associated with the front door.</p>
+<p>where \(V=H^1_{0, \Gamma_D}(\Omega)=\{ v \in H^1(\Omega) \mid v = 0 \text{ on } \Gamma_D \}\), and \(m(\cdot,\cdot): V \times V \rightarrow \mathbb{R}\), \(a(\cdot,\cdot;\mu): V \times V \rightarrow \mathbb{R}\) are the bilinear forms defined as:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{cases}
+    m(u,v) =(u,v)_{L^2(\Omega)} =\int_{\Omega} u\, v \, dx
+    \\
+    a(u, v;\mu) = \int_{\Omega} \mu  \nabla u \cdot \nabla v \, + (\beta \cdot \nabla u) v \, dx
+\end{cases}\]
+</div>
 </div>
 <div class="paragraph">
-<p>The parameters \(\mu_i\) correspond to</p>
+<p>Additionally, we are interested in a specific <a href="#Output">Output</a>:</p>
 </div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation}
+    s(t;\mu) = \ell(c(t;\mu);t;\mu)
+
+\end{equation}\]
+</div>
+</div>
+<div class="sect2">
+<h3 id="AffineDecomposition"><a class="anchor" href="#AffineDecomposition"></a>3.1. Affine decomposition (without boundary conditions)</h3>
+<div class="paragraph">
+<p>The bilinear form \(a(\cdot,\cdot;\mu)\) is affine in the parameter \(\mu\), i.e.:</p>
+</div>
+<div class="paragraph center">
+<p>\(a(\cdot,\cdot;\mu) = \sum_{q=1}^{Q_a} \theta^a_q(\mu) \,a_q(\cdot,\cdot)\)</p>
+</div>
+<div class="paragraph">
+<p>where \(a_q:V \times V \rightarrow \mathbb{R}\) are bilinear forms independent of \(\mu\) and \(\theta^a_q: \mathcal{P} \rightarrow \mathbb{R}\) are scalar quantities depending only on \(\mu\).</p>
+</div>
+<div class="paragraph">
+<p>In particular, \(Q_a=2\) and the decomposition is given by:</p>
+</div>
+<div class="stemblock center">
+<div class="content">
+\[\begin{align}
+a(u,v;\mu) &amp;= \int_{\Omega} \mu  \nabla u \cdot \nabla v \, + (\beta \cdot \nabla u) v \, dx \nonumber\\
+&amp; =1 \int_{\Omega} (\beta \cdot \nabla u) \, v \, dx + \mu \int_{\Omega} \nabla u \cdot \nabla v \, dx \nonumber\\
+&amp;= \theta^a_1(\mu) \, a_1(u,v) + \theta^a_2(\mu) \, a_2(u,v)
+\end{align}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where:</p>
+</div>
+<div class="paragraph center">
+<p>\(\theta^a_1(\mu) = 1 \quad \text{and} \quad \theta^a_2(\mu) = \mu\)</p>
+</div>
+<div class="paragraph">
+<p>and:</p>
+</div>
+<div class="paragraph center">
+<p>\(a_1(u,v) = \int_{\Omega} (\beta \cdot \nabla u) \, v \, dx \quad \text{and} \quad a_2(u,v) = \int_{\Omega} \nabla u \cdot \nabla v \, dx \quad \forall u,v \in V.\)</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In general, we seek an affine decomposition for both the bilinear form and the linear form in the variational formulation, as well as for the output functional \(\ell\). However, in our case, the right hand side linear form is equal to zero and the output functional doesn&#8217;t depend explicitly on the parameter \(\mu\).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_affine_decomposition_with_boundary_conditions"><a class="anchor" href="#_affine_decomposition_with_boundary_conditions"></a>3.2. Affine decomposition (with boundary conditions)</h3>
+<div class="paragraph">
+<p>A very practical approach to treat the boundary conditions (in particular Dirichlet) in the context of reduced basis method is to impose them weakly i.e. include them in the weak formulation and even in the affine decomposition of the problem as a penalisation terms. This approach is known as the Nitsche&#8217;s method. We won&#8217;t go into mathematical details that can be found in <a href="https://docs.feelpp.org/math/fem/laplacian/nitsche.html">Feel++ documentation</a>, but we will just give the final expression of the affine decomposition. First we recall that we have homogeneous Dirichlet boundary conditions on \(\Gamma_D\), and that Neumann boundary conditions are natural. Finally, we have the following affine decomposition:</p>
+</div>
+<div class="stemblock center">
+<div class="content">
+\[\begin{align}
+a(u,v;\mu) &amp;=  1 \left( \int_{\Omega} (\beta \cdot \nabla u) \, v \, dx
++ \int_{\Gamma_D} (\beta \cdot n) \, u \,v + \frac{\gamma}{h} \, u \, v \, ds \right) \\ &amp;+
+ \mu \left(\int_{\Omega} \nabla u \cdot \nabla v \, dx - \int_{\Gamma_D}(\nabla u \cdot n) \,v + (\nabla v\cdot n) \,u\right) \\ \\
+&amp;= \theta^a_1(\mu) \, a_1(u,v) + \theta^a_2(\mu) \, a_2(u,v)
+\end{align}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where:</p>
+</div>
+<div class="paragraph center">
+<p>\(\theta^a_1(\mu) = 1 , \quad  \theta^a_2(\mu) = \mu \quad \text{and} \quad h \text{ is the mesh size}\).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>\(\mu_i \in (300,340)\), for \(i=0,...,4\), are the surface temperatures of the heating units (in Kelvin);</p>
+<p>The penalisation parameter \(\gamma\) must be chosen such that the coercivity (or inf-sup) property is satisfied. It is difficult to do in general. We increase \(\gamma\) until the weak Dirichlet boundary conditions are properly satisfied.</p>
 </li>
 <li>
-<p>\(\mu_5 \in (270,290)\) is the external temperature (in Kelvin);</p>
-</li>
-<li>
-<p>\(\mu_6\) is a function of the external wall thickness. The wall is composed of two layers: a cinder layer of thickness \(l_{cinder} \in (0.1,0.3) m\) and an insulation layer of thickness \(l_{insulation} \in (0.1,0.2) m\), and</p>
+<p>Since we have homogeneous Dirichlet boundary conditions (i.e. \(u=g=0 \text{ on } \Gamma_D\)), we don&#8217;t have to include any term in the affine decomposition of the right hand side linear form.</p>
 </li>
 </ul>
 </div>
-<div class="stemblock">
-<div class="content">
-\[\mu_6 = \frac{1}{0.06 + \frac{0.01}{0.5} + \frac{l_{cinder}}{0.8} + \frac{l_{insulation}}{0.032} + \frac{0.016}{0.313} + 0.14}.\]
-</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_construction_of_the_affine_decomposition"><a class="anchor" href="#_construction_of_the_affine_decomposition"></a>1.2. Construction of the affine decomposition</h3>
+<h3 id="Output"><a class="anchor" href="#Output"></a>3.3. Output</h3>
 <div class="paragraph">
-<p>The problem presents an affine dependence on the parameters, hence we can explicity compute the terms of the correspondent affine decomposition</p>
+<p>We are interested in non-compliant time-dependent multiple outputs defined as follows:</p>
 </div>
-<div class="stemblock">
-<div class="content">
-\[\sum_{i = 0}^{N_A} \theta^A_i(\mu) A_i(u,v) = \sum_{j = 0}^{N_F} \theta^F_j(\mu) F_j(v),\]
-</div>
+<div class="paragraph center">
+<p>\(s(t;\mu)= (s_1(t;\mu), s_2(t;\mu), s_3(t;\mu)) \quad \\ \\ \text{with} \quad s_1(t;\mu) = \int_{\Omega} c(t;\mu) \, \eta_1 dx, \quad s_2(t;\mu) = \int_{\Omega} c(t;\mu) \, \eta_2 dx \quad \text{and} \quad s_3(t;\mu) = \int_{\Omega} c(t;\mu) \, \eta_3 dx\)</p>
 </div>
 <div class="paragraph">
-<p>where \(N_A = 1\) and \(N_F = 6\).</p>
-</div>
-<div class="paragraph">
-<p>The first product on the left-hand side is given by \(\theta^A_0(\mu) = 1\) and</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\begin{equation}
-\begin{aligned}
-A_0(u,v) &amp;= \sum_{i=0}^{N_m} \int_{\Omega_i} k_i \nabla u \cdot \nabla v + \\
- &amp; - \int_{\partial \Omega_{ext}} k_0 (\nabla u v + \nabla v u )\cdot \vec{n} +  \\
- &amp; + \int_{\partial \Omega_{ext}} k_0 \frac{\gamma}{h} u v  +\\
- &amp; + \int_{\partial \Omega_D} uv,
-\end{aligned}
-\end{equation}\]
+<p>where \(\eta_1, \eta_2, \eta_3\) are three Wendland functions \(\psi_{2,1}\) of radius 0.1 and centers \((0.1, 0.7), (0.1, 0.7) \text{ and } (0.5, 0.1)\) respectively.</p>
 </div>
 </div>
-<div class="paragraph">
-<p>where \(\gamma\) is the Nitsche penalty parameter and \(h\) is the local mesh size.</p>
-</div>
-<div class="paragraph">
-<p>The second product is given by \(\theta^A_1(\mu) = \mu_6\) and</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[A_1(u,v) = \int_{\partial \Omega_{ext}} u v.\]
-</div>
-</div>
-<div class="paragraph">
-<p>The terms on the right-hand side are \(\theta^F_i(\mu) = \mu_i\) for \(i=0,...,4\), corresponding to the temperatures of the heating units, \(\theta^F_5(\mu) = \mu_5\mu_6\), corresponding to the temperature on the internal surface of the external walls, and \(\theta^F_6(\mu) = \mu_5\), corresponding to the external temperature. The corresponding linear forms are</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\begin{equation}
-\begin{aligned}
-F_i (v) &amp;= k_0 \int_{\Gamma_i} -\nabla v \cdot \vec{n} + \frac{\gamma}{h} v, \quad i = 0,...,4\\
-F_5 (v) &amp;= \int_{\partial \Omega_{ext}} v,\\
-F_6 (v) &amp;= \int_{\partial \Omega_D} \sigma v.
-\end{aligned}
-\end{equation}\]
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_geometry"><a class="anchor" href="#_geometry"></a>1.3. Geometry</h3>
-<div class="imageblock">
-<div class="content">
-<img src="../_images/thermalbuilding/heat_3d.png" alt="heat 3d">
-</div>
-</div>
-<div class="paragraph">
-<p>The geometry file can be found in Github <a href="https://github.com/feelpp/feelpp/blob/develop/mor/examples/thermalbuilding//thermalbuilding/thermalbuilding.geo">here</a>.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_output"><a class="anchor" href="#_output"></a>2. Output</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The output corresponds to the air mean temperature, and it is computed as</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\begin{equation}
-s(\mu) = \frac{1}{|\Omega_0|} \int_{\Omega_0} u.
-\end{equation}\]
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_parameters"><a class="anchor" href="#_parameters"></a>3. Parameters</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The table displays the various fixed and variables parameters of this test-case.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Table of model order reduction parameters</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Range</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Units</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_0\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Heater temperature living room</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\([300,340\)]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_1\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Heater temperature kitchen</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\([300,340\)]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_2\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Heater temperature bedroom 1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\([300,340\)]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_3\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Heater temperature bedroom 2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\([300,340\)]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_4\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Heater temperature bathroom</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\([300,340\)]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_5\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">External temperature</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\([270,290\)]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mu_6\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Exchange coefficient external walls</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. Table of constant parameters</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\gamma\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Boundary conditions using Nitsche method</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(10\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(k_0\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Air conductivity</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(1\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(k_1\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Conductivity - internal walls</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(0.25\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(k_2\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Conductivity - internal doors</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(0.13\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\sigma\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Heat transfer coefficient - front door</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\frac{1.0}{0.06+\frac{0.06}{0.150}+\frac{0.1}{0.029}+0.14}\)</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 <div class="sect1">
@@ -541,9 +488,10 @@ s(\mu) = \frac{1}{|\Omega_0|} \int_{\Omega_0} u.
 <div class="listingblock">
 <div class="title">Setup the variables for the notebook simulation</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">girder_path = "https://girder.math.unistra.fr/api/v1/item/64d60522b0e9570499e1eaa1/download"
-fpp_name = 'thermalbuilding.fpp'
-time = 0</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import numpy as np
+girder_path = "https://girder.math.unistra.fr/api/v1/item/64c165a5b0e9570499e1cc3c/download"
+fpp_name = 'ad.fpp'
+time = np.linspace(start=0, stop=2.5, num=251)</code></pre>
 </div>
 </div>
 <details>
@@ -675,6 +623,67 @@ File <ipython-input-1-62a649bfbc5a>:8
 ----> 8 for i in range(len(r)):
       9     outputs={}
      10     errors={}
+
+TypeError: object of type 'Response' has no len()</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="listingblock">
+<div class="title">Show the values of the outputs for different parameters</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import plotly.graph_objects as go
+
+for i in range(len(r)):
+    # Create a Plotly figure with a scatter plot
+    fig = go.Figure()
+
+    for o in range(len(r[i])):
+        v=np.array(r[i][o].outputs())
+        err=np.array(r[i][o].errors())
+
+        min_values = v*(1-10/100)
+        max_values = v*(1+10/100)
+        # print(f"v: {v}")
+        # print(f"min_values: {min_values}")
+        # print(f"max_values: {max_values}")
+
+        assert time.size == min_values.size == max_values.size == v.size
+
+        fig.add_trace(go.Scatter(
+            x=time,
+            y=v,
+            mode='lines+markers',
+            name=f'wendland-{o}'
+        ))
+
+    # Update the layout of the figure
+    fig.update_layout(
+        title=f'Sensor outputs for mu={sampling[i]}',
+        xaxis_title='Time',
+        yaxis_title='Value',
+
+        # Use 'category' type for the x-axis to treat it as discrete dates
+        xaxis=dict(tickformat='.2f'),
+    )
+
+    # Show the plot
+    fig.show()</code></pre>
+</div>
+</div>
+<details>
+<summary class="title">Results</summary>
+<div class="content">
+<div class="literalblock dynamic-py-result">
+<div class="content">
+<pre>---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+File <ipython-input-1-bc1b0bfdb64a>:3
+      1 import plotly.graph_objects as go
+----> 3 for i in range(len(r)):
+      4     # Create a Plotly figure with a scatter plot
+      5     fig = go.Figure()
+      7     for o in range(len(r[i])):
 
 TypeError: object of type 'Response' has no len()</pre>
 </div>
