@@ -1,5 +1,5 @@
 [build]
-publish = "public"
+publish = "build/site"
 command = "./netlify-build.sh"
 
 [build.environment]
@@ -17,4 +17,4 @@ ALGOLIA_IDX_NAME = "feelpp"
 [[headers]]
 for = "/_/font/*"
   [headers.values]
-  Cache-Control = "public,max-age=604800"
+  Cache-Control = "build/site,max-age=604800"
