@@ -4,6 +4,8 @@
 :page-illustration: thermalbuilding/3d_building.png
 :description: We create a reduced order model for the thermal simulation of a 3D building using the stationary heat equation.
 :uri-data: https://github.com/feelpp/feelpp/blob/develop/mor/examples/thermalbuilding/
+:page-jupyter: true
+
 
 == Description
 
@@ -126,10 +128,91 @@ The table displays the various fixed and variables parameters of this test-case.
 .Table of constant parameters
 [width="100%"]
 |=======================================================================
-| Name         | Description                    | Range                 | Units
-| stem:[\gamma] | Boundary conditions using Nitsche method | stem:[[10]]      | 
-| stem:[\k_0] | Air conductivity     | stem:[1]      | 
-| stem:[\k_1] | Conductivity - internal walls | stem:[0.25]      | 
-| stem:[\k_2] | Conductivity - internal doors  | stem:[0.13]      |
-| stem:[\sigma]  | Heat transfer coefficient - front door | stem:[\frac{1.0}{0.06+\frac{0.06}{0.150}+\frac{0.1}{0.029}+0.14}] | 
+| Name         | Description                    | Value                 
+| stem:[\gamma] | Boundary conditions using Nitsche method | stem:[10]
+| stem:[k_0] | Air conductivity     | stem:[1]
+| stem:[k_1] | Conductivity - internal walls | stem:[0.25]
+| stem:[k_2] | Conductivity - internal doors  | stem:[0.13]
+| stem:[\sigma]  | Heat transfer coefficient - front door | stem:[\frac{1.0}{0.06+\frac{0.06}{0.150}+\frac{0.1}{0.029}+0.14}]
 |=======================================================================
+
+== Setup for the notebook simulation
+
+.Setup the variables for the notebook simulation
+[%dynamic,python]
+----
+girder_path = "https://girder.math.unistra.fr/api/v1/item/64d60522b0e9570499e1eaa1/download"
+fpp_name = 'thermalbuilding.fpp'
+time = 0
+----
+
+
+include::partial$girder_fpp.adoc[]
+
+include::partial$online_notebook.adoc[]
+
+// == Running the case using a Jupyter notebook
+
+// It is possible to download this page as a Jupyter notebook and run it in an environment that contains a local installation of {feelpp} and its Python wrappers. The offline creation of the reduced basis has already been performed, and an archive is downloaded from Girder. It contains the basis, the model and the configuration files that are necessary for the online simulation.
+
+// .Download the archive from Girder
+// [%dynamic,python]
+// ----
+// import requests
+// r=requests.get(girder_path)
+// with open(fpp_name,'wb') as f:
+//     f.write(r.content)
+// ----
+
+// .Create the online model, choose randomly 4 parameter vectors and simulate them using a reduced basis of 10 elements
+// [%dynamic,python]
+// ----
+// import feelpp
+// from feelpp.mor import *
+// ms=feelpp.mor.MORModels(fpp_name)
+// muspace = ms.parameterSpace()
+// sampling = muspace.sampling()
+// sampling.sample(4, "random")
+// r=ms.run(sampling,{"N":10})
+// ----
+
+// .Print the outputs and the associated parameter vector
+// [%dynamic,python]
+// ----
+// from pandas import DataFrame as df
+// from pandas import options as op
+// from pandas import set_option
+// outputs={}
+// errors={}
+// output_dataframes = list()
+// errors_dataframes = list()
+// for i in range(len(r)):
+//     outputs={}
+//     errors={}
+//     for o in range(len(r[i])):
+//         str_time = "Time"
+//         str_output = "Output "+str(o)
+//         str_error = "Error "+str(o)
+
+//         outputs[str_time] = time
+//         outputs[str_output] = np.array(r[i][o].outputs())
+//         outputs[str_error] = np.array(r[i][o].errors())
+
+
+//     output_frame = df(data=outputs)
+    
+
+//     set_option('display.float_format', '{:.2E}'.format)    
+    
+//     output_dataframes.append(output_frame)
+
+// op.display.max_colwidth = 100
+
+// i=0
+// for frame in output_dataframes:
+//     print("Parameters :",sampling[i])
+//     print(frame)
+//     print("\n")
+//     i=i+1
+    
+// ----
