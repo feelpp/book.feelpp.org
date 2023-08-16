@@ -1,7 +1,6 @@
 name: Build and Deploy
 on:
   push:
-    branches: [ master,develop ]
   repository_dispatch:
     types:
       - toolbox-update-trigger
@@ -42,6 +41,7 @@ jobs:
         ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
+      if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
       with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages # The branch the action should deploy to.
