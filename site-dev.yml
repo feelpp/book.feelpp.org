@@ -1,7 +1,10 @@
 site:
   title: Feel++ // Docs
   url: https://docs.feelpp.org
-  start_page: latest@feelpp::index.adoc
+  start_page: home::index.adoc
+runtime:
+  log:
+    level: debug
 content:
   sources:
   - url: ./
@@ -36,8 +39,6 @@ content:
   - url: ./
     branches: develop
     start_path: docs/data
-#    tags:
-#    - v0.109
   - url: ./
     branches: develop
     start_path: docs/math/
@@ -51,14 +52,17 @@ content:
 #    - v0.106
 #    - v0.105
   - url: ../toolbox
-    branches: [master]
+    branches: [develop]
 #    tags:
 #      - v0.109
 #      - v0.108
 #      - v0.105
     start_path: examples
   - url: ../toolbox
-    branches: master
+    branches: develop
+    start_path: toolboxes
+  - url: ../toolbox
+    branches: develop
     start_path: contribute
   - url: ./
     branches: develop
@@ -71,19 +75,28 @@ content:
   - url: ./
     branches: develop
     start_path: docs/salome/
+#  - url: ../Antora/antora-ui
+#    branches: mais
+#    start_path: docs/
 #  - url: ./
 #    branches: mor-module
 #    start_path: docs/mor/
+#urls:
+#  latest_version_segment: stable
+#  latest_version_segment_strategy: redirect:to
 ui:
   bundle:
-    url: https://gitlab.com/feelpp/antora-ui-default/-/jobs/artifacts/feelpp/raw/build/ui-bundle.zip?job=bundle-stable
+    url: https://github.com/feelpp/antora-ui/releases/latest/download/ui-bundle.zip #https://gitlab.com/feelpp/antora-ui-default/-/jobs/artifacts/feelpp/raw/build/ui-bundle.zip?job=bundle-stable
     snapshot: true
-  supplemental_files: supplemental-ui
+#  supplemental_files: supplemental-ui
 antora:
   extensions:
   - '@antora/collector-extension'
 asciidoc:
   attributes:
+    page-component-order: '!home, !ROOT, user, toolboxes, mor, dev, feelpp-project, contribute, data, math'
+    dynamic-blocks@: '' # soft enable
+    version: 0.110
     feelpp-git-tag: develop
     deploymentRoot: ""
     numbered: true
@@ -128,12 +141,18 @@ asciidoc:
     cpp14: C++14
     cmake: CMake
     paraview: ParaView
+    paraview-url: https://paraview.org
+    paraview-website: link:{paraview-url}[{paraview}]
     ensight: EnSight
     girder: Girder
     plantuml-server-url: http://www.plantuml.com/plantuml
   extensions:
+    - ./lib/plotly.js
     - ./lib/remote-include-processor
     - ./lib/tabs-block-extension
     - '@djencks/asciidoctor-template'
 #    - "@djencks/asciidoctor-tabset-block"
     - asciidoctor-kroki
+    - ./lib/vtkjs.js
+    - ./lib/mpirun.js
+    - ./lib/dynamic-notebook.js

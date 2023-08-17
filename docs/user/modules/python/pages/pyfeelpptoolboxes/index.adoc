@@ -1,1 +1,183 @@
 = {feelpp} Toolboxes in Python
+:page-jupyter: true
+:page-tags: toolbox
+:page-description: {python} interface for {feelpp} toolboxes
+:page-illustration: logo-python.png
+
+== Getting started with toolboxes in Python
+
+{feelpp} toolboxes are availabe as python modules. The following toolboxes are available:
+
+|===
+|*Toolbox* |*Python Module* 
+|coefficient form |feelpp.toolboxes.cfpdes
+|fluid mechanics|feelpp.toolboxes.fluid
+|heat transfert |feelpp.toolboxes.heat
+|solid mechanics |feelpp.toolboxes.solid
+|electric |feelpp.toolboxes.electric
+|hdg |feelpp.toolboxes.hdg
+|===
+
+=== Coefficient Form Toolbox
+
+The coefficient form toolbox has various pages dedicated to its python interface through a xref:pyfeelpptoolboxes/cfpdes.index.adoc[step by step tutorial].
+
+=== Heat Transfer Toolbox
+
+The following example shows how to use the fluid toolbox in python:
+We start with import feelpp, the heat toolboxes and start feelpp environment.
+[source,python]
+----
+import feelpp
+from feelpp.toolboxes.core import *
+from feelpp.toolboxes.heat import *
+
+app = feelpp.Environment(["myapp"], opts= toolboxes_options("heat"),config=feelpp.localRepository("")) # <1>
+----
+<1> The first argument is the name of the application, the second argument is the directory below `feelppdb` that will be created in the current directory. The directory will contain the results of the simulation.
+
+
+Then we continue with the definition of the model and the heat toolbox.
+[source,python]
+----
+case=feelpp.download( "github:{repo:feelpp,path:toolboxes/heat/cases/Building/ThermalBridgesENISO10211/", worldComm=app.worldCommPtr() )[0] # <1>
+casedfile=case+'/case2.cfg' 
+feelpp.Environment.setConfigFile(casefile) # <2>
+f = heat(dim=2, order=1) # <3>
+if not f.isStationary(): # <4>
+    f.setTimeFinal(10*f.timeStep())
+[ok,meas]=simulate(f) # <5>
+f.checkResults() # <6>
+----
+<1> Download the case from the feelpp repository
+<2> Set the configuration file
+<3> Create the heat toolbox in 2D  with order 1 finite elements
+<4> If the model is not stationary, set the final time to 10 times the time step
+<5> Simulate the model
+<6> Check the results
+
+[%collapsible.result]
+====
+----
+heat(2,1)
+[modelProperties] Loading Model Properties : "/scratch/jupyter/feelppdb/downloads/ThermalBridgesENISO10211/case2.json"
+ 0 heat KSP Residual norm 1.812720e+03
+ 1 heat KSP Residual norm 9.989990e-10
++--------------------------------------------------------------------------------------------------------------------------------+
+| Checkers : heat                                                                                                                |
++--------------------------------------------------------------------------------------------------------------------------------+
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | check     | name                                               | measure      | reference    | error        | tolerance    | |
+| +===========+====================================================+==============+==============+==============+==============+ |
+| | [success] | Normal_Heat_Flux_bottom                            | 9.317351e+00 | 9.500000e+00 | 1.960305e-02 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointA_field_temperature                    | 7.067795e+00 | 7.100000e+00 | 4.556565e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointB_field_temperature                    | 7.612815e-01 | 8.000000e-01 | 5.085967e-02 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointC_field_temperature                    | 7.900707e+00 | 7.900000e+00 | 8.954821e-05 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointD_field_temperature                    | 6.278234e+00 | 6.300000e+00 | 3.466902e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointE_field_temperature                    | 8.274854e-01 | 8.000000e-01 | 3.435681e-02 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointF_field_temperature                    | 1.640809e+01 | 1.640000e+01 | 4.935425e-04 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointG_field_temperature                    | 1.633449e+01 | 1.630000e+01 | 2.116074e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointH_field_temperature                    | 1.676604e+01 | 1.680000e+01 | 2.025570e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Points_pointI_field_temperature                    | 1.833338e+01 | 1.830000e+01 | 1.824001e-03 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_CheckGeneric_Heat-Flux_top_integrate    | 2.046351e-03 | 0.000000e+00 | 2.046351e-03 | 5.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_CheckGeneric_Heat-Flux_bottom_integrate | 1.775801e-01 | 0.000000e+00 | 1.775801e-01 | 5.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_Check_Heat-Flux_bottom_integrate        | 1.775801e-01 | 0.000000e+00 | 1.775801e-01 | 5.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_Check_Heat-Flux_top_integrate           | 2.046351e-03 | 0.000000e+00 | 2.046351e-03 | 5.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_Inward-Heat-Flux_V2_bottom_integrate    | 9.317351e+00 | 9.500000e+00 | 1.960305e-02 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
+| | [success] | Statistics_Inward-Heat-Flux_bottom_integrate       | 9.494932e+00 | 9.500000e+00 | 5.338099e-04 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
++--------------------------------------------------------------------------------------------------------------------------------+
+
++--------------------------------------------------------------------------------------------------------------------------------+
+...
+| | [success] | Statistics_Inward-Heat-Flux_bottom_integrate       | 9.494932e+00 | 9.500000e+00 | 5.338099e-04 | 1.000000e-01 | |
+| +-----------+----------------------------------------------------+--------------+--------------+--------------+--------------+ |
++--------------------------------------------------------------------------------------------------------------------------------+
+----
+====
+
+
+[source,python]
+----
+if ok: # <1>
+    meas = f.postProcessMeasures().values() # <2>
+
+    try:
+        import pandas as pd
+        df=pd.DataFrame([meas]) # <3>
+        print(df)
+    except ImportError:
+        print("cannot import pandas, no problem it was just a test")
+else:
+    print("error during simulation, cannot proceed with data analysis")
+----
+<1> Check if the simulation was successful
+<2> Get the measures
+<3> Print the measures in a pandas dataframe
+
+[%collapsible.result]
+.Results
+====
+----
+   Normal_Heat_Flux_bottom  Points_pointA_field_temperature  \
+0                 9.317351                         7.067795   
+
+   Points_pointB_field_temperature  Points_pointC_field_temperature  \
+0                         0.761281                         7.900707   
+
+   Points_pointD_field_temperature  Points_pointE_field_temperature  \
+0                         6.278234                         0.827485   
+
+   Points_pointF_field_temperature  Points_pointG_field_temperature  \
+0                        16.408094                        16.334492   
+
+   Points_pointH_field_temperature  Points_pointI_field_temperature  \
+0                        16.766039                        18.333379   
+
+   Statistics_CheckGeneric_Heat-Flux_bottom_integrate  \
+0                                            0.17758    
+
+   Statistics_CheckGeneric_Heat-Flux_top_integrate  \
+0                                         0.002046   
+
+   Statistics_Check_Heat-Flux_bottom_integrate  \
+0                                      0.17758   
+
+   Statistics_Check_Heat-Flux_top_integrate  \
+0                                  0.002046   
+
+   Statistics_Inward-Heat-Flux_V2_bottom_integrate  \
+0                                         9.317351   
+
+   Statistics_Inward-Heat-Flux_bottom_integrate  
+0                                      9.494932  
+----
+====
+
+== The Simulate function
+
+The function `simulate` takes any toolbox as input and simulate it. The function returns a tuple with a boolean and a dictionary. The boolean is true if the simulation was successful and the dictionary contains the measures.
+
+Here is the implementation of the function `simulate`:
+
+[source,python]
+----
+include::https://raw.githubusercontent.com/feelpp/feelpp/develop/python/pyfeelpp-toolboxes/feelpp/toolboxes/core/__init__.py[lines=4..-1]
+----
+
+NOTE: This is one possible implementation. Feel free to propose another one.

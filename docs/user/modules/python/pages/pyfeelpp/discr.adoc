@@ -5,7 +5,7 @@ include::user:ROOT:partial$header-macros.adoc[]
 We start with setting the {feelpp} environment and loading the {feelpp} library.
 We download a 2D and 3D geometry from the {feelpp} github repository.
 
-[source,python]
+[%dynamic,python]
 ----
 import feelpp
 import sys
@@ -21,14 +21,6 @@ print(" . 2D geometry file: {}".format(geo['2']))
 print(" . 3D geometry file: {}".format(geo['3']))
 ----
 
-[%collapsible.result]
-====
-----
- . 2D geometry file: /scratch/jupyter/feelppdb/downloads/feelpp2d.geo
- . 3D geometry file: /scratch/jupyter/feelppdb/downloads/feelpp3d.geo
----- 
-====
-
 == Notations
 
 The domain stem:[\Omega] is discretized using a mesh of triangles or tetrahedra. 
@@ -38,7 +30,7 @@ Scalar functions stem:[f \Omega \rightarrow \mathbb{R}] are defined on the mesh 
 == Scalar function spaces
 
 
-[source,python]
+[%dynamic,python]
 .2D mesh and function space example
 ----
 def run( m, geo ):
@@ -65,34 +57,10 @@ def run( m, geo ):
 run( feelpp.mesh(dim=2), geo['2'] )
 ----
 
-[%collapsible.result]
-.Results
-====
-----
-Xh basisname:  lagrange
-Xh nDof:  2867
-Xh nLocalDof:  2867
-Xh nLocalDofWithGhost:  2867
-Xh nLocalDofWithoutGhost:  2867
-----
-====
-
 Finally, we can do the same in 3D
 
-[source,python]
+[%dynamic,python]
 .3D mesh and function space example
 ----
 run( feelpp.mesh(dim=3,realdim=3), geo['3'] )
 ----
-
-[%collapsible.result]
-.Results
-====
-----
-Xh basisname:  lagrange
-Xh nDof:  21739
-Xh nLocalDof:  21739
-Xh nLocalDofWithGhost:  21739
-Xh nLocalDofWithoutGhost:  21739
-----
-====
