@@ -1,3 +1,4 @@
+:stem: latexmath
 [[eléments-finis-de-lagrange]]
 = Eléments finis de Lagrange
 
@@ -591,6 +592,37 @@ Voici deux exemples d’espace stem:[H^1]-conforme
       \circ T_K \in \mathbb{Q}_k\}
 ++++
 
+
+.Dimension des espaces stem:[P_{\mathrm{c}, h}^k] et stem:[Q_{\mathrm{c}, h}^k] en dimension 2 et 3 pour stem:[k \in\{1,2,3\}].
+[cols="^,^,^,^,^"]
+|===
+| espace | d | k=1 | k=2 | k=3
+
+| stem:[P_{c,h}^k]
+| 2
+| stem:[N_{so}]
+| stem:[N_{so}+N_{ar}]
+| stem:[N_{so}+2N_{ar}+N_{ma}]
+
+| stem:[Q_{c,h}^k]
+| 2
+| stem:[N_{so}]
+| stem:[N_{so}+N_{ar}+N_{ma}]
+| stem:[N_{so}+2N_{ar}+4N_{ma}]
+
+| stem:[P_{c,h}^k]
+| 3
+| stem:[N_{so}]
+| stem:[N_{so}+N_{ar}]
+| stem:[N_{so}+2N_{ar}+N_{fa}]
+
+| stem:[Q_{c,h}^k]
+| 3
+| stem:[N_{so}]
+| stem:[N_{so}+N_{ar}+N_{fa}+N_{ma}]
+| stem:[N_{so}+2N_{ar}+4N_{fa}+8N_{ma}]
+|===
+
 [[sec:proj-orth]]
 === Projections orthogonales
 
@@ -606,6 +638,10 @@ On note
 les projections orthogonales associées respectivement aux produits scalaires
 stem:[(u,v)_{0,\Omega} = \int_\Omega u v] and stem:[(u,v)_{1,\Omega} = \int_\Omega u     v + \int_\Omega \nabla u \cdot \nabla v]
 
+
+
+
+
 On a pour stem:[l=1,...,k] et si stem:[v \in H^{l+1}(\Omega)]
 
 [[eq:57]]
@@ -619,7 +655,7 @@ On a pour stem:[l=1,...,k] et si stem:[v \in H^{l+1}(\Omega)]
 Pour calculer stem:[\Pi^{0,k}_{c,h}] et stem:[\Pi^{1,k}_{c,h}] on a besoin de résoudre les problèmes
 
 [[prob:3]]
-.Problème: Projection stem:[l^2]
+.Problème: Projection stem:[L^2]
 ****
 Soit stem:[v] une fonction de stem:[L^2], calculer stem:[\Pi^{0,k}_{c,h}(v) \in
       P^k_{c,h}] tel que stem:[\forall v_h \in P^k_{c,h}] on a
@@ -642,6 +678,12 @@ Soit stem:[v] une fonction de stem:[H^1], calculer stem:[\Pi^{1,k}_{c,h}(v) \in
   (\Pi^{1,k}_{c,h}(v), v_h)_{1,\Omega} = (v, v_h)_{1,\Omega}
 ++++
 ****
+
+NOTE: L'opérateur stem:[\Pi_{\mathrm{c}, b}^{1, k}] est appelé **projecteur elliptique**. 
+On peut également considérer la projection orthogonale de stem:[H_0^1(\Omega)] dans stem:[P_{\mathrm{c}, b, 0}^k] avec le produit scalaire stem:[\int_{\Omega} \nabla v \cdot \nabla w]. 
+Ce dernier satisfait les mêmes propriétés que celles énoncées ci-dessus pour l'opérateur stem:[\Pi_{\mathrm{c}, b}^{1, k}].
+
+NOTE: Des résultats analogues existent pour des opérateurs de projection orthogonale sur les espaces stem:[Q_{c, b}^k].
 
 [[sec:lagr-interp-mesh]]
 === Interpolant de Lagrange
@@ -679,8 +721,28 @@ stem:[h] et stem:[v \in H^{k+1}(\Omega_h)]
 ++++
  \|v - \Ilag{h}(v)\|_{0,\Omega_h} + h |v - \Ilag{h}(v)|_{1,\Omega_h} \leq  c h^{k+1} |v|_{k+1,\Omega_h}
 ++++
+
+De plus, pour tout stem:[m \in\{2, \ldots, k+1\}], on a
+[stem]
+++++
+\begin{equation*}
+\left(\sum_{K \in \mathcal{T}_b}\left|v-\mathcal{I}_b^{\mathrm{Lag}} v\right|_{m, K}^2\right)^{\frac{1}{2}} \leqslant c h^{k+1-m}|v|_{k+1, \Omega_b} .
+\end{equation*}
+++++
 ****
 
+[NOTE]
+====
+Ce théorème est une conséquence directe du théorème d'interpolation local. 
+On notera que l'hypothèse portant sur la régularité de la famille stem:[\left\{\mathcal{T}_h\right\}_{h>0}] permet de contrôler uniformément les rapports stem:[\varpi_K]. 
+Enfin, lorsque la fonction à interpoler n'est pas suffisamment régulière, par exemple si stem:[v \in H^s\left(\Omega_h\right)] et stem:[v \notin H^{s+1}\left(\Omega_h\right)] pour un entier stem:[s \in\{1, \ldots, k\}], l'estimation <<eq.62>> ci-dessus devient
+[stem]
+++++
+\begin{equation*}
+\left\|v-\mathcal{I}_b^{\mathrm{Lag}} v\right\|_{0, \Omega_b}+h\left|v-\mathcal{I}_b^{\mathrm{Lag}} v\right|_{1, \Omega_b} \leqslant c h^s|v|_{s, \Omega_b}
+\end{equation*}
+++++
+====
 
 [example]
 .Vérification du théorème précédent sur un exemple

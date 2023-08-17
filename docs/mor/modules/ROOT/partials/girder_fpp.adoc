@@ -1,0 +1,12 @@
+== Downloading the reduced order model from Girder
+
+The offline creation of the reduced basis has already been performed, and an archive is downloaded from Girder. It contains the basis, the model and the configuration files that are necessary for the online simulation. The following code snippet performs the download.
+
+.Download the archive from Girder
+[%dynamic,python]
+----
+import requests
+r=requests.get(girder_path)
+with open(fpp_name,'wb') as f:
+    f.write(r.content)
+----

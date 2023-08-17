@@ -1,0 +1,202 @@
+= 2D Advection-diffusion with Taylor-Green Vortex
+Hassan Ballout, Luca Berti, Christophe Prud'homme
+:page-tags: case
+:page-illustration: taylor-green-vortex/combined_figure.png
+:description: We simulate the 2D Taylor-Green vortex.
+:stem: latexmath
+:page-jupyter: true
+:jupyter-language-name: python
+:jupyter-language-version: 3.8
+
+
+== Introduction
+
+We study the solution of a 2D advection-diffusion equation (used to model the dispersion of a contaminant) in presence of a Taylor-Green vortex stem:[\beta(x,t)]. The problem can be solved for different values of the diffusion coefficient stem:[\mu].
+
+== Advection-diffusion with Taylor-Green Vortex
+
+The problem is defined on the spatial domain stem:[\Omega = (-1, 1)^2] with Dirichlet boundary stem:[\Gamma_D := (-1, 1) \times \{-1\}] and Neumann boundary stem:[\Gamma_N := \partial\Omega \setminus \Gamma_D]. The governing parametric PDE (pPDE) can be described as follows:
+
+[stem]
+++++
+\begin{align}
+    &\partial_t c - \mu\Delta c + \beta \cdot \nabla c = 0 &&\text{in } \Omega \times (0, T), \\
+    &\nabla c(x, t; \mu) \cdot n = 0 &&\text{on } \Gamma_N \times (0, T), \\
+    &c(x, t; \mu) = 0 &&\text{on } \Gamma_D \times (0, T), \\
+    &c(x, 0; \mu) = c_0(x; \mu) &&\text{in } \Omega,
+\end{align}
+++++
+
+where the velocity field stem:[\beta := (\sin(\pi x_1) \cos(\pi x_2), -\cos(\pi x_1) \sin(\pi x_2))^{\top}], stem:[x = (x_1, x_2)], is a solenoidal field. The initial condition, stem:[c_0(\cdot; \mu): \Omega \rightarrow \mathbb{R}], is given by the sum of three Wendland functions stem:[\bar{\psi}_{2,1}^i] of radius 0.4 and centers located at stem:[(-0.6, -0.6)], stem:[(0, 0)] and stem:[(0.6, 0.6)].
+The Wendland functions are radial functions with compact support on the unit ball, and stem:[\psi_{2,1}(r)] has the following closed form
+
+[stem]
+++++
+\psi_{2,1}(r)=(3r + 1) \max \{0,(1-r)^3\}.
+++++
+
+Appropriate transformations have been applied to stem:[\psi_{2,1}(r)] in order to get the scaled and translated Wendland functions stem:[\bar{\psi}_{2,1}^i].
+
+The velocity field stem:[\beta], the initial condition stem:[c_0(\cdot; \mu)], and the boundaries are illustrated in the following figure.
+
+[.text-center]
+image::taylor-green-vortex/initial_condition.png[width=80%, align="center"]
+
+== Mathematical formulation for the reduced order problem
+Given a value for stem:[\mu \in \mathcal{P} \subset \mathbb{R}^p], we solve the weak formulation of the previous problem by finding stem:[c(t;\mu) \in V] such that:
+
+[stem]
+++++
+\begin{equation}
+    m(\partial_t c(t;\mu),v) + a(c(t;\mu),v;\mu) = \underbrace{f(v;t;\mu)}_{=0 \text{ in our case}} \quad \forall v \in V \quad \text{and } t \in \mathcal{I}
+    \label{eq:ExactParamPb}
+\end{equation}
+++++
+where stem:[V=H^1_{0, \Gamma_D}(\Omega)=\{ v \in H^1(\Omega) \mid v = 0 \text{ on } \Gamma_D \}], and stem:[m(\cdot,\cdot): V \times V \rightarrow \mathbb{R}], stem:[a(\cdot,\cdot;\mu): V \times V \rightarrow \mathbb{R}] are the bilinear forms defined as:
+[stem]
+++++
+\begin{cases}
+    m(u,v) =(u,v)_{L^2(\Omega)} =\int_{\Omega} u\, v \, dx 
+    \\
+    a(u, v;\mu) = \int_{\Omega} \mu  \nabla u \cdot \nabla v \, + (\beta \cdot \nabla u) v \, dx 
+\end{cases}
+++++
+
+Additionally, we are interested in a specific <<Output>>: 
+
+[stem]
+++++
+\begin{equation}
+    s(t;\mu) = \ell(c(t;\mu);t;\mu)
+
+\end{equation}
+++++
+
+[[AffineDecomposition]]
+=== Affine decomposition (without boundary conditions)
+
+The bilinear form stem:[a(\cdot,\cdot;\mu)] is affine in the parameter stem:[\mu], i.e.:
+
+[.center]
+stem:[a(\cdot,\cdot;\mu) = \sum_{q=1}^{Q_a} \theta^a_q(\mu) \,a_q(\cdot,\cdot)]
+
+where stem:[a_q:V \times V \rightarrow \mathbb{R}] are bilinear forms independent of stem:[\mu] and stem:[\theta^a_q: \mathcal{P} \rightarrow \mathbb{R}] are scalar quantities depending only on stem:[\mu]. 
+
+In particular, stem:[Q_a=2] and the decomposition is given by:
+
+[.center]
+[stem]
+++++
+\begin{align}
+a(u,v;\mu) &= \int_{\Omega} \mu  \nabla u \cdot \nabla v \, + (\beta \cdot \nabla u) v \, dx \nonumber\\
+& =1 \int_{\Omega} (\beta \cdot \nabla u) \, v \, dx + \mu \int_{\Omega} \nabla u \cdot \nabla v \, dx \nonumber\\
+&= \theta^a_1(\mu) \, a_1(u,v) + \theta^a_2(\mu) \, a_2(u,v)
+\end{align}
+++++
+
+where:
+
+[.center]
+stem:[\theta^a_1(\mu) = 1 \quad \text{and} \quad \theta^a_2(\mu) = \mu]
+
+and:
+
+[.center]
+stem:[a_1(u,v) = \int_{\Omega} (\beta \cdot \nabla u) \, v \, dx \quad \text{and} \quad a_2(u,v) = \int_{\Omega} \nabla u \cdot \nabla v \, dx \quad \forall u,v \in V.]
+
+[NOTE]
+====
+In general, we seek an affine decomposition for both the bilinear form and the linear form in the variational formulation, as well as for the output functional stem:[\ell]. However, in our case, the right hand side linear form is equal to zero and the output functional doesn't depend explicitly on the parameter stem:[\mu]. 
+====
+
+=== Affine decomposition (with boundary conditions)
+A very practical approach to treat the boundary conditions (in particular Dirichlet) in the context of reduced basis method is to impose them weakly i.e. include them in the weak formulation and even in the affine decomposition of the problem as a penalisation terms. This approach is known as the Nitsche's method. We won't go into mathematical details that can be found in link:https://docs.feelpp.org/math/fem/laplacian/nitsche.html[Feel++ documentation], but we will just give the final expression of the affine decomposition. First we recall that we have homogeneous Dirichlet boundary conditions on stem:[\Gamma_D], and that Neumann boundary conditions are natural. Finally, we have the following affine decomposition:
+
+[.center]
+[stem]
+++++
+\begin{align}
+a(u,v;\mu) &=  1 \left( \int_{\Omega} (\beta \cdot \nabla u) \, v \, dx 
++ \int_{\Gamma_D} (\beta \cdot n) \, u \,v + \frac{\gamma}{h} \, u \, v \, ds \right) \\ &+ 
+ \mu \left(\int_{\Omega} \nabla u \cdot \nabla v \, dx - \int_{\Gamma_D}(\nabla u \cdot n) \,v + (\nabla v\cdot n) \,u\right) \\ \\
+&= \theta^a_1(\mu) \, a_1(u,v) + \theta^a_2(\mu) \, a_2(u,v)
+\end{align}
+++++
+
+where:
+
+[.center]
+stem:[\theta^a_1(\mu) = 1 , \quad  \theta^a_2(\mu) = \mu \quad \text{and} \quad h \text{ is the mesh size}].
+
+[NOTE]
+====
+- The penalisation parameter stem:[\gamma] must be chosen such that the coercivity (or inf-sup) property is satisfied. It is difficult to do in general. We increase stem:[\gamma] until the weak Dirichlet boundary conditions are properly satisfied.
+
+- Since we have homogeneous Dirichlet boundary conditions (i.e. stem:[u=g=0 \text{ on } \Gamma_D]), we don't have to include any term in the affine decomposition of the right hand side linear form.
+====
+
+[[Output]]
+=== Output
+We are interested in non-compliant time-dependent multiple outputs defined as follows:
+[.center] 
+stem:[s(t;\mu)= (s_1(t;\mu), s_2(t;\mu), s_3(t;\mu)) \quad \\ \\ \text{with} \quad s_1(t;\mu) = \int_{\Omega} c(t;\mu) \, \eta_1 dx, \quad s_2(t;\mu) = \int_{\Omega} c(t;\mu) \, \eta_2 dx \quad \text{and} \quad s_3(t;\mu) = \int_{\Omega} c(t;\mu) \, \eta_3 dx]
+
+where stem:[\eta_1, \eta_2, \eta_3] are three Wendland functions stem:[\psi_{2,1}] of radius 0.1 and centers stem:[(0.1, 0.7), (0.1, 0.7) \text{ and } (0.5, 0.1)] respectively.
+
+== Setup for the notebook simulation
+
+.Setup the variables for the notebook simulation
+[%dynamic,python]
+----
+import numpy as np
+girder_path = "https://girder.math.unistra.fr/api/v1/item/64c165a5b0e9570499e1cc3c/download"
+fpp_name = 'ad.fpp'
+time = np.linspace(start=0, stop=2.5, num=251)
+----
+
+
+include::partial$girder_fpp.adoc[]
+
+include::partial$online_notebook.adoc[]
+
+.Show the values of the outputs for different parameters
+[%dynamic,python]
+----
+import plotly.graph_objects as go
+
+for i in range(len(r)):
+    # Create a Plotly figure with a scatter plot
+    fig = go.Figure()
+    
+    for o in range(len(r[i])):
+        v=np.array(r[i][o].outputs())
+        err=np.array(r[i][o].errors())
+
+        min_values = v*(1-10/100)
+        max_values = v*(1+10/100)
+        # print(f"v: {v}")
+        # print(f"min_values: {min_values}")
+        # print(f"max_values: {max_values}")
+        
+        assert time.size == min_values.size == max_values.size == v.size
+
+        fig.add_trace(go.Scatter(
+            x=time,
+            y=v,
+            mode='lines+markers',
+            name=f'wendland-{o}'
+        ))
+    
+    # Update the layout of the figure
+    fig.update_layout(
+        title=f'Sensor outputs for mu={sampling[i]}',
+        xaxis_title='Time',
+        yaxis_title='Value',
+        
+        # Use 'category' type for the x-axis to treat it as discrete dates
+        xaxis=dict(tickformat='.2f'),
+    )
+    
+    # Show the plot
+    fig.show()
+----

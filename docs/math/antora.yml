@@ -1,6 +1,19 @@
 name: math
 title: Feel++ Mathematics
-version: master
+version: ~
+asciidoc:
+  attributes:
+    y: icon:check[role="green"]
+    n: icon:times[role="red"]
+    c: icon:file-text-o[role="blue"]
+ext:
+  collector:
+    - run:
+        command: ./generate-jupyter.sh docs/mor/modules/ROOT
+      scan:
+        dir: jupyter/
+        files: '**/*.ipynb'
+        base: modules/ROOT/attachments/
 nav:
 - modules/ROOT/nav.adoc
 - modules/calculus/nav.adoc

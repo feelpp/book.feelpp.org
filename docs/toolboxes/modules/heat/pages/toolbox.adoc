@@ -282,6 +282,119 @@ JSON keywords : `convective_heat_flux`
 
 NOTE: The expressions given to the convective heat flux boundary condition can depend on the unknown but the automatic differentiation is not implemented here, so the jacobian will be inexact if a Newton solver is used.
 
+=== Radiative heat flux
+WARNING: Radiative heat transfer is not yet available in the toolboxes. An application implementing radiative heat is currently available in feelpp/doc/manual/heat.
+
+New sections in the JSON configuration file are necessary. 
+Firstly, the "Coating" section, which contains information about the radiative properties of the emitting surfaces, especially the value of the emissivity constant stem:[\epsilon].
+
+.JSON properties of Coating section
+|===
+| Property | Description | Value Type | Is Optional
+
+| `markers` | list of mesh markers associated to a radiative surface | `string`, `array of string`  | no  
+| `epsilon`       | value of the emissivity of the radiative surface | `string` | no |
+|===
+
+[source,json]
+----
+{
+  "Coating":{
+    "materialName": {
+        "markers": [
+            "markerName"
+        ],
+        "epsilon": "0.5"
+    }
+}
+}        
+----
+
+Secondly, the "radiative_enclosure_heat_flux" and "radiative_blackbody_heat_flux" sections, inside the "BoundaryConditions" section, which specify the decomposition of the radiating boundaries into cavities, independent of each other, open or closed, where the radiative boundary conditions are imposed.
+
+.JSON properties of the "radiative_enclosure_heat_flux/CavityName" section
+|===
+| Property | Description | Value Type | Values | Is Optional
+
+| `enclosure` | Specifies if the cavity is isolated (closed) or if it communicates with a black body (open) | `string`  | `open`, `closed` | no
+| `markers`       | list of mesh markers associated to a radiative surface | `string`, `array of string`  |  |no  
+| `sigma`       | Stefan-Boltzmann constant | `string`, `array of string`  |  |no  
+| `Tref`     | Reference temperature of the black body (only for open enclosures) | `string`  |  | yes
+| `viewfactors` | Information for the computation/loading of view factors of the cavity | JSON  |  | no
+|===
+
+.JSON properties of the "radiative_enclosure_heat_flux/CavityName/viewfactors" section
+|===
+| Property | Description | Value Type | Values | Is Optional
+
+| `status` | Specifies if view factors have to be computed or loaded from file | `string`  | `compute`, `load` | no
+| `filename`| File name for the computation of view factors (JSON format) or loading (CSV) | `string` |  |no  
+|===
+
+.JSON properties of the "radiative_blackbody_heat_flux/CavityName" section
+|===
+| Property | Description | Value Type | Values | Is Optional
+
+| `markers`       | list of mesh markers associated to a radiative surface | `string`, `array of string`  |  |no  
+| `sigma`       | Stefan-Boltzmann constant | `string`, `array of string`  |  |no  
+| `Tref`     | Reference temperature of the black body (only for open enclosures) | `string`  |  | yes
+|===
+
+[source,json]
+----
+{
+  "BoundaryConditions": {
+    "heat": {
+      "radiative_enclosure_heat_flux": {
+              "Cavity": {
+                  "enclosure": "closed",
+                  "markers": ["InnerTop", "LowerTop","LeftTop","RightTop"],
+                  "sigma": "sigma:sigma",
+                  "Tref": "Tref_C+273.15:Tref_C",
+                  "viewfactors": {
+                      "status":"load",
+                      "filename":"$cfgdir/VF_Matrix_Cavity_1.csv"
+                      // "status":"compute",
+                      // "filename":"$cfgdir/rectangular_cavity_vf.json"                        
+                  }
+            }
+          },
+        "radiative_blackbody_heat_flux": { 
+                "Gamma_BBC_1": {
+                    "markers": ["Gamma_B_11","Gamma_B_12"],
+                    "Tref": "Tref_C+273.15:Tref_C",
+                    "sigma": "sigma:sigma"
+                }
+        }
+      }
+   }     
+}   
+----
+
+Finally, an additional JSON file per cavity is necessary if the view factor matrix needs to be computed. This file will specify the algorithm to be use in order to compute the view factors, and the markers forming the cavity.
+
+.JSON properties for the computation of view factors
+|===
+| Property | Description | Value Type | Values | Is Optional
+
+| `type`       | Choose between raytracing (obstructed and non-obstructed cavities) and quadrature (only non-obstructed cavities)  | `string` |`Raytracing`, `UnobstructedPlanar`  |no  
+| `algorithm`     | Choose the algorithm (only for UnobstructedPlanar) between DoubleAreaIntegration (2D) and SingleAreaIntegration (3D) | `string` |`DoubleAreaIntegration`, `SingleAreaIntegration` | yes
+| `quadrature_order`  | Quadrature order (only for UnobstructedPlanar) | `int`  |  | yes
+| `markers`       | list of mesh markers associated to the cavity | `string`, `array of string`  |  |no  
+|===
+
+[source,json]
+----
+{
+     "viewfactor": {
+         "type": "UnobstructedPlanar",
+         "algorithm":"DoubleAreaIntegration",
+         "quadrature_order":2,
+         "markers":["RadiativeSurface1", "RadiativeSurface2","RadiativeSurface3"],        
+         "description": "The viewfactor of a closed triangular cavity."
+     }
+ }
+----
 
 == Initial Conditions
 

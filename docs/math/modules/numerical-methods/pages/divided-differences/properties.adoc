@@ -1,0 +1,218 @@
+= Divided differences
+:stem: latexmath
+
+
+.Problem
+****
+Given a set of data stem:[f(x_i)] and a polynomial in newton form stem:[P_n(x)] find the divided differences stem:[f[x_0,x_{1},\ldots,x_{n-1}]]  where stem:[n] is the degree of stem:[P_n(x)].
+[stem]
+++++
+\begin{equation*}
+P_n(x)=a_0+a_1\left(x-x_0\right)+a_2\left(x-x_0\right)\left(x-x_1\right)\\
++\ldots+a_n\left(x-x_0\right) \ldots\left(x-x_{n-1}\right) .
+\end{equation*}
+++++
+How to compute stem:[a_0, \ldots a_n] such that
+[stem]
+++++
+\begin{equation*}
+P_n\left(x_i\right)=f\left(x_i\right) \quad i=0, \ldots n \text {. }
+\end{equation*}
+++++
+****
+
+[stem]
+.Apply interpolation property to newton form
+++++
+\begin{aligned}
+\text { 1. } & p_n\left(x_0\right)=f\left(x_0\right) \text {. } \\
+&a_0 \Rightarrow a_0=f\left(x_0\right) . \\
+\text { 2. } & p_n\left(x_1\right)=f\left(x_1\right) \text {. } \\
+&a_0+a_1\left(x_1-x_0\right) \text {. } \\
+&a_1=\frac{f\left(x_1\right)-a_0}{x_1-x_0}=\frac{f\left(x_1\right)-f\left(x_0\right)}{x_1-x_0} \quad \text{ divided difference}\\
+\text { 3. } & f\left(x_2\right) =p_n\left(x_2\right)=a_0+a_1\left(x_2-x_0\right)+a_2\left(x_2-x_0\right)\left(x_2-x_1\right) . \\
+& a_2 =\frac{\left[\frac{f\left(x_0\right)-f\left(x_1\right)}{x_2-x_1}\right]-\left[\frac{f\left(x_1\right)-f\left(x_0\right)}{x_1-x_0}\right]}{x_2-x_0 .}\quad \text{(second divided difference)}
+
+\end{aligned}
+++++
+
+.Idea
+NOTE: Construct higher-order divided differences from lower-order ones.
+
+.Definition Divided Differences.
+****
+Let stem:[f] be a function defined at distinct points
+[stem]
+++++
+\begin{equation*}
+x_0, x_1, \ldots x_n \text {. }
+\end{equation*}
+++++
+
+- Zero-th divided differabe of stem:[f] with respect to stem:[x_i] is, stem:[f\left[x_i\right\]=f\left(x_i\right)]
+- k-th order divided difference at stem:[x_i, \ldots x_{i+k}] is stem:[f\left[x_i, \ldots x_{i+k}\right\]=\frac{f\left[x_{i+1}, \ldots x_{i+k}\right\]-f\left[x_i, \ldots x_{i+k-1}\right\]}{x_{i+k}-x_i}]
+****
+
+We have now a systematic construction of divided differences
+
+[stem]
+.Example
+++++
+O-th D.D. 1-st D.D. Znd D.D. \quad 3.d D.D\\
+\begin{equation*}
+\begin{array}{ll}
+x_0 & f\left[x_0\right] \\
+x_1 & f\left[x_1\right] \backslash f\left[x_0, x_1\right] \\
+x_2 & f\left[x_2\right] \geq f\left[x_1, x_2\right] \geq f\left[x_0, x_1, x_2\right] \\
+x_3 & f\left[x_5\right] \backslash f\left[x_2, x_3\right] \geq f\left[x_1, x_2, x_3\right] \backslash f\left[x_0, x_1, x_2, x_3\right] .
+\end{array}
+\end{equation*}
+++++
+
+== algorithm 
+
+.Notation
+****
+Input:: stem:[x_0, \ldots x_n.\ f\left(x_3\right), \ldots f\left(x_n\right)]
+Output:: Divided difference table.
+Notation:: stem:[F_{i, j}=f\left[x_{i-j}, \ldots x_i\right\]].
+- stem:[i=] last point in the DD.
+- stem:[j=] order of divided difference.
+****
+
+.Algorithm
+[stem]
+++++
+\left.\begin{array}{r}\text { for } i=0 \text { to } n \\ 
+F_{i, 0}=f\left(x_i\right)\\
+\text{ end for } \\
+\end{array}\right\} \text{ O-Th order D.D }\\
+\text{for}\ i=1 \text{ to } n\\
+\quad \text{for}\ j=1 \text{ to } i\\
+\quad\quad    F_{i, j}=\frac{F_{i, j-1}-F_{i-1, j-1}}{x_i-x_{i-j}}\\
+\quad\text{end}\\
+\text{end.}
+++++
+
+The output is a lower triangular matrix
+[stem]
+++++
+F=\left[\begin{array}{ccc}
+F_{00} & 0 & 0 & 0 \\
+F_{10} & F_{11} & 0 & 0 \\
+\vdots &  & \ddots & 0 \\
+F_{n_0} & \cdots & \cdots & F_{n n}
+\end{array}\right]
+++++
+
+.Remarks
+****
+1. It is very easy to add points to obtain a higher-degree interpolating polynomial
+2. Once a table has been constructed, we have access to many forms of the interpolating polynomial.
+****
+
+=== Newton's Interpolating Polynomial
+
+
+.Definition Newton's Interpolating Polynomial
+****
+Let stem:[x_0, \ldots x_n] be distinct points and stem:[f\left(x_i\right)] be the values of stem:[f] at stem:[x_i]. The Newton's interpolating polynomial is
+
+.Newton Forward Divided Difference
+[stem]
+++++
+\begin{aligned}
+P_3(x)=a_0 &+a_1\left(x-x_0\right)+a_2\left(x-x_0\right)\left(x-x_1\right) \\
+&+a_3\left(x-x_0\right)\left(x-x_1\right)\left(x-x_2\right) . \\
+\text { where } a_0=& F_{00} \quad a_1=F_{11} \quad a_2=F_{22} \quad a_3=F_{33} \\
+=& f\left[x_0\right]=f\left[x_0, x_1\right] \quad=f\left[x_0, x_1, x_2\right]=F\left[x_0, x_1, x_2, x_3\right] .
+\end{aligned}
+++++
+
+.Newton Backward Divided Difference
+[stem]
+++++
+\begin{aligned}
+P_3(x)=a_0 &+a_1\left(x-x_3\right)+a_2\left(x-x_3\right)\left(x-x_2\right) \\
+&+a_3\left(x-x_3\right)\left(x-x_2\right)\left(x-x_1\right) \\
+\text { where } \quad a_0 &=F_{30}=f\left[x_3\right] \\
+a_1 &=F_{31}=f\left[x_2, x_3\right] \\
+a_2 &=F_{32}=f\left[x_1, x_2, x_2\right] \\
+a_3 &=F_{33}=f\left[x_0, x_1, x_2, x_3\right]
+\end{aligned} 
+++++
+
+****
+
+
+== Properties of divided differences
+:stem: latexmath
+
+Recall the mean value theorem.
+If stem:[f(x)] is continuous and differentiable, then
+
+[stem]
+++++
+\begin{equation*}
+f^{\prime}(c)=\frac{f\left(x_1\right)-f\left(x_0\right)}{x_1-x_0}
+\end{equation*}
+++++
+for stem:[c \in\left[x_0, x_1\right\]].
+
+.Theorem
+****
+If stem:[f \in C^n[a, b\]] and stem:[x_0, x_1, \ldots k_n \in[a, b\]] and are distinct, then
+[stem]
+++++
+\begin{equation*}
+f\left[x_0, x_1, \ldots x_n\right]=\frac{f(n)(c)}{n !}
+\end{equation*}
+++++
+for some stem:[c \in[a, b\]].
+****
+
+We have that:
+
+[stem]
+++++
+\begin{array}{l|l}
+\text { For repeated } & f[\underbrace{x_0, \ldots x_0}_{n+1}] \equiv \frac{f(n)\left(x_0\right)}{n !} \\
+x_i^{\prime} \text { 's. } & 
+\end{array}
+++++
+
+We can use this to compute derivatives of polynomials.
+
+[stem]
+++++
+\begin{array}{ll}
+x_0 & f\left[x_0\right] \\
+x_0 & f\left[x_0\right]-f\left[x_0, x_0\right] \equiv \frac{f^{\prime}\left(x_0\right)}{1 !} \\
+x_1 & f\left[x_1\right]-f\left[x_0, x_1\right]-f\left[x_0, x_0, x_1\right] .
+\end{array}
+++++
+
+[stem]
+.Error
+++++
+\begin{aligned}
+f(x)-p_n(x) &=\frac{f(n+1)(c(x))}{(n+1) !}\left(x-x_0\right) \ldots\left(x-x_n\right) \\
+&\left.=f\left[x_0, x_1\right) \ldots x_n, x\right]\left(x-x_0\right) \ldots\left(x-x_n\right)
+\end{aligned}
+++++
+
+[stem]
+.Newton Interpolation polynomial from divided differences
+++++
+\begin{aligned}
+P_n(x)=f\left[x_0\right] &+f\left[x_0, x_1\right]\left(x-x_0\right)+\ldots \\
+&+f\left[x_0, x_1, \ldots x_n\right]\left(x-x_0\right) \ldots\left(x-x_{n-1}\right) .
+\end{aligned}
+++++
+
+with remainder of the form
+
+[stem]
+++++
+R_n(x)=f\left[x_0, x_1, \ldots x_n, x\right]\left(x-x_0\right) \ldots\left(x-x_n\right)
+++++

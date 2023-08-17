@@ -5,7 +5,7 @@ include::user:ROOT:partial$header-macros.adoc[]
 We start with setting the {feelpp} environment and loading the {feelpp} library.
 
 .Set the {feelpp} environment with local repository
-[source,python]
+[%dynamic,python]
 ----
 import feelpp 
 import sys
@@ -23,7 +23,7 @@ The integral over each element is computed using a quadrature formula.
 We first load a mesh
 
 .Load a mesh stem:[\mathcal{T}]
-[source,python]
+[%dynamic,python]
 ----
 geo=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
 print("geo file: {}".format(geo))
@@ -32,24 +32,17 @@ mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)
 
 Then we can define functions stem:[f] and compute the integral of stem:[f] over the mesh stem:[\mathcal{T}].
 
-[source,python]
 .Compute integrals
+[%dynamic,python]
 ----
 from feelpp.integrate  import integrate
 
 i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
 i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
 i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")
-print("i1 = {}, i2 = {}, i3 = {}".format(i1,i2,i3))
-----
 
-[%collapsible.result]
-.Results
-====
+print(f"i1 = {i1}, i2 = {i2}, i3 = {i3}")
 ----
-i1 = [3.24282386], i2 = [149.465], i3 = [0.]
-----
-====
 
 == Next steps
 
