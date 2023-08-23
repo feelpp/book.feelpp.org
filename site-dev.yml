@@ -39,8 +39,6 @@ content:
   - url: ./
     branches: develop
     start_path: docs/data
-#    tags:
-#    - v0.109
   - url: ./
     branches: develop
     start_path: docs/math/
@@ -64,7 +62,7 @@ content:
     branches: develop
     start_path: toolboxes
   - url: ../toolbox
-    branches: master
+    branches: develop
     start_path: contribute
   - url: ./
     branches: develop
@@ -96,7 +94,7 @@ antora:
   - '@antora/collector-extension'
 asciidoc:
   attributes:
-    page-component-order: '!home, !ROOT, user, toolboxes, feelpp-project, dev, data, math, *'
+    page-component-order: '!home, !ROOT, user, toolboxes, mor, dev, feelpp-project, contribute, data, math'
     dynamic-blocks@: '' # soft enable
     version: 0.110
     feelpp-git-tag: develop

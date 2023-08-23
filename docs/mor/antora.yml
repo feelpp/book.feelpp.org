@@ -1,5 +1,18 @@
 name: mor
-title: Model Order Reduction
+title: Model Order Reduction Manual
 version: 'latest'
+asciidoc:
+  attributes:
+    y: icon:check[role="green"]
+    n: icon:times[role="red"]
+    c: icon:file-text-o[role="blue"]
+ext:
+  collector:
+    - run:
+        command: ./generate-jupyter.sh docs/mor/modules/ROOT
+      scan:
+        dir: jupyter/
+        files: '**/*.ipynb'
+        base: modules/ROOT/attachments/
 nav:
 - modules/ROOT/nav.adoc

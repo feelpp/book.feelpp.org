@@ -1,0 +1,20 @@
+[build]
+publish = "build/site"
+command = "./netlify-build.sh"
+
+[build.environment]
+NODE_VERSION = "16"
+ANTORA_CACHE_DIR = "node_modules/.cache/antora"
+
+[context.deploy-preview]
+command = "URL=$DEPLOY_PRIME_URL ./netlify-build.sh"
+
+[context.production.environment]
+ALGOLIA_APP_ID = "03CF2L5SFL"
+ALGOLIA_API_KEY = "c81e9149ff78332d483d7e114cdfd309"
+ALGOLIA_IDX_NAME = "feelpp"
+
+[[headers]]
+for = "/_/font/*"
+  [headers.values]
+  Cache-Control = "build/site,max-age=604800"
