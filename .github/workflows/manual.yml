@@ -17,19 +17,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Install 
-      run: npm install
+    - name: Python Install 
+      run: |
+        python -m venv --system-site-packages .venv
+        source .venv/bin/activate
+        pip install -r requirements.txt  
+    - name: Npm Install 
+      run: |
+        npm i 
+        echo "${{ github.workspace }}/node_modules/.bin" >> $GITHUB_PATH        
     - name: Build
-      run: npm run build 
+      run: |
+        source .venv/bin/activate
+        npm run antora 
       env:
         GITHUB_OAUTH: ${{ secrets.DOCS_GITHUB_KEY }}
         ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
         ALGOLIA_INDEX_NAME: ${{ secrets.ALGOLIA_INDEX_NAME }}
         ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@v4.4.1
+      uses: JamesIves/github-pages-deploy-action@v4
+      if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
       with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: build/site # The folder the action should deploy.
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build/site # The folder the action should deploy.
           
