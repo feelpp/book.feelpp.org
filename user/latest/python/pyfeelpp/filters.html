@@ -630,7 +630,14 @@ logger.info(f"Feel++ version: {feelpp.Info.version()}")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre></pre>
+<pre>---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+File <ipython-input-1-ec17f70a2464>:1
+----> 1 import feelpp
+      2 import sys,os
+      3 import spdlog as spd
+
+ModuleNotFoundError: No module named 'feelpp'</pre>
 </div>
 </div>
 </div>
@@ -672,7 +679,14 @@ logger.info(f"export done")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre></pre>
+<pre>---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+File <ipython-input-1-c526d228d0f1>:1
+----> 1 app.setLogVerbosityLevel(0)
+      2 geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+      4 tic()
+
+NameError: name 'app' is not defined</pre>
 </div>
 </div>
 </div>

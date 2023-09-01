@@ -609,15 +609,13 @@ r=ms.run(sampling,{"N":10})</code></pre>
 <div class="literalblock dynamic-py-result">
 <div class="content">
 <pre>---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-File <ipython-input-1-5c70aaa6dd7d>:3
-      1 import feelpp
+ModuleNotFoundError                       Traceback (most recent call last)
+File <ipython-input-1-5c70aaa6dd7d>:1
+----> 1 import feelpp
       2 from feelpp.mor import *
-----> 3 ms=feelpp.mor.MORModels(fpp_name)
-      4 muspace = ms.parameterSpace()
-      5 sampling = muspace.sampling()
+      3 ms=feelpp.mor.MORModels(fpp_name)
 
-AttributeError: module 'feelpp.mor' has no attribute 'MORModels'</pre>
+ModuleNotFoundError: No module named 'feelpp'</pre>
 </div>
 </div>
 </div>
@@ -668,15 +666,13 @@ for frame in output_dataframes:
 <div class="literalblock dynamic-py-result">
 <div class="content">
 <pre>---------------------------------------------------------------------------
-TypeError                                 Traceback (most recent call last)
-File <ipython-input-1-62a649bfbc5a>:8
-      6 output_dataframes = list()
-      7 errors_dataframes = list()
-----> 8 for i in range(len(r)):
-      9     outputs={}
-     10     errors={}
+ModuleNotFoundError                       Traceback (most recent call last)
+File <ipython-input-1-62a649bfbc5a>:1
+----> 1 from pandas import DataFrame as df
+      2 from pandas import options as op
+      3 from pandas import set_option
 
-TypeError: object of type 'Response' has no len()</pre>
+ModuleNotFoundError: No module named 'pandas'</pre>
 </div>
 </div>
 </div>
