@@ -601,23 +601,6 @@ print(" . 2D geometry file: {}".format(geo['2']))
 print(" . 3D geometry file: {}".format(geo['3']))</code></pre>
 </div>
 </div>
-<details>
-<summary class="title">Results</summary>
-<div class="content">
-<div class="literalblock dynamic-py-result">
-<div class="content">
-<pre>---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-File <ipython-input-1-a381e3c20adc>:1
-----> 1 import feelpp
-      2 import sys
-      4 app=feelppEnvironment(["myapp"],config=localRepository(""))
-
-ModuleNotFoundError: No module named 'feelpp'</pre>
-</div>
-</div>
-</div>
-</details>
 </div>
 </div>
 <div class="sect1">
@@ -659,23 +642,6 @@ Scalar functions \(f \Omega \rightarrow \mathbb{R}\) are defined on the mesh and
 run( feelpp.mesh(dim=2), geo['2'] )</code></pre>
 </div>
 </div>
-<details>
-<summary class="title">Results</summary>
-<div class="content">
-<div class="literalblock dynamic-py-result">
-<div class="content">
-<pre>---------------------------------------------------------------------------
-NameError                                 Traceback (most recent call last)
-File <ipython-input-1-d756b5c7b176>:22
-     19     assert u.functionSpace() == Xh
-     20     assert u.size() == Xh.nDof()
----> 22 run( feelpp.mesh(dim=2), geo['2'] )
-
-NameError: name 'feelpp' is not defined</pre>
-</div>
-</div>
-</div>
-</details>
 <div class="paragraph">
 <p>Finally, we can do the same in 3D</p>
 </div>
@@ -685,21 +651,6 @@ NameError: name 'feelpp' is not defined</pre>
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">run( feelpp.mesh(dim=3,realdim=3), geo['3'] )</code></pre>
 </div>
 </div>
-<details>
-<summary class="title">Results</summary>
-<div class="content">
-<div class="literalblock dynamic-py-result">
-<div class="content">
-<pre>---------------------------------------------------------------------------
-NameError                                 Traceback (most recent call last)
-File <ipython-input-1-cd6e1bb2a6d3>:1
-----> 1 run( feelpp.mesh(dim=3,realdim=3), geo['3'] )
-
-NameError: name 'feelpp' is not defined</pre>
-</div>
-</div>
-</div>
-</details>
 </div>
 </div>
 <nav class="pagination">

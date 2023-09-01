@@ -597,14 +597,7 @@ app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))</code></pr
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-File <ipython-input-1-adb11e3d00f1>:1
-----> 1 import feelpp
-      2 import sys
-      3 app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))
-
-ModuleNotFoundError: No module named 'feelpp'</pre>
+<pre></pre>
 </div>
 </div>
 </div>
@@ -636,14 +629,7 @@ mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-NameError                                 Traceback (most recent call last)
-File <ipython-input-1-a88add7936a4>:1
-----> 1 geo=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
-      2 print("geo file: {}".format(geo))
-      3 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)
-
-NameError: name 'feelpp' is not defined</pre>
+<pre>geo file: /scratch/prudhomm/actions-runner/_work/book.feelpp.org/book.feelpp.org/feelppdb/downloads/feelpp2d.geo</pre>
 </div>
 </div>
 </div>
@@ -668,14 +654,7 @@ print(f"i1 = {i1}, i2 = {i2}, i3 = {i3}")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-File <ipython-input-1-69466e4dee8b>:1
-----> 1 from feelpp.integrate  import integrate
-      3 i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
-      4 i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
-
-ModuleNotFoundError: No module named 'feelpp'</pre>
+<pre>i1 = [3.24282386], i2 = [41.6], i3 = [0.]</pre>
 </div>
 </div>
 </div>
