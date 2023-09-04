@@ -26,11 +26,10 @@ from feelpp.operators import mass # <3>
 import feelpp.mor as mor # <4>
 import feelpp
 ----
-
-<1> The toolbox heat is used to simulate the heat equation on the case studied.
-<2> The module `core` is used to set the environment.
-<3> The `mass` function is needed to create the mass matrix if we work on a time-dependent case.
-<4> The module `mor` is used to get the functions neededd by the toolbox mor.
+<.> The toolbox heat is used to simulate the heat equation on the case studied.
+<.> The module `core` is used to set the environment.
+<.> The `mass` function is needed to create the mass matrix if we work on a time-dependent case.
+<.> The module `mor` is used to get the functions neededd by the toolbox mor.
 
 
 == Set the environment
@@ -38,6 +37,19 @@ import feelpp
 [source, python]
 ----
 config = feelpp.localRepository("reducedbasis")
+sys.argv = ["reducedbasis"]
+o = core.toolboxes_options("heat")
+o.add(mor.makeToolboxMorOptions())
+
+e = feelpp.Environment(sys.argv, opts=o, config=config)
+----
+
+
+== Set the environment
+
+[source, python]
+----
+config = feelpp.globalRepository("reducedbasis")
 sys.argv = ["reducedbasis"]
 o = core.toolboxes_options("heat")
 o.add(mor.makeToolboxMorOptions())
@@ -66,14 +78,13 @@ Set the parameters nedded to the model :
 - `time_depedent` : is the case stationnary or transient ? (for now always to `False`)
 - `name` : name of the CRB case
 
-
-
 [source,python]
 ----
 config_file = "thermal-fin.cfg"
 dim = 2
 order = 1
-time_depedent = False
+
+time_dependent = False
 name = "thermalfin-2d"
 ----
 
@@ -140,7 +151,7 @@ default_parameter = modelParameters.toParameterValues()
 
 [source, python]
 ----
-model = mor.toolboxmor(name=name, dim=dim, time_dependent=time_depedent)
+model = mor.toolboxmor(name=name, dim=dim, time_dependent=time_dependent)
 model.setFunctionSpaces( Vh=heatBox.spaceTemperature() )
 
 def assembleDEIM(mu):
@@ -255,6 +266,7 @@ for f in Fq_:
 print("Aq", Aq)
 print("Fq", Fq)
 ----
+====
 
 [%collapsible.result]
 .Results
@@ -381,4 +393,3 @@ rb.getSolutionsFE(mu, k=0)
 
 The two functions `getSolutions` (resp. `getSolutionsFE`) return the solution stem:[u_N(\mu)] (resp. stem:[u(\mu)]) and the value of the output stem:[s_N^k(\mu)] (res. stem:[s^k(\mu)]).
 See xref:pyfeelppmor/parameters.adoc[the dedicated page] for the API of `ParameterSpaceElement`.
-
