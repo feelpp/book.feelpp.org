@@ -38,3 +38,32 @@ In both cases, similar pieces of information are required:
 - either a *user/password* pair or an *API key*: to grant access to the
 required file(s).
 
+=== {feelpp} remotedata tool
+
+The application `feelpp_remotedata` can also be used to upload/download data from Girder, both files and entire folders.
+Some examples of its usage follow, and additional information can be found xref:user:using:tools/remotedata.adoc[here].
+
+.Download one file into a specific directory
+----
+feelpp_remotedata --download "girder:{file:5b1f8707b0e9570499f66bd0}" --data $HOME/mydir
+----
+.Download one folder
+----
+feelpp_remotedata --download "girder:{folder:<folder-id>}"
+----
+.Upload one file/folder (requires authentication)
+----
+feelpp_remotedata --upload "girder:{folder:<a folder id>}" --data $HOME/mydata
+----
+
+A Python interface to these functionalities is also available.
+
+.Download two files from Girder using Python
+[source,python]
+----
+import feelpp as fpp
+app = fpp.Environment(["myapp"],config=fpp.localRepository(""))
+sm_csv_names = fpp.download( "girder:{file:[<file1-id>,<file2-id>]}", worldComm=app.worldCommPtr())
+# It is possible to download an entire folder in zip format
+# sm_csv_zipped_folder = fpp.download( "girder:{folder:<folder-id>}", worldComm=app.worldCommPtr())
+----
