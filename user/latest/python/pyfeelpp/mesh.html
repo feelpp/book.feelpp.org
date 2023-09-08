@@ -597,14 +597,7 @@ app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))</code></pr
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-<ipython-input-1-adb11e3d00f1> in <module>
-----> 1 import feelpp
-      2 import sys
-      3 app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))
-
-ModuleNotFoundError: No module named 'feelpp'</pre>
+<pre></pre>
 </div>
 </div>
 </div>
@@ -667,14 +660,7 @@ mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-NameError                                 Traceback (most recent call last)
-<ipython-input-1-a88add7936a4> in <module>
-----> 1 geo=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
-      2 print("geo file: {}".format(geo))
-      3 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)
-
-NameError: name 'feelpp' is not defined</pre>
+<pre>geo file: /scratch/prudhomm/actions-runner-1/_work/book.feelpp.org/book.feelpp.org/feelppdb/downloads/feelpp2d.geo</pre>
 </div>
 </div>
 </div>
@@ -751,16 +737,14 @@ print(f"measure of boundary: {mesh.measureBoundary()}")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-NameError                                 Traceback (most recent call last)
-<ipython-input-1-37c3c5e7fd2c> in <module>
-----> 1 print(f"dimention: {mesh.dimension()}")
-      2 print(f"number of elements: {mesh.numGlobalElements()}")
-      3 print(f"number of faces: {mesh.numGlobalFaces()}")
-      4 print(f"hmin: {mesh.hMin()}")
-      5 print(f"havg: {mesh.hAverage()}")
-
-NameError: name 'mesh' is not defined</pre>
+<pre>dimention: 2
+number of elements: 5134
+number of faces: 8006
+hmin: 0.0763352613189128
+havg: 0.10274873094289755
+hmax: 0.13695416558140516
+measure: 20.79999999999997
+measure of boundary: 1497.0959239128888</pre>
 </div>
 </div>
 </div>
@@ -864,15 +848,8 @@ print("mesh boundary faces:", feelpp.nelements(r))</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-NameError                                 Traceback (most recent call last)
-<ipython-input-1-6afcd730eec0> in <module>
-----> 1 r = feelpp.elements(mesh)
-      2 print("mesh elts:", feelpp.nelements(r))
-      3 r = feelpp.boundaryfaces(mesh)
-      4 print("mesh boundary faces:", feelpp.nelements(r))
-
-NameError: name 'feelpp' is not defined</pre>
+<pre>mesh elts: 5134
+mesh boundary faces: 610</pre>
 </div>
 </div>
 </div>
@@ -897,16 +874,7 @@ print(f"i1 = {i1}, i2 = {i2}, i3 = {i3}")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-<ipython-input-1-69466e4dee8b> in <module>
-----> 1 from feelpp.integrate  import integrate
-      2
-      3 i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
-      4 i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
-      5 i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")
-
-ModuleNotFoundError: No module named 'feelpp'</pre>
+<pre>i1 = [3.24282386], i2 = [41.6], i3 = [0.]</pre>
 </div>
 </div>
 </div>

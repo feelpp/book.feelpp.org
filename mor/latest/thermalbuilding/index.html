@@ -546,16 +546,6 @@ fpp_name = 'thermalbuilding.fpp'
 time = 0</code></pre>
 </div>
 </div>
-<details>
-<summary class="title">Results</summary>
-<div class="content">
-<div class="literalblock dynamic-py-result">
-<div class="content">
-<pre></pre>
-</div>
-</div>
-</div>
-</details>
 </div>
 </div>
 <div class="sect1">
@@ -573,16 +563,6 @@ with open(fpp_name,'wb') as f:
     f.write(r.content)</code></pre>
 </div>
 </div>
-<details>
-<summary class="title">Results</summary>
-<div class="content">
-<div class="literalblock dynamic-py-result">
-<div class="content">
-<pre></pre>
-</div>
-</div>
-</div>
-</details>
 </div>
 </div>
 <div class="sect1">
@@ -603,25 +583,6 @@ sampling.sample(4, "random")
 r=ms.run(sampling,{"N":10})</code></pre>
 </div>
 </div>
-<details>
-<summary class="title">Results</summary>
-<div class="content">
-<div class="literalblock dynamic-py-result">
-<div class="content">
-<pre>---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-<ipython-input-1-5c70aaa6dd7d> in <module>
-----> 1 import feelpp
-      2 from feelpp.mor import *
-      3 ms=feelpp.mor.MORModels(fpp_name)
-      4 muspace = ms.parameterSpace()
-      5 sampling = muspace.sampling()
-
-ModuleNotFoundError: No module named 'feelpp'</pre>
-</div>
-</div>
-</div>
-</details>
 <div class="listingblock">
 <div class="title">Print the outputs and the associated parameter vector</div>
 <div class="content">
@@ -662,25 +623,6 @@ for frame in output_dataframes:
     i=i+1</code></pre>
 </div>
 </div>
-<details>
-<summary class="title">Results</summary>
-<div class="content">
-<div class="literalblock dynamic-py-result">
-<div class="content">
-<pre>---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-<ipython-input-1-62a649bfbc5a> in <module>
-----> 1 from pandas import DataFrame as df
-      2 from pandas import options as op
-      3 from pandas import set_option
-      4 outputs={}
-      5 errors={}
-
-ModuleNotFoundError: No module named 'pandas'</pre>
-</div>
-</div>
-</div>
-</details>
 </div>
 </div>
 </article>
