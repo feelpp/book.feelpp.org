@@ -6,6 +6,7 @@
     <title>Feel++ for Multiphysics Modeling and Simulation :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/index.html">
     <link rel="next" href="cfpdes/index.html">
+    <meta name="description" content="Toolbox Core">
     <meta name="generator" content="Antora 3.1.4">
     <link rel="stylesheet" href="../../_/css/site.css">
 <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
@@ -33,60 +34,61 @@ MathJax.Hub.Config({
 
   TeX: {
       Macros: {
-      RR: "{\\mathbb R}",
-      NN: "{\\mathbb N}",
-      Nso: "{N_{\\mathrm{so}}}",
-      Nma: "{N_{\\mathrm{ma}}}",
-      Nno: "{N_{\\mathrm{no}}}",
-      Ne: "{N_{\\mathrm{e}}}",
-      Ilag: ["{\\mathcal{I}^{\\mathrm{lag}}_{#1}}",1],
+      bold: ["{\\bf #1}",1],
       calTh: "{\\mathcal{T}_h}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      card: ["{\\operatorname{card}(#1)}",1],
       Ck: ["{\\mathcal{C}^{#1}}",1],
-      Pk: ["{\\mathcal{P}^{#1}}",1],
-      Qk: ["{\\mathcal{Q}^{#1}}",1],
-      Pch: ["{P^{#1}_{c,h}}",1],
-      Pcho: ["{P^{#1}_{c,h,0}}",1],
-      Qch: ["{Q^{#1}_{c,h}}",1],
+      deformt: ["{\\mathbf{\\varepsilon(#1)}}",1],
+      diam: "{\\operatorname{diam}}",
+      dim: ["{\\operatorname{dim}(#1)}",1],
+      disp: ["{\\mathbf{#1}}",1],
+      domain: "{\\Omega}",
+      ds: "",
+      essinf: "{\\operatorname{ess}\\, \\operatorname{inf}}",
+      F:"{\\mathcal{F}}",
+      geo: "{\\mathrm{geo}}",
       Ich: ["{\\mathcal{I}^{#1}_{c,h}#2}",2],
-      poly: ["{\\mathbb{#1}}",1],
+      Id: "{\\mathcal{I}}",
+      Ilag: ["{\\mathcal{I}^{\\mathrm{lag}}_{#1}}",1],
+      jump: ["{[\\![ #1 ]\\!]}",1],
+      n:"{\\mathbf{n}}",
+      Ne: "{N_{\\mathrm{e}}}",
+      Next: "{\\mathrm{n}}",
       nf: "{n_f}",
       ngeo: "{n_{\\mathrm{geo}}}",
-      geo: "{\\mathrm{geo}}",
-      card: ["{\\operatorname{card}(#1)}",1],
-      dim: ["{\\operatorname{dim}(#1)}",1],
+      Nma: "{N_{\\mathrm{ma}}}",
+      NN: "{\\mathbb N}",
+      Nno: "{N_{\\mathrm{no}}}",
+      Nso: "{N_{\\mathrm{so}}}",
       opdim: "{\\operatorname{dim}}",
-      card: ["{\\operatorname{card}(#1)}",1],
-      poly: ["{\\mathbb{#1}",1],
-      R: ["{\\mathbb{R}^{#1}}",1],
-      set: ["{\\left\\{#1\\right\\}}",1],
-      diam: "{\\operatorname{diam}}",
-      jump: ["{[\\![ #1 ]\\!]}",1],
-      Next: "{\\mathrm{n}}",
-      essinf: "{\\operatorname{ess}\\, \\operatorname{inf}}",
-      tr: "{\\operatorname{tr}}",
-      Id: "{\\mathcal{I}}",
-      disp: ["{\\mathbf{#1}}",1],
-      stresst: ["{\\mathbf{\\sigma(#1)}}",1],
-      deformt: ["{\\mathbf{\\varepsilon(#1)}}",1],
-      domain: "{\\Omega}",
-      prect: ["{\\left\\(#1\\right\\)}",1],
-      ds: "",
-      bold: ["{\\bf #1}",1],
       p: "{\\mathrm{p}}",
-      q:"{\\mathbf{q}}",
-      n:"{\\mathbf{n}}",
-      T:"{\\mathcal{T}}",
-      F:"{\\mathcal{F}}",
       P:"{\\mathcal{P}}",
-      v:"{\\mathbf{v}}"
+      Pch: ["{P^{#1}_{c,h}}",1],
+      Pcho: ["{P^{#1}_{c,h,0}}",1],
+      Pk: ["{\\mathcal{P}^{#1}}",1],
+      poly: ["{\\mathbb{#1}",1],
+      poly: ["{\\mathbb{#1}}",1],
+      prect: ["{\\left\\(#1\\right\\)}",1],
+      q:"{\\mathbf{q}}",
+      Qch: ["{Q^{#1}_{c,h}}",1],
+      Qk: ["{\\mathcal{Q}^{#1}}",1],
+      R: ["{\\mathbb{R}^{#1}}",1],
+      RR: "{\\mathbb R}",
+      set: ["{\\left\\{#1\\right\\}}",1],
+      stresst: ["{\\mathbf{\\sigma(#1)}}",1],
+      T:"{\\mathcal{T}}",
+      tr: "{\\operatorname{tr}}",
+      v:"{\\mathbf{v}}",
+      vertiii: ["\\left\\vert\\kern-0.25ex\\left\\vert\\kern-0.25ex\\left\\vert #1 \\right\\vert\\kern-0.25ex\\right\\vert\\kern-0.25ex\\right\\vert",1]
   },
-  extensions: ["mhchem.js"] }
+  extensions: ["mhchem.js"] 
+  }
 });
 </script>
 <!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
 <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script> -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML'>
-</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_CHTML'></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>-->
 
 <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
@@ -271,25 +273,25 @@ MathJax.Hub.Config({
     <a class="nav-link" href="csm/pendulum2D/index.html">2D Pendulum</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="csm/ribs/index.html">Bracing with ribs</a>
+    <a class="nav-link" href="csm/rotating-winch/index.html">Rotating winch</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="csm/rotating-winch/index.html">Rotating winch</a>
+    <a class="nav-link" href="csm/sheet-rounding/index.html">Effect of sheet rounding</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="csm/ribs/index.html">Bracing with ribs</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="csm/sensor/index.html">Sensor</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="csm/sheet-rounding/index.html">Effect of sheet rounding</a>
+    <a class="nav-link" href="csm/t-beam/index.html">T-beam</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="csm/spring/index.html">Spring</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="csm/suspension/index.html">Suspension Mechanics</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="csm/t-beam/index.html">T-beam</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="csm/torsion-bar/index.html">Torsion Bar Benchmarks</a>
@@ -335,13 +337,13 @@ MathJax.Hub.Config({
     <a class="nav-link" href="cfd/TurekHron/index.html">CFD Benchmarks</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cfd/laminar_isothermal_backward_facing_step/index.html">Laminar, Isothermal Backward Facing Step Benchmark</a>
+    <a class="nav-link" href="cfd/pipestokes/index.html">Stokes flow in a pipe</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="cfd/oscillating_cylinder/index.html">Oscillating cylinder</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cfd/pipestokes/index.html">Stokes flow in a pipe</a>
+    <a class="nav-link" href="cfd/laminar_isothermal_backward_facing_step/index.html">Laminar, Isothermal Backward Facing Step Benchmark</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="cfd/stokes_boundary_layer/index.html">Stokes Boundary Layer Benchmark</a>
@@ -451,10 +453,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="heatfluid/2Dbuilding_NS/index.html">2D building with natural convection</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="heatfluid/TurekHron/index.html">Forced convection around a cylinder</a>
+    <a class="nav-link" href="heatfluid/cabin/index.html">Aerothermal Flow in an Airplane Cabin</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="heatfluid/cabin/index.html">Aerothermal Flow in an Airplane Cabin</a>
+    <a class="nav-link" href="heatfluid/TurekHron/index.html">Forced convection around a cylinder</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="heatfluid/channel_flow_with_viscous_heating/index.html">Channel flow with viscous heating benchmark</a>
@@ -534,10 +536,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="electric/electric.html">feelpp_toolbox_electric(1)</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="electric/manual.html">Electrostatics toolbox</a>
+    <a class="nav-link" href="electric/theory.html">Electrostatics toolbox</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="electric/theory.html">Electrostatics toolbox</a>
+    <a class="nav-link" href="electric/manual.html">Electrostatics toolbox</a>
   </li>
 </ul>
   </li>
@@ -632,10 +634,10 @@ MathJax.Hub.Config({
     <span class="nav-text">Benchmarks</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="maxwell/Harmonic/index.html">Harmonic Content &amp; Multipoles magnets</a>
+    <a class="nav-link" href="maxwell/Inductor/index.html">Inductor Benchmark</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="maxwell/Inductor/index.html">Inductor Benchmark</a>
+    <a class="nav-link" href="maxwell/Harmonic/index.html">Harmonic Content &amp; Multipoles magnets</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="maxwell/Torus/index.html">Torus Benchmark</a>
@@ -798,121 +800,39 @@ MathJax.Hub.Config({
     <div class="content">
       <article class="doc">
           <h1 class="page">Feel++ for Multiphysics Modeling and Simulation</h1>
-          <h2>Toolboxes</h2>
-          <div class="toolboxes">
-            <div class="toolbox"><a class="page-card" href="cfd/index.html">
+        <h2 id="manuals">Manuals</h2>
+        <div class="manuals">
+          <div class="manual"><a class="page-card" href="modeling-analysis-using-json-files.html">
     <div class="page-card-illustration">
-      <img alt="" src="_images/FlowAroundCylinder-600x300.png"/>
+      <img alt="" src="_images/manual.svg"/>
     </div>
     <div class="page-card-body">
-      <h4>Computational Fluid Mechanics</h4>
-      <p class="page-card-description">The computation fluid mechanics solves from low to high Reynolds number flows and includes some turbulence models.</p>
+      <h4>Modeling and Analysis using the JSON files</h4>
+      <p class="page-card-description">JSON description</p>
     </div>
 </a>
 </div>
-            <div class="toolbox"><a class="page-card" href="csm/index.html">
+          <div class="manual"><a class="page-card" href="parametrized-simulation-using-cfg-files.html">
     <div class="page-card-illustration">
-      <img alt="" src="_images/torsionbarNeoHookIncompT2-600x300.png"/>
+      <img alt="" src="_images/manual.svg"/>
     </div>
     <div class="page-card-body">
-      <h4>Computational Solid Mechanics</h4>
-      <p class="page-card-description">A toolbox to solve non-linear elasticity problems that supports (i) Large deformations, (ii) large displacements; (iv) Compressible, nearly incompressible materials and (v) Multi-material</p>
+      <h4>Parametrized Simulation using CFG files</h4>
+      <p class="page-card-description">CFG description</p>
     </div>
 </a>
 </div>
-            <div class="toolbox"><a class="page-card" href="cfpdes/index.html">
+          <div class="manual"><a class="page-card" href="what-is-a-toolbox.html">
     <div class="page-card-illustration">
-      <img alt="" src="cfpdes/_images/cahn-hilliard/ch-3d-t6e-3-removebg.jpg"/>
+      <img alt="" src="_images/manual.svg"/>
     </div>
     <div class="page-card-body">
-      <h4>Coefficient Form PDEs</h4>
-      <p class="page-card-description">A coefficient form PDE toolbox to solve N coupled nonlinear PDEs</p>
+      <h4>What is a Toolbox</h4>
+      <p class="page-card-description">What is a Toolbox ?</p>
     </div>
 </a>
 </div>
-            <div class="toolbox"><a class="page-card" href="electric/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/Magnet_3D_brochure_highresolution2-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Electric</h4>
-      <p class="page-card-description">A Toolbox that solves Gauss's Law equation and compute the electric potential and field of a given charge distribution.</p>
-    </div>
-</a>
-</div>
-            <div class="toolbox"><a class="page-card" href="hdg/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/Magnet_3D_brochure_highresolution2-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Hybridized Discontinuous Galerkin Toolbox</h4>
-      <p class="page-card-description">Hybridized Discontinuous Galerkin Toolbox case studies, supporting elliptic and parabolic problems in 2D and 3D including advection, diffusion and reaction, elasticity, Stokes and coupled problems.</p>
-    </div>
-</a>
-</div>
-            <div class="toolbox"><a class="page-card" href="heat/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/heat-transfer-building-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Heat Transfer</h4>
-      <p class="page-card-description">A toolbox to solve heat transfer problems including conduction, convection and black body radiation including non-linear problems and temperature dependent properties.</p>
-    </div>
-</a>
-</div>
-            <div class="toolbox"><a class="page-card" href="fsi/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/wp3dP3P2G2-struct-disp-t2-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Fluid Structure Interaction</h4>
-      <p class="page-card-description">A toolbox for solving fluid-structure interaction problems using ALE formulation and staggered schemes such as Diriexlet-Neumann, Generalized Robin-Neumann, and Robin-Robin.</p>
-    </div>
-</a>
-</div>
-            <div class="toolbox"><a class="page-card" href="heatfluid/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/feelpp-aerothermal-2-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Heat and Fluid</h4>
-      <p class="page-card-description">A toolbox that solves the heat and fluid equations including convection, conduction effects. it is mostly used for aerothermal problems.</p>
-    </div>
-</a>
-</div>
-            <div class="toolbox"><a class="page-card" href="maxwell/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/Magnet_3D_brochure_highresolution2-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Maxwell</h4>
-      <p class="page-card-description">A toolbox for the simulation of electromagnetic fields in 3D including static, low frequency, and high frequency applications and non-linear materials.</p>
-    </div>
-</a>
-</div>
-            <div class="toolbox"><a class="page-card" href="multifluid/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/drop3d_initial.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Multifluid Flow Toolbox</h4>
-      <p class="page-card-description">A toolbox to solve multuid flow problems using the level set method</p>
-    </div>
-</a>
-</div>
-            <div class="toolbox"><a class="page-card" href="thermoelectric/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/peltiermodule-electricpotential-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Thermo-Electric</h4>
-      <p class="page-card-description">A toolbox to solve the heat equation coupled to the electric currents equation including temperature-dependent material properties.</p>
-    </div>
-</a>
-</div>
-            <div class="toolbox">  <div class="empty"></div>
-</div>
-          </div>
+        </div>
       </article>
     </div>
   </main>
