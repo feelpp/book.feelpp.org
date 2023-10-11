@@ -244,6 +244,8 @@ When the radiative boundary stem:[\partial \Omega_R] is composed of several subs
 
 In this equation, stem:[q=\nabla T \cdot \vec{n}, E_b(x)=\sigma T^4], stem:[\epsilon(x)] is the emittance and stem:[dF_{x-x'}] is the view factor between the infinitesimal areas surrounding points stem:[x,x'].
 
+==== Picard iteration
+
 Let us now propose a variational formulation for this equation. Let stem:[\psi \in \mathbb{P}^0_{d}(\partial \Omega_R)] be discontinuous, piecewise constant basis functions. Functions stem:[\psi] are elementwise discontinuous; however, one could choose to work, as a first approximation, with stem:[\Psi \in P], where stem:[P] a space of discontinuous, piecewise constant basis functions, where discontinuities are not elementwise, but for example discontinuous in correspondence of different radiating surfaces. In the following, we will use stem:[\psi] to denote test functions and stem:[N_h] to denote the cardinality of the test space. We have
 
 ====
@@ -287,6 +289,40 @@ Due to the presence of the fourth power of the temperature and the non-linearity
 \end{algorithm}
 </pre>
 ++++
+
+==== Newton non-linear iteration
+
+The previous integral equation can be included in the variational formulation of the PDE as a boundary condition on the heat flux stem:[q(x)=\Big(-k \nabla T \cdot n \Big)(x)]:
+
+====
+[stem]
+++++
+q(x) = \epsilon(x) \Bigg( E_b(x) - \int_{\partial \Omega_R} E_b(x') dF_{x-x'} + \int_{\partial \Omega_R} \Big( \frac{1}{\epsilon(x')}-1\Big)q(x') dF_{x-x'}
+	\Bigg).
+++++
+====
+
+The linearization of the boundary condition generates the following terms to be added to the Jacobian matrix stem:[DF(T)], at iteration stem:[k],
+
+====
+[stem]
+++++
+DF(T_k)\alpha = \int_{\partial \Omega_R} 4\sigma \epsilon T_k^3 \alpha \varphi.
+++++
+====
+
+The following term is added to the residual stem:[F(T)] at iteration stem:[k], where we denoted by stem:[A] and stem:[A'] the areas surrounding points stem:[x] and stem:[x'].
+
+====
+[stem]
+++++
+\begin{multline}
+F(T_k) = \int_A \epsilon(x) \sigma T^4_k \varphi - \int_A \epsilon(x) \Big[\int_{A'} \sigma T^4_k(x') dF_{dA-dA'}\Big] \varphi(x) +\\
+	+ \int_A \epsilon(x) \Big[\int_{A'} \Big( \frac{1}{\epsilon(x')} -1\Big)(-k\nabla T_k \cdot \vec{n})  dF_{dA-dA'} \Big]\varphi(x).
+\end{multline}
+++++
+====
+In practice, the surface of the cavity is divided into smaller surfaces and the view factors stem:[F_{ij}] are often already computed and stored for all pairs  stem:[ij] of (finite) subsurfaces. In that case, the differential stem:[dF_{dA-dA'}] can be substituted by the ratio stem:[F_{ji}/|A_i|]. The meaning of  stem:[dF_{dA-dA'}] is ``the ratio (diffuse energy leaving $dA$ and intercepted by stem:[dA'])/(total energy leaving stem:[dA]) '', and the ratio stem:[F_{ji}/|A_i|] corresponds to the ratio of (energy leaving surface $j$ and intercepted by surface stem:[i])/(total energy leaving surface stem:[j]) divided by the area of the intercepting surface. The idea behind the substitution is that integrals stem:[ \Big(\int_{A'} \sigma T^4_k(x') dF_{dA-dA'}\Big) ] and stem:[\Big(\int_{A'} \Big( \frac{1}{\epsilon(x')} -1\Big)(-k\nabla T_k \cdot \vec{n})  dF_{dA-dA'} \Big)] produce values for all stem:[x\in A], by attributing them a portion of incident radiation which is proportional to the view factor. By dividing stem:[F_{ji}] by stem:[|A_i|] we construct a density for the view factor, constant over the whole receiving surface, to average the incoming radiation. We hence make the approximation that stem:[ dF_{dA-dA'} = \cos(\theta_i)\cos(\theta_j)/(\pi S^2)dA' \approx F_{ji}/|A_i| dA' = F_{ij}/|A_j| dA' ].
 
 == Bibliography
 
