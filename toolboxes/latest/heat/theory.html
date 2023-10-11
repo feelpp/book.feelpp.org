@@ -380,10 +380,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="heat.html">feelpp_toolbox_heat(1)</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="manual.html">Heat Transfer</a>
+    <a class="nav-link" href="modeling.html">Heat transfer Modeling and Theory</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="modeling.html">Heat transfer Modeling and Theory</a>
+    <a class="nav-link" href="manual.html">Heat Transfer</a>
   </li>
 </ul>
   </li>
@@ -400,6 +400,9 @@ MathJax.Hub.Config({
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Cases</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="radiative_cavity/index.html">Radiative cavity examples</a>
+  </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="2Dbuilding/index.html">Example Toolboxes 2D building</a>
   </li>
@@ -1112,6 +1115,8 @@ Radiative heat transfer is not yet available in the toolboxes. An application im
 <div class="paragraph">
 <p>In this equation, \(q=\nabla T \cdot \vec{n}, E_b(x)=\sigma T^4\), \(\epsilon(x)\) is the emittance and \(dF_{x-x'}\) is the view factor between the infinitesimal areas surrounding points \(x,x'\).</p>
 </div>
+<div class="sect3">
+<h4 id="_picards_iteration"><a class="anchor" href="#_picards_iteration"></a>1.4.1. Picard&#8217;s iteration</h4>
 <div class="paragraph">
 <p>Let us now propose a variational formulation for this equation. Let \(\psi \in \mathbb{P}^0_{d}(\partial \Omega_R)\) be discontinuous, piecewise constant basis functions. Functions \(\psi\) are elementwise discontinuous; however, one could choose to work, as a first approximation, with \(\Psi \in P\), where \(P\) a space of discontinuous, piecewise constant basis functions, where discontinuities are not elementwise, but for example discontinuous in correspondence of different radiating surfaces. In the following, we will use \(\psi\) to denote test functions and \(N_h\) to denote the cardinality of the test space. We have</p>
 </div>
@@ -1158,6 +1163,53 @@ The right-hand side is of the form \(D_j(T) = \int_{\partial \Omega_R} ( \sigma 
     \STATE $q^{n+1} \leftarrow q^{n+1,k+1,0}$
     \end{algorithmic}
 \end{algorithm}</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_newton_non_linear_iteration"><a class="anchor" href="#_newton_non_linear_iteration"></a>1.4.2. Newton non-linear iteration</h4>
+<div class="paragraph">
+<p>The previous integral equation can be included in the variational formulation of the PDE as a boundary condition on the heat flux \(q(x)=\Big(-k \nabla T \cdot n \Big)(x)\):</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[q(x) = \epsilon(x) \Bigg( E_b(x) - \int_{\partial \Omega_R} E_b(x') dF_{x-x'} + \int_{\partial \Omega_R} \Big( \frac{1}{\epsilon(x')}-1\Big)q(x') dF_{x-x'}
+	\Bigg).\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The linearization of the boundary condition generates the following terms to be added to the Jacobian matrix \(DF(T)\), at iteration \(k\),</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[DF(T_k)\alpha = \int_{\partial \Omega_R} 4\sigma \epsilon T_k^3 \alpha \varphi.\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The following term is added to the residual \(F(T)\) at iteration \(k\), where we denoted by \(A\) and \(A'\) the areas surrounding points \(x\) and \(x'\).</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="stemblock">
+<div class="content">
+\[\begin{multline}
+F(T_k) = \int_A \epsilon(x) \sigma T^4_k \varphi - \int_A \epsilon(x) \Big[\int_{A'} \sigma T^4_k(x') dF_{dA-dA'}\Big] \varphi(x) +\\
+	+ \int_A \epsilon(x) \Big[\int_{A'} \Big( \frac{1}{\epsilon(x')} -1\Big)(-k\nabla T_k \cdot \vec{n})  dF_{dA-dA'} \Big]\varphi(x).
+\end{multline}\]
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>In practice, the surface of the cavity is divided into smaller surfaces and the view factors \(F_{ij}\) are often already computed and stored for all pairs  \(ij\) of (finite) subsurfaces. In that case, the differential \(dF_{dA-dA'}\) can be substituted by the ratio \(F_{ji}/|A_i|\). The meaning of  \(dF_{dA-dA'}\) is ``the ratio (diffuse energy leaving $dA$ and intercepted by \(dA'\))/(total energy leaving \(dA\)) '', and the ratio \(F_{ji}/|A_i|\) corresponds to the ratio of (energy leaving surface $j$ and intercepted by surface \(i\))/(total energy leaving surface \(j\)) divided by the area of the intercepting surface. The idea behind the substitution is that integrals \( \Big(\int_{A'} \sigma T^4_k(x') dF_{dA-dA'}\Big) \) and \(\Big(\int_{A'} \Big( \frac{1}{\epsilon(x')} -1\Big)(-k\nabla T_k \cdot \vec{n})  dF_{dA-dA'} \Big)\) produce values for all \(x\in A\), by attributing them a portion of incident radiation which is proportional to the view factor. By dividing \(F_{ji}\) by \(|A_i|\) we construct a density for the view factor, constant over the whole receiving surface, to average the incoming radiation. We hence make the approximation that \( dF_{dA-dA'} = \cos(\theta_i)\cos(\theta_j)/(\pi S^2)dA' \approx F_{ji}/|A_i| dA' = F_{ij}/|A_j| dA' \).</p>
 </div>
 </div>
 </div>
