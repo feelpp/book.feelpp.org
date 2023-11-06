@@ -3,6 +3,9 @@
 :feelpp: Feel++
 :stem: latexmath
 :page-jupyter: true
+:sectanchors: true
+:sectnums: |,all|
+:tocdepth: 3
 
 == Introduction
 
@@ -252,7 +255,8 @@ We consider a conformal approximation of problems by Lagrangian finite elements.
 We suppose that stem:[\Omega] is a polyhedron of stem:[\mathbb{R}^3] and we consider a regular and conformal family of affine meshes of stem:[\Omega] that we note stem:[\left\{\mathcal{T}_h\right\}_{h>0}]. 
 We choose as reference finite element stem:[\left\{\widehat{K}, \widehat{P}, \widehat{Sigma}\right\}] a Lagrangian finite element of degree stem:[k \geq 1].
 
-Homogeneous Dirichlet problem:: 
+=== Homogeneous Dirichlet problem
+
 In order to construct a stem:[V_{\mathrm{D}}]-conformal approximation space, we pose
 [stem]
 ++++
@@ -292,14 +296,16 @@ Moreover, if the problem  is regularizing (i.e., if there exists a constant stem
 The <<estimation-conv,estimation>> results from the lemma of Céa  and the interpolation theorem which we apply component by component. The estimate results from the Aubin-Nitsche lemma.
 ====
 
-Pure traction problem::
+=== Pure traction problem
+
 For the pure traction problem, one way to eliminate the arbitrary rigid displacement at the discrete level is to:
 [lowerroman]
 . impose that the displacement at one mesh node, stem:[a_0], is zero;
 . choose three other mesh nodes, stem:[a_1, a_2, a_3], and three unit vectors, stem:[\tau_1, \tau_2, \tau_3], such that the set stem:[\left\{\left(a_i-a_0\right) \times \tau_i\right\}_{1 \leq i \leq 3}] forms a basis of stem:[\mathbb{R}^3];
 . impose that the displacement at the node stem:[a_i] along the direction stem:[\boldsymbol{\tau}_i] is zero.
 
-[.def#def:space]
+.Pure Traction approximation space
+[.def#def:space-pure-traction]
 ****
 This leads to the approximation space
 [stem]
