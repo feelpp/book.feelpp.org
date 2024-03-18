@@ -1,0 +1,61 @@
+= Encapsulating a {feelpp} model in a FMU
+
+== FMI standard and reference FMUs
+Functional Mockup Units (FMUs) provide a standardized interface for communications and interactions among models having different origins via the Functional Mockup Interface (FMI) standard.
+
+The FMI standard uses a combination of XML files, binaries and C codes to create a zip file (with .fmu extension) that can be distributed and exchanged.
+
+A collection of reference FMUs, written in C, are provided in the Github repository https://github.com/modelica/Reference-FMUs[Reference-FMUs], and they can be used as a starting point to develop other FMUs.
+
+== Create an FMU using {feelpp}
+
+=== C interface for {feelpp} classes
+A FMU can be created from {feelpp} code by using the `extern "C"` declaration on parts that need to be compiled in C, and the precompiler directives `#ifdef __cplusplus` for the C++ parts in C files and headers.
+
+The {feelpp} model can be a class that provides methods for the solution of the problem of interest and the computation of the desired outputs. Since classes are not defined in C, in order to instantiate, delete, and call the methods of the {feelpp} class, C functions are used, and the syntax could be the following
+
+[source,c++]
+----
+C_CLASS_TYPE CLASSNAME_new()
+{
+    return new CPP_CLASS_TYPE;
+}
+void feelppClass_delete(C_CLASS_TYPE hc)
+{
+    auto pHc = reinterpret_cast<CPP_CLASS_TYPE*>(hc);
+    delete pHc;
+}
+void CLASSNAME_f(C_CLASS_TYPE hc)
+{
+    auto pHc = reinterpret_cast<CPP_CLASS_TYPE*>(hc);
+    pHc->f();
+}
+----
+
+IMPORTANT: The constructor of the class needs to define the {feelpp} environment, and the destructor needs to delete it.
+The name of the C function `feelppClass_delete` calling the destructor should not be changed: at the end of the cosimulation, this specific function is called to delete the class instances. A modified file (`cosimulationFeelpp.c`) is compiled with the rest of the sources to create {feelpp}-FMU models, instead of the `cosimulation.c` that is compiled with the reference FMUs, in order to ensure the destruction of the {feelpp} environment.
+
+=== Creating a {feelpp}-FMU for cosimulation
+In order to finalize the creation of the FMU and following the examples in https://github.com/modelica/Reference-FMUs[Reference-FMUs], the following steps need to be taken:
+
+* functions associated with the {feelpp} class need to be called in the `model.c` file;
+* file `config.h` needs to be modified to specify the names of the variables and other parameters of the FMU (if cosimulation or model-exchange are possible, a fixed time-step and other);
+* the XML files that are associated with every version of the FMI standard need to be modified according to the variables that are defined and the options that are available for the FMU being built;
+* a `CMakeLists.txt` file needs to be created (or updated) to ensure the compilation and construction of the zipped folder.
+
+The https://fmi-standard.org/[FMI standard] specifies the role of each option in the construction of FMUs.
+
+The source files need to be linked with the {feelpp} library and, if a reduced order model is simulated, with the {feelpp} MOR library.
+
+Current versions of these FMUs can be launched successfully using https://fmpy.readthedocs.io/en/latest/tutorial/[FMPy] in the command line or through its graphical interface.
+
+Two examples of {feelpp}-FMUs are created in the repository https://github.com/feelpp/Reference-FMUs[feelpp/Reference-FMUs]: one of them solves the heat equation using {feelpp} and the other executes a stationary reduced order model.
+
+IMPORTANT: The __.mat__ file, which contains the results of the execution of the FMU, is automatically saved in the results folder of the Feel++ application. By default, Dymola expects the __.mat__ file to be found in the same folder as the FMU that is executed. In order to show these results, it is necessary to manually load the file via Dymola's graphical interface.
+
+==== Heat {feelpp}-fmu
+This FMU executes the finite element simulation of the heat equation in a 2D domain in a fixed time interval of 3s. The output is the average temperature of the domain, which is computed at every communication step, and the derivative of the output, which is also computed at every communication step. The code building the FMU is contained in https://github.com/feelpp/Reference-FMUs/tree/feelpp/feelpp[here].
+
+==== ReducedBasis {feelpp}-fmu
+This FMU executes the reduced order model for a given value of the parameters. It was constructed from the `thermalbuilding` MOR example, and parameters can be modified as they are prescribed as `input` in the FMU interface. It needs the specification of the reduced basis and plugin library at build time, as specified in the https://github.com/feelpp/Reference-FMUs/blob/feelpp/feelpp_mor/ReducedBasis/README.md[README] file.
+The code which builds this FMU is located https://github.com/feelpp/Reference-FMUs/tree/feelpp/feelpp_mor[here].
