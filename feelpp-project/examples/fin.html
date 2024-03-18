@@ -347,7 +347,8 @@ MathJax.Hub.Config({
 </aside>
 <article class="doc">
 <h1 class="page">Thermal fin</h1>
-<div id="preamble">
+<div class="sect1">
+<h2 id="_problem_statement"><a class="anchor" href="#_problem_statement"></a>1. Problem statement</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We consider the problem of designing a thermal fin to effectively remove heat from a surface. The two-dimensional fin, shown in Figure below, consists of a vertical central post and four horizontal subfins; the fin conducts heat from a prescribed uniform flux source at the root, \(\Gamma_{\text {root }}\), through the large-surface-area subfins to surrounding flowing air. The fin is characterized by a five-component parameter vector, or input, \(\mu_{=}\left(\mu_1, \mu_2, \ldots, \mu_5\right)\), where \(\mu_i=k^i, i=1, \ldots, 4\), and \(\mu_5=\mathrm{Bi} ; \mu\) may take on any value in a specified design set \(D \subset \mathbb{R}^5\).</p>
@@ -366,11 +367,15 @@ MathJax.Hub.Config({
 </div>
 <div class="stemblock">
 <div class="content">
-\[-k^i \Delta u^i=0 \text { in } \Omega^i, i=0, \ldots, 4,\]
+\[\rho_i C_i \frac{\partial u^i}{\partial t} -k^i \Delta u^i=0 \text { in } \Omega^i, i=0, \ldots, 4,\]
 </div>
 </div>
 <div class="paragraph">
-<p>where \(\Delta\) is the Laplacian operator, and \(u_i\) refers to the restriction of \(u\) to \(\Omega^i\) . Here \(\Omega^i\) is the region of the fin with conductivity \(k^i, i=0, \ldots, 4: \Omega^0\) is thus the central post, and \(\Omega^i, i=1, \ldots, 4\), corresponds to the four subfins. The entire fin domain is denoted \(\Omega\left(\bar{\Omega}=\cup_{i=0}^4 \bar{\Omega}^i\right)\); the boundary \(\Omega\) is denoted \(\Gamma\). We must also ensure continuity of temperature and heat flux at the conductivity discontinuity interfaces \(\Gamma_{\text {int }}^i \equiv \partial \Omega^0 \cap \partial \Omega^i, i=1, \ldots, 4\), where \(\partial \Omega^i\) denotes the boundary of \(\Omega^i\), we have on \(\Gamma_{\text {int }}^i i=1, \ldots, 4\) :</p>
+<p>where \(\Delta\) is the Laplacian operator, and \(u_i\) refers to the restriction of \(u\) to \(\Omega^i\).
+Here \(\Omega^i\) is the region of the fin with conductivity \(k^i, i=0, \ldots, 4\) and volumetric heat capacity \((\rho C)_i, i=0, \cdots, 4\): \(\Omega^0\) is thus the central post, and \(\Omega^i, i=1, \ldots, 4\), corresponds to the four subfins.</p>
+</div>
+<div class="paragraph">
+<p>The entire fin domain is denoted \(\Omega\left(\bar{\Omega}=\cup_{i=0}^4 \bar{\Omega}^i\right)\); the boundary \(\Omega\) is denoted \(\Gamma\). We must also ensure continuity of temperature and heat flux at the conductivity discontinuity interfaces \(\Gamma_{\text {int }}^i \equiv \partial \Omega^0 \cap \partial \Omega^i, i=1, \ldots, 4\), where \(\partial \Omega^i\) denotes the boundary of \(\Omega^i\), we have on \(\Gamma_{\text {int }}^i i=1, \ldots, 4\) :</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -407,7 +412,7 @@ u^0 &amp; =u^i \\
 </div>
 </div>
 <div class="sect1">
-<h2 id="_implementation"><a class="anchor" href="#_implementation"></a>1. Implementation</h2>
+<h2 id="_implementation"><a class="anchor" href="#_implementation"></a>2. Implementation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>First, we initialize the Feel++ environment and set the working directory.</p>
@@ -430,14 +435,14 @@ e = feelpp.Environment(['fin'], config=feelpp.localRepository("."))</code></pre>
 <div class="literalblock dynamic-py-result">
 <div class="content">
 <pre>---------------------------------------------------------------------------
-ImportError                               Traceback (most recent call last)
+ModuleNotFoundError                       Traceback (most recent call last)
 File <ipython-input-1-1d4b97f5aec6>:2
       1 import feelpp
 ----> 2 from feelpp_project import laplacian
       3 import json
       4 import os
 
-ImportError: cannot import name 'laplacian' from 'feelpp_project' (unknown location)</pre>
+ModuleNotFoundError: No module named 'feelpp_project'</pre>
 </div>
 </div>
 </div>
@@ -657,7 +662,7 @@ NameError: name 'df' is not defined
     </div>
     <div class="footer-terms">
       <div class="footer-terms-copyright">
-          <span>© 2023 Cemosis, Université de Strasbourg</span>
+          <span>© 2024 Cemosis, Université de Strasbourg</span>
       </div>
       <div class="footer-terms-links">
         <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>

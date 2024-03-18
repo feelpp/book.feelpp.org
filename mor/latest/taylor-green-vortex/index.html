@@ -495,16 +495,6 @@ fpp_name = 'ad.fpp'
 time = np.linspace(start=0, stop=2.5, num=251)</code></pre>
 </div>
 </div>
-<details>
-<summary class="title">Results</summary>
-<div class="content">
-<div class="literalblock dynamic-py-result">
-<div class="content">
-<pre></pre>
-</div>
-</div>
-</div>
-</details>
 </div>
 </div>
 <div class="sect1">
@@ -527,7 +517,15 @@ with open(fpp_name,'wb') as f:
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre></pre>
+<pre>---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+File <ipython-input-1-5c5aa891ff02>:2
+      1 import requests
+----> 2 r=requests.get(girder_path)
+      3 with open(fpp_name,'wb') as f:
+      4     f.write(r.content)
+
+NameError: name 'girder_path' is not defined</pre>
 </div>
 </div>
 </div>
@@ -558,25 +556,15 @@ r=ms.run(sampling,{"N":10})</code></pre>
 <div class="literalblock dynamic-py-result">
 <div class="content">
 <pre>---------------------------------------------------------------------------
-ImportError                               Traceback (most recent call last)
-File <ipython-input-1-5c70aaa6dd7d>:2
+NameError                                 Traceback (most recent call last)
+File <ipython-input-1-5c70aaa6dd7d>:3
       1 import feelpp
-----> 2 from feelpp.mor import *
-      3 ms=feelpp.mor.MORModels(fpp_name)
+      2 from feelpp.mor import *
+----> 3 ms=feelpp.mor.MORModels(fpp_name)
       4 muspace = ms.parameterSpace()
+      5 sampling = muspace.sampling()
 
-File /usr/lib/python3/dist-packages/feelpp/mor/__init__.py:2
-      1 import feelpp
-----> 2 from ._mor import *
-      3 from ._toolboxmor import *
-      5 _toolboxmor={
-      6     'toolboxmor(2)':ToolboxMor_2D,
-      7     'toolboxmor(3)':ToolboxMor_3D,
-      8     'toolboxmor_dt(2)':ToolboxMor_2D_dt,
-      9     'toolboxmor_dt(3)':ToolboxMor_3D_dt
-     10 }
-
-ImportError: /lib/x86_64-linux-gnu/libfeelpp_mor.so.1: undefined symbol: _ZN4Feel10Repository6ConfigC1EN5boost10filesystem4pathENS_8LocationERKN8nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE</pre>
+NameError: name 'fpp_name' is not defined</pre>
 </div>
 </div>
 </div>
@@ -627,7 +615,7 @@ for frame in output_dataframes:
 <div class="literalblock dynamic-py-result">
 <div class="content">
 <pre>---------------------------------------------------------------------------
-TypeError                                 Traceback (most recent call last)
+NameError                                 Traceback (most recent call last)
 File <ipython-input-1-62a649bfbc5a>:8
       6 output_dataframes = list()
       7 errors_dataframes = list()
@@ -635,7 +623,7 @@ File <ipython-input-1-62a649bfbc5a>:8
       9     outputs={}
      10     errors={}
 
-TypeError: object of type 'Response' has no len()</pre>
+NameError: name 'r' is not defined</pre>
 </div>
 </div>
 </div>
@@ -682,25 +670,6 @@ for i in range(len(r)):
     fig.show()</code></pre>
 </div>
 </div>
-<details>
-<summary class="title">Results</summary>
-<div class="content">
-<div class="literalblock dynamic-py-result">
-<div class="content">
-<pre>---------------------------------------------------------------------------
-TypeError                                 Traceback (most recent call last)
-File <ipython-input-1-bc1b0bfdb64a>:3
-      1 import plotly.graph_objects as go
-----> 3 for i in range(len(r)):
-      4     # Create a Plotly figure with a scatter plot
-      5     fig = go.Figure()
-      7     for o in range(len(r[i])):
-
-TypeError: object of type 'Response' has no len()</pre>
-</div>
-</div>
-</div>
-</details>
 </div>
 </div>
 </article>
@@ -763,7 +732,7 @@ TypeError: object of type 'Response' has no len()</pre>
     </div>
     <div class="footer-terms">
       <div class="footer-terms-copyright">
-          <span>© 2023 Cemosis, Université de Strasbourg</span>
+          <span>© 2024 Cemosis, Université de Strasbourg</span>
       </div>
       <div class="footer-terms-links">
         <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>
