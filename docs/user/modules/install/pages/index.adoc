@@ -124,7 +124,7 @@ Windows 10::
 To use {feelpp} on Windows 10, follow these steps:
 
  * [x] install https://docs.microsoft.com/fr-fr/windows/wsl/install-win10:[WSL (Windows Subsystem for Linux)]
- * [x] install https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions[Ubuntu focal (20.04) Ubuntu jammy(22.04) or Debian bullseye(11)]
+ * [x] install https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions[Ubuntu jammy(22.04) Ubuntu focal (20.04) or Debian bookworm(12)]
  * [x] follow the corresponding Ubuntu or Debian {feelpp} installation steps
 
 include::partial$install-deb.adoc[]
@@ -148,6 +148,11 @@ docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:jammy
 docker pull ghcr.io/feelpp/feelpp-dev:jammy
 docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-dev:jammy
 ----
+
+NOTE: these images are also available for 
++
+* Ubuntu 20.04 (focal): ghcr.io/feelpp/feelpp:focal
+* Debian 12 (bookworm): ghcr.io/feelpp/feelpp:bookworm
 --
 // MacOSX::
 // +
