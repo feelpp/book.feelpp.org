@@ -436,11 +436,12 @@ e = feelpp.Environment(['fin'], config=feelpp.localRepository("."))</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 ModuleNotFoundError                       Traceback (most recent call last)
-File <ipython-input-1-1d4b97f5aec6>:2
+<ipython-input-1-1d4b97f5aec6> in <module>
       1 import feelpp
 ----> 2 from feelpp_project import laplacian
       3 import json
       4 import os
+      5
 
 ModuleNotFoundError: No module named 'feelpp_project'</pre>
 </div>
@@ -465,10 +466,11 @@ print(data)</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-File <ipython-input-1-334c38b17d9d>:1
+<ipython-input-1-334c38b17d9d> in <module>
 ----> 1 feelpp.Environment.setConfigFile(f"{d}/src/cases/laplacian/fin/fin1/fin2d.cfg")
       2 # Reading the JSON file
       3 data = laplacian.loadSpecs(f"{d}/src/cases/laplacian/fin/fin2d.json")
+      4 print(data)
 
 NameError: name 'd' is not defined</pre>
 </div>
@@ -493,10 +495,11 @@ meas=lap.measures()</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-File <ipython-input-1-d909663a9992>:1
+<ipython-input-1-d909663a9992> in <module>
 ----> 1 lap = laplacian.get(dim=2, order=1)
       2 lap.setSpecs(data)
       3 lap.run()
+      4 meas=lap.measures()
 
 NameError: name 'laplacian' is not defined</pre>
 </div>
@@ -521,7 +524,7 @@ print(df.to_markdown())</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-File <ipython-input-1-d5bf1c958560>:2
+<ipython-input-1-d5bf1c958560> in <module>
       1 import pandas as pd
 ----> 2 df = pd.DataFrame(meas)
       3 df.set_index('time', inplace=True)
@@ -555,8 +558,8 @@ fig.show()</code></pre>
 <div class="content">
 ---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-File <ipython-input-1-2fed1671999c>:5
-      2 import numpy as np
+<ipython-input-1-2fed1671999c> in <module>
+      3
       4 fig = go.Figure()
 ----> 5 fig.add_trace(go.Scatter(x=df.index, y=df["mean_Gamma_root"], mode='lines', name='T_{Gamma Root}'))
       6 fig.add_trace(go.Scatter(x=df.index, y=df["mean_Gamma_ext"], mode='markers', name='T_{Gamma Ext}'))
@@ -585,13 +588,12 @@ fig.show()</code></pre>
 <div class="content">
 ---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-File <ipython-input-1-b08a7c45d8c0>:3
+<ipython-input-1-b08a7c45d8c0> in <module>
       1 fig = go.Figure()
       2 fig.add_trace(go.Scatter(
 ----> 3     x=df.index, y=df["flux_Gamma_root"], mode='lines', name='Flux_{Gamma Root}'))
       4 fig.add_trace(go.Scatter(
       5     x=df.index, y=df["flux_Gamma_ext"], mode='markers', name='Flux_{Gamma Ext}'))
-      6 fig.update_layout(title='Heat Flux', xaxis_title='time', yaxis_title='Flux')
 
 NameError: name 'df' is not defined
 </div>

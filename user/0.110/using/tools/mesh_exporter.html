@@ -750,42 +750,78 @@ MathJax.Hub.Config({
 <h2 id="_examples"><a class="anchor" href="#_examples"></a>4. EXAMPLES</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We are now using the <code>feelpp/feelpp-toolboxes:latest</code> docker images as described in <a href="http://book.feelpp.org/user-manual/#getting_started" class="bare">book.feelpp.org/user-manual/#getting_started</a> to demonstrate feelpp_mesh_exporter usage.
-We use the meshes in <code>src/feelpp/data/gmsh/primitives</code> in the docker image.</p>
+<p>We support that you have either Feel++ available via Debian/Ubuntu packages or via Docker/Apptainer images.</p>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Debian/Ubuntu packages</dt>
+<dd>
+<p>We support that you have installed the <code>feelpp</code> packages on your system, see the <a href="../../../latest/install/index.html" class="xref page">Feel++ Installation</a> for more information.</p>
+</dd>
+<dt class="hdlist1">Docker/Apptainer images</dt>
+<dd>
+<p>We are now using the <code>ghcr.io/feelpp/feelpp:jammy</code> docker image to demonstrate feelpp_mesh_exporter usage.
+We use the meshes in <code>src/feelpp/data/gmsh/primitives</code> in the docker image.</p>
 <div class="listingblock">
 <div class="title">Starting the docker <code>feelpp/feelpp-toolboxes:latest</code></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">docker run --rm -ti -v $HOME/feel:/feel feelpp/feelpp-toolboxes</code></pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">docker run --rm -ti -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:jammy</code></pre>
 </div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>In the following examples, we use the <code>tetrahedron.geo</code> mesh file in GitHub repository <code>feelpp/feelpp/</code> to display the mesh and the fields.</p>
 </div>
 <div class="listingblock">
 <div class="title">Example of a command line to export a mesh and some fields to visualise</div>
 <div class="content">
-<pre>./feelpp_mesh_exporter
-  --scalar_expr="g1|sin(2*pi*x)*sin(2*pi*y)*cos(2*pi*z):x:y:z|nodal" <i class="conum" data-value="1"></i><b>(1)</b>
-  --scalar_expr="g2|sin(3*pi*x)*sin(4*pi*y)*cos(5*pi*z):x:y:z|nodal" <i class="conum" data-value="2"></i><b>(2)</b>
-  --gmsh.hsize 0.2 <i class="conum" data-value="3"></i><b>(3)</b>
-  --gmsh.filename="github:{repo:feelpp,path:feelpp/quickstart/laplacian/tetrahedron/tetrahedron.geo}" <i class="conum" data-value="4"></i><b>(4)</b></pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_mesh_exporter \
+  --scalar_expr="g1|sin(2*pi*x)*sin(2*pi*y)*cos(2*pi*z):x:y:z|nodal" \
+  --scalar_expr="g2|sin(3*pi*x)*sin(4*pi*y)*cos(5*pi*z):x:y:z|nodal" \
+  --gmsh.hsize 0.2 \
+  --gmsh.filename="github:{repo:feelpp,path:feelpp/quickstart/laplacian/tetrahedron/tetrahedron.geo}"</code></pre>
 </div>
 </div>
-<div class="colist arabic">
+<div class="paragraph">
+<p>Using <code>--scalar-expr</code>, you can accumulate as many scalar expressions as you want, the format is as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">--scalar_expr="name|expression:x:y:z|nodal"
+--scalar_expr="name|expression:x:y:z|element"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first one creates a field with the name <code>name</code> and the expression <code>expression</code> on the nodal representation.
+The second one creates a field with the name <code>name</code> and the expression <code>expression</code> on the element representation.</p>
+</div>
+<div class="paragraph">
+<p>Using <code>--vectorial-expr</code>, you can accumulate as many vectorial expressions as you want, the format is as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">--vectorial_expr="name|expression:x:y:z|nodal"
+--vectorial_expr="name|expression:x:y:z|element"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first one creates a field with the name <code>name</code> and the expression <code>expression</code> on the nodal representation.
+The second one creates a field with the name <code>name</code> and the expression <code>expression</code> on the element representation.</p>
+</div>
+<div class="paragraph">
+<p>The <code>--gmsh.hsize</code> option is used to set the mesh size, the <code>--gmsh.filename</code> option is used to set the mesh file to be used.</p>
+</div>
+<div class="admonitionblock note">
 <table>
 <tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>scalar expression to be visualised with nodal representation</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>scalar expression to be visualised with nodal representation</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>mesh characteristic size</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>mesh filename</td>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+we have use here the remote data download feature Feel++ application to download data either from GitHub or Girder.
+</td>
 </tr>
 </table>
 </div>
@@ -803,7 +839,7 @@ We use the meshes in <code>src/feelpp/data/gmsh/primitives</code> in the docker 
 <h2 id="_copying"><a class="anchor" href="#_copying"></a>6. COPYING</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Copyright (C) 2017-2019 Feel++ Consortium.<br>
+<p>Copyright (C) 2017-2024 Feel++ Consortium.<br>
 Free use of this software is granted under the terms of the GPLv3 License.</p>
 </div>
 </div>

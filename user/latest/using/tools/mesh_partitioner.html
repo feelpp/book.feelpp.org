@@ -586,7 +586,7 @@ MathJax.Hub.Config({
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>2. SYNOPSIS</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>feelpp_mesh_partitioner --part num [num2&#8230;&#8203;] --ifile file [--dim d] [--shape s] [--order num] [--by-markers] [--by-markers-desc markers] [--ofile file] [--odir dir]</p>
+<p>feelpp_mesh_partitioner --part num [num2&#8230;&#8203;] --ifile file [--dim d] [--json file.json] [--shape s] [--order num] [--by-markers] [--by-markers-desc markers] [--ofile file] [--odir dir]</p>
 </div>
 </div>
 </div>
@@ -594,7 +594,7 @@ MathJax.Hub.Config({
 <h2 id="_description"><a class="anchor" href="#_description"></a>3. DESCRIPTION</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>feelpp_mesh_partitioner is a simple application which can generate a partitioned mesh and
+<p>feelpp_mesh_partitioner is a simple application which can generate a partitioned mesh and
 save it in a Feel++ specific <code>json+hdf5</code> file format.</p>
 </div>
 <div class="paragraph">
@@ -663,6 +663,11 @@ save it in a Feel++ specific <code>json+hdf5</code> file format.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">odir</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">output directory</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">json</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">json file that describes the partitioning</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
@@ -774,6 +779,46 @@ If you want a different prefix than <code>torus</code>, like <code>torus-coarse<
 <p>In <code><code>by-markers-desc</code></code> option, the <code><code>,</code></code> keyword create an union of the markers and <code><code>:</code></code> keyword allow to split the partitioning regions.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_aggregating_elements_of_a_mesh"><a class="anchor" href="#_aggregating_elements_of_a_mesh"></a>4.4. Aggregating elements of a mesh</h3>
+<div class="paragraph">
+<p>For some numerical methods, it is necessary to aggregate elements that share faces marked with a specific marker.
+This is done to</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>avoid these faces are also interprocess faces</p>
+</li>
+<li>
+<p>avoid having degrees of freedom split over different processes</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To do so we use the <code>--json</code> option to specify the partitioning.</p>
+</div>
+<div class="paragraph">
+<p>The following code will aggregate the elements of the spheres marked with <code>CenterSphere</code>, <code>LeftSphere</code> and <code>RightSphere</code> in the mesh on the same processor.
+The aggregation is done by adding weights to the elements sharing the same face marked with the same marker which then force the graph partitioner to put them on the same processor.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "partitioner":
+    {
+        "aggregates":
+        {
+            "spheres":{
+                "type": "faces",
+                "markers": ["CenterSphere","LeftSphere","RightSphere"]
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -788,7 +833,7 @@ If you want a different prefix than <code>torus</code>, like <code>torus-coarse<
 <h2 id="_copying"><a class="anchor" href="#_copying"></a>6. COPYING</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Copyright (C) 2017 Feel++ Consortium.<br>
+<p>Copyright (C) 2017-2024 Feel++ Consortium.<br>
 Free use of this software is granted under the terms of the GPLv3 License.</p>
 </div>
 </div>
