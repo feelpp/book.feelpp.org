@@ -241,12 +241,6 @@ MathJax.Hub.Config({
               <li class="version is-latest">
                 <a href="../../user/latest/index.html">latest</a>
               </li>
-              <li class="version">
-                <a href="../../user/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../user/0.109/index.html">0.109</a>
-              </li>
           </ul>
       </li>
       <li class="component">
@@ -254,12 +248,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../toolboxes/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../../toolboxes/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../toolboxes/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -269,12 +257,6 @@ MathJax.Hub.Config({
               <li class="version is-latest">
                 <a href="../../mor/latest/index.html">latest</a>
               </li>
-              <li class="version">
-                <a href="../../mor/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../mor/0.109/index.html">0.109</a>
-              </li>
           </ul>
       </li>
       <li class="component">
@@ -282,12 +264,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../dev/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../../dev/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../dev/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -437,12 +413,11 @@ e = feelpp.Environment(['fin'], config=feelpp.localRepository("."))</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 ModuleNotFoundError                       Traceback (most recent call last)
-<ipython-input-1-1d4b97f5aec6> in <module>
+File <ipython-input-1-1d4b97f5aec6>:2
       1 import feelpp
 ----> 2 from feelpp_project import laplacian
       3 import json
       4 import os
-      5
 
 ModuleNotFoundError: No module named 'feelpp_project'</pre>
 </div>
@@ -467,11 +442,10 @@ print(data)</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 AttributeError                            Traceback (most recent call last)
-<ipython-input-1-334c38b17d9d> in <module>
+File <ipython-input-1-334c38b17d9d>:1
 ----> 1 feelpp.Environment.setConfigFile(f"{d}/src/cases/laplacian/fin/fin1/fin2d.cfg")
       2 # Reading the JSON file
       3 data = laplacian.loadSpecs(f"{d}/src/cases/laplacian/fin/fin2d.json")
-      4 print(data)
 
 AttributeError: module 'feelpp' has no attribute 'Environment'</pre>
 </div>
@@ -496,11 +470,10 @@ meas=lap.measures()</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-<ipython-input-1-d909663a9992> in <module>
+File <ipython-input-1-d909663a9992>:1
 ----> 1 lap = laplacian.get(dim=2, order=1)
       2 lap.setSpecs(data)
       3 lap.run()
-      4 meas=lap.measures()
 
 NameError: name 'laplacian' is not defined</pre>
 </div>
@@ -525,7 +498,7 @@ print(df.to_markdown())</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-<ipython-input-1-d5bf1c958560> in <module>
+File <ipython-input-1-d5bf1c958560>:2
       1 import pandas as pd
 ----> 2 df = pd.DataFrame(meas)
       3 df.set_index('time', inplace=True)

@@ -432,16 +432,16 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../../feelpp/0.110/acknowledgments.html">Acknowledgments</a>
+    <a class="nav-link" href="#feelpp:ROOT:acknowledgments.adoc">Acknowledgments</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../feelpp/0.110/acknowledgments.html#_funding">Funding</a>
+    <a class="nav-link" href="#feelpp:ROOT:acknowledgments.adoc#_funding">Funding</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../feelpp/0.110/acknowledgments.html#_contributors">Contributors</a>
+    <a class="nav-link" href="#feelpp:ROOT:acknowledgments.adoc#_contributors">Contributors</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../feelpp/0.110/consortium.html">Consortium</a>
+    <a class="nav-link" href="#feelpp:ROOT:consortium.adoc">Consortium</a>
   </li>
 </ul>
   </li>
@@ -465,12 +465,6 @@ MathJax.Hub.Config({
               <li class="version is-current is-latest">
                 <a href="../../index.html">latest</a>
               </li>
-              <li class="version">
-                <a href="../../../0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../0.109/index.html">0.109</a>
-              </li>
           </ul>
       </li>
       <li class="component">
@@ -478,12 +472,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../../../toolboxes/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../../../../toolboxes/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../toolboxes/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -493,12 +481,6 @@ MathJax.Hub.Config({
               <li class="version is-latest">
                 <a href="../../../../mor/latest/index.html">latest</a>
               </li>
-              <li class="version">
-                <a href="../../../../mor/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../mor/0.109/index.html">0.109</a>
-              </li>
           </ul>
       </li>
       <li class="component">
@@ -506,12 +488,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../../../dev/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../../../../dev/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../dev/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -545,15 +521,7 @@ MathJax.Hub.Config({
   </ul>
 </nav>
 
-  <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
-  <div class="version-menu">
-    <a class="version is-current" href="integrals.html">latest</a>
-    <a class="version" href="../../../0.110/python/pyfeelpp/integrals.html">0.110</a>
-    <a class="version is-missing" href="../../../0.109/index.html">0.109</a>
-  </div>
-</div>
-
+  
     <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/user/modules/python/pages/pyfeelpp/integrals.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
@@ -589,9 +557,9 @@ MathJax.Hub.Config({
 <div class="listingblock">
 <div class="title">Set the Feel++ environment with local repository</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp.core as fppc
 import sys
-app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))</code></pre>
+app = fppc.Environment(["myapp"],config=fppc.localRepository(""))</code></pre>
 </div>
 </div>
 <details>
@@ -599,14 +567,7 @@ app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))</code></pr
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-<ipython-input-1-adb11e3d00f1> in <module>
-      1 import feelpp
-      2 import sys
-----> 3 app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))
-
-AttributeError: module 'feelpp' has no attribute 'Environment'</pre>
+<pre></pre>
 </div>
 </div>
 </div>
@@ -628,9 +589,9 @@ The integral over each element is computed using a quadrature formula.</p>
 <div class="listingblock">
 <div class="title">Load a mesh \(\mathcal{T}\)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">geo=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">geo=fppc.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
 print("geo file: {}".format(geo))
-mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)</code></pre>
+mesh = fppc.load(fppc.mesh(dim=2,realdim=2), geo, 0.1)</code></pre>
 </div>
 </div>
 <details>
@@ -638,14 +599,7 @@ mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-<ipython-input-1-a88add7936a4> in <module>
-----> 1 geo=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
-      2 print("geo file: {}".format(geo))
-      3 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)
-
-AttributeError: module 'feelpp' has no attribute 'download'</pre>
+<pre>geo file: /nvme0/prudhomm/github-actions/actions-runner-4/_work/book.feelpp.org/book.feelpp.org/feelppdb/downloads/feelpp2d.geo</pre>
 </div>
 </div>
 </div>
@@ -656,11 +610,11 @@ AttributeError: module 'feelpp' has no attribute 'download'</pre>
 <div class="listingblock">
 <div class="title">Compute integrals</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from feelpp.integrate  import integrate
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from feelpp.core.integrate  import integrate
 
-i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
-i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
-i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")
+i1 = integrate(range=fppc.elements(mesh),expr="sin(x+y):x:y")
+i2 = integrate(range=fppc.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
+i3 = integrate(range=fppc.markedelements(mesh, "marker"), expr="1")
 
 print(f"i1 = {i1}, i2 = {i2}, i3 = {i3}")</code></pre>
 </div>
@@ -670,16 +624,7 @@ print(f"i1 = {i1}, i2 = {i2}, i3 = {i3}")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-<ipython-input-1-69466e4dee8b> in <module>
-----> 1 from feelpp.integrate  import integrate
-      2
-      3 i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
-      4 i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
-      5 i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")
-
-ModuleNotFoundError: No module named 'feelpp.integrate'</pre>
+<pre>i1 = [3.24282386], i2 = [41.6], i3 = [0.]</pre>
 </div>
 </div>
 </div>

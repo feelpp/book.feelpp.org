@@ -432,16 +432,16 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../../feelpp/0.110/acknowledgments.html">Acknowledgments</a>
+    <a class="nav-link" href="#feelpp:ROOT:acknowledgments.adoc">Acknowledgments</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../feelpp/0.110/acknowledgments.html#_funding">Funding</a>
+    <a class="nav-link" href="#feelpp:ROOT:acknowledgments.adoc#_funding">Funding</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../feelpp/0.110/acknowledgments.html#_contributors">Contributors</a>
+    <a class="nav-link" href="#feelpp:ROOT:acknowledgments.adoc#_contributors">Contributors</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../feelpp/0.110/consortium.html">Consortium</a>
+    <a class="nav-link" href="#feelpp:ROOT:consortium.adoc">Consortium</a>
   </li>
 </ul>
   </li>
@@ -465,12 +465,6 @@ MathJax.Hub.Config({
               <li class="version is-current is-latest">
                 <a href="../../index.html">latest</a>
               </li>
-              <li class="version">
-                <a href="../../../0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../0.109/index.html">0.109</a>
-              </li>
           </ul>
       </li>
       <li class="component">
@@ -478,12 +472,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../../../toolboxes/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../../../../toolboxes/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../toolboxes/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -493,12 +481,6 @@ MathJax.Hub.Config({
               <li class="version is-latest">
                 <a href="../../../../mor/latest/index.html">latest</a>
               </li>
-              <li class="version">
-                <a href="../../../../mor/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../mor/0.109/index.html">0.109</a>
-              </li>
           </ul>
       </li>
       <li class="component">
@@ -506,12 +488,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../../../dev/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../../../../dev/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../dev/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -545,15 +521,7 @@ MathJax.Hub.Config({
   </ul>
 </nav>
 
-  <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
-  <div class="version-menu">
-    <a class="version is-current" href="filters.html">latest</a>
-    <a class="version" href="../../../0.110/python/pyfeelpp/filters.html">0.110</a>
-    <a class="version" href="../../../0.109/python/pyfeelpp/filters.html">0.109</a>
-  </div>
-</div>
-
+  
     <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/user/modules/python/pages/pyfeelpp/filters.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
@@ -612,19 +580,20 @@ MathJax.Hub.Config({
 <div class="listingblock">
 <div class="title">Example to build a mesh and function space, create an element and visualize them in ParaView</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp.core as fppc
 import sys,os
 import spdlog as spd
-from feelpp.timing import tic, toc
+from feelpp.core.timing import tic, toc
 
 logger = spd.ConsoleLogger('Logger', False, True, True)
 logger.set_level(spd.LogLevel.TRACE)
 
 tic()
-app = feelpp.Environment(["myapp"],config=feelpp.localRepository("")) <i class="conum" data-value="1"></i><b>(1)</b>
+app = fppc.Environment(["myapp"],config=fppc.localRepository("")) <i class="conum" data-value="1"></i><b>(1)</b>
 toc("init Feel++")
 
-logger.info(f"Feel++ version: {feelpp.Info.version()}")</code></pre>
+logger.info(f"Feel++ version: {fppc.Info.version()}")
+print("Feel++ version: ",fppc.Info.version())</code></pre>
 </div>
 </div>
 <details>
@@ -632,16 +601,7 @@ logger.info(f"Feel++ version: {feelpp.Info.version()}")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-<ipython-input-1-80925bce18e3> in <module>
-      2 import sys,os
-      3 import spdlog as spd
-----> 4 from feelpp.timing import tic, toc
-      5
-      6 logger = spd.ConsoleLogger('Logger', False, True, True)
-
-ModuleNotFoundError: No module named 'feelpp.timing'</pre>
+<pre>Feel++ version:  0.111.0-preview.100</pre>
 </div>
 </div>
 </div>
@@ -657,23 +617,23 @@ ModuleNotFoundError: No module named 'feelpp.timing'</pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">app.setLogVerbosityLevel(0) <i class="conum" data-value="1"></i><b>(1)</b>
-geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+geofilename=fppc.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
 
 tic()
-mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) <i class="conum" data-value="2"></i><b>(2)</b>
+mesh = fppc.load(fppc.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) <i class="conum" data-value="2"></i><b>(2)</b>
 toc("load mesh")
 logger.info(f"mesh loaded")
 
-Xh=feelpp.functionSpace(mesh=mesh,space="Pch",order=1) <i class="conum" data-value="3"></i><b>(3)</b>
-P0h=feelpp.functionSpace(mesh=mesh,space="Pdh",order=0) <i class="conum" data-value="4"></i><b>(4)</b>
+Xh=fppc.functionSpace(mesh=mesh,space="Pch",order=1) <i class="conum" data-value="3"></i><b>(3)</b>
+P0h=fppc.functionSpace(mesh=mesh,space="Pdh",order=0) <i class="conum" data-value="4"></i><b>(4)</b>
 u=Xh.element() <i class="conum" data-value="5"></i><b>(5)</b>
-u.on(range=feelpp.elements(mesh), expr=feelpp.expr("sin(2*pi*x)*cos(pi*y):x:y")) <i class="conum" data-value="6"></i><b>(6)</b>
+u.on(range=fppc.elements(mesh), expr=fppc.expr("sin(2*pi*x)*cos(pi*y):x:y")) <i class="conum" data-value="6"></i><b>(6)</b>
 logger.info(f"functionspace built and u created")
 
-e = feelpp.exporter(mesh=mesh)  <i class="conum" data-value="7"></i><b>(7)</b>
+e = fppc.exporter(mesh=mesh)  <i class="conum" data-value="7"></i><b>(7)</b>
 e.add("a_scalar", 1.) <i class="conum" data-value="8"></i><b>(8)</b>
 e.add("u",u) <i class="conum" data-value="9"></i><b>(9)</b>
-e.add("pid",feelpp.pid( P0h )) <i class="conum" data-value="10"></i><b>(10)</b>
+e.add("pid",fppc.pid( P0h )) <i class="conum" data-value="10"></i><b>(10)</b>
 e.save() <i class="conum" data-value="11"></i><b>(11)</b>
 logger.info(f"export done")</code></pre>
 </div>
@@ -683,16 +643,7 @@ logger.info(f"export done")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-NameError                                 Traceback (most recent call last)
-<ipython-input-1-1774bf3ed91d> in <module>
-----> 1 app.setLogVerbosityLevel(0) #
-      2 geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
-      3
-      4 tic()
-      5 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) #
-
-NameError: name 'app' is not defined</pre>
+<pre></pre>
 </div>
 </div>
 </div>
@@ -758,7 +709,6 @@ vdisplay = Xvfb()
 vdisplay.start()
 import pyvista as pv
 import os
-pv.set_jupyter_backend('pythreejs')
 
 def pv_get_mesh(mesh_path):
     reader = pv.get_reader(mesh_path)
@@ -781,17 +731,11 @@ axes = pv.create_axes_marker(
                                 zlabel="Z Axis",
                                 label_size=(0.1, 0.1), label_color="#aaaaaa",
                             )
-plotter.add_actor(axes)
+#plotter.add_actor(axes)
 
 plotter.show()</code></pre>
 </div>
 </div>
-<details>
-<summary class="title">Results</summary>
-<div class="content">
-
-</div>
-</details>
 <nav class="pagination">
   <span class="prev"><a href="integrals.html">Computing integrals</a></span>
   <span class="next"><a href="../pyfeelpptoolboxes/index.html">pyFeel++ Toolboxes</a></span>

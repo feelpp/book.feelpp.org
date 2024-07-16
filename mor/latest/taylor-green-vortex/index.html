@@ -184,12 +184,6 @@ MathJax.Hub.Config({
               <li class="version is-latest">
                 <a href="../../../user/latest/index.html">latest</a>
               </li>
-              <li class="version">
-                <a href="../../../user/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../user/0.109/index.html">0.109</a>
-              </li>
           </ul>
       </li>
       <li class="component">
@@ -197,12 +191,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../../toolboxes/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../../../toolboxes/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../toolboxes/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -212,12 +200,6 @@ MathJax.Hub.Config({
               <li class="version is-current is-latest">
                 <a href="../index.html">latest</a>
               </li>
-              <li class="version">
-                <a href="../../0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../0.109/index.html">0.109</a>
-              </li>
           </ul>
       </li>
       <li class="component">
@@ -225,12 +207,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../../dev/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../../../dev/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../dev/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -258,15 +234,7 @@ MathJax.Hub.Config({
   <nav class="breadcrumbs" aria-label="breadcrumbs">
 </nav>
 
-  <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
-  <div class="version-menu">
-    <a class="version is-current" href="index.html">latest</a>
-    <a class="version is-missing" href="../../0.110/index.html">0.110</a>
-    <a class="version is-missing" href="../../0.109/index.html">0.109</a>
-  </div>
-</div>
-
+  
     <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/mor/modules/ROOT/pages/taylor-green-vortex/index.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
@@ -520,7 +488,7 @@ with open(fpp_name,'wb') as f:
 <div class="content">
 <pre>---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-<ipython-input-1-5c5aa891ff02> in <module>
+File <ipython-input-1-5c5aa891ff02>:2
       1 import requests
 ----> 2 r=requests.get(girder_path)
       3 with open(fpp_name,'wb') as f:
@@ -542,7 +510,7 @@ NameError: name 'girder_path' is not defined</pre>
 <div class="listingblock">
 <div class="title">Create the online model, choose randomly 4 parameter vectors and simulate them using a reduced basis of 10 elements</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp as fpppc
 from feelpp.mor import *
 ms=feelpp.mor.MORModels(fpp_name)
 muspace = ms.parameterSpace()
@@ -558,8 +526,8 @@ r=ms.run(sampling,{"N":10})</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-<ipython-input-1-5c70aaa6dd7d> in <module>
-      1 import feelpp
+File <ipython-input-1-b1fe66a227c1>:3
+      1 import feelpp as fpppc
       2 from feelpp.mor import *
 ----> 3 ms=feelpp.mor.MORModels(fpp_name)
       4 muspace = ms.parameterSpace()
@@ -617,7 +585,7 @@ for frame in output_dataframes:
 <div class="content">
 <pre>---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-<ipython-input-1-62a649bfbc5a> in <module>
+File <ipython-input-1-62a649bfbc5a>:8
       6 output_dataframes = list()
       7 errors_dataframes = list()
 ----> 8 for i in range(len(r)):

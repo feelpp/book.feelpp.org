@@ -432,16 +432,16 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../../feelpp/0.110/acknowledgments.html">Acknowledgments</a>
+    <a class="nav-link" href="#feelpp:ROOT:acknowledgments.adoc">Acknowledgments</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../feelpp/0.110/acknowledgments.html#_funding">Funding</a>
+    <a class="nav-link" href="#feelpp:ROOT:acknowledgments.adoc#_funding">Funding</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../feelpp/0.110/acknowledgments.html#_contributors">Contributors</a>
+    <a class="nav-link" href="#feelpp:ROOT:acknowledgments.adoc#_contributors">Contributors</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../feelpp/0.110/consortium.html">Consortium</a>
+    <a class="nav-link" href="#feelpp:ROOT:consortium.adoc">Consortium</a>
   </li>
 </ul>
   </li>
@@ -465,12 +465,6 @@ MathJax.Hub.Config({
               <li class="version is-current is-latest">
                 <a href="../../index.html">latest</a>
               </li>
-              <li class="version">
-                <a href="../../../0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../0.109/index.html">0.109</a>
-              </li>
           </ul>
       </li>
       <li class="component">
@@ -478,12 +472,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../../../toolboxes/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../../../../toolboxes/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../toolboxes/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -493,12 +481,6 @@ MathJax.Hub.Config({
               <li class="version is-latest">
                 <a href="../../../../mor/latest/index.html">latest</a>
               </li>
-              <li class="version">
-                <a href="../../../../mor/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../mor/0.109/index.html">0.109</a>
-              </li>
           </ul>
       </li>
       <li class="component">
@@ -506,12 +488,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../../../dev/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../../../../dev/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../dev/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -545,15 +521,7 @@ MathJax.Hub.Config({
   </ul>
 </nav>
 
-  <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
-  <div class="version-menu">
-    <a class="version is-current" href="discr.html">latest</a>
-    <a class="version" href="../../../0.110/python/pyfeelpp/discr.html">0.110</a>
-    <a class="version" href="../../../0.109/python/pyfeelpp/discr.html">0.109</a>
-  </div>
-</div>
-
+  
     <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/user/modules/python/pages/pyfeelpp/discr.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
@@ -589,15 +557,14 @@ We download a 2D and 3D geometry from the Feel++ github repository.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp.core as fppc
 import sys
 
-app=feelppEnvironment(["myapp"],config=localRepository(""))
+app=fppc.Environment(["myapp"],config=fppc.localRepository(""))
 
-from pyfeelpp import mesh,discr,vf
 geo={
-    '2':feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0],
-    '3':feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp3d/feelpp3d.geo}", worldComm=app.worldCommPtr() )[0]
+    '2':fppc.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0],
+    '3':fppc.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp3d/feelpp3d.geo}", worldComm=app.worldCommPtr() )[0]
 }
 print(" . 2D geometry file: {}".format(geo['2']))
 print(" . 3D geometry file: {}".format(geo['3']))</code></pre>
@@ -608,16 +575,8 @@ print(" . 3D geometry file: {}".format(geo['3']))</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-NameError                                 Traceback (most recent call last)
-<ipython-input-1-a381e3c20adc> in <module>
-      2 import sys
-      3
-----> 4 app=feelppEnvironment(["myapp"],config=localRepository(""))
-      5
-      6 from pyfeelpp import mesh,discr,vf
-
-NameError: name 'feelppEnvironment' is not defined</pre>
+<pre> . 2D geometry file: /nvme0/prudhomm/github-actions/actions-runner-4/_work/book.feelpp.org/book.feelpp.org/feelppdb/downloads/feelpp2d.geo
+ . 3D geometry file: /nvme0/prudhomm/github-actions/actions-runner-4/_work/book.feelpp.org/book.feelpp.org/feelppdb/downloads/feelpp3d.geo</pre>
 </div>
 </div>
 </div>
@@ -640,8 +599,8 @@ Scalar functions \(f \Omega \rightarrow \mathbb{R}\) are defined on the mesh and
 <div class="title">2D mesh and function space example</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def run( m, geo ):
-    m2d = feelpp.load(m,geo,0.1)
-    Xh=feelpp.functionSpace(mesh=m2d)
+    m2d = fppc.load(m,geo,0.1)
+    Xh=fppc.functionSpace(mesh=m2d)
 
     if app.isMasterRank():
         print("Xh basisname: ", Xh.basisName())
@@ -655,12 +614,12 @@ Scalar functions \(f \Omega \rightarrow \mathbb{R}\) are defined on the mesh and
     assert m3==m2d
 
     u=Xh.element()
-    u.on(range=feelpp.elements(m2d),expr=feelpp.expr("x:x"))
+    u.on(range=fppc.elements(m2d),expr=fppc.expr("x:x"))
 
     assert u.functionSpace() == Xh
     assert u.size() == Xh.nDof()
 
-run( feelpp.mesh(dim=2), geo['2'] )</code></pre>
+run( fppc.mesh(dim=2), geo['2'] )</code></pre>
 </div>
 </div>
 <details>
@@ -668,14 +627,11 @@ run( feelpp.mesh(dim=2), geo['2'] )</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-<ipython-input-1-d756b5c7b176> in <module>
-     20     assert u.size() == Xh.nDof()
-     21
----> 22 run( feelpp.mesh(dim=2), geo['2'] )
-
-AttributeError: module 'feelpp' has no attribute 'mesh'</pre>
+<pre>Xh basisname:  lagrange
+Xh nDof:  2867
+Xh nLocalDof:  2867
+Xh nLocalDofWithGhost:  2867
+Xh nLocalDofWithoutGhost:  2867</pre>
 </div>
 </div>
 </div>
@@ -686,7 +642,7 @@ AttributeError: module 'feelpp' has no attribute 'mesh'</pre>
 <div class="listingblock">
 <div class="title">3D mesh and function space example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">run( feelpp.mesh(dim=3,realdim=3), geo['3'] )</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">run( fppc.mesh(dim=3,realdim=3), geo['3'] )</code></pre>
 </div>
 </div>
 <details>
@@ -694,12 +650,11 @@ AttributeError: module 'feelpp' has no attribute 'mesh'</pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-<ipython-input-1-cd6e1bb2a6d3> in <module>
-----> 1 run( feelpp.mesh(dim=3,realdim=3), geo['3'] )
-
-AttributeError: module 'feelpp' has no attribute 'mesh'</pre>
+<pre>Xh basisname:  lagrange
+Xh nDof:  21739
+Xh nLocalDof:  21739
+Xh nLocalDofWithGhost:  21739
+Xh nLocalDofWithoutGhost:  21739</pre>
 </div>
 </div>
 </div>

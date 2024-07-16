@@ -432,16 +432,16 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../../feelpp/0.110/acknowledgments.html">Acknowledgments</a>
+    <a class="nav-link" href="#feelpp:ROOT:acknowledgments.adoc">Acknowledgments</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../feelpp/0.110/acknowledgments.html#_funding">Funding</a>
+    <a class="nav-link" href="#feelpp:ROOT:acknowledgments.adoc#_funding">Funding</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../feelpp/0.110/acknowledgments.html#_contributors">Contributors</a>
+    <a class="nav-link" href="#feelpp:ROOT:acknowledgments.adoc#_contributors">Contributors</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../feelpp/0.110/consortium.html">Consortium</a>
+    <a class="nav-link" href="#feelpp:ROOT:consortium.adoc">Consortium</a>
   </li>
 </ul>
   </li>
@@ -465,12 +465,6 @@ MathJax.Hub.Config({
               <li class="version is-current is-latest">
                 <a href="../../index.html">latest</a>
               </li>
-              <li class="version">
-                <a href="../../../0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../0.109/index.html">0.109</a>
-              </li>
           </ul>
       </li>
       <li class="component">
@@ -478,12 +472,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../../../toolboxes/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../../../../toolboxes/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../toolboxes/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -493,12 +481,6 @@ MathJax.Hub.Config({
               <li class="version is-latest">
                 <a href="../../../../mor/latest/index.html">latest</a>
               </li>
-              <li class="version">
-                <a href="../../../../mor/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../mor/0.109/index.html">0.109</a>
-              </li>
           </ul>
       </li>
       <li class="component">
@@ -506,12 +488,6 @@ MathJax.Hub.Config({
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../../../dev/latest/index.html">latest</a>
-              </li>
-              <li class="version">
-                <a href="../../../../dev/0.110/index.html">0.110</a>
-              </li>
-              <li class="version">
-                <a href="../../../../dev/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
@@ -545,15 +521,7 @@ MathJax.Hub.Config({
   </ul>
 </nav>
 
-  <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
-  <div class="version-menu">
-    <a class="version is-current" href="mesh.html">latest</a>
-    <a class="version" href="../../../0.110/python/pyfeelpp/mesh.html">0.110</a>
-    <a class="version" href="../../../0.109/python/pyfeelpp/mesh.html">0.109</a>
-  </div>
-</div>
-
+  
     <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/user/modules/python/pages/pyfeelpp/mesh.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
@@ -589,9 +557,9 @@ MathJax.Hub.Config({
 <div class="listingblock">
 <div class="title">Set the Feel++ environment with local repository</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp.core as fppc
 import sys
-app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))</code></pre>
+app = fppc.Environment(["myapp"],config=fppc.localRepository(""))</code></pre>
 </div>
 </div>
 <details>
@@ -599,14 +567,7 @@ app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))</code></pr
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-<ipython-input-1-adb11e3d00f1> in <module>
-      1 import feelpp
-      2 import sys
-----> 3 app = feelpp.Environment(["myapp"],config=feelpp.localRepository(""))
-
-AttributeError: module 'feelpp' has no attribute 'Environment'</pre>
+<pre></pre>
 </div>
 </div>
 </div>
@@ -617,7 +578,7 @@ AttributeError: module 'feelpp' has no attribute 'Environment'</pre>
 <h2 id="_load_a_mesh_from_a_geo_or_msh_file"><a class="anchor" href="#_load_a_mesh_from_a_geo_or_msh_file"></a>1. Load a mesh from a <code>geo</code> or <code>msh</code> file</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><code>feelpp.mesh(dim=2, geo=1, realdim=2, worldComm=None)</code> : create a mesh.
+<p><code>fppc.mesh(dim=2, geo=1, realdim=2, worldComm=None)</code> : create a mesh.
 The mesh is of topological dimension <code>dim</code>, in real dimension <code>realdim</code> with geometric order <code>geo</code>.
 The mesh is configured with a <code>WorldComm</code> which provides the parallel process layout.</p>
 </div>
@@ -641,7 +602,7 @@ The mesh is configured with a <code>WorldComm</code> which provides the parallel
 </ul>
 </div>
 <div class="paragraph">
-<p><code>feelpp.load(m, path, size) &#8594; feelpp._mesh.Mesh_S1DG1R1</code> : load a mesh from a file</p>
+<p><code>fppc.load(m, path, size) &#8594; fppc._mesh.Mesh_S1DG1R1</code> : load a mesh from a file</p>
 </div>
 <div class="ulist">
 <ul>
@@ -659,9 +620,9 @@ The mesh is configured with a <code>WorldComm</code> which provides the parallel
 <div class="listingblock">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">geo=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">geo=fppc.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
 print("geo file: {}".format(geo))
-mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)</code></pre>
+mesh = fppc.load(fppc.mesh(dim=2,realdim=2), geo, 0.1)</code></pre>
 </div>
 </div>
 <details>
@@ -669,14 +630,7 @@ mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-<ipython-input-1-a88add7936a4> in <module>
-----> 1 geo=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
-      2 print("geo file: {}".format(geo))
-      3 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), geo, 0.1)
-
-AttributeError: module 'feelpp' has no attribute 'download'</pre>
+<pre>geo file: /nvme0/prudhomm/github-actions/actions-runner-4/_work/book.feelpp.org/book.feelpp.org/feelppdb/downloads/feelpp2d.geo</pre>
 </div>
 </div>
 </div>
@@ -753,16 +707,14 @@ print(f"measure of boundary: {mesh.measureBoundary()}")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-NameError                                 Traceback (most recent call last)
-<ipython-input-1-37c3c5e7fd2c> in <module>
-----> 1 print(f"dimention: {mesh.dimension()}")
-      2 print(f"number of elements: {mesh.numGlobalElements()}")
-      3 print(f"number of faces: {mesh.numGlobalFaces()}")
-      4 print(f"hmin: {mesh.hMin()}")
-      5 print(f"havg: {mesh.hAverage()}")
-
-NameError: name 'mesh' is not defined</pre>
+<pre>dimention: 2
+number of elements: 5134
+number of faces: 8006
+hmin: 0.0763352613189128
+havg: 0.10274873094289755
+hmax: 0.13695416558140516
+measure: 20.79999999999997
+measure of boundary: 1497.0959239128888</pre>
 </div>
 </div>
 </div>
@@ -773,16 +725,16 @@ NameError: name 'mesh' is not defined</pre>
 <div class="ulist">
 <ul>
 <li>
-<p><code>isParentMeshOf(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) &#8594; bool</code> : is the mesh the parent mesh of another mesh</p>
+<p><code>isParentMeshOf(self: fppc._mesh.Mesh_S3DG1R3, arg0: fppc._mesh.Mesh_S3DG1R3) &#8594; bool</code> : is the mesh the parent mesh of another mesh</p>
 </li>
 <li>
-<p><code>isRelatedTo(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) &#8594; bool</code> : is the mesh related to another mesh</p>
+<p><code>isRelatedTo(self: fppc._mesh.Mesh_S3DG1R3, arg0: fppc._mesh.Mesh_S3DG1R3) &#8594; bool</code> : is the mesh related to another mesh</p>
 </li>
 <li>
-<p><code>isSiblingOf(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) &#8594; bool</code>: is the mesh a sibling of another mesh</p>
+<p><code>isSiblingOf(self: fppc._mesh.Mesh_S3DG1R3, arg0: fppc._mesh.Mesh_S3DG1R3) &#8594; bool</code>: is the mesh a sibling of another mesh</p>
 </li>
 <li>
-<p><code>isSubMeshFrom(self: feelpp._mesh.Mesh_S3DG1R3, arg0: feelpp._mesh.Mesh_S3DG1R3) &#8594; bool</code> : is the mesh a sub mesh of another mesh</p>
+<p><code>isSubMeshFrom(self: fppc._mesh.Mesh_S3DG1R3, arg0: fppc._mesh.Mesh_S3DG1R3) &#8594; bool</code> : is the mesh a sub mesh of another mesh</p>
 </li>
 </ul>
 </div>
@@ -809,34 +761,34 @@ NameError: name 'mesh' is not defined</pre>
 <dl>
 <dt class="hdlist1"><code>elements</code></dt>
 <dd>
-<p><code>feelpp.elements(mesh)</code> : get iterator over the elements of the mesh</p>
+<p><code>fppc.elements(mesh)</code> : get iterator over the elements of the mesh</p>
 </dd>
 <dt class="hdlist1"><code>markedelements</code></dt>
 <dd>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>feelpp.markedelements(mesh, tag: str)</code> : get iterator over the marked elements of the mesh</p>
+<p><code>fppc.markedelements(mesh, tag: str)</code> : get iterator over the marked elements of the mesh</p>
 </li>
 <li>
-<p><code>feelpp.markedelements(mesh, marker: str)</code> :  return the range of elements of the mesh with marker</p>
+<p><code>fppc.markedelements(mesh, marker: str)</code> :  return the range of elements of the mesh with marker</p>
 </li>
 <li>
-<p><code>feelpp.markedelements(mesh, markers: List[str])</code> : return the range of elements of the mesh with markers</p>
+<p><code>fppc.markedelements(mesh, markers: List[str])</code> : return the range of elements of the mesh with markers</p>
 </li>
 </ol>
 </div>
 </dd>
 <dt class="hdlist1"><code>faces</code></dt>
 <dd>
-<p><code>feelpp.faces(mesh)</code> : get iterator over the faces of the mesh</p>
+<p><code>fppc.faces(mesh)</code> : get iterator over the faces of the mesh</p>
 </dd>
 <dt class="hdlist1"><code>markedfaces</code></dt>
 <dd>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>feelpp.markedfaces(mesh, marker: str)</code> : return the range of facets of the mesh with marker</p>
+<p><code>fppc.markedfaces(mesh, marker: str)</code> : return the range of facets of the mesh with marker</p>
 </li>
 <li>
 <p><code>markedfaces(mesh, markers: List[str])</code> : return the range of facets of the mesh with marker</p>
@@ -846,7 +798,7 @@ NameError: name 'mesh' is not defined</pre>
 </dd>
 <dt class="hdlist1"><code>boundaryfaces</code></dt>
 <dd>
-<p><code>feelpp.boundaryfaces(mesh)</code>: get iterator over the boundary faces of the mesh</p>
+<p><code>fppc.boundaryfaces(mesh)</code>: get iterator over the boundary faces of the mesh</p>
 </dd>
 </dl>
 </div>
@@ -855,10 +807,10 @@ NameError: name 'mesh' is not defined</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">r = feelpp.elements(mesh)
-print("mesh elts:", feelpp.nelements(r))
-r = feelpp.boundaryfaces(mesh)
-print("mesh boundary faces:", feelpp.nelements(r))</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">r = fppc.elements(mesh)
+print("mesh elts:", fppc.nelements(r))
+r = fppc.boundaryfaces(mesh)
+print("mesh boundary faces:", fppc.nelements(r))</code></pre>
 </div>
 </div>
 <details>
@@ -866,15 +818,8 @@ print("mesh boundary faces:", feelpp.nelements(r))</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-<ipython-input-1-6afcd730eec0> in <module>
-----> 1 r = feelpp.elements(mesh)
-      2 print("mesh elts:", feelpp.nelements(r))
-      3 r = feelpp.boundaryfaces(mesh)
-      4 print("mesh boundary faces:", feelpp.nelements(r))
-
-AttributeError: module 'feelpp' has no attribute 'elements'</pre>
+<pre>mesh elts: 5134
+mesh boundary faces: 610</pre>
 </div>
 </div>
 </div>
@@ -885,11 +830,11 @@ AttributeError: module 'feelpp' has no attribute 'elements'</pre>
 <div class="listingblock">
 <div class="title">Example : compute integrals</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from feelpp.integrate  import integrate
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from feelpp.core.integrate  import integrate
 
-i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
-i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
-i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")
+i1 = integrate(range=fppc.elements(mesh),expr="sin(x+y):x:y")
+i2 = integrate(range=fppc.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
+i3 = integrate(range=fppc.markedelements(mesh, "marker"), expr="1")
 
 print(f"i1 = {i1}, i2 = {i2}, i3 = {i3}")</code></pre>
 </div>
@@ -899,16 +844,7 @@ print(f"i1 = {i1}, i2 = {i2}, i3 = {i3}")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-<ipython-input-1-69466e4dee8b> in <module>
-----> 1 from feelpp.integrate  import integrate
-      2
-      3 i1 = integrate(range=feelpp.elements(mesh),expr="sin(x+y):x:y")
-      4 i2 = integrate(range=feelpp.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
-      5 i3 = integrate(range=feelpp.markedelements(mesh, "marker"), expr="1")
-
-ModuleNotFoundError: No module named 'feelpp.integrate'</pre>
+<pre>i1 = [3.24282386], i2 = [41.6], i3 = [0.]</pre>
 </div>
 </div>
 </div>
