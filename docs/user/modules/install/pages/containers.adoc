@@ -7,7 +7,7 @@ Containers provide an all-in one programming environment to start directly using
 {feelpp} is provided with two containers solutions currently:
 
 . link:https://www.docker.com/what-docker[Docker]
-. link:http://singularity.lbl.gov/about[Singularity]
+. link:https://apptainer.org[Apptainer] and https://apptainer.org/docs/user/latest/[Apptainer documentation]
 
 Depending on your usage and your operating system, you might prefer using one of these previous solutions.
 On a laptop or workstation Docker and Singularity are preferred while on a cluster Singularity is preferred.
@@ -85,14 +85,14 @@ mpirun --bind-to core -np 10 feelpp_toolbox_fluid --case "github:{path:toolboxes
 
 == Apptainer
 
-Apptainer is a container technology initially developed to work with
+https://apptainer.org[Apptainer] is a container technology initially developed to work with
 HPC infrastructure and address security issues in multi-user environments.
 It allows users to run applications in a portable and reproducible environment,
 making it ideal for scientific and engineering workflows.
 
 We now pull/push SIF images from/to GitHub Container Registry (ghcr.io). 
 Feel++ images can be found at the following link:
-https://github.com/feelpp/feelpp/pkgs/container/feelpp.
+https://github.com/feelpp/feelpp/pkgs/container/feelpp[> Feel++ Packages].
 
 We currently provide the same main images as for Docker, but the suffix naming might vary
 depending on the image version.
@@ -120,9 +120,10 @@ download one of the images available on ghcr.io and run it interactively or exec
 
 Once downloaded, you can enter the container interactively with the command line:
 
+.Run the container interactively 
 [source,bash]
 ----
-apptainer shell -B ${HOME}/feel:/feel feelpp-noble.sif
+apptainer shell feelpp-noble.sif
 ----
 
 Or run a specific command:
