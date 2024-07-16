@@ -28,23 +28,17 @@ Ubuntu LTS distributions jammy(22.04-preferred) is supported.
 
 We may support short term distributions.
 
+[[noble]]
+[discrete]
+=== Noble Numbat LTS (24.04)
+
+par::[ubuntu,noble,latest]
+
 [[jammy]]
 [discrete]
 === Jammy LTS (22.04)
 
 par::[ubuntu,jammy,latest]
-
-[[lunar]]
-[discrete]
-=== Lunar (23.04)
-
-par::[ubuntu,lunar,latest]
-
-[[kinetic]]
-[discrete]
-=== Kinetic (22.10)
-
-par::[ubuntu,kinetic,latest]
 
 [[focal]]
 [discrete]
@@ -59,9 +53,8 @@ The supported systems are described below
 |===
 |Distribution | Release | Version | Supported Channels | Comment
 
+|ubuntu | noble | 24.04 | latest | LTS
 |ubuntu | jammy | 22.04 | latest | LTS
-|ubuntu | lunar | 23.04 | latest |
-|ubuntu | kinetic | 22.10 | latest |
 |ubuntu | focal | 20.04 | latest | LTS
 
 
@@ -72,7 +65,7 @@ include::partial$install-deb.adoc[]
 Debian::
 +
 --
-Debian LTS distributions bookworm(12) and bullseye(11) are supported.
+Debian LTS distribution bookworm(12) is supported.
 
 //Debian Sid packages are also available.
 
@@ -83,7 +76,6 @@ The supported systems are described below
 |Distribution | Release | Version | Supported Channels | Comment
 
 |debian |bookworm | 12 | latest | LTS
-|debian |bullseye | 11 | latest | LTS
 |debian |testing| - | latest | testing
 |debian |sid| - | latest | unstable
 
@@ -139,7 +131,7 @@ Windows 10::
 To use {feelpp} on Windows 10, follow these steps:
 
  * [x] install https://docs.microsoft.com/fr-fr/windows/wsl/install-win10:[WSL (Windows Subsystem for Linux)]
- * [x] install https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions[Ubuntu focal (20.04) Ubuntu jammy(22.04) or Debian bullseye(11)]
+ * [x] install https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions[Ubuntu jammy(22.04) Ubuntu focal (20.04) or Debian bookworm(12)]
  * [x] follow the corresponding Ubuntu or Debian {feelpp} installation steps
 
 include::partial$install-deb.adoc[]
@@ -162,6 +154,14 @@ docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:jammy
 ----
 docker pull ghcr.io/feelpp/feelpp-dev:jammy
 docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-dev:jammy
+----
+
+[NOTE]
+----
+These images are also available for
+
+* Ubuntu 20.04 (focal): ghcr.io/feelpp/feelpp:focal
+* Debian 12 (bookworm): ghcr.io/feelpp/feelpp:bookworm
 ----
 --
 // MacOSX::
