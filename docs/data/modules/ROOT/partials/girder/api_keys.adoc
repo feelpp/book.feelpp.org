@@ -1,0 +1,79 @@
+= Using API keys
+
+An API key grants access to a certain set of files, with various permissions.
+It is very useful and quite convenient to use.
+Since it is nothing more than a character string, one could think of it as a
+long and pseudorandom special password.
+
+NOTE: To learn how to set API keys, read
+link:http://girder.readthedocs.io/en/latest/user-guide.html#api-keys[this part]
+of the documentation.
+
+== Download
+
+To use an API key to download a file, see this script:
+
+[source, python]
+----
+#!/usr/bin/env python3
+
+
+# We need the girder client module.
+import girder_client
+
+# First, we initiate the client with the girder server address.
+gc = girder_client.GirderClient(apiUrl='https://girder.math.unistra.fr/api/v1')
+
+# We authenticate using only the API key
+gc.authenticate(apiKey='KEY')                   # <1>
+
+# We download the file using its file ID. The path indicates where the file
+# should be written (the full file name should be included at the end of the path)
+gc.downloadFile(fileId='FILEID', path='PATH')   # <2>
+
+----
+
+<1> *KEY* is the only needed information to authenticate.
+
+<2> *FILEID* should be replaced by the actual Girder file ID and *PATH* should
+be the path where to store the results, including the desired file name and
+extension.
+
+
+== Upload
+
+To upload using an API key:
+
+[source, python]
+----
+#!/usr/bin/env python3
+
+
+# We need the girder client module.
+import girder_client
+
+# First, we initiate the client with the girder server address.
+gc = girder_client.GirderClient(apiUrl='https://girder.math.unistra.fr/api/v1')
+
+# We authenticate using only the API key
+gc.authenticate(apiKey='KEY')                   # <1>
+
+# /!\ This is mandatory: we have to open the file in read mode before
+# uploading it
+f = open('PATH', 'r')                                 # <2>
+
+# Now we can upload the file                            <3>
+gc.uploadFile(parentId='PID', stream=f, name="NAME", size=SIZE, parentType='TYPE')
+
+----
+
+<1> *KEY* is the only needed information to authenticate.
+
+<2> *PATH* should be replaced by the full path to the file to read.
+*r* stands for "read mode".
+
+<3> *PID* should be replaced by the parent directory ID (on the Girder server).
+*f* is the read stream defined previously .
+*NAME* should be replaced by the desired file name (on the Girder server).
+*SIZE* should be replaced by the file size (in bytes).
+*TYPE* is either *folder*, *user*, or *collection*.

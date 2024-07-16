@@ -1,0 +1,69 @@
+== File access options
+
+A big advantage of girder is that files can be accessed either with a nice user
+interface (in a web browser) or more programmatically (via CLI or programming
+interfaces).
+This is true for both upload and download.
+
+=== Web browser UI
+
+If you are new to Girder, you should start with the web user interface to
+discover the service.
+You are encouraged to read the documentation
+link:http://girder.readthedocs.io/[documentation] and especially the
+link:http://girder.readthedocs.io/en/latest/user-docs.html[user guide].
+For example, using a web browser, you can reach
+link:https://girder.math.unistra.fr/#collections[our server].
+
+|===
+| image:girder/girder_web_ui.png[Web user interface,100%]
+|===
+
+NOTE: This is quite straightforward and it should illustrate important concepts
+and help better visualize the following section.
+
+=== Python API
+
+To download or upload a file using python, we have two options.
+We can either use a login system (user + password) or an API key.
+- With the user/password, we will need to provide a user and a password to
+access files, just like a human would do using the UI.
+- With an API key, the script only needs an API key.
+This means we do not need to have an account on the Girder server.
+
+In both cases, similar pieces of information are required:
+
+- an *address* (URL):  to reach the server,
+- a *file ID*: to tell which file/directory we want to manipulate,
+- either a *user/password* pair or an *API key*: to grant access to the
+required file(s).
+
+=== {feelpp} remotedata tool
+
+The application `feelpp_remotedata` can also be used to upload/download data from Girder, both files and entire folders.
+Some examples of its usage follow, and additional information can be found xref:user:using:tools/remotedata.adoc[here].
+
+.Download one file into a specific directory
+----
+feelpp_remotedata --download "girder:{file:5b1f8707b0e9570499f66bd0}" --data $HOME/mydir
+----
+.Download one folder
+----
+feelpp_remotedata --download "girder:{folder:<folder-id>}"
+----
+.Upload one file/folder (requires authentication)
+----
+feelpp_remotedata --upload "girder:{folder:<a folder id>}" --data $HOME/mydata
+----
+
+A Python interface to these functionalities is also available.
+
+.Download two files from Girder using Python
+[source,python]
+----
+import feelpp as fpp
+app = fpp.Environment(["myapp"],config=fpp.localRepository(""))
+sm_csv_names = fpp.download( "girder:{file:[<file1-id>,<file2-id>]}", worldComm=app.worldCommPtr())
+# It is possible to download an entire folder in zip format
+# sm_csv_zipped_folder = fpp.download( "girder:{folder:<folder-id>}", worldComm=app.worldCommPtr())
+----

@@ -1,0 +1,134 @@
+= Python scripts
+
+Here, we provide some python scripts to access files on Girder.
+To be able to use them, please install the girder client python module (read how
+link:http://girder.readthedocs.io/en/latest/python-client.html[here].
+)
+
+== With user and password
+
+=== What not to do
+
+WARNING: The following script is only meant as a first approach to understand
+how the module works.
+You should not use it because it requires your password to be written in clear
+in the script.
+Use the interactive version instead.
+
+[source, python]
+----
+#!/usr/bin/env python3
+
+
+# We need the girder client module.
+import girder_client
+
+# First, we initiate the client with the girder server address.
+gc = girder_client.GirderClient(apiUrl='https://girder.math.unistra.fr/api/v1')
+
+# We authenticate using the username and the password.
+# /!\ This is for learning purpose.
+# For security reasons, you should never put your password in the script.
+gc.authenticate(username='USER', password='PASSWORD')   # <1>
+
+# We download the file using its file ID. The path indicates where the file
+# should be written (the file name should be included at the end of the path)
+gc.downloadFile(fileId='FILEID', path='PATH')           # <2>
+
+----
+<1> *USER* should be replaced by the Girder user name,
+*PASSWORD* by the corresponding password
+<2> *FILEID* should be replaced by the actual Girder file ID and *PATH* should
+be the path where to store the results, including the desired file name and
+extension.
+
+WARNING: If you don't supply the file name, the system will not warn you, it
+will *automatically generate one*, which could be confusing !
+
+IMPORTANT: Remember not to use this script. Try the interactive one instead.
+
+
+=== Interactive download
+
+Here, we use a modified version of the _authenticate_ function to use
+interactive login.
+This means the password will be prompted for at run time.
+
+IMPORTANT: This implies the script can not be used in a fully automated way,
+because each execution of the script will require the user of the script to be
+present to type the password. For a safe and automatic access, use the API keys.
+
+[source, python]
+----
+#!/usr/bin/env python3
+
+
+# We need the girder client module.
+import girder_client
+
+# First, we initiate the client with the girder server address.
+gc = girder_client.GirderClient(apiUrl='https://girder.math.unistra.fr/api/v1')
+
+# We authenticate using the username, the password will be typed at runtime
+gc.authenticate(username='USER', interactive=True)   # <1>
+
+# We download the file using its file ID. The path indicates where the file
+# should be written (the full file name should be included at the end of the path)
+gc.downloadFile(fileId='FILEID', path='PATH')        # <2>
+
+----
+<1> *USER* should be replaced by the Girder user name, and because of the
+_interactive=True_ argument, the password will be prompted for at runtime.
+<2> *FILEID* should be replaced by the actual Girder file ID and *PATH* should be the path where to store the results, including the desired file name and extension.
+
+TIP: We can even prompt the user to type *both the user name and the password*
+by providing *only* the _interactive=True_ argument !
+This is a better solution when multiple users are likely to use the script only
+once or a handful of times each.
+
+WARNING: If you don't supply the file name, the system will not warn you, it
+will *automatically generate one*, which could be confusing !
+
+
+
+=== Interactive upload
+
+To upload a file, only a few changes are required.
+
+[source, python]
+----
+#!/usr/bin/env python3
+
+
+# We need the girder client module.
+import girder_client
+
+# First, we initiate the client with the girder server address.
+gc = girder_client.GirderClient(apiUrl='https://girder.math.unistra.fr/api/v1')
+
+# We authenticate using the username, the password will be typed at runtime
+gc.authenticate(username='USER', interactive=True)    # <1>
+
+
+# /!\ This is mandatory: we have to open the file in read mode before
+# uploading it
+f = open('PATH', 'r')                                 # <2>
+
+# Now we can upload the file                            <3>
+gc.uploadFile(parentId='PID', stream=f, name="NAME", size=SIZE, parentType='TYPE') 
+
+----
+
+<1> *USER* should be replaced by the Girder user name, and because of the
+_interactive=True_ argument, the password will be prompted for at runtime.
+
+<2> *PATH* should be replaced by the full path to the file to read.
+*r* stands for "read mode".
+
+<3> *PID* should be replaced by the parent directory ID (on the Girder server).
+*f* is the read stream defined previously .
+*NAME* should be replaced by the desired file name (on the Girder server).
+*SIZE* should be replaced by the file size (in bytes).
+*TYPE* is either *folder*, *user*, or *collection*.
+
+NOTE: We should try and find a way to get the file size automatically.
