@@ -7,8 +7,9 @@
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/python/pyfeelpptoolboxes/index.html">
     <link rel="prev" href="../pyfeelpp/filters.html">
     <link rel="next" href="modelproperties.html">
-    <meta name="generator" content="Antora 3.1.4">
+    <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../../_/css/listing.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
@@ -837,7 +838,63 @@ else:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"></code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">has_tqdm = False
+try:
+    from tqdm import tqdm
+    has_tqdm = True
+except ImportError:
+    pass
+
+def simulate(toolbox, export=True, buildModelAlgebraicFactory=True, data=None, verbose=0):
+    """simulate a toolbox
+
+    simulate execute the toolbox in steady or transient case and export the results
+
+    Parameters:
+        toolbox -- a toolbox which has been configured
+
+    Returns:
+        a tuple (status,results) where status is a boolean(True if success, False otherwise) and results is a dictionary provided by the PostProcessing step 
+
+    Example::
+        fppc.Environment.setConfigFile('toolboxs/laplace/l-shape/l-shape.cfg')
+        toolbox = toolboxs.toolboxs(dim=2)
+        [success,measures]=simulate(toolbox)        
+        import pandas as pd
+        df = pd.DataFrame(measures)
+        print(df.head())
+    """
+    toolbox.init(buildModelAlgebraicFactory)
+    if verbose &gt; 0:
+        toolbox.printAndSaveInfo()
+    meas=[]
+    if toolbox.isStationary():
+        toolbox.solve()
+        if export:
+            toolbox.exportResults()
+        if not toolbox.postProcessMeasures().empty():
+            meas.append(toolbox.postProcessMeasures().values())
+    else:
+        if not toolbox.doRestart():
+            toolbox.exportResults(toolbox.timeInitial())
+        toolbox.startTimeStep()
+        #while not toolbox.timeStepBase().isFinished():
+        if has_tqdm:
+            steps = tqdm(range(int(toolbox.timeStepBase().timeFinal()/toolbox.timeStepBase().timeStep())))
+        else:
+            steps = range(int(toolbox.timeStepBase().timeFinal()/toolbox.timeStepBase().timeStep()))
+        for step in steps:
+            if fppc.Environment.isMasterRank() and verbose &gt; 0:
+                print("============================================================\n")
+                print("time simulation: {}s/{}s with step: {}".format(toolbox.time(), toolbox.timeFinal(), toolbox.timeStep()))
+                print("============================================================\n")
+            toolbox.solve()
+            if not toolbox.postProcessMeasures().empty():
+                meas.append(toolbox.postProcessMeasures().values())
+            if export:
+                toolbox.exportResults()
+            toolbox.updateTimeStep()
+    return [toolbox.checkResults(), meas]</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">

@@ -7,8 +7,9 @@
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/python/pyfeelpp/filters.html">
     <link rel="prev" href="integrals.html">
     <link rel="next" href="../pyfeelpptoolboxes/index.html">
-    <meta name="generator" content="Antora 3.1.4">
+    <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../../_/css/listing.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
@@ -633,7 +634,7 @@ logger.info(f"Feel++ version: {feelpp.Info.version()}")</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 ModuleNotFoundError                       Traceback (most recent call last)
-<ipython-input-1-ec17f70a2464> in <module>
+<ipython-input-1-80925bce18e3> in <module>
       2 import sys,os
       3 import spdlog as spd
 ----> 4 from feelpp.timing import tic, toc
@@ -684,12 +685,12 @@ logger.info(f"export done")</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-<ipython-input-1-c526d228d0f1> in <module>
-----> 1 app.setLogVerbosityLevel(0)
+<ipython-input-1-1774bf3ed91d> in <module>
+----> 1 app.setLogVerbosityLevel(0) #
       2 geofilename=feelpp.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
       3
       4 tic()
-      5 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1)
+      5 mesh = feelpp.load(feelpp.mesh(dim=2,realdim=2), name=geofilename, h=0.1, verbose=1) #
 
 NameError: name 'app' is not defined</pre>
 </div>

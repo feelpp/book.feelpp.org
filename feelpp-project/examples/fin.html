@@ -8,8 +8,9 @@
     <link rel="prev" href="index.html">
     <link rel="next" href="../env/cmake.html">
     <meta name="description" content="We simulate the heat transfer in a thermal fin">
-    <meta name="generator" content="Antora 3.1.4">
+    <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/listing.css">
 <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
@@ -553,19 +554,10 @@ fig.update_layout(title='Temperature', xaxis_title='time', yaxis_title='T')
 fig.show()</code></pre>
 </div>
 </div>
-<details>
+<details class="dynamic-py-result dynamic-py-result-plotly" open>
 <summary class="title">Results</summary>
 <div class="content">
----------------------------------------------------------------------------
-NameError                                 Traceback (most recent call last)
-<ipython-input-1-2fed1671999c> in <module>
-      3
-      4 fig = go.Figure()
-----> 5 fig.add_trace(go.Scatter(x=df.index, y=df["mean_Gamma_root"], mode='lines', name='T_{Gamma Root}'))
-      6 fig.add_trace(go.Scatter(x=df.index, y=df["mean_Gamma_ext"], mode='markers', name='T_{Gamma Ext}'))
-      7 fig.add_trace(go.Scatter(x=df.index, y=df["min"], mode='markers', name='min T'))
 
-NameError: name 'df' is not defined
 </div>
 </details>
 <div class="paragraph">
@@ -583,19 +575,10 @@ fig.update_layout(title='Heat Flux', xaxis_title='time', yaxis_title='Flux')
 fig.show()</code></pre>
 </div>
 </div>
-<details>
+<details class="dynamic-py-result dynamic-py-result-plotly" open>
 <summary class="title">Results</summary>
 <div class="content">
----------------------------------------------------------------------------
-NameError                                 Traceback (most recent call last)
-<ipython-input-1-b08a7c45d8c0> in <module>
-      1 fig = go.Figure()
-      2 fig.add_trace(go.Scatter(
-----> 3     x=df.index, y=df["flux_Gamma_root"], mode='lines', name='Flux_{Gamma Root}'))
-      4 fig.add_trace(go.Scatter(
-      5     x=df.index, y=df["flux_Gamma_ext"], mode='markers', name='Flux_{Gamma Ext}'))
 
-NameError: name 'df' is not defined
 </div>
 </details>
 </div>

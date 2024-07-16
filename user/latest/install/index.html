@@ -7,8 +7,9 @@
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/install/index.html">
     <link rel="prev" href="../how-feelpp-works.html">
     <link rel="next" href="containers.html">
-    <meta name="generator" content="Antora 3.1.4">
+    <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/listing.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
@@ -596,13 +597,13 @@ MathJax.Hub.Config({
 <p><a id="tabset1_debian"></a>Debian</p>
 </li>
 <li>
-<p><a id="tabset1_fedora"></a>Fedora</p>
-</li>
-<li>
 <p><a id="tabset1_windows-10"></a>Windows 10</p>
 </li>
 <li>
 <p><a id="tabset1_docker"></a>Docker</p>
+</li>
+<li>
+<p><a id="tabset1_apptainer"></a>Apptainer</p>
 </li>
 </ul>
 </div>
@@ -977,40 +978,6 @@ sudo apt update</code></pre>
 </div>
 </div>
 </div>
-<div class="tab-pane" aria-labelledby="tabset1_fedora">
-<div class="paragraph">
-<p>Feel++ is not yet packaged for Fedora.
-However</p>
-</div>
-<div class="ulist checklist">
-<ul class="checklist">
-<li>
-<p><i class="fa fa-check-square-o"></i> it is possible to compile it from source for Fedora:36 and Fedora:37</p>
-</li>
-<li>
-<p><i class="fa fa-check-square-o"></i> a docker image containing Feel++ development environment is available for both systems</p>
-</li>
-</ul>
-</div>
-<div class="literalblock">
-<div class="title">Fedora 36(stable)</div>
-<div class="content">
-<pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-36</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>or</p>
-</div>
-<div class="literalblock">
-<div class="title">Fedora 37(beta)</div>
-<div class="content">
-<pre>$ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-37</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>see <a href="compile.html" class="xref page">how to build Feel++ from sources</a>.</p>
-</div>
-</div>
 <div class="tab-pane" aria-labelledby="tabset1_windows-10">
 <div class="paragraph">
 <p>To use Feel++ on Windows 10, follow these steps:</p>
@@ -1134,7 +1101,7 @@ However</p>
 <div class="tab-pane" aria-labelledby="tabset1_docker">
 <div class="paragraph">
 <p>A docker image is generated with the deb packages.
-The image is based on the LTS distribution Ubuntu Focal 20.04.</p>
+The image is based on the LTS distribution Ubuntu Noble 24.04.</p>
 </div>
 <div class="paragraph">
 <p>To download and execute it, follow the steps described below</p>
@@ -1142,23 +1109,49 @@ The image is based on the LTS distribution Ubuntu Focal 20.04.</p>
 <div class="listingblock">
 <div class="title">Download and run  the feelpp docker image: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python</div>
 <div class="content">
-<pre>docker pull ghcr.io/feelpp/feelpp:jammy
-docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:jammy</pre>
+<pre>docker pull ghcr.io/feelpp/feelpp:noble
+docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:noble</pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Download and run  the feelpp docker image including the development kit: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python</div>
 <div class="content">
-<pre>docker pull ghcr.io/feelpp/feelpp-dev:jammy
-docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-dev:jammy</pre>
+<pre>docker pull ghcr.io/feelpp/feelpp-dev:noble
+docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-dev:noble</pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>These images are also available for
 
+* Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:jammy
 * Ubuntu 20.04 (focal): ghcr.io/feelpp/feelpp:focal
 * Debian 12 (bookworm): ghcr.io/feelpp/feelpp:bookworm</pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_apptainer">
+<div class="paragraph">
+<p>An <a href="https://apptainer.org/">Apptainer</a> image is generated with the deb packages.
+The image is based on the LTS distribution Ubuntu Noble 24.04.
+See more information on <a href="containers.html#_apptainer" class="xref page">Apptainer</a>.</p>
+</div>
+<div class="paragraph">
+<p>To download and execute it, follow the steps described below</p>
+</div>
+<div class="listingblock">
+<div class="title">Download and run the Feel++ Apptainer image: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python</div>
+<div class="content">
+<pre>apptainer pull -F feelpp-noble.sif oras://ghcr.io/feelpp/feelpp:v0.111.0-preview.10-noble-sif
+apptainer inspect feelpp-noble.sif
+apptainer run feelpp-noble.sif feelpp_toolbox_fluid --version</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>These images are also available for
+
+* Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-jammy-sif</pre>
 </div>
 </div>
 </div>

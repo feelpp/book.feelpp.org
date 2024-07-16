@@ -6,8 +6,9 @@
     <title>3D thermal simulation of a building :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/mor/latest/thermalbuilding/index.html">
     <meta name="description" content="We use a reduced order model for the 3D thermal simulation of a building using the stationary heat equation.">
-    <meta name="generator" content="Antora 3.1.4">
+    <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/listing.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
@@ -547,83 +548,16 @@ fpp_name = 'thermalbuilding.fpp'
 time = 0</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_downloading_the_reduced_order_model_from_girder"><a class="anchor" href="#_downloading_the_reduced_order_model_from_girder"></a>5. Downloading the reduced order model from Girder</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The offline creation of the reduced basis has already been performed, and an archive is downloaded from Girder. It contains the basis, the model and the configuration files that are necessary for the online simulation. The following code snippet performs the download.</p>
-</div>
-<div class="listingblock">
-<div class="title">Download the archive from Girder</div>
+<details>
+<summary class="title">Results</summary>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import requests
-r=requests.get(girder_path)
-with open(fpp_name,'wb') as f:
-    f.write(r.content)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_running_the_case_using_a_jupyter_notebook"><a class="anchor" href="#_running_the_case_using_a_jupyter_notebook"></a>6. Running the case using a Jupyter notebook</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>It is possible to download this page as a Jupyter notebook and run it in an environment that contains a local installation of Feel++ and its Python wrappers.</p>
-</div>
-<div class="listingblock">
-<div class="title">Create the online model, choose randomly 4 parameter vectors and simulate them using a reduced basis of 10 elements</div>
+<div class="literalblock dynamic-py-result">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
-from feelpp.mor import *
-ms=feelpp.mor.MORModels(fpp_name)
-muspace = ms.parameterSpace()
-sampling = muspace.sampling()
-sampling.sample(4, "random")
-r=ms.run(sampling,{"N":10})</code></pre>
+<pre></pre>
 </div>
 </div>
-<div class="listingblock">
-<div class="title">Print the outputs and the associated parameter vector</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from pandas import DataFrame as df
-from pandas import options as op
-from pandas import set_option
-outputs={}
-errors={}
-output_dataframes = list()
-errors_dataframes = list()
-for i in range(len(r)):
-    outputs={}
-    errors={}
-    for o in range(len(r[i])):
-        str_time = "Time"
-        str_output = "Output "+str(o)
-        str_error = "Error "+str(o)
-
-        outputs[str_time] = time
-        outputs[str_output] = np.array(r[i][o].outputs())
-        outputs[str_error] = [np.array(r[i][o].errors())]
-
-
-    output_frame = df(data=outputs)
-
-
-    set_option('display.float_format', '{:.2E}'.format)
-
-    output_dataframes.append(output_frame)
-
-op.display.max_colwidth = 100
-
-i=0
-for frame in output_dataframes:
-    print("Parameters :",sampling[i])
-    print(frame)
-    print("\n")
-    i=i+1</code></pre>
 </div>
-</div>
+</details>
 </div>
 </div>
 </article>

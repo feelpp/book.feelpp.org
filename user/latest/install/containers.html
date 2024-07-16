@@ -8,8 +8,9 @@
     <link rel="prev" href="index.html">
     <link rel="next" href="sources.html">
     <meta name="keywords" content="Feel++, partial differential equations, finite element method,">
-    <meta name="generator" content="Antora 3.1.4">
+    <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/listing.css">
 <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
@@ -587,7 +588,7 @@ Feel++ is provided with two containers solutions currently:</p>
 <p><a href="https://www.docker.com/what-docker">Docker</a></p>
 </li>
 <li>
-<p><a href="http://singularity.lbl.gov/about">Singularity</a></p>
+<p><a href="https://apptainer.org">Apptainer</a> and <a href="https://apptainer.org/docs/user/latest/">Apptainer documentation</a></p>
 </li>
 </ol>
 </div>
@@ -748,33 +749,62 @@ For example, once you are in Docker,</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_singularity"><a class="anchor" href="#_singularity"></a>2. Singularity</h2>
+<h2 id="_apptainer"><a class="anchor" href="#_apptainer"></a>2. Apptainer</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>singularity is another container technology initially developed to work with
-HPC infrastructure and solve some security problems in multi-users environment.
-Latest <a href="https://girder.math.unistra.fr/#collections">Feel++ singularity
-images</a> can be found on <a href="https://girder.math.unistra.fr/#collections">our
-data management server</a> (recommended) in the Feel++ collection.  Future
-public Feel++ images will also be available on the official
-<a href="https://singularity-hub.org/">singularity hub</a> website.  We provide
-currently the same main images as for docker, but the suffix naming might vary
+<p><a href="https://apptainer.org">Apptainer</a> is a container technology initially developed to work with
+HPC infrastructure and address security issues in multi-user environments.
+It allows users to run applications in a portable and reproducible environment,
+making it ideal for scientific and engineering workflows.</p>
+</div>
+<div class="paragraph">
+<p>We now pull/push SIF images from/to GitHub Container Registry (ghcr.io).
+Feel images can be found at the following link:
+https://github.com/feelpp/feelpp/pkgs/container/feelpp[&gt; Feel Packages].</p>
+</div>
+<div class="paragraph">
+<p>We currently provide the same main images as for Docker, but the suffix naming might vary
 depending on the image version.</p>
 </div>
 <div class="paragraph">
-<p>Singularity works in a similar way as for docker.  For example, you can
-download one of the image available on
-<a href="https://girder.math.unistra.fr/#collections">girder</a> under the collection
-<code>feelpp</code> &#8594; <code>singularity_images</code> &#8594; <code>ci</code> &#8594; <code>feelpp_feelpp-toolboxes-latest.simg</code>
-click on download button.</p>
+<p>To download and use Feel++ Apptainer images, follow the steps below:</p>
 </div>
-<div class="paragraph">
-<p>Once downloaded you can place yourself in the container in interactive as for docker
-using the commandline</p>
+<div class="listingblock">
+<div class="title">Download and run the Feel++ Apptainer image: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python</div>
+<div class="content">
+<pre>apptainer pull -F feelpp-noble.sif oras://ghcr.io/feelpp/feelpp:v0.111.0-preview.10-noble-sif
+apptainer inspect feelpp-noble.sif
+apptainer run feelpp-noble.sif feelpp_toolbox_fluid --version</pre>
+</div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">singularity shell -B ${HOME}/feel:/feel feelpp_feelpp-toolboxes-latest.simg</code></pre>
+<pre>These images are also available for:
+
+* Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-jammy-sif
+* Ubuntu 20.04 (focal): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-focal-sif
+* Debian 12 (bookworm): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-bookworm-sif</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Apptainer works in a similar way to Docker. For example, you can
+download one of the images available on ghcr.io and run it interactively or execute specific commands within the container.</p>
+</div>
+<div class="paragraph">
+<p>Once downloaded, you can enter the container interactively with the command line:</p>
+</div>
+<div class="listingblock">
+<div class="title">Run the container interactively</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">apptainer shell feelpp-noble.sif</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or run a specific command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">apptainer run feelpp-noble.sif feelpp_toolbox_fluid --version</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -784,10 +814,9 @@ using the commandline</p>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-You can retrieve an image from singularity hub directly
-<code>singularity pull shub://feelpp/singularity:feelpp-toolboxes-latest</code> instead of girder
-and as for docker.
-Be aware that current images are currently older than the ones on girder!
+You can retrieve images from the GitHub Container Registry directly using
+<code>apptainer pull -F feelpp-noble.sif oras://ghcr.io/feelpp/feelpp:v0.111.0-preview.10-noble-sif</code>.
+Make sure to check for the latest versions and tags.
 </td>
 </tr>
 </table>
