@@ -83,34 +83,55 @@ For example, once you are in Docker,
 mpirun --bind-to core -np 10 feelpp_toolbox_fluid --case "github:{path:toolboxes/fluid/TurekHron}"
 ----
 
-== Singularity
+== Apptainer
 
-singularity is another container technology initially developed to work with
-HPC infrastructure and solve some security problems in multi-users environment.
-Latest link:https://girder.math.unistra.fr/#collections[{feelpp} singularity
-images] can be found on link:https://girder.math.unistra.fr/#collections[our
-data management server] (recommended) in the {feelpp} collection.  Future
-public {feelpp} images will also be available on the official
-link:https://singularity-hub.org/[singularity hub] website.  We provide
-currently the same main images as for docker, but the suffix naming might vary
+Apptainer is a container technology initially developed to work with
+HPC infrastructure and address security issues in multi-user environments.
+It allows users to run applications in a portable and reproducible environment,
+making it ideal for scientific and engineering workflows.
+
+We now pull/push SIF images from/to GitHub Container Registry (ghcr.io). 
+Feel++ images can be found at the following link:
+https://github.com/feelpp/feelpp/pkgs/container/feelpp.
+
+We currently provide the same main images as for Docker, but the suffix naming might vary
 depending on the image version.
 
-Singularity works in a similar way as for docker.  For example, you can
-download one of the image available on
-link:https://girder.math.unistra.fr/#collections[girder] under the collection
-`feelpp` -> `singularity_images` -> `ci` -> `feelpp_feelpp-toolboxes-latest.simg`
-click on download button.
+To download and use Feel++ Apptainer images, follow the steps below:
 
-
-Once downloaded you can place yourself in the container in interactive as for docker
-using the commandline
-
-[source, bash]
+.Download and run the Feel++ Apptainer image: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
 ----
-singularity shell -B ${HOME}/feel:/feel feelpp_feelpp-toolboxes-latest.simg
+apptainer pull -F feelpp-noble.sif oras://ghcr.io/feelpp/feelpp:v0.111.0-preview.10-noble-sif
+apptainer inspect feelpp-noble.sif
+apptainer run feelpp-noble.sif feelpp_toolbox_fluid --version
 ----
 
-TIP: You can retrieve an image from singularity hub directly
-`singularity pull shub://feelpp/singularity:feelpp-toolboxes-latest` instead of girder
-and as for docker.
-Be aware that current images are currently older than the ones on girder!
+[NOTE]
+----
+These images are also available for:
+
+* Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-jammy-sif
+* Ubuntu 20.04 (focal): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-focal-sif
+* Debian 12 (bookworm): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-bookworm-sif
+----
+
+Apptainer works in a similar way to Docker. For example, you can
+download one of the images available on ghcr.io and run it interactively or execute specific commands within the container.
+
+Once downloaded, you can enter the container interactively with the command line:
+
+[source,bash]
+----
+apptainer shell -B ${HOME}/feel:/feel feelpp-noble.sif
+----
+
+Or run a specific command:
+
+[source,bash]
+----
+apptainer run feelpp-noble.sif feelpp_toolbox_fluid --version
+----
+
+TIP: You can retrieve images from the GitHub Container Registry directly using 
+`apptainer pull -F feelpp-noble.sif oras://ghcr.io/feelpp/feelpp:v0.111.0-preview.10-noble-sif`.
+Make sure to check for the latest versions and tags.

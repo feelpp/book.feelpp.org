@@ -140,30 +140,57 @@ Docker::
 +
 --
 A docker image is generated with the deb packages.
-The image is based on the LTS distribution Ubuntu Focal 20.04.
+The image is based on the LTS distribution Ubuntu Noble 24.04.
 
 To download and execute it, follow the steps described below
 
 .Download and run  the feelpp docker image: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
 ----
-docker pull ghcr.io/feelpp/feelpp:jammy
-docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:jammy
+docker pull ghcr.io/feelpp/feelpp:noble
+docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:noble
 ----
 
 .Download and run  the feelpp docker image including the development kit: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
 ----
-docker pull ghcr.io/feelpp/feelpp-dev:jammy
-docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-dev:jammy
+docker pull ghcr.io/feelpp/feelpp-dev:noble
+docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-dev:noble
 ----
 
 [NOTE]
 ----
 These images are also available for
 
+* Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:jammy
 * Ubuntu 20.04 (focal): ghcr.io/feelpp/feelpp:focal
 * Debian 12 (bookworm): ghcr.io/feelpp/feelpp:bookworm
 ----
 --
+Apptainer::
++
+--
+An https://apptainer.org/[Apptainer] image is generated with the deb packages.
+The image is based on the LTS distribution Ubuntu Noble 24.04.
+See more information on xref:containers.adoc#_apptainer[Apptainer].
+
+To download and execute it, follow the steps described below
+
+.Download and run the Feel++ Apptainer image: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
+----
+apptainer pull -F feelpp-noble.sif oras://ghcr.io/feelpp/feelpp:v0.111.0-preview.10-noble-sif
+apptainer inspect feelpp-noble.sif
+apptainer run feelpp-noble.sif feelpp_toolbox_fluid --version
+----
+
+
+[NOTE]
+----
+These images are also available for
+
+* Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-jammy-sif
+
+----
+--
+
 // MacOSX::
 // +
 // --
