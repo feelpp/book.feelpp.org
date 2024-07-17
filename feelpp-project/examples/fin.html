@@ -420,14 +420,14 @@ u^0 &amp; =u^i \\
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import feelpp.core as fppc
 from feelpp_project import laplacian
 import json
 import os
 
 d = os.getcwd()
 print(f"directory={d}")
-e = feelpp.Environment(['fin'], config=feelpp.localRepository("."))</code></pre>
+e = fppc.Environment(['fin'], config=fppc.localRepository("."))</code></pre>
 </div>
 </div>
 <details>
@@ -437,11 +437,12 @@ e = feelpp.Environment(['fin'], config=feelpp.localRepository("."))</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 ModuleNotFoundError                       Traceback (most recent call last)
-File <ipython-input-1-1d4b97f5aec6>:2
-      1 import feelpp
+<ipython-input-1-2a1e2629577a> in <module>
+      1 import feelpp.core as fppc
 ----> 2 from feelpp_project import laplacian
       3 import json
       4 import os
+      5
 
 ModuleNotFoundError: No module named 'feelpp_project'</pre>
 </div>
@@ -453,7 +454,7 @@ ModuleNotFoundError: No module named 'feelpp_project'</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">feelpp.Environment.setConfigFile(f"{d}/src/cases/laplacian/fin/fin1/fin2d.cfg")
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">fppc.Environment.setConfigFile(f"{d}/src/cases/laplacian/fin/fin1/fin2d.cfg")
 # Reading the JSON file
 data = laplacian.loadSpecs(f"{d}/src/cases/laplacian/fin/fin2d.json")
 print(data)</code></pre>
@@ -465,13 +466,14 @@ print(data)</code></pre>
 <div class="literalblock dynamic-py-result">
 <div class="content">
 <pre>---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-File <ipython-input-1-334c38b17d9d>:1
-----> 1 feelpp.Environment.setConfigFile(f"{d}/src/cases/laplacian/fin/fin1/fin2d.cfg")
+NameError                                 Traceback (most recent call last)
+<ipython-input-1-28bdc28dcd8e> in <module>
+----> 1 fppc.Environment.setConfigFile(f"{d}/src/cases/laplacian/fin/fin1/fin2d.cfg")
       2 # Reading the JSON file
       3 data = laplacian.loadSpecs(f"{d}/src/cases/laplacian/fin/fin2d.json")
+      4 print(data)
 
-AttributeError: module 'feelpp' has no attribute 'Environment'</pre>
+NameError: name 'd' is not defined</pre>
 </div>
 </div>
 </div>
@@ -494,10 +496,11 @@ meas=lap.measures()</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-File <ipython-input-1-d909663a9992>:1
+<ipython-input-1-d909663a9992> in <module>
 ----> 1 lap = laplacian.get(dim=2, order=1)
       2 lap.setSpecs(data)
       3 lap.run()
+      4 meas=lap.measures()
 
 NameError: name 'laplacian' is not defined</pre>
 </div>
@@ -522,7 +525,7 @@ print(df.to_markdown())</code></pre>
 <div class="content">
 <pre>---------------------------------------------------------------------------
 NameError                                 Traceback (most recent call last)
-File <ipython-input-1-d5bf1c958560>:2
+<ipython-input-1-d5bf1c958560> in <module>
       1 import pandas as pd
 ----> 2 df = pd.DataFrame(meas)
       3 df.set_index('time', inplace=True)
