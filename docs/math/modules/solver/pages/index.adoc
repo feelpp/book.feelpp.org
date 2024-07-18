@@ -10,14 +10,14 @@ Ax = F
 
 where stem:[A] is a sparse large matrix, stem:[x] is the solution, and stem:[F] is the right-hand side.
 
-Our objective is to solve a linear system stem:[Ax = F] with an iterative process efficiently, a direct method is not suitable because of the size of the matrix. We will use a Krylov subspace method with a preconditioner to accelerate the convergence. 
+Our objective is to solve a linear system stem:[Ax = F] with an iterative process efficiently, a direct method is not suitable because of the size of the matrix. We will use a Krylov subspace method with a preconditioner to accelerate the convergence.
 
 Given stem:[x^0] the initial guess, we wish to compute stem:[x^{1},x^2, \ldots x^n,x^{n+1}, \ldots] through the iterative process.
 
 == Krylov subspace method
 
 The Krylov subspace methods finds such an approximate solution in a space which the dimension increase at each step of the method.
-It is based on the Arnoldi process which generates an orthogonal basis of the Krylov subspace. 
+It is based on the Arnoldi process which generates an orthogonal basis of the Krylov subspace.
 
 
 [stem]
@@ -64,7 +64,7 @@ We now describe the different preconditioners stem:[M] that can be used in Feel+
 
 == LU
 
-First, we start with the LU factorization of the matrix stem:[A] to solve the system stem:[Ax=F]. 
+First, we start with the LU factorization of the matrix stem:[A] to solve the system stem:[Ax=F].
 
 We compute the factorisation stem:[A=LU]
 
@@ -73,12 +73,12 @@ We compute the factorisation stem:[A=LU]
 . For stem:[i > k]: stem:[l_{ik} = a_{ik} / a_{kk}]
 . For stem:[i > k, j > k]: stem:[u_{ij} = a_{ij} - l_{ik} a_{kj}]
 
-Note that 
+Note that
 
-* Algorithm complexity (A is sparse matrix stem:[n \times n\ with bandwidth stem:[b]): stem:[mathcal{O}(n b^2)] in time, stem:[mathcal{O}(n b)] in space.
+* Algorithm complexity (stem:[A] is sparse matrix stem:[n \times n] with bandwidth stem:[b]): stem:[\mathcal{O}(n b^2)] in time, stem:[\mathcal{O}(n b)] in space.
 * Ordering routine (to reduce fill) to be used in the LU factorization stem:[LU = PAQ]:
 
-The options set in Feel++ are in fact PETSc options. 
+The options set in Feel++ are in fact PETSc options.
 Here is how to set the LU factorization options.
 
 Matrix ordering::
@@ -87,7 +87,7 @@ Matrix ordering::
 ----
 --pc_factor_mat_ordering_type=nd [natural, nd, 1wd, rcm, qmd, rowlength]
 ----
-Factorization package:: mumps,petsc,pastix,umfpack, superlu,...
+Factorization package:: mumps, petsc, pastix, umfpack, superlu, ...
 +
 [source,sh]
 ----
@@ -95,6 +95,7 @@ Factorization package:: mumps,petsc,pastix,umfpack, superlu,...
 ----
 
 NOTE: MUMPS and Pastix are parallel factorization packages.
+
 
 NOTE: `mumps` is the default factorization package in Feel++.
 
@@ -110,7 +111,7 @@ NOTE: If you do not disable the iterative solver, you should expect that the ite
 
 == ILU
 
-An alternative to the LU factorization is the Incomplete LU factorization. 
+An alternative to the LU factorization is the Incomplete LU factorization.
 ILU factorizations provide  approximations of the LU factorization.
 Various ILU factorizations are available in Feel++:
 
@@ -133,20 +134,20 @@ ILUT:: only fill in zero locations if stem:[a_{ik} a_{kk}^{-1} a_{kj}] large eno
 The options indicate the amount of fill you expect in the factored matrix (fill = number nonzeros in factor/number nonzeros in original matrix).
 
 
-To select an incomplete factorization, you have to first select the factorization package using `--pc-factor-mat-solver-package-type=...` 
+To select an incomplete factorization, you have to first select the factorization package using `--pc-factor-mat-solver-package-type=...`
 
 |===
 | Factorization package |  Option  | Comment
 | PETSc | `petsc` | PETSc ILU factorization, not parallel
 | HYPRE | `hypre` | HYPRE ILU factorization, works in sequential (ILU(k) and ILUT) and parallel (ILU(k))
-| HYPRE | `pilut` | HYPRE ILUT factorization, works in sequential and parallel 
+| HYPRE | `pilut` | HYPRE ILUT factorization, works in sequential and parallel
 |===
 
 NOTE: the table needs to be checked and updated.
 
 == Relaxation methods
 
-An alternative to the LU, ILU factorization is the relaxation methods. 
+An alternative to the LU, ILU factorization is the relaxation methods.
 The principle is to split stem:[A] into lower, diagonal, upper parts: stem:[A = L +D + U] and to solve the system stem:[Ax=F] with the following iterative process:
 
 [stem]
@@ -164,8 +165,9 @@ Successive over-relaxation (SOR):: `--pc-type=sor`
 +
 [stem]
 ++++
-P = (1/omega)D + U forward, P = backward
-x^{k+1} = -(D+\omega L)^{-1} ((omega U + (1-\omega) D)) x^{k} + omega (D +\omega L)^{-1} F
+P = (1/\omega)D + U forward, P = backward
+
+x^{k+1} = -(D+\omega L)^{-1} ((\omega U + (1-\omega) D)) x^{k} + \omega (D +\omega L)^{-1} F
 ++++
 
 The SOR method is a generalization of the Jacobi method and has various options:
@@ -186,6 +188,7 @@ Additive Schwarz with overlap::
 P = \sum_{i=1}^p \hat{R}_i^T \left(R_i A_i R_i^T\right) ^{-1} \tilde{R}_i
 ++++
 where  stem:[R_i,\tilde{R}_i,\hat{R}_i] are restriction operators.
+
 .Example 1
 [source,sh]
 ----
@@ -198,13 +201,14 @@ where  stem:[R_i,\tilde{R}_i,\hat{R}_i] are restriction operators.
 
 .Example 2
 [source,sh]
+----
 --pc-type=gasm
 --pc-gasm-overlap=2 # [size of extended local subdomains]
 --pc-gasm-type=restrict # [basic, restrict, interpolate, none]
 --sub-pc-type=ilu # [preconditioner used for A_i^{-1}]
 --sub-pc-factor-levels=3
 --sub-pc-factor-fill=6
-++++
+----
 
 == Algebraic multigrid
 
@@ -256,12 +260,10 @@ Specific levels options (up to 5)::
 .FieldSplit: solving bloc matrix (N x N) example:
 [stem]
 ++++
-(left(
-begin{array}{cc}
+\begin{pmatrix}
 A_{00} & A_{01} \\
 A_{10} & A_{11}
-end{array}
-right))
+\end{pmatrix}
 ++++
 
 IndexSplit:: computed automatically with composite space, block matrix, and block graph. User can redefine split definition (union of split):
@@ -314,7 +316,7 @@ A_{00}^{-1} & 0 \\
 \right)
 ++++
 
-Symmetric Block Gauss-Seidel (symmetric-multiplicative):: 
+Symmetric Block Gauss-Seidel (symmetric-multiplicative)::
 +
 [stem]
 ++++
@@ -366,7 +368,7 @@ A_{00}^{-1} & 0 \\
 --fieldsplit-0.fieldsplit-fields=0->(0),1->(2)
 ----
 
-== Schur complement 
+== Schur complement
 
 First we compute the stem:[LDU] factorization of the block matrix:
 
@@ -404,7 +406,7 @@ I & A_{00}^{-1} A_{01} \\
 \right)}_{U}
 ++++
 
-where the stem:[S] is called the Schur complement of stem:[A_{00}] and is equal to 
+where the stem:[S] is called the Schur complement of stem:[A_{00}] and is equal to
 
 [stem]
 ++++
@@ -431,7 +433,7 @@ A_{00}^{-1} & 0 \\
 - S^{-1} A_{10} A_{00}^{-1} & S^{-1}
 \end{array}
 \right)\\
-&= 
+&=
 \left(
 \begin{array}{cc}
 A_{00}^{-1} & -A_{00}^{-1} A_{01} S^{-1} \\
@@ -497,7 +499,7 @@ Upper solver:: in full Schur factorisation:
 +
 [stem]
 ++++
-A^{-1} = 
+A^{-1} =
 \left(
 \begin{array}{cc}
 I & -A_{00}^{-1}A_{01} \\
@@ -532,7 +534,7 @@ SIMPLE:: Semi-Implicit Method for Pressure-Linked Equations (Patankar and Spaldi
 +
 [stem]
 ++++
-P_{SIMPLE} =
+P_\text{SIMPLE} =
 \left(
 \begin{array}{cc}
 A_{00} & 0 \\
