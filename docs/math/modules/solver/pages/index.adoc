@@ -1,0 +1,578 @@
+= Preconditioned Krylov subspace method in Feel++
+:stem: latexmath
+
+We wish to solve a linear system of the form:
+
+[stem]
+++++
+Ax = F
+++++
+
+where stem:[A] is a sparse large matrix, stem:[x] is the solution, and stem:[F] is the right-hand side.
+
+Our objective is to solve a linear system stem:[Ax = F] with an iterative process efficiently, a direct method is not suitable because of the size of the matrix. We will use a Krylov subspace method with a preconditioner to accelerate the convergence. 
+
+Given stem:[x^0] the initial guess, we wish to compute stem:[x^{1},x^2, \ldots x^n,x^{n+1}, \ldots] through the iterative process.
+
+== Krylov subspace method
+
+The Krylov subspace methods finds such an approximate solution in a space which the dimension increase at each step of the method.
+It is based on the Arnoldi process which generates an orthogonal basis of the Krylov subspace. 
+
+
+[stem]
+++++
+x^{n+1} = x^0 + \mathrm{span}\left\{ r^0,Ar^0,...,A^{n-1}r^0\right\}, \quad r^k=F-Ax^k
+++++
+where stem:[r^k] is the residual of the system at the step stem:[k].
+
+
+There are many Krylov subspace methods in the literature, here are some of them:
+
+Cg (Conjugate Gradient):: for symmetric positive definite matrices
+Gmres (Generalized Minimal Residual):: for non-symmetric matrices
+Bicg (BiConjugate Gradient):: for non-symmetric matrices
+Fgmres (Flexible Generalized Minimal Residual):: for non-symmetric matrices enabling the use of preconditioners changing at each iteration
+Minres (Minimal Residual):: for symmetric indefinite matrices
+
+Their convergence rate depend of condition number of stem:[A], it is highly recommended to precondition the system to accelerate the convergence.
+
+From now on, we use preconditioned Krylov subspace method to solve the system stem:[Ax=F].
+We transform the original system into an equivalent system which has a better conditioning:
+
+Left preconditioning:: denote stem:[M_L^{-1}] the left preconditioner, we solve
++
+[stem]
+++++
+M_L^{-1} A x = M_L^{-1} F
+++++
+Right preconditioning:: denote stem:[M_R^{-1}] the right preconditioner, we solve
++
+[stem]
+++++
+A M_R^{-1} y = F, \quad x=M_R^{-1} y
+++++
+Left and right preconditioning:: denote stem:[M_L^{-1}] and stem:[M_R^{-1}] the left and right preconditioners, we solve
++
+[stem]
+++++
+M_L^{-1} A M_R^{-1}, \quad y = M_L^{-1} F \quad x=M_R^{-1} y
+++++
+
+We now describe the different preconditioners stem:[M] that can be used in Feel++.
+
+
+== LU
+
+First, we start with the LU factorization of the matrix stem:[A] to solve the system stem:[Ax=F]. 
+
+We compute the factorisation stem:[A=LU]
+
+.Algorithm:
+. Basic algo: step stem:[k] of stem:[LU] factorization stem:[a_{kk}] pivot
+. For stem:[i > k]: stem:[l_{ik} = a_{ik} / a_{kk}]
+. For stem:[i > k, j > k]: stem:[u_{ij} = a_{ij} - l_{ik} a_{kj}]
+
+Note that 
+
+* Algorithm complexity (A is sparse matrix stem:[n \times n\ with bandwidth stem:[b]): stem:[mathcal{O}(n b^2)] in time, stem:[mathcal{O}(n b)] in space.
+* Ordering routine (to reduce fill) to be used in the LU factorization stem:[LU = PAQ]:
+
+The options set in Feel++ are in fact PETSc options. 
+Here is how to set the LU factorization options.
+
+Matrix ordering::
++
+[source,sh]
+----
+--pc_factor_mat_ordering_type=nd [natural, nd, 1wd, rcm, qmd, rowlength]
+----
+Factorization package:: mumps,petsc,pastix,umfpack, superlu,...
++
+[source,sh]
+----
+--pc-factor-mat-solver-package-type=mumps
+----
+NOTE: MUMPS and Pastix are parallel factorization packages. 
+NOTE: `mumps` is the default factorization package in Feel++.
+
+To use a direct solver, you can disable the iterative solver and use a direct solver
+
+[source,sh]
+----
+--ksp-type=preonly
+--pc-type=lu
+----
+
+NOTE: If you do not disable the iterative solver, you should expect that the iterative solver will take 1 iteration to solve the system.
+
+== ILU
+
+An alternative to the LU factorization is the Incomplete LU factorization. 
+ILU factorizations provide  approximations of the LU factorization.
+Various ILU factorizations are available in Feel++:
+
+
+ILU(k):: approximate factorization
++
+[stem]
+++++
+\forall {i,j > k} : \mathrm{if} (i,j)\in S a_{ij} \leftarrow a_{ij} - a_{ik} a_{kk}^{-1} a_{kj}
+++++
+
+ILUT:: only fill in zero locations if stem:[a_{ik} a_{kk}^{-1} a_{kj}] large enough
++
+[source,plaintext]
+----
+--pc-factor-levels=3
+--pc-factor-fill=6
+----
++
+The options indicate the amount of fill you expect in the factored matrix (fill = number nonzeros in factor/number nonzeros in original matrix).
+
+
+To select an incomplete factorization, you have to first select the factorization package using `--pc-factor-mat-solver-package-type=...` 
+
+|===
+| Factorization package |  Option  | Comment
+| PETSc | `petsc` | PETSc ILU factorization, not parallel
+| HYPRE | `hypre` | HYPRE ILU factorization, works in sequential (ILU(k) and ILUT) and parallel (ILU(k))
+| HYPRE | `pilut` | HYPRE ILUT factorization, works in sequential and parallel 
+|===
+
+NOTE: the table needs to be checked and updated.
+
+== Relaxation methods
+
+An alternative to the LU, ILU factorization is the relaxation methods. 
+The principle is to split stem:[A] into lower, diagonal, upper parts: stem:[A = L +D + U] and to solve the system stem:[Ax=F] with the following iterative process:
+
+[stem]
+++++
+x^{k+1} = x^{k} + P^{-1}(F-Ax^{k})
+++++
+
+Jacobi:: `--pc-type=jacobi`
++
+[stem]
+++++
+P^{-1} = D^{-1}
+++++
+Successive over-relaxation (SOR):: `--pc-type=sor`
++
+[stem]
+++++
+P = (1/omega)D + U forward, P = backward
+x^{k+1} = -(D+\omega L)^{-1} ((omega U + (1-\omega) D)) x^{k} + omega (D +\omega L)^{-1} F
+++++
+
+The SOR method is a generalization of the Jacobi method and has various options:
+[source,sh]
+----
+--pc-sor-type=local_symmetric [symmetric, forward, backward, local_symmetric, local_forward, local_backward]
+--pc-sor-omega=1 : omega in ]0,2[. if omega=1 => Gauss-Seidel
+--pc-sor-lits=1 : the number of smoothing sweeps on a process before doing a ghost point update from the other processes
+--pc-sor-its=1
+----
+The total number of SOR sweeps is given by `lits*its`.
+
+== Domain decomposition
+
+Additive Schwarz with overlap::
+[stem]
+++++
+P = \sum_{i=1}^p \hat{R}_i^T \left(R_i A_i R_i^T\right) ^{-1} \tilde{R}_i
+++++
+where  stem:[R_i,\tilde{R}_i,\hat{R}_i] are restriction operators.
+.Example 1
+[source,sh]
+----
+--pc-type=gasm
+--pc-gasm-overlap=2 [size of extended local subdomains]
+--pc-gasm-type=restrict [basic, restrict, interpolate, none]
+--sub-pc-type=lu [preconditioner used for A_i^{-1}]
+--sub-pc-factor-mat-solver-package-type=mumps
+----
+
+.Example 2
+[source,sh]
+--pc-type=gasm
+--pc-gasm-overlap=2 # [size of extended local subdomains]
+--pc-gasm-type=restrict # [basic, restrict, interpolate, none]
+--sub-pc-type=ilu # [preconditioner used for A_i^{-1}]
+--sub-pc-factor-levels=3
+--sub-pc-factor-fill=6
+++++
+
+== Algebraic multigrid
+
+.Algorithm:
+. Basic multigrid with two levels
+. Solve on fine grid: stem:[A_1 u_1 = F_1]
+. Compute residual: stem:[r_1 = F_1 - A_1 u_1]
+. Restrict stem:[r_1] to the coarse grid: stem:[r_{0}= R r_1]
+. Solve on coarse grid: stem:[A_{0} e_{0}=r_{0}]
+. Interpolate: stem:[e_{1}=I e_{0}]
+. Solve on fine grid by starting with stem:[u_1 = u_1 + e_1]
+
+
+.boomeramg
+TIP: only `--pc-mg-levels` is taken into account. A lot of options can be given with PETSc options (see doc or code). Seams to be very efficient but strange behavior with fine meshes (convergence saturation)#
+
+MultiGrid options:: here is an example of options to use with multigrid:
++
+[source,sh]
+----
+--pc-type=ml [ml,gamg,boomeramg]
+--pc-mg-levels=10
+--pc-mg-type=multiplicative [multiplicative, additive, full, kaskade]
+----
+
+Coarse options::
+[source,sh]
+----
+--mg-coarse.pc-type=redundant
+----
+All fine levels options (not including coarse)::
+[source,sh]
+----
+--mg-levels.pc-type=sor
+----
+Last fine levels options::
+[source,sh]
+----
+--mg-fine-level.pc-type=sor
+----
+Specific levels options (up to 5)::
+[source,sh]
+----
+--mg-levels3.pc-type=sor
+----
+
+== FieldSplit
+
+.FieldSplit: solving bloc matrix (N x N) example:
+[stem]
+++++
+(left(
+begin{array}{cc}
+A_{00} & A_{01} \\
+A_{10} & A_{11}
+end{array}
+right))
+++++
+
+IndexSplit:: computed automatically with composite space, block matrix, and block graph. User can redefine split definition (union of split):
++
+[source,sh]
+----
+--fieldsplit-fields=0->(1),1->(2,0)
+----
+
+[source,sh]
+----
+--fieldsplit-type=additive [additive, multiplicative, symmetric-multiplicative, schur]
+----
+
+Block Jacobi (additive):: filedsplit additive
++
+[stem]
+++++
+\left(
+\begin{array}{cc}
+A_{00}^{-1} & 0 \\
+0 & A_{11}^{-1}
+\end{array}
+\right)
+++++
+
+Block Gauss-Seidel (multiplicative):: here is the block Gauss-Seidel (multiplicative) preconditioner:
++
+[stem]
+++++
+\left(
+\begin{array}{cc}
+I & 0 \\
+0 & A_{11}^{-1}
+\end{array}
+\right)
+
+\left(
+\begin{array}{cc}
+I & 0 \\
+-A_{10} & I
+\end{array}
+\right)
+
+\left(
+\begin{array}{cc}
+A_{00}^{-1} & 0 \\
+0 & I
+\end{array}
+\right)
+++++
+
+Symmetric Block Gauss-Seidel (symmetric-multiplicative):: 
++
+[stem]
+++++
+\left(
+\begin{array}{cc}
+A_{00}^{-1} & 0 \\
+0 & I
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+I & -A_{01} \\
+0 & I
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+A_{00} & 0 \\
+0 & A_{11}^{-1}
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+I & 0 \\
+-A_{10} & I
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+A_{00}^{-1} & 0 \\
+0 & I
+\end{array}
+\right)
+++++
+
+[source,sh]
+----
+--fieldsplit-0.pc-type=gasm
+--fieldsplit-0.sub-pc-type=lu
+--fieldsplit-1.pc-type=boomeramg
+--fieldsplit-1.ksp-type=gmres
+----
+
+.FieldSplit in FieldSplit:
+[source,sh]
+----
+--fieldsplit-fields=0->(0,2),1->(1)
+--fieldsplit-0.pc-type=fieldsplit
+--fieldsplit-0.fieldsplit-fields=0->(0),1->(2)
+----
+
+== Schur complement 
+
+First we compute the stem:[LDU] factorization of the block matrix:
+
+[stem]
+++++
+A = \left(
+\begin{array}{cc}
+A_{00} & A_{01} \\
+A_{10} & A_{11}
+\end{array}
+\right)
+= L D U =
+\underbrace{\left(
+\begin{array}{cc}
+I & 0 \\
+A_{10}A_{00}^{-1} & I
+\end{array}
+\right)}_{L}
+
+\underbrace{
+\left(
+\begin{array}{cc}
+A_{00} & 0 \\
+0 & S
+\end{array}
+\right)
+}_{D}
+
+\underbrace{
+\left(
+\begin{array}{cc}
+I & A_{00}^{-1} A_{01} \\
+0 & I
+\end{array}
+\right)}_{U}
+++++
+
+where the stem:[S] is called the Schur complement of stem:[A_{00}] and is equal to 
+
+[stem]
+++++
+S = A_{11} - A_{10} A_{00}^{-1} A_{01}
+++++
+
+IMPORTANT: the LDU factorization works only with 2 fields!
+
+We can now write the inverse of the matrix A:
+
+[stem]
+++++
+\begin{array}{ll}
+A^{-1} & =
+\left(
+\begin{array}{cc}
+I & -A_{00}^{-1} A_{01} \\
+0 & I
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+A_{00}^{-1} & 0 \\
+- S^{-1} A_{10} A_{00}^{-1} & S^{-1}
+\end{array}
+\right)\\
+&= 
+\left(
+\begin{array}{cc}
+A_{00}^{-1} & -A_{00}^{-1} A_{01} S^{-1} \\
+0 & S^{-1}
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+I & 0 \\
+-A_{10}A_{00}^{-1} & 0
+\end{array}
+\right)\\
+& =
+\left(
+\begin{array}{cc}
+I & -A_{00}^{-1} A_{01} \\
+0 & I
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+A_{00}^{-1} & 0 \\
+0 & S^{-1}
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+I & 0 \\
+-A_{10}A_{00}^{-1} & I
+\end{array}
+\right)
+\end{array}
+++++
+
+[source,sh]
+----
+--fieldsplit-type=schur
+--fieldsplit-schur-fact-type=full [diag, lower, upper, full]
+----
+
+|====
+| Preconditioner | Mathematical object | Comment
+| `diag` | stem:[\tilde{D}^{-1}]| positive definite, suitable for MINRES
+| `lower`| stem:[(LD)^{-1}] | suitable for left preconditioning
+| `upper`| stem:[(DU)^{-1}] | suitable for right preconditioning
+| `full` | stem:[U^{-1} (LD)^{-1} = (DU)^{-1} L^{-1}] | an exact solve if applied exactly, needs one extra solve with A
+|====
+
+
+By default, all stem:[A_{00}^{-1}] approximation use the same Krylov Subspace (KSP) however you can change it with the following options:
+
+
+Inner solver in the Schur complement:: recal that stem:[S = A_{11} - A_{10} A_{00}^{-1} A_{01}]
++
+[source,sh]
+----
+--fieldsplit-schur-inner-solver.use-outer-solver=false
+--fieldsplit-schur-inner-solver.pc-type=jacobi
+--fieldsplit-schur-inner-solver.ksp-type=preonly
+----
+
+Upper solver:: in full Schur factorisation:
++
+[stem]
+++++
+A^{-1} = 
+\left(
+\begin{array}{cc}
+I & -A_{00}^{-1}A_{01} \\
+0 & I
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+A_{00}^{-1} & 0 \\
+0 & S^{-1}
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+I & 0 \\
+-A_{10}A_{00}^{-1} & I
+\end{array}
+\right)
+++++
+
+[source,sh]
+----
+--fieldsplit-schur-upper-solver.use-outer-solver=false
+--fieldsplit-schur-upper-solver.pc-type=jacobi
+--fieldsplit-schur-upper-solver.ksp-type=preonly
+----
+
+Here are some preconditioning strategies for the Schur complement:
+
+
+SIMPLE:: Semi-Implicit Method for Pressure-Linked Equations (Patankar and Spalding 1972)
++
+[stem]
+++++
+P_{SIMPLE} =
+\left(
+\begin{array}{cc}
+A_{00} & 0 \\
+A_{10} & \tilde{S}
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+I & D_{00}^{-1} A_{01} \\
+0 & I
+\end{array}
+\right)
+++++
++
+with stem:[\tilde{S} = A_{10}D_{00}^{-1}A_{01}]
+
+[source,sh]
+----
+--fieldsplit-schur-precondition=user
+--fieldsplit-schur-upper-solver.use-outer-solver=false
+--fieldsplit-1.pc-type=lu
+--fieldsplit-1.ksp-type=gmres
+--fieldsplit-1.ksp-maxit=10
+--fieldsplit-1.rtol=1e-3
+----
+
+NOTE: Variants: SIMPLER (Patankar - 1980), SIMPLEC (Van Doormaal and Raithby - 1984), SIMPLEST (Spalding - 1989)
+
+
+Approximate stem:[S^{-1}] with preconditioner `PCLSC`:: stem:[S^{-1} \approx (A_{10}A_{01})^{-1} A_{10} A_{00} A_{01} (A_{10}A_{01})^{-1}]
++
+[source,sh]
+----
+--fieldsplit-schur-precondition=self
+--fieldsplit-1.pc-type=lsc
+--fieldsplit-1.ksp-type=gmres
+--fieldsplit-1.ksp-maxit=10
+--fieldsplit-1.ksp-rtol=1e-3
+--fieldsplit-1.lsc.ksp-type=gmres
+--fieldsplit-1.lsc.pc-type=boomeramg
+--fieldsplit-1.lsc.ksp-rtol=1e-4
+----
+
+Other preconditioners::: Yosida, PCD (Pressure Convection Diffusion), aSIMPLE, aPCD,...
+
