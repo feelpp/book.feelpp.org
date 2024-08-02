@@ -390,8 +390,9 @@ g(f)=\frac{f-average(f)}{max(f)-min(f)}
 }
 ----
 The previous snippet JSON will generate two normalizations of the distance function by using :
-* min_max method with default range stem:[\left[0,1\right]] : generated symbol is `meshes_<mesh_id>_distanceToRange_walls_normalized_min_max`.
-* mean method : generated symbol is `meshes_<mesh_id>_distanceToRange_walls_normalized_mean`.
+
+* `min_max` method with default range stem:[\[0, 1\]] : generated symbol is `meshes_<mesh_id>_distanceToRange_walls_normalized_min_max`.
+* `mean` method : generated symbol is `meshes_<mesh_id>_distanceToRange_walls_normalized_mean`.
 
 .Example 2 of DistanceToRange normalisation setup
 [source,json]
@@ -403,7 +404,7 @@ The previous snippet JSON will generate two normalizations of the distance funct
   }
 }
 ----
-The previous snippet JSON will generated one normalization Min-Max of the distance function on interval stem:[\left[1,2\rifht]].
+The previous snippet JSON will generated one normalization Min-Max of the distance function on interval stem:[\[1,2\]].
 
 
 .Example 3 of DistanceToRange normalisation setup
@@ -1207,7 +1208,7 @@ The quadrature order used in the norm computed can be also given if an analytica
 <11> coordinates of the point
 <12> fields to be computed at the point coordinate
 
-Here is a   xref:cases:csm:rotating-winch/index.adoc[biele example] from the Toolbox examples.
+Here is a xref:cases:csm:rotating-winch/index.adoc[biele example] from the Toolbox examples.
 
 
 == The generator of cases by using the index definitions

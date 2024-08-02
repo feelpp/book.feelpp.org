@@ -3,7 +3,7 @@ include::{partialsdir}/header-macros.adoc[]
 
 NOTE: {lvl_advanced}
 
-TIP: For beginners, you can skip this section and go directly to <<containers,containers>> section.
+TIP: For beginners, you can skip this section and go directly to xref:containers.adoc[containers] section.
 
 Before starting compiling {feelpp}, you need first to
 
@@ -61,7 +61,7 @@ $ cd feelpp/quickstart
 $ mpirun -np 4 feelpp_qs_laplacian_2d --case laplacian/feelpp2d
 ----
 
-=== Targets 
+=== Targets
 
 Here is a list of targets you might be interested in
 
@@ -69,7 +69,7 @@ To compile a specific target use the following command line
 
  $ cmake --build --preset default -t <target>
 
-[cols="1,1"] 
+[cols="1,1"]
 |===
 | Target | Description
 | feelpp | {feelpp} core library
@@ -207,10 +207,10 @@ $ cmake ../feelpp
 | None | |
 | Debug | `-g -O1` | Debug mode with slight optimization to ensure some performance but some objects may be optimized away while debugging
 | DebugFull | `-g -O0 -fno-omit-frame-pointer -fno-optimize-sibling-calls` | Debug without any optimization to avoid objects to be optimized away at the cost of performance
-| Release | `-O3 -DNDEBUG` | Optimize the code aggressively 
-| RelWithDebInfo |  `-g -O2 -DNDEBUG` | 
+| Release | `-O3 -DNDEBUG` | Optimize the code aggressively
+| RelWithDebInfo |  `-g -O2 -DNDEBUG` |
 | Asan | `-g -O1  -fsanitize=address,leak -fno-omit-frame-pointer -fno-optimize-sibling-calls` |  Enable Address and Leak Sanitizers
-| Coverage | `-g -O0 --coverage` | Enable Coverage Reporting for GCC/Clang 
+| Coverage | `-g -O0 --coverage` | Enable Coverage Reporting for GCC/Clang
 |===
 ====
 

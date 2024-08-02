@@ -1,4 +1,4 @@
-:cfpdes: Coefficient Form PDEs 
+:cfpdes: Coefficient Form PDEs
 = The linear elasticity equation with {cfpdes} toolbox
 :feelpp: Feel++
 :stem: latexmath
@@ -9,13 +9,13 @@
 
 == Introduction
 
-This notebook deals with the finite element approximation of deformable continuum mechanics problems in three space dimensions. 
-The domain stem:[\Omega \subset \mathbb{R}^3] represents a deformable medium, initially at rest and to which an external loading stem:[f: \Omega \rightarrow \mathbb{R}^3] is applied. 
-The objective is to determine the displacement field stem:[u: \Omega \rightarrow \mathbb{R}^3] induced by this loading once the medium has reached equilibrium. 
-It is assumed that the deformations are small enough to be modeled in the framework of linear elasticity. 
+This notebook deals with the finite element approximation of deformable continuum mechanics problems in three space dimensions.
+The domain stem:[\Omega \subset \mathbb{R}^3] represents a deformable medium, initially at rest and to which an external loading stem:[f: \Omega \rightarrow \mathbb{R}^3] is applied.
+The objective is to determine the displacement field stem:[u: \Omega \rightarrow \mathbb{R}^3] induced by this loading once the medium has reached equilibrium.
+It is assumed that the deformations are small enough to be modeled in the framework of linear elasticity.
 For simplicity, it is also assumed that the medium is isotropic.
 
-We note stem:[\sigma: \Omega \rightarrow \mathbb{R}^{3,3}] the stress field. 
+We note stem:[\sigma: \Omega \rightarrow \mathbb{R}^{3,3}] the stress field.
 The equilibrium condition is written as follows
 [stem]
 ++++
@@ -51,9 +51,9 @@ where stem:[\lambda] and stem:[\mu] are the Lamé coefficients and stem:[\mathca
 ++++
 ****
 
-The Lamé coefficients are phenomenological coefficients which, for thermodynamic reasons, are constrained by the relations stem:[\mu>0] and stem:[\lambda+\frac{2}{3} \mu \geq 0]. 
+The Lamé coefficients are phenomenological coefficients which, for thermodynamic reasons, are constrained by the relations stem:[\mu>0] and stem:[\lambda+\frac{2}{3} \mu \geq 0].
 
-For simplicity, we assume that stem:[\lambda \geq 0] and that the medium is homogeneous so that the coefficients stem:[\lambda] and stem:[\mu] are constants. 
+For simplicity, we assume that stem:[\lambda \geq 0] and that the medium is homogeneous so that the coefficients stem:[\lambda] and stem:[\mu] are constants.
 In some applications, it is more convenient to introduce the Young's modulus stem:[E] and the Poisson's ratio stem:[\nu] such that
 
 .Relation between Lamé coefficients and Young's modulus.
@@ -75,7 +75,7 @@ The Poisson coefficient is such that stem:[-1 \leq \nu<\frac{1}{2}]; moreover, s
 The model problem  must be completed by boundary conditions. In the following, two cases are considered.
 
 .Homogeneous Dirichlet problem
-[.def#def:dirichlet]  
+[.def#def:dirichlet]
 ****
 we impose the boundary condition
 [stem]
@@ -85,7 +85,7 @@ u=0 \quad \text { on } \partial \Omega
 ****
 
 .Pure traction problem (or Neumann problem)
-[.def#def:neumann] 
+[.def#def:neumann]
 ****
 we impose the boundary condition
 [stem]
@@ -102,7 +102,7 @@ Other boundary conditions are possible such as, for example, mixed Dirichlet-Neu
 .Weak formulation.
 [.def#eq-def-a]
 ****
-On stem:[\left[H^1(\Omega)\right\]^3 \times\left[H^1(\Omega)\right\]^3], we introduce the bilinear form 
+On stem:[\left[H^1(\Omega)\right\]^3 \times\left[H^1(\Omega)\right\]^3], we introduce the bilinear form
 [stem]
 ++++
 a(v, w)=\int_{\Omega} \sigma(v): \varepsilon(w)=\int_{\Omega} \lambda(\nabla \cdot v)(\nabla \cdot w)+\int_{\Omega} 2 \mu \varepsilon(v): \varepsilon(w).
@@ -111,9 +111,9 @@ a(v, w)=\int_{\Omega} \sigma(v): \varepsilon(w)=\int_{\Omega} \lambda(\nabla \cd
 
 NOTE: For two matrices stem:[\sigma] and stem:[\varepsilon] in stem:[\mathbb{R}^{3,3}, \sigma: \varepsilon] denotes their maximal contraction, which is equal to stem:[\sum_{i, j=1}^3 \sigma_{i j} \varepsilon_{i j}].
 
-It is clear that stem:[a \in \mathcal{L}\left(\left[H^1(\Omega)\right\]^3 \times\left[H^1(\Omega)\right\]^3 ; \mathbb{R}\right)]. 
-Moreover, the bilinear form stem:[a] is symmetric and positive. 
-On the other hand, the bilinear form stem:[a] is singular. 
+It is clear that stem:[a \in \mathcal{L}\left(\left[H^1(\Omega)\right\]^3 \times\left[H^1(\Omega)\right\]^3 ; \mathbb{R}\right)].
+Moreover, the bilinear form stem:[a] is symmetric and positive.
+On the other hand, the bilinear form stem:[a] is singular.
 Indeed, by introducing the vector space of rigid displacements
 
 [stem]
@@ -136,7 +136,7 @@ We note that a rigid displacement consists in the compound of a translation and 
 
 since the only rigid displacement that preserves the boundary is the zero displacement.
 
-=== Homogeneous Dirichlet problem. 
+=== Homogeneous Dirichlet problem.
 
 In order to write the homogeneous Dirichlet problem in weak form, we introduce the functional space
 [stem]
@@ -156,7 +156,7 @@ f_{\mathrm{D}}(w)=\int_{\Omega} f \cdot w
 We obtain the following problem:
 [stem]
 ++++
-\text { Find } u \in V_{\mathrm{D}} \text { such that } 
+\text { Find } u \in V_{\mathrm{D}} \text { such that }
 a(u, w)=f_{\mathrm{D}}(w), \quad \forall w \in V_{\mathrm{D}} .
 ++++
 ****
@@ -164,28 +164,28 @@ a(u, w)=f_{\mathrm{D}}(w), \quad \forall w \in V_{\mathrm{D}} .
 
 The well-posedness of <<eq-problem-D,the previous problem>> follows from the following inequality
 
-.Lemma First Korn inequality. 
+.Lemma First Korn inequality.
 [.lem#lem:1st-korn-ineq]
 ****
 Let stem:[\Omega] be a domain of stem:[\mathbb{R}^3]. Let stem:[\|\varepsilon(v)\|_{0, \Omega}=\left(\int_{\Omega} \varepsilon(v): \varepsilon(v)\right)^{\frac{1}{2}}]. There exists a constant stem:[\boldsymbol{\kappa}_{\Omega}] such that
-[[1st-korn-ineq]]]
+[[1st-korn-ineq]]
 [stem]
 ++++
-\forall v \in\left[H_0^1(\Omega)\right]^3, \quad \kappa_{\Omega}|v\|_{1, \Omega}.
+\forall v \in\left[H_0^1(\Omega)\right]^3, \quad \kappa_{\Omega}\|v\|_{1, \Omega} \leq \|\varepsilon(v)\|_{1, \Omega}.
 ++++
 ****
 
-The <<1st-korn-ineq,inequality>> implies the coercivity of the bilinear form stem:[a] on stem:[V_{\mathrm{D}}=\left[H_0^1(\Omega)\right\]^3] since
+The <<lem:1st-korn-ineq,inequality>> implies the coercivity of the bilinear form stem:[a] on stem:[V_{\mathrm{D}}=\left[H_0^1(\Omega)\right\]^3] since
 [stem]
 ++++
 \forall v \in\left[H_0^1(\Omega)\right]^3, \quad a(v, v) \geq 2 \mu|\varepsilon(v)\|_{0, \Omega}^2 \geq 2 \mu \kappa_{\Omega}^2|v||_{1, \Omega}^2 .
 ++++
 
-=== Pure traction problem 
+=== Pure traction problem
 
-The mathematical study of the pure traction problem requires some precautions. 
+The mathematical study of the pure traction problem requires some precautions.
 
-Indeed, we cannot look for the solution stem:[u] in stem:[\left[H^1(\Omega)\right\]^3] and ask that for any stem:[w \in\left[H^1(\Omega)\right\]^3], stem:[a(u, w)=\int_{\Omega} f \cdot w+\int_{\partial \Omega} g \cdot w] because the bilinear form stem:[a] is singular on stem:[\left[H^1(\Omega)\right\]^3]. 
+Indeed, we cannot look for the solution stem:[u] in stem:[\left[H^1(\Omega)\right\]^3] and ask that for any stem:[w \in\left[H^1(\Omega)\right\]^3], stem:[a(u, w)=\int_{\Omega} f \cdot w+\int_{\partial \Omega} g \cdot w] because the bilinear form stem:[a] is singular on stem:[\left[H^1(\Omega)\right\]^3].
 
 .Necessary condition for the existence of a solution.
 [.def#def:rigid]
@@ -197,8 +197,8 @@ A necessary condition for the existence of a solution is that
 ++++
 ****
 
-This equation expresses the fact that the resultant of all external forces and their moments are zero. 
-Moreover, the solution stem:[u], if it exists, is determined only to the nearest rigid displacement. 
+This equation expresses the fact that the resultant of all external forces and their moments are zero.
+Moreover, the solution stem:[u], if it exists, is determined only to the nearest rigid displacement.
 We therefore consider the functional space
 [stem]
 ++++
@@ -219,9 +219,9 @@ a(u, w)=f_{\mathrm{N}}(w), \quad \forall w \in V_{\mathrm{N}}
 \end{array}\right.
 ++++
 
-The well-posedness of <<pure-traction-problem-varf,this problem>> follows from the following inequality 
+The well-posedness of <<pure-traction-problem-varf,this problem>> follows from the following inequality
 
-.Lemma Second inequality of Korn. 
+.Lemma Second inequality of Korn.
 [.lem#lem:2nd-korn-ineq]
 ****
 Let stem:[\Omega] be a domain of stem:[\mathbb{R}^3]. There exists a constant stem:[\kappa_{\Omega}^{\prime}] such that
@@ -231,7 +231,7 @@ Let stem:[\Omega] be a domain of stem:[\mathbb{R}^3]. There exists a constant st
 \forall v \in\left[H^1(\Omega)\right]^3, \quad \boldsymbol{\kappa}_{\Omega}^{\prime}\|v\|_{1, \Omega} \leq \|\varepsilon(v)\|_{0, \Omega}+\|v\|_{0, \Omega}
 ++++
 ****
-We show that the <<2nd-korn-ineq,inequality>>  implies the coercivity of the bilinear form stem:[a] on stem:[V_{\mathrm{N}}].
+We show that the <<lem:2nd-korn-ineq,inequality>>  implies the coercivity of the bilinear form stem:[a] on stem:[V_{\mathrm{N}}].
 
 
 [NOTE]
@@ -251,8 +251,8 @@ We find the principle of least energy. The quadratic terms in stem:[v]  represen
 
 == Conformal approximation
 
-We consider a conformal approximation of problems by Lagrangian finite elements. 
-We suppose that stem:[\Omega] is a polyhedron of stem:[\mathbb{R}^3] and we consider a regular and conformal family of affine meshes of stem:[\Omega] that we note stem:[\left\{\mathcal{T}_h\right\}_{h>0}]. 
+We consider a conformal approximation of problems by Lagrangian finite elements.
+We suppose that stem:[\Omega] is a polyhedron of stem:[\mathbb{R}^3] and we consider a regular and conformal family of affine meshes of stem:[\Omega] that we note stem:[\left\{\mathcal{T}_h\right\}_{h>0}].
 We choose as reference finite element stem:[\left\{\widehat{K}, \widehat{P}, \widehat{Sigma}\right\}] a Lagrangian finite element of degree stem:[k \geq 1].
 
 === Homogeneous Dirichlet problem
@@ -274,10 +274,10 @@ a\left(u_h, w_h\right)=f_{\mathrm{D}}\left(w_h\right), \quad \forall w_h \in V_{
 which is clearly well-posed since stem:[a] is coercive on stem:[V_{\mathrm{D}}] and stem:[V_{\mathrm{D}h} \subset V_{\mathrm{D}}].
 
 
-.Theorem Convergence. 
+.Theorem Convergence.
 [.thm#thm:convergence]
 ****
-With the above assumptions, we suppose that the unique solution stem:[u] is in 
+With the above assumptions, we suppose that the unique solution stem:[u] is in
 stem:[\left[H^{k+1}(\Omega) \cap H_0^1(\Omega)\right\]^3]. Then, there exists a constant stem:[c] such that for all stem:[h],
 [stem]
 ++++
@@ -310,7 +310,7 @@ For the pure traction problem, one way to eliminate the arbitrary rigid displace
 This leads to the approximation space
 [stem]
 ++++
-\begin{aligned} 
+\begin{aligned}
 V_{\mathrm{N} h}=\left\{v_h \in\left[\mathcal{C}^0(\bar{\Omega})\right]^3 ;\right. & \forall K \in \mathcal{T}_h, v_h \circ T_K \in[\widehat{P}]^3 ; \\ & \left.v_h\left(a_0\right)=0 ; v_h\left(a_i\right) \cdot \tau_i=0, i \in\{1,2,3\}\right\} .
 \end{aligned}
 ++++
@@ -327,7 +327,7 @@ a\left(u_h, w_h\right)=f_{\mathrm{N}}\left(w_h\right), \quad \forall w_h \in V_{
 ++++
 Using the second Korn inequality, we show that the bilinear form stem:[a] is coercive on stem:[V_{\mathrm{N} h}] so that the <<approx-problem-N,discrete problem>>  is well posed.
 
-.Theorem Convergence. 
+.Theorem Convergence.
 [.thm#thm:convergence-N]
 ****
 With the above assumptions, we suppose that the unique solution u of <<pure-traction-problem-varf,continuous problem>> is in stem:[\left[H^{k+1}(\Omega)\right\]^3 \cap V_{\mathrm{N}}]. Then there exists a constant stem:[c] such that for all stem:[h],
@@ -364,11 +364,11 @@ We are now interested in materials whose ratio of Lamé coefficients is such tha
 
 This situation occurs when the *Poisson's ratio* is very close to stem:[\frac{1}{2}], i.e. for practically incompressible materials.
 
-For such materials, it is observed that if we use a mesh that is not fine enough, the discrete solution is polluted by spurious oscillations. This phenomenon, called **coercivity loss**. 
+For such materials, it is observed that if we use a mesh that is not fine enough, the discrete solution is polluted by spurious oscillations. This phenomenon, called **coercivity loss**.
 The ratio stem:[\frac{\lambda}{\mu}] being very large, it is not reasonable to absorb it in the generic constants stem:[c] appearing in the error estimates.
-We consider the bilinear form stem:[a] defined <<eq-def-a,above>>. 
+We consider the bilinear form stem:[a] defined <<eq-def-a,above>>.
 
-.Definition Coercivity and Continuity constants. 
+.Definition Coercivity and Continuity constants.
 [.def#def:alpha-omega]
 ****
 We pose
@@ -379,17 +379,17 @@ We pose
 & \omega_a=\sup _{v \in V} \sup _{w \in V} \frac{a(v, w)}{\|v\|_{1, \Omega}\|w\|_{1, \Omega}}
 \end{aligned}
 ++++
-where stem:[V] is the functional space on which the continuous problem is posed. 
+where stem:[V] is the functional space on which the continuous problem is posed.
 ****
 
-NOTE: Under the <<coercivity-loss,hypothesis>>, we show that the ratio stem:[\frac{\omega_a}{\alpha_a}] is of order stem:[\frac{\lambda}{\mu}]. 
+NOTE: Under the <<coercivity-loss,hypothesis>>, we show that the ratio stem:[\frac{\omega_a}{\alpha_a}] is of order stem:[\frac{\lambda}{\mu}].
 
 Using the convergence analysis presented in the previous section, we obtain the error estimate
 [stem]
 ++++
 \left\|u-u_h\right\|_{1, \Omega} \leq c \frac{\lambda}{\mu} h^k|u|_{k+1, \Omega}
 ++++
-with a constant stem:[c] independent of stem:[h] and the ratio stem:[\frac{\lambda}{\mu}]. This estimate shows that the mesh must be fine enough for the error to be controlled. 
+with a constant stem:[c] independent of stem:[h] and the ratio stem:[\frac{\lambda}{\mu}]. This estimate shows that the mesh must be fine enough for the error to be controlled.
 
 === Example of coercivity loss
 
