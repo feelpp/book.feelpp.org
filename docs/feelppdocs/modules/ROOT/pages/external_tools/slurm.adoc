@@ -42,8 +42,8 @@ date
 NOTE: If hyperthreading is enabled and you do not want to use it : `#SBATCH --ntasks-per-core 1`
 
 
-In the previous script, we save in log file the standard output and error outup. We can can extract the error output in another file by adding `--error=<FILE>` option.
-Also, you can be notified by an email when the job is finished or have generated a erro by using `--mail-type=<EVENTS>` and `--mail-user<EMAIl>`.
+In the previous script, we save in log file the standard output and error outup. We can can extract the error output in another file by adding `--error=FILE` option.
+Also, you can be notified by an email when the job is finished or have generated a erro by using `--mail-type=EVENTS` and `--mail-userEMAIl`.
 
 .example of script slurm with mail notification and error output
 ----
@@ -93,6 +93,4 @@ salloc -t "03:00:00" -p public -J "jobname" --exclusive -N 1 srun --pty ${SHELL}
 NOTE: Please be reasonable with your use of the --exclusive and -t "XX:YY:ZZ", as it could prevent other users to access the node.
 
 === Job arrays
-
-
 

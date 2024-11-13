@@ -1,0 +1,107 @@
+
+= SLURM Guide
+:author: [Lemoine]
+:revdate: 2024-11-13
+:toc: left
+This guide provides an overview of commonly used *SLURM* commands for job submission, management, and system control in high-performance computing environments. 
+== Introduction
+*SLURM* (Simple Linux Utility for Resource Management) is a job scheduler and resource manager used to manage tasks on clusters. This guide covers essential SLURM commands to submit, monitor, and manage jobs effectively.
+== Common SLURM Commands
+The following commands are essential for interacting with SLURM, whether you're submitting batch jobs or requesting resources for interactive sessions.
+* `sbatch`: 
+  Submits a batch script for processing. The script should contain `SBATCH` directives to specify the required resources and submission options. For example:
+  [source,bash]
+  ----
+  sbatch myscript.sh
+  ----
+* `salloc`: 
+  Requests a resource allocation for real-time jobs, enabling interactive sessions for command execution. Common usage:
+  [source,bash]
+  ----
+  salloc --nodes=1 --time=01:00:00
+  ----
+* `srun`: 
+  Launches application tasks using allocated resources. It can be used within a script submitted by `sbatch` or interactively within an `salloc` session. For example:
+  [source,bash]
+  ----
+  srun ./my_application
+  ----
+== Job Management Commands
+These commands assist with managing jobs in SLURM, including monitoring and canceling jobs.
+* `scancel`: 
+  Cancels a pending or running job. You can also specify a signal to send to all processes associated with a running job. Example usage:
+  [source,bash]
+  ----
+  scancel 12345
+  ----
+* `squeue`: 
+  Displays a list of jobs that are pending or currently running, including their status (`RUNNING`, `PENDING`, etc.). To view all jobs for a specific user:
+  [source,bash]
+  ----
+  squeue -u username
+  ----
+* `sacct`: 
+  Provides historical data on completed jobs, detailing job statuses and resource usage. Useful for tracking job performance and statistics. Example:
+  [source,bash]
+  ----
+  sacct --format=JobID,JobName,Partition,Elapsed,State
+  ----
+* `scontrol`: 
+  A powerful administrative tool that allows you to view and modify SLURM job statuses, manage job priorities, and perform various maintenance tasks. Basic usage includes:
+  [source,bash]
+  ----
+  scontrol show job 12345
+  ----
+== Resource Allocation and Job Submission
+=== Specifying Resources in SLURM
+When submitting jobs, specify the resources needed using `SBATCH` directives within your job script, or pass them as options to `salloc` or `srun`. Key resources include:
+* **Nodes**: Number of compute nodes.
+* **CPUs**: Number of CPUs per task.
+* **Memory**: Required memory per node.
+* **Time**: Estimated wall-time limit for the job.
+Example `SBATCH` directives in a script:
+[source,bash]
+----
+#!/bin/bash
+#SBATCH --job-name=myjob
+#SBATCH --nodes=2
+#SBATCH --time=02:00:00
+#SBATCH --mem=4GB
+srun ./my_application
+----
+== Monitoring Job Progress
+SLURM provides several commands to check the status and progress of your jobs.
+* `squeue`: Lists all jobs in the queue, including their state and allocated resources.
+* `sacct`: Shows accounting information for completed jobs.
+* `sstat`: Monitors real-time status information about running jobs.
+== Tips for Effective Job Management
+* **Resource Requests**: Request only the resources you need to ensure fair usage and improve scheduling efficiency.
+* **Job Dependencies**: Use job dependencies to run jobs in sequence or conditionally based on the success or failure of previous jobs. For example:
+  [source,bash]
+  ----
+  sbatch --dependency=afterok:12345 my_next_job.sh
+  ----
+* **Interactive Debugging**: Use `salloc` with `srun` for interactive job sessions, allowing you to debug and test commands directly on compute nodes.
+== Automating Workflows with SLURM
+For complex workflows, consider using job dependencies and SLURM’s `--array` option for job arrays, which allow you to submit multiple tasks with a single command.
+Example of a job array submission:
+[source,bash]
+----
+#!/bin/bash
+#SBATCH --job-name=array_job
+#SBATCH --array=1-10
+srun ./my_application --input data_${SLURM_ARRAY_TASK_ID}.txt
+----
+== Advanced SLURM Features
+SLURM provides advanced features for customized job control and scheduling.
+* **Job Arrays**: Useful for executing multiple similar tasks with slight variations, like different input files.
+* **Preemption**: High-priority jobs may preempt lower-priority jobs, so plan job priorities accordingly.
+* **Quality of Service (QoS)**: Allows configuration of job priorities and resource limitations based on user-defined categories.
+== SLURM Documentation and Resources
+For more detailed SLURM documentation, consult:
+* The official SLURM website: https://slurm.schedmd.com/
+* The man pages for each SLURM command (`man sbatch`, `man squeue`, etc.).
+* Cluster-specific documentation provided by your institution or organization.
+== Summary
+This guide covered essential SLURM commands for job submission, resource management, and monitoring. By understanding and effectively using these commands, users can optimize their workflows and resource utilization on SLURM-managed clusters.
+
