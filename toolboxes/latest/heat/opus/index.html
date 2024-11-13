@@ -6,7 +6,7 @@
     <title>Example : Electronic component cooling :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/heat/opus/index.html">
     <link rel="prev" href="../motor/index.html">
-    <link rel="next" href="../radiative_cavity/index.html">
+    <link rel="next" href="../stent/index.html">
     <meta name="description" content="We simulate a 2D model representative of the neighboring of an electronic component submitted to a cooling air flow.">
     <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -296,10 +296,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../../csm/t-beam/index.html">T-beam</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/vierendeel-truss/index.html">Vierendeel truss</a>
+    <a class="nav-link" href="../../csm/torsion-bar/index.html">Torsion Bar Benchmarks</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/torsion-bar/index.html">Torsion Bar Benchmarks</a>
+    <a class="nav-link" href="../../csm/vierendeel-truss/index.html">Vierendeel truss</a>
   </li>
 </ul>
   </li>
@@ -413,13 +413,13 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../cell/index.html">Diffusion and Uptake into a Spherical Cell</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../radiative_cavity/index.html">Radiative cavity examples</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../motor/index.html">Heat Transfer in a BWM Motor</a>
   </li>
   <li class="nav-item is-current-page" data-depth="3">
     <a class="nav-link" href="index.html">Example : Electronic component cooling</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../radiative_cavity/index.html">Radiative cavity examples</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../stent/index.html">Drug Delivery in a Coronary Stent</a>
@@ -458,10 +458,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../../heatfluid/TurekHron/index.html">Forced convection around a cylinder</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heatfluid/channel_flow_with_viscous_heating/index.html">Channel flow with viscous heating benchmark</a>
+    <a class="nav-link" href="../../heatfluid/cabin/index.html">Aerothermal Flow in an Airplane Cabin</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heatfluid/cabin/index.html">Aerothermal Flow in an Airplane Cabin</a>
+    <a class="nav-link" href="../../heatfluid/channel_flow_with_viscous_heating/index.html">Channel flow with viscous heating benchmark</a>
   </li>
 </ul>
   </li>
@@ -534,9 +534,9 @@ MathJax.Hub.Config({
     <span class="nav-text">Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../electric/manual.html">Electrostatics toolbox</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../electric/manual.html">Electrostatics toolbox</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../electric/theory.html">Electrostatics toolbox</a>
@@ -1327,7 +1327,7 @@ ICs.</p>
 <p>As the periodicity helps to dissipate the heat in both directions of the PCB, the reference results
 are attended to be lower than the results obtained with Feel++ on these testcases.</p>
 </div>
-<div id="ploty_e55e2682-3181-4057-9b88-1385e72f7348"></div>
+<div id="ploty_b3db56ea-5418-44e3-bd4e-f2e4f87b008f"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -1368,7 +1368,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_e55e2682-3181-4057-9b88-1385e72f7348', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_b3db56ea-5418-44e3-bd4e-f2e4f87b008f', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -1550,7 +1550,7 @@ else GitHub can refuse the access.</p>
 </tr>
 </tbody>
 </table>
-<div id="ploty_9b2d3126-f737-4fbb-8351-ef03d631e2b3"></div>
+<div id="ploty_a33b8731-2a85-448b-bcd4-5afd2ddec207"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -1591,7 +1591,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_9b2d3126-f737-4fbb-8351-ef03d631e2b3', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_a33b8731-2a85-448b-bcd4-5afd2ddec207', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -1660,7 +1660,7 @@ gmsh.hsize=1e-3</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="ploty_8b04103e-b7fd-4198-a341-084e0f0ee7e8"></div>
+<div id="ploty_a84ef6f7-419f-4e86-8b00-2cac9d919081"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -1701,7 +1701,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_8b04103e-b7fd-4198-a341-084e0f0ee7e8', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_a84ef6f7-419f-4e86-8b00-2cac9d919081', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -1770,7 +1770,7 @@ gmsh.hsize=2e-4</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="ploty_0ce43762-22bc-434d-a41b-c79f02e7f01d"></div>
+<div id="ploty_9ad9d60a-a06f-46d3-a7a3-731205f2bd91"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -1811,7 +1811,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_0ce43762-22bc-434d-a41b-c79f02e7f01d', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_9ad9d60a-a06f-46d3-a7a3-731205f2bd91', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -1880,7 +1880,7 @@ gmsh.hsize=1e-4</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="ploty_628100e8-a39a-40b4-8955-1eb81410ab5d"></div>
+<div id="ploty_bc03180f-af7a-495a-9966-9c1b4c5c4a3b"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -1921,7 +1921,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_628100e8-a39a-40b4-8955-1eb81410ab5d', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_bc03180f-af7a-495a-9966-9c1b4c5c4a3b', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -1989,7 +1989,7 @@ const layout = {
 </tr>
 </tbody>
 </table>
-<div id="ploty_fd22a77e-8e73-4aee-9e9c-e67c53d251e5"></div>
+<div id="ploty_5788c7be-cbb6-456b-a094-7a083cada4a4"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -2030,7 +2030,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_fd22a77e-8e73-4aee-9e9c-e67c53d251e5', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_5788c7be-cbb6-456b-a094-7a083cada4a4', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -2202,7 +2202,7 @@ order=2</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="ploty_568eee70-c825-405d-91df-3e29fc24a4c7"></div>
+<div id="ploty_3e6d4029-fd16-481e-8801-0f9b69279abf"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -2243,7 +2243,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_568eee70-c825-405d-91df-3e29fc24a4c7', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_3e6d4029-fd16-481e-8801-0f9b69279abf', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -2312,7 +2312,7 @@ velocity-convection={0,(2e-3+2e-3&lt;x)*(x&lt;2e-3+4e-3)*1e-3*(3/2/(4e-3-2e-3))*
 </tr>
 </tbody>
 </table>
-<div id="ploty_d5672033-19be-410c-8973-73eabf0329ab"></div>
+<div id="ploty_997edfd5-229f-4495-93b4-2a163cff6fda"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -2353,7 +2353,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_d5672033-19be-410c-8973-73eabf0329ab', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_997edfd5-229f-4495-93b4-2a163cff6fda', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -2398,7 +2398,7 @@ stabilization-gls=0</code></pre>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="../motor/index.html">Heat Transfer in a BWM Motor</a></span>
-  <span class="next"><a href="../radiative_cavity/index.html">Radiative cavity examples</a></span>
+  <span class="next"><a href="../stent/index.html">Drug Delivery in a Coronary Stent</a></span>
 </nav>
 </article>
   </div>
