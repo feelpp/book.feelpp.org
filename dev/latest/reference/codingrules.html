@@ -678,7 +678,9 @@ public:
 
 private:
   //! member
-  int member;
+  int M_member;
+  //! another member
+  int member_;
 };
 
 //! the function
@@ -772,7 +774,7 @@ class MeshAdaptation {};</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Non-static data members name of structures and classes always start with <code>M_</code> . M stands for Member. The rational behind this is for example :</p>
+<p>Non-static data members name of structures and classes always start with <code>M_</code> . M stands for Member, or adding <code>_</code> at the end of the member name. The rational behind this is for example :</p>
 <div class="ulist">
 <ul>
 <li>
@@ -788,7 +790,10 @@ class MeshAdaptation {};</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wong
+class meshAdaptation { std::vector directions; };
+
+// Correct
 class meshAdaptation { std::vector directions_; };
 
 // Correct
@@ -815,6 +820,9 @@ class MeshAdaptation { std::vector M_directions; };</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
+class meshAdaptation { static std::vector directions; };
+
+// Wrong
 class meshAdaptation { static std::vector directions_; };
 
 // Correct
@@ -952,6 +960,19 @@ for (int i = 0; i &lt; 10; ++i) std::cout &lt;&lt; "=" &lt;&lt; i &lt;&lt; "";</
 if (address.isEmpty() || !isValid() || !codec)
 {
     return false;
+}
+else
+{
+   return true;
+}
+
+
+// Wrong
+if (address.isEmpty() || !isValid() || !codec) {
+  return false;
+}
+else {
+  return truel
 }</code></pre>
 </div>
 </div>
