@@ -172,7 +172,9 @@ public:
 
 private:
   //! member
-  int member;
+  int M_member;
+  //! another member
+  int member_;
 };
 
 //! the function
@@ -231,14 +233,16 @@ class MeshAdaptation {};
 
 ----
 
- * Non-static data members name of structures and classes always start with `M_` . M stands for Member. The rational behind this is for example :
+ * Non-static data members name of structures and classes always start with `M_` . M stands for Member, or adding `_` at the end of the member name. The rational behind this is for example :
  ** to be able to immediately see that the data is a member of a class or a struct
  ** to easily search and query-replace
  
 [source,cpp] 
 ----
+// Wong
+class meshAdaptation { std::vector directions; };
 
-// Wrong
+// Correct
 class meshAdaptation { std::vector directions_; };
 
 // Correct
@@ -252,6 +256,8 @@ class MeshAdaptation { std::vector M_directions; };
 
 [source,cpp]   
 ----
+// Wrong
+class meshAdaptation { static std::vector directions; };
 
 // Wrong
 class meshAdaptation { static std::vector directions_; };
@@ -356,7 +362,19 @@ if (address.isEmpty() || !isValid() || !codec)
 {
     return false;
 }
+else
+{
+   return true;
+}
 
+
+// Wrong
+if (address.isEmpty() || !isValid() || !codec) {
+  return false;
+}
+else {
+  return truel
+}
 ----
 
 * Exception 2: Use braces also in if-then-else blocks where either the if-code or the else-code covers several lines
