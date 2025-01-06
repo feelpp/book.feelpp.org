@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Preconditioned Krylov subspace method in Feel++ :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/math/solver/index.html">
+    <link rel="prev" href="../rbm/numerical-experiment.html">
+    <meta name="generator" content="Antora 3.1.9">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/listing.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+<script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
+
+<script src="../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../_/js/vendor/tabs-block-behavior.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+
+  TeX: {
+      Macros: {
+      bold: ["{\\bf #1}",1],
+      calTh: "{\\mathcal{T}_h}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      card: ["{\\operatorname{card}(#1)}",1],
+      Ck: ["{\\mathcal{C}^{#1}}",1],
+      deformt: ["{\\mathbf{\\varepsilon(#1)}}",1],
+      diam: "{\\operatorname{diam}}",
+      dim: ["{\\operatorname{dim}(#1)}",1],
+      disp: ["{\\mathbf{#1}}",1],
+      domain: "{\\Omega}",
+      ds: "",
+      essinf: "{\\operatorname{ess}\\, \\operatorname{inf}}",
+      F:"{\\mathcal{F}}",
+      geo: "{\\mathrm{geo}}",
+      Ich: ["{\\mathcal{I}^{#1}_{c,h}#2}",2],
+      Id: "{\\mathcal{I}}",
+      Ilag: ["{\\mathcal{I}^{\\mathrm{lag}}_{#1}}",1],
+      jump: ["{[\\![ #1 ]\\!]}",1],
+      n:"{\\mathbf{n}}",
+      Ne: "{N_{\\mathrm{e}}}",
+      Next: "{\\mathrm{n}}",
+      nf: "{n_f}",
+      ngeo: "{n_{\\mathrm{geo}}}",
+      Nma: "{N_{\\mathrm{ma}}}",
+      NN: "{\\mathbb N}",
+      Nno: "{N_{\\mathrm{no}}}",
+      Nso: "{N_{\\mathrm{so}}}",
+      opdim: "{\\operatorname{dim}}",
+      p: "{\\mathrm{p}}",
+      P:"{\\mathcal{P}}",
+      Pch: ["{P^{#1}_{c,h}}",1],
+      Pcho: ["{P^{#1}_{c,h,0}}",1],
+      Pk: ["{\\mathcal{P}^{#1}}",1],
+      poly: ["{\\mathbb{#1}",1],
+      poly: ["{\\mathbb{#1}}",1],
+      prect: ["{\\left\\(#1\\right\\)}",1],
+      q:"{\\mathbf{q}}",
+      Qch: ["{Q^{#1}_{c,h}}",1],
+      Qk: ["{\\mathcal{Q}^{#1}}",1],
+      R: ["{\\mathbb{R}^{#1}}",1],
+      RR: "{\\mathbb R}",
+      set: ["{\\left\\{#1\\right\\}}",1],
+      stresst: ["{\\mathbf{\\sigma(#1)}}",1],
+      T:"{\\mathcal{T}}",
+      tr: "{\\operatorname{tr}}",
+      v:"{\\mathbf{v}}",
+      vertiii: ["\\left\\vert\\kern-0.25ex\\left\\vert\\kern-0.25ex\\left\\vert #1 \\right\\vert\\kern-0.25ex\\right\\vert\\kern-0.25ex\\right\\vert",1]
+  },
+  extensions: ["mhchem.js"] 
+  }
+});
+</script>
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_CHTML'></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
+<script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
+<script>var uiRootPath = '../../_'</script>
+
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item feelpp-logo">
+        <a href="https://docs.feelpp.org"><img src="../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <form class="search">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Search Feel++ Docs" class="query" id="search-query">
+          </form>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Manuals</div>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://docs.feelpp.org/user/">User</a>
+            <a class="navbar-item" href="https://docs.feelpp.org/dev/">Developer</a>
+            <a class="navbar-item" href="https://docs.feelpp.org/toolbox/">Toolbox</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link" data-title="Support">
+            <span class="icon"><img src="../../_/img/octicons-24.svg#view-comment-discussion"></span>
+          </div>
+          <div class="navbar-dropdown is-right">
+            <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../_/img/slack-icon.svg"></span>
+              <span>Chat</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span>Discussions</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span>Source</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../_/img/octicons-16.svg#view-hash"></span>
+              <span>Tweets</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
+              <span class="icon"><img src="../../_/img/octicons-16.svg#view-bug"></span>
+              <span>Issues</span>
+            </a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable download-item">
+            <div class="navbar-item"><a href="../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="https://www.cemosis.fr">
+            <img class="cemosis-logo"  src="../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<a href="#" class="menu-expand-toggle"></a>
+<div class="nav-container" data-component="math" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Feel++ Mathematics</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Notations</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../calculus/index.html">Calculus</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../calculus/vectorial.html">Calcul Vectoriel</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../calculus/change_of_variable.html">Change of variables in integrals</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../calculus/integral_theorems.html">Integral theorems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../calculus/forms.html">Formes Différentielles</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../analyse-fonctionnelle/index.html">Functional Analysis</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../analyse-fonctionnelle/lemma.html">Lemma</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/index.html">Méthode des éléments finis</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/index.html">Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/index.html#formulation-variationelle">Formulation Variationelle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/index.html#formulation-générale">Formulation Générale</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/index.html#théorème-de-lax-milgram">Théorème de Lax-Milgram</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/index.html#approximation-interne">Approximation Interne</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/index.html#sec:overview">Principe général de la méthode des éléments finis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/index.html#sec:retour-a-lexemple">Retour à l’exemple 1-D</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html">Élement fini de Lagrange</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#unisolvance">Unisolvance</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#sec:lagrange">Élement fini de Lagrange</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#exemples-déléments-finis-de-lagrange">Exemples d&#8217;éléments finis de Lagrange</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#famille-affine-déléments-finis">Famille affine d’éléments finis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#sec:maillages">Maillages</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#sec:espace">Espaces élément fini de Lagrange</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#sec:interp-iso-param">Approximation iso-paramétrique</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#sec:feelpp">Feel++</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#sec:glob">Du problème global aux éléments locaux</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-ef-lagrange.html#exercices">Exercices</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/ch-problemes-coercifs.html">Problèmes Coercifs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/laplacian/index.html">Laplacien</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../user/latest/cpp/laplacian.html">Numerical Experiments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/advection-diffusion/index.html">Advection-Diffusion</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/elasticity/index.html">Élasticité Linéaire</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/elasticity/mixed.html">Problème mixte</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/elasticity/pure-traction.html">Problème de traction pure</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/elasticity/implementation.html">Implementation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/elasticity/numerical-experiments.html">Numerical Experiments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/coercivity-loss.html">Perte de coercivité</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/advection-diffusion/dominant-advection.html">Advection-Diffusion avec advection dominante</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/elasticity/incompressibility.html">Incompressibilité en élasticité</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html">Problèmes Mixtes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_model_problems">Model Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_saddle_point_problems">Saddle Point Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_finite_element_approximation">Finite Element Approximation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_mixed_finite_element_for_stokes">Mixed Finite Element for Stokes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_variational_formulation_for_stokes">Variational Formulation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_finite_element_approximation_for_stokes">Finite Element Approximation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_bad_finite_elements_for_stokes">Bad Finite Elements</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_mini_element">Mini-Element</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_taylor_hood_element">Taylor-Hood Element</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/ch-problemes-mixtes.html#_test_cases">Test Cases for Stokes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/darcy.html">Flow through porous medium : Darcy&#8217;s law</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../fem/coupling_darcystokes.html">The Darcy-Stokes coupled problem</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fem/nonlinear.html">Nonlinear problems</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../hdg/index.html">HDG Methods</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../hdg/diffusion-reaction/index.html">Diffusion-Reaction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../hdg/diffusion-reaction/verification.html">verification</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../rbm/index.html">Reduced Basis Methods</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../rbm/linear-compliant-elliptic-problems.html">Linear compliant elliptic problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../rbm/a-posteriori-error-estimation.html">A Posteriori Error Estimation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../rbm/Inf-sup-lower-bound.html">Inf-sup lower bound</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../rbm/numerical-experiment.html">Numerical experiment</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="index.html">Algebraic Solutions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Feel++ Mathematics</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+      <li class="component">
+        <a class="title" href="../../user/latest/index.html">User Manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../user/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../user/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../user/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../toolboxes/latest/index.html">Toolboxes Manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../toolboxes/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../toolboxes/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../toolboxes/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../mor/latest/index.html">Model Order Reduction Manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../mor/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../mor/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../mor/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../dev/latest/index.html">Developer manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../dev/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../dev/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../dev/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../feelpp-project/index.html">Template Project</a>
+      </li>
+      <li class="component">
+        <a class="title" href="../../contribute/index.html">Toolboxes Contribution Guide</a>
+      </li>
+      <li class="component">
+        <a class="title" href="../../data/index.html">Data Manual</a>
+      </li>
+      <li class="component is-current">
+        <a class="title" href="../index.html">Feel++ Mathematics</a>
+      </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button class="nav-toggle"></button>
+    <a href="../../home/index.html" class="home-link"></a>
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Feel++ Mathematics</a></li>
+    <li><a href="index.html">Algebraic Solutions</a></li>
+  </ul>
+</nav>
+
+  
+    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/math/modules/solver/pages/index.adoc">Edit this Page</a></div>
+  
+  <div class="page-downloads">
+  <span class="label">Download as</span>
+  <ul class="download-options">
+    <li>
+      <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
+         class="pdf-download">
+        <img class="pdf-file-icon icon" src="../../_/img/pdf.svg"/> .pdf
+      </a>
+    </li>
+  </ul>
+</div>
+</div>
+
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Preconditioned Krylov subspace method in Feel++</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>We wish to solve a linear system of the form:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[Ax = F\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(A\) is a sparse large matrix, \(x\) is the solution, and \(F\) is the right-hand side.</p>
+</div>
+<div class="paragraph">
+<p>Our objective is to solve a linear system \(Ax = F\) with an iterative process efficiently, a direct method is not suitable because of the size of the matrix. We will use a Krylov subspace method with a preconditioner to accelerate the convergence.</p>
+</div>
+<div class="paragraph">
+<p>Given \(x^0\) the initial guess, we wish to compute \(x^{1},x^2, \ldots x^n,x^{n+1}, \ldots\) through the iterative process.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_krylov_subspace_method"><a class="anchor" href="#_krylov_subspace_method"></a>1. Krylov subspace method</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Krylov subspace methods finds such an approximate solution in a space which the dimension increase at each step of the method.
+It is based on the Arnoldi process which generates an orthogonal basis of the Krylov subspace.</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[x^{n+1} = x^0 + \mathrm{span}\left\{ r^0,Ar^0,...,A^{n-1}r^0\right\}, \quad r^k=F-Ax^k\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(r^k\) is the residual of the system at the step \(k\).</p>
+</div>
+<div class="paragraph">
+<p>There are many Krylov subspace methods in the literature, here are some of them:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Cg (Conjugate Gradient)</dt>
+<dd>
+<p>for symmetric positive definite matrices</p>
+</dd>
+<dt class="hdlist1">Gmres (Generalized Minimal Residual)</dt>
+<dd>
+<p>for non-symmetric matrices</p>
+</dd>
+<dt class="hdlist1">Bicg (BiConjugate Gradient)</dt>
+<dd>
+<p>for non-symmetric matrices</p>
+</dd>
+<dt class="hdlist1">Fgmres (Flexible Generalized Minimal Residual)</dt>
+<dd>
+<p>for non-symmetric matrices enabling the use of preconditioners changing at each iteration</p>
+</dd>
+<dt class="hdlist1">Minres (Minimal Residual)</dt>
+<dd>
+<p>for symmetric indefinite matrices</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Their convergence rate depend of condition number of \(A\), it is highly recommended to precondition the system to accelerate the convergence.</p>
+</div>
+<div class="paragraph">
+<p>From now on, we use preconditioned Krylov subspace method to solve the system \(Ax=F\).
+We transform the original system into an equivalent system which has a better conditioning:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Left preconditioning</dt>
+<dd>
+<p>denote \(M_L^{-1}\) the left preconditioner, we solve</p>
+<div class="stemblock">
+<div class="content">
+\[M_L^{-1} A x = M_L^{-1} F\]
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Right preconditioning</dt>
+<dd>
+<p>denote \(M_R^{-1}\) the right preconditioner, we solve</p>
+<div class="stemblock">
+<div class="content">
+\[A M_R^{-1} y = F, \quad x=M_R^{-1} y\]
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Left and right preconditioning</dt>
+<dd>
+<p>denote \(M_L^{-1}\) and \(M_R^{-1}\) the left and right preconditioners, we solve</p>
+<div class="stemblock">
+<div class="content">
+\[M_L^{-1} A M_R^{-1}, \quad y = M_L^{-1} F \quad x=M_R^{-1} y\]
+</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>We now describe the different preconditioners \(M\) that can be used in Feel++.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lu"><a class="anchor" href="#_lu"></a>2. LU</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First, we start with the LU factorization of the matrix \(A\) to solve the system \(Ax=F\).</p>
+</div>
+<div class="paragraph">
+<p>We compute the factorisation \(A=LU\)</p>
+</div>
+<div class="olist arabic">
+<div class="title">Algorithm:</div>
+<ol class="arabic">
+<li>
+<p>Basic algo: step \(k\) of \(LU\) factorization \(a_{kk}\) pivot</p>
+</li>
+<li>
+<p>For \(i &gt; k\): \(l_{ik} = a_{ik} / a_{kk}\)</p>
+</li>
+<li>
+<p>For \(i &gt; k, j &gt; k\): \(u_{ij} = a_{ij} - l_{ik} a_{kj}\)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Note that</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Algorithm complexity (\(A\) is sparse matrix \(n \times n\) with bandwidth \(b\)): \(\mathcal{O}(n b^2)\) in time, \(\mathcal{O}(n b)\) in space.</p>
+</li>
+<li>
+<p>Ordering routine (to reduce fill) to be used in the LU factorization \(LU = PAQ\):</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The options set in Feel++ are in fact PETSc options.
+Here is how to set the LU factorization options.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Matrix ordering</dt>
+<dd>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--pc_factor_mat_ordering_type=nd [natural, nd, 1wd, rcm, qmd, rowlength]</code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Factorization package</dt>
+<dd>
+<p>mumps, petsc, pastix, umfpack, superlu, &#8230;&#8203;</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--pc-factor-mat-solver-package-type=mumps</code></pre>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+MUMPS and Pastix are parallel factorization packages.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>mumps</code> is the default factorization package in Feel++.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To use a direct solver, you can disable the iterative solver and use a direct solver</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--ksp-type=preonly
+--pc-type=lu</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you do not disable the iterative solver, you should expect that the iterative solver will take 1 iteration to solve the system.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ilu"><a class="anchor" href="#_ilu"></a>3. ILU</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An alternative to the LU factorization is the Incomplete LU factorization.
+ILU factorizations provide  approximations of the LU factorization.
+Various ILU factorizations are available in Feel++:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">ILU(k)</dt>
+<dd>
+<p>approximate factorization</p>
+<div class="stemblock">
+<div class="content">
+\[\forall {i,j &gt; k} : \mathrm{if} (i,j)\in S a_{ij} \leftarrow a_{ij} - a_{ik} a_{kk}^{-1} a_{kj}\]
+</div>
+</div>
+</dd>
+<dt class="hdlist1">ILUT</dt>
+<dd>
+<p>only fill in zero locations if \(a_{ik} a_{kk}^{-1} a_{kj}\) large enough</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-plaintext hljs" data-lang="plaintext">--pc-factor-levels=3
+--pc-factor-fill=6</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The options indicate the amount of fill you expect in the factored matrix (fill = number nonzeros in factor/number nonzeros in original matrix).</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>To select an incomplete factorization, you have to first select the factorization package using <code>--pc-factor-mat-solver-package-type=&#8230;&#8203;</code></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Factorization package</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Option</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PETSc</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>petsc</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PETSc ILU factorization, not parallel</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HYPRE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hypre</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HYPRE ILU factorization, works in sequential (ILU(k) and ILUT) and parallel (ILU(k))</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HYPRE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pilut</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HYPRE ILUT factorization, works in sequential and parallel</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+the table needs to be checked and updated.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_relaxation_methods"><a class="anchor" href="#_relaxation_methods"></a>4. Relaxation methods</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An alternative to the LU, ILU factorization is the relaxation methods.
+The principle is to split \(A\) into lower, diagonal, upper parts: \(A = L +D + U\) and to solve the system \(Ax=F\) with the following iterative process:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[x^{k+1} = x^{k} + P^{-1}(F-Ax^{k})\]
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Jacobi</dt>
+<dd>
+<p><code>--pc-type=jacobi</code></p>
+<div class="stemblock">
+<div class="content">
+\[P^{-1} = D^{-1}\]
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Successive over-relaxation (SOR)</dt>
+<dd>
+<p><code>--pc-type=sor</code></p>
+<div class="stemblock">
+<div class="content">
+\[P = (1/\omega)D + U forward, P = backward
+
+x^{k+1} = -(D+\omega L)^{-1} ((\omega U + (1-\omega) D)) x^{k} + \omega (D +\omega L)^{-1} F\]
+</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The SOR method is a generalization of the Jacobi method and has various options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--pc-sor-type=local_symmetric [symmetric, forward, backward, local_symmetric, local_forward, local_backward]
+--pc-sor-omega=1 : omega in ]0,2[. if omega=1 =&gt; Gauss-Seidel
+--pc-sor-lits=1 : the number of smoothing sweeps on a process before doing a ghost point update from the other processes
+--pc-sor-its=1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The total number of SOR sweeps is given by <code>lits*its</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_domain_decomposition"><a class="anchor" href="#_domain_decomposition"></a>5. Domain decomposition</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Additive Schwarz with overlap</dt>
+</dl>
+</div>
+<div class="stemblock">
+<div class="content">
+\[P = \sum_{i=1}^p \hat{R}_i^T \left(R_i A_i R_i^T\right) ^{-1} \tilde{R}_i\]
+</div>
+</div>
+<div class="paragraph">
+<p>where  \(R_i,\tilde{R}_i,\hat{R}_i\) are restriction operators.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 1</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--pc-type=gasm
+--pc-gasm-overlap=2 [size of extended local subdomains]
+--pc-gasm-type=restrict [basic, restrict, interpolate, none]
+--sub-pc-type=lu [preconditioner used for A_i^{-1}]
+--sub-pc-factor-mat-solver-package-type=mumps</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Example 2</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--pc-type=gasm
+--pc-gasm-overlap=2 # [size of extended local subdomains]
+--pc-gasm-type=restrict # [basic, restrict, interpolate, none]
+--sub-pc-type=ilu # [preconditioner used for A_i^{-1}]
+--sub-pc-factor-levels=3
+--sub-pc-factor-fill=6</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_algebraic_multigrid"><a class="anchor" href="#_algebraic_multigrid"></a>6. Algebraic multigrid</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<div class="title">Algorithm:</div>
+<ol class="arabic">
+<li>
+<p>Basic multigrid with two levels</p>
+</li>
+<li>
+<p>Solve on fine grid: \(A_1 u_1 = F_1\)</p>
+</li>
+<li>
+<p>Compute residual: \(r_1 = F_1 - A_1 u_1\)</p>
+</li>
+<li>
+<p>Restrict \(r_1\) to the coarse grid: \(r_{0}= R r_1\)</p>
+</li>
+<li>
+<p>Solve on coarse grid: \(A_{0} e_{0}=r_{0}\)</p>
+</li>
+<li>
+<p>Interpolate: \(e_{1}=I e_{0}\)</p>
+</li>
+<li>
+<p>Solve on fine grid by starting with \(u_1 = u_1 + e_1\)</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">boomeramg</div>
+only <code>--pc-mg-levels</code> is taken into account. A lot of options can be given with PETSc options (see doc or code). Seams to be very efficient but strange behavior with fine meshes (convergence saturation)#
+</td>
+</tr>
+</table>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">MultiGrid options</dt>
+<dd>
+<p>here is an example of options to use with multigrid:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--pc-type=ml [ml,gamg,boomeramg]
+--pc-mg-levels=10
+--pc-mg-type=multiplicative [multiplicative, additive, full, kaskade]</code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Coarse options</dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--mg-coarse.pc-type=redundant</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">All fine levels options (not including coarse)</dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--mg-levels.pc-type=sor</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Last fine levels options</dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--mg-fine-level.pc-type=sor</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Specific levels options (up to 5)</dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--mg-levels3.pc-type=sor</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fieldsplit"><a class="anchor" href="#_fieldsplit"></a>7. FieldSplit</h2>
+<div class="sectionbody">
+<div class="stemblock">
+<div class="title">FieldSplit: solving bloc matrix (N x N) example:</div>
+<div class="content">
+\[\begin{pmatrix}
+A_{00} &amp; A_{01} \\
+A_{10} &amp; A_{11}
+\end{pmatrix}\]
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">IndexSplit</dt>
+<dd>
+<p>computed automatically with composite space, block matrix, and block graph. User can redefine split definition (union of split):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--fieldsplit-fields=0-&gt;(1),1-&gt;(2,0)</code></pre>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--fieldsplit-type=additive [additive, multiplicative, symmetric-multiplicative, schur]</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Block Jacobi (additive)</dt>
+<dd>
+<p>filedsplit additive</p>
+<div class="stemblock">
+<div class="content">
+\[\left(
+\begin{array}{cc}
+A_{00}^{-1} &amp; 0 \\
+0 &amp; A_{11}^{-1}
+\end{array}
+\right)\]
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Block Gauss-Seidel (multiplicative)</dt>
+<dd>
+<p>here is the block Gauss-Seidel (multiplicative) preconditioner:</p>
+<div class="stemblock">
+<div class="content">
+\[\left(
+\begin{array}{cc}
+I &amp; 0 \\
+0 &amp; A_{11}^{-1}
+\end{array}
+\right)
+
+\left(
+\begin{array}{cc}
+I &amp; 0 \\
+-A_{10} &amp; I
+\end{array}
+\right)
+
+\left(
+\begin{array}{cc}
+A_{00}^{-1} &amp; 0 \\
+0 &amp; I
+\end{array}
+\right)\]
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Symmetric Block Gauss-Seidel (symmetric-multiplicative)</dt>
+<dd>
+<div class="stemblock">
+<div class="content">
+\[\left(
+\begin{array}{cc}
+A_{00}^{-1} &amp; 0 \\
+0 &amp; I
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+I &amp; -A_{01} \\
+0 &amp; I
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+A_{00} &amp; 0 \\
+0 &amp; A_{11}^{-1}
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+I &amp; 0 \\
+-A_{10} &amp; I
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+A_{00}^{-1} &amp; 0 \\
+0 &amp; I
+\end{array}
+\right)\]
+</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--fieldsplit-0.pc-type=gasm
+--fieldsplit-0.sub-pc-type=lu
+--fieldsplit-1.pc-type=boomeramg
+--fieldsplit-1.ksp-type=gmres</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">FieldSplit in FieldSplit:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--fieldsplit-fields=0-&gt;(0,2),1-&gt;(1)
+--fieldsplit-0.pc-type=fieldsplit
+--fieldsplit-0.fieldsplit-fields=0-&gt;(0),1-&gt;(2)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_schur_complement"><a class="anchor" href="#_schur_complement"></a>8. Schur complement</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First we compute the \(LDU\) factorization of the block matrix:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[A = \left(
+\begin{array}{cc}
+A_{00} &amp; A_{01} \\
+A_{10} &amp; A_{11}
+\end{array}
+\right)
+= L D U =
+\underbrace{\left(
+\begin{array}{cc}
+I &amp; 0 \\
+A_{10}A_{00}^{-1} &amp; I
+\end{array}
+\right)}_{L}
+
+\underbrace{
+\left(
+\begin{array}{cc}
+A_{00} &amp; 0 \\
+0 &amp; S
+\end{array}
+\right)
+}_{D}
+
+\underbrace{
+\left(
+\begin{array}{cc}
+I &amp; A_{00}^{-1} A_{01} \\
+0 &amp; I
+\end{array}
+\right)}_{U}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where the \(S\) is called the Schur complement of \(A_{00}\) and is equal to</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[S = A_{11} - A_{10} A_{00}^{-1} A_{01}\]
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+the LDU factorization works only with 2 fields!
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We can now write the inverse of the matrix A:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{array}{ll}
+A^{-1} &amp; =
+\left(
+\begin{array}{cc}
+I &amp; -A_{00}^{-1} A_{01} \\
+0 &amp; I
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+A_{00}^{-1} &amp; 0 \\
+- S^{-1} A_{10} A_{00}^{-1} &amp; S^{-1}
+\end{array}
+\right)\\
+&amp;=
+\left(
+\begin{array}{cc}
+A_{00}^{-1} &amp; -A_{00}^{-1} A_{01} S^{-1} \\
+0 &amp; S^{-1}
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+I &amp; 0 \\
+-A_{10}A_{00}^{-1} &amp; 0
+\end{array}
+\right)\\
+&amp; =
+\left(
+\begin{array}{cc}
+I &amp; -A_{00}^{-1} A_{01} \\
+0 &amp; I
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+A_{00}^{-1} &amp; 0 \\
+0 &amp; S^{-1}
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+I &amp; 0 \\
+-A_{10}A_{00}^{-1} &amp; I
+\end{array}
+\right)
+\end{array}\]
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--fieldsplit-type=schur
+--fieldsplit-schur-fact-type=full [diag, lower, upper, full]</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preconditioner</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mathematical object</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>diag</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\tilde{D}^{-1}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">positive definite, suitable for MINRES</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>lower</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\((LD)^{-1}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">suitable for left preconditioning</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>upper</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\((DU)^{-1}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">suitable for right preconditioning</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>full</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(U^{-1} (LD)^{-1} = (DU)^{-1} L^{-1}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">an exact solve if applied exactly, needs one extra solve with A</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>By default, all \(A_{00}^{-1}\) approximation use the same Krylov Subspace (KSP) however you can change it with the following options:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Inner solver in the Schur complement</dt>
+<dd>
+<p>recal that \(S = A_{11} - A_{10} A_{00}^{-1} A_{01}\)</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--fieldsplit-schur-inner-solver.use-outer-solver=false
+--fieldsplit-schur-inner-solver.pc-type=jacobi
+--fieldsplit-schur-inner-solver.ksp-type=preonly</code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Upper solver</dt>
+<dd>
+<p>in full Schur factorisation:</p>
+<div class="stemblock">
+<div class="content">
+\[A^{-1} =
+\left(
+\begin{array}{cc}
+I &amp; -A_{00}^{-1}A_{01} \\
+0 &amp; I
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+A_{00}^{-1} &amp; 0 \\
+0 &amp; S^{-1}
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+I &amp; 0 \\
+-A_{10}A_{00}^{-1} &amp; I
+\end{array}
+\right)\]
+</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--fieldsplit-schur-upper-solver.use-outer-solver=false
+--fieldsplit-schur-upper-solver.pc-type=jacobi
+--fieldsplit-schur-upper-solver.ksp-type=preonly</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here are some preconditioning strategies for the Schur complement:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">SIMPLE</dt>
+<dd>
+<p>Semi-Implicit Method for Pressure-Linked Equations (Patankar and Spalding 1972)</p>
+<div class="stemblock">
+<div class="content">
+\[P_\text{SIMPLE} =
+\left(
+\begin{array}{cc}
+A_{00} &amp; 0 \\
+A_{10} &amp; \tilde{S}
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+I &amp; D_{00}^{-1} A_{01} \\
+0 &amp; I
+\end{array}
+\right)\]
+</div>
+</div>
+<div class="paragraph">
+<p>with \(\tilde{S} = A_{10}D_{00}^{-1}A_{01}\)</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--fieldsplit-schur-precondition=user
+--fieldsplit-schur-upper-solver.use-outer-solver=false
+--fieldsplit-1.pc-type=lu
+--fieldsplit-1.ksp-type=gmres
+--fieldsplit-1.ksp-maxit=10
+--fieldsplit-1.rtol=1e-3</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Variants: SIMPLER (Patankar - 1980), SIMPLEC (Van Doormaal and Raithby - 1984), SIMPLEST (Spalding - 1989)
+</td>
+</tr>
+</table>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Approximate \(S^{-1}\) with preconditioner <code>PCLSC</code></dt>
+<dd>
+<p>\(S^{-1} \approx (A_{10}A_{01})^{-1} A_{10} A_{00} A_{01} (A_{10}A_{01})^{-1}\)</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">--fieldsplit-schur-precondition=self
+--fieldsplit-1.pc-type=lsc
+--fieldsplit-1.ksp-type=gmres
+--fieldsplit-1.ksp-maxit=10
+--fieldsplit-1.ksp-rtol=1e-3
+--fieldsplit-1.lsc.ksp-type=gmres
+--fieldsplit-1.lsc.pc-type=boomeramg
+--fieldsplit-1.lsc.ksp-rtol=1e-4</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Other preconditioners</dt>
+<dd>
+<p>Yosida, PCD (Pressure Convection Diffusion), aSIMPLE, aPCD,&#8230;&#8203;</p>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../rbm/numerical-experiment.html">Numerical experiment</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="sharethis-inline-share-buttons"></div>
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.cemosis.fr" class="icon">
+            <img src="../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.cemosis.fr" target="_blank" rel="noopener">Projects Documentation</a></li>
+          <li><a href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">Forums(Slack)</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://www.cemosis.fr" target="_blank" rel="noopener">Cemosis</a></li>
+          <li><a href="https://www.cemosis.fr/news" target="_blank" rel="noopener">News</a></li>
+          <li><a href="https://www.cemosis.fr/projects" target="_blank" rel="noopener">Projects</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.feelpp.org" target="_blank" rel="noopener">Feel++ Documentation</a></li>
+          <li><a href="http://docs.feelpp.org/user/">Get Started</a></li>
+          <li><a href="http://docs.feelpp.org/user//install/distributions/">Downloads</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="facebook" class="cls-1" d="M29,0H3A2.652,2.652,0,0,0,0,3V29a2.652,2.652,0,0,0,3,3H16V18H12V14h4V12a6.452,6.452,0,0,1,6-6h4v4H22a2.151,2.151,0,0,0-2,2v2h6l-1,4H20V32h9a2.652,2.652,0,0,0,3-3V3A2.652,2.652,0,0,0,29,0Z"/></svg>
+            <a href="https://www.facebook.com/cemosis.fr" class="icon">
+            Facebook
+            </a>
+          </li>
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32.1 26.1"> <path id="twitter" class="cls-1" d="M32,7.1a11.836,11.836,0,0,1-3.8,1,6.462,6.462,0,0,0,2.9-3.6,12.606,12.606,0,0,1-4.2,1.6A6.492,6.492,0,0,0,22.1,4a6.594,6.594,0,0,0-6.6,6.6,7.719,7.719,0,0,0,.2,1.5A18.458,18.458,0,0,1,2.2,5.2a6.294,6.294,0,0,0-.9,3.3A6.765,6.765,0,0,0,4.2,14a6.109,6.109,0,0,1-3-.8v.1a6.543,6.543,0,0,0,5.3,6.4,4.678,4.678,0,0,1-1.7.2,4.869,4.869,0,0,1-1.2-.1,6.679,6.679,0,0,0,6.1,4.6,12.917,12.917,0,0,1-8.2,2.8,9.151,9.151,0,0,1-1.6-.1,18.438,18.438,0,0,0,10.1,3c12.1,0,18.7-10,18.7-18.7v-.8A13.336,13.336,0,0,0,32,7.2Z" transform="translate(0.1 -4)"/></svg>
+            <a href="https://twitter.com/cemosis" class="icon">
+              Twitter
+            </a>
+          </li>
+          <li>
+          <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="linkedin" class="cls-1" d="M29,0H3A3.076,3.076,0,0,0,0,3V29a3.009,3.009,0,0,0,3,3H29a2.946,2.946,0,0,0,3-3V3A3.009,3.009,0,0,0,29,0ZM12,26H8V12h4ZM10,10a2,2,0,1,1,2-2A2.006,2.006,0,0,1,10,10ZM26,26H22V18a2,2,0,0,0-4,0v8H14V12h4v2.5c.8-1.1,2.1-2.5,3.5-2.5A4.736,4.736,0,0,1,26,17Z"/></svg>
+              <a href="https://www.linkedin.com/company/cemosis" class="icon">
+             Linkedin
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <div class="footer-terms-copyright">
+          <span>© 2025 Cemosis, Université de Strasbourg</span>
+      </div>
+      <div class="footer-terms-links">
+        <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>
+        <a href="https://www.cemosis.fr/privacy-policy">Privacy Policy</a>
+        <a href="https://www.cemosis.fr/cookie-policy">Cookie Policy</a>
+        <a href="https://www.cemosis.fr/support-policy">Support Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+
+
+<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
+<script async src="../../_/js/vendor/fontawesome.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+
+<script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">
+</script>
+
+<script type="text/javascript">
+function toggleFullScreen() {
+   var doc = window.document;
+   var docEl = doc.documentElement;
+
+   var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+   var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+   if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+       requestFullScreen.call(docEl);
+   }
+   else {
+       cancelFullScreen.call(doc);
+   }
+}
+</script>
+  </body>
+</html>
