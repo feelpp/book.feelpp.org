@@ -1,0 +1,47 @@
+= Krylov subspace method
+:stem: latexmath
+
+The Krylov subspace methods finds such an approximate solution in a space which the dimension increase at each step of the method.
+It is based on the Arnoldi process which generates an orthogonal basis of the Krylov subspace.
+
+
+[stem]
+++++
+x^{n+1} = x^0 + \mathrm{span}\left\{ r^0,Ar^0,...,A^{n-1}r^0\right\}, \quad r^k=F-Ax^k
+++++
+where stem:[r^k] is the residual of the system at the step stem:[k].
+
+
+There are many Krylov subspace methods in the literature, here are some of them:
+
+Cg (Conjugate Gradient):: for symmetric positive definite matrices
+Gmres (Generalized Minimal Residual):: for non-symmetric matrices
+Bicg (BiConjugate Gradient):: for non-symmetric matrices
+Fgmres (Flexible Generalized Minimal Residual):: for non-symmetric matrices enabling the use of preconditioners changing at each iteration
+Minres (Minimal Residual):: for symmetric indefinite matrices
+
+Their convergence rate depend of condition number of stem:[A], it is highly recommended to precondition the system to accelerate the convergence.
+
+From now on, we use preconditioned Krylov subspace method to solve the system stem:[Ax=F].
+We transform the original system into an equivalent system which has a better conditioning:
+
+Left preconditioning:: denote stem:[M_L^{-1}] the left preconditioner, we solve
++
+[stem]
+++++
+M_L^{-1} A x = M_L^{-1} F
+++++
+Right preconditioning:: denote stem:[M_R^{-1}] the right preconditioner, we solve
++
+[stem]
+++++
+A M_R^{-1} y = F, \quad x=M_R^{-1} y
+++++
+Left and right preconditioning:: denote stem:[M_L^{-1}] and stem:[M_R^{-1}] the left and right preconditioners, we solve
++
+[stem]
+++++
+M_L^{-1} A M_R^{-1}, \quad y = M_L^{-1} F \quad x=M_R^{-1} y
+++++
+
+We now describe the different preconditioners stem:[M] that can be used in Feel++.
