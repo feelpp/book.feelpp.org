@@ -387,7 +387,19 @@ MathJax.Hub.Config({
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../fem/nonlinear.html">Nonlinear problems</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">High Order Methods</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fem/hom/index.html">Introductions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fem/hom/specs.html">Specifications</a>
   </li>
 </ul>
   </li>
@@ -576,92 +588,7 @@ MathJax.Hub.Config({
 </div>
 </div>
 <div class="sect1">
-<h2 id="_krylov_subspace_method"><a class="anchor" href="#_krylov_subspace_method"></a>1. Krylov subspace method</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Krylov subspace methods finds such an approximate solution in a space which the dimension increase at each step of the method.
-It is based on the Arnoldi process which generates an orthogonal basis of the Krylov subspace.</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[x^{n+1} = x^0 + \mathrm{span}\left\{ r^0,Ar^0,...,A^{n-1}r^0\right\}, \quad r^k=F-Ax^k\]
-</div>
-</div>
-<div class="paragraph">
-<p>where \(r^k\) is the residual of the system at the step \(k\).</p>
-</div>
-<div class="paragraph">
-<p>There are many Krylov subspace methods in the literature, here are some of them:</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Cg (Conjugate Gradient)</dt>
-<dd>
-<p>for symmetric positive definite matrices</p>
-</dd>
-<dt class="hdlist1">Gmres (Generalized Minimal Residual)</dt>
-<dd>
-<p>for non-symmetric matrices</p>
-</dd>
-<dt class="hdlist1">Bicg (BiConjugate Gradient)</dt>
-<dd>
-<p>for non-symmetric matrices</p>
-</dd>
-<dt class="hdlist1">Fgmres (Flexible Generalized Minimal Residual)</dt>
-<dd>
-<p>for non-symmetric matrices enabling the use of preconditioners changing at each iteration</p>
-</dd>
-<dt class="hdlist1">Minres (Minimal Residual)</dt>
-<dd>
-<p>for symmetric indefinite matrices</p>
-</dd>
-</dl>
-</div>
-<div class="paragraph">
-<p>Their convergence rate depend of condition number of \(A\), it is highly recommended to precondition the system to accelerate the convergence.</p>
-</div>
-<div class="paragraph">
-<p>From now on, we use preconditioned Krylov subspace method to solve the system \(Ax=F\).
-We transform the original system into an equivalent system which has a better conditioning:</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Left preconditioning</dt>
-<dd>
-<p>denote \(M_L^{-1}\) the left preconditioner, we solve</p>
-<div class="stemblock">
-<div class="content">
-\[M_L^{-1} A x = M_L^{-1} F\]
-</div>
-</div>
-</dd>
-<dt class="hdlist1">Right preconditioning</dt>
-<dd>
-<p>denote \(M_R^{-1}\) the right preconditioner, we solve</p>
-<div class="stemblock">
-<div class="content">
-\[A M_R^{-1} y = F, \quad x=M_R^{-1} y\]
-</div>
-</div>
-</dd>
-<dt class="hdlist1">Left and right preconditioning</dt>
-<dd>
-<p>denote \(M_L^{-1}\) and \(M_R^{-1}\) the left and right preconditioners, we solve</p>
-<div class="stemblock">
-<div class="content">
-\[M_L^{-1} A M_R^{-1}, \quad y = M_L^{-1} F \quad x=M_R^{-1} y\]
-</div>
-</div>
-</dd>
-</dl>
-</div>
-<div class="paragraph">
-<p>We now describe the different preconditioners \(M\) that can be used in Feel++.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_lu"><a class="anchor" href="#_lu"></a>2. LU</h2>
+<h2 id="_lu"><a class="anchor" href="#_lu"></a>1. LU</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>First, we start with the LU factorization of the matrix \(A\) to solve the system \(Ax=F\).</p>
@@ -769,7 +696,7 @@ If you do not disable the iterative solver, you should expect that the iterative
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ilu"><a class="anchor" href="#_ilu"></a>3. ILU</h2>
+<h2 id="_ilu"><a class="anchor" href="#_ilu"></a>2. ILU</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>An alternative to the LU factorization is the Incomplete LU factorization.
@@ -849,7 +776,7 @@ the table needs to be checked and updated.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_relaxation_methods"><a class="anchor" href="#_relaxation_methods"></a>4. Relaxation methods</h2>
+<h2 id="_relaxation_methods"><a class="anchor" href="#_relaxation_methods"></a>3. Relaxation methods</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>An alternative to the LU, ILU factorization is the relaxation methods.
@@ -901,7 +828,7 @@ x^{k+1} = -(D+\omega L)^{-1} ((\omega U + (1-\omega) D)) x^{k} + \omega (D +\ome
 </div>
 </div>
 <div class="sect1">
-<h2 id="_domain_decomposition"><a class="anchor" href="#_domain_decomposition"></a>5. Domain decomposition</h2>
+<h2 id="_domain_decomposition"><a class="anchor" href="#_domain_decomposition"></a>4. Domain decomposition</h2>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
@@ -940,7 +867,7 @@ x^{k+1} = -(D+\omega L)^{-1} ((\omega U + (1-\omega) D)) x^{k} + \omega (D +\ome
 </div>
 </div>
 <div class="sect1">
-<h2 id="_algebraic_multigrid"><a class="anchor" href="#_algebraic_multigrid"></a>6. Algebraic multigrid</h2>
+<h2 id="_algebraic_multigrid"><a class="anchor" href="#_algebraic_multigrid"></a>5. Algebraic multigrid</h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <div class="title">Algorithm:</div>
@@ -1035,7 +962,7 @@ only <code>--pc-mg-levels</code> is taken into account. A lot of options can be 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fieldsplit"><a class="anchor" href="#_fieldsplit"></a>7. FieldSplit</h2>
+<h2 id="_fieldsplit"><a class="anchor" href="#_fieldsplit"></a>6. FieldSplit</h2>
 <div class="sectionbody">
 <div class="stemblock">
 <div class="title">FieldSplit: solving bloc matrix (N x N) example:</div>
@@ -1166,7 +1093,7 @@ A_{00}^{-1} &amp; 0 \\
 </div>
 </div>
 <div class="sect1">
-<h2 id="_schur_complement"><a class="anchor" href="#_schur_complement"></a>8. Schur complement</h2>
+<h2 id="_schur_complement"><a class="anchor" href="#_schur_complement"></a>7. Schur complement</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>First we compute the \(LDU\) factorization of the block matrix:</p>
