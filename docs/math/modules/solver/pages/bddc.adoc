@@ -1,0 +1,91 @@
+= Balancing Domain Decomposition by Constraints (PCBDDC)
+:stem: latexmath
+
+PCBDDC (Balancing Domain Decomposition by Constraints) is a robust domain decomposition technique for solving large linear systems that arise, for example, from finite element discretizations of PDEs. In PETSc (and thus in {feelpp}), you can enable it via:
+
+----
+--pc-type bddc
+----
+
+== Mathematical Idea
+
+We have a global linear system:
+
+[stem]
+++++
+A u = f
+++++
+
+where the domain has been partitioned into subdomains (often one per MPI process). BDDC enforces continuity across subdomains by introducing a coarse space of “primal” unknowns on the subdomain interfaces. The method consists of:
+
+1. Local solves on each subdomain (with partially constrained boundary conditions).
+2. A global coarse solve that couples the subdomains via interface constraints.
+
+Hence, it is a two-level (or multi-level) domain decomposition method: a local level to handle subdomains and a coarse level to ensure global coupling.
+
+=== Unknowns Classification
+
+Each subdomain has:
+
+* Interior degrees of freedom (DOFs): no direct interaction with other subdomains.
+* Interface DOFs: these must match up with neighboring subdomains. BDDC splits interface DOFs into:
+** Primal (coarse) DOFs, e.g. corner/vertex values, edge averages, face averages, etc.
+** Dual DOFs, i.e., the remaining interface unknowns.
+
+=== Preconditioner Form
+
+The BDDC preconditioner M_BDDC can be written schematically as:
+
+[stem]
+++++
+M_\mathrm{BDDC} = R_0^T\,D_0^{-1}\,R_0 \;+\; B^T\,\tilde{S}_C^{-1}\,B
+++++
+
+where:
+
+* stem:[R_0] is the restriction/extension operator to local subdomains.
+* stem:[D_0^{-1}] is block-diagonal, consisting of local subdomain solves.
+* stem:[B] is an operator mapping coarse interface DOFs to the global interface unknowns.
+* stem:[\tilde{S}_C] is the coarse Schur complement that enforces global interface constraints.
+
+In effect:
+
+* The term stem:[R_0^T\,D_0^{-1}\,R_0] provides local corrections within each subdomain.
+* The term stem:[B^T\,\tilde{S}_C^{-1}\,B] supplies a coarse correction that enforces interface constraints and balances the subdomains globally.
+
+== Using PCBDDC in PETSc
+
+In {feelpp}/PETSc, once you have:
+
+----
+--pc-type bddc
+----
+
+you can add options like:
+
+----
+# Use corner, edge, face constraints:
+--pc-bddc-use-vertices=true
+--pc-bddc-use-edges=true
+--pc-bddc-use-faces=true
+
+# If necessary, specify boundary conditions or custom constraints:
+--pc-bddc-neumann-boundary=...
+--pc-bddc-dirichlet-boundary=...
+--pc-bddc-user-primal-vertices=...
+--pc-bddc-numbering=...
+----
+
+Depending on your problem (e.g. elasticity, flow, etc.), you might enable or disable edges/faces in the primal space. The chosen constraints control the coarse space dimension and thus preconditioner performance.
+
+== Benefits
+
+* **Scalable**: Good parallel scaling for large 3D problems.
+* **Robust**: Typically more robust than simpler methods (e.g., block-Jacobi or ASM) for elliptic and nearly-elliptic PDEs.
+* **Flexible**: You can change which constraints (corners, edges, faces) are included in the coarse space.
+
+== References
+
+* C.R. Dohrmann, "An approximate BDDC preconditioner," _Numerical Linear Algebra with Applications_ 14 (2007), 149–168.
+* J. Mandel and C.R. Dohrmann, "Convergence of a balancing domain decomposition by constraints and energy minimization," _Numerical Linear Algebra with Applications_ 10 (2003), 639–659.
+* PETSc documentation on PCBDDC: https://petsc.org/main/docs/manualpages/PC/PCBDDC/
