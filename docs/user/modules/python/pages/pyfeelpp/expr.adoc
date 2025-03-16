@@ -227,7 +227,7 @@ The smoothstep function is a smooth approximation of the step function.
 
 [%dynamic%raw,python]
 ----
-ex=fppc.expr("smoothstep(sin(x),0,0.5):x")
+ex=fppc.expr("smoothstep(x,0,0.5):x")
 x=np.linspace(0,2*math.pi,100)
 y=ex.evaluate("x",x)
 
