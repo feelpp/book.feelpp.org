@@ -579,7 +579,7 @@ MathJax.Hub.Config({
 <div class="stemblock">
 <div class="content">
 \[\begin{align*}
-\Lambda\mathbf{u} + \nabla p &amp;= \mathbf 0 &amp; &amp;\text{in }\Omega &amp; &amp;(1)\\
+\Lambda\mathbf{u} + \nabla p - \Lambda \alpha p  &amp;= \mathbf 0 &amp; &amp;\text{in }\Omega &amp; &amp;(1)\\
 \nabla\cdot\mathbf u + d p &amp;= f &amp; &amp;\text{in }\Omega &amp; &amp;(2)\\
 p &amp;= h_D &amp; &amp;\text{on }\Gamma_D &amp; &amp;(3)\\
 \mathbf u\cdot\mathbf n &amp;= h_N &amp; &amp;\text{on }\Gamma_N &amp; &amp;(4)
@@ -587,10 +587,45 @@ p &amp;= h_D &amp; &amp;\text{on }\Gamma_D &amp; &amp;(3)\\
 </div>
 </div>
 <div class="paragraph">
-<p>Here \(\Omega\subset\mathbb R^n\) is a polyhedral domain \((n\geq 2)\), \(\partial\Omega = \Gamma = \Gamma_D \cup \Gamma_N\), \(d(\mathbf x)\) is a scalar nonnegative function, \(\Lambda(\mathbf x)\) is a matrix valued function that is symmetric and uniformly positive definite on \(\Omega\), and \(f\in L^2(\Omega)\). If \(d = 0\), we get the Darcy model presented in <a href="#darcy-model">[darcy-model]</a>. These assumptions can be generalized but we take them to simplify the discussion.</p>
+<p>Here</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(\Omega\subset\mathbb R^n\) is a polyhedral domain \((n\geq 2)\),</p>
+</li>
+<li>
+<p>\(\partial\Omega = \Gamma = \Gamma_D \cup \Gamma_N\),</p>
+</li>
+<li>
+<p>\(d(\mathbf x)\) is a scalar nonnegative function,</p>
+</li>
+<li>
+<p>\(\Lambda(\mathbf x)\) is a matrix valued function that is symmetric and uniformly positive definite on \(\Omega\),</p>
+</li>
+<li>
+<p>\(\alpha\) is a vector valued function corresponding, also named the convection velocity, and</p>
+</li>
+<li>
+<p>\(f\in L^2(\Omega)\).</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If \(d = 0\), we get the Darcy model presented in <a href="#darcy-model">[darcy-model]</a>. These assumptions can be generalized but we take them to simplify the discussion.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>The Darcy problem presented in <a href="#stabilized-formulations">[stabilized-formulations]</a> fits into this framework. Here, rather than using stabilized Galerkin formulations, the idea is to insert a Lagrange multiplier to handle the continuity of the normal components of the approximated flux \(\mathbf{u}_h\). In other words, the requirement \(\mathbf{u}_h\in H(\text{div},\Omega)\) will be written in weak form initially, and then recovered in strong form later.
+<p>The Darcy problem presented in <a href="#stabilized-formulations">[stabilized-formulations]</a> fits into this framework. Here, rather than using stabilized Galerkin formulations, the idea is to insert a Lagrange multiplier to handle the continuity of the normal components of the approximated flux \(\mathbf{u}_h\).
+In other words, the requirement \(\mathbf{u}_h\in H(\text{div},\Omega)\) will be written in weak form initially, and then recovered in strong form later.
 The introduction of a Lagrange multipliers leads to a formulation with three fields &lt;<a href="#boffi2013">Boffi 2013</a>&gt;. We will show how the interior fields can be eliminated in order to build a discrete system that has lost the saddle point structure and only contains degrees of freedom on the faces.</p>
 </div>
 </div>
@@ -665,7 +700,7 @@ M_h^N &amp;= \{\mu\in M_h : \mu|_F = 0\quad\forall\,F\in\mathcal E_h\setminus\Ga
 <div class="stemblock">
 <div class="content">
 \[\begin{align*}
-\Lambda\mathbf u + \nabla p &amp;= \mathbf 0 &amp; &amp;\text{in }K,\\
+\Lambda\mathbf u + \nabla p - \Lambda \alpha p &amp;= \mathbf 0 &amp; &amp;\text{in }K,\\
 \nabla\cdot\mathbf u + d p &amp;= f &amp; &amp;\text{in K},
 \end{align*}\]
 </div>
@@ -693,12 +728,18 @@ M_h^N &amp;= \{\mu\in M_h : \mu|_F = 0\quad\forall\,F\in\mathcal E_h\setminus\Ga
 </div>
 </div>
 <div class="paragraph">
-<p>where \(\hat p\) and \(\hat{\mathbf u}\) are the traces of \(p\) and \(\mathbf u\), respectively. The transmission conditions state that the normal component of \(\hat{\mathbf u}\) across interelement boundary must be continuous. We can obtain \((\mathbf u, p)\) in \(K\) in terms of \(\hat p\) on \(\partial K\) and \(f\) by solving the following <em>local</em> Dirichlet problem</p>
+<p>where \(\hat p\) and \(\hat{\mathbf u}\) are the traces of \(p\) and \(\mathbf u\), respectively.</p>
+</div>
+<div class="paragraph">
+<p>The transmission conditions state that the normal component of \(\hat{\mathbf u}\) across interelement boundary must be continuous.</p>
+</div>
+<div class="paragraph">
+<p>We can obtain \((\mathbf u, p)\) in \(K\) in terms of \(\hat p\) on \(\partial K\) and \(f\) by solving the following <em>local</em> Dirichlet problem</p>
 </div>
 <div class="stemblock">
 <div class="content">
 \[\begin{align*}
-\Lambda\mathbf u + \nabla p &amp;= \mathbf 0 &amp; &amp;\text{in }K, &amp; &amp;(5)\\
+\Lambda\mathbf u + \nabla p - \Lambda \alpha p &amp;= \mathbf 0 &amp; &amp;\text{in }K, &amp; &amp;(5)\\
 \nabla\cdot\mathbf u + d p &amp;= f &amp; &amp;\text{in K}, &amp; &amp;(6)\\
 p &amp;= \hat p &amp; &amp;\text{on }\partial K. &amp; &amp;(7)
 \end{align*}\]
@@ -726,13 +767,35 @@ p &amp;= \hat p &amp; &amp;\text{on }\partial K. &amp; &amp;(7)
 <div class="stemblock">
 <div class="content">
 \[\begin{align*}
-(\Lambda\mathbf u_h,\mathbf v)_K - (p_h, \nabla\cdot\mathbf v)_K + \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial K} &amp;= 0, &amp; &amp;(11)\\
+(\Lambda\mathbf u_h,\mathbf v)_K - (p_h, \nabla\cdot\mathbf v)_K - (\Lambda \alpha p_h,  \mathbf v)_K + \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial K} &amp;= 0, &amp; &amp;(11)\\
 -(\mathbf u_h, \nabla w)_K + \langle\hat{\mathbf u}_h\cdot\mathbf n,w\rangle_{\partial K} + (dp_h, w)_K &amp;= (f,w)_K, &amp; &amp;(12)
 \end{align*}\]
 </div>
 </div>
 <div class="paragraph">
-<p>for all \((\mathbf v, w) \in \mathbf V(K)\times W(K)\), where \(\hat{\mathbf u}_h\) is the numerical trace of the flux and depends, in general, on \(\mathbf u_h, p_h\), and \(\hat p_h\). Different methods will correspond to different choices of \(\hat{\mathbf u}_h\).</p>
+<p>for all \((\mathbf v, w) \in \mathbf V(K)\times W(K)\), where \(\hat{\mathbf u}_h\) is the numerical trace of the flux and depends, in general, on \(\mathbf u_h, p_h\), and \(\hat p_h\).</p>
+</div>
+<div class="paragraph">
+<p>We use the the divergence theorem to rewrite the first equation to integrate by parts.</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align*}
+(\nabla p_h, \mathbf v)_K &amp; = - (p_h, \nabla\cdot\mathbf v)_K + \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial K}
+\end{align*}\]
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Different methods will correspond to different choices of \(\hat{\mathbf u}_h\).
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -764,7 +827,7 @@ p &amp;= \hat p &amp; &amp;\text{on }\partial K. &amp; &amp;(7)
 <div class="stemblock">
 <div class="content">
 \[\begin{align*}
-(\Lambda\mathbf u_h,\mathbf v)_{\Omega_h} - (p_h, \nabla\cdot\mathbf v)_{\Omega_h} + \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial\Omega_h} &amp;= 0 &amp; &amp;\forall\mathbf v\in \mathbf V_h, &amp; &amp;(16)\\
+(\Lambda\mathbf u_h,\mathbf v)_{\Omega_h} - (p_h, \nabla\cdot\mathbf v)_{\Omega_h}  - (\Lambda \alpha p_h,  \mathbf v)_K + \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial\Omega_h} &amp;= 0 &amp; &amp;\forall\mathbf v\in \mathbf V_h, &amp; &amp;(16)\\
 -(\mathbf u_h, \nabla w)_{\Omega_h} + \langle\hat{\mathbf u}_h\cdot\mathbf n,w\rangle_{\partial\Omega_h}  + (d p_h, w)_{\Omega_h} &amp;= (f,w)_{\Omega_h} &amp; &amp;\forall w\in W_h, &amp; &amp;(17)\\
 \langle\mu,\hat{\mathbf u}_h\cdot\mathbf n\rangle_{\partial\Omega_h\setminus\Gamma} &amp;= 0 &amp; &amp;\forall \mu\in M^o_h, &amp; &amp;(18)\\
 \langle\mu,\hat{\mathbf u}_h\cdot\mathbf n\rangle_{\Gamma_N} &amp;= \langle\mu,h_N\rangle_{\Gamma_N} &amp; &amp;\forall\mu\in M^N_h, &amp; &amp;(19)\\
@@ -914,7 +977,7 @@ we can obtain a postprocessed flux \(\mathbf u_h^*\) with better conservation pr
 <div class="stemblock">
 <div class="content">
 \[\begin{align*}
-&amp;(\Lambda\mathbf u_h,\mathbf v)_{\Omega_h} &amp; &amp;- (p_h, \nabla\cdot\mathbf v)_{\Omega_h} &amp; &amp;+ \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial\Omega_h} &amp; &amp;= 0, &amp; &amp;(21)\\
+&amp;(\Lambda\mathbf u_h,\mathbf v)_{\Omega_h} &amp; &amp;- (p_h, \nabla\cdot\mathbf v)_{\Omega_h}- (\Lambda \alpha p_h,  \mathbf v)_K  &amp; &amp;+ \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial\Omega_h} &amp; &amp;= 0, &amp; &amp;(21)\\
 &amp;(\nabla\cdot\mathbf u_h, w)_{\Omega_h} &amp; &amp;+ \langle\tau p_h,w\rangle_{\partial\Omega_h}  + (d p_h, w)_{\Omega_h} &amp; &amp;- \langle\tau \hat p_h,w\rangle_{\partial\Omega_h} &amp; &amp;= (f,w)_{\Omega_h}, &amp; &amp;(22)\\
 &amp;\langle\mathbf u_h\cdot\mathbf n,\mu_1\rangle_{\partial\Omega_h\setminus\Gamma} &amp; &amp;+ \langle\tau p_h,\mu_1\rangle_{\partial\Omega_h\setminus\Gamma} &amp; &amp;- \langle\tau \hat p_h,\mu_1\rangle_{\partial\Omega_h\setminus\Gamma} &amp; &amp;= 0, &amp; &amp;(23)\\
 &amp;\langle\mathbf u_h\cdot\mathbf n,\mu_2\rangle_{\Gamma_N} &amp; &amp;+ \langle\tau p_h,\mu_2\rangle_{\Gamma_N} &amp; &amp;- \langle\tau \hat p_h,\mu_2\rangle_{\Gamma_N} &amp; &amp;= \langle h_N,\mu_2\rangle_{\Gamma_N}, &amp; &amp;(24)\\
@@ -933,7 +996,7 @@ we can obtain a postprocessed flux \(\mathbf u_h^*\) with better conservation pr
 <div class="stemblock">
 <div class="content">
 \[\begin{align}
-A_{11}^K &amp;\leftrightarrow (\Lambda\mathbf u_h,\mathbf v)_K, &amp; &amp;A_{12}^K\leftrightarrow- (p_h, \nabla\cdot\mathbf v)_K, &amp; &amp;A_{13}^K\leftrightarrow\langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial K},\\
+A_{11}^K &amp;\leftrightarrow (\Lambda\mathbf u_h,\mathbf v)_K, &amp; &amp;A_{12}^K\leftrightarrow- (p_h, \nabla\cdot\mathbf v)_K- (\Lambda \alpha p_h,  \mathbf v)_K, &amp; &amp;A_{13}^K\leftrightarrow\langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial K},\\
 A_{21}^K &amp;\leftrightarrow(\nabla\cdot\mathbf u_h, w)_K, &amp; &amp;A_{22}^K\leftrightarrow\langle\tau p_h,w\rangle_{\partial K}  + (d p_h, w)_K, &amp; &amp;A_{23}^K\leftrightarrow\langle\tau \hat p_h,w\rangle_{\partial K},\\
 A_{31}^K &amp;\leftrightarrow\langle\mathbf u_h\cdot\mathbf n, \mu\rangle_{\partial K}, &amp; &amp;A_{32}^K\leftrightarrow\langle\tau p_h,\mu\rangle_{\partial K}, &amp; &amp;A_{33}^K\leftrightarrow\langle\tau \hat p_h,\mu\rangle_{\partial K},\\
 &amp; &amp; &amp;A_f^K\leftrightarrow (f,w)_K

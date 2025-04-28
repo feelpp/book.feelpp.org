@@ -267,16 +267,16 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../csm/cantilever/index.html">Cantilever CSM Benchmark</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../csm/pendulum2D/index.html">2D Pendulum</a>
-  </li>
-  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../csm/ribs/index.html">Bracing with ribs</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../csm/rotating-winch/index.html">Rotating winch</a>
+    <a class="nav-link" href="../csm/pendulum2D/index.html">2D Pendulum</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../csm/sensor/index.html">Sensor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../csm/rotating-winch/index.html">Rotating winch</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../csm/sheet-rounding/index.html">Effect of sheet rounding</a>
@@ -351,10 +351,10 @@ MathJax.Hub.Config({
     <span class="nav-text">Cases</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../cfd/cyclone/index.html">Cyclone</a>
+    <a class="nav-link" href="../cfd/backwardstep/index.html">Backward Step</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../cfd/backwardstep/index.html">Backward Step</a>
+    <a class="nav-link" href="../cfd/cyclone/index.html">Cyclone</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../cfd/spring/index.html">Spring CFD</a>
@@ -411,10 +411,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="motor/index.html">Heat Transfer in a BWM Motor</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="opus/index.html">Example : Electronic component cooling</a>
+    <a class="nav-link" href="radiative_cavity/index.html">Radiative cavity examples</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="radiative_cavity/index.html">Radiative cavity examples</a>
+    <a class="nav-link" href="opus/index.html">Example : Electronic component cooling</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="stent/index.html">Drug Delivery in a Coronary Stent</a>
@@ -1020,32 +1020,11 @@ This, similar to a structural analysis, the model input comprises abstracted geo
 <div class="paragraph">
 <p>The simple <a href="#guideline">flow diagram</a> summarises the classification process.</p>
 </div>
-<div id="guideline" class="literalblock activity kroki-error">
-<div class="title">Guideline to select the type of Thermal Analysis</div>
+<div id="guideline" class="imageblock activity kroki-format-svg kroki">
 <div class="content">
-<pre>start
-
-if (are materials properties or boundary
-    temperature dependent) then (true)
-  :Non-Linear Analysis;
-  if ( Time Dependence? ) then ( true )
-  :Non-Linear Transient Analysis;
-  end
-  else (false)
-  :Non-Linear Steady State Analysis;
-  end
-  endif
-else (false)
-  :Linear Analysis;
-  if ( Time Dependence? ) then ( true )
-  :Linear Transient Analysis;
-  end
-  else (false)
-  :Linear Steady State Analysis;
-  end
-  endif
-endif</pre>
+<img src="_images/diag-4b32569c9f75f820e70df0898818b62ede4b63ce.svg" alt="Guideline to select the type of Thermal Analysis">
 </div>
+<div class="title">Figure 5. Guideline to select the type of Thermal Analysis</div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Summary of heat transfer processes</caption>

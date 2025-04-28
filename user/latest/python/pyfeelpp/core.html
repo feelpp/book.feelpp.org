@@ -669,7 +669,7 @@ print("downloaded Feel++ README.adoc from Github: ",readme)</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>downloaded Feel++ README.adoc from Github:  /scratch/prudhomm/actions-runner/_work/book.feelpp.org/book.feelpp.org/feelppdb/downloads/README.adoc</pre>
+<pre>downloaded Feel++ README.adoc from Github:  /scratch/github-runners/feelpp-actions-runner-0/_work/book.feelpp.org/book.feelpp.org/feelppdb/downloads/README.adoc</pre>
 </div>
 </div>
 </div>
@@ -694,12 +694,70 @@ print(df.head())</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>       TIME      Y_CM
-0  0.001538  3.991736
-1  0.013846  3.983471
-2  0.022432  3.959772
-3  0.030984  3.925082
-4  0.038925  3.881016</pre>
+<pre>---------------------------------------------------------------------------
+FileNotFoundError                         Traceback (most recent call last)
+File <ipython-input-1-2dfaea053944>:3
+      1 acsv=fppc.download( "github:{repo:feelpp,path:toolboxes/fluid/cases/moving_body/gravity/cylinder_under_gravity/curve_comparison.csv}", worldComm=app.worldCommPtr() )[0] #
+      2 import pandas as pd #
+----> 3 df = pd.read_csv(acsv, sep=",") #
+      4 df.columns = df.columns.str.replace(' ', '')
+      5 print(df.head())
+
+File /scratch/github-runners/feelpp-actions-runner-0/_work/book.feelpp.org/book.feelpp.org/.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:948, in read_csv(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)
+    935 kwds_defaults = _refine_defaults_read(
+    936     dialect,
+    937     delimiter,
+   (...)    944     dtype_backend=dtype_backend,
+    945 )
+    946 kwds.update(kwds_defaults)
+--> 948 return _read(filepath_or_buffer, kwds)
+
+File /scratch/github-runners/feelpp-actions-runner-0/_work/book.feelpp.org/book.feelpp.org/.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:611, in _read(filepath_or_buffer, kwds)
+    608 _validate_names(kwds.get("names", None))
+    610 # Create the parser.
+--> 611 parser = TextFileReader(filepath_or_buffer, **kwds)
+    613 if chunksize or iterator:
+    614     return parser
+
+File /scratch/github-runners/feelpp-actions-runner-0/_work/book.feelpp.org/book.feelpp.org/.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1448, in TextFileReader.__init__(self, f, engine, **kwds)
+   1445     self.options["has_index_names"] = kwds["has_index_names"]
+   1447 self.handles: IOHandles | None = None
+-> 1448 self._engine = self._make_engine(f, self.engine)
+
+File /scratch/github-runners/feelpp-actions-runner-0/_work/book.feelpp.org/book.feelpp.org/.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1705, in TextFileReader._make_engine(self, f, engine)
+   1703     if "b" not in mode:
+   1704         mode += "b"
+-> 1705 self.handles = get_handle(
+   1706     f,
+   1707     mode,
+   1708     encoding=self.options.get("encoding", None),
+   1709     compression=self.options.get("compression", None),
+   1710     memory_map=self.options.get("memory_map", False),
+   1711     is_text=is_text,
+   1712     errors=self.options.get("encoding_errors", "strict"),
+   1713     storage_options=self.options.get("storage_options", None),
+   1714 )
+   1715 assert self.handles is not None
+   1716 f = self.handles.handle
+
+File /scratch/github-runners/feelpp-actions-runner-0/_work/book.feelpp.org/book.feelpp.org/.venv/lib/python3.12/site-packages/pandas/io/common.py:863, in get_handle(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)
+    858 elif isinstance(handle, str):
+    859     # Check whether the filename is to be opened in binary mode.
+    860     # Binary mode does not support 'encoding' and 'newline'.
+    861     if ioargs.encoding and "b" not in ioargs.mode:
+    862         # Encoding
+--> 863         handle = open(
+    864             handle,
+    865             ioargs.mode,
+    866             encoding=ioargs.encoding,
+    867             errors=errors,
+    868             newline="",
+    869         )
+    870     else:
+    871         # Binary mode
+    872         handle = open(handle, ioargs.mode)
+
+FileNotFoundError: [Errno 2] No such file or directory: '/scratch/github-runners/feelpp-actions-runner-0/_work/book.feelpp.org/book.feelpp.org/feelppdb/downloads/curve_comparison.csv'</pre>
 </div>
 </div>
 </div>
@@ -733,7 +791,7 @@ fig.show()</code></pre>
 <details class="dynamic-py-result dynamic-py-result-plotly">
 <summary class="title">Results</summary>
 <div class="content">
-<div id="4aea270c-01f3-4bf8-a724-b4ed0407131a" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("4aea270c-01f3-4bf8-a724-b4ed0407131a")) {                    Plotly.newPlot(                        "4aea270c-01f3-4bf8-a724-b4ed0407131a",                        [{"hovertemplate":"t (s)=%{x}\u003cbr\u003ey-displacement (m)=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":"#636efa","symbol":"circle"},"mode":"markers","name":"","orientation":"v","showlegend":false,"x":{"dtype":"f8","bdata":"NSybf8Y0WT9oko5PX1uMP6elK4py+JY\u002fdulT+U+6nz\u002fVOCGnBe6jP8\u002frJtjrJqg\u002f7cAP\u002fMAPrD8rJ2qZjdCvPz4PG9iotLE\u002f3wqB4wqBsz8Qz5+raDm1PzqTvnPG8bY\u002f9R+W+B+WuD8m5LTAfU66P2I5RQLT3rs\u002fHcYchyyDvT9gG63IgRO\u002fPw1UwqbtW8A\u002fIrbRihw4wT8JRfYJRfbBP2YLYsxxyMI\u002fBDYqbZyQwz+mYPINx1jEP4zvFo3vFsU\u002f6bWCTxzpxT8RqQOtQp3GP7LTy01tZcc\u002fVP6T7pctyD\u002f2KFyPwvXIP5RTJDDtvck\u002fNn7s0BeGyj9gcW0uPjrLPwKcNc9oAsw\u002f6CpaTpHAzD\u002fLuX7NuX7NP23kRm7kRs4\u002fDw8PDw8Pzz85ApBsNcPPP2wWrAawRdA\u002f310+RsSk0D9SpdCF2APRP6O6NNbtZ9E\u002fODT1BAHC0T+re4dEFSHSP\u002fyQ65QqhdI\u002fbth91D7k0j8DUj4DUj7TP1RnolNnotM\u002f6eBignr80z849sbSj2DUP4kLKyOlxNQ\u002fH4XrUbge1T9umk+izYLVP8Cvs\u002fLi5tU\u002f\u002fTOmyQBz1j\u002fSIQ7TIQ7XP8xBpMtBpNc\u002foi8M1WI\u002f2D94HXTeg9rYP04L3Oekddk\u002fRyty4MQL2j8dGdrp5abaP\u002fMGQvMGQts\u002f6ybY6ybY2z\u002fDFED1R3PcP5gCqP5oDt0\u002fcPAPCIqp3T9G3ncRq0TePz7+DQrL2t4\u002fNR6kAutw3z8="},"xaxis":"x","y":{"dtype":"f8","bdata":"ZRmUChPvD0DIMigVJt4PQGlOuq+crQ9At1H0LpFmD0AN9ZcjUgwPQG2FUPFFng5Am8jTiBAiDkCYbRS9S6QNQGbDbtZdHg1Amlf\u002fmo6VDEA4XnOZdwcMQKThU+6dcwtAp4r269jpCkAkbytLhFEKQHKcH3LTtQlAN8rU59YeCUBA3zPMRIQIQLySfVd56QdAYTlbyy5IB0B2Q1LT7rkGQDpAHHV7IAZAhm0QnMqEBUDm+1jNnuQEQHpyzQpGSgRAphjqL0ekA0A3XnOZdwcDQMmj\u002fAKoagJAsmJvuT7IAUAxR6QY6i8BQNbtgYyfjgBAkbo9kPHT\u002fz+Qg6dOSKP+P\u002f2SC0u9V\u002f0\u002fmO3zmFsg\u002fD+6eAZsvOb6P7S4lO3zmPk\u002fhDZ6WiFU+D9HUwu9yRP3P2jeHZAq2vU\u002f3E9YNI2T9D8M2uhphVDzPwYad+u8AvI\u002fPAbeyKLE8D\u002fIv4jysAfvP+jF+lkFbew\u002fiMHFM2Dj6T\u002fU1+rZIXDnP+gZsPGay+Q\u002f+AzYeM1l4j9AYOM1l3nfPxcRf6sugdo\u002feHsg46ej1T\u002fPcraWXZDQP34o3B8Ax8k\u002fftJ95Wwtyz9+0n3lbC3LP37SfeVsLcs\u002fftJ95Wwtyz9+0n3lbC3LP37SfeVsLcs\u002fftJ95Wwtyz9+0n3lbC3LP37SfeVsLcs\u002fftJ95Wwtyz9+0n3lbC3LP37SfeVsLcs\u002fftJ95Wwtyz9+0n3lbC3LP37SfeVsLcs\u002fftJ95Wwtyz8="},"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"t (s)"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"y-displacement (m)"}},"legend":{"tracegroupgap":0},"title":{"text":"y-displacement of the center of mass(CM) of the cylinder"}},                        {"responsive": true}                    )                };            </script>
+
 </div>
 </details>
 <div class="sect2">
