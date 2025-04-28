@@ -7,16 +7,26 @@ We provide a first characterization of HDG methods for the following second-orde
 [stem]
 ++++
 \begin{align*}
-\Lambda\mathbf{u} + \nabla p &= \mathbf 0 & &\text{in }\Omega & &(1)\\
+\Lambda\mathbf{u} + \nabla p - \Lambda \alpha p  &= \mathbf 0 & &\text{in }\Omega & &(1)\\
 \nabla\cdot\mathbf u + d p &= f & &\text{in }\Omega & &(2)\\
 p &= h_D & &\text{on }\Gamma_D & &(3)\\
 \mathbf u\cdot\mathbf n &= h_N & &\text{on }\Gamma_N & &(4)
 \end{align*}
 ++++
 
-Here stem:[\Omega\subset\mathbb R^n] is a polyhedral domain stem:[(n\geq 2)], stem:[\partial\Omega = \Gamma = \Gamma_D \cup \Gamma_N], stem:[d(\mathbf x)] is a scalar nonnegative function, stem:[\Lambda(\mathbf x)] is a matrix valued function that is symmetric and uniformly positive definite on stem:[\Omega], and stem:[f\in L^2(\Omega)]. If stem:[d = 0], we get the Darcy model presented in <<darcy-model>>. These assumptions can be generalized but we take them to simplify the discussion.
+Here 
 
-The Darcy problem presented in <<stabilized-formulations>> fits into this framework. Here, rather than using stabilized Galerkin formulations, the idea is to insert a Lagrange multiplier to handle the continuity of the normal components of the approximated flux stem:[\mathbf{u}_h]. In other words, the requirement stem:[\mathbf{u}_h\in H(\text{div},\Omega)] will be written in weak form initially, and then recovered in strong form later.
+* stem:[\Omega\subset\mathbb R^n] is a polyhedral domain stem:[(n\geq 2)], 
+* stem:[\partial\Omega = \Gamma = \Gamma_D \cup \Gamma_N], 
+* stem:[d(\mathbf x)] is a scalar nonnegative function, 
+* stem:[\Lambda(\mathbf x)] is a matrix valued function that is symmetric and uniformly positive definite on stem:[\Omega], 
+* stem:[\alpha] is a vector valued function corresponding, also named the convection velocity, and 
+* stem:[f\in L^2(\Omega)]. 
+
+NOTE: If stem:[d = 0], we get the Darcy model presented in <<darcy-model>>. These assumptions can be generalized but we take them to simplify the discussion.
+
+The Darcy problem presented in <<stabilized-formulations>> fits into this framework. Here, rather than using stabilized Galerkin formulations, the idea is to insert a Lagrange multiplier to handle the continuity of the normal components of the approximated flux stem:[\mathbf{u}_h]. 
+In other words, the requirement stem:[\mathbf{u}_h\in H(\text{div},\Omega)] will be written in weak form initially, and then recovered in strong form later.
 The introduction of a Lagrange multipliers leads to a formulation with three fields <<<boffi2013,Boffi 2013>>>. We will show how the interior fields can be eliminated in order to build a discrete system that has lost the saddle point structure and only contains degrees of freedom on the faces.
 
 == The general structure of the methods
@@ -72,7 +82,7 @@ Two functions stem:[\mathbf u, p] are exact solutions of stem:[(1)-(4)] if and o
 [stem]
 ++++
 \begin{align*}
-\Lambda\mathbf u + \nabla p &= \mathbf 0 & &\text{in }K,\\
+\Lambda\mathbf u + \nabla p - \Lambda \alpha p &= \mathbf 0 & &\text{in }K,\\
 \nabla\cdot\mathbf u + d p &= f & &\text{in K},
 \end{align*}
 ++++
@@ -92,15 +102,21 @@ and the boundary conditions
 \hat{\mathbf u}\cdot\mathbf n &= h_N & &\text{if }F\in\Gamma_N,
 \end{align}
 ++++
-where stem:[\hat p] and stem:[\hat{\mathbf u}] are the traces of stem:[p] and stem:[\mathbf u], respectively. The transmission conditions state that the normal component of stem:[\hat{\mathbf u}] across interelement boundary must be continuous. We can obtain stem:[(\mathbf u, p)] in stem:[K] in terms of stem:[\hat p] on stem:[\partial K] and stem:[f] by solving the following _local_ Dirichlet problem
+where stem:[\hat p] and stem:[\hat{\mathbf u}] are the traces of stem:[p] and stem:[\mathbf u], respectively. 
+
+The transmission conditions state that the normal component of stem:[\hat{\mathbf u}] across interelement boundary must be continuous. 
+
+We can obtain stem:[(\mathbf u, p)] in stem:[K] in terms of stem:[\hat p] on stem:[\partial K] and stem:[f] by solving the following _local_ Dirichlet problem
 [stem]
 ++++
 \begin{align*}
-\Lambda\mathbf u + \nabla p &= \mathbf 0 & &\text{in }K, & &(5)\\
+\Lambda\mathbf u + \nabla p - \Lambda \alpha p &= \mathbf 0 & &\text{in }K, & &(5)\\
 \nabla\cdot\mathbf u + d p &= f & &\text{in K}, & &(6)\\
 p &= \hat p & &\text{on }\partial K. & &(7)
 \end{align*}
 ++++
+
+
 The function stem:[\hat p] can now be determined as the solution, on each stem:[F\in\mathcal E_h], of the _global_ equations
 $$
 \begin{align*}
@@ -118,11 +134,23 @@ From stem:[(5)-(7)], on the element stem:[K\in\Omega_h], we define stem:[(\mathb
 [stem]
 ++++
 \begin{align*}
-(\Lambda\mathbf u_h,\mathbf v)_K - (p_h, \nabla\cdot\mathbf v)_K + \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial K} &= 0, & &(11)\\
+(\Lambda\mathbf u_h,\mathbf v)_K - (p_h, \nabla\cdot\mathbf v)_K - (\Lambda \alpha p_h,  \mathbf v)_K + \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial K} &= 0, & &(11)\\
 -(\mathbf u_h, \nabla w)_K + \langle\hat{\mathbf u}_h\cdot\mathbf n,w\rangle_{\partial K} + (dp_h, w)_K &= (f,w)_K, & &(12)
 \end{align*}
 ++++
-for all stem:[(\mathbf v, w) \in \mathbf V(K)\times W(K)], where stem:[\hat{\mathbf u}_h] is the numerical trace of the flux and depends, in general, on stem:[\mathbf u_h, p_h], and stem:[\hat p_h]. Different methods will correspond to different choices of stem:[\hat{\mathbf u}_h].
+for all stem:[(\mathbf v, w) \in \mathbf V(K)\times W(K)], where stem:[\hat{\mathbf u}_h] is the numerical trace of the flux and depends, in general, on stem:[\mathbf u_h, p_h], and stem:[\hat p_h]. 
+
+We use the the divergence theorem to rewrite the first equation to integrate by parts.
+[stem]
+++++
+\begin{align*}
+(\nabla p_h, \mathbf v)_K & = - (p_h, \nabla\cdot\mathbf v)_K + \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial K} 
+\end{align*}
+++++
+
+NOTE: Different methods will correspond to different choices of stem:[\hat{\mathbf u}_h].
+
+
 
 ==== The global problem
 From stem:[(8)-(10)], We determine stem:[\hat p_h\in M_h] by requiring that
@@ -143,7 +171,7 @@ The approximate solution stem:[(\mathbf u_h, p_h, \hat p_h)] is the element of t
 [stem]
 ++++
 \begin{align*}
-(\Lambda\mathbf u_h,\mathbf v)_{\Omega_h} - (p_h, \nabla\cdot\mathbf v)_{\Omega_h} + \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial\Omega_h} &= 0 & &\forall\mathbf v\in \mathbf V_h, & &(16)\\
+(\Lambda\mathbf u_h,\mathbf v)_{\Omega_h} - (p_h, \nabla\cdot\mathbf v)_{\Omega_h}  - (\Lambda \alpha p_h,  \mathbf v)_K + \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial\Omega_h} &= 0 & &\forall\mathbf v\in \mathbf V_h, & &(16)\\
 -(\mathbf u_h, \nabla w)_{\Omega_h} + \langle\hat{\mathbf u}_h\cdot\mathbf n,w\rangle_{\partial\Omega_h}  + (d p_h, w)_{\Omega_h} &= (f,w)_{\Omega_h} & &\forall w\in W_h, & &(17)\\
 \langle\mu,\hat{\mathbf u}_h\cdot\mathbf n\rangle_{\partial\Omega_h\setminus\Gamma} &= 0 & &\forall \mu\in M^o_h, & &(18)\\
 \langle\mu,\hat{\mathbf u}_h\cdot\mathbf n\rangle_{\Gamma_N} &= \langle\mu,h_N\rangle_{\Gamma_N} & &\forall\mu\in M^N_h, & &(19)\\
@@ -228,7 +256,7 @@ This section is mainly based on <<<sayas-matlab,Fu 2013>>>. As stated before, th
 [stem]
 ++++
 \begin{align*}
-&(\Lambda\mathbf u_h,\mathbf v)_{\Omega_h} & &- (p_h, \nabla\cdot\mathbf v)_{\Omega_h} & &+ \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial\Omega_h} & &= 0, & &(21)\\
+&(\Lambda\mathbf u_h,\mathbf v)_{\Omega_h} & &- (p_h, \nabla\cdot\mathbf v)_{\Omega_h}- (\Lambda \alpha p_h,  \mathbf v)_K  & &+ \langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial\Omega_h} & &= 0, & &(21)\\
 &(\nabla\cdot\mathbf u_h, w)_{\Omega_h} & &+ \langle\tau p_h,w\rangle_{\partial\Omega_h}  + (d p_h, w)_{\Omega_h} & &- \langle\tau \hat p_h,w\rangle_{\partial\Omega_h} & &= (f,w)_{\Omega_h}, & &(22)\\
 &\langle\mathbf u_h\cdot\mathbf n,\mu_1\rangle_{\partial\Omega_h\setminus\Gamma} & &+ \langle\tau p_h,\mu_1\rangle_{\partial\Omega_h\setminus\Gamma} & &- \langle\tau \hat p_h,\mu_1\rangle_{\partial\Omega_h\setminus\Gamma} & &= 0, & &(23)\\
 &\langle\mathbf u_h\cdot\mathbf n,\mu_2\rangle_{\Gamma_N} & &+ \langle\tau p_h,\mu_2\rangle_{\Gamma_N} & &- \langle\tau \hat p_h,\mu_2\rangle_{\Gamma_N} & &= \langle h_N,\mu_2\rangle_{\Gamma_N}, & &(24)\\
@@ -242,7 +270,7 @@ Introduce the matrices related to the local bilinear forms
 [stem]
 ++++
 \begin{align}
-A_{11}^K &\leftrightarrow (\Lambda\mathbf u_h,\mathbf v)_K, & &A_{12}^K\leftrightarrow- (p_h, \nabla\cdot\mathbf v)_K, & &A_{13}^K\leftrightarrow\langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial K},\\
+A_{11}^K &\leftrightarrow (\Lambda\mathbf u_h,\mathbf v)_K, & &A_{12}^K\leftrightarrow- (p_h, \nabla\cdot\mathbf v)_K- (\Lambda \alpha p_h,  \mathbf v)_K, & &A_{13}^K\leftrightarrow\langle\hat p_h, \mathbf v\cdot\mathbf n\rangle_{\partial K},\\
 A_{21}^K &\leftrightarrow(\nabla\cdot\mathbf u_h, w)_K, & &A_{22}^K\leftrightarrow\langle\tau p_h,w\rangle_{\partial K}  + (d p_h, w)_K, & &A_{23}^K\leftrightarrow\langle\tau \hat p_h,w\rangle_{\partial K},\\
 A_{31}^K &\leftrightarrow\langle\mathbf u_h\cdot\mathbf n, \mu\rangle_{\partial K}, & &A_{32}^K\leftrightarrow\langle\tau p_h,\mu\rangle_{\partial K}, & &A_{33}^K\leftrightarrow\langle\tau \hat p_h,\mu\rangle_{\partial K},\\
 & & &A_f^K\leftrightarrow (f,w)_K
