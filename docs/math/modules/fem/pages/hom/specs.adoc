@@ -1,4 +1,6 @@
-= Modernizing Feel++ Finite Element Library with Kokkidio, C++20, Eigen, and Kokkos
+:feelpp: Feel++
+:cpp: C++
+= Modernizing {feelpp} Finite Element Library with Kokkidio, {cpp}20, Eigen, and Kokkos
 Christophe Prud'homme 
 v1.0, 2025-02-27
 :toc:
@@ -6,14 +8,14 @@ v1.0, 2025-02-27
 
 == Overview
 
-This document details the specifications for modernizing the Feel++ finite element library. The new design leverages modern C++20 features (concepts, constexpr functions, structured bindings), uses Eigen for linear algebra, and employs Kokkos (with Kokkidio) for performance portability on both CPU and GPU. The library will support high‑order finite element computations, automatic differentiation, and a flexible mesh data structure for heterogeneous convex elements.
+This document details the specifications for modernizing the {feelpp} finite element library. The new design leverages modern {cpp}20 features (concepts, constexpr functions, structured bindings), uses Eigen for linear algebra, and employs Kokkos (with Kokkidio) for performance portability on both CPU and GPU. The library will support high‑order finite element computations, automatic differentiation, and a flexible mesh data structure for heterogeneous convex elements.
 
 == Goals
 
 * Develop a versatile, high‑order finite element library that runs efficiently on both CPUs and GPUs.
 * Hide low‑level hardware details (CPU vs. GPU) behind a unified, high‑level API.
 * Support both compile‑time and runtime polynomial orders.
-* Use modern C++20 features (concepts, constexpr, structured bindings) and boost.mp11 for meta‑programming.
+* Use modern {cpp}20 features (concepts, constexpr, structured bindings) and boost.mp11 for meta‑programming.
 * Integrate Kokkos for portability and Eigen for high‑performance linear algebra.
 * Leverage Kokkidio to bridge Eigen and Kokkos, so that familiar Eigen expressions can be used within Kokkos parallel dispatch.
 * Support automatic differentiation of polynomial bases, including recursive differentiation (e.g., gradients, Hessians, etc.).
@@ -95,7 +97,7 @@ int main(int argc, char** argv) {
 
 === 3. Polynomial Policy Classes and Meta‑Programming
 
-* Rewrite the policies for Scalar, Vectorial, Tensor2, Tensor2Symm, and Tensor3 using C++20, boost.mp11, and Eigen.
+* Rewrite the policies for Scalar, Vectorial, Tensor2, Tensor2Symm, and Tensor3 using {cpp}20, boost.mp11, and Eigen.
 * Use constexpr member functions to access properties such as rank, dimension, and number of components. For example:
 [source,cpp]
 ----
@@ -133,7 +135,7 @@ int main() {
   
 == Design Guidelines
 
-* Use C++20 features (concepts, constexpr, structured bindings) for type safety and compile‑time property access.
+* Use {cpp}20 features (concepts, constexpr, structured bindings) for type safety and compile‑time property access.
 * Replace boost.mpl with boost.mp11 for meta‑programming.
 * Abstract CPU vs. GPU execution by introducing an ExecutionSpace template parameter. Use if‑constexpr to choose between implementations.
 * Integrate Kokkidio to provide interoperability between Eigen and Kokkos:
@@ -165,7 +167,7 @@ int main() {
    * Deliver integration tests and scalability benchmarks.
 
 4. **Module 3 – Polynomial Policy Classes (3–4 weeks):**
-   * Rewrite polynomial policies (Scalar, Vectorial, Tensor2, Tensor2Symm, Tensor3) using C++20 and boost.mp11.
+   * Rewrite polynomial policies (Scalar, Vectorial, Tensor2, Tensor2Symm, Tensor3) using {cpp}20 and boost.mp11.
    * Provide constexpr getters and meta‑functions (RankUp, RankDown, etc.).
    * Deliver unit tests for each policy.
 
@@ -217,10 +219,10 @@ int main(int argc, char** argv) {
 
 == Summary
 
-This specification outlines the work required to modernize the Feel++ library by:
+This specification outlines the work required to modernize the {feelpp} library by:
 
 * Developing a high‑order finite element library that runs on CPUs and GPUs.
-* Using modern C++20 features (concepts, constexpr, boost.mp11) and libraries (Eigen, Kokkos, Kokkidio) to create a unified, portable API.
+* Using modern {cpp}20 features (concepts, constexpr, boost.mp11) and libraries (Eigen, Kokkos, Kokkidio) to create a unified, portable API.
 * Supporting automatic differentiation of polynomial bases with recursive derivative computations.
 * Providing a flexible, high‑performance mesh data structure for heterogeneous convex elements with MPI-based distributed computing.
   
