@@ -1,4 +1,6 @@
+:feelpp: Feel++
 = Get {feelpp}
+
 
 {feelpp} can be installed on Windows 10, Debian/Ubuntu systems.
 
@@ -135,6 +137,88 @@ To use {feelpp} on Windows 10, follow these steps:
  * [x] follow the corresponding Ubuntu or Debian {feelpp} installation steps
 
 include::partial$install-deb.adoc[]
+--
+Spack::
++
+--
+https://spack.io[Spack] packaging is available for {feelpp} thanks to ghcr.io.
+Binaries are available for the generic microarchitecture `x86_64_v3`.
+
+The following steps require the installation of Spack and the cloning of the `spack.numpex` repository.
+
+[[spack]]
+[discrete]
+=== Clone Spack
+
+[source,sh]
+----
+git clone https://github.com/spack/spack <path to spack>/spack
+source <path to spack>/spack/share/spack/setup-env.sh
+----
+
+[discrete]
+=== Add {feelpp} Spack Mirror 
+
+First set the {feelpp} mirror.
+
+.set the {feelpp} spack mirror (only once)
+[source,sh]
+----
+spack mirror add spack-mirror oci://ghcr.io/feelpp/spack <1>
+----
+<.> add the mirror named spack-mirror to spack
+
+You can check the mirror with
+[source,sh]
+----
+spack mirror list
+----
+
+[discrete]
+=== Clone spack.numpex
+
+Add `spack.numpex` as a spack repository
+
+[source,sh]
+----
+git clone https://github.com/numpex/spack.numpex <path to spack.numpex>/spack.numpex
+spack repo add <path to spack.numpex>/spack.numpex
+# check the repo 
+spack repo list
+----
+
+[discrete]
+=== Install {feelpp}
+
+then download the package feelpp
+
+[source,sh]
+----
+spack install --use-buildcache only --no-check-signature feelpp target=x86_64_v3
+----
+
+{feelpp} package as well as the dependencies will be installed.
+
+You can check the package by run `spack test`
+[source,sh]
+----
+spack test run feelpp
+----
+
+Then load the {feelpp} package
+
+[source,sh]
+----
+spack load feelpp
+----
+
+Try get some info about {feelpp} using the command `feelpp_info`
+
+[source,sh]
+----
+feelpp_info
+----
+
 --
 Docker::
 +

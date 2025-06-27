@@ -1,0 +1,215 @@
+= Krylov Subspace Methods
+:stem: latexmath
+
+Krylov subspace methods approximate the solution of a linear system
+
+[stem]
+++++
+A x = F
+++++
+
+by searching within a sequence of subspaces (Krylov spaces) that expand at each iteration. These methods often rely on the Arnoldi (or Lanczos, for symmetric problems) process to build an orthonormal basis of the subspace. Starting from an initial guess stem:[x^0], the (n+1)-th approximation is sought in
+
+[stem]
+++++
+x^{n+1} = x^0 + \mathrm{span}\{\,r^0, \, A r^0, \, A^2 r^0, \dots, A^{n-1} r^0\}, 
+\quad
+r^k = F - A x^k,
+++++
+
+where stem:[r^k] is the residual at step k.
+
+Common Krylov methods include:
+
+* *CG (Conjugate Gradient)*: for symmetric positive definite matrices  
+* *GMRES (Generalized Minimal Residual)*: for non-symmetric matrices (requires restarts in practice, e.g., `--ksp-gmres-restart=30`)  
+* *BiCG, BiCGSTAB (BiConjugate Gradient / stabilized)*: for non-symmetric matrices  
+* *FGMRES (Flexible GMRES)*: for non-symmetric problems; allows changing preconditioners between iterations  
+* *MINRES (Minimal Residual)*: for symmetric indefinite problems  
+* *LSQR, LSMR*: for least-squares or rectangular systems
+
+=== Newer and Advanced PETSc Krylov Methods
+
+Recent PETSc versions (3.14+) offer additional methods optimized for large-scale parallelism:
+
+* *PIPECG, PIPEGMRES, PIPECR (Pipelined)*: pipeline variants of CG, GMRES, and Conjugate Residual that reduce synchronization and global communication in parallel  
+* *GCR (Generalized Conjugate Residual)*: a flexible variant similar to GMRES but can be used in certain indefinite cases  
+* *LGMRES (Loose GMRES)*: a variant of GMRES that sometimes reduces restart issues and can converge faster than standard GMRES in certain problems
+
+To select or configure these methods in Feel++/PETSc, you can use, for example:
+
+----
+# Use pipelined GMRES
+--ksp-type pipegmres
+
+# Use CG with a Jacobi preconditioner
+--ksp-type cg
+--pc-type jacobi
+
+# Use GMRES with a restart of 50
+--ksp-type gmres
+--ksp-gmres-restart=50
+----
+
+=== Preconditioning
+
+Because Krylov methods converge at rates that depend on the condition number of stem:[A], it is almost always beneficial to apply a (left, right, or both sides) preconditioner stem:[M] to improve conditioning.
+
+*Left preconditioning*  
+[stem]
+++++
+M_L^{-1} A x = M_L^{-1} F
+++++
+
+*Right preconditioning*  
+[stem]
+++++
+A M_R^{-1} y = F,  x = M_R^{-1} y
+++++
+
+*Left and Right*  
+[stem]
+++++
+M_L^{-1} A M_R^{-1},  y = M_L^{-1} F,  x = M_R^{-1} y
+++++
+
+PETSc and Feel++ provide many built-in preconditioners (LU, ILU, multigrid, domain decomposition, etc.) and can also combine these with field-split or Schur complement approaches for block-structured problems. 
+The appropriate choice generally depends on the PDE or matrix at hand.
+
+== Krylov Methods: Mathematical Overviews
+
+Below are short mathematical descriptions of common Krylov subspace methods. 
+Each method updates its approximate solution by minimizing or reducing a certain residual norm, typically the 2-norm, within a Krylov subspace.
+
+=== Conjugate Gradient (CG)
+
+For a symmetric positive definite (SPD) matrix stem:[A], *Conjugate Gradient* (CG) performs an optimal search in the space spanned by conjugate directions stem:[p^k].  
+At iteration stem:[k], CG solves the minimization problem:
+
+[stem]
+++++
+x^{k+1} = 
+\arg\min_{x \in x^{0} + \mathrm{span}\{p^{0},\dots,p^{k}\}}
+\|r^{0} - A(x - x^{0})\|_2
+++++
+
+where the residual is stem:[r^{k} = F - A\,x^{k}].  
+The algorithm chooses step lengths stem:[\\alpha_k] to minimize stem:[\\|r^{k+1}\\|_2] at each iteration and enforces stem:[p^{k+1}] to be stem:[A]-orthogonal to previous directions.  
+This yields a short three-term recurrence and a method that converges in at most stem:[n] steps for an stem:[n \\times n] SPD matrix (in exact arithmetic).
+
+=== GMRES (Generalized Minimal Residual)
+
+For non-symmetric stem:[A], *GMRES* constructs an orthonormal basis stem:[\\{v_i\\}] of the Krylov subspace
+
+[stem]
+++++
+K_{n}(A, r^{0}) = 
+\mathrm{span}\bigl\{
+r^{0},\,A\,r^{0},\,A^{2}\,r^{0},\dots\bigr\}
+++++
+
+via the Arnoldi process.  At each iteration stem:[k], GMRES solves
+
+[stem]
+++++
+x^{k+1} = 
+\arg\min_{x \in x^{0} + K_{k}(A, r^{0})}
+\|r^{0} - A\bigl(x - x^{0}\bigr)\|_2
+++++
+
+i.e. it finds the vector in the current Krylov subspace that minimizes the 2-norm of the residual.  
+Practically, GMRES can be restarted every stem:[m] steps (notated GMRES(m)) to control memory usage.  
+The method is robust but can require many iterations for poorly conditioned or highly non-symmetric problems.
+
+=== BiCG and BiCGSTAB
+
+*BiConjugate Gradient (BiCG)* handles non-symmetric systems by generating two coupled Krylov sequences: one for stem:[A] and one for stem:[A^T].  
+It enforces orthogonality conditions with respect to a “shadow” residual stem:[\tilde{r}^k] that satisfies stem:[\tilde{r}^k = \tilde{r}^0 - A^T\,\tilde{x}^k].
+
+Because BiCG may exhibit erratic residual behavior, *BiCGSTAB (BiCG Stabilized)* introduces a polynomial factor to “smooth” convergence:
+
+[stem]
+++++
+r^{k+1} = \mathrm{stab}\bigl(r^k, A, \dots\bigr)
+++++
+
+reducing oscillations while preserving the favorable properties of BiCG.  
+Many variants (BiCGSTAB2, BiCGSafe, etc.) refine this stabilization mechanism.
+
+=== FGMRES (Flexible GMRES)
+
+*FGMRES* extends GMRES to allow a changing preconditioner stem:[M_k] at each iteration.  
+Instead of forming a single Arnoldi basis from repeated applications of the same stem:[M^{-1}A], FGMRES tracks how each distinct stem:[M_k^{-1}] transforms the residual.  
+The method still solves
+
+[stem]
+++++
+\min_{x \in x^{0} + 
+\mathrm{span}\bigl\{
+(\prod_{j=0}^{k-1}M_j^{-1} A)\,r^{0},
+\dots
+\bigr\}
+}
+\|r^{0} - A\bigl(x - x^{0}\bigr)\|_2,
+++++
+
+but updates the basis accordingly. 
+
+NOTE: This is useful when a preconditioner is itself iteratively refined or changed on the fly.
+
+=== MINRES (Minimal Residual)
+
+For symmetric indefinite matrices stem:[A], *MINRES* constructs a Lanczos basis and selects stem:[x^{k+1}] to minimize the residual norm stem:[\|r^{k+1}\|_2].
+
+It is similar to CG, but does not require positive definiteness.  
+Instead, it uses short recurrences that rely on symmetry to maintain orthogonality.  
+MINRES is especially useful in saddle-point problems (e.g., in combination with a suitable preconditioner).
+
+=== Additional Methods
+
+==== LSQR / LSMR
+
+These methods solve least-squares problems of the form stem:[\min_{x}\|A x - b\|_2] 
+using bidiagonalization or a variant of the Lanczos process on a block matrix:
+
+[stem]
+++++
+\begin{pmatrix}
+0 & A\\
+A^T & 0
+\end{pmatrix}.
+++++
+
+NOTE: They are popular for large, sparse problems (e.g., tomography, data fitting).
+
+==== GCR (Generalized Conjugate Residual)
+
+*GCR* extends the original Conjugate Residual idea to non-symmetric or indefinite matrices.
+Similar to GMRES, it aims to minimize the residual norm in a Krylov subspace, but it constructs search directions that are kept mutually orthogonal (often stem:[A]-orthogonal) through an iterative orthogonalization procedure against all previous directions.
+In each iteration stem:[k], GCR computes a new direction stem:[p^{k}] and step size stem:[\alpha_k] to reduce stem:[\|r^{k+1}\|_2].
+Because it accumulates and orthogonalizes more vectors over time, GCR can be more robust but may require more memory than short-recurrence methods.
+In PETSc, one can select GCR via:
+
+----
+--ksp-type gcr
+----
+
+GCR sometimes includes “truncation” strategies (like GMRES restarts) to limit memory usage.
+
+
+==== Pipelined Methods (PIPECG, PIPEGMRES, PIPECR, etc.)
+
+“Pipelined” Krylov methods reduce the number of global synchronizations each iteration.
+For instance, *PIPECG* merges inner products and vector updates into fewer communication rounds, significantly improving scalability on many MPI ranks.
+Mathematically, they satisfy recurrences similar to CG/GMRES/CR but reorganize the order of operations to hide communication latency.
+
+In PETSc/{feelpp}, one can select PIPECG, PIPEGMRES, or PIPECR via:
+
+----
+--ksp-type pipecg
+--ksp-type pipegmres
+--ksp-type pipecr
+----
+
+
+NOTE: https://petsc.org/release/faq/#doc-faq-pipelined[What steps are necessary to make the pipelined solvers execute efficiently?]
