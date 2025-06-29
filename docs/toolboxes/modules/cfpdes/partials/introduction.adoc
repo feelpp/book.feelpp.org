@@ -6,7 +6,7 @@
 
 Coefficient forms in PDE (Partial Differential Equation) toolboxes refer to the representation of the PDE problem in terms of its coefficient functions. In the context of PDEs, the coefficients represent the properties and characteristics of the equation, such as the diffusion coefficient, convection coefficient, reaction coefficient, and others.
 
-Different types of PDEs, such as elliptic, parabolic, or hyperbolic equations, have specific coefficient forms associated with them. 
+Different types of PDEs, such as elliptic, parabolic, or hyperbolic equations, have specific coefficient forms associated with them.
 These coefficient forms capture the behavior and physical properties of the underlying phenomena being modeled.
 
 For example, in the context of the Poisson equation, a commonly encountered elliptic equation, the coefficient form is often written as:
@@ -16,16 +16,16 @@ For example, in the context of the Poisson equation, a commonly encountered elli
 -\nabla \cdot (c \nabla u) + a u = f
 ++++
 
-Here, 
+Here,
 
-* stem:[c] represents the diffusion coefficient, 
-* stem:[a] represents the reaction coefficient, 
-* stem:[u] is the unknown function, and 
-* stem:[f] is the source term. 
+* stem:[c] represents the diffusion coefficient,
+* stem:[a] represents the reaction coefficient,
+* stem:[u] is the unknown function, and
+* stem:[f] is the source term.
 
 The coefficient form provides a structured way to express the PDE problem and allows for efficient numerical solution techniques.
 
-PDE toolboxes, such as those available in {feelpp}, provide functionality to handle coefficient forms of various PDEs. 
+PDE toolboxes, such as those available in {feelpp}, provide functionality to handle coefficient forms of various PDEs.
 They offer tools for defining the coefficient functions, setting boundary conditions, discretizing the problem, and solving it numerically using appropriate algorithms and methods.
 
 By utilizing coefficient forms in PDE toolboxes, researchers and engineers can conveniently formulate and solve complex PDE problems with the necessary coefficients and boundary conditions, enabling the analysis and simulation of a wide range of physical phenomena.
@@ -86,10 +86,10 @@ We need also to respect some constraint on the coefficient shape as described in
 
 | stem:[d]      | scalar               | scalar
 | stem:[c]      | scalar or matrix    | scalar or matrix
-| stem:[\alpha] | vectorial            | scalar or matrix 
-| stem:[\gamma] | vectorial            | matrix 
-| stem:[\beta]  | vectorial            | vectorial 
-| stem:[a]      | scalar               | scalar 
+| stem:[\alpha] | vectorial            | scalar or matrix
+| stem:[\gamma] | vectorial            | matrix
+| stem:[\beta]  | vectorial            | vectorial
+| stem:[a]      | scalar               | scalar
 | stem:[f]      | scalar               | vectorial
 
 |===
@@ -161,7 +161,7 @@ NOTE: In the following, `mu` is a parameter defined e.g. in the `Parameters` sec
                     "alpha": "x*y*mu:x:y:mu", // scalar
                     "alpha": "{x,y,y,x*mu}:x:y:mu", // 2D matrix
                     "gamma": "{x,y,y,x}:x:y", // 2D matrix
-                    "beta": "{t+x,y}:x:y:t", 
+                    "beta": "{t+x,y}:x:y:t",
                     "a": "x+y:x:y",
                     "f": "{x,x+y*t}:x:y:t"
                 }
@@ -207,16 +207,16 @@ NOTE: the shape of the initial condition must be the same as the unknown shape.
 
 Here are supported boundary conditions
 
-=== Dirichlet 
+=== Dirichlet
 
-Dirichlet boundary condition is a type of boundary condition commonly used in partial differential equations. 
-It specifies the value of the solution at the boundary of the domain. 
-In other words, it prescribes the behavior of the solution at the boundary. 
+Dirichlet boundary condition is a type of boundary condition commonly used in partial differential equations.
+It specifies the value of the solution at the boundary of the domain.
+In other words, it prescribes the behavior of the solution at the boundary.
 
 The condition may depend  on the space variable stem:[x], time stem:[t], parameters stem:[\mu] and other unknowns stem:[u_1, \dots, u_N] than the current one.
 
-For example, in a heat transfer problem, a Dirichlet boundary condition may specify the temperature at the boundary of the domain. 
-In a fluid flow problem, a Dirichlet boundary condition may specify the velocity or pressure at the boundary. 
+For example, in a heat transfer problem, a Dirichlet boundary condition may specify the temperature at the boundary of the domain.
+In a fluid flow problem, a Dirichlet boundary condition may specify the velocity or pressure at the boundary.
 
 The Dirichlet boundary condition is essential in determining a unique solution to a PDE problem. Without it, the solution would be underdetermined, and there would be an infinite number of solutions that satisfy the PDE.
 
@@ -228,7 +228,7 @@ The shape of the Dirichlet condition is the same as the unknown shape.
 [stem]
 ++++
 \begin{eqnarray*}
-u_i = g_i(x,t,\mu), \quad i=1,\dots,N 
+u_i = g_i(x,t,\mu), \quad i=1,\dots,N
 \end{eqnarray*}
 ++++
 ****
@@ -237,14 +237,14 @@ The user provides the expression for stem:[(g_i)_{i=1\dots N}] in the `.json` fi
 
 === Neumann
 
-Neumann boundary condition is another type of boundary condition commonly used in partial differential equations. 
-It specifies the normal derivative of the solution at the boundary of the domain. 
+Neumann boundary condition is another type of boundary condition commonly used in partial differential equations.
+It specifies the normal derivative of the solution at the boundary of the domain.
 In other words, it prescribes the flux of the solution across the boundary.
 
-For example, in a heat transfer problem, a Neumann boundary condition may specify the heat flux at the boundary of the domain. 
-In a fluid flow problem, a Neumann boundary condition may specify the normal stress or shear stress at the boundary. 
+For example, in a heat transfer problem, a Neumann boundary condition may specify the heat flux at the boundary of the domain.
+In a fluid flow problem, a Neumann boundary condition may specify the normal stress or shear stress at the boundary.
 
-The Neumann boundary condition is also essential in determining a unique solution to a PDE problem. 
+The Neumann boundary condition is also essential in determining a unique solution to a PDE problem.
 It provides additional information about the behavior of the solution at the boundary, which complements the Dirichlet boundary condition. Together, the Dirichlet and Neumann boundary conditions form a complete set of boundary conditions that fully specify the PDE problem.
 
 The Neumann conditions may depend  on the space variable stem:[x], time stem:[t], parameters stem:[\mu] and the unknowns stem:[u_1, \dots, u_N].
@@ -266,12 +266,12 @@ The user provides the expression for stem:[(g_i)_{i=1\dots N}] in the `.json` fi
 
 === Robin
 
-Robin boundary condition is a type of boundary condition that combines both Dirichlet and Neumann boundary conditions. 
-It specifies a linear combination of the solution and its normal derivative at the boundary of the domain. 
-In other words, it prescribes both the value and the flux of the solution at the boundary. 
+Robin boundary condition is a type of boundary condition that combines both Dirichlet and Neumann boundary conditions.
+It specifies a linear combination of the solution and its normal derivative at the boundary of the domain.
+In other words, it prescribes both the value and the flux of the solution at the boundary.
 
-For example, in a heat transfer problem, a Robin boundary condition may specify a heat transfer coefficient that relates the temperature difference between the boundary and the surrounding medium to the heat flux at the boundary. 
-In a fluid flow problem, a Robin boundary condition may specify a slip coefficient that relates the velocity difference between the boundary and the surrounding medium to the shear stress at the boundary. 
+For example, in a heat transfer problem, a Robin boundary condition may specify a heat transfer coefficient that relates the temperature difference between the boundary and the surrounding medium to the heat flux at the boundary.
+In a fluid flow problem, a Robin boundary condition may specify a slip coefficient that relates the velocity difference between the boundary and the surrounding medium to the shear stress at the boundary.
 
 The Robin boundary condition is useful in modeling situations where the boundary is in contact with a medium that has a different thermal or mechanical behavior than the domain. It provides a more realistic and accurate description of the physical problem than using only Dirichlet or Neumann boundary conditions.
 
@@ -300,16 +300,13 @@ Here's an example of an asciidoc table with a list of finite elements supported 
 
 |===
 | Finite Element | polynomial order | Description
-
 | Pch<k> | 0,1,2 | Piecewise continuous scalar functions of arbitrary degree stem:[k]
 | Pchv<k>| 0,1,2 | Piecewise continuous vectorial functions of arbitrary degree stem:[k]
-
 | RT<k> | k=0 | Raviart-Thomas element of degree stem:[k]
-| NED<k> | Nedelec's first family of curl-conforming elements
-
+| NED<k> | | Nedelec's first family of curl-conforming elements
 |===
 
-This table lists various finite elements supported by {cfpdes}, along with a brief description of each element. 
+This table lists various finite elements supported by {cfpdes}, along with a brief description of each element.
 
 NOTE: {feelpp} supports a wider range of finite elements, including piecewise arbitrary order polynomials, as well as mixed finite elements such as Raviart-Thomas and Brezzi-Douglas-Marini elements or Nedelec's first families.
 
@@ -322,7 +319,7 @@ The backward difference formula scheme is a numerical method for approximating t
 
 stem:[f'(x_n) ≈ \frac{1}{\Delta t} \left(\alpha f(x_n) + \beta f(x_{n-1}) + \gamma f(x_{n-2}) + \dots\right)]
 
-where stem:[\Delta t] is the time step size, stem:[x_n] is the point at which the derivative is approximated, and stem:[\alpha], stem:[\beta], stem:[\gamma], etc. are coefficients that depend on the order of the scheme. 
+where stem:[\Delta t] is the time step size, stem:[x_n] is the point at which the derivative is approximated, and stem:[\alpha], stem:[\beta], stem:[\gamma], etc. are coefficients that depend on the order of the scheme.
 
 For example, the first-order backward difference formula scheme is:
 
@@ -344,25 +341,25 @@ The theta scheme is a numerical method for solving partial differential equation
 \frac{u_i^{n+1} - u_i^n}{\Delta t} = \theta f(u_{i}^{n+1}) + (1-\theta)f(u_{i}^{n})
 ++++
 
-where stem:[u_i^n] is the numerical solution at the stem:[i]-th spatial point and stem:[n]-th time step, stem:[\Delta t] and stem:[\Delta x] are the time and spatial step sizes, and stem:[\theta] is a parameter that determines the weighting between the current and previous time steps. 
+where stem:[u_i^n] is the numerical solution at the stem:[i]-th spatial point and stem:[n]-th time step, stem:[\Delta t] and stem:[\Delta x] are the time and spatial step sizes, and stem:[\theta] is a parameter that determines the weighting between the current and previous time steps.
 
-When stem:[\theta=0], the scheme reduces to the backward difference formula, whereas when stem:[\theta=1], it reduces to the forward difference formula. 
+When stem:[\theta=0], the scheme reduces to the backward difference formula, whereas when stem:[\theta=1], it reduces to the forward difference formula.
 
 For stem:[\theta=0.5], the scheme is known as the **Crank-Nicolson scheme**, which is a popular choice due to its stability and accuracy. The theta scheme is widely used in numerical simulations of heat transfer, fluid flow, and other physical phenomena.
 
 == Stabilized finite element methods
-:adr: advection diffusion reaction 
+:adr: advection diffusion reaction
 
-Stabilized finite element methods are a class of numerical methods used to solve partial differential equations (PDEs). 
+Stabilized finite element methods are a class of numerical methods used to solve partial differential equations (PDEs).
 These methods are designed to overcome the limitations of traditional finite element methods, which can suffer from numerical instabilities and inaccuracies when applied to certain types of PDEs, such as those with convection-dominated or highly oscillatory solutions.
 
-Stabilized finite element methods introduce additional terms to the weak form of the PDE, which act as stabilizers to improve the accuracy and stability of the numerical solution. 
+Stabilized finite element methods introduce additional terms to the weak form of the PDE, which act as stabilizers to improve the accuracy and stability of the numerical solution.
 These terms are typically chosen to balance the effects of convection, diffusion, and reaction in the PDE, and to ensure that the numerical solution satisfies certain physical and mathematical constraints.
 
-There are several types of stabilized finite element methods, including **streamline diffusion**, **Petrov-Galerkin**, and **least-squares** methods. 
+There are several types of stabilized finite element methods, including **streamline diffusion**, **Petrov-Galerkin**, and **least-squares** methods.
 Each method has its own strengths and weaknesses, and the choice of method depends on the specific problem being solved.
 
-Stabilized finite element methods have been successfully applied to a wide range of PDE problems, including fluid dynamics, heat transfer, and structural mechanics. 
+Stabilized finite element methods have been successfully applied to a wide range of PDE problems, including fluid dynamics, heat transfer, and structural mechanics.
 They have also been used in the development of advanced simulation tools for engineering and scientific applications.
 
 {cfpdes} toolbox provides the possibility to use stabilized finite element methods (GaLS and SUPG) for equations such as the {adr} equation.
@@ -392,9 +389,9 @@ l(v) = \int_{\Omega} f v dx
 ++++
 
 
-Here, stem:[\epsilon], stem:[\beta], and stem:[\gamma] are positive constants that control the balance between diffusion, convection, and reaction in the PDE, and stem:[\alpha] is a positive constant that controls the strength of the stabilization term on the boundary. 
-The Galerkin least squares method introduces additional terms to the bilinear form that act as stabilizers to improve the accuracy and stability of the numerical solution. 
-These terms are chosen to minimize the residual of the PDE in a least squares sense, and are typically expressed in terms of the gradient of the solution and its higher-order derivatives. 
+Here, stem:[\epsilon], stem:[\beta], and stem:[\gamma] are positive constants that control the balance between diffusion, convection, and reaction in the PDE, and stem:[\alpha] is a positive constant that controls the strength of the stabilization term on the boundary.
+The Galerkin least squares method introduces additional terms to the bilinear form that act as stabilizers to improve the accuracy and stability of the numerical solution.
+These terms are chosen to minimize the residual of the PDE in a least squares sense, and are typically expressed in terms of the gradient of the solution and its higher-order derivatives.
 The Galerkin least squares method has been shown to be effective in solving a wide range of PDE problems, including convection-dominated and highly oscillatory problems.
 
 [stem]
@@ -403,8 +400,8 @@ a_{\text{GLS}}(u,v) = a(u,v) + \tau \int_{\Omega} \left( \epsilon \nabla u - \be
 ++++
 
 where stem:[\tau] is a positive constant that controls the strength of the stabilization term.
-The first term in the additional terms is a diffusion term that penalizes the gradient of the solution, while the second term is a convection term that penalizes the solution itself. 
-The third term is a reaction term that ensures that the numerical solution satisfies certain physical and mathematical constraints. 
+The first term in the additional terms is a diffusion term that penalizes the gradient of the solution, while the second term is a convection term that penalizes the solution itself.
+The third term is a reaction term that ensures that the numerical solution satisfies certain physical and mathematical constraints.
 The Galerkin least squares method with these additional terms has been shown to be effective in improving the accuracy and stability of the numerical solution for a wide range of PDE problems.
 
 === SUPG
@@ -420,21 +417,21 @@ where stem:[\tau] is a positive constant that controls the strength of the stabi
 
 === {cfpdes} toolbox
 
-Given a `cfpdes` equation  named `myeq`, SUPG and GaLS can be used as stabilisation methods. 
+Given a `cfpdes` equation  named `myeq`, SUPG and GaLS can be used as stabilisation methods.
 To enable them use, in the command-line or `.cfg` file, the option `cfpdes.eq.stabilitsation=1` and define the stabilisation type `cfpdes.eq.stabilitsation.type=gls #supg#unusual-gls #gls`
 
 .Stabilisation methods
 |===
-| type | 
+| type |
 
 
 | `gls`      | default option
-| `supg`      | 
-| `unusual-gls`  | 
+| `supg`      |
+| `unusual-gls`  |
 
 |===
 
-Examples are available https://github.com/feelpp/feelpp/tree/develop/toolboxes/coefficientformpdes/cases/adr[here] 
+Examples are available https://github.com/feelpp/feelpp/tree/develop/toolboxes/coefficientformpdes/cases/adr[here]
 
 
 == Next steps

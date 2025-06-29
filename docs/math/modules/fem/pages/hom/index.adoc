@@ -1,4 +1,4 @@
-= High-Order Discretization Mini‑App and Mathematical Framework
+= High-Order Discretization Mini-App and Mathematical Framework
 2025-02-13
 :icons: font
 :sectnums:
@@ -7,18 +7,18 @@
 
 == Overview
 
-This document describes our effort to develop a portable mini‑app for high‑order discretizations using Kokkos (targeting both CPUs and GPUs) and a mathematical framework that unifies a wide range of methods, drawing inspiration from the Feel++ project. In our work we combine two complementary ideas:
+This document describes our effort to develop a portable mini-app for high-order discretizations using Kokkos (targeting both CPUs and GPUs) and a mathematical framework that unifies a wide range of methods, drawing inspiration from the Feel++ project. In our work we combine two complementary ideas:
 
-* A **mini‑app** that encapsulates the core high‑order discretization kernels.
-* A **proxy‑app** that serves as a simplified version of a full‑scale application, emphasizing performance‑critical operations.
+* A **mini-app** that encapsulates the core high-order discretization kernels.
+* A **proxy-app** that serves as a simplified version of a full-scale application, emphasizing performance-critical operations.
 
-Furthermore, we take inspiration from the ECP’s development of [libCEED concepts](https://libceed.org/en/latest/libCEEDapi/), which guide our low‑level operator design.
+Furthermore, we take inspiration from the ECP’s development of [libCEED concepts](https://libceed.org/en/latest/libCEEDapi/), which guide our low-level operator design.
 
-== Mini‑App
+== Mini-App
 
-A *mini‑app* is a lightweight application designed to capture the essential computational patterns of a complex code base without the full implementation overhead. Our mini‑app:
+A *mini-app* is a lightweight application designed to capture the essential computational patterns of a complex code base without the full implementation overhead. Our mini-app:
 
-* Implements high‑order discretizations for partial differential equations.
+* Implements high-order discretizations for partial differential equations.
 * Leverages Kokkos to ensure performance portability across different hardware architectures (CPUs and GPUs).
 * Focuses on key computational kernels (e.g. basis function evaluation, operator assembly, and matrix–vector products).
 * Serves as a testbed to validate both the numerical methods and the performance optimizations.
@@ -33,27 +33,27 @@ A *mini‑app* is a lightweight application designed to capture the essential co
 \frac{1}{\rho c^2} \frac{\partial^2 u}{\partial t^2} -\nabla \cdot ( \frac{1}{\rho} \nabla u  )  = f
 ++++
 
-== Proxy‑App
+== Proxy-App
 
-A *proxy‑app* is a simplified, stand‑alone application that replicates the performance‑critical aspects of a full‑scale production code. In our context the proxy‑app:
+A *proxy-app* is a simplified, stand-alone application that replicates the performance-critical aspects of a full-scale production code. In our context the proxy-app:
 
 * Emulates the discretization workflow by assembling the key operators.
 * Is used to benchmark and tune performance on various hardware configurations.
-* Provides an environment for exploring 
-** various finite element libraries 
+* Provides an environment for exploring
+** various finite element libraries
 ** optimization strategies (such as tuning Kokkos execution policies) without the complexity of a complete application.
-* Acts as a bridge between the mini‑app’s numerical kernels and a full‑scale solver.
+* Acts as a bridge between the mini-app’s numerical kernels and a full-scale solver.
 
 == LibCEED and Its Concepts
 
-The Exascale Computing Project (ECP) developed libCEED to provide a lightweight, efficient, and portable API for high‑order finite element discretizations. The libCEED approach is based on a few key concepts:
+The Exascale Computing Project (ECP) developed libCEED to provide a lightweight, efficient, and portable API for high-order finite element discretizations. The libCEED approach is based on a few key concepts:
 
-* **Element Restriction:** Maps global degrees of freedom into element‑local data, enabling efficient local operator evaluations.
+* **Element Restriction:** Maps global degrees of freedom into element-local data, enabling efficient local operator evaluations.
 * **Basis Evaluation:** Offers routines to evaluate finite element basis functions (and their derivatives) at quadrature points.
-* **QFunctions:** Encapsulates the action of local operators as small user‑defined functions that are independent of the global assembly process.
+* **QFunctions:** Encapsulates the action of local operators as small user-defined functions that are independent of the global assembly process.
 * **Operator Assembly:** Provides a modular framework to compose element restrictions, basis evaluations, and QFunctions into a complete discretized operator.
 
-These design ideas allow libCEED to separate the mathematical formulation from the hardware‑specific optimizations. In our work, we follow similar principles to create a mathematical framework that supports a broad range of methods (as seen in Feel++) while keeping the user API as stable as possible.
+These design ideas allow libCEED to separate the mathematical formulation from the hardware-specific optimizations. In our work, we follow similar principles to create a mathematical framework that supports a broad range of methods (as seen in Feel++) while keeping the user API as stable as possible.
 
 Questions:
 
@@ -85,7 +85,7 @@ ReferenceElement triangleReference( "triangle", { {0,0}, {1,0}, {0,1} } );
 
 The primal basis is a set of polynomials defined on the reference element. These polynomials (for example, Dubiner, Legendre, or canonical monomials) provide the building blocks for the finite element space.
 
-For a given reference element, let stem:[\{ p_0, p_1, \dots, p_n \}] be the set of polynomial basis functions. In 
+For a given reference element, let stem:[\{ p_0, p_1, \dots, p_n \}] be the set of polynomial basis functions. In
 
 [stem]
 ++++
@@ -121,7 +121,7 @@ The construction process involves:
 === Portable High-Order Discretization with Kokkos
 
 To achieve performance portability across CPUs and GPUs, FEEL++ leverages Kokkos. Kokkos provides:
-  
+
 * **Portable Data Structures:** For example, using `Kokkos::View` for storing the polynomial coefficients.
 * **Parallel Execution:** Parallel loops for evaluating basis functions and assembling element operators.
 * **Memory Abstraction:** The same code can run on different architectures without major modifications.
@@ -132,5 +132,5 @@ in GPU recomputing can be critical. see Geos proxy app. @kfelix @stefano ?
 
 == References
 
-* [libCEED API Documentation](https://libceed.org/en/latest/libCEEDapi/) – An example of how low‑level operator abstractions are defined for high‑order methods.
+* [libCEED API Documentation](https://libceed.org/en/latest/libCEEDapi/) – An example of how low-level operator abstractions are defined for high-order methods.
 * FEEL++ documentation and source code for further details on the implementation.

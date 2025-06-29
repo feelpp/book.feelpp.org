@@ -81,14 +81,14 @@ Optional Parameters:
 |===
 | Name | Type | Description | Default Value | Option
 
-| `_hsize`  |double | characteristic size of the mesh. This option will edit the `.geo` file and change the variable `h` if defined | 0.1 | `gmsh.hsize`
-| `_geo_variables_list` | string | Set a list of variable that may be defined in a `.geo` file| "" | `gmsh.geo`-variables-list
-| `_filename` |string | filename with extension | `feel.geo`| `gmsh.filename`
-| `_depends`  |string | list of files (separated by , or ;) on which `gmsh.filename` depends| ""|`gmsh.depends`
-| `_refine` | boolean| optionally refine with \p refine levels the mesh.| `0.`| `gmsh.refine`
-| `_update` | integer | update the mesh data structure (build internal faces and edges)| `true`
-| `_physical_are_elementary_regions` | boolean | to load specific meshes formats.| `false.`| gmsh.physical_are_elementary_regions
-|`_straighten` | boolean | in case of curvilinear elements, straighten the elements which are not touching with a face the boundary of the domain| `true`| `gmsh.straighten`
+| `_hsize` | double | characteristic size of the mesh. This option will edit the `.geo` file and change the variable `h` if defined | 0.1 | `gmsh.hsize`
+| `_geo_variables_list` | string | Set a list of variable that may be defined in a `.geo` file | "" | `gmsh.geo`-variables-list
+| `_filename` | string | filename with extension | `feel.geo`| `gmsh.filename`
+| `_depends`  | string | list of files (separated by , or ;) on which `gmsh.filename` depends | "" |`gmsh.depends`
+| `_refine` | boolean | optionally refine with \p refine levels the mesh.| `0.` | `gmsh.refine`
+| `_update` | integer | update the mesh data structure (build internal faces and edges) | `true` |
+| `_physical_are_elementary_regions` | boolean | to load specific meshes formats.| `false.` | gmsh.physical_are_elementary_regions
+|`_straighten` | boolean | in case of curvilinear elements, straighten the elements which are not touching with a face the boundary of the domain| `true` | `gmsh.straighten`
 | `_partitioner` | integer | define the mesh partitioner to use | `1` (if Metis is available) `0` if not (CHACO) | gmsh.partitioner
 
 |===
