@@ -646,7 +646,7 @@ They offer tools for defining the coefficient functions, setting boundary condit
 <div class="sectionbody">
 <div class="paragraph">
 <p>A lot of PDE(s) can be writen in a generic form, and depends mainly on the definition of coefficients.
-The generic form that we use is describe by the next equation, find \(u: \Omega \subset \mathbb{R}^d \longrightarrow \mathbb{R}^n\) with \(d=2,3\)  and \(n=1\) (\(u\) is a scalar field) or \(n=d\)(\(u\) is a vector field) such that</p>
+The generic form that we use is describe by the next equation, find \(u: \Omega \subset \mathbb{R}^d \longrightarrow \mathbb{R}^n\) with \(d=2,3\) and \(n=1\) (\(u\) is a scalar field) or \(n=d\)(\(u\) is a vector field) such that</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -712,7 +712,7 @@ parameters \(\mu\) may depend on the unknown \(u\) and on the space variable \(x
 <p>The system of \(N\) equations reads then:</p>
 </div>
 <div class="paragraph">
-<p>For \(i=1\dots N\), find \(u_i: \Omega \subset \mathbb{R}^d \longrightarrow \mathbb{R}^{n_i}\) with \(d=2,3\)  and \(n_i=1\) (\(u_i\) is a scalar field) or \(n_i=d\)(\(u_i\) is a vector field) such that</p>
+<p>For \(i=1\dots N\), find \(u_i: \Omega \subset \mathbb{R}^d \longrightarrow \mathbb{R}^{n_i}\) with \(d=2,3\) and \(n_i=1\) (\(u_i\) is a scalar field) or \(n_i=d\)(\(u_i\) is a vector field) such that</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -808,17 +808,22 @@ In the following, <code>mu</code> is a parameter defined e.g. in the <code>Param
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "Models":
     {
-        "cfpdes":{
-            "equations":["myscalarpde"]
+        "cfpdes":
+        {
+            "equations":["myscalarpde"] <i class="conum" data-value="1"></i><b>(1)</b>
         },
-        "mypde":{
-            "setup":{
-                "unknown":{
-                    "basis":"Pch1", // the unknown is a scalar field
-                    "name":"u",
-                    "symbol":"u"
+        "myscalarpde": <i class="conum" data-value="2"></i><b>(2)</b>
+        {
+            "setup":
+            {
+                "unknown":
+                {
+                    "basis":"Pch1", // the unknown is a scalar field <i class="conum" data-value="3"></i><b>(3)</b>
+                    "name":"u", <i class="conum" data-value="4"></i><b>(4)</b>
+                    "symbol":"u" <i class="conum" data-value="4"></i><b>(4)</b>
                 },
-                "coefficients":{
+                "coefficients": <i class="conum" data-value="5"></i><b>(5)</b>
+                {
                     "d": "1",
                     "c": "x+y:x:y",
                     "c": "{x+y,x,y,x-y}:t:x:y", // 2D matrix
@@ -832,7 +837,8 @@ In the following, <code>mu</code> is a parameter defined e.g. in the <code>Param
             }
         }
     },
-    "Parameters":{
+    "Parameters": <i class="conum" data-value="6"></i><b>(6)</b>
+    {
         "mu": 0.5
     }
 }</code></pre>
@@ -848,17 +854,22 @@ In the following, <code>mu</code> is a parameter defined e.g. in the <code>Param
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "Models":
     {
-        "cfpdes":{
-            "equations":["myvectorialpde"]
+        "cfpdes":
+        {
+            "equations":["myvectorialpde"] <i class="conum" data-value="1"></i><b>(1)</b>
         },
-        "mypde":{
-            "setup":{
-                "unknown":{
-                    "basis":"Pch1v", // the unknown is a vector field
-                    "name":"u",
-                    "symbol":"u"
+        "myvectorialpde": <i class="conum" data-value="2"></i><b>(2)</b>
+        {
+            "setup":
+            {
+                "unknown":
+                {
+                    "basis":"Pch1v", // the unknown is a vector field <i class="conum" data-value="3"></i><b>(3)</b>
+                    "name":"u", <i class="conum" data-value="4"></i><b>(4)</b>
+                    "symbol":"u" <i class="conum" data-value="4"></i><b>(4)</b>
                 },
-                "coefficients":{
+                "coefficients": <i class="conum" data-value="5"></i><b>(5)</b>
+                {
                     "d": "1",
                     "c": "x+y:x:y",
                     "c": "{x+y,x,y,x-y}:t:x:y", // 2D matrix
@@ -873,13 +884,42 @@ In the following, <code>mu</code> is a parameter defined e.g. in the <code>Param
             }
         }
     },
-    "Parameters":{
+    "Parameters": <i class="conum" data-value="6"></i><b>(6)</b>
+    {
         "mu": 0.5
     }
 }</code></pre>
 </div>
 </div>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The name of the equation to be considered, if many equations are defined, they must be listed here.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The name of the equation for definition.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Functional space used in the discretization of the equation.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The name, and symbol of the unknown.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Definition of the coefficients involved in the equation.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Definition of parameters involved in the equation.</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -906,13 +946,18 @@ the shape of the initial condition must be the same as the unknown shape.
 <div class="title">Examples of initial conditions using an expression</div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"InitialConditions":{
-    "mypde": {
-        "u": {
-            "Expression": {
-                "myic": {
-                    "markers": "Omega",
-                    "expr": "2*cos(t)*sin(x)*cos(y):t:x:y"
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"InitialConditions": <i class="conum" data-value="1"></i><b>(1)</b>
+{
+    "mypde": <i class="conum" data-value="2"></i><b>(2)</b>
+    {
+        "u": <i class="conum" data-value="3"></i><b>(3)</b>
+        {
+            "Expression":
+            {
+                "myic": <i class="conum" data-value="4"></i><b>(4)</b>
+                {
+                    "markers": "Omega", <i class="conum" data-value="5"></i><b>(5)</b>
+                    "expr": "2*cos(t)*sin(x)*cos(y):t:x:y" <i class="conum" data-value="6"></i><b>(6)</b>
                 }
             }
         }
@@ -921,6 +966,34 @@ the shape of the initial condition must be the same as the unknown shape.
 </div>
 </div>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Keyword for initial conditions</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The name of the equation</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The name of the unknown</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The name of the initial condition</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The physical entity (associated to the mesh) to which the condition is applied.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>The expression of the initial condition. See more details in <a href="../../../../toolboxes/latest/modeling-analysis-using-json-files.html#_initialconditions" class="xref page">the json specifications</a>.</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -938,7 +1011,7 @@ It specifies the value of the solution at the boundary of the domain.
 In other words, it prescribes the behavior of the solution at the boundary.</p>
 </div>
 <div class="paragraph">
-<p>The condition may depend  on the space variable \(x\), time \(t\), parameters \(\mu\) and other unknowns \(u_1, \dots, u_N\) than the current one.</p>
+<p>The condition may depend on the space variable \(x\), time \(t\), parameters \(\mu\) and other unknowns \(u_1, \dots, u_N\) than the current one.</p>
 </div>
 <div class="paragraph">
 <p>For example, in a heat transfer problem, a Dirichlet boundary condition may specify the temperature at the boundary of the domain.
@@ -963,7 +1036,44 @@ u_i = g_i(x,t,\mu), \quad i=1,\dots,N
 </div>
 </div>
 <div class="paragraph">
-<p>The user provides the expression for \((g_i)_{i=1\dots N}\) in the <code>.json</code> file  only if Dirichlet conditions are used.</p>
+<p>The user provides the expression for \((g_i)_{i=1\dots N}\) in the <code>.json</code> file only if Dirichlet conditions are used.</p>
+</div>
+<div id="ex:boudaryconditions:dirichlet" class="sidebarblock examp">
+<div class="content">
+<div class="title">Examples of Dirichlet boundary condition</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Dirichlet": <i class="conum" data-value="1"></i><b>(1)</b>
+{
+    "Gamma0": <i class="conum" data-value="2"></i><b>(2)</b>
+    {
+        "markers": ["Bottom","Right","Bottom-Left","Top-Right"], <i class="conum" data-value="3"></i><b>(3)</b>
+        "expr": "0" <i class="conum" data-value="4"></i><b>(4)</b>
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Keyword for Dirichlet conditions.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The physical entity (associated to the mesh) to which the condition is applied.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The markers of the boundary where the Dirichlet condition is applied.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The expression for the Dirichlet \(g_i\). See more details in <a href="../../../../toolboxes/latest/modeling-analysis-using-json-files.html#_boundaryconditions" class="xref page">the json specifications</a>.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -982,7 +1092,7 @@ In a fluid flow problem, a Neumann boundary condition may specify the normal str
 It provides additional information about the behavior of the solution at the boundary, which complements the Dirichlet boundary condition. Together, the Dirichlet and Neumann boundary conditions form a complete set of boundary conditions that fully specify the PDE problem.</p>
 </div>
 <div class="paragraph">
-<p>The Neumann conditions may depend  on the space variable \(x\), time \(t\), parameters \(\mu\) and the unknowns \(u_1, \dots, u_N\).</p>
+<p>The Neumann conditions may depend on the space variable \(x\), time \(t\), parameters \(\mu\) and the unknowns \(u_1, \dots, u_N\).</p>
 </div>
 <div class="paragraph">
 <p>The shape of the Neumann condition is the same as the unknown shape.</p>
@@ -1002,6 +1112,50 @@ It provides additional information about the behavior of the solution at the bou
 <div class="paragraph">
 <p>The user provides the expression for \((g_i)_{i=1\dots N}\) in the <code>.json</code> file only if Neumann conditions are used.</p>
 </div>
+<div id="ex:boudaryconditions:neumann" class="sidebarblock examp">
+<div class="content">
+<div class="title">Examples of Neumann boundary condition</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Neumann": <i class="conum" data-value="1"></i><b>(1)</b>
+{
+    "top": <i class="conum" data-value="2"></i><b>(2)</b>
+    {
+        "expr":"-h_top*(heat_T-T0_top):h_top:heat_T:T0_top" <i class="conum" data-value="3"></i><b>(3)</b>
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Keyword for Robin conditions.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The physical entity (associated to the mesh) to which the condition is applied.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Expression of \(g_i\). See more details in <a href="../../../../toolboxes/latest/modeling-analysis-using-json-files.html#_boundaryconditions" class="xref page">the json specifications</a>.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Because of the presence of <code>heat_T</code> in the expression, this will be considered as a non-linear condition.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_robin"><a class="anchor" href="#_robin"></a>6.3. Robin</h3>
@@ -1018,7 +1172,7 @@ In a fluid flow problem, a Robin boundary condition may specify a slip coefficie
 <p>The Robin boundary condition is useful in modeling situations where the boundary is in contact with a medium that has a different thermal or mechanical behavior than the domain. It provides a more realistic and accurate description of the physical problem than using only Dirichlet or Neumann boundary conditions.</p>
 </div>
 <div class="paragraph">
-<p>The Robin conditions may depend  on the space variable \(x\), time \(t\), parameters \(\mu\).</p>
+<p>The Robin conditions may depend on the space variable \(x\), time \(t\), parameters \(\mu\).</p>
 </div>
 <div class="paragraph">
 <p>The shape of the Robin condition is the same as the unknown shape.</p>
@@ -1037,6 +1191,43 @@ In a fluid flow problem, a Robin boundary condition may specify a slip coefficie
 </div>
 <div class="paragraph">
 <p>The user provides the expression for \((\eta_i)_{i=1\dots N}\) and \((\zeta_i)_{i=1\dots N}\) in the <code>.json</code> file only if Robin conditions are used.</p>
+</div>
+<div id="ex:boudaryconditions:robin" class="sidebarblock examp">
+<div class="content">
+<div class="title">Examples of Robin boundary condition</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"Robin": <i class="conum" data-value="1"></i><b>(1)</b>
+{
+    "top": <i class="conum" data-value="2"></i><b>(2)</b>
+    {
+        "expr1": "h_top:h_top", <i class="conum" data-value="3"></i><b>(3)</b>
+        "expr2": "h_top*T0_top:h_top:T0_top" <i class="conum" data-value="4"></i><b>(4)</b>
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Keyword for Robin conditions.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The physical entity (associated to the mesh) to which the condition is applied.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Expression of \(\eta_i\). See more details in <a href="../../../../toolboxes/latest/modeling-analysis-using-json-files.html#_boundaryconditions" class="xref page">the json specifications</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Expression of \(\zeta_i\).</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -1063,19 +1254,24 @@ Here&#8217;s an example of an asciidoc table with a list of finite elements supp
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pch&lt;k&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Pch&lt;k&gt;</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">0,1,2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Piecewise continuous scalar functions of arbitrary degree \(k\)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pchv&lt;k&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Pchv&lt;k&gt;</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">0,1,2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Piecewise continuous vectorial functions of arbitrary degree \(k\)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">RT&lt;k&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RT&lt;k&gt;</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">k=0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Raviart-Thomas element of degree \(k\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NED&lt;k&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nedelec&#8217;s first family of curl-conforming elements</p></td>
 </tr>
 </tbody>
 </table>
@@ -1176,7 +1372,7 @@ They have also been used in the development of advanced simulation tools for eng
 <p>The Galerkin least squares formulation is a stabilized finite element method used to solve partial differential equations. The variational formulation of the Galerkin least squares method is given by:</p>
 </div>
 <div class="paragraph">
-<p>Find $u \in V$ such that</p>
+<p>Find \(u \in V\) such that</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -1228,13 +1424,13 @@ The Galerkin least squares method with these additional terms has been shown to 
 </div>
 </div>
 <div class="paragraph">
-<p>where \(\tau\) is a positive constant that controls the strength of the stabilization term, \(\beta\) is a vector field that represents the direction and magnitude of the convection term in the PDE, and $\Delta$ is the Laplace operator. The SUPG method introduces an additional term that penalizes the gradient of the solution in the direction of the convection term, which improves the accuracy and stability of the numerical solution for convection-dominated problems. The SUPG method has been shown to be effective in solving a wide range of PDE problems, including fluid dynamics and heat transfer.</p>
+<p>where \(\tau\) is a positive constant that controls the strength of the stabilization term, \(\beta\) is a vector field that represents the direction and magnitude of the convection term in the PDE, and \(\Delta\) is the Laplace operator. The SUPG method introduces an additional term that penalizes the gradient of the solution in the direction of the convection term, which improves the accuracy and stability of the numerical solution for convection-dominated problems. The SUPG method has been shown to be effective in solving a wide range of PDE problems, including fluid dynamics and heat transfer.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_coefficient_form_pde_toolbox"><a class="anchor" href="#_coefficient_form_pde_toolbox"></a>9.3. Coefficient form PDE toolbox</h3>
 <div class="paragraph">
-<p>Given a <code>cfpdes</code> equation  named <code>myeq</code>, SUPG and GaLS can be used as stabilisation methods.
+<p>Given a <code>cfpdes</code> equation named <code>myeq</code>, SUPG and GaLS can be used as stabilisation methods.
 To enable them use, in the command-line or <code>.cfg</code> file, the option <code>cfpdes.eq.stabilitsation=1</code> and define the stabilisation type <code>cfpdes.eq.stabilitsation.type=gls #supg#unusual-gls #gls</code></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">

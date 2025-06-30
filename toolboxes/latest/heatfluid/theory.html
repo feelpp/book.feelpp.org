@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Heat Fluid :: Feel++ Docs</title>
+    <title>Theory of Heat Transfer and Fluid :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/heatfluid/theory.html">
+    <link rel="prev" href="manual.html">
+    <link rel="next" href="2Dbuilding_NS/index.html">
+    <meta name="description" content="Computational Solid Mechanics modeling theory">
     <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/listing.css">
@@ -264,10 +267,10 @@ MathJax.Hub.Config({
     <span class="nav-text">Cases</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../csm/cantilever/index.html">Cantilever CSM Benchmark</a>
+    <a class="nav-link" href="../csm/pendulum2D/index.html">2D Pendulum</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../csm/pendulum2D/index.html">2D Pendulum</a>
+    <a class="nav-link" href="../csm/cantilever/index.html">Cantilever CSM Benchmark</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../csm/ribs/index.html">Bracing with ribs</a>
@@ -333,13 +336,13 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../cfd/TurekHron/index.html">CFD Benchmarks</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../cfd/laminar_isothermal_backward_facing_step/index.html">Laminar, Isothermal Backward Facing Step Benchmark</a>
-  </li>
-  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../cfd/oscillating_cylinder/index.html">Oscillating cylinder</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../cfd/pipestokes/index.html">Stokes flow in a pipe</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../cfd/laminar_isothermal_backward_facing_step/index.html">Laminar, Isothermal Backward Facing Step Benchmark</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../cfd/stokes_boundary_layer/index.html">Stokes Boundary Layer Benchmark</a>
@@ -399,10 +402,10 @@ MathJax.Hub.Config({
     <span class="nav-text">Cases</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../heat/2Dbuilding/index.html">Example Toolboxes 2D building</a>
+    <a class="nav-link" href="../heat/3Dbuilding/index.html">3D Building</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../heat/3Dbuilding/index.html">3D Building</a>
+    <a class="nav-link" href="../heat/2Dbuilding/index.html">Example Toolboxes 2D building</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../heat/cell/index.html">Diffusion and Uptake into a Spherical Cell</a>
@@ -439,6 +442,9 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="manual.html">Heat Transfer and Fluids</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="theory.html">Theory of Heat Transfer and Fluid</a>
   </li>
 </ul>
   </li>
@@ -782,7 +788,9 @@ MathJax.Hub.Config({
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Toolboxes Manual</a></li>
-    <li><a href="theory.html">Heat Fluid</a></li>
+    <li><a href="index.html">Heat &amp; Fluid</a></li>
+    <li>Manuals</li>
+    <li><a href="theory.html">Theory of Heat Transfer and Fluid</a></li>
   </ul>
 </nav>
 
@@ -815,7 +823,7 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Heat Fluid</h1>
+<h1 class="page">Theory of Heat Transfer and Fluid</h1>
 <div class="sect1">
 <h2 id="_notations_and_units"><a class="anchor" href="#_notations_and_units"></a>1. Notations and Units</h2>
 <div class="sectionbody">
@@ -859,6 +867,11 @@ MathJax.Hub.Config({
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(m \cdot s^{-1}\)</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(p\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pressure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(Pa\)</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(\beta\)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">coefficient of thermal expansion</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(K^{-1}\)</p></td>
@@ -878,6 +891,11 @@ MathJax.Hub.Config({
 <td class="tableblock halign-left valign-top"><p class="tableblock">fluid density of air</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(kg \cdot m^{-3}\)</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(T_\text{ref}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reference temperature</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(K\)</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -885,10 +903,10 @@ MathJax.Hub.Config({
 <div class="sect1">
 <h2 id="_equations"><a class="anchor" href="#_equations"></a>2. Equations</h2>
 <div class="sectionbody">
-<div class="stemblock">
+<div id="convective_heat_equation" class="stemblock">
 <div class="title">Convective heat equation</div>
 <div class="content">
-\[\rho C_p \left( \frac{\partial T}{\partial t} + \boldsymbol{u} \cdot \nabla T \right) - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega_H\]
+\[\rho C_p \left( \frac{\partial T}{\partial t} + \boldsymbol{u} \cdot \nabla T \right) - \nabla \cdot \left( k \nabla T \right) = Q, \quad \text{ in } \Omega_H \quad (1)\]
 </div>
 </div>
 <div class="paragraph">
@@ -899,27 +917,22 @@ MathJax.Hub.Config({
 \[\text{at } t=0, \quad T(x,0) = T_0(x)\]
 </div>
 </div>
-<div class="stemblock">
-<div class="title">Equation of air movement (Navier-Stokes)</div>
-<div class="content">
-\[\begin{cases}
-
-\rho (\frac{\partial \mathbf{u}}{\partial t} + \mathbf{u} \cdot \nabla \mathbf{u}) -\nabla \cdot (\mu \nabla \mathbf{u}) + \nabla  P = - \rho_0 \beta(T-T_{ref}) \mathbf{g} &amp; dans \; \Omega_F \quad (1) \\
-
-\nabla \mathbf{u} = 0 &amp; dans \; \Omega_F \quad (2) \\
-\mathbf{u}=0 &amp; sur \; \partial \Omega_F \quad \text{(boundary of Dirichlet)}
-\end{cases}\]
-</div>
-</div>
+\begin{alignat}{2}
+  \rho \left(\frac{\partial \mathbf{u}}{\partial t} + \mathbf{u} \cdot \nabla \mathbf{u}\right) - \nabla \cdot (\mu \nabla \mathbf{u}) + \nabla p &= - \rho_0 \beta(T-T_\text{ref}) \mathbf{g} & \quad\text{in} \; \Omega_F & \quad(2)\\
+  \nabla\cdot \mathbf{u}          &= 0            & \quad\text{in} \; \Omega_F & \quad(3)\\
+  \mathbf{u}                      &= 0            & \quad\text{on} \; \partial \Omega_F & \quad\text{(Dirichlet)}
+\end{alignat}
 <div class="paragraph">
-<p>\(\quad\)The equation (1) is the momentum equation inherited from Newton&#8217;s law and (2) is the mass conservation equation for incompressible flows.</p>
+<p>\(\quad\)The equation <a href="#navier_stokes">(2)</a> is the momentum equation inherited from Newton&#8217;s law and <a href="#navier_stokes">(3)</a> is the mass conservation equation for incompressible flows.</p>
 </div>
+<div class="sect2">
+<h3 id="_variational_formulation"><a class="anchor" href="#_variational_formulation"></a>2.1. Variational formulation</h3>
 <div class="paragraph">
-<p>\(\quad\)We consider \(\mathbf{\phi} \in \mathcal{H}_0^1(\Omega)^d\) a test function with compact support in the Sobolev space in dimension d. We multiply our equation by \(\mathbf{\phi}\) and we integrate on \(\Omega_F\).</p>
+<p>\(\quad\)We consider \(\mathbf{v} \in \mathcal{H}_0^1(\Omega)^d\) a test function with compact support in the Sobolev space in dimension \(d\). We multiply our equation by \(\mathbf{v}\) and we integrate on \(\Omega_F\).</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[\rho \int_{\Omega_F}\frac{\partial \mathbf{u}}{\partial t}\cdot \mathbf{\mathbf{\phi}} + \rho\int_{\Omega_F} (\mathbf{u} \cdot \nabla \mathbf{u}) \cdot \mathbf{\phi} -\int_{\Omega_F} (\nabla \cdot (\mu \nabla \mathbf{u})) \cdot \mathbf{\phi} + \int_{\Omega_F} \nabla  P \cdot \mathbf{\phi} = -\int_{\Omega_F} \rho_0 \beta(T-T_{ref}) \mathbf{g} \cdot \mathbf{\phi}\]
+\[\rho \int_{\Omega_F}\frac{\partial \mathbf{u}}{\partial t}\cdot \mathbf{v} + \rho\int_{\Omega_F} (\mathbf{u} \cdot \nabla \mathbf{u}) \cdot \mathbf{v} -\int_{\Omega_F} (\nabla \cdot (\mu \nabla \mathbf{u})) \cdot \mathbf{v} + \int_{\Omega_F} \nabla p \cdot \mathbf{v} = -\int_{\Omega_F} \rho_0 \beta(T-T_\text{ref}) \mathbf{g} \cdot \mathbf{v}\]
 </div>
 </div>
 <div class="paragraph">
@@ -927,7 +940,7 @@ MathJax.Hub.Config({
 </div>
 <div class="stemblock">
 <div class="content">
-\[ \rho \int_{\Omega_F}\frac{\partial \mathbf{u}}{\partial t}\cdot \mathbf{\mathbf{\phi}} + \rho\int_{\Omega_F} (\mathbf{u} \cdot \nabla \mathbf{u}) \cdot \mathbf{\phi} -\mu \int_{\Omega_F} \Delta \mathbf{u} \cdot \mathbf{\phi} + \int_{\Omega_F} \nabla  P \cdot \mathbf{\phi} = -\int_{\Omega_F} \rho_0 \beta(T-T_{ref}) \mathbf{g} \cdot \mathbf{\phi}\]
+\[ \rho \int_{\Omega_F}\frac{\partial \mathbf{u}}{\partial t}\cdot \mathbf{\mathbf{v}} + \rho\int_{\Omega_F} (\mathbf{u} \cdot \nabla \mathbf{u}) \cdot \mathbf{v} -\mu \int_{\Omega_F} \Delta \mathbf{u} \cdot \mathbf{v} + \int_{\Omega_F} \nabla p \cdot \mathbf{v} = -\int_{\Omega_F} \rho_0 \beta(T-T_\text{ref}) \mathbf{g} \cdot \mathbf{v}\]
 </div>
 </div>
 <div class="paragraph">
@@ -935,21 +948,21 @@ MathJax.Hub.Config({
 </div>
 <div class="stemblock">
 <div class="content">
-\[  \rho \int_{\Omega_F}\frac{\partial \mathbf{u}}{\partial t}\cdot \mathbf{\mathbf{\phi}} + \rho\int_{\Omega_F} (\mathbf{u} \cdot \nabla \mathbf{u}) \cdot \mathbf{\phi} +\mu \int_{\Omega_F} \nabla \mathbf{u} : \nabla \mathbf{\phi} - \int_{\partial \Omega_F}\frac{\partial \mathbf{u}}{\partial n } \cdot \mathbf{\phi} + \int_{\Omega_F} \nabla  P \cdot \mathbf{\phi} =- \int_{\Omega_F} \rho_0 \beta(T-T_{ref}) \mathbf{g} \cdot \mathbf{\phi}\]
+\[  \rho \int_{\Omega_F}\frac{\partial \mathbf{u}}{\partial t}\cdot \mathbf{\mathbf{v}} + \rho\int_{\Omega_F} (\mathbf{u} \cdot \nabla \mathbf{u}) \cdot \mathbf{v} +\mu \int_{\Omega_F} \nabla \mathbf{u} : \nabla \mathbf{v} - \int_{\partial \Omega_F}\frac{\partial \mathbf{u}}{\partial n } \cdot \mathbf{v} + \int_{\Omega_F} \nabla p \cdot \mathbf{v} =- \int_{\Omega_F} \rho_0 \beta(T-T_\text{ref}) \mathbf{g} \cdot \mathbf{v}\]
 </div>
 </div>
 <div class="stemblock">
 <div class="content">
-\[ \rho \int_{\Omega_F}\frac{\partial \mathbf{u}}{\partial t}\cdot \mathbf{\mathbf{\phi}} + \rho\int_{\Omega_F} (\mathbf{u} \cdot \nabla \mathbf{u}) \cdot \mathbf{\phi} +\mu \int_{\Omega_F} \nabla \mathbf{u} : \nabla \mathbf{\phi} - \int_{\partial \Omega_F}\frac{\partial \mathbf{u}}{\partial n } \cdot \mathbf{\phi} - \int_{\Omega_F}   P \cdot \nabla \mathbf{\phi} + \int_{\partial \Omega_F} \frac{\partial P}{\partial n} \cdot \mathbf{\phi} = - \int_{\Omega_F} \rho_0 \beta(T-T_{ref})\mathbf{g} \cdot \mathbf{\phi}\]
+\[ \rho \int_{\Omega_F}\frac{\partial \mathbf{u}}{\partial t}\cdot \mathbf{\mathbf{v}} + \rho\int_{\Omega_F} (\mathbf{u} \cdot \nabla \mathbf{u}) \cdot \mathbf{v} +\mu \int_{\Omega_F} \nabla \mathbf{u} : \nabla \mathbf{v} - \int_{\partial \Omega_F}\frac{\partial \mathbf{u}}{\partial n } \cdot \mathbf{v} - \int_{\Omega_F} p \cdot \nabla \mathbf{v} + \int_{\partial \Omega_F} \frac{\partial p}{\partial n} \cdot \mathbf{v} = - \int_{\Omega_F} \rho_0 \beta(T-T_\text{ref})\mathbf{g} \cdot \mathbf{v}\]
 </div>
 </div>
 <div class="paragraph">
-<p>\(\quad\)As \(\phi\) is compact support, the terms on the edges vanish.
+<p>\(\quad\)As \(\mathbf{v}\) is compact support, the terms on the edges vanish.
 We will then obtain:</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[  \rho \int_{\Omega_F}\frac{\partial \mathbf{u}}{\partial t}\cdot \mathbf{\mathbf{\phi}} + \rho\int_{\Omega_F} (\mathbf{u} \cdot \nabla \mathbf{u}) \cdot \mathbf{\phi} +\mu \int_{\Omega_F} \nabla \mathbf{u} : \nabla \mathbf{\phi} - \int_{\Omega_F}   P \cdot \nabla \mathbf{\phi}  =- \int_{\Omega_F} \rho_0 \beta(T-T_{ref})\mathbf{g} \cdot \mathbf{\phi} \quad (3)\]
+\[  \rho \int_{\Omega_F}\frac{\partial \mathbf{u}}{\partial t}\cdot \mathbf{\mathbf{v}} + \rho\int_{\Omega_F} (\mathbf{u} \cdot \nabla \mathbf{u}) \cdot \mathbf{v} +\mu \int_{\Omega_F} \nabla \mathbf{u} : \nabla \mathbf{v} - \int_{\Omega_F}   p \cdot \nabla \mathbf{v}  =- \int_{\Omega_F} \rho_0 \beta(T-T_\text{ref})\mathbf{g} \cdot \mathbf{v}\]
 </div>
 </div>
 <div class="paragraph">
@@ -957,15 +970,15 @@ We will then obtain:</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[\frac{\partial \mathbf{u}}{\partial t} (t^{ k+1}) \approx \frac{ \mathbf{u} (t^{ k+1}) - \mathbf{u}(t^k)}{ dt} \quad \forall t^k \in \mathbb{ R^+} \text{ et } k \in \mathbb{N}\]
+\[\frac{\partial \mathbf{u}}{\partial t} (t^{k+1}) \approx \frac{ \mathbf{u} (t^{ k+1}) - \mathbf{u}(t^k) }{dt} \quad \forall t^k \in \mathbb{R^+} \text{ and } k \in \mathbb{N}\]
 </div>
 </div>
 <div class="paragraph">
-<p>\(\quad\)Denoting \(\mathbf{u}^k = \mathbf{u}(t^k)\), we write the formula in  \(t^{ k+1}\), we obtain:</p>
+<p>\(\quad\)Denoting \(\mathbf{u}^k = \mathbf{u}(t^k)\), we write the formula in  \(t^{k+1}\), we obtain:</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[  \rho \int_{\Omega_F}\frac{\partial \mathbf{u}^{k+1}}{dt}\cdot \mathbf{\mathbf{\phi}} + \rho\int_{\Omega_F} (\mathbf{u}^{k+1} \cdot \nabla \mathbf{u}^{k+1}) \cdot \mathbf{\phi} +\mu \int_{\Omega_F} \nabla \mathbf{u}^{k+1} : \nabla \mathbf{\phi} - \int_{\Omega_F}   P \cdot \nabla \mathbf{\phi}  = \rho \int_{\Omega_F}\frac{\partial \mathbf{u}^{k}}{dt}\cdot \mathbf{\mathbf{\phi}} - \int_{\Omega_F} \rho_0 \beta(T-T_{ref})\mathbf{g} \cdot \mathbf{\phi}\]
+\[  \rho \int_{\Omega_F}\frac{\mathbf{u}^{k+1}}{dt}\cdot \mathbf{\mathbf{v}} + \rho\int_{\Omega_F} (\mathbf{u}^{k+1} \cdot \nabla \mathbf{u}^{k+1}) \cdot \mathbf{v} +\mu \int_{\Omega_F} \nabla \mathbf{u}^{k+1} : \nabla \mathbf{v} - \int_{\Omega_F} p \cdot \nabla \mathbf{v}  = \rho \int_{\Omega_F}\frac{\mathbf{u}^{k}}{dt}\cdot \mathbf{\mathbf{v}} - \int_{\Omega_F} \rho_0 \beta(T-T_\text{ref})\mathbf{g} \cdot \mathbf{v}\]
 </div>
 </div>
 <div class="paragraph">
@@ -973,11 +986,11 @@ We will then obtain:</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[  \rho \int_{\Omega_F}\frac{\partial \mathbf{u}^{k+1}}{dt}\cdot \mathbf{\mathbf{\phi}} + \rho\int_{\Omega_F} (\mathbf{u}^{k+1} \cdot \nabla \mathbf{u}^{k+1}) \cdot \mathbf{\phi} +\mu \int_{\Omega_F} \nabla \mathbf{u}^{k+1} : \nabla \mathbf{\phi} = \rho \int_{\Omega_F}\frac{\partial \mathbf{u}^{k}}{dt}\cdot \mathbf{\mathbf{\phi}} - \int_{\Omega_F} \rho_0 \beta(T-T_{ref})\mathbf{g} \cdot \mathbf{\phi}\]
+\[  \rho \int_{\Omega_F}\frac{\mathbf{u}^{k+1}}{dt}\cdot \mathbf{\mathbf{v}} + \rho\int_{\Omega_F} (\mathbf{u}^{k+1} \cdot \nabla \mathbf{u}^{k+1}) \cdot \mathbf{v} +\mu \int_{\Omega_F} \nabla \mathbf{u}^{k+1} : \nabla \mathbf{v} = \rho \int_{\Omega_F}\frac{\mathbf{u}^{k}}{dt}\cdot \mathbf{\mathbf{v}} - \int_{\Omega_F} \rho_0 \beta(T-T_\text{ref})\mathbf{g} \cdot \mathbf{v}\]
 </div>
 </div>
 <div class="paragraph">
-<p>\(\quad\)As the space \(\mathcal{V}\) is difficult to build, so we will use the formulation (3). We now look at what happens with equation (2). Let \(q \in L^2 (\Omega)\), we multiply (2) by \(q\):</p>
+<p>\(\quad\)As the space \(\mathcal{V}\) is difficult to build, so we will use the formulation <a href="#navier_stokes">(3)</a>. We now look at what happens with equation <a href="#navier_stokes">(3)</a>. Let \(q \in L^2 (\Omega)\), we multiply <a href="#navier_stokes">(3)</a> by \(q\):</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -985,85 +998,163 @@ We will then obtain:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>\(\quad\)We then pose 2 bilinear forms \(a : \mathcal{H}_0^1(\Omega_F)^3 \times \mathcal{H}_0^1(\Omega_F)^3 \rightarrow \mathbb{R}\) and \(b : \mathcal{H}_0^1(\Omega_F)^3 \times L^2(\Omega_F) \rightarrow \mathbb{R}\):</p>
+<p>Let \(\phi\in H^1(\Omega)\) be a test function associated to the temperature space. We multiply the equation <a href="#convective_heat_equation">(1)</a> by \(\phi\) and integrate over \(\Omega\):</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation}
+    \int_{\Omega_H}\rho C_p\left(\frac{\partial T}{\partial t} + \mathbf{u}\cdot\nabla T\right)\phi - k\nabla^2 T\phi = \int_{\Omega_H}Q\phi.
+\end{equation}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Doing another integration by parts, we obtain:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation}
+    \int_{\Omega_H} \rho C_p\left(\frac{\partial T}{\partial t} + \mathbf{u}\cdot\nabla T \right)\phi + \int_{\Omega_H} k\nabla T\cdot\nabla\phi = \int_{\partial\Omega_H} k\nabla T\cdot\boldsymbol{n}\phi + \int_{\Omega_H}Q\phi.
+\end{equation}\]
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The right hand side term is updated according to the boundary conditions of the heat problem. In the following, we will consider homogeneous Neumann boundary conditions: \(k\nabla T\cdot\boldsymbol{n} = 0\) on \(\partial\Omega_H\).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As earlier, we use the Euler implicit method for the time term:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\frac{\partial T}{\partial t} (t^{k+1}) \approx \frac{T(t^{k+1}) - T(t^k)}{dt} =: \frac{T^{k+1}-T^k}{dt} \quad \forall t^k \in \mathbb{R^+} \text{ and } k \in \mathbb{N}\]
+</div>
+</div>
+<div class="paragraph">
+<p>So:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{equation}
+    \int_{\Omega_H} \rho C_p \left(\frac{T^{k+1}}{dt} + \mathbf{u}\cdot\nabla T^{k+1}\right)\phi + \int_{\Omega_H} k\nabla T^{k+1}\cdot\nabla\phi = \int_{\Omega_H}Q\phi + \rho C_p\frac{T^k}{dt} \phi.
+\end{equation}\]
+</div>
+</div>
+<div class="paragraph">
+<p>\(\quad\)We then pose a trilinear form \(a \colon \mathcal{H}_0^1(\Omega_F)^3 \times \mathcal{H}_0^1(\Omega_F)^3 \times  \to \mathcal{H}_0^1(\Omega_F)^3 \mathbb{R}\) defined by:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[a(\mathbf{u}, \mathbf{u}, \mathbf{v})=\rho\int_{\Omega_F} ( \frac{\mathbf{u}}{dt} + \mathbf{u} \cdot \nabla \mathbf{u}) \cdot \mathbf{v} + \mu \int_{\Omega_F} \nabla \mathbf{u} : \nabla \mathbf{v}\]
+</div>
+</div>
+<div class="paragraph">
+<p>and two bilinear forms \(b \colon \mathcal{H}_0^1(\Omega_F)^3 \times L^2_0(\Omega_F) \to \mathbb{R}\) and \(d \colon \mathcal{H}^1(\Omega_F) \times \mathcal{H}_0^1(\Omega_F)^3 \times \to \mathbb{R}\) defined by:</p>
 </div>
 <div class="stemblock">
 <div class="content">
 \[\begin{align}
-a(u,\phi)= \rho \int_{\Omega_F}\frac{\partial u}{dt}\cdot \mathbf{\mathbf{\phi}} + \int_{\Omega_F} \nabla u : \nabla \mathbf{\phi}
+b(\mathbf{v}, p) &amp;= -\int_{\Omega_F} p \cdot \nabla \mathbf{v}
 \\
-b(\phi,p) =- \int_{\Omega_F} p \cdot \nabla \mathbf{\phi}
+d(T, \mathbf{v}) &amp;= -\int_{\Omega_F} \rho_0 \beta T \mathbf{g} \cdot \mathbf{v}
 \end{align}\]
 </div>
 </div>
 <div class="paragraph">
-<p>\(\quad\)And a trilinear form \(c: \mathcal{H}_0^1(\Omega_F)^3 \times \mathcal{H}_0^1(\Omega_F)^3 \times \mathcal{H}_0^1(\Omega_F)^3 \rightarrow \mathbb{R}\) :</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[c(u,u,\phi)=\int_{\Omega_F} (u \cdot \nabla u) \cdot \mathbf{\phi}\]
-</div>
-</div>
-<div class="paragraph">
-<p>\(\quad\)The variational formulation is then written as follows:</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\begin{cases}
-c(\mathbf{u}^{k+1},\mathbf{u}^{k+1},\mathbf{\phi}) + a(\mathbf{u}^{k+1},\mathbf{\phi}) + b(\mathbf{\phi},P)= l( \mathbf{u}^{k}{dt} - \rho_0 \beta(T-T_{ref}) \mathbf{g},\mathbf{\phi})  \\
-b(\mathbf{u},q)=0
-\end{cases}\]
-</div>
-</div>
-<div class="paragraph">
-<p>\(\quad\)The problem for the Stokes equation \(a(u,\phi) + b(\phi,p)\) is well settled, if the stem form: [a] is coercive on \(\mathcal {H}_0^1 (\Omega)\) and the form b satisfies the condition 'inf-sup', that is to say:</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\exists \beta &gt;0 \; \text{tel que} \quad \sup_{\phi \in \mathcal{H}_0^1(\Omega), \phi \neq 0} \frac{b(\phi,q)}{\lVert \phi \rVert_{\mathcal{H}^1}}\geq \beta \lVert q \rVert_{L^2} \quad \forall q \in L^2(\Omega)\]
-</div>
-</div>
-<div class="paragraph">
-<p>\(\quad\) We must have at least these verified hypotheses to have a solution for the Navier-Stokes equation. In our case, the pressure is then defined to a constant, to have a single pressure we can take it in the space \(L^2(\Omega)\) to average zero. But nothing assures that it&#8217;s the right space, so the pressure will be determined numerically during the simulations.</p>
-</div>
-<div class="paragraph">
-<p>\(\quad\) We first consider the Stokes problem for discretization.
-Let \(\mathcal{V}_h\) is the discretized space of the velocity and \(\mathcal{P}_h\) is the discretized space of the pressure.</p>
-</div>
-<div class="paragraph">
-<p>We pose \(N_u = dim (\mathcal {V}_h)\) and \(N_p = dim (\mathcal{P}_h)\). Let \(\{ \lambda_i \}_{i = 1, ..., N_u}\) is a base of \(\mathcal{V}_h\) and \(\{ \mu_i \}_{ i = 1, ..., N_p}\) is a base of \(\mathcal{P}_h\).</p>
+<p>and a tri-linear form \(e \colon \mathcal{H}_0^1(\Omega_F)^3 \times \mathcal{H}^1(\Omega_F) \times \mathcal{H}^1(\Omega_F) \to \mathbb{R}\) and a bilinear form \(f \colon \mathcal{H}^1(\Omega_F) \times \mathcal{H}^1(\Omega_F) \to \mathbb{r}\) defined by:</p>
 </div>
 <div class="stemblock">
 <div class="content">
 \[\begin{align}
-u_h = \sum_{i=1}^{N_u} u_i \lambda_i
+e(\mathbf{u}, T, \phi) &amp;= \rho C_p\int_{\Omega_H} \left(\frac{T}{dt} + \mathbf{u}\cdot\nabla T\right)\phi
 \\
-p_h = \sum_{j=1}^{N_p} p_j \mu_j
+f(T, \phi) &amp;= k\int_{\Omega_H} \nabla T\cdot\nabla\phi
 \end{align}\]
 </div>
 </div>
 <div class="paragraph">
-<p>\(\quad\) Returning everything into the variational formulation, we obtain the formulation discrete.</p>
+<p>\(\quad\)The variational formulation is then written as follows: find \(\mathbf{u}^{k+1} \in \mathcal{H}_0^1(\Omega_F)^3\) and \(p \in L^2(\Omega_F)\) such as:</p>
 </div>
 <div class="stemblock">
 <div class="content">
 \[\begin{cases}
-a(\sum_{i=1}^{N_u} u_i \lambda_i , \phi) + b(\phi , \sum_{j=1}^{N_p} p_j \mu_j ) = l(\phi)
-\\
-b(\sum_{i=1}^{N_u} u_i \lambda_i , q) = 0
-
+a(\mathbf{u}^{k+1},\mathbf{u}^{k+1}, \mathbf{v}) &amp;+ b(\mathbf{v},p) &amp;+ d(T, \mathbf{v}) &amp;= \ell_1( \frac{\mathbf{u}^{k}}{dt} + \rho\beta T_\text{ref}\mathbf{g}, \mathbf{v})  \\
+b(\mathbf{u}, q) &amp; &amp; &amp;= 0 \\
+e(\mathbf{u}^{k+1}, T, \phi) &amp; &amp;+ f(T, \phi) &amp;= \ell_2(T^k + Q, \phi)
 \end{cases}\]
 </div>
 </div>
 <div class="paragraph">
-<p>\(\quad\)By putting \(\phi = \lambda_i, \; \ forall i = 1, ..., N_u\) and \(q = \mu_j, \; \forall j = 1, ..., N_p\). We obtain :</p>
+<p>\(\quad\)The problem for the Stokes equation \(a(\mathbf{u}, \mathbf{v}) + b(\mathbf{v}, p)\) is well settled if the  form \(a\) is coercive on \(\mathcal {H}_0^1 (\Omega)\) and the form \(b\) satisfies the condition « inf-sup », that is to say:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\exists \beta &gt; 0 \; \text{such that} \quad \sup_{\mathbf{v} \in \mathcal{H}_0^1(\Omega), \mathbf{v} \neq 0} \frac{b(\mathbf{v}, q)}{\lVert \mathbf{v} \rVert_{\mathcal{H}^1}}\geq \beta \lVert q \rVert_{L^2} \quad \forall q \in L^2(\Omega)\]
+</div>
+</div>
+<div class="paragraph">
+<p>\(\quad\) We must have at least these verified hypotheses to have a solution for the Navier-Stokes equation. In our case, the pressure is then defined to a constant, to have a single pressure we can take it in the space \(L^2(\Omega)\) to average zero. But nothing assures that it&#8217;s the right space so that the pressure will be determined numerically during the simulations.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_discretization"><a class="anchor" href="#_discretization"></a>2.2. Discretization</h3>
+<div class="paragraph">
+<p>Let \(\mathcal{V}_h\) is the discretized space of the velocity, \(\mathcal{P}_h\) is the discretized space of the pressure and \(\mathcal{T}_h\) is the discretized space of the temperature.</p>
+</div>
+<div class="paragraph">
+<p>We set \(N_u = \mathrm{dim} (\mathcal {V}_h)\), \(N_p = \mathrm{dim} (\mathcal{P}_h)\) and \(N_T = \mathrm{dim}(\mathcal{T}_h)\). Let \(\{ \boldsymbol{\lambda}_i \}_{i = 1, ..., N_u}\), \(\{ \mu_j \}_{j = 1, ..., N_p}\) and \(\{ \theta_m \}_{ = 1, ..., N_T}\) be the bases of \(\mathcal{V}_h\), \(\mathcal{P}_h\) and \(\mathcal{T}_h\) respectively.</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+\mathbf{u}_h &amp;= \sum_{i=1}^{N_u} u_i \boldsymbol{\lambda}_i
+\\
+p_h &amp;= \sum_{j=1}^{N_p} p_j \mu_j
+\\
+T_h &amp;= \sum_{m=1}^{N_T} T_m \theta_m
+\end{align}\]
+</div>
+</div>
+<div class="paragraph">
+<p>\(\quad\) Returning everything into the variational formulation, we obtain the discrete formulation.</p>
 </div>
 <div class="stemblock">
 <div class="content">
 \[\begin{cases}
-j=1,...,N_u, \quad \sum_{i=1}^{N_u} u_i a(\lambda_i, \lambda_j) + \sum_{k=1}^{N_p} p_k b(\lambda_j, \mu_k) = l(\phi_j)
+a\left(\sum_{i=1}^{N_u} u_i \boldsymbol{\lambda}_i, \mathbf{v}\right) &amp;+ b\left(\mathbf{v}, \sum_{j=1}^{N_p} p_j \mu_j\right) &amp;+ d\left(\sum_{m=1}^{N_T} T_m \theta_m, \mathbf{v}\right) &amp;= \ell_1(\mathbf{v}) \\
+b\left(\sum_{i=1}^{N_u} u_i \boldsymbol{\lambda}_i, q\right) &amp; &amp; &amp;= 0 \\
+e\left(\sum_{i=1}^{N_u} u_i \boldsymbol{\lambda}_i, \sum_{m=1}^{N_T} T_m \theta_m, \phi\right) &amp; &amp;+ f\left(\sum_{m=1}^{N_T} T_m \theta_m, \phi\right) &amp;= \ell_2(\phi)
+\end{cases}\]
+</div>
+</div>
+<div class="paragraph">
+<p>\(\quad\)By putting \(\mathbf{v} = \boldsymbol{\lambda}_i, \; \forall i = 1, ..., N_u\) and \(q = \mu_j, \; \forall j = 1, ..., N_p\). We obtain :</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+TODO to be continued
+</td>
+</tr>
+</table>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{cases}
+\forall j \in \{1,...,N_u\}, \quad \sum_{i=1}^{N_u} u_i a(\boldsymbol{\lambda}_i, \boldsymbol{\lambda}_j) + \sum_{k=1}^{N_p} p_k b(\boldsymbol{\lambda}_j, \mu_k) = \ell_1(\boldsymbol{\lambda}_j)
 \\
-k=1,...,N_p, \quad \sum_{i=1}^{N_u} u_i b(\lambda_i, \mu_k) = 0
+\forall k \in\{1,...,N_p\}, \quad \sum_{i=1}^{N_u} u_i b(\boldsymbol{\lambda}_i, \mu_k) = 0
 \end{cases}\]
 </div>
 </div>
@@ -1072,14 +1163,14 @@ k=1,...,N_p, \quad \sum_{i=1}^{N_u} u_i b(\lambda_i, \mu_k) = 0
 </div>
 <div class="stemblock">
 <div class="content">
-\[\begin{align}
-U =(u_i)_{i=1,..,N_u}^T \quad P =(p_i)_{i=1,...,N_p}^T
+\[\begin{equation}
+U =(u_i)_{i=1,..,N_u}^T \quad p =(p_i)_{i=1,...,N_p}^T
 \\
-A = (a(\lambda_i, \lambda_j))_{1 \leq i,j \leq N_u} \quad B= (b(\lambda_i, \mu_j))_{1 \leq i \leq N_u , 1 \leq j \leq N_p}
+A = (a(\boldsymbol{\lambda}_i, \boldsymbol{\lambda}_j))_{1 \leq i,j \leq N_u} \quad B= (b(\boldsymbol{\lambda}_i, \mu_j))_{1 \leq i \leq N_u , 1 \leq j \leq N_p}
 \\
-F = (l(\phi_i))_{i=1,...,N_u}
+F = (\ell_1(\boldsymbol{\lambda}_i))_{i=1,...,N_u}
 
-\end{align}\]
+\end{equation}\]
 </div>
 </div>
 <div class="paragraph">
@@ -1087,15 +1178,15 @@ F = (l(\phi_i))_{i=1,...,N_u}
 </div>
 <div class="stemblock">
 <div class="content">
-\[\begin{pmatrix}
+\[\begin{bmatrix}
 A &amp; B^T \\
 B &amp; 0 \\
-\end{pmatrix}
+\end{bmatrix}
 
-\begin{pmatrix}
+\begin{bmatrix}
 U \\
-P \\
-\end{pmatrix}
+p \\
+\end{bmatrix}
 
 =
 
@@ -1110,6 +1201,11 @@ F \\
 </div>
 </div>
 </div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="manual.html">Heat Transfer and Fluids</a></span>
+  <span class="next"><a href="2Dbuilding_NS/index.html">2D building with natural convection</a></span>
+</nav>
 </article>
   </div>
 </main>
