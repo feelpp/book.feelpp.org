@@ -227,9 +227,9 @@ from feelpp.toolboxes.cfpdes import *
 import pandas as pd
 
 sys.argv = ["feelpp_cfpdes_poisson"]
-e = feelpp.Environment(sys.argv,
-                        opts=tb.toolboxes_options("coefficient-form-pdes", "cfpdes"),
-                        config=feelpp.globalRepository("cfpdes-poisson-homogeneous-dirichlet"))
+e = fppc.Environment(sys.argv,
+                     opts = tb.toolboxes_options("coefficient-form-pdes", "cfpdes"),
+                     config=  fppc.globalRepository("cfpdes-poisson-homogeneous-dirichlet"))
 ----
 
 Then we consider the stem:[\mathbb{R}^2] domain stem:[\Omega] defined by stem:[\Omega=\left\{x \in \mathbb{R}^2; 0 \leq x_1 \leq 1, 0 \leq x_2 \leq 1\right\}].
@@ -238,7 +238,7 @@ We consider the following mesh stem:[\mathcal{T}_h] of stem:[\Omega] with stem:[
 [[code:2]]
 [%dynamic,python]
 ----
-def generateGeometry(filename,dim=2,hsize=0.1):
+def generateGeometry(filename, dim=2, hsize=0.1):
     """create gmsh mesh
 
     Args:
@@ -246,19 +246,19 @@ def generateGeometry(filename,dim=2,hsize=0.1):
         dim (int): dimension of the mesh
         hsize (float): mesh size
     """
-    geo="""SetFactory("OpenCASCADE");
-    h={};
-    dim={};
+    geo = """SetFactory("OpenCASCADE");
+    h = {};
+    dim = {};
     """.format(hsize,dim)
-    if dim==2 :
-        geo+="""
+    if dim == 2 :
+        geo += """
         Rectangle(1) = {0, 0, 0, 1, 1, 0};
         Characteristic Length{ PointsOf{ Surface{1}; } } = h;
         Physical Curve("Gamma_D") = {1,2,3,4};
         Physical Surface("Omega") = {1};
         """
     elif dim==3 :
-        geo+="""
+        geo += """
         Box(1) = {0, 0, 0, 1, 1, 1};
         Characteristic Length{ PointsOf{ Volume{1}; } } = h;
         Physical Surface("Gamma_D") = {1,2,3,4,5,6};
@@ -268,7 +268,7 @@ def generateGeometry(filename,dim=2,hsize=0.1):
         # Write the string to the file
         f.write(geo)
 
-def getMesh(filename,hsize=0.05,dim=2,verbose=False):
+def getMesh(filename, hsize=0.05, dim=2, verbose=False):
     """create mesh
 
     Args:
@@ -279,14 +279,14 @@ def getMesh(filename,hsize=0.05,dim=2,verbose=False):
     """
     import os
     for ext in [".msh",".geo"]:
-        f=os.path.splitext(filename)[0]+ext
+        f = os.path.splitext(filename)[0]+  ext
         # print(f)
         if os.path.exists(f):
             os.remove(f)
     if verbose:
         print(f"generate mesh {filename} with hsize={hsize} and dimension={dim}")
     generateGeometry(filename=filename,dim=dim,hsize=hsize)
-    mesh = feelpp.load(feelpp.mesh(dim=dim,realdim=dim), filename, hsize)
+    mesh = fppc.load(fppc.mesh(dim=dim,realdim=dim), filename, hsize)
     return mesh
 
 # generate 2D abd 3D meshes
@@ -307,11 +307,11 @@ The {cfpdes} toolbox allows to solve the problem <<laplace-varf,problem>> with t
 [[code:3]]
 [%dynamic,python]
 ----
-def laplacian(hsize, json, dim=2,verbose=False):
+def laplacian(hsize, json, dim=2, verbose=False):
     if verbose:
         print(f"Solving the laplacian problem for hsize = {hsize}...")
     laplacian = cfpdes(dim=dim, keyword=f"cfpdes-{dim}d")
-    laplacian.setMesh(getMesh(f"omega-{dim}.geo",hsize=hsize,dim=dim,verbose=verbose))
+    laplacian.setMesh(getMesh(f"omega-{dim}.geo", hsize=hsize, dim=dim, verbose=verbose))
     laplacian.setModelProperties(json)
     laplacian.init(buildModelAlgebraicFactory=True)
     laplacian.printAndSaveInfo()
@@ -339,7 +339,6 @@ laplacian_json = lambda order,dim=2,name="u":  {
                 },
                 "coefficients":{
                     "c":"1",
-
                     "f":"8*pi*pi*sin(2*pi*x)*sin(2*pi*y):x:y" if dim==2 else "12*pi*pi*sin(2*pi*x)*sin(2*pi*y)*sin(2*pi*z):x:y:z"
                 }
             }
@@ -373,7 +372,8 @@ laplacian_json = lambda order,dim=2,name="u":  {
             "Exports":
             {
                 "fields":["all"],
-                "expr":{
+                "expr":
+                {
                     "u_exact":"sin(2*pi*x)*sin(2*pi*y):x:y" if dim==2 else "sin(2*pi*x)*sin(2*pi*y)*sin(2*pi*z):x:y:z",
                     "grad_u_exact": "{2*pi*cos(2*pi*x)*sin(2*pi*y),2*pi*sin(2*pi*x)*cos(2*pi*y)}:x:y" if dim==2 else "{2*pi*cos(2*pi*x)*sin(2*pi*y)*sin(2*pi*z),2*pi*sin(2*pi*x)*cos(2*pi*y)*sin(2*pi*z),2*pi*sin(2*pi*x)*sin(2*pi*y)*cos(2*pi*z)}:x:y:z"
                 }
@@ -403,9 +403,9 @@ for dim in [2,3]:
         import json
         f.write(json.dumps(laplacian_json(dim=dim,order=1),indent=1))
         # execute the laplacian problem using P1 basis on a mesh of the unit square  of size 0.1
-        laplacian(hsize=0.1,json=laplacian_json(order=1,dim=dim), dim=dim,verbose=True)
+        laplacian(hsize=0.1, json=laplacian_json(order=1, dim=dim), dim=dim, verbose=True)
 # execute the laplacian problem using P2 basis on a mesh of the unit square of size 0.1
-#laplacian(hsize=0.025,json=laplacian_json(dim=2,order=2),dim=2,verbose=True)
+#laplacian(hsize=0.025, json=laplacian_json(dim=2, order=2), dim=2, verbose=True)
 ----
 
 We can proceed with the visualisation of the field `u` using the following code using `pyvista`:
@@ -441,10 +441,10 @@ def myplots(dim=2, field="cfpdes.laplace.u", factor=1, cmap='viridis'):
         warped = mesh[0].warp_by_scalar(field, factor=factor)
         warped.plot(cmap=cmap, show_scalar_bar=False, show_edges=True)
     else:
-        slices = mesh.slice_orthogonal(x=0.2,y=0.4,z=.6)
+        slices = mesh.slice_orthogonal(x=0.2, y=0.4, z=.6)
         slices.plot()
 
-myplots(dim=2,factor=0.5)
+myplots(dim=2, factor=0.5)
 ----
 <1> The `xvfbwrapper` package is used to run the `pyvista` visualisation in a virtual display. This is necessary when running the code on a remote server.
 <2> The `pyvista` package is used to visualise the mesh and the field `u`.
@@ -474,32 +474,32 @@ Then we can run the following code to:
 import pandas as pd
 import numpy as np
 
-def runLaplacianPk(df,model,verbose=False):
+def runLaplacianPk(df, model, verbose=False):
     """generate the Pk case
 
     Args:
         order (int, optional): order of the basis. Defaults to 1.
     """
-    meas=dict()
-    dim,order,json=model
+    meas = dict()
+    dim, order, json = model
     for h in df['h']:
-        m=laplacian(hsize=h,json=json,dim=dim,verbose=verbose)
+        m = laplacian(hsize=h, json=json, dim=dim, verbose=verbose)
         for norm in ['L2','H1']:
             meas.setdefault(f'P{order}-Norm_laplace_{norm}-error', [])
             meas[f'P{order}-Norm_laplace_{norm}-error'].append(m.pop(f'Norm_laplace_{norm}-error'))
-    df=df.assign(**meas)
+    df = df.assign(**meas)
     for norm in ['L2','H1']:
-        df[f'P{order}-laplace_{norm}-convergence-rate']=np.log2(df[f'P{order}-Norm_laplace_{norm}-error'].shift() / df[f'P{order}-Norm_laplace_{norm}-error']) / np.log2(df['h'].shift() / df['h'])
+        df[f'P{order}-laplace_{norm}-convergence-rate'] = np.log2(df[f'P{order}-Norm_laplace_{norm}-error'].shift() / df[f'P{order}-Norm_laplace_{norm}-error']) / np.log2(df['h'].shift() / df['h'])
     return df
 
-def runConvergenceAnalysis(json,dim=2,hs=[0.1,0.05,0.025,0.0125],orders=[1,2],verbose=False):
-    df=pd.DataFrame({'h':hs})
+def runConvergenceAnalysis(json, dim=2, hs=[0.1,0.05,0.025,0.0125], orders=[1,2], verbose=False):
+    df = pd.DataFrame({'h':hs})
     for order in orders:
-        df=runLaplacianPk(df=df,model=[dim,order,json(dim=dim,order=order)],verbose=verbose)
+        df = runLaplacianPk(df=df, model=[dim,order,json(dim=dim,order=order)], verbose=verbose)
     print(df.to_markdown()) # <1>
     return df
 
-df=runConvergenceAnalysis(json=laplacian_json,dim=2,verbose=True)
+df = runConvergenceAnalysis(json=laplacian_json,dim=2,verbose=True)
 ----
 <1> The `to_markdown` function is used to display the results in a table.
 
@@ -509,7 +509,7 @@ However we do this for different mesh sizes and only in stem:[\mathbb{P}^1] to r
 [[code:4]]
 [%dynamic,python]
 ----
-df3d=runConvergenceAnalysis(json=laplacian_json,dim=3,hs=[0.1,0.05,0.03],orders=[1],verbose=True)
+df3d = runConvergenceAnalysis(json=laplacian_json, dim=3, hs=[0.1,0.05,0.03], orders=[1], verbose=True)
 ----
 
 Again, we observe that the proper convergence rates are obtained.
@@ -530,7 +530,7 @@ from plotly.subplots import make_subplots
 import itertools
 
 def plot_convergence(df,dim,orders=[1,2]):
-    fig=px.line(df, x="h", y=[f'P{order}-Norm_laplace_{norm}-error' for order,norm in list(itertools.product(orders,['L2','H1']))])
+    fig = px.line(df, x="h", y=[f'P{order}-Norm_laplace_{norm}-error' for order,norm in list(itertools.product(orders,['L2','H1']))])
     fig.update_xaxes(title_text="h",type="log")
     fig.update_yaxes(title_text="Error",type="log")
     for order,norm in list(itertools.product(orders,['L2','H1'])):
@@ -551,7 +551,7 @@ and now we plot the convergence rates in stem:[L^2] and stem:[H^1] norms for the
 [[code:5]]
 [%dynamic%raw,python]
 ----
-fig=plot_convergence(df3d,dim=3,orders=[1])
+fig = plot_convergence(df3d, dim=3, orders=[1])
 fig.show()
 ----
 
@@ -601,7 +601,7 @@ By the Lax-Milgram lemma, this problem is well posed.
 We are interested in a conformal approximation of <<laplace-dir,the problem>> by Lagrange finite elements.
 We use the discrete framework described previously.
 We suppose that the data stem:[g] is regular enough to admit a lifting stem:[u_g] in stem:[\mathcal{C}^0(\bar{\Omega}) \cap H^1(\Omega)].
-We denote stem:[\mathcal{I}_h^{\mathrm{Lag}}] the interpolation operator associated with the mesh stem:[\mathcal{T}_h] and the finite Lagrangian element of reference stem:[\widehat{K}, \widehat{P}, \widehat{\Sigma}}].
+We denote stem:[\mathcal{I}_h^{\mathrm{Lag}}] the interpolation operator associated with the mesh stem:[\mathcal{T}_h] and the finite Lagrangian element of reference stem:[\widehat{K}], stem:[\widehat{P}], stem:[\widehat{\Sigma}].
 Recall that stem:[P_{\mathrm{c}, h}^k] denotes the stem:[H^1]-conformal space based on this finite element and that stem:[V_h] is the stem:[H_0^1]-conformal approximation space defined in (5.9).
 
 Let stem:[N=\operatorname{dim} P_{\mathrm{c}, h}^k] be given.
@@ -684,8 +684,8 @@ the boundary condition stem:[g=0] is replace by stem:[h=u] on stem:[\partial \Om
 [%dynamic, python]
 ----
 # get the laplacian json model
-def laplacian_g_json(dim,order=1):
-    j=laplacian_json(dim=dim,order=order)
+def laplacian_g_json(dim, order=1):
+    j = laplacian_json(dim=dim, order=order)
     if dim == 2:
         j['Models']['laplace']['setup']['coefficients']['f']=f'8*(pi^2)*sin(2*pi*x)*cos(2*pi*y):x:y'
         j['BoundaryConditions']['laplace']['Dirichlet']['g']={
@@ -705,10 +705,10 @@ def laplacian_g_json(dim,order=1):
     return j
 
 # in 2D
-laplacian(hsize=0.1,json=laplacian_g_json(dim=2,order=1),dim=2)
+laplacian(hsize=0.1, json=laplacian_g_json(dim=2,order=1), dim=2)
 
 # in 3D
-laplacian(hsize=0.1,json=laplacian_g_json(dim=3,order=1),dim=3)
+laplacian(hsize=0.1, json=laplacian_g_json(dim=3,order=1), dim=3)
 ----
 
 We can then plot the 2D results
@@ -732,7 +732,7 @@ We now run the convergence analysis and verify the convergence rate expected fro
 [%dynamic,python]
 ----
 # run the 2D convergence analysis
-df=runConvergenceAnalysis(json=laplacian_g_json,dim=2,verbose=True)
+df = runConvergenceAnalysis(json=laplacian_g_json, dim=2, verbose=True)
 ----
 
 We now run the convergence analysis and verify the convergence rate expected from <<thm:1>> in 2D.
@@ -740,7 +740,7 @@ We now run the convergence analysis and verify the convergence rate expected fro
 [%dynamic,python]
 ----
 # run the 2D convergence analysis
-df3d=runConvergenceAnalysis(json=laplacian_g_json,dim=3,hs=[0.1,0.05,0.03], orders=[1], verbose=True)
+df3d = runConvergenceAnalysis(json=laplacian_g_json, dim=3, hs=[0.1,0.05,0.03], orders=[1], verbose=True)
 ----
 
 
@@ -926,7 +926,7 @@ An alternative way to obtain the solution of <<laplace-N-0-approx-sys,linear sys
 
 ==== Example
 
-Consider the <<laplace-N-0,problem>> with stem:[\Omega=\mathbb{R}^2] and the exact solution stem:[u(x, y)=\sin(2*\pi*x) \sin(2*\pi*y)] in 2D and stem:[u(x, y, z)=\sin(2*\pi*x) \sin(2*\pi*y) \sin(2*\pi*z)] in 3D.
+Consider the <<laplace-N-0,problem>> with stem:[\Omega=\mathbb{R}^2] and the exact solution stem:[u(x, y)=\sin(2\pi x) \sin(2\pi y)] in 2D and stem:[u(x, y, z)=\sin(2 \pi x) \sin(2 \pi y) \sin(2\pi z)] in 3D.
 
 The right hand side stem:[f] and the boundary condition stem:[g_{\mathrm{N}}] are computed using the exact solution stem:[u] in stem:[\mathbb{R}^d, d=2,3].
 We have
@@ -948,7 +948,7 @@ The code below computes the solution of the <<laplace-N-0,problem>> using the fi
 ----
 # get the laplacian json model
 def laplacian_gN_json(dim,order=1):
-    j=laplacian_json(dim=dim,order=order)
+    j = laplacian_json(dim=dim, order=order)
     if dim == 2:
         j['Models']['laplace']['setup']['coefficients']['f']=f'8*(pi^2)*sin(2*pi*x)*sin(2*pi*y)+sin(2*pi*x)*sin(2*pi*y):x:y'
         j['Models']['laplace']['setup']['coefficients']['a']='1' # set \lambda=1
@@ -963,7 +963,7 @@ def laplacian_gN_json(dim,order=1):
     return j
 
 # in 2D
-laplacian(hsize=0.1,json=laplacian_gN_json(dim=2,order=1),dim=2)
+laplacian(hsize=0.1, json=laplacian_gN_json(dim=2, order=1), dim=2)
 ----
 
 
@@ -972,7 +972,7 @@ We now run the convergence analysis and verify the convergence rate expected fro
 [%dynamic,python]
 ----
 # run the 2D convergence analysis
-df=runConvergenceAnalysis(json=laplacian_gN_json,dim=2,verbose=True)
+df = runConvergenceAnalysis(json=laplacian_gN_json, dim=2, verbose=True)
 ----
 
 
@@ -1016,7 +1016,7 @@ The well-posedness of <<laplace-R-weak,weak problem>> results from the coercivit
 [stem]
 ++++
 \begin{equation*}
-\forall v \in H^1(\Omega), \quad\|v\|_{0, \Omega} \leq \rho_{\Omega} \left(\|nabla v|_{0, \Omega}+\|v\|_{0, \partial \Omega}\right) .
+\forall v \in H^1(\Omega), \quad\|v\|_{0, \Omega} \leq \rho_{\Omega} \left(\|\nabla v|_{0, \Omega}+\|v\|_{0, \partial \Omega}\right) .
 \end{equation*}
 ++++
 Starting from the initial discrete framework, we are interested in an approximation  by Lagrange finite elements.
@@ -1026,7 +1026,7 @@ We consider the following approximated problem:
 ++++
 \begin{equation*}
 \left\{\begin{array}{l}
-\text { Find } u_h \in P_{mathrm{c}, h}^k \text { such that } \\
+\text { Find } u_h \in P_{\mathrm{c}, h}^k \text { such that } \\
 a_{\mathrm{R}}\left(u_h, w_h\right)=f_{\mathrm{N}}\left(w_h\right), \quad \forall w_h \in P_{\mathrm{c}, h}^k,
 \end{array}\right.
 \end{equation*}
@@ -1048,7 +1048,7 @@ We have
 \begin{equation*}
 \begin{aligned}
 f=-\Delta u &=2 d \pi^2 sin(2\pi x)sin(2\pi y), \\
-\nabla u = { 2\pi cos(2\pi x)sin(2\pi y), 2\pi sin(2\pi x)sin(2\pi y) } \\
+\nabla u = \left[ 2\pi cos(2\pi x)sin(2\pi y), 2\pi sin(2\pi x)sin(2\pi y) \right] \\
 g_R &= +\gamma_R u+\nabla u \cdot n = \gamma_R sin(2\pi x)sin(2\pi y)+2\pi \cos(2\pi x)\sin(2\pi y) n_x +2\pi \sin(2\pi x) \cos(2\pi y) n_y.
 \end{aligned}
 \end{equation*}
@@ -1059,8 +1059,8 @@ The json specifications now read as follows:
 [%dynamic,python]
 ----
 # get the laplacian json model
-def laplacian_gR_json(dim,order=1):
-    j=laplacian_json(dim=dim,order=order)
+def laplacian_gR_json(dim, order=1):
+    j = laplacian_json(dim=dim, order=order)
     if dim == 2:
         j['Parameters'] = { 'gammaR': 1.0 }
         j['BoundaryConditions']['laplace'].pop('Dirichlet')
@@ -1073,7 +1073,7 @@ def laplacian_gR_json(dim,order=1):
     return j
 
 # in 2D
-laplacian(hsize=0.1,json=laplacian_gR_json(dim=2,order=1),dim=2)
+laplacian(hsize=0.1, json=laplacian_gR_json(dim=2, order=1), dim=2)
 ----
 
 We can now verify the convergence properties
@@ -1081,13 +1081,13 @@ We can now verify the convergence properties
 [%dynamic,python]
 ----
 # run the 2D convergence analysis
-df=runConvergenceAnalysis(json=laplacian_gR_json,dim=2,verbose=True)
+df=runConvergenceAnalysis(json=laplacian_gR_json, dim=2, verbose=True)
 ----
 
 === Advection-Diffusion-Reaction Equation
 
 Consider a differential operator of the form
-[[laplace-ADR-op]]]
+[[laplace-ADR-op]]
 [stem]
 ++++
 \begin{equation*}
@@ -1148,7 +1148,7 @@ a_{\sigma \beta \mu}(v, w)=\int_{\Omega} \nabla w \cdot \sigma \cdot \nabla v+w(
 ++++
 We pose stem:[p=\inf {\operatorname{ess}}{ }_{x \in \Omega}\left(\mu-\frac{1}{2} \nabla \cdot \beta\right)] and we recall that stem:[\ell_{\Omega}] is the constant intervening in the Poincaré inequality above.
 
-NOTE: For a function stem:[f \in L^{\infty}(\Omega), \inf \operatorname{ess}_{x \in \Omega} f(x)=\sup \left\{ M \in \mathbb{R}_{+}; f(x) \geq M \text{ almost\ everywhere\ in\ } \Omega\right\}].
+NOTE: For a function stem:[f \in L^{\infty}(\Omega), \inf \operatorname{ess}_{x \in \Omega} f(x)=\sup \left\{ M \in \mathbb{R}_{+}; f(x) \geq M \text{ almost everywhere in } \Omega\right\}].
 
 Then, we show that under the condition
 [[laplace-ADR-condition]]
@@ -1173,24 +1173,24 @@ The json specifications now read as follows:
 [%dynamic,python]
 ----
 # get the laplacian json model
-def adr_json(dim,order=1,c=1):
-    j=laplacian_json(dim=dim,order=order,name="u")
+def adr_json(dim, order=1, c=1):
+    j = laplacian_json(dim=dim, order=order, name="u")
     if dim == 2:
         j['Models']['laplace']['setup']['coefficients']['f']='physics_laplace_laplace_c*8*(pi^2)*sin(2*pi*x)*sin(2*pi*y)+physics_laplace_laplace_beta_0*2*pi*cos(2*pi*x)*sin(2*pi*y)+physics_laplace_laplace_beta_1*2*pi*sin(2*pi*x)*cos(2*pi*y)+physics_laplace_laplace_a*sin(2*pi*x)*sin(2*pi*y):x:y:physics_laplace_laplace_beta_0:physics_laplace_laplace_beta_1:physics_laplace_laplace_c:physics_laplace_laplace_a'
         j['Models']['laplace']['setup']['coefficients']['beta']='{1,1}'
         j['Models']['laplace']['setup']['coefficients']['a']='1'
         j['Models']['laplace']['setup']['coefficients']['c']=c
     return j
-print(adr_json(dim=2,order=1,c=1e-7))
+print(adr_json(dim=2, order=1, c=1e-7))
 # in 2D
-laplacian(hsize=0.1,json=adr_json(dim=2,order=1,c=1),dim=2)
+laplacian(hsize=0.1, json=adr_json(dim=2, order=1, c=1), dim=2)
 ----
 
 We can plot the solution:
 
 [%dynamic,python]
 ----
-myplots(dim=2,field="cfpdes.laplace.u")
+myplots(dim=2, field="cfpdes.laplace.u")
 ----
 
 and obtain the convergence rates as follows:
@@ -1198,7 +1198,7 @@ and obtain the convergence rates as follows:
 [%dynamic,python]
 ----
 # run the 2D convergence analysis with c=1
-df=runConvergenceAnalysis(json=lambda dim,order: adr_json(dim=dim,order=order,c=1),dim=2,verbose=True)
+df = runConvergenceAnalysis(json=lambda dim, order: adr_json(dim=dim,order=order,c=1), dim=2, verbose=True)
 ----
 
 [appendix]

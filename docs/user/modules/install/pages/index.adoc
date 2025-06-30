@@ -1,7 +1,6 @@
 :feelpp: Feel++
 = Get {feelpp}
 
-
 {feelpp} can be installed on Windows 10, Debian/Ubuntu systems.
 
 The main channel is called `latest`.
@@ -64,6 +63,7 @@ The supported systems are described below
 
 include::partial$install-deb.adoc[]
 --
+
 Debian::
 +
 --
@@ -76,11 +76,9 @@ The supported systems are described below
 .Table {feelpp} Debian distributions
 |===
 |Distribution | Release | Version | Supported Channels | Comment
-
-|debian |bookworm | 12 | latest | LTS
-|debian |testing| - | latest | testing
-|debian |sid| - | latest | unstable
-
+|debian | bookworm | 12 | latest | LTS
+|debian | testing | - | latest | testing
+|debian | sid | - | latest | unstable
 |===
 
 [discrete]
@@ -103,41 +101,42 @@ par::[debian,testing,latest]
 
 par::[debian,sid,latest]
 
-
 include::partial$install-deb.adoc[]
 --
+
 // Fedora::
 // +
 // --
-// 
-// {feelpp} is not yet packaged for Fedora. 
-// However 
-//  
+//
+// {feelpp} is not yet packaged for Fedora.
+// However
+//
 // - [x] it is possible to compile it from source for Fedora:36 and Fedora:37
 // - [x] a docker image containing {feelpp} development environment is available for both systems
-// 
-// .Fedora 36(stable) 
-//  $ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-36 
-// 
-// or 
-// 
+//
+// .Fedora 36(stable)
+//  $ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-36
+//
+// or
+//
 // .Fedora 37(beta)
-//  $ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-37 
-// 
+//  $ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-37
+//
 // see xref:compile.adoc[how to build {feelpp} from sources].
-// 
+//
 // --
 Windows 10::
 +
 --
 To use {feelpp} on Windows 10, follow these steps:
 
- * [x] install https://docs.microsoft.com/fr-fr/windows/wsl/install-win10:[WSL (Windows Subsystem for Linux)]
+ * [x] install https://docs.microsoft.com/fr-fr/windows/wsl/install-win10[WSL (Windows Subsystem for Linux)]
  * [x] install https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions[Ubuntu jammy(22.04) Ubuntu focal (20.04) or Debian bookworm(12)]
  * [x] follow the corresponding Ubuntu or Debian {feelpp} installation steps
 
 include::partial$install-deb.adoc[]
 --
+
 Spack::
 +
 --
@@ -157,7 +156,7 @@ source <path to spack>/spack/share/spack/setup-env.sh
 ----
 
 [discrete]
-=== Add {feelpp} Spack Mirror 
+=== Add {feelpp} Spack Mirror
 
 First set the {feelpp} mirror.
 
@@ -183,7 +182,7 @@ Add `spack.numpex` as a spack repository
 ----
 git clone https://github.com/numpex/spack.numpex <path to spack.numpex>/spack.numpex
 spack repo add <path to spack.numpex>/spack.numpex
-# check the repo 
+# check the repo
 spack repo list
 ----
 
@@ -218,8 +217,8 @@ Try get some info about {feelpp} using the command `feelpp_info`
 ----
 feelpp_info
 ----
-
 --
+
 Docker::
 +
 --
@@ -228,27 +227,28 @@ The image is based on the LTS distribution Ubuntu Noble 24.04.
 
 To download and execute it, follow the steps described below
 
-.Download and run  the feelpp docker image: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
+.Download and run the feelpp docker image: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
 ----
 docker pull ghcr.io/feelpp/feelpp:noble
 docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:noble
 ----
 
-.Download and run  the feelpp docker image including the development kit: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
+.Download and run the feelpp docker image including the development kit: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
 ----
 docker pull ghcr.io/feelpp/feelpp-dev:noble
 docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-dev:noble
 ----
 
 [NOTE]
-----
+====
 These images are also available for
 
 * Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:jammy
 * Ubuntu 20.04 (focal): ghcr.io/feelpp/feelpp:focal
 * Debian 12 (bookworm): ghcr.io/feelpp/feelpp:bookworm
-----
+====
 --
+
 Apptainer::
 +
 --
@@ -265,21 +265,19 @@ apptainer inspect feelpp-noble.sif
 apptainer run feelpp-noble.sif feelpp_toolbox_fluid --version
 ----
 
-
 [NOTE]
-----
+====
 These images are also available for
 
 * Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-jammy-sif
-
-----
+====
 --
 
 // MacOSX::
 // +
 // --
-// 
-// * [x] install https://brew.sh/[Homebrew] 
+//
+// * [x] install https://brew.sh/[Homebrew]
 // * [x] install {feelpp} Homebrew tap
 // [source,bash]
 // ----
@@ -290,8 +288,6 @@ These images are also available for
 // ----
 // brew install feelpp
 // ----
-// 
+//
 // --
-
 ====
-

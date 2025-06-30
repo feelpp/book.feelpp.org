@@ -9,7 +9,7 @@
 {feelpp} toolboxes are availabe as python modules. The following toolboxes are available:
 
 |===
-|*Toolbox* |*Python Module* 
+|*Toolbox* |*Python Module*
 |coefficient form |feelpp.toolboxes.cfpdes
 |fluid mechanics|feelpp.toolboxes.fluid
 |heat transfert |feelpp.toolboxes.heat
@@ -32,7 +32,7 @@ import feelpp.core as fppc
 from feelpp.toolboxes.core import *
 from feelpp.toolboxes.heat import *
 
-app = feelpp.Environment(["myapp"], opts= toolboxes_options("heat"),config=feelpp.localRepository("")) # <1>
+app = fppc.Environment(["myapp"], opts=toolboxes_options("heat"), config=fppc.localRepository("")) # <1>
 ----
 <1> The first argument is the name of the application, the second argument is the directory below `feelppdb` that will be created in the current directory. The directory will contain the results of the simulation.
 
@@ -40,13 +40,15 @@ app = feelpp.Environment(["myapp"], opts= toolboxes_options("heat"),config=feelp
 Then we continue with the definition of the model and the heat toolbox.
 [source,python]
 ----
-case=feelpp.download( "github:{repo:feelpp,path:toolboxes/heat/cases/Building/ThermalBridgesENISO10211/", worldComm=app.worldCommPtr() )[0] # <1>
-casedfile=case+'/case2.cfg' 
-feelpp.Environment.setConfigFile(casefile) # <2>
+path = "toolboxes/heat/cases/Building/ThermalBridgesENISO10211"
+casefile = fppc.download( f"github:{{repo:feelpp,path:{path}/case2.cfg}}", worldComm=fppc.Environment.worldCommPtr() )[0] # <1>
+jsonfile = fppc.download( f"github:{{repo:feelpp,path:{path}/case2.json}}", worldComm=fppc.Environment.worldCommPtr() )[0]
+geofile = fppc.download( f"github:{{repo:feelpp,path:{path}/case2.geo}}", worldComm=fppc.Environment.worldCommPtr() )[0]
+fppc.Environment.setConfigFile(casefile) # <2>
 f = heat(dim=2, order=1) # <3>
 if not f.isStationary(): # <4>
     f.setTimeFinal(10*f.timeStep())
-[ok,meas]=simulate(f) # <5>
+[ok,meas] = simulate(f) # <5>
 f.checkResults() # <6>
 ----
 <1> Download the case from the feelpp repository
@@ -135,37 +137,37 @@ else:
 ====
 ----
    Normal_Heat_Flux_bottom  Points_pointA_field_temperature  \
-0                 9.317351                         7.067795   
+0                 9.317351                         7.067795
 
    Points_pointB_field_temperature  Points_pointC_field_temperature  \
-0                         0.761281                         7.900707   
+0                         0.761281                         7.900707
 
    Points_pointD_field_temperature  Points_pointE_field_temperature  \
-0                         6.278234                         0.827485   
+0                         6.278234                         0.827485
 
    Points_pointF_field_temperature  Points_pointG_field_temperature  \
-0                        16.408094                        16.334492   
+0                        16.408094                        16.334492
 
    Points_pointH_field_temperature  Points_pointI_field_temperature  \
-0                        16.766039                        18.333379   
+0                        16.766039                        18.333379
 
    Statistics_CheckGeneric_Heat-Flux_bottom_integrate  \
-0                                            0.17758    
+0                                            0.17758
 
    Statistics_CheckGeneric_Heat-Flux_top_integrate  \
-0                                         0.002046   
+0                                         0.002046
 
    Statistics_Check_Heat-Flux_bottom_integrate  \
-0                                      0.17758   
+0                                      0.17758
 
    Statistics_Check_Heat-Flux_top_integrate  \
-0                                  0.002046   
+0                                  0.002046
 
    Statistics_Inward-Heat-Flux_V2_bottom_integrate  \
-0                                         9.317351   
+0                                         9.317351
 
-   Statistics_Inward-Heat-Flux_bottom_integrate  
-0                                      9.494932  
+   Statistics_Inward-Heat-Flux_bottom_integrate
+0                                      9.494932
 ----
 ====
 

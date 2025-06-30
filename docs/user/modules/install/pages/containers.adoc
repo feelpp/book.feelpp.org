@@ -90,7 +90,7 @@ HPC infrastructure and address security issues in multi-user environments.
 It allows users to run applications in a portable and reproducible environment,
 making it ideal for scientific and engineering workflows.
 
-We now pull/push SIF images from/to GitHub Container Registry (ghcr.io). 
+We now pull/push SIF images from/to GitHub Container Registry (ghcr.io).
 Feel++ images can be found at the following link:
 https://github.com/feelpp/feelpp/pkgs/container/feelpp[> Feel++ Packages].
 
@@ -107,20 +107,20 @@ apptainer run feelpp-noble.sif feelpp_toolbox_fluid --version
 ----
 
 [NOTE]
-----
+====
 These images are also available for:
 
 * Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-jammy-sif
 * Ubuntu 20.04 (focal): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-focal-sif
 * Debian 12 (bookworm): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-bookworm-sif
-----
+====
 
 Apptainer works in a similar way to Docker. For example, you can
 download one of the images available on ghcr.io and run it interactively or execute specific commands within the container.
 
 Once downloaded, you can enter the container interactively with the command line:
 
-.Run the container interactively 
+.Run the container interactively
 [source,bash]
 ----
 apptainer shell feelpp-noble.sif
@@ -133,6 +133,6 @@ Or run a specific command:
 apptainer run feelpp-noble.sif feelpp_toolbox_fluid --version
 ----
 
-TIP: You can retrieve images from the GitHub Container Registry directly using 
+TIP: You can retrieve images from the GitHub Container Registry directly using
 `apptainer pull -F feelpp-noble.sif oras://ghcr.io/feelpp/feelpp:v0.111.0-preview.10-noble-sif`.
 Make sure to check for the latest versions and tags.
