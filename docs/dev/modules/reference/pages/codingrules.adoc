@@ -356,13 +356,16 @@ std::string msg = fmt::format("rank {} of {}", rank, size);
 fmt::println("{}", msg);
 ----
 
-*Important in parallel/HPC codes:*  
-- Direct printing (`std::println`, `fmt::println`) should be **restricted** (e.g., only master rank writes) to avoid flooding the terminal.  
-- Logging (`LOG(INFO) << fmt::format(...)`) is **MPI-aware and safe** in Feel++:  
-  - In master-only mode → only rank 0 produces output.  
-  - In all-ranks mode → every process logs (useful for debugging).  
-  - In selective mode → fine-grained control.  
+[IMPORTANT] 
+====
+In parallel/HPC codes:
 
+* Direct printing (`std::println`, `fmt::println`) should be **restricted** (e.g., only master rank writes) to avoid flooding the terminal.  
+* Logging (`LOG(INFO) << fmt::format(...)`) is **MPI-aware and safe** in Feel++:  
+** In master-only mode → only rank 0 produces output.  
+** In all-ranks mode → every process logs (useful for debugging).  
+** In selective mode → fine-grained control.  
+====
 [source,cpp]
 ----
 // Logging with {fmt} and glog (preferred in Feel++)
