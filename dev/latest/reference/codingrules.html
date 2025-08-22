@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Feel++ Coding Styles :: Feel++ Docs</title>
+    <title>Feel Coding Styles (C20/23 + HPC) :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/dev/latest/reference/codingrules.html">
     <link rel="prev" href="fileformats.html">
     <meta name="generator" content="Antora 3.1.9">
@@ -444,597 +444,218 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Feel++ Coding Styles</h1>
+<h1 class="page">Feel Coding Styles (C20/23 + HPC)</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This is an overview of the coding conventions we use when writing Feel++
-code.</p>
+<p>This document is a <strong>teaching-first</strong> style guide for Feel++.
+Every rule has a short explanation and a tiny C++ example.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_clang_format"><a class="anchor" href="#_clang_format"></a>1. Clang Format</h2>
+<h2 id="_part_i_general_coding_naming"><a class="anchor" href="#_part_i_general_coding_naming"></a>1. Part I — General Coding &amp; Naming</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p><code>clang-format</code> is a powerful tool to reformat your code according to
-rules defined in a <code>.clang-format</code> file at the toplevel directory of
-your software.</p>
-</div>
-<div class="paragraph">
-<p>Feel++ has such a file and define the indentation, space and breaks
-rules defined later on.</p>
-</div>
-<div class="paragraph">
-<p>For <code>clang-format</code> to function properly, follow the <a href="#comments">Comments</a> rules.</p>
-</div>
-<div class="paragraph">
-<p>To apply Feel++ rules on a file <code>a.cpp</code> in a Feel++ sub-directory, type</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>clang-format a.cpp</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>to dump the results of the reformating to the standard output
-or type</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>clang-format -i a.cpp</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>which will replace <code>a.cpp</code> by the reformated file.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-be careful when reformating, make sure nobody is working on that file, to avoid creating possibly massive conflicts with the persons currently modifying the same code when they get merged.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="headers"><a class="anchor" href="#headers"></a>2. Header files and multiple inclusions</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To avoid multiple inclusions, wrap every header files using the following technique</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// say we have myheader.hpp
-#if !defined(FEELPP_MYHEADER_HPP)
-#define FEELPP_MYHEADER_HPP 1
-
-// your header here...
-
-#endif // FEELPP_MYHEADER_HPP</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>more details
-<a href="http://en.wikipedia.org/wiki/Include_guard#Double_inclusion">here</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_naming_convention"><a class="anchor" href="#_naming_convention"></a>3. Naming Convention</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In Feel++, we basically follow the same naming conventions as in Qt and
-KDE.</p>
-</div>
-<div class="paragraph">
-<p>Class names starts with a capital. The rest is in camel case. Function
-names starts with a lower case, but the first letter of each successive
-word is capitalized.</p>
-</div>
-<div class="paragraph">
-<p>Functions and classes should be in the <code>Feel</code> namespace.</p>
-</div>
-<div class="paragraph">
-<p>The prefix <code>set</code> is used for setters, but the prefix <code>get</code> is not used
-for accessors. Accessors are simply named with the name of the property
-they access. The exception is for accessors of a boolean which may start
-with the prefix <code>is</code>.</p>
-</div>
-<div class="paragraph">
-<p>Acronyms are lowercased too. Example: Url instead of URL and
-isFemEnabled() instead of isFEMEnabled()</p>
-</div>
-<div class="paragraph">
-<p>Accessors should usually be const.</p>
-</div>
-<div class="paragraph">
-<p>This example shows some possible functions names</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">class A
-{
-public:
-    void setMatrix(const Matrix&amp; c);
-    Matrix matrix() const;
-    void setDiagonal(bool b);
-    bool isDiagonal() const;
-};</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="reserved-identifiers"><a class="anchor" href="#reserved-identifiers"></a>4. Reserved identifiers</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_formatting_tools"><a class="anchor" href="#_formatting_tools"></a>1.1. Formatting &amp; Tools</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Do not use underscores to start identifiers, see
-<a href="http://stackoverflow.com/questions/228783/what-are-the-rules-about-using-an-underscore-in-a-c-identifier/228794#228797">StackOverFlow
-comments here</a> for the reasons</p>
+<p>Use <code>.clang-format</code> at the repo root; <strong>Allman</strong> braces, <strong>4 spaces</strong>, <strong>column ≤ 100</strong>.</p>
+</li>
+<li>
+<p>Run <code>git clang-format</code> before committing. Style violations fail CI.</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_indentation"><a class="anchor" href="#_indentation"></a>5. Indentation</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>4 spaces are used for indentation but not in namespace</p>
-</li>
-<li>
-<p>Spaces, not tabs!</p>
-</li>
-<li>
-<p>Suggestion: use emacs and [<a href="http://emacswiki.org/emacs/dirvars.el" class="bare">emacswiki.org/emacs/dirvars.el</a>
-dirvars.el], here is the content of <code>.emacs-dirvars</code> in top Feel++
-directory</p>
-<div class="listingblock">
-<div class="content">
-<pre>indent-tabs-mode: nil
-tab-width: 4
-c-basic-offset: 4
-evaluate: (c-set-offset 'innamespace '0)
-show-trailing-whitespace: t
-indicate-empty-lines: t
-evaluate: (add-hook 'write-file-hooks 'delete-trailing-whitespace)</pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">namespace Feel
-{
-// no space indentation in namespace
-Class A
-{
-    // 4 spaces indentation
-    A() {};
-    void f();
-};
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="comments"><a class="anchor" href="#comments"></a>6. Comments</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Use C++ style comment <code>//</code> rather than <code>/* */</code>. It uses less
-characters but also it is easier to reflow using clang format.</p>
+<p><strong>Example (auto-formatted spacing &amp; braces):</strong></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">/* Wrong
-  the doc
-  */
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
+if(ok){doWork();}
 
 // Correct
-// the doc</code></pre>
+if (ok)
+{
+    doWork();
+}</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_doxygen"><a class="anchor" href="#_doxygen"></a>6.1. Doxygen</h3>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<a href="http://www.doxygen.org">Doxygen</a> is the tool to document Feel++ and create a reference manual
-</td>
-</tr>
-</table>
+<h3 id="headers"><a class="anchor" href="#headers"></a>1.2. Headers &amp; Include Guards</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Every header uses a <strong>FEELPP-style include guard</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// feel/mesh/my_header.hpp
+#if !defined(FEELPP_MESH_MY_HEADER_HPP)
+#define FEELPP_MESH_MY_HEADER_HPP 1
+
+// header content
+
+#endif // FEELPP_MESH_MY_HEADER_HPP</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Use <code>//!</code> to comment function, variables, classes rather than <code>/**
-*/</code>, it allows to reflow comments using clang format.</p>
+<p><strong>Include order (in .cpp):</strong> own header, C std, 3rd-party, Feel headers.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">//!
-//! @brief the class
-//! @author me &lt;me@email&gt;
-//!
-class TheClass
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Correct
+#include "feel/mesh/my_header.hpp"
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;boost/mpi3/communicator.hpp&gt;
+#include "feel/mesh/mesh.hpp"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_namespaces"><a class="anchor" href="#_namespaces"></a>1.3. Namespaces</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Put code in <code>Feel</code> (and sub-namespaces). No extra indent inside namespaces.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">namespace Feel::mesh
+{
+class A
 {
 public:
-  //! constructor
-  TheClass() {}
-
-private:
-  //! member
-  int M_member;
-  //! another member
-  int member_;
+    A() = default;
 };
-
-//! the function
-void thefunction() {}</code></pre>
-</div>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Feel++ used to promote <code>/** */</code> but this is no longer the case.
-The comment style will be updated progressively to match the new style using <code>//!</code>
-</td>
-</tr>
-</table>
+} // namespace Feel::mesh</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="declvariables"><a class="anchor" href="#declvariables"></a>7. Declaring variables</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_naming_conventions"><a class="anchor" href="#_naming_conventions"></a>1.4. Naming Conventions</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Declare each variable on a separate line</p>
+<p><strong>Classes/structs:</strong> PascalCase (<code>MeshAdaptation</code>)</p>
 </li>
 <li>
-<p>Avoid short (e.g. <code>a</code>, <code>rbarr</code>, <code>nughdeget</code>) names whenever possible</p>
+<p><strong>Functions/variables:</strong> camelCase (<code>getValue</code>, <code>counter</code>)</p>
 </li>
 <li>
-<p>Single character variable names are only okay for counters and
-temporaries, where the purpose of the variable is obvious</p>
+<p><strong>Accessors:</strong> property name (e.g., <code>matrix()</code>); bool as <code>isXxx()</code>/<code>hasXxx()</code></p>
 </li>
 <li>
-<p>Wait when declaring a variable until it is needed</p>
+<p><strong>Acronyms</strong> lowercased inside names (e.g., <code>isFemEnabled()</code>)</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
-int a, b;
-char __c, __d;
+class meshadapter {};
+int Counter;
+bool isFEMEnabled();
 
 // Correct
-int height;
-int width;
-char __nameOfThis;
-char __nameOfThat;</code></pre>
+class MeshAdapter {};
+int counter;
+bool isFemEnabled();</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_data_members_statics"><a class="anchor" href="#_data_members_statics"></a>1.5. Data Members &amp; Statics</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Variables and functions start with a lower-case letter. Each consecutive word in a variable&#8217;s or function&#8217;s name starts with an upper-case letter</p>
+<p><strong>Official</strong>: non-static members use <code>M_</code> (e.g., <code>int M_value;</code>).</p>
 </li>
 <li>
-<p>Avoid abbreviations</p>
+<p><strong>Statics</strong>: <code>S_</code> (e.g., <code>static inline int S_counter = 0;</code>).</p>
+</li>
+<li>
+<p>A trailing underscore (e.g., <code>value_</code>) is <strong>tolerated</strong>, but <strong><code>M_</code> is the rule</strong> for new code.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Tolerated
+class Foo { int value_; };
+
+// Preferred (official)
+class Foo { int M_value = 0; };
+
+// Static
+class Bar { static inline int S_instances = 0; };</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="reserved-identifiers"><a class="anchor" href="#reserved-identifiers"></a>1.6. Reserved Identifiers</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Don’t start identifiers with <code><em></code> and never use <code>_</em></code>.</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
-short Cntr; char ITEM_DELIM = '';
+int _count, __impl;
 
 // Correct
-short counter; char itemDelimiter = '';</code></pre>
+int count, impl;</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_indentation_whitespace"><a class="anchor" href="#_indentation_whitespace"></a>1.7. Indentation &amp; Whitespace</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Classes always start with an upper-case letter.</p>
+<p>4 spaces; no tabs; no extra indent in namespaces.</p>
+</li>
+<li>
+<p>Space around binary operators; one space after keywords.</p>
+</li>
+<li>
+<p>Pointer/reference style: <code>char *p</code>, <code>const T &amp;x</code>.</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
-class meshAdaptation {};
+if(foo){a=b+1;}
 
 // Correct
-class MeshAdaptation {};</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Non-static data members name of structures and classes always start with <code>M_</code> . M stands for Member, or adding <code>_</code> at the end of the member name. The rational behind this is for example :</p>
-<div class="ulist">
-<ul>
-<li>
-<p>to be able to immediately see that the data is a member of a class or a struct</p>
-</li>
-<li>
-<p>to easily search and query-replace</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wong
-class meshAdaptation { std::vector directions; };
-
-// Correct
-class meshAdaptation { std::vector directions_; };
-
-// Correct
-class MeshAdaptation { std::vector M_directions; };</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Static data members name of structures and classes always start with <code>S_</code> . <code>S</code> stands for Static. The rational behind this is for example :</p>
-<div class="ulist">
-<ul>
-<li>
-<p>to be able to immediately see that the data is a static member of a class or a struct</p>
-</li>
-<li>
-<p>to easily search and query-replace</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
-class meshAdaptation { static std::vector directions; };
-
-// Wrong
-class meshAdaptation { static std::vector directions_; };
-
-// Correct
-class MeshAdaptation { static std::vector S_directions; };</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="whitespace"><a class="anchor" href="#whitespace"></a>8. Whitespace</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Use blank lines to group statements together where suited</p>
-</li>
-<li>
-<p>Always use only one blank line</p>
-</li>
-<li>
-<p>Always use a single space after a keyword and before a curly brace.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Correct
-if (foo) { }
-
-// Wrong
-if(foo) { }</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>For pointers or references, always use a single space between the type and <code><strong></code> or <code>&amp;</code>, but no space between the <code></strong></code> or <code>&amp;</code> and the variable name.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">char *x;
-const std::string &amp;myString;
-const char * const y = "hello";</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Surround binary operators with spaces.</p>
-</li>
-<li>
-<p>No space after a cast.</p>
-</li>
-<li>
-<p>Avoid C-style casts when possible.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
-char* blockOfMemory = (char* ) malloc(data.size());
-
-// Correct
-char *blockOfMemory = reinterpret_cast(malloc(data.size()));</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="braces"><a class="anchor" href="#braces"></a>9. Braces</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>As a base rule, the left curly brace goes on the same line as the start of the statement:</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
-if (codec) { }
-
-// Correct
-if (codec) { }</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Function implementations and class declarations always have the left brace on the start of a line:</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">static void foo(int g) { std::cout &lt;&lt; g &lt;&lt; "" }
-
-class Moo { };</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Use curly braces when the body of a conditional statement contains more than one line, and also if a single line statement is somewhat complex.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
-if (address.isEmpty()) { return false; }
-
-for (int i = 0; i &lt; 10; ++i) { std::cout &lt;&lt; "i=" &lt;&lt; i &lt;&lt; ""; }
-
-// Correct
-if (address.isEmpty()) return false;
-
-for (int i = 0; i &lt; 10; ++i) std::cout &lt;&lt; "=" &lt;&lt; i &lt;&lt; "";</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Exception 1: Use braces also if the parent statement covers several lines / wraps</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Correct
-if (address.isEmpty() || !isValid() || !codec)
+if (foo)
 {
-    return false;
-}
-else
-{
-   return true;
-}
-
-
-// Wrong
-if (address.isEmpty() || !isValid() || !codec) {
-  return false;
-}
-else {
-  return truel
+    a = b + 1;
 }</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_braces_parentheses"><a class="anchor" href="#_braces_parentheses"></a>1.8. Braces &amp; Parentheses</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Exception 2: Use braces also in if-then-else blocks where either the if-code or the else-code covers several lines</p>
+<p><strong>Allman</strong> braces; always use braces for multi-line or complex bodies.</p>
 </li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
-if (address.isEmpty())
-  return false;
-else
-{
-  std::cout &lt;&lt; address &lt;&lt; ""; ++it;
- }
-
-// Correct
-if (address.isEmpty())
-{
-    return false;
-}
-else
-{
-    std::cout &lt;&lt; address &lt;&lt; ""; ++it;
-}
-
-// Wrong
-if (a) if (b) ... else ...
-
-// Correct
-if (a) { if (b) ... else ... }</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p>Use curly braces when the body of a conditional statement is empty</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
-while (a);
-
-// Correct
-while (a) {}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="parens"><a class="anchor" href="#parens"></a>10. Parentheses</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Use parentheses to group expressions:</p>
+<p>Parenthesize to make precedence explicit.</p>
 </li>
 </ul>
 </div>
@@ -1044,77 +665,751 @@ while (a) {}</code></pre>
 if (a &amp;&amp; b || c)
 
 // Correct
-if ((a &amp;&amp; b) || c)
-
-// Wrong
-a + b &amp; c
-
-// Correct
-(a + b) &amp; c</code></pre>
+if ((a &amp;&amp; b) || c)</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="switch"><a class="anchor" href="#switch"></a>11. Switch statements</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="switch"><a class="anchor" href="#switch"></a>1.9. Switch</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>The case labels are in the same column as the switch</p>
-</li>
-<li>
-<p>Every case must have a break (or return) statement at the end or a comment to indicate that there&#8217;s intentionally no break, unless another case follows immediately.</p>
+<p>Align <code>case</code> with <code>switch</code>; always end each case with <code>break</code>/<code>return</code> or <code><a id="fallthrough"></a>;</code>.</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">switch (myEnum)
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">switch (mode)
 {
-  case Value1:
-    doSomething();
+case Mode::A:
+    doA();
     break;
-  case Value2:
-  case Value3:
-    doSomethingElse(); // fall through
-  default:
-    defaultHandling();
+case Mode::B:
+    doB();
+    [[fallthrough]];
+case Mode::C:
+    doC();
+    break;
+default:
+    handleDefault();
     break;
 }</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="breaks"><a class="anchor" href="#breaks"></a>12. Line breaks</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_inheritance_virtuals"><a class="anchor" href="#_inheritance_virtuals"></a>1.10. Inheritance &amp; Virtuals</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Keep lines shorter than 100 characters; insert breaks if necessary.</p>
+<p>Don’t repeat <code>virtual</code> in overrides; <strong>use <code>override</code></strong>. Consider <code>final</code> where relevant.</p>
 </li>
 <li>
-<p>Commas go at the end of a broken line; operators start at the beginning of the new line. An operator at the end of the line is easy to not see if your editor is too narrow.</p>
+<p>Polymorphic base classes need a <code>virtual</code> (or protected) destructor.</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Correct
-if (longExpression + otherLongExpression + otherOtherLongExpression) { }
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
+class Derived : public Base
+{
+    virtual void run();
+};
 
-// Wrong
-if (longExpression + otherLongExpression + otherOtherLongExpression) { }</code></pre>
+// Correct
+class Derived : public Base
+{
+    void run() override;
+};</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_comments_doxygen"><a class="anchor" href="#_comments_doxygen"></a>1.11. Comments &amp; Doxygen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Prefer <code>//</code> comments; reserve <code>/* &#8230;&#8203; */</code> for license blocks.</p>
+</li>
+<li>
+<p>Use <code>//!</code> Doxygen for public APIs (<code>\param</code>, <code>\return</code>, <code>\tparam</code>).</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">//!
+//! \brief Compute flux on a boundary.
+//! \param mesh  input mesh
+//! \param bid   boundary id
+//! \return integrated flux
+double computeFlux(const Mesh &amp;mesh, int bid);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_declaring_variables"><a class="anchor" href="#_declaring_variables"></a>1.12. Declaring Variables</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>One per line; meaningful names; declare near first use.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
+int a,b;
+
+// Correct
+int width;
+int height;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_line_length"><a class="anchor" href="#_line_length"></a>1.13. Line Length</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Keep lines ≤ 100 chars; wrap long expressions/operators on new lines.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">if (longExpr
+    + otherExpr
+    + finalExpr)
+{
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="inheritance"><a class="anchor" href="#inheritance"></a>13. Inheritance and the <code>virtual</code> keyword</h2>
+<h2 id="_part_ii_c2023_prefer_this_prefer_that"><a class="anchor" href="#_part_ii_c2023_prefer_this_prefer_that"></a>2. Part II — C++20/23: Prefer This / Prefer That</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When reimplementing a virtual method, do not put the <code>virtual</code> keyword in the header file.</p>
+<p>Each item: a short explanation + example. Acronyms expanded at first use.</p>
+</div>
+<div class="sect2">
+<h3 id="_special_members_default_delete"><a class="anchor" href="#_special_members_default_delete"></a>2.1. Special Members: <code>= default</code> / <code>= delete</code></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Clear intent, zero boilerplate, follows Rule of 0/5/6.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>class Solver
+{
+public:
+    Solver() = default;
+    ~Solver() = default;
+    Solver(Solver const &amp;) = delete;
+    Solver &amp;operator=(Solver const &amp;) = delete;
+};</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_overrides_override_and_final_when_needed"><a class="anchor" href="#_overrides_override_and_final_when_needed"></a>2.2. Overrides: <code>override</code> (and <code>final</code> when needed)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Don’t repeat <code>virtual</code> in derived classes.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>class Derived : public Base
+{
+public:
+    void run() override;
+};</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enums_enum_class"><a class="anchor" href="#_enums_enum_class"></a>2.3. Enums: <code>enum class</code></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Scoped, type-safe.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>enum class Mode { A, B, C };</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_defaulted_comparisons"><a class="anchor" href="#_defaulted_comparisons"></a>2.4. Defaulted Comparisons: <code>&lt;&#8658;</code></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Generate comparisons with one line.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>struct Point
+{
+    int x{}, y{};
+    friend auto operator&lt;=&gt;(Point const &amp;, Point const &amp;) = default;
+};</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id=""><a class="anchor" href="#"></a>2.5. <code><a id="nodiscard"></a></code></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Mark results that must not be ignored.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[[nodiscard]] double computeEnergy(Mesh const &amp;mesh);</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_constexpr_consteval_constinit"><a class="anchor" href="#_constexpr_consteval_constinit"></a>2.6. <code>constexpr</code> / <code>consteval</code> / <code>constinit</code></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>constexpr</code>: usable at compile time; <code>consteval</code>: must be compile-time;
+<code>constinit</code>: constant-initialized static (avoids static init order issues).</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>constexpr int square(int x) { return x*x; }
+consteval int scaled(int x) { return x*42; }
+constinit static int S_threshold = 10;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_inline_constexpr_globals_in_headers"><a class="anchor" href="#_inline_constexpr_globals_in_headers"></a>2.7. <code>inline constexpr</code> Globals in Headers</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Avoid ODR issues.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>inline constexpr double kPi = 3.14159265358979323846;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_views_stdstring_view_stdspant"><a class="anchor" href="#_views_stdstring_view_stdspant"></a>2.8. Views: <code>std::string_view</code>, <code>std::span&lt;T&gt;</code></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Accept data <strong>without owning/copying</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>void logName(std::string_view name);
+void scale(std::span&lt;double const&gt; v, double factor);</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ranges_stdranges_stdviews"><a class="anchor" href="#_ranges_stdranges_stdviews"></a>2.9. Ranges: <code>std::ranges</code> / <code>std::views</code></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Clearer intent, fewer errors than hand-written loops.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>for (int x : values | std::views::drop(1))
+{
+    std::println("{}", x);
+}</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_concepts_requires"><a class="anchor" href="#_concepts_requires"></a>2.10. Concepts / <code>requires</code></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Express constraints directly; simpler than SFINAE.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>template &lt;std::integral T&gt;
+T gcd(T a, T b);</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_auto_for_type_deduction"><a class="anchor" href="#_auto_for_type_deduction"></a>2.11. <code>auto</code> for Type Deduction</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Avoids accidental conversions/copies; clarifies intent.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>auto s = getStringLike();</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_formatting_stdformat_stdprint"><a class="anchor" href="#_formatting_stdformat_stdprint"></a>2.12. Formatting: <code>std::format</code> / <code>std::print</code></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Safer &amp; faster than iostreams/printf.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>std::println("rank {} of {}", rank, size);</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_strong_types_over_flags"><a class="anchor" href="#_strong_types_over_flags"></a>2.13. Strong Types over Flags</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Replace “parameter soup” with self-documenting types.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>struct Position { int x, y; };
+struct Size { int w, h; };
+Rectangle r{ Position{0,0}, Size{640,480} };</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_explicit_initialization"><a class="anchor" href="#_explicit_initialization"></a>2.14. Explicit Initialization</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Never read uninitialized memory.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>float sum(std::span&lt;float&gt; v)
+{
+    float result = 0.0f;
+    for (float x : v) { result += x; }
+    return result;
+}</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_switch_with"><a class="anchor" href="#_switch_with"></a>2.15. Switch with <code><a id="fallthrough"></a>;</code></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Make intentional fallthrough explicit.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>switch (mode)
+{
+case Mode::A: doA(); [[fallthrough]];
+case Mode::B: doB(); break;
+}</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_casting_use_c_casts"><a class="anchor" href="#_casting_use_c_casts"></a>2.16. Casting: Use C++ Casts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>static_cast</code>, <code>const_cast</code>, <code>reinterpret_cast</code>; avoid C-style casts.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// Wrong
+char *p = (char *)std::malloc(n);
+
+// Correct
+char *p = static_cast&lt;char *&gt;(std::malloc(n));</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_glossary_c_basics"><a class="anchor" href="#_glossary_c_basics"></a>2.17. Glossary (C++ basics)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>RAII</strong>: <strong>Resource Acquisition Is Initialization</strong> — acquire/release resources in ctor/dtor.</p>
+</li>
+<li>
+<p><strong>ODR</strong>: <strong>One Definition Rule</strong> — avoid multiple conflicting definitions across TUs.</p>
+</li>
+<li>
+<p><strong>SFINAE</strong>: <strong>Substitution Failure Is Not An Error</strong> — older template constraint idiom (prefer concepts now).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_part_iii_hpc_practices_mpi_gpu_perf_determinism_logging"><a class="anchor" href="#_part_iii_hpc_practices_mpi_gpu_perf_determinism_logging"></a>3. Part III — HPC Practices (MPI, GPU, Perf, Determinism, Logging)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each rule has a short explanation + example. Acronyms are expanded at first sight.</p>
+</div>
+<div class="sect2">
+<h3 id="_determinism_reproducibility"><a class="anchor" href="#_determinism_reproducibility"></a>3.1. Determinism &amp; Reproducibility</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Avoid hidden global state; seed RNGs explicitly; document nondeterministic paths.</p>
+</li>
+<li>
+<p><strong>RNG</strong> = <strong>Random Number Generator</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Deterministic RNG (repeatable experiments)
+std::mt19937 gen(1337);
+std::uniform_real_distribution&lt;double&gt; dist(0.0, 1.0);
+double u = dist(gen);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_memory_data_layout"><a class="anchor" href="#_memory_data_layout"></a>3.2. Memory &amp; Data Layout</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Reuse allocations in loops; prefer contiguous memory; consider <strong>SoA</strong> (Structure of Arrays) for SIMD/vectorization.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong: allocates each iteration
+for (int i = 0; i &lt; N; ++i)
+{
+    std::vector&lt;double&gt; buf(1024);
+    process(buf);
+}
+
+// Correct: reuse
+std::vector&lt;double&gt; buf(1024);
+for (int i = 0; i &lt; N; ++i)
+{
+    process(buf);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Glossary:</strong> <strong>SoA</strong> = <strong>Structure of Arrays</strong> (e.g., <code>struct { float <strong>x; float *y; }</code>) vs <strong>AoS</strong> = *Array of Structures</strong> (<code>struct { float x,y; } p[N];</code>). SoA often vectorizes better.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_concurrency_atomics"><a class="anchor" href="#_concurrency_atomics"></a>3.3. Concurrency &amp; Atomics</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Minimize shared mutable state; prefer message passing; when needed, use <code>std::atomic</code> with explicit memory order.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">std::atomic&lt;int&gt; S_counter{0};
+S_counter.fetch_add(1, std::memory_order_relaxed);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mpi_message_passing_interface"><a class="anchor" href="#_mpi_message_passing_interface"></a>3.4. MPI (Message Passing Interface)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Prefer <strong>collectives</strong> over manual loops — faster, fewer bugs.</p>
+</li>
+<li>
+<p><strong>Rank 0</strong> handles user-facing logs/prints; others stay silent unless debugging.</p>
+</li>
+<li>
+<p>Avoid <strong>gratuitous barriers</strong>; synchronize only when necessary (e.g., benchmarking fences).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Collective vs manual broadcast:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong: manual send/recv loop (verbose, error-prone)
+if (comm.rank() == 0)
+{
+    for (int r = 1; r &lt; comm.size(); ++r)
+    {
+        MPI_Send(buf.data(), count, MPI_DOUBLE, r, 0, MPI_COMM_WORLD);
+    }
+}
+else
+{
+    MPI_Recv(buf.data(), count, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+}
+
+// Correct: collective broadcast
+MPI_Bcast(buf.data(), count, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+// (boost::mpi3 variants exist; use comm.broadcast_*/all_reduce, etc.)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Rank 0 logging (see also glog policy below):</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">if (comm.rank() == 0)
+{
+    logger.info("N={}", N);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Avoid unnecessary barriers:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
+for (int step = 0; step &lt; steps; ++step)
+{
+    compute_local();
+    MPI_Barrier(MPI_COMM_WORLD); // unnecessary fence
+}
+
+// Correct: use waits or rely on collective semantics
+std::vector&lt;MPI_Request&gt; reqs;
+// issue non-blocking ops...
+MPI_Waitall(static_cast&lt;int&gt;(reqs.size()), reqs.data(), MPI_STATUSES_IGNORE);
+
+// Barrier only for timing fairness
+MPI_Barrier(MPI_COMM_WORLD);
+double t0 = MPI_Wtime();
+do_work();
+MPI_Barrier(MPI_COMM_WORLD);
+double t1 = MPI_Wtime();
+if (comm.rank() == 0) { logger.info("Phase time = {:.6f}s", t1 - t0); }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gpu_accelerators"><a class="anchor" href="#_gpu_accelerators"></a>3.5. GPU / Accelerators</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Don’t leak CUDA/HIP types in public headers; keep device pointers opaque; keep kernels focused.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// header (opaque device handle)
+class DeviceBuffer
+{
+public:
+    void * M_dev = nullptr; // opaque; defined/managed in .cu/.hip
+};</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_logging_with_google_glog_glog"><a class="anchor" href="#_logging_with_google_glog_glog"></a>3.6. Logging with Google glog (GLOG)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Feel++ uses <strong>Google glog</strong>. We support three modes:
+1) <strong>Master-only</strong>: only rank 0 logs → best for benchmarking (minimize I/O).
+2) <strong>All ranks</strong>: all processes log → for debugging only.
+3) <strong>Selective</strong>: rank 0 logs info; specific ranks may log debug based on flags.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Initialize glog once per process:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">int main(int argc, char **argv)
+{
+    google::InitGoogleLogging(argv[0]);  // glog
+    // FLAGS_logtostderr = 1;            // optional: log to stderr
+    // FLAGS_v = 1;                       // optional: verbose level
+    // ... init MPI/boost::mpi3 ...
+    // ... Feel++ init ...
+    // ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Master-only logging (benchmark mode):</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">if (comm.rank() == 0)
+{
+    LOG(INFO) &lt;&lt; fmt::format("N={}", N);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>All-ranks logging (debug mode; beware of I/O):</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">LOG(INFO) &lt;&lt; fmt::format("[rank {}] localNorm={}", comm.rank(), localNorm);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Selective logging (rank 0 info + targeted debug):</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">if (comm.rank() == 0)
+{
+    LOG(INFO) &lt;&lt; "Starting phase A";
+}
+if (debug &amp;&amp; comm.rank() == verboseRank)
+{
+    LOG(INFO) &lt;&lt; fmt::format("Diagnostics: mean={}, var={}", mean, var);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Recommendation:</strong> expose a Feel++ config (CLI/env) to choose <strong>master-only / all-ranks / selective</strong> and document it in user guides.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_testing_benchmarking"><a class="anchor" href="#_testing_benchmarking"></a>3.7. Testing &amp; Benchmarking</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Fix RNG seeds; make tests deterministic.</p>
+</li>
+<li>
+<p>Separate microbenchmarks from unit tests.</p>
+</li>
+<li>
+<p>Use sanitizers (ASan/UBSan/TSan) in dedicated CI jobs.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">std::mt19937 gen(42); // fixed seed for tests</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_glossary_hpc"><a class="anchor" href="#_glossary_hpc"></a>3.8. Glossary (HPC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>MPI</strong>: <strong>Message Passing Interface</strong> — standard for distributed-memory parallelism.</p>
+</li>
+<li>
+<p><strong>GPU</strong>: <strong>Graphics Processing Unit</strong> — accelerator used for massively parallel workloads.</p>
+</li>
+<li>
+<p><strong>SoA/AoS</strong>: <strong>Structure of Arrays / Array of Structures</strong> — data layout patterns affecting vectorization and cache behavior.</p>
+</li>
+<li>
+<p><strong>SIMD</strong>: <strong>Single Instruction, Multiple Data</strong> — CPU vector instructions (e.g., AVX).</p>
+</li>
+<li>
+<p><strong>Barrier</strong>: a global synchronization point across MPI ranks (use sparingly).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_appendix_full_example_integrating_rules"><a class="anchor" href="#_appendix_full_example_integrating_rules"></a>4. Appendix — Full Example (Integrating Rules)</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#if !defined(FEELPP_MESH_ADAPT_HPP)
+#define FEELPP_MESH_ADAPT_HPP 1
+
+namespace Feel::mesh
+{
+class MeshAdaptation
+{
+public:
+    MeshAdaptation() = default;
+    explicit MeshAdaptation(std::vector&lt;int&gt; dirs) noexcept
+        : M_directions(std::move(dirs))
+    {}
+
+    [[nodiscard]] const std::vector&lt;int&gt; &amp; directions() const noexcept
+    {
+        return M_directions;
+    }
+
+    void setDirections(std::vector&lt;int&gt; dirs)
+    {
+        M_directions = std::move(dirs);
+    }
+
+    virtual ~MeshAdaptation() = default;
+
+private:
+    std::vector&lt;int&gt; M_directions;              // non-static → M_
+    static inline std::atomic&lt;int&gt; S_instances; // static → S_
+};
+} // namespace Feel::mesh
+
+#endif // FEELPP_MESH_ADAPT_HPP</code></pre>
+</div>
 </div>
 </div>
 </div>

@@ -893,9 +893,9 @@ from feelpp.toolboxes.cfpdes import *
 import pandas as pd
 
 sys.argv = ["feelpp_cfpdes_poisson"]
-e = feelpp.Environment(sys.argv,
-                        opts=tb.toolboxes_options("coefficient-form-pdes", "cfpdes"),
-                        config=feelpp.globalRepository("cfpdes-poisson-homogeneous-dirichlet"))</code></pre>
+e = fppc.Environment(sys.argv,
+                     opts = tb.toolboxes_options("coefficient-form-pdes", "cfpdes"),
+                     config=  fppc.globalRepository("cfpdes-poisson-homogeneous-dirichlet"))</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -904,7 +904,7 @@ We consider the following mesh \(\mathcal{T}_h\) of \(\Omega\) with \(h=0.1\).</
 </div>
 <div id="code:2" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def generateGeometry(filename,dim=2,hsize=0.1):
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def generateGeometry(filename, dim=2, hsize=0.1):
     """create gmsh mesh
 
     Args:
@@ -912,19 +912,19 @@ We consider the following mesh \(\mathcal{T}_h\) of \(\Omega\) with \(h=0.1\).</
         dim (int): dimension of the mesh
         hsize (float): mesh size
     """
-    geo="""SetFactory("OpenCASCADE");
-    h={};
-    dim={};
+    geo = """SetFactory("OpenCASCADE");
+    h = {};
+    dim = {};
     """.format(hsize,dim)
-    if dim==2 :
-        geo+="""
+    if dim == 2 :
+        geo += """
         Rectangle(1) = {0, 0, 0, 1, 1, 0};
         Characteristic Length{ PointsOf{ Surface{1}; } } = h;
         Physical Curve("Gamma_D") = {1,2,3,4};
         Physical Surface("Omega") = {1};
         """
     elif dim==3 :
-        geo+="""
+        geo += """
         Box(1) = {0, 0, 0, 1, 1, 1};
         Characteristic Length{ PointsOf{ Volume{1}; } } = h;
         Physical Surface("Gamma_D") = {1,2,3,4,5,6};
@@ -934,7 +934,7 @@ We consider the following mesh \(\mathcal{T}_h\) of \(\Omega\) with \(h=0.1\).</
         # Write the string to the file
         f.write(geo)
 
-def getMesh(filename,hsize=0.05,dim=2,verbose=False):
+def getMesh(filename, hsize=0.05, dim=2, verbose=False):
     """create mesh
 
     Args:
@@ -945,14 +945,14 @@ def getMesh(filename,hsize=0.05,dim=2,verbose=False):
     """
     import os
     for ext in [".msh",".geo"]:
-        f=os.path.splitext(filename)[0]+ext
+        f = os.path.splitext(filename)[0]+  ext
         # print(f)
         if os.path.exists(f):
             os.remove(f)
     if verbose:
         print(f"generate mesh {filename} with hsize={hsize} and dimension={dim}")
     generateGeometry(filename=filename,dim=dim,hsize=hsize)
-    mesh = feelpp.load(feelpp.mesh(dim=dim,realdim=dim), filename, hsize)
+    mesh = fppc.load(fppc.mesh(dim=dim,realdim=dim), filename, hsize)
     return mesh
 
 # generate 2D abd 3D meshes
@@ -976,11 +976,11 @@ for dim in [2,3]:
 </div>
 <div id="code:3" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def laplacian(hsize, json, dim=2,verbose=False):
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def laplacian(hsize, json, dim=2, verbose=False):
     if verbose:
         print(f"Solving the laplacian problem for hsize = {hsize}...")
     laplacian = cfpdes(dim=dim, keyword=f"cfpdes-{dim}d")
-    laplacian.setMesh(getMesh(f"omega-{dim}.geo",hsize=hsize,dim=dim,verbose=verbose))
+    laplacian.setMesh(getMesh(f"omega-{dim}.geo", hsize=hsize, dim=dim, verbose=verbose))
     laplacian.setModelProperties(json)
     laplacian.init(buildModelAlgebraicFactory=True)
     laplacian.printAndSaveInfo()
@@ -1008,7 +1008,6 @@ laplacian_json = lambda order,dim=2,name="u":  {
                 },
                 "coefficients":{
                     "c":"1",
-
                     "f":"8*pi*pi*sin(2*pi*x)*sin(2*pi*y):x:y" if dim==2 else "12*pi*pi*sin(2*pi*x)*sin(2*pi*y)*sin(2*pi*z):x:y:z"
                 }
             }
@@ -1042,7 +1041,8 @@ laplacian_json = lambda order,dim=2,name="u":  {
             "Exports":
             {
                 "fields":["all"],
-                "expr":{
+                "expr":
+                {
                     "u_exact":"sin(2*pi*x)*sin(2*pi*y):x:y" if dim==2 else "sin(2*pi*x)*sin(2*pi*y)*sin(2*pi*z):x:y:z",
                     "grad_u_exact": "{2*pi*cos(2*pi*x)*sin(2*pi*y),2*pi*sin(2*pi*x)*cos(2*pi*y)}:x:y" if dim==2 else "{2*pi*cos(2*pi*x)*sin(2*pi*y)*sin(2*pi*z),2*pi*sin(2*pi*x)*cos(2*pi*y)*sin(2*pi*z),2*pi*sin(2*pi*x)*sin(2*pi*y)*cos(2*pi*z)}:x:y:z"
                 }
@@ -1072,9 +1072,9 @@ for dim in [2,3]:
         import json
         f.write(json.dumps(laplacian_json(dim=dim,order=1),indent=1))
         # execute the laplacian problem using P1 basis on a mesh of the unit square  of size 0.1
-        laplacian(hsize=0.1,json=laplacian_json(order=1,dim=dim), dim=dim,verbose=True)
+        laplacian(hsize=0.1, json=laplacian_json(order=1, dim=dim), dim=dim, verbose=True)
 # execute the laplacian problem using P2 basis on a mesh of the unit square of size 0.1
-#laplacian(hsize=0.025,json=laplacian_json(dim=2,order=2),dim=2,verbose=True)</code></pre>
+#laplacian(hsize=0.025, json=laplacian_json(dim=2, order=2), dim=2, verbose=True)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1110,10 +1110,10 @@ def myplots(dim=2, field="cfpdes.laplace.u", factor=1, cmap='viridis'):
         warped = mesh[0].warp_by_scalar(field, factor=factor)
         warped.plot(cmap=cmap, show_scalar_bar=False, show_edges=True)
     else:
-        slices = mesh.slice_orthogonal(x=0.2,y=0.4,z=.6)
+        slices = mesh.slice_orthogonal(x=0.2, y=0.4, z=.6)
         slices.plot()
 
-myplots(dim=2,factor=0.5)</code></pre>
+myplots(dim=2, factor=0.5)</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1172,32 +1172,32 @@ myplots(dim=2,factor=0.5)</code></pre>
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">import pandas as pd
 import numpy as np
 
-def runLaplacianPk(df,model,verbose=False):
+def runLaplacianPk(df, model, verbose=False):
     """generate the Pk case
 
     Args:
         order (int, optional): order of the basis. Defaults to 1.
     """
-    meas=dict()
-    dim,order,json=model
+    meas = dict()
+    dim, order, json = model
     for h in df['h']:
-        m=laplacian(hsize=h,json=json,dim=dim,verbose=verbose)
+        m = laplacian(hsize=h, json=json, dim=dim, verbose=verbose)
         for norm in ['L2','H1']:
             meas.setdefault(f'P{order}-Norm_laplace_{norm}-error', [])
             meas[f'P{order}-Norm_laplace_{norm}-error'].append(m.pop(f'Norm_laplace_{norm}-error'))
-    df=df.assign(**meas)
+    df = df.assign(**meas)
     for norm in ['L2','H1']:
-        df[f'P{order}-laplace_{norm}-convergence-rate']=np.log2(df[f'P{order}-Norm_laplace_{norm}-error'].shift() / df[f'P{order}-Norm_laplace_{norm}-error']) / np.log2(df['h'].shift() / df['h'])
+        df[f'P{order}-laplace_{norm}-convergence-rate'] = np.log2(df[f'P{order}-Norm_laplace_{norm}-error'].shift() / df[f'P{order}-Norm_laplace_{norm}-error']) / np.log2(df['h'].shift() / df['h'])
     return df
 
-def runConvergenceAnalysis(json,dim=2,hs=[0.1,0.05,0.025,0.0125],orders=[1,2],verbose=False):
-    df=pd.DataFrame({'h':hs})
+def runConvergenceAnalysis(json, dim=2, hs=[0.1,0.05,0.025,0.0125], orders=[1,2], verbose=False):
+    df = pd.DataFrame({'h':hs})
     for order in orders:
-        df=runLaplacianPk(df=df,model=[dim,order,json(dim=dim,order=order)],verbose=verbose)
+        df = runLaplacianPk(df=df, model=[dim,order,json(dim=dim,order=order)], verbose=verbose)
     print(df.to_markdown()) <i class="conum" data-value="1"></i><b>(1)</b>
     return df
 
-df=runConvergenceAnalysis(json=laplacian_json,dim=2,verbose=True)</code></pre>
+df = runConvergenceAnalysis(json=laplacian_json,dim=2,verbose=True)</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1214,7 +1214,7 @@ However we do this for different mesh sizes and only in \(\mathbb{P}^1\) to redu
 </div>
 <div id="code:4" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">df3d=runConvergenceAnalysis(json=laplacian_json,dim=3,hs=[0.1,0.05,0.03],orders=[1],verbose=True)</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">df3d = runConvergenceAnalysis(json=laplacian_json, dim=3, hs=[0.1,0.05,0.03], orders=[1], verbose=True)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1244,7 +1244,7 @@ from plotly.subplots import make_subplots
 import itertools
 
 def plot_convergence(df,dim,orders=[1,2]):
-    fig=px.line(df, x="h", y=[f'P{order}-Norm_laplace_{norm}-error' for order,norm in list(itertools.product(orders,['L2','H1']))])
+    fig = px.line(df, x="h", y=[f'P{order}-Norm_laplace_{norm}-error' for order,norm in list(itertools.product(orders,['L2','H1']))])
     fig.update_xaxes(title_text="h",type="log")
     fig.update_yaxes(title_text="Error",type="log")
     for order,norm in list(itertools.product(orders,['L2','H1'])):
@@ -1265,7 +1265,7 @@ fig.show()</code></pre>
 </div>
 <div id="code:5" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">fig=plot_convergence(df3d,dim=3,orders=[1])
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">fig = plot_convergence(df3d, dim=3, orders=[1])
 fig.show()</code></pre>
 </div>
 </div>
@@ -1334,7 +1334,7 @@ a\left(u_0, w\right)=f(w)-a\left(u_g, w\right), \quad \forall w \in H_0^1(\Omega
 We are interested in a conformal approximation of <a href="#laplace-dir">the problem</a> by Lagrange finite elements.
 We use the discrete framework described previously.
 We suppose that the data \(g\) is regular enough to admit a lifting \(u_g\) in \(\mathcal{C}^0(\bar{\Omega}) \cap H^1(\Omega)\).
-We denote \(\mathcal{I}_h^{\mathrm{Lag}}\) the interpolation operator associated with the mesh \(\mathcal{T}_h\) and the finite Lagrangian element of reference \(\widehat{K}, \widehat{P}, \widehat{\Sigma}}\).
+We denote \(\mathcal{I}_h^{\mathrm{Lag}}\) the interpolation operator associated with the mesh \(\mathcal{T}_h\) and the finite Lagrangian element of reference \(\widehat{K}\), \(\widehat{P}\), \(\widehat{\Sigma}\).
 Recall that \(P_{\mathrm{c}, h}^k\) denotes the \(H^1\)-conformal space based on this finite element and that \(V_h\) is the \(H_0^1\)-conformal approximation space defined in (5.9).</p>
 </div>
 <div class="paragraph">
@@ -1448,8 +1448,8 @@ We consider the following mesh \(\mathcal{T}_h\) of \(\Omega\) with \(h=0.1\).</
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># get the laplacian json model
-def laplacian_g_json(dim,order=1):
-    j=laplacian_json(dim=dim,order=order)
+def laplacian_g_json(dim, order=1):
+    j = laplacian_json(dim=dim, order=order)
     if dim == 2:
         j['Models']['laplace']['setup']['coefficients']['f']=f'8*(pi^2)*sin(2*pi*x)*cos(2*pi*y):x:y'
         j['BoundaryConditions']['laplace']['Dirichlet']['g']={
@@ -1469,10 +1469,10 @@ def laplacian_g_json(dim,order=1):
     return j
 
 # in 2D
-laplacian(hsize=0.1,json=laplacian_g_json(dim=2,order=1),dim=2)
+laplacian(hsize=0.1, json=laplacian_g_json(dim=2,order=1), dim=2)
 
 # in 3D
-laplacian(hsize=0.1,json=laplacian_g_json(dim=3,order=1),dim=3)</code></pre>
+laplacian(hsize=0.1, json=laplacian_g_json(dim=3,order=1), dim=3)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1499,7 +1499,7 @@ myplots(dim=3)</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># run the 2D convergence analysis
-df=runConvergenceAnalysis(json=laplacian_g_json,dim=2,verbose=True)</code></pre>
+df = runConvergenceAnalysis(json=laplacian_g_json, dim=2, verbose=True)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1508,7 +1508,7 @@ df=runConvergenceAnalysis(json=laplacian_g_json,dim=2,verbose=True)</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># run the 2D convergence analysis
-df3d=runConvergenceAnalysis(json=laplacian_g_json,dim=3,hs=[0.1,0.05,0.03], orders=[1], verbose=True)</code></pre>
+df3d = runConvergenceAnalysis(json=laplacian_g_json, dim=3, hs=[0.1,0.05,0.03], orders=[1], verbose=True)</code></pre>
 </div>
 </div>
 </div>
@@ -1780,7 +1780,7 @@ The <a href="#laplace-N-0-approx-sol">postprocessing of the solution</a> removes
 <div class="sect3">
 <h4 id="_example_2"><a class="anchor" href="#_example_2"></a>3.2.1. Example</h4>
 <div class="paragraph">
-<p>Consider the <a href="#laplace-N-0">problem</a> with \(\Omega=\mathbb{R}^2\) and the exact solution \(u(x, y)=\sin(2*\pi*x) \sin(2*\pi*y)\) in 2D and \(u(x, y, z)=\sin(2*\pi*x) \sin(2*\pi*y) \sin(2*\pi*z)\) in 3D.</p>
+<p>Consider the <a href="#laplace-N-0">problem</a> with \(\Omega=\mathbb{R}^2\) and the exact solution \(u(x, y)=\sin(2\pi x) \sin(2\pi y)\) in 2D and \(u(x, y, z)=\sin(2 \pi x) \sin(2 \pi y) \sin(2\pi z)\) in 3D.</p>
 </div>
 <div class="paragraph">
 <p>The right hand side \(f\) and the boundary condition \(g_{\mathrm{N}}\) are computed using the exact solution \(u\) in \(\mathbb{R}^d, d=2,3\).
@@ -1815,7 +1815,7 @@ we can verify the condition <a href="#laplace-N-0-cond">[laplace-N-0-cond]</a> i
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># get the laplacian json model
 def laplacian_gN_json(dim,order=1):
-    j=laplacian_json(dim=dim,order=order)
+    j = laplacian_json(dim=dim, order=order)
     if dim == 2:
         j['Models']['laplace']['setup']['coefficients']['f']=f'8*(pi^2)*sin(2*pi*x)*sin(2*pi*y)+sin(2*pi*x)*sin(2*pi*y):x:y'
         j['Models']['laplace']['setup']['coefficients']['a']='1' # set \lambda=1
@@ -1830,7 +1830,7 @@ def laplacian_gN_json(dim,order=1):
     return j
 
 # in 2D
-laplacian(hsize=0.1,json=laplacian_gN_json(dim=2,order=1),dim=2)</code></pre>
+laplacian(hsize=0.1, json=laplacian_gN_json(dim=2, order=1), dim=2)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1839,7 +1839,7 @@ laplacian(hsize=0.1,json=laplacian_gN_json(dim=2,order=1),dim=2)</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># run the 2D convergence analysis
-df=runConvergenceAnalysis(json=laplacian_gN_json,dim=2,verbose=True)</code></pre>
+df = runConvergenceAnalysis(json=laplacian_gN_json, dim=2, verbose=True)</code></pre>
 </div>
 </div>
 </div>
@@ -1904,7 +1904,7 @@ a_{\mathrm{R}}(v, w)=\int_{\Omega} \nabla v \cdot \nabla w+\int_{\partial \Omega
 <div class="stemblock">
 <div class="content">
 \[\begin{equation*}
-\forall v \in H^1(\Omega), \quad\|v\|_{0, \Omega} \leq \rho_{\Omega} \left(\|nabla v|_{0, \Omega}+\|v\|_{0, \partial \Omega}\right) .
+\forall v \in H^1(\Omega), \quad\|v\|_{0, \Omega} \leq \rho_{\Omega} \left(\|\nabla v|_{0, \Omega}+\|v\|_{0, \partial \Omega}\right) .
 \end{equation*}\]
 </div>
 </div>
@@ -1916,7 +1916,7 @@ We consider the following approximated problem:</p>
 <div class="content">
 \[\begin{equation*}
 \left\{\begin{array}{l}
-\text { Find } u_h \in P_{mathrm{c}, h}^k \text { such that } \\
+\text { Find } u_h \in P_{\mathrm{c}, h}^k \text { such that } \\
 a_{\mathrm{R}}\left(u_h, w_h\right)=f_{\mathrm{N}}\left(w_h\right), \quad \forall w_h \in P_{\mathrm{c}, h}^k,
 \end{array}\right.
 \end{equation*}\]
@@ -1954,7 +1954,7 @@ We then compute \(f\) and \(g_R\) such that \(u\) is the solution of the problem
 \[\begin{equation*}
 \begin{aligned}
 f=-\Delta u &amp;=2 d \pi^2 sin(2\pi x)sin(2\pi y), \\
-\nabla u = { 2\pi cos(2\pi x)sin(2\pi y), 2\pi sin(2\pi x)sin(2\pi y) } \\
+\nabla u = \left[ 2\pi cos(2\pi x)sin(2\pi y), 2\pi sin(2\pi x)sin(2\pi y) \right] \\
 g_R &amp;= +\gamma_R u+\nabla u \cdot n = \gamma_R sin(2\pi x)sin(2\pi y)+2\pi \cos(2\pi x)\sin(2\pi y) n_x +2\pi \sin(2\pi x) \cos(2\pi y) n_y.
 \end{aligned}
 \end{equation*}\]
@@ -1969,8 +1969,8 @@ g_R &amp;= +\gamma_R u+\nabla u \cdot n = \gamma_R sin(2\pi x)sin(2\pi y)+2\pi \
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># get the laplacian json model
-def laplacian_gR_json(dim,order=1):
-    j=laplacian_json(dim=dim,order=order)
+def laplacian_gR_json(dim, order=1):
+    j = laplacian_json(dim=dim, order=order)
     if dim == 2:
         j['Parameters'] = { 'gammaR': 1.0 }
         j['BoundaryConditions']['laplace'].pop('Dirichlet')
@@ -1983,7 +1983,7 @@ def laplacian_gR_json(dim,order=1):
     return j
 
 # in 2D
-laplacian(hsize=0.1,json=laplacian_gR_json(dim=2,order=1),dim=2)</code></pre>
+laplacian(hsize=0.1, json=laplacian_gR_json(dim=2, order=1), dim=2)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1992,7 +1992,7 @@ laplacian(hsize=0.1,json=laplacian_gR_json(dim=2,order=1),dim=2)</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># run the 2D convergence analysis
-df=runConvergenceAnalysis(json=laplacian_gR_json,dim=2,verbose=True)</code></pre>
+df=runConvergenceAnalysis(json=laplacian_gR_json, dim=2, verbose=True)</code></pre>
 </div>
 </div>
 </div>
@@ -2000,10 +2000,9 @@ df=runConvergenceAnalysis(json=laplacian_gR_json,dim=2,verbose=True)</code></pre
 <div class="sect2">
 <h3 id="_advection_diffusion_reaction_equation"><a class="anchor" href="#_advection_diffusion_reaction_equation"></a>3.4. Advection-Diffusion-Reaction Equation</h3>
 <div class="paragraph">
-<p>Consider a differential operator of the form
-<a id="laplace-ADR-op"></a>]</p>
+<p>Consider a differential operator of the form</p>
 </div>
-<div class="stemblock">
+<div id="laplace-ADR-op" class="stemblock">
 <div class="content">
 \[\begin{equation*}
 \mathcal{L} u=-\nabla \cdot(\sigma \cdot \nabla u)+\beta \cdot \nabla u+\mu u,
@@ -2115,7 +2114,7 @@ a_{\sigma \beta \mu}(v, w)=\int_{\Omega} \nabla w \cdot \sigma \cdot \nabla v+w(
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-For a function \(f \in L^{\infty}(\Omega), \inf \operatorname{ess}_{x \in \Omega} f(x)=\sup \left\{ M \in \mathbb{R}_{+}; f(x) \geq M \text{ almost\ everywhere\ in\ } \Omega\right\}\).
+For a function \(f \in L^{\infty}(\Omega), \inf \operatorname{ess}_{x \in \Omega} f(x)=\sup \left\{ M \in \mathbb{R}_{+}; f(x) \geq M \text{ almost everywhere in } \Omega\right\}\).
 </td>
 </tr>
 </table>
@@ -2161,17 +2160,17 @@ Convergence results are obtained in the same way as for the Laplacian, with the 
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># get the laplacian json model
-def adr_json(dim,order=1,c=1):
-    j=laplacian_json(dim=dim,order=order,name="u")
+def adr_json(dim, order=1, c=1):
+    j = laplacian_json(dim=dim, order=order, name="u")
     if dim == 2:
         j['Models']['laplace']['setup']['coefficients']['f']='physics_laplace_laplace_c*8*(pi^2)*sin(2*pi*x)*sin(2*pi*y)+physics_laplace_laplace_beta_0*2*pi*cos(2*pi*x)*sin(2*pi*y)+physics_laplace_laplace_beta_1*2*pi*sin(2*pi*x)*cos(2*pi*y)+physics_laplace_laplace_a*sin(2*pi*x)*sin(2*pi*y):x:y:physics_laplace_laplace_beta_0:physics_laplace_laplace_beta_1:physics_laplace_laplace_c:physics_laplace_laplace_a'
         j['Models']['laplace']['setup']['coefficients']['beta']='{1,1}'
         j['Models']['laplace']['setup']['coefficients']['a']='1'
         j['Models']['laplace']['setup']['coefficients']['c']=c
     return j
-print(adr_json(dim=2,order=1,c=1e-7))
+print(adr_json(dim=2, order=1, c=1e-7))
 # in 2D
-laplacian(hsize=0.1,json=adr_json(dim=2,order=1,c=1),dim=2)</code></pre>
+laplacian(hsize=0.1, json=adr_json(dim=2, order=1, c=1), dim=2)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2179,7 +2178,7 @@ laplacian(hsize=0.1,json=adr_json(dim=2,order=1,c=1),dim=2)</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">myplots(dim=2,field="cfpdes.laplace.u")</code></pre>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">myplots(dim=2, field="cfpdes.laplace.u")</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2188,7 +2187,7 @@ laplacian(hsize=0.1,json=adr_json(dim=2,order=1,c=1),dim=2)</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># run the 2D convergence analysis with c=1
-df=runConvergenceAnalysis(json=lambda dim,order: adr_json(dim=dim,order=order,c=1),dim=2,verbose=True)</code></pre>
+df = runConvergenceAnalysis(json=lambda dim, order: adr_json(dim=dim,order=order,c=1), dim=2, verbose=True)</code></pre>
 </div>
 </div>
 </div>

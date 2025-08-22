@@ -640,7 +640,7 @@ We start with import feelpp, the heat toolboxes and start feelpp environment.</p
 from feelpp.toolboxes.core import *
 from feelpp.toolboxes.heat import *
 
-app = feelpp.Environment(["myapp"], opts= toolboxes_options("heat"),config=feelpp.localRepository("")) <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+app = fppc.Environment(["myapp"], opts=toolboxes_options("heat"), config=fppc.localRepository("")) <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -656,13 +656,15 @@ app = feelpp.Environment(["myapp"], opts= toolboxes_options("heat"),config=feelp
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">case=feelpp.download( "github:{repo:feelpp,path:toolboxes/heat/cases/Building/ThermalBridgesENISO10211/", worldComm=app.worldCommPtr() )[0] <i class="conum" data-value="1"></i><b>(1)</b>
-casedfile=case+'/case2.cfg'
-feelpp.Environment.setConfigFile(casefile) <i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">path = "toolboxes/heat/cases/Building/ThermalBridgesENISO10211"
+casefile = fppc.download( f"github:{{repo:feelpp,path:{path}/case2.cfg}}", worldComm=fppc.Environment.worldCommPtr() )[0] <i class="conum" data-value="1"></i><b>(1)</b>
+jsonfile = fppc.download( f"github:{{repo:feelpp,path:{path}/case2.json}}", worldComm=fppc.Environment.worldCommPtr() )[0]
+geofile = fppc.download( f"github:{{repo:feelpp,path:{path}/case2.geo}}", worldComm=fppc.Environment.worldCommPtr() )[0]
+fppc.Environment.setConfigFile(casefile) <i class="conum" data-value="2"></i><b>(2)</b>
 f = heat(dim=2, order=1) <i class="conum" data-value="3"></i><b>(3)</b>
 if not f.isStationary(): <i class="conum" data-value="4"></i><b>(4)</b>
     f.setTimeFinal(10*f.timeStep())
-[ok,meas]=simulate(f) <i class="conum" data-value="5"></i><b>(5)</b>
+[ok,meas] = simulate(f) <i class="conum" data-value="5"></i><b>(5)</b>
 f.checkResults() <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
 </div>
 </div>

@@ -635,21 +635,28 @@ in the case of a <code>.geo</code> file, Feel++ automatically generate a mesh da
 <td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">update the mesh data structure (build internal faces and edges)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_physical_are_elementary_regions</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_physical_are_elementary_regions</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">to load specific meshes formats.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>false.</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">gmsh.physical_are_elementary_regions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_straighten</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_straighten</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">in case of curvilinear elements, straighten the elements which are not touching with a face the boundary of the domain</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>gmsh.straighten</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_partitioner</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">define the mesh partitioner to use</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>1</code> (if Metis is available) <code>0</code> if not (CHACO)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gmsh.partitioner</p></td>
 </tr>
 </tbody>
 </table>

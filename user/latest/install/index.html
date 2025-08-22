@@ -596,18 +596,6 @@ MathJax.Hub.Config({
 <li>
 <p><a id="tabset1_debian"></a>Debian</p>
 </li>
-<li>
-<p><a id="tabset1_windows-10"></a>Windows 10</p>
-</li>
-<li>
-<p><a id="tabset1_spack"></a>Spack</p>
-</li>
-<li>
-<p><a id="tabset1_docker"></a>Docker</p>
-</li>
-<li>
-<p><a id="tabset1_apptainer"></a>Apptainer</p>
-</li>
 </ul>
 </div>
 <div class="content">
@@ -981,249 +969,35 @@ sudo apt update</code></pre>
 </div>
 </div>
 </div>
-<div class="tab-pane" aria-labelledby="tabset1_windows-10">
-<div class="paragraph">
-<p>To use Feel++ on Windows 10, follow these steps:</p>
 </div>
-<div class="ulist checklist">
-<ul class="checklist">
+</div>
+<div class="paragraph">
+<p>These images are also available for</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
-<p><i class="fa fa-check-square-o"></i> install <a href="https://docs.microsoft.com/fr-fr/windows/wsl/install-win10:">WSL (Windows Subsystem for Linux)</a></p>
+<p>Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:jammy</p>
 </li>
 <li>
-<p><i class="fa fa-check-square-o"></i> install <a href="https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions">Ubuntu jammy(22.04) Ubuntu focal (20.04) or Debian bookworm(12)</a></p>
+<p>Ubuntu 20.04 (focal): ghcr.io/feelpp/feelpp:focal</p>
 </li>
 <li>
-<p><i class="fa fa-check-square-o"></i> follow the corresponding Ubuntu or Debian Feel++ installation steps</p>
+<p>Debian 12 (bookworm): ghcr.io/feelpp/feelpp:bookworm</p>
 </li>
 </ul>
 </div>
-<h3 id="_install_feel_debianubuntu_packages_3" class="discrete">Install Feel++ Debian/Ubuntu packages</h3>
-<div class="paragraph">
-<p>We describe here the installation of the debian packages for LTS distributions.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Table Feel++ Ubuntu packages</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">shared libraries</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp-dev</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">development headers and libraries</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-tools</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../using/index.html#_using_feel_tools" class="xref page">mesh partitioners and remote data upload/download</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-quickstart</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">quickstart applications (laplacian cg an hdg), stokes, elasticity(cg and hdg)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">python3-feelpp</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Python3 bindings</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-data</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">data files (geometry and config files) for Feel++ applications (e.g. feelpp-quickstart)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp-toolboxes1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">toolboxes shared libraries</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">libfeelpp-toolboxes1-all-dev</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">toolboxes development headers and libraries</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-toolboxes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../using/index.html#_using_feel_toolboxes" class="xref page">toolbox applications</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">feelpp-toolboxes-data</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">data files (geometry and config files) for Feel++ toolboxes</p></td>
-</tr>
-</tbody>
-</table>
-<h4 id="_installation_examples_3" class="discrete">Installation examples</h4>
-<div class="literalblock">
-<div class="title">Install the library</div>
+<div class="exampleblock">
 <div class="content">
-<pre>$ sudo apt install libfeelpp1</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="title">Install the tools</div>
+<div class="openblock">
 <div class="content">
-<pre>$ sudo apt install feelpp-tools</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="title">Install the quickstart applications and associated data</div>
-<div class="content">
-<pre>$ sudo apt install feelpp-quickstart feelpp-data</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="title">Install the toolboxes applications and associated data</div>
-<div class="content">
-<pre>$ sudo apt install feelpp-toolboxes feelpp-toolboxes-data</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="title">Install the toolboxes development environment</div>
-<div class="content">
-<pre>$ sudo apt install libfeelpp-toolboxes1-all-dev</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="title">Reinstall the runtime environment feelpp, the toolboxes and the python3 packages</div>
-<div class="content">
-<pre>$ sudo apt install --reinstall 'feelpp-*' 'libfeelpp1' 'python3-feelpp-*'</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="title">Reinstall the development environment for feelpp and the toolboxes</div>
-<div class="content">
-<pre>$ sudo apt install --reinstall 'libfeelpp*'</pre>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Apptainer</dt>
+</dl>
 </div>
 </div>
 </div>
-<div class="tab-pane" aria-labelledby="tabset1_spack">
-<div class="paragraph">
-<p><a href="https://spack.io">Spack</a> packaging is available for Feel++ thanks to ghcr.io.
-Binaries are available for the generic microarchitecture <code>x86_64_v3</code>.</p>
-</div>
-<div class="paragraph">
-<p>The following steps require the installation of Spack and the cloning of the <code>spack.numpex</code> repository.</p>
-</div>
-<h3 id="spack" class="discrete">Clone Spack</h3>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">git clone https://github.com/spack/spack &lt;path to spack&gt;/spack
-source &lt;path to spack&gt;/spack/share/spack/setup-env.sh</code></pre>
-</div>
-</div>
-<h3 id="_add_feel_spack_mirror" class="discrete">Add Feel++ Spack Mirror</h3>
-<div class="paragraph">
-<p>First set the Feel++ mirror.</p>
-</div>
-<div class="listingblock">
-<div class="title">set the Feel++ spack mirror (only once)</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">spack mirror add spack-mirror oci://ghcr.io/feelpp/spack <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>add the mirror named spack-mirror to spack</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>You can check the mirror with</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">spack mirror list</code></pre>
-</div>
-</div>
-<h3 id="_clone_spack_numpex" class="discrete">Clone spack.numpex</h3>
-<div class="paragraph">
-<p>Add <code>spack.numpex</code> as a spack repository</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">git clone https://github.com/numpex/spack.numpex &lt;path to spack.numpex&gt;/spack.numpex
-spack repo add &lt;path to spack.numpex&gt;/spack.numpex
-# check the repo
-spack repo list</code></pre>
-</div>
-</div>
-<h3 id="_install_feel" class="discrete">Install Feel++</h3>
-<div class="paragraph">
-<p>then download the package feelpp</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">spack install --use-buildcache only --no-check-signature feelpp target=x86_64_v3</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Feel++ package as well as the dependencies will be installed.</p>
-</div>
-<div class="paragraph">
-<p>You can check the package by run <code>spack test</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">spack test run feelpp</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then load the Feel++ package</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">spack load feelpp</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Try get some info about Feel++ using the command <code>feelpp_info</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">feelpp_info</code></pre>
-</div>
-</div>
-</div>
-<div class="tab-pane" aria-labelledby="tabset1_docker">
-<div class="paragraph">
-<p>A docker image is generated with the deb packages.
-The image is based on the LTS distribution Ubuntu Noble 24.04.</p>
-</div>
-<div class="paragraph">
-<p>To download and execute it, follow the steps described below</p>
-</div>
-<div class="listingblock">
-<div class="title">Download and run  the feelpp docker image: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python</div>
-<div class="content">
-<pre>docker pull ghcr.io/feelpp/feelpp:noble
-docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:noble</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Download and run  the feelpp docker image including the development kit: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python</div>
-<div class="content">
-<pre>docker pull ghcr.io/feelpp/feelpp-dev:noble
-docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-dev:noble</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>These images are also available for
-
-* Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:jammy
-* Ubuntu 20.04 (focal): ghcr.io/feelpp/feelpp:focal
-* Debian 12 (bookworm): ghcr.io/feelpp/feelpp:bookworm</pre>
-</div>
-</div>
-</div>
-<div class="tab-pane" aria-labelledby="tabset1_apptainer">
 <div class="paragraph">
 <p>An <a href="https://apptainer.org/">Apptainer</a> image is generated with the deb packages.
 The image is based on the LTS distribution Ubuntu Noble 24.04.
@@ -1240,12 +1014,23 @@ apptainer inspect feelpp-noble.sif
 apptainer run feelpp-noble.sif feelpp_toolbox_fluid --version</pre>
 </div>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>These images are also available for
-
-* Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-jammy-sif</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>These images are also available for</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-jammy-sif</p>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="openblock">
+<div class="content">
+
 </div>
 </div>
 </div>
