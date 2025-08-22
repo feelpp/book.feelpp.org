@@ -985,17 +985,43 @@ T gcd(T a, T b);</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_formatting_stdformat_stdprint"><a class="anchor" href="#_formatting_stdformat_stdprint"></a>2.12. Formatting: <code>std::format</code> / <code>std::print</code></h3>
+<h3 id="_formatting_printing_prefer_stdformat_stdprint"><a class="anchor" href="#_formatting_printing_prefer_stdformat_stdprint"></a>2.12. Formatting &amp; Printing: prefer <code>std::format</code> / <code>std::print</code></h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Safer &amp; faster than iostreams/printf.</p>
+<p><code>std::format</code> and <code>std::print</code> (C++20/23) are safer and faster than iostreams (<code>&lt;&lt;</code>) or <code>printf</code>.</p>
+</li>
+<li>
+<p>Feel++ currently uses the <strong>{fmt} library</strong> (the same backend that powers <code>std::format</code>) because not all compilers and standard libraries provide <code>std::format</code> yet.</p>
+</li>
+<li>
+<p>Both styles are acceptable:</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>std::println("rank {} of {}", rank, size);</pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Standard (C++20/23)
+std::string msg = std::format("rank {} of {}", rank, size);
+std::println("{}", msg);
+
+// With {fmt} (used in Feel++)
+std::string msg = fmt::format("rank {} of {}", rank, size);
+fmt::println("{}", msg);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Important in parallel/HPC codes:</strong>
+- Direct printing (<code>std::println</code>, <code>fmt::println</code>) should be <strong>restricted</strong> (e.g., only master rank writes) to avoid flooding the terminal.
+- Logging (<code>LOG(INFO) &lt;&lt; fmt::format(&#8230;&#8203;)</code>) is <strong>MPI-aware and safe</strong> in Feel++:
+  - In master-only mode → only rank 0 produces output.
+  - In all-ranks mode → every process logs (useful for debugging).
+  - In selective mode → fine-grained control.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Logging with {fmt} and glog (preferred in Feel++)
+LOG(INFO) &lt;&lt; fmt::format("N={}", N);</code></pre>
 </div>
 </div>
 </div>
