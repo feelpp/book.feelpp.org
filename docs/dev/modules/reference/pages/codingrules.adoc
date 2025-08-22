@@ -339,11 +339,34 @@ T gcd(T a, T b);
 auto s = getStringLike();
 ----
 
-=== Formatting: `std::format` / `std::print`
-* Safer & faster than iostreams/printf.
+=== Formatting & Printing: prefer `std::format` / `std::print`
+
+* `std::format` and `std::print` (C++20/23) are safer and faster than iostreams (`<<`) or `printf`.  
+* Feel++ currently uses the **{fmt} library** (the same backend that powers `std::format`) because not all compilers and standard libraries provide `std::format` yet.  
+* Both styles are acceptable:  
+
 [source,cpp]
 ----
-std::println("rank {} of {}", rank, size);
+// Standard (C++20/23)
+std::string msg = std::format("rank {} of {}", rank, size);
+std::println("{}", msg);
+
+// With {fmt} (used in Feel++)
+std::string msg = fmt::format("rank {} of {}", rank, size);
+fmt::println("{}", msg);
+----
+
+*Important in parallel/HPC codes:*  
+- Direct printing (`std::println`, `fmt::println`) should be **restricted** (e.g., only master rank writes) to avoid flooding the terminal.  
+- Logging (`LOG(INFO) << fmt::format(...)`) is **MPI-aware and safe** in Feel++:  
+  - In master-only mode → only rank 0 produces output.  
+  - In all-ranks mode → every process logs (useful for debugging).  
+  - In selective mode → fine-grained control.  
+
+[source,cpp]
+----
+// Logging with {fmt} and glog (preferred in Feel++)
+LOG(INFO) << fmt::format("N={}", N);
 ----
 
 === Strong Types over Flags
