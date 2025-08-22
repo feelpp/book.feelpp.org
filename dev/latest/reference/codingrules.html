@@ -1170,22 +1170,35 @@ S_counter.fetch_add(1, std::memory_order_relaxed);</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Prefer <strong>collectives</strong> over manual loops — faster, fewer bugs.</p>
+<p>Prefer <strong>collectives</strong> over manual send/recv loops — they are simpler, faster, and less error-prone.</p>
 </li>
 <li>
-<p><strong>Rank 0</strong> handles user-facing logs/prints; others stay silent unless debugging.</p>
+<p>Logging is <strong>MPI-aware and integrated with Google glog</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>In <strong>master-only mode</strong>, only rank 0 logs; on other ranks the logging stream is a <strong>NoOp</strong>.</p>
 </li>
 <li>
-<p>Avoid <strong>gratuitous barriers</strong>; synchronize only when necessary (e.g., benchmarking fences).</p>
+<p>In <strong>all-ranks mode</strong>, every process logs (debugging).</p>
+</li>
+<li>
+<p>In <strong>selective mode</strong>, rank 0 logs info while specific ranks may log debug output.
+Users do <strong>not</strong> need to write <code>if (comm.rank()==0)</code> guards — <code>LOG(&#8230;&#8203;)</code> handles this transparently.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Collective vs manual broadcast:</strong></p>
+</li>
+<li>
+<p>Avoid <strong>gratuitous barriers</strong>; synchronize only when required (timing, algorithm phases).</p>
+</li>
+</ul>
 </div>
+<div class="sect3">
+<h4 id="_prefer_collectives_over_manual_loops"><a class="anchor" href="#_prefer_collectives_over_manual_loops"></a>3.4.1. Prefer collectives over manual loops</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong: manual send/recv loop (verbose, error-prone)
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong: manual broadcast via send/recv
 if (comm.rank() == 0)
 {
     for (int r = 1; r &lt; comm.size(); ++r)
@@ -1198,46 +1211,49 @@ else
     MPI_Recv(buf.data(), count, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 }
 
-// Correct: collective broadcast
+// Correct: use a collective broadcast
 MPI_Bcast(buf.data(), count, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-// (boost::mpi3 variants exist; use comm.broadcast_*/all_reduce, etc.)</code></pre>
+
+// (boost::mpi3 also provides collective methods, e.g. comm.broadcast_n)</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rank 0 logging (see also glog policy below):</strong></p>
 </div>
+<div class="sect3">
+<h4 id="_mpi_aware_logging_with_glog"><a class="anchor" href="#_mpi_aware_logging_with_glog"></a>3.4.2. MPI-aware logging with glog</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">if (comm.rank() == 0)
-{
-    logger.info("N={}", N);
-}</code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Transparent: behavior depends on logging configuration
+LOG(INFO) &lt;&lt; fmt::format("Starting computation with N={}", N);
+
+// In selective/debug mode, all ranks may emit if configured
+LOG(DEBUG) &lt;&lt; fmt::format("[rank {}] localNorm={}", comm.rank(), localNorm);</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Avoid unnecessary barriers:</strong></p>
 </div>
+<div class="sect3">
+<h4 id="_avoid_unnecessary_barriers"><a class="anchor" href="#_avoid_unnecessary_barriers"></a>3.4.3. Avoid unnecessary barriers</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Wrong: barrier in every loop step (expensive!)
 for (int step = 0; step &lt; steps; ++step)
 {
     compute_local();
-    MPI_Barrier(MPI_COMM_WORLD); // unnecessary fence
+    MPI_Barrier(MPI_COMM_WORLD); // unnecessary
 }
 
-// Correct: use waits or rely on collective semantics
+// Correct: rely on nonblocking ops or collectives
 std::vector&lt;MPI_Request&gt; reqs;
-// issue non-blocking ops...
+// issue nonblocking Isend/Irecv into reqs...
 MPI_Waitall(static_cast&lt;int&gt;(reqs.size()), reqs.data(), MPI_STATUSES_IGNORE);
 
-// Barrier only for timing fairness
+// Barrier only when timing phases
 MPI_Barrier(MPI_COMM_WORLD);
 double t0 = MPI_Wtime();
 do_work();
 MPI_Barrier(MPI_COMM_WORLD);
 double t1 = MPI_Wtime();
-if (comm.rank() == 0) { logger.info("Phase time = {:.6f}s", t1 - t0); }</code></pre>
+LOG(INFO) &lt;&lt; fmt::format("Phase time = {:.6f}s", t1 - t0);</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1266,65 +1282,45 @@ public:
 <div class="ulist">
 <ul>
 <li>
-<p>Feel++ uses <strong>Google glog</strong>. We support three modes:
-1) <strong>Master-only</strong>: only rank 0 logs → best for benchmarking (minimize I/O).
-2) <strong>All ranks</strong>: all processes log → for debugging only.
-3) <strong>Selective</strong>: rank 0 logs info; specific ranks may log debug based on flags.</p>
+<p>Feel++ integrates <strong>Google glog</strong> with MPI-aware logging.</p>
+</li>
+<li>
+<p>Logging behavior is controlled by configuration:
+1) <strong>Master-only</strong>: only rank 0 produces output (other ranks get a NoOp stream).
+2) <strong>All ranks</strong>: every rank logs (useful for debugging).
+3) <strong>Selective</strong>: rank 0 logs info; individual ranks can be configured to emit debug output.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Initialize glog once per process:</strong></p>
+<p><strong>Important:</strong> Users <strong>do not need</strong> to write <code>if (comm.rank()==0)</code> guards.
+Logging transparently respects the current MPI logging mode.
+On ranks where logging is disabled, the <code>LOG(&#8230;&#8203;)</code> call compiles to a <strong>NoOp</strong>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Transparent to the user:
+// In master-only mode → only rank 0 produces output
+// In all-ranks mode   → every rank produces output
+
+LOG(INFO) &lt;&lt; fmt::format("Starting computation with N={}", N);
+
+// Selective debug example (controlled via Feel++ logging config/flags)
+LOG(WARNING) &lt;&lt; fmt::format("[rank {}] localNorm={}", comm.rank(), localNorm);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Initialization (done once per process):</strong></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">int main(int argc, char **argv)
 {
-    google::InitGoogleLogging(argv[0]);  // glog
-    // FLAGS_logtostderr = 1;            // optional: log to stderr
-    // FLAGS_v = 1;                       // optional: verbose level
-    // ... init MPI/boost::mpi3 ...
-    // ... Feel++ init ...
-    // ...
+    google::InitGoogleLogging(argv[0]);
+    // Feel++ logging setup chooses master-only / all-ranks / selective
+    // based on command-line flags or configuration
 }</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p><strong>Master-only logging (benchmark mode):</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">if (comm.rank() == 0)
-{
-    LOG(INFO) &lt;&lt; fmt::format("N={}", N);
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>All-ranks logging (debug mode; beware of I/O):</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">LOG(INFO) &lt;&lt; fmt::format("[rank {}] localNorm={}", comm.rank(), localNorm);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Selective logging (rank 0 info + targeted debug):</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">if (comm.rank() == 0)
-{
-    LOG(INFO) &lt;&lt; "Starting phase A";
-}
-if (debug &amp;&amp; comm.rank() == verboseRank)
-{
-    LOG(INFO) &lt;&lt; fmt::format("Diagnostics: mean={}, var={}", mean, var);
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Recommendation:</strong> expose a Feel++ config (CLI/env) to choose <strong>master-only / all-ranks / selective</strong> and document it in user guides.</p>
 </div>
 </div>
 <div class="sect2">
