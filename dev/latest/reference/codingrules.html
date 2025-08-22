@@ -1010,13 +1010,42 @@ std::string msg = fmt::format("rank {} of {}", rank, size);
 fmt::println("{}", msg);</code></pre>
 </div>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><strong>Important in parallel/HPC codes:</strong>
-- Direct printing (<code>std::println</code>, <code>fmt::println</code>) should be <strong>restricted</strong> (e.g., only master rank writes) to avoid flooding the terminal.
-- Logging (<code>LOG(INFO) &lt;&lt; fmt::format(&#8230;&#8203;)</code>) is <strong>MPI-aware and safe</strong> in Feel++:
-  - In master-only mode → only rank 0 produces output.
-  - In all-ranks mode → every process logs (useful for debugging).
-  - In selective mode → fine-grained control.</p>
+<p>In parallel/HPC codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Direct printing (<code>std::println</code>, <code>fmt::println</code>) should be <strong>restricted</strong> (e.g., only master rank writes) to avoid flooding the terminal.</p>
+</li>
+<li>
+<p>Logging (<code>LOG(INFO) &lt;&lt; fmt::format(&#8230;&#8203;)</code>) is <strong>MPI-aware and safe</strong> in Feel++:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>In master-only mode → only rank 0 produces output.</p>
+</li>
+<li>
+<p>In all-ranks mode → every process logs (useful for debugging).</p>
+</li>
+<li>
+<p>In selective mode → fine-grained control.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="content">
