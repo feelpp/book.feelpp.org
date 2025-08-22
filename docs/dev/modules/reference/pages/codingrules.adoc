@@ -442,14 +442,19 @@ S_counter.fetch_add(1, std::memory_order_relaxed);
 ----
 
 === MPI (Message Passing Interface)
-* Prefer **collectives** over manual loops — faster, fewer bugs.  
-* **Rank 0** handles user-facing logs/prints; others stay silent unless debugging.  
-* Avoid **gratuitous barriers**; synchronize only when necessary (e.g., benchmarking fences).
 
-*Collective vs manual broadcast:*
+* Prefer **collectives** over manual send/recv loops — they are simpler, faster, and less error-prone.  
+* Logging is **MPI-aware and integrated with Google glog**:  
+  - In **master-only mode**, only rank 0 logs; on other ranks the logging stream is a **NoOp**.  
+  - In **all-ranks mode**, every process logs (debugging).  
+  - In **selective mode**, rank 0 logs info while specific ranks may log debug output.  
+  Users do **not** need to write `if (comm.rank()==0)` guards — `LOG(...)` handles this transparently.  
+* Avoid **gratuitous barriers**; synchronize only when required (timing, algorithm phases).
+
+==== Prefer collectives over manual loops
 [source,cpp]
 ----
-// Wrong: manual send/recv loop (verbose, error-prone)
+// Wrong: manual broadcast via send/recv
 if (comm.rank() == 0)
 {
     for (int r = 1; r < comm.size(); ++r)
@@ -462,42 +467,44 @@ else
     MPI_Recv(buf.data(), count, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 }
 
-// Correct: collective broadcast
+// Correct: use a collective broadcast
 MPI_Bcast(buf.data(), count, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-// (boost::mpi3 variants exist; use comm.broadcast_*/all_reduce, etc.)
+
+// (boost::mpi3 also provides collective methods, e.g. comm.broadcast_n)
 ----
 
-*Rank 0 logging (see also glog policy below):*
+==== MPI-aware logging with glog
 [source,cpp]
 ----
-if (comm.rank() == 0)
-{
-    logger.info("N={}", N);
-}
+// Transparent: behavior depends on logging configuration
+LOG(INFO) << fmt::format("Starting computation with N={}", N);
+
+// In selective/debug mode, all ranks may emit if configured
+LOG(DEBUG) << fmt::format("[rank {}] localNorm={}", comm.rank(), localNorm);
 ----
 
-*Avoid unnecessary barriers:*
+==== Avoid unnecessary barriers
 [source,cpp]
 ----
-// Wrong
+// Wrong: barrier in every loop step (expensive!)
 for (int step = 0; step < steps; ++step)
 {
     compute_local();
-    MPI_Barrier(MPI_COMM_WORLD); // unnecessary fence
+    MPI_Barrier(MPI_COMM_WORLD); // unnecessary
 }
 
-// Correct: use waits or rely on collective semantics
+// Correct: rely on nonblocking ops or collectives
 std::vector<MPI_Request> reqs;
-// issue non-blocking ops...
+// issue nonblocking Isend/Irecv into reqs...
 MPI_Waitall(static_cast<int>(reqs.size()), reqs.data(), MPI_STATUSES_IGNORE);
 
-// Barrier only for timing fairness
+// Barrier only when timing phases
 MPI_Barrier(MPI_COMM_WORLD);
 double t0 = MPI_Wtime();
 do_work();
 MPI_Barrier(MPI_COMM_WORLD);
 double t1 = MPI_Wtime();
-if (comm.rank() == 0) { logger.info("Phase time = {:.6f}s", t1 - t0); }
+LOG(INFO) << fmt::format("Phase time = {:.6f}s", t1 - t0);
 ----
 
 === GPU / Accelerators
@@ -512,56 +519,40 @@ public:
     void * M_dev = nullptr; // opaque; defined/managed in .cu/.hip
 };
 ----
-
 === Logging with Google glog (GLOG)
-* Feel++ uses **Google glog**. We support three modes:
-  1) **Master-only**: only rank 0 logs → best for benchmarking (minimize I/O).  
-  2) **All ranks**: all processes log → for debugging only.  
-  3) **Selective**: rank 0 logs info; specific ranks may log debug based on flags.
 
-*Initialize glog once per process:*
+* Feel++ integrates **Google glog** with MPI-aware logging.  
+* Logging behavior is controlled by configuration:  
+  1) **Master-only**: only rank 0 produces output (other ranks get a NoOp stream).  
+  2) **All ranks**: every rank logs (useful for debugging).  
+  3) **Selective**: rank 0 logs info; individual ranks can be configured to emit debug output.
+
+*Important:* Users **do not need** to write `if (comm.rank()==0)` guards.  
+Logging transparently respects the current MPI logging mode.  
+On ranks where logging is disabled, the `LOG(...)` call compiles to a **NoOp**.
+
+[source,cpp]
+----
+// Transparent to the user:
+// In master-only mode → only rank 0 produces output
+// In all-ranks mode   → every rank produces output
+
+LOG(INFO) << fmt::format("Starting computation with N={}", N);
+
+// Selective debug example (controlled via Feel++ logging config/flags)
+LOG(WARNING) << fmt::format("[rank {}] localNorm={}", comm.rank(), localNorm);
+----
+
+*Initialization (done once per process):*
 [source,cpp]
 ----
 int main(int argc, char **argv)
 {
-    google::InitGoogleLogging(argv[0]);  // glog
-    // FLAGS_logtostderr = 1;            // optional: log to stderr
-    // FLAGS_v = 1;                       // optional: verbose level
-    // ... init MPI/boost::mpi3 ...
-    // ... Feel++ init ...
-    // ...
+    google::InitGoogleLogging(argv[0]);
+    // Feel++ logging setup chooses master-only / all-ranks / selective
+    // based on command-line flags or configuration
 }
 ----
-
-*Master-only logging (benchmark mode):*
-[source,cpp]
-----
-if (comm.rank() == 0)
-{
-    LOG(INFO) << fmt::format("N={}", N);
-}
-----
-
-*All-ranks logging (debug mode; beware of I/O):*
-[source,cpp]
-----
-LOG(INFO) << fmt::format("[rank {}] localNorm={}", comm.rank(), localNorm);
-----
-
-*Selective logging (rank 0 info + targeted debug):*
-[source,cpp]
-----
-if (comm.rank() == 0)
-{
-    LOG(INFO) << "Starting phase A";
-}
-if (debug && comm.rank() == verboseRank)
-{
-    LOG(INFO) << fmt::format("Diagnostics: mean={}, var={}", mean, var);
-}
-----
-
-*Recommendation:* expose a Feel++ config (CLI/env) to choose **master-only / all-ranks / selective** and document it in user guides.
 
 === Testing & Benchmarking
 * Fix RNG seeds; make tests deterministic.  
