@@ -1,0 +1,38 @@
+
+// -*- mode: adoc -*-
+= Boundary integrals
+:page-tags: manual, boundary
+:page-illustration: fa-solid fa-border-all
+:description: Integrals computed on mesh boundaries and marked faces (fluxes, boundary contributions).
+:parent-catalogs: integrals
+:page-cards-order: 4
+:page-cards-tag: manual
+
+Boundary integrals are useful to compute fluxes, boundary forces, or to apply Neumann/Robin conditions.
+
+Common ranges for boundary integration:
+
+* `boundaryfaces(mesh)` — all boundary faces
+* `markedfaces(mesh, "MarkerName")` — faces with a given marker (see mesh marking in mesh generation)
+
+== Example: compute boundary flux
+
+Compute the flux of a vector field `q` through the boundary:
+
+[source,cpp]
+----
+auto q = idv(qv); // example vector expression
+double flux = integrate( _range = boundaryfaces(mesh), _expr = q*vf::N() ).evaluate()(0,0);
+std::cout << "total flux = " << flux << std::endl;
+----
+
+== Example: integral on a marked boundary
+
+Only integrate on faces marked with "Neumann":
+
+[source,cpp]
+----
+double neumannContrib = integrate( _range = markedfaces(mesh, "Neumann"), _expr = g ).evaluate()(0,0);
+----
+
+See xref:../Integrals/integrate.adoc[integrate] and xref:../Mesh/iterators.adoc[Mesh iterators] for parameter options such as `_quad` and `_geomap`.

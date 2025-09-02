@@ -43,7 +43,10 @@ SET(SRC
   04-myexpression
   05-myexporter
   07-myfunctionspace
+  07-functionspace-modern
   08-myintegrals
+  11-laplacian-modern
+  13-stokes-modern
   #  model1.cpp
   #  model2.cpp
   #  myadvection.cpp

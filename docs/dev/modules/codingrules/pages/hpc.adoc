@@ -1,0 +1,164 @@
+= HPC Practices
+:page-tags: manual, coding-rule-hpc
+:parent-catalogs: coding-rules
+:page-illustration: fa-solid fa-microchip
+:page-description: Best practices for high-performance computing (HPC).
+:page-cards-order: 3
+
+This section concentrates the HPC guidance (MPI, GPU, determinism, logging, performance).
+
+== Determinism & Reproducibility
+* Avoid hidden global state; seed RNGs explicitly; document nondeterministic paths.
+
+[source,cpp]
+----
+// Deterministic RNG (repeatable experiments)
+std::mt19937 gen(1337);
+std::uniform_real_distribution<double> dist(0.0, 1.0);
+double u = dist(gen);
+----
+
+== Memory & Data Layout
+* Reuse allocations in loops; prefer contiguous memory; consider **SoA** for SIMD/vectorization.
+
+[source,cpp]
+----
+// Wrong: allocates each iteration
+for (int i = 0; i < N; ++i)
+{
+	std::vector<double> buf(1024);
+	process(buf);
+}
+
+// Correct: reuse
+std::vector<double> buf(1024);
+for (int i = 0; i < N; ++i)
+{
+	process(buf);
+}
+----
+
+*Glossary:* **SoA** = Structure of Arrays vs **AoS** = Array of Structures.
+
+== Concurrency & Atomics
+* Minimize shared mutable state; prefer message passing; when needed, use `std::atomic` with explicit memory order.
+
+[source,cpp]
+----
+std::atomic<int> S_counter{0};
+S_counter.fetch_add(1, std::memory_order_relaxed);
+----
+
+== MPI Practices
+* Prefer collectives over manual send/recv loops — simpler, faster, less error-prone.
+* Avoid gratuitous barriers; synchronize only when required (timing, phases).
+* Logging is MPI-aware and integrated with Google glog.
+
+=== Prefer collectives over manual loops
+[source,cpp]
+----
+// Wrong: manual broadcast via send/recv
+if (comm.rank() == 0)
+{
+	for (int r = 1; r < comm.size(); ++r)
+	{
+		MPI_Send(buf.data(), count, MPI_DOUBLE, r, 0, MPI_COMM_WORLD);
+	}
+}
+else
+{
+	MPI_Recv(buf.data(), count, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+}
+
+// Correct: use a collective broadcast
+MPI_Bcast(buf.data(), count, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+
+// (boost::mpi3 also provides collective methods, e.g. comm.broadcast_n)
+----
+
+=== MPI-aware logging with glog
+[source,cpp]
+----
+// Transparent: behavior depends on logging configuration
+LOG(INFO) << fmt::format("Starting computation with N={}", N);
+
+// In selective/debug mode, all ranks may emit if configured
+LOG(DEBUG) << fmt::format("[rank {}] localNorm={}", comm.rank(), localNorm);
+----
+
+=== Avoid unnecessary barriers
+[source,cpp]
+----
+// Wrong: barrier in every loop step (expensive!)
+for (int step = 0; step < steps; ++step)
+{
+	compute_local();
+	MPI_Barrier(MPI_COMM_WORLD); // unnecessary
+}
+
+// Correct: rely on nonblocking ops or collectives
+std::vector<MPI_Request> reqs;
+// issue nonblocking Isend/Irecv into reqs...
+MPI_Waitall(static_cast<int>(reqs.size()), reqs.data(), MPI_STATUSES_IGNORE);
+
+// Barrier only when timing phases
+MPI_Barrier(MPI_COMM_WORLD);
+double t0 = MPI_Wtime();
+do_work();
+MPI_Barrier(MPI_COMM_WORLD);
+double t1 = MPI_Wtime();
+LOG(INFO) << fmt::format("Phase time = {:.6f}s", t1 - t0);
+----
+
+== GPU / Accelerators
+* Don’t leak CUDA/HIP types in public headers; keep device pointers opaque; keep kernels focused.
+
+[source,cpp]
+----
+// header (opaque device handle)
+class DeviceBuffer
+{
+public:
+	void * M_dev = nullptr; // opaque; defined/managed in .cu/.hip
+};
+----
+
+== Logging with Google glog (GLOG)
+* MPI-aware logging modes:
+  1) Master-only: only rank 0 produces output (other ranks get a NoOp stream).
+  2) All ranks: every rank logs (useful for debugging).
+  3) Selective: rank 0 logs info; specific ranks can emit debug.
+
+Users do not need to write `if (comm.rank()==0)` guards — `LOG(...)` honors the configured mode. On ranks where logging is disabled, the call compiles to a NoOp.
+
+[source,cpp]
+----
+// Transparent to the user
+LOG(INFO) << fmt::format("Starting computation with N={}", N);
+LOG(WARNING) << fmt::format("[rank {}] localNorm={}", comm.rank(), localNorm);
+----
+
+*Initialization (done once per process):*
+[source,cpp]
+----
+int main(int argc, char **argv)
+{
+	google::InitGoogleLogging(argv[0]);
+	// Feel++ logging setup chooses master-only / all-ranks / selective
+}
+----
+
+== Testing & Benchmarking
+* Fix RNG seeds; make tests deterministic. Separate microbenchmarks from unit tests. Use sanitizers (ASan/UBSan/TSan) in dedicated CI jobs.
+
+[source,cpp]
+----
+std::mt19937 gen(42); // fixed seed for tests
+----
+
+== Glossary (HPC)
+* **MPI**: Message Passing Interface — standard for distributed-memory parallelism.
+* **GPU**: Graphics Processing Unit — accelerator used for massively parallel workloads.
+* **SoA/AoS**: Structure of Arrays / Array of Structures — data layout patterns affecting vectorization and cache behavior.
+* **SIMD**: Single Instruction, Multiple Data — CPU vector instructions (e.g., AVX).
+* **Barrier**: global synchronization point across MPI ranks (use sparingly).

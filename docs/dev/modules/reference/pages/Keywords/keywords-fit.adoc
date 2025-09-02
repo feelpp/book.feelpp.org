@@ -1,4 +1,9 @@
-== Fitting 
+= Fitting 
+:page-tags: manual, keywords, fit
+:page-illustration: fa-solid fa-ruler
+:description: Data fitting and interpolation keywords (fit, fitDiff).
+:page-cards-order: 7
+:parent-catalogs: keywords
 
 Keywords  `fit` and `fitDiff` provide the
 interpolated data and the derivative of the interpolated data respectively.
@@ -14,7 +19,7 @@ K.on(_range=elements(mesh), _expr=fit(idv(T)[,dataFile(string),[type(string)]]))
 Kd.on(_range=elements(mesh), _expr=fitDiff(idv(T)[,dataFile(string),[type(string)]]));
 ----
 
-=== Options
+== Options
 
 |===
 | `--fit.datafile` | the data file to interpolate (two columns)
@@ -30,4 +35,6 @@ Kd.on(_range=elements(mesh), _expr=fitDiff(idv(T)[,dataFile(string),[type(string
 ----
 include::https://raw.githubusercontent.com/feelpp/feelpp/develop/testsuite/feelfit/test_fit.cpp[tag=fit]
 ----
+
+:parent-catalogs: keywords
 

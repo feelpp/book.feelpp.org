@@ -1,0 +1,35 @@
+// -*- mode: adoc -*-
+= Integrals on subdomains
+:page-tags: manual, subdomain
+:page-illustration: integral.svg
+:description: Integrals restricted to marked subdomains or regions in a mesh.
+:parent-catalogs: integrals
+:page-cards-order: 5
+:page-cards-tag: manual
+
+You often need to integrate only on a part of the mesh (a subset of elements) defined by markers or ranges.
+
+Examples of ranges:
+
+* `elements(mesh)` — whole mesh
+* `elements(mesh, "RegionName")` — elements marked with `RegionName` (if your mesh generation set region markers)
+* `faces(mesh, "MarkerName")` and `markedfaces(mesh, "MarkerName")` — face-based markers
+
+== Example: integral over a subregion
+
+[source,cpp]
+----
+double energy = integrate( _range = elements(mesh, "DomainA"), _expr = 0.5*nu*trans(gradv(u))*gradv(u) ).evaluate()(0,0);
+----
+
+== Example: assemble only on a subdomain
+
+Use `form1`/`form2` and restrict integrals to a region:
+
+[source,cpp]
+----
+form2( _test = Xh, _trial = Xh, _matrix = A ) +=
+  integrate( _range = elements(mesh, "DomainA"), _expr = trans(gradt(u))*grad(v) );
+----
+
+When using external mesh generators, ensure region and boundary markers are exported and preserved in the mesh file.

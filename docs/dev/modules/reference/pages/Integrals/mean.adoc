@@ -1,26 +1,31 @@
 // -*- mode: adoc -*-
+= Mean
+:page-tags: manual, mean
+:page-illustration: fa-solid fa-sigma
+:description: Compute the mean value of a function using the `mean()` helper.
+:parent-catalogs: integrals
+:page-cards-order: 2
+:page-cards-tag: manual
 
-== Mean value of a function
-
-Let stem:[f] a bounded function on domain stem:[\Omega]. You can evaluate the mean value of a function thanks to the `mean()` function :
+Let stem:[f] be a bounded function on domain stem:[\Omega]. The `mean()` helper evaluates the average value of `f` on a domain:
 
 [stem]
-++++
++++
 \bar{f}=\frac{1}{|\Omega|}\int_\Omega f=\frac{1}{\int_\Omega 1}\int_\Omega f
-++++
++++
 
-=== Interface
+== Interface
 
 [source,cpp]
 ----
-  mean( _range, _expr, _quad, _geomap );
+mean( _range, _expr, _quad, _geomap );
 ----
 
 Required parameters:
 
 * `_range` = domain of integration
 
-* `_expr` = mesurable function
+* `_expr` = measurable function
 
 Optional parameters:
 
@@ -30,10 +35,9 @@ Optional parameters:
 * `_geomap` = type of geometric mapping.
    - Default = `GEOMAP_OPT`
 
-=== Example
+== Example
 
-
-.Stokes example using `mean`
+.Stokes example using `mean()`
 [source,cpp]
 ----
 include::{examplesdir}/mystokes.cpp[tag=main]

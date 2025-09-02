@@ -1,4 +1,9 @@
 = Fair Data
+:page-tags: manual, data-plan-fair
+:parent-catalogs: data-plan
+:page-description: FAIR data principles for Feel++ data management.
+:page-illustration: fa-solid fa-balance-scale
+:page-cards-order: 2
 
 According to FORCE11 [<<1,1>>], *FAIR data* stands for *Findable*, *Accessible*, *Interoperable*, and *Re-usable*.
 It is a concept promoted as a way to facilitate data sharing among scientists.
@@ -10,17 +15,145 @@ NOTE: including provisions for metadata
 
 === Are the data produced and/or used in the project discoverable with metadata, identifiable and locatable by means of a standard identification mechanism (e.g. persistent and unique identifiers such as Digital Object Identifiers)?
 
+Yes, {feelpp} implements a comprehensive data discovery and identification system:
+
+Persistent Identifiers::
+* Digital Object Identifiers (DOIs) for published datasets through Zenodo integration
+* Git repository tags and commit hashes for version control
+* Unique simulation identifiers based on parameter fingerprints
+
+Metadata Standards::
+* Dublin Core metadata for general resource description
+* DataCite schema for research datasets
+* Custom {feelpp} metadata schemas for simulation-specific information
+
+Discovery Mechanisms::
+* Integration with the Cemosis data repository and catalog
+* HAL (Hyper Articles en Ligne) repository for French academic publications
+* GitHub/GitLab repository metadata for source code and examples
+* Web-based data portals with search capabilities
+
 === What naming conventions do {feelpp} follow?
+
+{feelpp} follows structured and consistent naming conventions:
+
+File Naming::
+* Descriptive names with domain, problem type, and resolution: `heat_2d_square_h0.1.json`
+* Timestamped outputs: `result_YYYYMMDD_HHMMSS.h5`
+* Version suffixes for iterative development: `mesh_v1.2.msh`
+
+Directory Structure::
+* Hierarchical organization: `/domain/application/case/results/`
+* Standardized subdirectories: `/input/`, `/output/`, `/postprocessing/`
+
+Dataset Naming::
+* Project prefix + description + version: `feelpp_heat_benchmarks_v2.1`
+* Application-specific conventions: `eye2brain_patient_001_mri_t1`
+
+Variable and Field Naming::
+* Physical quantities with units: `temperature_celsius`, `velocity_ms`
+* Standardized mathematical symbols: `u` (displacement), `p` (pressure), `T` (temperature)
 
 === Will search keywords be provided that optimize possibilities for re-use?
 
+Yes, comprehensive keyword strategies are implemented:
+
+Domain-Specific Keywords::
+* Mathematical: "finite elements", "spectral methods", "Galerkin", "multiphysics"
+* Application domains: "biomedical", "thermal", "fluid dynamics", "electromagnetics"
+* Computational: "HPC", "parallel computing", "C++", "Python"
+
+Methodological Keywords::
+* "verification", "validation", "benchmarking", "uncertainty quantification"
+* "mesh generation", "adaptive refinement", "error estimation"
+
+Interdisciplinary Keywords::
+* Medical applications: "MRI", "hemodynamics", "brain modeling"
+* Engineering: "heat transfer", "structural mechanics", "optimization"
+
+Technical Keywords::
+* File formats, software versions, computational platforms
+* Performance metrics, scaling properties
+
 === Do we provide clear version numbers?
 
+Yes, {feelpp} implements comprehensive versioning:
+
+Software Versioning::
+* Semantic versioning (MAJOR.MINOR.PATCH) for {feelpp} library releases
+* Git tags and releases for all software components
+* Docker image versioning for reproducible environments
+
+Data Versioning::
+* Version numbers for datasets: v1.0, v1.1, v2.0
+* Timestamped snapshots for evolving datasets
+* Checksum-based integrity verification
+
+Documentation Versioning::
+* Synchronized documentation with software releases
+* Change logs and migration guides between versions
+* API versioning for programmatic access
+
+Reproducibility Support::
+* Complete environment specifications (software stack, dependencies)
+* Provenance tracking for generated data
+* Version-locked configurations for long-term reproducibility
+
 === What metadata will be created? In case metadata standards do not exist in your discipline, please outline what type of metadata will be created and how.
+
+{feelpp} creates comprehensive metadata following established and custom standards:
+
+Standard Metadata Schemas::
+* Dublin Core for basic resource description
+* DataCite for research data citation
+* FAIR Data Point for FAIR compliance
+* CodeMeta for software metadata
+
+Custom {feelpp} Metadata::
+* Simulation parameters and boundary conditions
+* Computational environment specifications (compiler, MPI, libraries)
+* Mathematical formulation details (equations, discretization)
+* Performance characteristics (runtime, memory, scaling)
+
+Technical Metadata::
+* File format specifications and structure
+* Data quality indicators and validation results
+* Provenance information (workflow, dependencies)
+* Access and usage statistics
+
+Application-Specific Metadata::
+* Medical data: Patient anonymization, imaging protocols
+* Engineering data: Material properties, experimental conditions
+* Benchmark data: Problem specifications, reference solutions
+
+Metadata is stored in JSON-LD format for machine readability and integrated into the Cemosis data management infrastructure.
 
 == Making data openly accessible
 
 === Which data produced and/or used in the project will be made openly available as the default?
+
+By default, the following data will be made openly available:
+
+Freely Available Data::
+* Benchmark datasets and validation cases
+* Educational examples and tutorials
+* Software documentation and user guides
+* Performance analysis and scaling studies
+* Non-sensitive simulation results
+
+Open Source Components::
+* {feelpp} library source code (LGPL license)
+* Example configurations and test cases
+* Mesh generation tools and geometries
+* Post-processing scripts and visualizations
+
+Restricted Access Data::
+* Medical data (anonymized, with patient consent protocols)
+* Industrial proprietary datasets (partner agreements required)
+* Preliminary research results (embargo periods)
+* Third-party licensed data
+
+The default principle is open access unless legal, ethical, or contractual restrictions apply. All restrictions are clearly documented with justification.
 
 NOTE: If certain datasets cannot be shared (or need to be shared under restrictions), explain why, clearly separating legal and contractual reasons from voluntary restrictions.
 
@@ -28,17 +161,112 @@ NOTE: that in multi-beneficiary projects it is also possible for specific benefi
 
 === How will the data be made accessible?
 
+Data accessibility is ensured through multiple channels:
+
+Primary Repositories::
+* Cemosis Data Repository: Institutional repository at University of Strasbourg
+* Zenodo: For DOI assignment and long-term preservation
+* HAL (Hyper Articles en Ligne): French national repository
+* GitHub/GitLab: For source code and example datasets
+
+Access Methods::
+* Direct download via web interfaces
+* API access for programmatic retrieval
+* Version control systems (Git) for code and configuration
+* Streaming access for large datasets
+
+Distribution Formats::
+* Container images (Docker, Singularity) for complete environments
+* Package managers for software components
+* Cloud storage integration (academic and commercial platforms)
+
 NOTE: e.g. by deposition in a repository
 
 === What methods or software tools are needed to access the data?
 
+Accessing {feelpp} data requires different tools depending on data type:
+
+Basic Access::
+* Web browsers for metadata and documentation
+* Standard file managers for simple datasets
+* Text editors for configuration files
+
+Scientific Computing Tools::
+* {feelpp} library for native data formats
+* ParaView/VisIt for visualization (VTK, Ensight formats)
+* HDF5 tools for large numerical datasets
+* Python scientific stack (NumPy, SciPy, Matplotlib)
+
+Specialized Software::
+* GMSH for mesh files
+* Medical imaging software (3D Slicer, ITK-SNAP) for biomedical data
+* CAD software for geometric models
+* Version control tools (Git) for code repositories
+
+Development Environment::
+* C++ compiler and development tools
+* Python interpreter with scientific libraries
+* Container platforms (Docker, Singularity)
+* High-performance computing environments
+
 === Is documentation about the software needed to access the data included?
+
+Yes, comprehensive documentation is provided:
+
+User Documentation::
+* Installation guides for all platforms (Linux, macOS, Windows)
+* Quick start tutorials and examples
+* Complete API reference and user manual
+* Video tutorials and webinars
+
+Technical Documentation::
+* File format specifications
+* Data structure descriptions
+* Workflow documentation with step-by-step instructions
+* Troubleshooting guides and FAQ
+
+Developer Documentation::
+* Source code documentation (Doxygen)
+* Contribution guidelines
+* Build system instructions
+* Testing procedures and validation protocols
+
+Accessibility Features::
+* Multiple documentation formats (HTML, PDF, EPUB)
+* Multilingual support (English, French)
+* Searchable online documentation
+* Community forums and support channels
 
 === Is it possible to include the relevant software ?
 
 NOTE: e.g. in open source code
 
 === Where will the data and associated metadata, documentation and code be deposited?
+
+Data deposition follows a multi-tier strategy utilizing certified repositories:
+
+Primary Repositories::
+* Zenodo (zenodo.org): Long-term preservation with DOI assignment for published datasets
+* HAL (hal.archives-ouvertes.fr): French national repository for academic publications and data
+* Cemosis Repository: Institutional repository for ongoing projects and internal use
+* GitHub/GitLab: Source code, examples, and version-controlled datasets
+
+Specialized Repositories::
+* Software Heritage: Permanent archival of all source code
+* Medical imaging repositories: Anonymized biomedical datasets (with ethics approval)
+* Domain-specific repositories: Field-appropriate archives for specialized datasets
+
+Repository Selection Criteria::
+* Certification status (ISO 16363, OAIS compliance)
+* Long-term sustainability and funding
+* Community adoption in relevant domains
+* Technical capabilities (APIs, search, visualization)
+
+Integration Strategy::
+* Automated deposition workflows from development environments
+* Metadata synchronization across repositories
+* Cross-repository linking and citation
+* Backup strategies across multiple platforms
 
 NOTE: Preference should be given to certified repositories which support open access where possible.
 
@@ -54,6 +282,32 @@ NOTE: If there are restrictions on use, how will access be provided?
 
 === Are the data produced in the project interoperable, that is allowing data exchange and re-use between researchers, institutions, organisations, countries, etc. (i.e. adhering to standards for formats, as much as possible compliant with available (open) software applications, and in particular facilitating re-combinations with different datasets from different origins)?
 
+Yes, {feelpp} prioritizes interoperability through standardized formats and protocols:
+
+Standard File Formats::
+* HDF5 for large numerical datasets (self-describing, cross-platform)
+* VTK/VTU for visualization and post-processing
+* JSON for configuration and metadata
+* NetCDF for climate and environmental data
+
+Open Standards Compliance::
+* MPI for parallel computing interoperability
+* CGNS for computational fluid dynamics
+* DICOM for medical imaging data
+* OpenFOAM mesh compatibility
+
+Software Interoperability::
+* ParaView/VisIt visualization compatibility
+* Python scientific ecosystem integration
+* R statistical computing interfaces
+* MATLAB/Octave data exchange
+
+Cross-Platform Support::
+* Linux, macOS, Windows compatibility
+* Container-based distribution (Docker, Singularity)
+* Cloud platform integration (AWS, Azure, Google Cloud)
+* High-performance computing cluster support
+
 === What data and metadata vocabularies, standards or methodologies will you follow to make your data interoperable?
 
 === Will you be using standard vocabularies for all data types present in your data set, to allow inter-disciplinary interoperability?
@@ -64,6 +318,32 @@ NOTE: If there are restrictions on use, how will access be provided?
 == Making data re-usable
 
 === How will the data be licensed to permit the widest re-use possible?
+
+{feelpp} employs a comprehensive licensing strategy to maximize reuse while protecting appropriate interests:
+
+Open Source Licenses::
+* LGPL v3+ for {feelpp} core library (allows commercial use with attribution)
+* MIT/BSD licenses for utilities and examples (maximum permissivity)
+* Creative Commons licenses for documentation and educational materials
+* CC0 (public domain) for benchmark datasets and reference solutions
+
+Data-Specific Licensing::
+* CC BY 4.0: Attribution required, commercial use allowed
+* CC BY-SA 4.0: Share-alike for derivative datasets
+* CC BY-NC 4.0: Non-commercial use only (for sensitive applications)
+* Custom licenses: For industry partnerships with specific requirements
+
+Medical and Sensitive Data::
+* Controlled access with data use agreements
+* Anonymization protocols preserving scientific utility
+* Time-limited access for research purposes
+* Compliance with GDPR and medical ethics requirements
+
+Implementation::
+* Clear license statements in all data packages
+* Machine-readable license metadata
+* Legal review for complex licensing scenarios
+* Community education on licensing implications
 
 === When will the data be made available for re-use? If an embargo is sought to give time to publish or seek patents, specify why and how long this will apply, bearing in mind that research data should be made available as soon as possible.
 

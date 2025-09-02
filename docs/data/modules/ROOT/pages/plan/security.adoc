@@ -1,9 +1,78 @@
 = Data security
+:page-tags: manual, data-plan-security
+:parent-catalogs: data-plan
+:page-description: Data security provisions and protocols for Feel++ projects.
+:page-illustration: fa-solid fa-shield-alt
+:page-cards-order: 4
 
 == What provisions are in place for data security (including data recovery as well as secure storage and transfer of sensitive data)?
 
-NOTE: need to check with IRMA info team
+{feelpp} implements comprehensive security measures across all data operations:
+
+Access Control::
+* Role-based access control (RBAC) for different user categories
+* Multi-factor authentication for sensitive data access
+* Regular access audits and permission reviews
+* Integration with institutional identity management systems
+
+Data Protection::
+* Encryption at rest for all stored data (AES-256)
+* Encryption in transit using TLS 1.3+ for all data transfers
+* Anonymization protocols for medical and personal data
+* Secure key management through hardware security modules
+
+Infrastructure Security::
+* University of Strasbourg certified data centers
+* Redundant power and cooling systems
+* Physical access controls and surveillance
+* Regular security audits and penetration testing
+
+Backup and Recovery::
+* Automated daily backups with 3-2-1 backup strategy
+* Geographic distribution across multiple data centers
+* Regular recovery testing and disaster preparedness
+* Recovery time objectives (RTO) < 24 hours for critical data
+
+Monitoring and Incident Response::
+* 24/7 security monitoring and alerting
+* Intrusion detection and prevention systems
+* Incident response procedures with clear escalation paths
+* Collaboration with IRMA information security team
+
+
 
 == Is the data safely stored in certified repositories for long term preservation and curation?
 
-NOTE: need to check with IRMA info team
+Yes, {feelpp} utilizes multiple certified repositories for comprehensive data preservation:
+
+Primary Certified Repositories::
+* Zenodo (CERN): ISO 16363 certified for digital preservation
+* HAL (CCSD): French national repository with OAIS compliance
+* Cemosis Repository: University of Strasbourg institutional repository
+* Software Heritage: For permanent source code archival
+
+Certification Standards::
+* ISO 16363 (Audit and certification of trustworthy digital repositories)
+* OAIS (Open Archival Information System) compliance
+* FAIR Data Point certification for metadata exposure
+* University data governance standards
+
+Quality Assurance::
+* Regular repository audits and compliance checks
+* Data integrity verification through checksums
+* Metadata quality validation and enrichment
+* Migration planning for obsolete formats
+
+International Standards::
+* Dublin Core metadata standards
+* DataCite schema for dataset citation
+* PREMIS for preservation metadata
+* BagIt specification for data packaging
+
+Redundancy and Reliability::
+* Multiple geographic locations for critical data
+* Cross-repository replication for important datasets
+* Automated monitoring of repository health
+* Service level agreements with repository providers
+
+

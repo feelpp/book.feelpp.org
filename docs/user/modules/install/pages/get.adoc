@@ -1,0 +1,298 @@
+:feelpp: Feel++
+= Get {feelpp}
+:page-tags: manual, install-get
+:page-cards-tag: manual
+:page-illustration: fa-solid fa-download
+:page-description: Get {feelpp}: ubuntu, debian, spack, docker, apptainer, Windows WSL
+:parent-catalogs: install
+
+{feelpp} can be installed on Windows 10, Debian/Ubuntu systems.
+
+The main channel is called `latest`.
+
+// `stable`:: Docker and Debian/Ubuntu packages with latest {feelpp} release following the `master` branch.
+
+`latest`:: Docker and Debian/Ubuntu packages with latest {feelpp} development following the `develop` branch.
+
+[blockMacroTemplate,par,'flavor,dist,channel']
+----
+.Command lines to install the {channel} {feelpp} channel on {flavor}/{dist}
+[source,bash]
+--
+wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
+echo "deb http://apt.feelpp.org/{flavor}/{dist} {dist} {channel}" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+sudo apt update
+--
+----
+
+[tabs]
+====
+Ubuntu::
++
+--
+Ubuntu LTS distributions jammy(22.04-preferred) is supported.
+
+We may support short term distributions.
+
+[[noble]]
+[discrete]
+=== Noble Numbat LTS (24.04)
+
+par::[ubuntu,noble,latest]
+
+[[jammy]]
+[discrete]
+=== Jammy LTS (22.04)
+
+par::[ubuntu,jammy,latest]
+
+[[focal]]
+[discrete]
+=== Focal LTS (20.04)
+
+par::[ubuntu,focal,latest]
+
+
+The supported systems are described below
+[cols="1,1,1,1,2", options="header"]
+.Table {feelpp} Ubuntu distributions
+|===
+|Distribution | Release | Version | Supported Channels | Comment
+
+|ubuntu | noble | 24.04 | latest | LTS
+|ubuntu | jammy | 22.04 | latest | LTS
+|ubuntu | focal | 20.04 | latest | LTS
+
+
+|===
+
+include::partial$install-deb.adoc[]
+--
+
+Debian::
++
+--
+Debian LTS distribution bookworm(12) is supported.
+
+//Debian Sid packages are also available.
+
+The supported systems are described below
+[cols="1,1,1,1,2", options="header"]
+.Table {feelpp} Debian distributions
+|===
+|Distribution | Release | Version | Supported Channels | Comment
+|debian | bookworm | 12 | latest | LTS
+|debian | testing | - | latest | testing
+|debian | sid | - | latest | unstable
+|===
+
+[discrete]
+=== Bookworm (12)
+
+par::[debian,bookworm,latest]
+
+[discrete]
+=== Bullseye (11)
+
+par::[debian,bullseye,latest]
+
+[discrete]
+=== Testing (testing)
+
+par::[debian,testing,latest]
+
+[discrete]
+=== Sid (unstable)
+
+par::[debian,sid,latest]
+
+include::partial$install-deb.adoc[]
+--
+
+// Fedora::
+// +
+// --
+//
+// {feelpp} is not yet packaged for Fedora.
+// However
+//
+// - [x] it is possible to compile it from source for Fedora:36 and Fedora:37
+// - [x] a docker image containing {feelpp} development environment is available for both systems
+//
+// .Fedora 36(stable)
+//  $ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-36
+//
+// or
+//
+// .Fedora 37(beta)
+//  $ docker run --rm -it ghcr.io/feelpp/feelpp-env:fedora-37
+//
+// see xref:compile.adoc[how to build {feelpp} from sources].
+//
+// --
+Windows 10::
++
+--
+To use {feelpp} on Windows 10, follow these steps:
+
+ * [x] install https://docs.microsoft.com/fr-fr/windows/wsl/install-win10[WSL (Windows Subsystem for Linux)]
+ * [x] install https://docs.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions[Ubuntu jammy(22.04) Ubuntu focal (20.04) or Debian bookworm(12)]
+ * [x] follow the corresponding Ubuntu or Debian {feelpp} installation steps
+
+include::partial$install-deb.adoc[]
+--
+
+Spack::
++
+--
+https://spack.io[Spack] packaging is available for {feelpp} thanks to ghcr.io.
+Binaries are available for the generic microarchitecture `x86_64_v3`.
+
+The following steps require the installation of Spack and the cloning of the `spack.numpex` repository.
+
+[[spack]]
+[discrete]
+=== Clone Spack
+
+[source,sh]
+----
+git clone https://github.com/spack/spack <path to spack>/spack
+source <path to spack>/spack/share/spack/setup-env.sh
+----
+
+[discrete]
+=== Add {feelpp} Spack Mirror
+
+First set the {feelpp} mirror.
+
+.set the {feelpp} spack mirror (only once)
+[source,sh]
+----
+spack mirror add spack-mirror oci://ghcr.io/feelpp/spack <1>
+----
+<.> add the mirror named spack-mirror to spack
+
+You can check the mirror with
+[source,sh]
+----
+spack mirror list
+----
+
+[discrete]
+=== Clone spack.numpex
+
+Add `spack.numpex` as a spack repository
+
+[source,sh]
+----
+git clone https://github.com/numpex/spack.numpex <path to spack.numpex>/spack.numpex
+spack repo add <path to spack.numpex>/spack.numpex
+# check the repo
+spack repo list
+----
+
+[discrete]
+=== Install {feelpp}
+
+then download the package feelpp
+
+[source,sh]
+----
+spack install --use-buildcache only --no-check-signature feelpp target=x86_64_v3
+----
+
+{feelpp} package as well as the dependencies will be installed.
+
+You can check the package by run `spack test`
+[source,sh]
+----
+spack test run feelpp
+----
+
+Then load the {feelpp} package
+
+[source,sh]
+----
+spack load feelpp
+----
+
+Try get some info about {feelpp} using the command `feelpp_info`
+
+[source,sh]
+----
+feelpp_info
+----
+--
+
+Docker::
++
+--
+A docker image is generated with the deb packages.
+The image is based on the LTS distribution Ubuntu Noble 24.04.
+
+To download and execute it, follow the steps described below
+
+.Download and run the feelpp docker image: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
+----
+docker pull ghcr.io/feelpp/feelpp:noble
+docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp:noble
+----
+
+.Download and run the feelpp docker image including the development kit: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
+----
+docker pull ghcr.io/feelpp/feelpp-dev:noble
+docker run --rm -it -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-dev:noble
+----
+
+[NOTE]
+====
+These images are also available for
+
+* Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:jammy
+* Ubuntu 20.04 (focal): ghcr.io/feelpp/feelpp:focal
+* Debian 12 (bookworm): ghcr.io/feelpp/feelpp:bookworm
+====
+--
+
+Apptainer::
++
+--
+An https://apptainer.org/[Apptainer] image is generated with the deb packages.
+The image is based on the LTS distribution Ubuntu Noble 24.04.
+See more information on xref:containers.adoc#_apptainer[Apptainer].
+
+To download and execute it, follow the steps described below
+
+.Download and run the Feel++ Apptainer image: contains feelpp, feelpp-toolboxes, feelpp-mor and feelpp-python
+----
+apptainer pull -F feelpp-noble.sif oras://ghcr.io/feelpp/feelpp:v0.111.0-preview.10-noble-sif
+apptainer inspect feelpp-noble.sif
+apptainer run feelpp-noble.sif feelpp_toolbox_fluid --version
+----
+
+[NOTE]
+====
+These images are also available for
+
+* Ubuntu 22.04 (jammy): ghcr.io/feelpp/feelpp:v0.111.0-preview.10-jammy-sif
+====
+--
+
+// MacOSX::
+// +
+// --
+//
+// * [x] install https://brew.sh/[Homebrew]
+// * [x] install {feelpp} Homebrew tap
+// [source,bash]
+// ----
+// brew tap feelpp/homebrew-feelpp
+// ----
+// * [x] install {feelpp}
+// [source,bash]
+// ----
+// brew install feelpp
+// ----
+//
+// --
+====

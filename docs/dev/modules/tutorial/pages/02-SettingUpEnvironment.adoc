@@ -1,7 +1,218 @@
 
-== Setting up the {feelpp} Environment
+= Setting up the {feelpp} Environment
+:page-tags: manual, tutorial-02
+:parent-catalogs: tutorial-base
+:page-description: Setting up the Feel++ environment and writing your first application.
+:page-illustration: fa-solid fa-cogs
+:page-cards-order: 2
 
-NOTE: merge with link:01-OutputDirectories.adoc[] and rewrite pending!
+== Introduction
+
+The {feelpp} Environment class is the entry point for all {feelpp} applications. It handles the initialization and finalization of all required libraries including MPI for parallel computing, PETSc for linear algebra, and logging systems.
+
+The Environment must be created in your `main()` function and will exist for the entire lifetime of your application.
+
+== Basic Environment Setup
+
+Let's start with a minimal example showing how to set up the {feelpp} environment:
+
+[[FirstApp]]
+[source,cpp]
+----
+include::{examplesdir}/02-environment.cpp[]
+----
+
+=== Key Components
+
+**Header Include**: Always start by including the main {feelpp} header:
+[source,cpp]
+----
+#include <feel/feel.hpp>
+----
+
+**Environment Creation**: The Environment object takes several parameters:
+- `_argc` and `_argv`: Command line arguments
+- `_about`: Application metadata including name, author, and contact information
+
+**Information Access**: The Environment provides access to:
+- Process rank and total number of processes for MPI parallelism
+- {feelpp} version and build information  
+- Repository paths and configuration details
+
+== Adding Command Line Options
+
+{feelpp} uses the http://www.boost.org/doc/libs/1_53_0/doc/html/program_options.html[Boost Program Options] library to handle command line arguments. Here's how to add custom options:
+
+[source,cpp]
+----
+po::options_description myoptions( "My application options" );
+myoptions.add_options()
+    ( "param", po::value<double>()->default_value( 1.0 ), "parameter description" )
+    ( "verbose", po::value<bool>()->default_value( false ), "enable verbose output" );
+
+Environment env( _argc=argc, _argv=argv,
+                 _desc=myoptions,
+                 _about=about( _name="myapp",
+                               _author="Your Name",
+                               _email="your.email@domain.com") );
+----
+
+**Option Access**: Use these functions to retrieve option values:
+- `doption("param")` for double values
+- `boption("verbose")` for boolean values  
+- `ioption("count")` for integer values
+- `soption("text")` for string values
+
+== Compilation and Execution
+
+=== Building Your Application
+
+To compile a {feelpp} application, you need to link against the {feelpp} libraries. A basic CMake configuration looks like:
+
+[source,cmake]
+----
+cmake_minimum_required(VERSION 3.13)
+project(my_feelpp_app)
+
+find_package(feelpp REQUIRED)
+
+add_executable(my_app main.cpp)
+target_link_libraries(my_app feelpp)
+----
+
+=== Running Your Application
+
+Execute your application with:
+[source,bash]
+----
+./my_app
+----
+
+For parallel execution with MPI:
+[source,bash]
+----
+mpirun -np 4 ./my_app
+----
+
+== Configuration Files
+
+{feelpp} applications can read configuration from `.cfg` files. The search order is:
+
+1. Current directory: `./myapp.cfg` or `./feelpp_myapp.cfg`
+2. User config: `$HOME/feelpp/config/`  
+3. System config: `$INSTALL_PREFIX/share/feelpp/config/`
+
+=== Configuration File Format
+
+Create a file named `myapp.cfg`:
+[source,cfg]
+----
+# Application parameters
+param=2.5
+verbose=true
+
+# Mesh parameters  
+gmsh.filename=square.geo
+gmsh.hsize=0.1
+
+# Linear solver parameters
+ksp-type=cg
+pc-type=gamg
+----
+
+=== Multiple Configuration Files
+
+You can specify multiple configuration files:
+[source,bash]
+----
+./myapp --config-files base.cfg override.cfg local.cfg
+----
+
+Files are processed in order, with later files overriding earlier ones.
+
+== Parallel Computing Setup
+
+{feelpp} automatically handles MPI initialization through the Environment. Key parallel computing features:
+
+**Process Information**:
+[source,cpp]
+----
+int rank = Environment::rank();                    // Current process rank
+int nprocs = Environment::numberOfProcessors();     // Total number of processes
+auto worldComm = Environment::worldCommPtr();       // MPI communicator
+----
+
+**Conditional Execution**:
+[source,cpp]
+----
+if ( Environment::isMasterRank() )
+{
+    std::cout << "This runs only on the master process" << std::endl;
+}
+----
+
+== Repository and Output Organization
+
+{feelpp} organizes output files using environment variables:
+
+**FEELPP_REPOSITORY**: Root directory for results (default: `$HOME/feel`)
+**FEELPP_WORKDIR**: Alternative name for the same directory
+
+Within the repository, files are organized as:
+----
+$FEELPP_REPOSITORY/
+├── feel/
+│   └── myapp/
+│       └── np_1/                 # Results for 1 process
+│           ├── logs/             # Log files
+│           ├── exports/          # Visualization files
+│           └── checkpoints/      # Restart files
+----
+
+== Modern Best Practices
+
+=== Use Named Arguments
+
+Modern {feelpp} code uses named arguments for clarity:
+[source,cpp]
+----
+Environment env( _argc=argc, _argv=argv,
+                 _desc=options,
+                 _about=about_data );
+----
+
+=== Leverage Auto Type Deduction  
+
+Use `auto` for type deduction with {feelpp} objects:
+[source,cpp]
+----
+auto mesh = loadMesh(_mesh=new Mesh<Simplex<2>>);
+auto Vh = Pch<2>(mesh);
+----
+
+=== Structure Your Applications
+
+Organize larger applications with clear separation:
+[source,cpp]
+----
+int main( int argc, char** argv )
+{
+    using namespace Feel;
+    
+    Environment env( _argc=argc, _argv=argv, /* ... */ );
+    
+    // Problem setup
+    auto mesh = loadMesh(/*...*/);
+    auto Vh = Pch<2>(mesh);
+    
+    // Solve problem
+    solve_problem(mesh, Vh);
+    
+    return 0;
+}
+----
+
+This tutorial provides the foundation for all {feelpp} applications. The Environment class ensures proper initialization and cleanup of all required libraries and provides access to parallel computing, configuration management, and output organization.
 
 === Minimal Example
 

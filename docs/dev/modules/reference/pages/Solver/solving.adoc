@@ -1,8 +1,14 @@
 = Solving a linear system
+:page-tags: manual, solve-system
+:page-illustration: fa-solid fa-gears
+:description: Solving linear systems in Feel++.
+:page-cards-tag: manual
+:page-cards-order: 1
+:parent-catalogs: solvers
 
 The configuration files `.cfg` allow for a wide range of options to solve a linear or non-linear system.
 
-We consider now the following example
+We consider the following example
 
 [source,cpp]
 ----
@@ -116,4 +122,29 @@ ksp_monitor=1
 snes-monitor=1
 # eigen value problem
 eps-monitor=1
+----
+
+== Examples: linear and nonlinear solvers
+
+The following snippets show the typical usage of linear and nonlinear solver wrappers used in the testsuite.
+
+[source,c++]
+----
+// Linear solver (PETSc wrapper)
+SolverLinearPetsc<double> lsolver;
+size_type its;
+double resid;
+boost::tie( its, resid ) = lsolver.solve( A, X, F, 1e-12, 1000 );
+// residual history can be queried
+std::vector<double> history;
+lsolver.getResidualHistory( history );
+----
+
+[source,c++]
+----
+// Non-linear solver (petsc-backed builder) using Eigen::Map callbacks
+auto nlsolver = SolverNonLinear<double>::build( "petsc", "", Feel::Environment::worldCommPtr() );
+nlsolver->map_dense_residual = std::bind( &MyClass::updateResidual, this, std::placeholders::_1, std::placeholders::_2 );
+nlsolver->map_dense_jacobian = std::bind( &MyClass::updateJacobian, this, std::placeholders::_1, std::placeholders::_2 );
+nlsolver->solve( map_J, map_X, map_R, 1e-10, 10 );
 ----

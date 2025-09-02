@@ -1,8 +1,56 @@
 = Basic aspects
+:page-tags: manual, data-plan-basics
+:parent-catalogs: data-plan
+:page-description: Basic aspects of data management plan for Feel++ projects.
+:page-illustration: fa-solid fa-info-circle
+:page-cards-order: 1
 
 == What is the purpose of the data collection/generation and its relation to the objectives of {feelpp}?
 
+The primary purpose of data collection and generation in the {feelpp} project is to support scientific computing, mathematical modeling, and numerical simulation across multiple domains. The objectives include:
+
+Benchmarking and Validation::
+Collecting reference datasets to validate numerical methods and algorithms implemented in {feelpp}
+
+Performance Analysis::
+Generating performance metrics to optimize high-performance computing implementations
+
+Scientific Applications::
+Supporting multidisciplinary research in biomedical engineering, material science, fluid dynamics, and thermal modeling
+
+Open Science::
+Providing reproducible computational results and datasets for the scientific community
+
+Industrial Applications::
+Facilitating technology transfer through validated simulation tools and datasets
+
+The data collection serves the core mission of {feelpp} to democratize advanced mathematical modeling and simulation tools while maintaining scientific rigor and reproducibility.
+
 == What types and formats of data {feelpp} generates/collects?
+
+{feelpp} generates and collects diverse types of data across multiple categories:
+
+Simulation Data::
+* Mesh files (MSH, GMSH formats)
+* Solution fields (HDF5, VTK, Ensight formats)
+* Time series data (CSV, JSON)
+* Convergence and error analysis data
+
+Benchmarking Data::
+* Performance metrics (execution time, memory usage, scalability)
+* Accuracy assessments (error norms, convergence rates)
+* Comparative analysis results
+
+Application-Specific Data::
+* Medical imaging data (DICOM, NIfTI) for biomedical applications
+* Material property databases
+* Experimental validation datasets
+* Sensor measurements and monitoring data
+
+Documentation and Metadata::
+* Configuration files (JSON, CFG)
+* Parameter studies and sensitivity analysis
+* Computational geometry and CAD files
 
 The types and formats of data depends on the purpose of the data.
 Some datasets are provided for benchmarking and others for verification and validation.
@@ -38,6 +86,32 @@ At this stage, the following external data sources have been identified:
 * PO: PlasticOmnium automotive
 
 == What is the expected size of the data?
+
+The data size varies significantly depending on the application domain and computational complexity:
+
+Small-scale datasets (KB to MB)::
+* Configuration files and parameter sets
+* 1D and 2D simulation results
+* Performance metrics and logs
+* Documentation and metadata
+
+Medium-scale datasets (MB to GB)::
+* 3D simulation results for standard problems
+* Time-dependent simulations with moderate resolution
+* Benchmark and validation datasets
+* Medical imaging data for typical studies
+
+Large-scale datasets (GB to TB)::
+* High-resolution 3D simulations
+* Long-time integration studies
+* Uncertainty quantification campaigns
+* Large-scale parallel performance studies
+
+Application-specific estimates::
+* Eye2Brain: 10 MB to 500 MB per patient dataset
+* HifiMagnet: 100 MB to 2 GB per magnetic field simulation
+* HemoTumPP: 50 MB to 1 GB per hemodynamic simulation
+* Industrial applications: Highly variable (1 GB to 10 TB)
 
 The size of the data will also depend on the kind of data and other aspects, such as the concrete application and tools involved.
 

@@ -1,0 +1,51 @@
+== Integrals tutorial
+
+This short tutorial shows a complete flow: create a mesh, define expressions and compute several integrals (volume integral, boundary flux, mean and norms).
+
+=== 1) Create a mesh
+
+[source,cpp]
+----
+auto mesh = unitHypercube<2>(); // 2D unit square mesh
+----
+
+=== 2) Define expressions
+
+[source,cpp]
+----
+auto u = Px()*Px() + Py()*Py();
+auto g = sin( 2*pi*Px() )*cos( 2*pi*Py() );
+----
+
+=== 3) Integrate on the domain
+
+[source,cpp]
+----
+double I = integrate( _range = elements(mesh), _expr = u ).evaluate()(0,0);
+std::cout << "Integral of u over domain: " << I << std::endl;
+----
+
+=== 4) Boundary flux
+
+[source,cpp]
+----
+double flux = integrate( _range = boundaryfaces(mesh), _expr = (gradv(u) * vf::N()) ).evaluate()(0,0);
+std::cout << "Boundary flux: " << flux << std::endl;
+----
+
+=== 5) Mean and norms
+
+[source,cpp]
+----
+double avg = mean( _range = elements(mesh), _expr = u );
+double L2 = normL2( _range = elements(mesh), _expr = u );
+double H1 = normH1( _range = elements(mesh), _expr = u, _grad_expr = trans(gradv(u)) );
+auto linf = normLinf( _range = elements(mesh), _expr = u, _pset = _Q<5>() );
+std::cout << "avg="<<avg<<" L2="<<L2<<" H1="<<H1<<" max="<<linf.value()<<std::endl;
+----
+
+=== Tips
+
+* Use `_quad` to increase quadrature accuracy when integrands are high-order.
+* Use `evaluate(false)` to collect local per-element contributions.
+* Use `markedfaces` / `elements(mesh, "Region")` to restrict computations to subdomains or boundaries.

@@ -1,10 +1,104 @@
-= {feelpp} Developer Manual
-:page-layout: toolboxes
+= Tutorial Manual
+:page-layout: manuals
+:page-tags: catalog, tutorial-base
+:parent-catalogs: dev-manuals-catalog
+:description: Tutorial manual for developers using {feelpp}.
+:page-illustration: fa-solid fa-chalkboard-teacher
+:page-cards-order: 3
 
-This developer manual is for {feelpp} version {page-component-version}.
+[.lead]
+This developer manual provides a comprehensive tutorial for {feelpp} version {page-component-version}.
 
-* [x] An xref:ROOT:index.adoc[introduction to {feelpp} programming] which go through the main mathematical operations to solve a PDE and present basic programming aspects
-* [x] A xref:reference:index.adoc[mathematical concepts reference] which go through the different mathematical concepts, functions and classes and provide the reference documentation
+== Tutorial Overview
 
-* [x] xref:ROOT:debug.adoc[Debugging {feelpp}]
-* [x] xref:ROOT:profile.adoc[Profiling {feelpp}]
+This tutorial series covers the essential concepts and techniques for developing applications with {feelpp}. Each tutorial builds upon previous concepts while introducing new features and best practices.
+
+=== Getting Started
+
+* xref:01-OutputDirectories.adoc[Output Directories] - Understanding {feelpp} file organization
+* xref:02-SettingUpEnvironment.adoc[Environment Setup] - Initialize the {feelpp} environment and handle command line options
+
+=== Core Concepts
+
+* xref:03-LoadingMesh.adoc[Mesh Loading] - Load and manipulate computational meshes
+* xref:04-UsingExpressions.adoc[Mathematical Expressions] - Work with symbolic and numerical expressions
+* xref:05-EvaluatingFunctions.adoc[Function Evaluation] - Evaluate functions at points and over domains
+* xref:06-VisualizingFunctions.adoc[Visualization] - Export results for visualization
+* xref:07-FunctionSpaces.adoc[Function Spaces] - Create and work with finite element spaces
+* xref:08-ComputingIntegrals.adoc[Computing Integrals] - Numerical integration over meshes
+
+=== Advanced Topics
+
+* xref:09-UsingBackend.adoc[Linear Algebra Backend] - Configure and use linear solvers
+* xref:11-SolvingPDEs.adoc[Solving PDEs] - Complete guide to solving partial differential equations
+* xref:12-CreateModels.adoc[Creating Models] - Develop complete simulation models
+
+== Tutorial Philosophy
+
+These tutorials follow modern {feelpp} practices:
+
+**Modern C++ Features**: Leverage auto type deduction, range-based loops, and smart pointers
+**Named Arguments**: Use clear, self-documenting function calls
+**Error Handling**: Proper validation and error reporting
+**Performance**: Efficient memory usage and parallel computing
+**Best Practices**: Industry-standard coding patterns
+
+== Prerequisites
+
+Before starting these tutorials, ensure you have:
+
+* Basic C++ knowledge
+* Understanding of finite element concepts
+* {feelpp} development environment set up
+* Familiarity with CMake build system
+
+== Code Examples
+
+All tutorials include complete, working code examples that demonstrate:
+
+* Proper {feelpp} initialization and cleanup
+* Modern API usage patterns  
+* Error handling and validation
+* Performance considerations
+* Documentation and comments
+
+== Building and Running Examples
+
+Each tutorial includes compilable examples. Build them using:
+
+[source,bash]
+----
+cd tutorial/examples
+mkdir build && cd build
+cmake ..
+make
+----
+
+Run examples with:
+[source,bash]
+----
+./tutorial_name
+----
+
+For parallel execution:
+[source,bash]
+----
+mpirun -np 4 ./tutorial_name
+----
+
+== Configuration
+
+Examples include configuration files (`.cfg`) demonstrating:
+
+* Parameter specification
+* Solver configuration
+* Output control
+* Mesh parameters
+
+== Further Reading
+
+* xref:reference:index.adoc[Reference Manual] - Complete API documentation
+* xref:ROOT:debug.adoc[Debugging Guide] - Debugging {feelpp} applications  
+* xref:ROOT:profile.adoc[Performance Analysis] - Profiling and optimization
+
+This tutorial series provides the foundation for effective {feelpp} development, from basic concepts to advanced PDE solving techniques.

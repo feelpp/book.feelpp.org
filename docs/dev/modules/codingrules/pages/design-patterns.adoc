@@ -1,0 +1,191 @@
+= Design Patterns
+:page-tags: manual, coding-rule-design-pattern
+:parent-catalogs: coding-rules
+:page-illustration: fa-solid fa-puzzle-piece
+:page-description: Guidelines and examples of using design patterns effectively in Feel++ code.
+:page-cards-order: 4
+
+== Refactoring Guru
+
+The https://refactoring.guru/design-patterns/cpp[Refactoring Guru] website is an excellent resource for learning about design patterns and refactoring techniques, with clear explanations and C++ examples.  
+Feel++ developers are encouraged to consult Refactoring Guru to deepen their understanding of classic patterns and best practices, and to see how these patterns can be applied or adapted in scientific computing and numerical code.
+
+Some patterns you’ll find there—such as Factory, Strategy, Visitor, and Singleton—are directly relevant to Feel++ codebases.  
+Use this resource to guide your design decisions and to help communicate patterns and refactorings.
+
+== Factory / Strategy
+Use factory pattern to centralize object creation and strategy pattern to swap algorithms at runtime.
+
+[source,cpp]
+----
+// Strategy
+struct Integrator { virtual double integrate() const = 0; virtual ~Integrator() = default; };
+struct GaussIntegrator : Integrator { double integrate() const override { return 0.; } };
+struct SimpsonIntegrator : Integrator { double integrate() const override { return 0.; } };
+
+// Factory
+std::unique_ptr<Integrator> makeIntegrator(std::string_view name)
+{
+	if (name == "gauss") return std::make_unique<GaussIntegrator>();
+	if (name == "simpson") return std::make_unique<SimpsonIntegrator>();
+	throw std::invalid_argument("unknown integrator");
+}
+----
+
+== Visitor
+
+Use the Visitor pattern to add new operations to mesh entities (like `Element` and `Face`) without modifying their classes. 
+This is useful in {feelpp} for tasks such as exporting, printing, or computing properties on different mesh objects.
+
+[source,cpp]
+----
+// Visitor interface
+struct MeshEntityVisitor {
+    virtual void visit(class Element&) = 0;
+    virtual void visit(class Face&) = 0;
+    virtual ~MeshEntityVisitor() = default;
+};
+
+// Base entity
+struct MeshEntity {
+    virtual void accept(MeshEntityVisitor& v) = 0;
+    virtual ~MeshEntity() = default;
+};
+
+// Concrete entities
+struct Element : MeshEntity {
+    void accept(MeshEntityVisitor& v) override { v.visit(*this); }
+    // ... element-specific data ...
+};
+struct Face : MeshEntity {
+    void accept(MeshEntityVisitor& v) override { v.visit(*this); }
+    // ... face-specific data ...
+};
+
+// Concrete visitor
+struct PrintVisitor : MeshEntityVisitor {
+    void visit(Element&) override { std::cout << "Element\n"; }
+    void visit(Face&) override { std::cout << "Face\n"; }
+};
+
+// Usage
+Element e;
+Face f;
+PrintVisitor printer;
+e.accept(printer); // prints "Element"
+f.accept(printer); // prints "Face"
+----
+
+This pattern lets you add new operations (like exporting or analysis) to mesh entities in Feel++ without changing their classes—just implement a new visitor!
+
+
+== RAII and Resource Management
+Ensure acquisition and release of resources in constructors/destructors. Avoid raw `new/delete`.
+
+[source,cpp]
+----
+class ScopedTimer
+{
+public:
+	explicit ScopedTimer(std::string name) : M_name(std::move(name)), M_t0(std::chrono::steady_clock::now()) {}
+	~ScopedTimer()
+	{
+		auto t1 = std::chrono::steady_clock::now();
+		LOG(INFO) << fmt::format("{} took {} ms", M_name, std::chrono::duration_cast<std::chrono::milliseconds>(t1 - M_t0).count());
+	}
+private:
+	std::string M_name; // M_ for members
+	std::chrono::steady_clock::time_point M_t0;
+};
+----
+
+== Dependency Injection and Composition
+Prefer passing dependencies via constructors (or setters) to enable testing and flexibility.
+
+[source,cpp]
+----
+class Solver
+{
+public:
+	Solver(std::unique_ptr<Integrator> integrator) : M_integrator(std::move(integrator)) {}
+	double solve() const { return M_integrator->integrate(); }
+private:
+	std::unique_ptr<Integrator> M_integrator;
+};
+----
+
+== Error Handling Patterns
+Prefer exceptions for exceptional conditions; use `expected`-like results for recoverable flows where applicable. Log with glog at appropriate levels.
+
+[source,cpp]
+----
+double computeOrThrow(int n)
+{
+	if ([[unlikely]] n < 0) throw std::domain_error("n must be nonnegative");
+	return std::sqrt(n);
+}
+----
+
+NOTE: [[unlikely]] tells the compiler that the condition is rarely true, which may improve branch prediction and performance.
+
+
+== Minimal Interfaces and Favoring Composition
+
+Keep interfaces minimal and prefer composition over inheritance unless a clear hierarchy exists. This leads to more maintainable and flexible code.
+
+[source,cpp]
+----
+// Prefer composition:
+class Logger {
+public:
+    void log(const std::string& msg) const { std::cout << msg << std::endl; }
+};
+
+class Simulation {
+public:
+    Simulation(Logger& logger) : M_logger(logger) {}
+    void run() { M_logger.log("Simulation started"); }
+private:
+    Logger& M_logger;
+};
+----
+
+
+== Explicit Lifetimes and Smart Pointers
+
+Make object lifetimes explicit. Prefer smart pointers (`std::unique_ptr`, `std::shared_ptr`) and value semantics to avoid memory leaks and dangling pointers.
+
+[source,cpp]
+----
+class Mesh {
+    // ...
+};
+
+std::unique_ptr<Mesh> createMesh() {
+    return std::make_unique<Mesh>();
+}
+
+void useMesh() {
+    auto mesh = createMesh(); // mesh is automatically destroyed at end of scope
+}
+----
+
+
+== Documenting Ownership and Thread-Safety
+
+Always document who owns what and whether objects are thread-safe. This helps avoid bugs in concurrent or complex codebases.
+
+[source,cpp]
+----
+//! Solver owns the Integrator (unique_ptr)
+//! Thread-safe if Integrator is thread-safe
+class Solver {
+public:
+    Solver(std::unique_ptr<Integrator> integrator)
+      : M_integrator(std::move(integrator)) {}
+    // ...
+private:
+    std::unique_ptr<Integrator> M_integrator;
+};
+----
+

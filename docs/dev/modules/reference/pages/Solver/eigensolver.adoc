@@ -1,5 +1,11 @@
 // -*- mode: adoc -*-
 = Eigen Problem
+:page-tags: manual, eigensolver
+:page-illustration: fa-solid fa-bullseye
+:description: Eigensolver strategies available in Feel++.
+:page-cards-order: 4
+:page-cards-tag: manual
+:parent-catalogs: solvers
 
 To solve standard and generalized eigenvalue problems, Feel++
 interfaces http://slepc.upv.es[SLEPc]. SLEPc is a library which
@@ -85,6 +91,19 @@ the size of the subspace, `j` above. This parameter should always be
 greater than `nev`. SLEPc recommends to set it to `max(nev+15,
 2*nev)`. This can be set from the command line option
 `--solvereigen.ncv`.
+
+== Quick example
+
+[source,c++]
+----
+// assemble matrices A and B (see testsuite slepc example)
+auto A = backend->newMatrix( _test = Xh, _trial = Xh );
+auto B = backend->newMatrix( _test = Xh, _trial = Xh );
+// compute eigenmodes
+auto modes = SolverEigen<double>::eigs( _matrixA = A, _matrixB = B, _spectrum = SMALLEST_REAL, _transform = SINVERT );
+double lambda = modes.begin()->second.get<0>();
+auto eigen_vector = modes.begin()->second.get<2>();
+----
 
 == Problem type
 
