@@ -5,7 +5,7 @@
     "clean-install": "rm -rf node_modules/ .cache/ package-lock.json ;npm i --cache=.cache/npm",
     "dev": "npx antora site-dev.yml",
     "version": "npx antora --version",
-    "antora": "npx antora --stacktrace --cache cache/antora --fetch site.yml ",
+    "antora": "npx antora --stacktrace --fetch site.yml ",
     "dev-serve": "npx antora --stacktrace --fetch site-dev.yml ; node-srv -p 8010 build/site",
     "start": "http-server build/site -d -i",
     "serve": "node-srv -p 8011 build/site"
