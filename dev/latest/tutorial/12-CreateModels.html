@@ -3,16 +3,20 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/dev/latest/12-CreateModels.html">
-    <meta name="generator" content="Antora 3.1.9">
-    <link rel="stylesheet" href="../../_/css/site.css">
-    <link rel="stylesheet" href="../../_/css/listing.css">
-<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <title>Defining a Model :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/dev/latest/tutorial/12-CreateModels.html">
+    <meta name="generator" content="Antora 3.1.12">
+<link rel="stylesheet" href="../../../_/css/site.css">
+
+<!-- Font Awesome webfont CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../../../_/css/listing.css">
+<link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
-<script src="../../_/js/vendor/tabs-block-extension.js"></script>
-<script src="../../_/js/vendor/tabs-block-behavior.js"></script>
+<script src="../../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../../_/js/vendor/tabs-block-behavior.js"></script>
 
 
 
@@ -94,7 +98,7 @@ MathJax.Hub.Config({
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
 <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
-<script>var uiRootPath = '../../_'</script>
+<script>var uiRootPath = '../../../_'</script>
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
   </head>
@@ -103,7 +107,7 @@ MathJax.Hub.Config({
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
       <div class="navbar-item feelpp-logo">
-        <a href="https://docs.feelpp.org"><img src="../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
+        <a href="https://docs.feelpp.org"><img src="../../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -129,37 +133,37 @@ MathJax.Hub.Config({
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link" data-title="Support">
-            <span class="icon"><img src="../../_/img/octicons-24.svg#view-comment-discussion"></span>
+            <span class="icon"><img src="../../../_/img/octicons-24.svg#view-comment-discussion"></span>
           </div>
           <div class="navbar-dropdown is-right">
             <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/slack-icon.svg"></span>
+              <span class="icon"><img src="../../../_/img/slack-icon.svg"></span>
               <span>Chat</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-discussion-closed"></span>
               <span>Discussions</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-mark-github"></span>
               <span>Source</span>
             </a>
             <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-hash"></span>
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-hash"></span>
               <span>Tweets</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-bug"></span>
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-bug"></span>
               <span>Issues</span>
             </a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable download-item">
-            <div class="navbar-item"><a href="../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
+            <div class="navbar-item"><a href="../../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
         </div>
         <div class="navbar-item">
           <a class="navbar-brand"  href="https://www.cemosis.fr">
-            <img class="cemosis-logo"  src="../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
+            <img class="cemosis-logo"  src="../../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
           </a>
         </div>
       </div>
@@ -173,32 +177,24 @@ MathJax.Hub.Config({
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Developer manual</a></h3>
+    <h3 class="title"><a href="../index.html">Developer manuals</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming with Feel++</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming environment</span>
+    <span class="nav-text">Programming Environment Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Debugging Feel++</span>
+    <a class="nav-link" href="../env/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Profiling Feel++</span>
+    <a class="nav-link" href="../env/debugging.html">Debugging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../env/profiling.html">Profiling</a>
   </li>
 </ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#tutorial-dev:ROOT:index.adoc">Feel++ Development Tutorial</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#template_project:ROOT:index.adoc">Feel++ Template Project</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="fmufeelpp.html">Encapsulating Feel++ models in FMU</a>
   </li>
 </ul>
   </li>
@@ -206,117 +202,155 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/index.html">Mathematical Concepts Reference</a>
+    <span class="nav-text">Coding Rules Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Mesh/README.html">Mesh</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Mesh/iterators.html">Mesh iterators</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../codingrules/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Integrals/README.html">Integrals</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/integrate.html">integrate</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/mean.html">mean</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/norms.html">norms</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/project.html">project</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../codingrules/general.html">General Coding Rules</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Spaces/README.html">Function spaces</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/notations.html">Notations</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/functionspace.html">FunctionSpace</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/projection.html">Projection</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/interpolation.html">Interpolation</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/save.html">Save</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../codingrules/cpp20.html">C++20 and beyond</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Solver/README.html">Algebraic solutions</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/notations.html">Notations</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/backend.html">Defining a backend</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/preconditioner.html">Defining a preconditioner</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/solving.html">Solving linear systems</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/eigensolver.html">Solving eigenvalue problems</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../codingrules/hpc.html">HPC Rules</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reference/forms.html">Linear and Bilinear Forms</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Time/README.html">Time Discretization</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Time/bdf.html">BDF</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Time/adaptivestepping.html">Adaptive time stepping</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reference/exporter.html">Post-processing and Visualization</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reference/Keywords/README.html">Mathematical keywords</a>
+    <a class="nav-link" href="../codingrules/design-patterns.html">Design Patterns</a>
   </li>
 </ul>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Developer Reference</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/cmake.html">CMake Feel++ macros</a>
+    <a class="nav-link" href="index.html">Tutorial</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/environment.html">Feel++ Environment</a>
+</ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/fileformats.html">Feel++ File Formats</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/index.html">Mathematical Concepts Reference</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Mesh/README.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Mesh/iterators.html">Mesh iterators</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/codingrules.html">Feel++ Coding Rules</a>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#Integrals/README.adoc">Integrals</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Integrals/integrate.html">integrate</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Integrals/mean.html">mean</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Integrals/norms.html">norms</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Integrals/project.html">project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Spaces/README.html">Function spaces</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/notations.html">Notations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/functionspace.html">FunctionSpace</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/projection.html">Projection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/interpolation.html">Interpolation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/save.html">Save</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Solver/README.html">Algebraic solutions</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/notations.html">Notations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/backend.html">Defining a backend</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/preconditioner.html">Defining a preconditioner</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/solving.html">Solving linear systems</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/eigensolver.html">Solving eigenvalue problems</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../reference/forms.html">Linear and Bilinear Forms</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Time/README.html">Time Discretization</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Time/bdf.html">BDF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Time/adaptivestepping.html">Adaptive time stepping</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../reference/exporter.html">Post-processing and Visualization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Keywords/README.html">Mathematical keywords</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-mesh.html">Mesh</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords.html">Mathematical expressions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-geometry.html">Geometry</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-algebra.html">Vectors and matrices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-operators.html">Operators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-image.html">Image</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-fit.html">Fitting</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -325,77 +359,77 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Developer manual</span>
+    <span class="title">Developer manuals</span>
     <span class="version">latest</span>
   </div>
   <ul class="components">
       <li class="component">
-        <a class="title" href="../../user/latest/index.html">User Manual</a>
+        <a class="title" href="../../../user/latest/index.html">User Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../user/latest/index.html">latest</a>
+                <a href="../../../user/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../user/0.110/index.html">0.110</a>
+                <a href="../../../user/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../user/0.109/index.html">0.109</a>
+                <a href="../../../user/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../toolboxes/latest/index.html">Toolboxes Manual</a>
+        <a class="title" href="../../../toolboxes/latest/index.html">Toolboxes Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../toolboxes/latest/index.html">latest</a>
+                <a href="../../../toolboxes/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../toolboxes/0.110/index.html">0.110</a>
+                <a href="../../../toolboxes/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../toolboxes/0.109/index.html">0.109</a>
+                <a href="../../../toolboxes/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../mor/latest/index.html">Model Order Reduction Manual</a>
+        <a class="title" href="../../../mor/latest/index.html">Model Order Reduction Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../mor/latest/index.html">latest</a>
+                <a href="../../../mor/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../mor/0.110/index.html">0.110</a>
+                <a href="../../../mor/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../mor/0.109/index.html">0.109</a>
+                <a href="../../../mor/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component is-current">
-        <a class="title" href="index.html">Developer manual</a>
+        <a class="title" href="../index.html">Developer manuals</a>
           <ul class="versions">
               <li class="version is-current is-latest">
-                <a href="index.html">latest</a>
+                <a href="../index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../0.110/index.html">0.110</a>
+                <a href="../../0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../0.109/index.html">0.109</a>
+                <a href="../../0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../feelpp-project/index.html">Template Project</a>
+        <a class="title" href="../../../feelpp-project/index.html">Template Project</a>
       </li>
       <li class="component">
-        <a class="title" href="../../contribute/index.html">Toolboxes Contribution Guide</a>
+        <a class="title" href="../../../contribute/index.html">Toolboxes Contribution Guide</a>
       </li>
       <li class="component">
-        <a class="title" href="../../data/index.html">Data Manual</a>
+        <a class="title" href="../../../data/index.html">Data Manual</a>
       </li>
       <li class="component">
-        <a class="title" href="../../math/index.html">Feel++ Mathematics</a>
+        <a class="title" href="../../../math/index.html">Feel++ Mathematics</a>
       </li>
   </ul>
 </div>
@@ -405,20 +439,24 @@ MathJax.Hub.Config({
 <main class="article">
 <div class="toolbar" role="navigation">
   <button class="nav-toggle"></button>
-    <a href="../../home/index.html" class="home-link"></a>
+    <a href="../../../home/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Developer manuals</a></li>
+    <li><a href="12-CreateModels.html">Defining a Model</a></li>
+  </ul>
 </nav>
 
   <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
   <div class="version-menu">
     <a class="version is-current" href="12-CreateModels.html">latest</a>
-    <a class="version" href="../0.110/12-CreateModels.html">0.110</a>
-    <a class="version" href="../0.109/12-CreateModels.html">0.109</a>
+    <a class="version is-missing" href="../../0.110/index.html">0.110</a>
+    <a class="version is-missing" href="../../0.109/index.html">0.109</a>
   </div>
 </div>
 
-    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/dev/modules/ROOT/pages/12-CreateModels.adoc">Edit this Page</a></div>
+    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/dev/modules/tutorial/pages/12-CreateModels.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -426,7 +464,7 @@ MathJax.Hub.Config({
     <li>
       <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
          class="pdf-download">
-        <img class="pdf-file-icon icon" src="../../_/img/pdf.svg"/> .pdf
+        <img class="pdf-file-icon icon" src="../../../_/img/pdf.svg"/> .pdf
       </a>
     </li>
   </ul>
@@ -438,11 +476,9 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<div class="sect1">
-<h2 id="_defining_a_model"><a class="anchor" href="#_defining_a_model"></a>1. Defining a Model</h2>
+<h1 class="page">Defining a Model</h1>
+<div id="preamble">
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_introduction"><a class="anchor" href="#_introduction"></a>1.1. Introduction</h3>
 <div class="paragraph">
 <p>It is well known an equation can describe a huge range of physical
 problems. Each of theses problems will have a particular environment,
@@ -452,8 +488,9 @@ definitions can be retrieve in this
 <a href="../07-quickref/Models/README.adoc">section</a>.</p>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="_what_is_a_model"><a class="anchor" href="#_what_is_a_model"></a>1.2. What is a model</h3>
+<h3 id="_what_is_a_model"><a class="anchor" href="#_what_is_a_model"></a>1. What is a model</h3>
 <div class="paragraph">
 <p>A model is defined by :</p>
 </div>
@@ -483,13 +520,13 @@ definitions can be retrieve in this
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_parameters"><a class="anchor" href="#_parameters"></a>1.2.1. Parameters</h4>
+<h4 id="_parameters"><a class="anchor" href="#_parameters"></a>1.1. Parameters</h4>
 <div class="paragraph">
 <p>A parameter is a non physical property for a model.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_materials"><a class="anchor" href="#_materials"></a>1.2.2. Materials</h4>
+<h4 id="_materials"><a class="anchor" href="#_materials"></a>1.2. Materials</h4>
 <div class="paragraph">
 <p>To retrieve the materials properties, we use :</p>
 </div>
@@ -500,7 +537,7 @@ definitions can be retrieve in this
 </div>
 </div>
 <div class="sect3">
-<h4 id="_boundaryconditions"><a class="anchor" href="#_boundaryconditions"></a>1.2.3. BoundaryConditions</h4>
+<h4 id="_boundaryconditions"><a class="anchor" href="#_boundaryconditions"></a>1.3. BoundaryConditions</h4>
 <div class="paragraph">
 <p>Thanks to GiNaC, we handle boundary conditions (Dirichlet, Neumann, Robin) as expression. You have to indicate in the json file the quantity to handle (velocity, pressure&#8230;&#8203;) and the associated expression.</p>
 </div>
@@ -523,7 +560,7 @@ definitions can be retrieve in this
 </div>
 </div>
 <div class="sect3">
-<h4 id="_code"><a class="anchor" href="#_code"></a>1.2.4. Code</h4>
+<h4 id="_code"><a class="anchor" href="#_code"></a>1.4. Code</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  for(auto it : materials)
@@ -558,7 +595,7 @@ definitions can be retrieve in this
 </div>
 </div>
 <div class="sect3">
-<h4 id="_postprocessing"><a class="anchor" href="#_postprocessing"></a>1.2.5. PostProcessing</h4>
+<h4 id="_postprocessing"><a class="anchor" href="#_postprocessing"></a>1.5. PostProcessing</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -573,7 +610,7 @@ explanation pending.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example"><a class="anchor" href="#_example"></a>1.2.6. Example</h4>
+<h4 id="_example"><a class="anchor" href="#_example"></a>1.6. Example</h4>
 <div class="paragraph">
 <p>We have set up an example : an anisotropic laplacian.</p>
 </div>
@@ -677,8 +714,6 @@ int main(int argc, char**argv )
 </div>
 </div>
 </div>
-</div>
-</div>
 </article>
   </div>
 </main>
@@ -690,7 +725,7 @@ int main(int argc, char**argv )
       <div class="col">
         <div class="footer-logo">
           <a href="https://www.cemosis.fr" class="icon">
-            <img src="../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+            <img src="../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
           </a>
         </div>
       </div>
@@ -750,14 +785,13 @@ int main(int argc, char**argv )
     </div>
   </div>
 </footer>
-<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
 
 
-<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../_/js/vendor/fontawesome.js"></script>
-<script async src="../../_/js/vendor/highlight.js"></script>
+<!-- Font Awesome JS removed to use webfont icons only -->
+<script async src="../../../_/js/vendor/highlight.js"></script>
 
-<script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">
+<script async id="search-script" src="../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../_/css/vendor/docsearch.css">
 </script>
 
 <script type="text/javascript">

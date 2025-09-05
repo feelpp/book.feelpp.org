@@ -7,8 +7,12 @@
     <link rel="canonical" href="https://docs.feelpp.org/data/plan/basics.html">
     <link rel="prev" href="index.html">
     <link rel="next" href="fair.html">
-    <meta name="generator" content="Antora 3.1.9">
-    <link rel="stylesheet" href="../../_/css/site.css">
+    <meta name="generator" content="Antora 3.1.12">
+<link rel="stylesheet" href="../../_/css/site.css">
+
+<!-- Font Awesome webfont CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <link rel="stylesheet" href="../../_/css/listing.css">
 <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
@@ -345,7 +349,7 @@ MathJax.Hub.Config({
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../dev/latest/index.html">Developer manual</a>
+        <a class="title" href="../../dev/latest/index.html">Developer manuals</a>
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../dev/latest/index.html">latest</a>
@@ -412,12 +416,118 @@ MathJax.Hub.Config({
 <div class="sect1">
 <h2 id="_what_is_the_purpose_of_the_data_collectiongeneration_and_its_relation_to_the_objectives_of_feel"><a class="anchor" href="#_what_is_the_purpose_of_the_data_collectiongeneration_and_its_relation_to_the_objectives_of_feel"></a>1. What is the purpose of the data collection/generation and its relation to the objectives of Feel++?</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>The primary purpose of data collection and generation in the Feel++ project is to support scientific computing, mathematical modeling, and numerical simulation across multiple domains. The objectives include:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Benchmarking and Validation</dt>
+<dd>
+<p>Collecting reference datasets to validate numerical methods and algorithms implemented in Feel++</p>
+</dd>
+<dt class="hdlist1">Performance Analysis</dt>
+<dd>
+<p>Generating performance metrics to optimize high-performance computing implementations</p>
+</dd>
+<dt class="hdlist1">Scientific Applications</dt>
+<dd>
+<p>Supporting multidisciplinary research in biomedical engineering, material science, fluid dynamics, and thermal modeling</p>
+</dd>
+<dt class="hdlist1">Open Science</dt>
+<dd>
+<p>Providing reproducible computational results and datasets for the scientific community</p>
+</dd>
+<dt class="hdlist1">Industrial Applications</dt>
+<dd>
+<p>Facilitating technology transfer through validated simulation tools and datasets</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The data collection serves the core mission of Feel++ to democratize advanced mathematical modeling and simulation tools while maintaining scientific rigor and reproducibility.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_what_types_and_formats_of_data_feel_generatescollects"><a class="anchor" href="#_what_types_and_formats_of_data_feel_generatescollects"></a>2. What types and formats of data Feel++ generates/collects?</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Feel++ generates and collects diverse types of data across multiple categories:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Simulation Data</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Mesh files (MSH, GMSH formats)</p>
+</li>
+<li>
+<p>Solution fields (HDF5, VTK, Ensight formats)</p>
+</li>
+<li>
+<p>Time series data (CSV, JSON)</p>
+</li>
+<li>
+<p>Convergence and error analysis data</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Benchmarking Data</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Performance metrics (execution time, memory usage, scalability)</p>
+</li>
+<li>
+<p>Accuracy assessments (error norms, convergence rates)</p>
+</li>
+<li>
+<p>Comparative analysis results</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Application-Specific Data</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Medical imaging data (DICOM, NIfTI) for biomedical applications</p>
+</li>
+<li>
+<p>Material property databases</p>
+</li>
+<li>
+<p>Experimental validation datasets</p>
+</li>
+<li>
+<p>Sensor measurements and monitoring data</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Documentation and Metadata</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Configuration files (JSON, CFG)</p>
+</li>
+<li>
+<p>Parameter studies and sensitivity analysis</p>
+</li>
+<li>
+<p>Computational geometry and CAD files</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
 <div class="paragraph">
 <p>The types and formats of data depends on the purpose of the data.
 Some datasets are provided for benchmarking and others for verification and validation.
@@ -482,6 +592,89 @@ Therefore, the origin of the data will vary depending on each application.</p>
 <div class="sect1">
 <h2 id="_what_is_the_expected_size_of_the_data"><a class="anchor" href="#_what_is_the_expected_size_of_the_data"></a>5. What is the expected size of the data?</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>The data size varies significantly depending on the application domain and computational complexity:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Small-scale datasets (KB to MB)</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Configuration files and parameter sets</p>
+</li>
+<li>
+<p>1D and 2D simulation results</p>
+</li>
+<li>
+<p>Performance metrics and logs</p>
+</li>
+<li>
+<p>Documentation and metadata</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Medium-scale datasets (MB to GB)</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>3D simulation results for standard problems</p>
+</li>
+<li>
+<p>Time-dependent simulations with moderate resolution</p>
+</li>
+<li>
+<p>Benchmark and validation datasets</p>
+</li>
+<li>
+<p>Medical imaging data for typical studies</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Large-scale datasets (GB to TB)</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>High-resolution 3D simulations</p>
+</li>
+<li>
+<p>Long-time integration studies</p>
+</li>
+<li>
+<p>Uncertainty quantification campaigns</p>
+</li>
+<li>
+<p>Large-scale parallel performance studies</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Application-specific estimates</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Eye2Brain: 10 MB to 500 MB per patient dataset</p>
+</li>
+<li>
+<p>HifiMagnet: 100 MB to 2 GB per magnetic field simulation</p>
+</li>
+<li>
+<p>HemoTumPP: 50 MB to 1 GB per hemodynamic simulation</p>
+</li>
+<li>
+<p>Industrial applications: Highly variable (1 GB to 10 TB)</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
 <div class="paragraph">
 <p>The size of the data will also depend on the kind of data and other aspects, such as the concrete application and tools involved.</p>
 </div>
@@ -601,8 +794,7 @@ However, special care must be taken when sharing data regarding privacy and conf
 <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
 
 
-<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../_/js/vendor/fontawesome.js"></script>
+<!-- Font Awesome JS removed to use webfont icons only -->
 <script async src="../../_/js/vendor/highlight.js"></script>
 
 <script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">

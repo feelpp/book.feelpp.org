@@ -3,16 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/dev/latest/06-VisualizingFunctions.html">
-    <meta name="generator" content="Antora 3.1.9">
-    <link rel="stylesheet" href="../../_/css/site.css">
-    <link rel="stylesheet" href="../../_/css/listing.css">
-<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <title>C++20/23: Prefer This / Prefer That :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/dev/latest/codingrules/cpp20.html">
+    <link rel="prev" href="general.html">
+    <link rel="next" href="hpc.html">
+    <meta name="generator" content="Antora 3.1.12">
+<link rel="stylesheet" href="../../../_/css/site.css">
+
+<!-- Font Awesome webfont CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../../../_/css/listing.css">
+<link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
-<script src="../../_/js/vendor/tabs-block-extension.js"></script>
-<script src="../../_/js/vendor/tabs-block-behavior.js"></script>
+<script src="../../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../../_/js/vendor/tabs-block-behavior.js"></script>
 
 
 
@@ -94,7 +100,7 @@ MathJax.Hub.Config({
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
 <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
-<script>var uiRootPath = '../../_'</script>
+<script>var uiRootPath = '../../../_'</script>
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
   </head>
@@ -103,7 +109,7 @@ MathJax.Hub.Config({
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
       <div class="navbar-item feelpp-logo">
-        <a href="https://docs.feelpp.org"><img src="../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
+        <a href="https://docs.feelpp.org"><img src="../../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -129,37 +135,37 @@ MathJax.Hub.Config({
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link" data-title="Support">
-            <span class="icon"><img src="../../_/img/octicons-24.svg#view-comment-discussion"></span>
+            <span class="icon"><img src="../../../_/img/octicons-24.svg#view-comment-discussion"></span>
           </div>
           <div class="navbar-dropdown is-right">
             <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/slack-icon.svg"></span>
+              <span class="icon"><img src="../../../_/img/slack-icon.svg"></span>
               <span>Chat</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-discussion-closed"></span>
               <span>Discussions</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-mark-github"></span>
               <span>Source</span>
             </a>
             <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-hash"></span>
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-hash"></span>
               <span>Tweets</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-bug"></span>
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-bug"></span>
               <span>Issues</span>
             </a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable download-item">
-            <div class="navbar-item"><a href="../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
+            <div class="navbar-item"><a href="../../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
         </div>
         <div class="navbar-item">
           <a class="navbar-brand"  href="https://www.cemosis.fr">
-            <img class="cemosis-logo"  src="../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
+            <img class="cemosis-logo"  src="../../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
           </a>
         </div>
       </div>
@@ -173,32 +179,24 @@ MathJax.Hub.Config({
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Developer manual</a></h3>
+    <h3 class="title"><a href="../index.html">Developer manuals</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming with Feel++</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming environment</span>
+    <span class="nav-text">Programming Environment Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Debugging Feel++</span>
+    <a class="nav-link" href="../env/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Profiling Feel++</span>
+    <a class="nav-link" href="../env/debugging.html">Debugging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../env/profiling.html">Profiling</a>
   </li>
 </ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#tutorial-dev:ROOT:index.adoc">Feel++ Development Tutorial</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#template_project:ROOT:index.adoc">Feel++ Template Project</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="fmufeelpp.html">Encapsulating Feel++ models in FMU</a>
   </li>
 </ul>
   </li>
@@ -206,117 +204,155 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/index.html">Mathematical Concepts Reference</a>
+    <span class="nav-text">Coding Rules Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Mesh/README.html">Mesh</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Mesh/iterators.html">Mesh iterators</a>
-  </li>
-</ul>
+    <a class="nav-link" href="index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Integrals/README.html">Integrals</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/integrate.html">integrate</a>
+    <a class="nav-link" href="general.html">General Coding Rules</a>
   </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/mean.html">mean</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/norms.html">norms</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/project.html">project</a>
-  </li>
-</ul>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="cpp20.html">C++20 and beyond</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Spaces/README.html">Function spaces</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/notations.html">Notations</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/functionspace.html">FunctionSpace</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/projection.html">Projection</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/interpolation.html">Interpolation</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/save.html">Save</a>
-  </li>
-</ul>
+    <a class="nav-link" href="hpc.html">HPC Rules</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Solver/README.html">Algebraic solutions</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/notations.html">Notations</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/backend.html">Defining a backend</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/preconditioner.html">Defining a preconditioner</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/solving.html">Solving linear systems</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/eigensolver.html">Solving eigenvalue problems</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reference/forms.html">Linear and Bilinear Forms</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Time/README.html">Time Discretization</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Time/bdf.html">BDF</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Time/adaptivestepping.html">Adaptive time stepping</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reference/exporter.html">Post-processing and Visualization</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reference/Keywords/README.html">Mathematical keywords</a>
+    <a class="nav-link" href="design-patterns.html">Design Patterns</a>
   </li>
 </ul>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Developer Reference</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/cmake.html">CMake Feel++ macros</a>
+    <a class="nav-link" href="../tutorial/index.html">Tutorial</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/environment.html">Feel++ Environment</a>
+</ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/fileformats.html">Feel++ File Formats</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/index.html">Mathematical Concepts Reference</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Mesh/README.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Mesh/iterators.html">Mesh iterators</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/codingrules.html">Feel++ Coding Rules</a>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#Integrals/README.adoc">Integrals</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Integrals/integrate.html">integrate</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Integrals/mean.html">mean</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Integrals/norms.html">norms</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Integrals/project.html">project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Spaces/README.html">Function spaces</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/notations.html">Notations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/functionspace.html">FunctionSpace</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/projection.html">Projection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/interpolation.html">Interpolation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/save.html">Save</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Solver/README.html">Algebraic solutions</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/notations.html">Notations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/backend.html">Defining a backend</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/preconditioner.html">Defining a preconditioner</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/solving.html">Solving linear systems</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/eigensolver.html">Solving eigenvalue problems</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../reference/forms.html">Linear and Bilinear Forms</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Time/README.html">Time Discretization</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Time/bdf.html">BDF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Time/adaptivestepping.html">Adaptive time stepping</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../reference/exporter.html">Post-processing and Visualization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Keywords/README.html">Mathematical keywords</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-mesh.html">Mesh</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords.html">Mathematical expressions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-geometry.html">Geometry</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-algebra.html">Vectors and matrices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-operators.html">Operators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-image.html">Image</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-fit.html">Fitting</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -325,77 +361,77 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Developer manual</span>
+    <span class="title">Developer manuals</span>
     <span class="version">latest</span>
   </div>
   <ul class="components">
       <li class="component">
-        <a class="title" href="../../user/latest/index.html">User Manual</a>
+        <a class="title" href="../../../user/latest/index.html">User Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../user/latest/index.html">latest</a>
+                <a href="../../../user/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../user/0.110/index.html">0.110</a>
+                <a href="../../../user/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../user/0.109/index.html">0.109</a>
+                <a href="../../../user/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../toolboxes/latest/index.html">Toolboxes Manual</a>
+        <a class="title" href="../../../toolboxes/latest/index.html">Toolboxes Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../toolboxes/latest/index.html">latest</a>
+                <a href="../../../toolboxes/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../toolboxes/0.110/index.html">0.110</a>
+                <a href="../../../toolboxes/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../toolboxes/0.109/index.html">0.109</a>
+                <a href="../../../toolboxes/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../mor/latest/index.html">Model Order Reduction Manual</a>
+        <a class="title" href="../../../mor/latest/index.html">Model Order Reduction Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../mor/latest/index.html">latest</a>
+                <a href="../../../mor/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../mor/0.110/index.html">0.110</a>
+                <a href="../../../mor/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../mor/0.109/index.html">0.109</a>
+                <a href="../../../mor/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component is-current">
-        <a class="title" href="index.html">Developer manual</a>
+        <a class="title" href="../index.html">Developer manuals</a>
           <ul class="versions">
               <li class="version is-current is-latest">
-                <a href="index.html">latest</a>
+                <a href="../index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../0.110/index.html">0.110</a>
+                <a href="../../0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../0.109/index.html">0.109</a>
+                <a href="../../0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../feelpp-project/index.html">Template Project</a>
+        <a class="title" href="../../../feelpp-project/index.html">Template Project</a>
       </li>
       <li class="component">
-        <a class="title" href="../../contribute/index.html">Toolboxes Contribution Guide</a>
+        <a class="title" href="../../../contribute/index.html">Toolboxes Contribution Guide</a>
       </li>
       <li class="component">
-        <a class="title" href="../../data/index.html">Data Manual</a>
+        <a class="title" href="../../../data/index.html">Data Manual</a>
       </li>
       <li class="component">
-        <a class="title" href="../../math/index.html">Feel++ Mathematics</a>
+        <a class="title" href="../../../math/index.html">Feel++ Mathematics</a>
       </li>
   </ul>
 </div>
@@ -405,20 +441,25 @@ MathJax.Hub.Config({
 <main class="article">
 <div class="toolbar" role="navigation">
   <button class="nav-toggle"></button>
-    <a href="../../home/index.html" class="home-link"></a>
+    <a href="../../../home/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Developer manuals</a></li>
+    <li>Coding Rules Manuals</li>
+    <li><a href="cpp20.html">C++20 and beyond</a></li>
+  </ul>
 </nav>
 
   <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
   <div class="version-menu">
-    <a class="version is-current" href="06-VisualizingFunctions.html">latest</a>
-    <a class="version" href="../0.110/06-VisualizingFunctions.html">0.110</a>
-    <a class="version" href="../0.109/06-VisualizingFunctions.html">0.109</a>
+    <a class="version is-current" href="cpp20.html">latest</a>
+    <a class="version is-missing" href="../../0.110/index.html">0.110</a>
+    <a class="version is-missing" href="../../0.109/index.html">0.109</a>
   </div>
 </div>
 
-    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/dev/modules/ROOT/pages/06-VisualizingFunctions.adoc">Edit this Page</a></div>
+    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/dev/modules/codingrules/pages/cpp20.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -426,7 +467,7 @@ MathJax.Hub.Config({
     <li>
       <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
          class="pdf-download">
-        <img class="pdf-file-icon icon" src="../../_/img/pdf.svg"/> .pdf
+        <img class="pdf-file-icon icon" src="../../../_/img/pdf.svg"/> .pdf
       </a>
     </li>
   </ul>
@@ -438,61 +479,253 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<div class="sect1">
-<h2 id="_visualizing_functions_over_a_mesh"><a class="anchor" href="#_visualizing_functions_over_a_mesh"></a>1. Visualizing functions over a mesh</h2>
+<h1 class="page">C++20/23: Prefer This / Prefer That</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The next step is to visualize function over the mesh. The source code that generate our output is
-available in <a href="../codes/05-myexporter.cpp">myexporter.cpp</a>, presented in the previous section.</p>
+<p>This section gathers the modern C++ rules from the original document.</p>
 </div>
-<div class="paragraph">
-<p>You can visualize data via :</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_special_members_default_delete"><a class="anchor" href="#_special_members_default_delete"></a>1. Special Members: = default / = delete</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>link::https://www.ceisoftware.com/[ensight]</p>
-</li>
-<li>
-<p>link::http://www.paraview.org/[paraview]</p>
-</li>
-<li>
-<p>link::http://geuz.org/gmsh[gmsh]</p>
+<p>Clear intent, zero boilerplate, follows Rule of 0/5/6.</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>The results files are in</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>$HOME/feel/myexporter/np_1</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>or</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>$FEELPP_WORKDIR/feel/myexporter/np_1</code>.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>We discriminate output directories based on the name of the simulation
-(the parameter <code>_name</code> in the environment), the number of process
-(<code>mpirun -np &#8230;&#8203;</code>) and the type of the chosen exporter</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">--exporter.format={ensight|ensightgold|gmsh|...}</code></pre>
+<pre>class Solver
+{
+public:
+	Solver() = default;
+	~Solver() = default;
+	Solver(Solver const &amp;) = delete;
+	Solver &amp;operator=(Solver const &amp;) = delete;
+};</pre>
 </div>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_override_final"><a class="anchor" href="#_override_final"></a>2. override / final</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Don’t repeat <code>virtual</code> in derived classes. Use <code>override</code>; consider <code>final</code> where relevant.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>class Derived : public Base
+{
+public:
+	void run() override;
+};</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_enum_class"><a class="anchor" href="#_enum_class"></a>3. enum class</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Scoped and type-safe enums.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>enum class Mode { A, B, C };</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_defaulted_comparisons"><a class="anchor" href="#_defaulted_comparisons"></a>4. &lt;&#8658; defaulted comparisons</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Generate comparisons with one line.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>struct Point
+{
+	int x{}, y{};
+	friend auto operator&lt;=&gt;(Point const &amp;, Point const &amp;) = default;
+};</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id=""><a class="anchor" href="#"></a>5. <a id="nodiscard"></a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Mark results that must not be ignored.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[[nodiscard]] double computeEnergy(Mesh const &amp;mesh);</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_constexpr_consteval_constinit"><a class="anchor" href="#_constexpr_consteval_constinit"></a>6. constexpr / consteval / constinit</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>constexpr</code>: usable at compile time; <code>consteval</code>: must be compile-time; <code>constinit</code>: constant-initialized static (avoids static init order issues).</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>constexpr int square(int x) { return x*x; }
+consteval int scaled(int x) { return x*42; }
+constinit static int S_threshold = 10;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_inline_constexpr_globals"><a class="anchor" href="#_inline_constexpr_globals"></a>7. inline constexpr globals</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Avoid ODR issues for constants in headers.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>inline constexpr double kPi = 3.14159265358979323846;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_string_view_span"><a class="anchor" href="#_string_view_span"></a>8. string_view / span</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Accept data without owning/copying.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>void logName(std::string_view name);
+void scale(std::span&lt;double const&gt; v, double factor);</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ranges"><a class="anchor" href="#_ranges"></a>9. ranges</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Clear intent, fewer errors than hand-written loops.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>for (int x : values | std::views::drop(1))
+{
+	std::println("{}", x);
+}</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts_requires"><a class="anchor" href="#_concepts_requires"></a>10. concepts / requires</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Express constraints directly; simpler than SFINAE.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>template &lt;std::integral T&gt;
+T gcd(T a, T b);</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auto_for_type_deduction"><a class="anchor" href="#_auto_for_type_deduction"></a>11. auto for type deduction</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Avoid accidental conversions/copies; clarify intent.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>auto s = getStringLike();</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_formatting_printing_stdformat_stdprint_or_fmt"><a class="anchor" href="#_formatting_printing_stdformat_stdprint_or_fmt"></a>12. Formatting &amp; Printing: std::format / std::print (or fmt)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>std::format</code> and <code>std::print</code> (C++20/23) are safer and faster than iostreams or <code>printf</code>.</p>
+</li>
+<li>
+<p>Feel++ uses <code>{fmt}</code> where standard <code>std::format</code> is unavailable. Both styles are acceptable.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// Standard (C++20/23)
+std::string msg = std::format("rank {} of {}", rank, size);
+std::println("{}", msg);
+
+// With {fmt} (used in Feel++)
+std::string msg = fmt::format("rank {} of {}", rank, size);
+fmt::println("{}", msg);</pre>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="general.html">General Coding Rules</a></span>
+  <span class="next"><a href="hpc.html">HPC Rules</a></span>
+</nav>
 </article>
   </div>
 </main>
@@ -504,7 +737,7 @@ available in <a href="../codes/05-myexporter.cpp">myexporter.cpp</a>, presented 
       <div class="col">
         <div class="footer-logo">
           <a href="https://www.cemosis.fr" class="icon">
-            <img src="../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+            <img src="../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
           </a>
         </div>
       </div>
@@ -564,14 +797,13 @@ available in <a href="../codes/05-myexporter.cpp">myexporter.cpp</a>, presented 
     </div>
   </div>
 </footer>
-<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
 
 
-<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../_/js/vendor/fontawesome.js"></script>
-<script async src="../../_/js/vendor/highlight.js"></script>
+<!-- Font Awesome JS removed to use webfont icons only -->
+<script async src="../../../_/js/vendor/highlight.js"></script>
 
-<script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">
+<script async id="search-script" src="../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../_/css/vendor/docsearch.css">
 </script>
 
 <script type="text/javascript">

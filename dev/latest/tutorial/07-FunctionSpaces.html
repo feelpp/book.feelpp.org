@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Function Spaces in Feel++ :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/dev/latest/tutorial/07-FunctionSpaces.html">
+    <meta name="generator" content="Antora 3.1.12">
+<link rel="stylesheet" href="../../../_/css/site.css">
+
+<!-- Font Awesome webfont CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../../../_/css/listing.css">
+<link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
+<script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
+
+<script src="../../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../../_/js/vendor/tabs-block-behavior.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+
+  TeX: {
+      Macros: {
+      bold: ["{\\bf #1}",1],
+      calTh: "{\\mathcal{T}_h}",
+      card: ["{\\operatorname{card}(#1)}",1],
+      card: ["{\\operatorname{card}(#1)}",1],
+      Ck: ["{\\mathcal{C}^{#1}}",1],
+      deformt: ["{\\mathbf{\\varepsilon(#1)}}",1],
+      diam: "{\\operatorname{diam}}",
+      dim: ["{\\operatorname{dim}(#1)}",1],
+      disp: ["{\\mathbf{#1}}",1],
+      domain: "{\\Omega}",
+      ds: "",
+      essinf: "{\\operatorname{ess}\\, \\operatorname{inf}}",
+      F:"{\\mathcal{F}}",
+      geo: "{\\mathrm{geo}}",
+      Ich: ["{\\mathcal{I}^{#1}_{c,h}#2}",2],
+      Id: "{\\mathcal{I}}",
+      Ilag: ["{\\mathcal{I}^{\\mathrm{lag}}_{#1}}",1],
+      jump: ["{[\\![ #1 ]\\!]}",1],
+      n:"{\\mathbf{n}}",
+      Ne: "{N_{\\mathrm{e}}}",
+      Next: "{\\mathrm{n}}",
+      nf: "{n_f}",
+      ngeo: "{n_{\\mathrm{geo}}}",
+      Nma: "{N_{\\mathrm{ma}}}",
+      NN: "{\\mathbb N}",
+      Nno: "{N_{\\mathrm{no}}}",
+      Nso: "{N_{\\mathrm{so}}}",
+      opdim: "{\\operatorname{dim}}",
+      p: "{\\mathrm{p}}",
+      P:"{\\mathcal{P}}",
+      Pch: ["{P^{#1}_{c,h}}",1],
+      Pcho: ["{P^{#1}_{c,h,0}}",1],
+      Pk: ["{\\mathcal{P}^{#1}}",1],
+      poly: ["{\\mathbb{#1}",1],
+      poly: ["{\\mathbb{#1}}",1],
+      prect: ["{\\left\\(#1\\right\\)}",1],
+      q:"{\\mathbf{q}}",
+      Qch: ["{Q^{#1}_{c,h}}",1],
+      Qk: ["{\\mathcal{Q}^{#1}}",1],
+      R: ["{\\mathbb{R}^{#1}}",1],
+      RR: "{\\mathbb R}",
+      set: ["{\\left\\{#1\\right\\}}",1],
+      stresst: ["{\\mathbf{\\sigma(#1)}}",1],
+      T:"{\\mathcal{T}}",
+      tr: "{\\operatorname{tr}}",
+      v:"{\\mathbf{v}}",
+      vertiii: ["\\left\\vert\\kern-0.25ex\\left\\vert\\kern-0.25ex\\left\\vert #1 \\right\\vert\\kern-0.25ex\\right\\vert\\kern-0.25ex\\right\\vert",1]
+  },
+  extensions: ["mhchem.js"] 
+  }
+});
+</script>
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_CHTML'></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
+<script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
+<script>var uiRootPath = '../../../_'</script>
+
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item feelpp-logo">
+        <a href="https://docs.feelpp.org"><img src="../../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <form class="search">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Search Feel++ Docs" class="query" id="search-query">
+          </form>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Manuals</div>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://docs.feelpp.org/user/">User</a>
+            <a class="navbar-item" href="https://docs.feelpp.org/dev/">Developer</a>
+            <a class="navbar-item" href="https://docs.feelpp.org/toolbox/">Toolbox</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link" data-title="Support">
+            <span class="icon"><img src="../../../_/img/octicons-24.svg#view-comment-discussion"></span>
+          </div>
+          <div class="navbar-dropdown is-right">
+            <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../_/img/slack-icon.svg"></span>
+              <span>Chat</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span>Discussions</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span>Source</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-hash"></span>
+              <span>Tweets</span>
+            </a>
+            <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
+              <span class="icon"><img src="../../../_/img/octicons-16.svg#view-bug"></span>
+              <span>Issues</span>
+            </a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable download-item">
+            <div class="navbar-item"><a href="../../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
+        </div>
+        <div class="navbar-item">
+          <a class="navbar-brand"  href="https://www.cemosis.fr">
+            <img class="cemosis-logo"  src="../../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<a href="#" class="menu-expand-toggle"></a>
+<div class="nav-container" data-component="dev" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Developer manuals</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Programming Environment Manuals</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../env/index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../env/debugging.html">Debugging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../env/profiling.html">Profiling</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Coding Rules Manuals</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../codingrules/index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../codingrules/general.html">General Coding Rules</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../codingrules/cpp20.html">C++20 and beyond</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../codingrules/hpc.html">HPC Rules</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../codingrules/design-patterns.html">Design Patterns</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Tutorial</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/index.html">Mathematical Concepts Reference</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Mesh/README.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Mesh/iterators.html">Mesh iterators</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#Integrals/README.adoc">Integrals</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Integrals/integrate.html">integrate</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Integrals/mean.html">mean</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Integrals/norms.html">norms</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Integrals/project.html">project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Spaces/README.html">Function spaces</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/notations.html">Notations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/functionspace.html">FunctionSpace</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/projection.html">Projection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/interpolation.html">Interpolation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Spaces/save.html">Save</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Solver/README.html">Algebraic solutions</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/notations.html">Notations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/backend.html">Defining a backend</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/preconditioner.html">Defining a preconditioner</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/solving.html">Solving linear systems</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Solver/eigensolver.html">Solving eigenvalue problems</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../reference/forms.html">Linear and Bilinear Forms</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Time/README.html">Time Discretization</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Time/bdf.html">BDF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Time/adaptivestepping.html">Adaptive time stepping</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../reference/exporter.html">Post-processing and Visualization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../reference/Keywords/README.html">Mathematical keywords</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-mesh.html">Mesh</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords.html">Mathematical expressions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-geometry.html">Geometry</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-algebra.html">Vectors and matrices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-operators.html">Operators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-image.html">Image</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/Keywords/keywords-fit.html">Fitting</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Developer manuals</span>
+    <span class="version">latest</span>
+  </div>
+  <ul class="components">
+      <li class="component">
+        <a class="title" href="../../../user/latest/index.html">User Manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../user/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../user/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../user/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../toolboxes/latest/index.html">Toolboxes Manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../toolboxes/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../toolboxes/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../toolboxes/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../mor/latest/index.html">Model Order Reduction Manual</a>
+          <ul class="versions">
+              <li class="version is-latest">
+                <a href="../../../mor/latest/index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../../mor/0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../../mor/0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component is-current">
+        <a class="title" href="../index.html">Developer manuals</a>
+          <ul class="versions">
+              <li class="version is-current is-latest">
+                <a href="../index.html">latest</a>
+              </li>
+              <li class="version">
+                <a href="../../0.110/index.html">0.110</a>
+              </li>
+              <li class="version">
+                <a href="../../0.109/index.html">0.109</a>
+              </li>
+          </ul>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../feelpp-project/index.html">Template Project</a>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../contribute/index.html">Toolboxes Contribution Guide</a>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../data/index.html">Data Manual</a>
+      </li>
+      <li class="component">
+        <a class="title" href="../../../math/index.html">Feel++ Mathematics</a>
+      </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button class="nav-toggle"></button>
+    <a href="../../../home/index.html" class="home-link"></a>
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Developer manuals</a></li>
+    <li><a href="07-FunctionSpaces.html">Function Spaces in Feel++</a></li>
+  </ul>
+</nav>
+
+  <div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
+  <div class="version-menu">
+    <a class="version is-current" href="07-FunctionSpaces.html">latest</a>
+    <a class="version is-missing" href="../../0.110/index.html">0.110</a>
+    <a class="version is-missing" href="../../0.109/index.html">0.109</a>
+  </div>
+</div>
+
+    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/dev/modules/tutorial/pages/07-FunctionSpaces.adoc">Edit this Page</a></div>
+  
+  <div class="page-downloads">
+  <span class="label">Download as</span>
+  <ul class="download-options">
+    <li>
+      <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
+         class="pdf-download">
+        <img class="pdf-file-icon icon" src="../../../_/img/pdf.svg"/> .pdf
+      </a>
+    </li>
+  </ul>
+</div>
+</div>
+
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Function Spaces in Feel++</h1>
+<div class="sect1">
+<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Function spaces are fundamental to finite element methods in Feel++. They define the mathematical framework for approximating solutions to partial differential equations using polynomial basis functions over a mesh.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_basic_function_space_types"><a class="anchor" href="#_basic_function_space_types"></a>2. Basic Function Space Types</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Feel++ provides several pre-defined function space types:</p>
+</div>
+<div class="sect2">
+<h3 id="_scalar_function_spaces"><a class="anchor" href="#_scalar_function_spaces"></a>2.1. Scalar Function Spaces</h3>
+<div class="paragraph">
+<p>For scalar-valued functions (temperature, pressure, density):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto Vh1 = Pch&lt;1&gt;(mesh);  // Continuous piecewise linear (P1)
+auto Vh2 = Pch&lt;2&gt;(mesh);  // Continuous piecewise quadratic (P2)
+auto Vh3 = Pch&lt;3&gt;(mesh);  // Continuous piecewise cubic (P3)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vector_function_spaces"><a class="anchor" href="#_vector_function_spaces"></a>2.2. Vector Function Spaces</h3>
+<div class="paragraph">
+<p>For vector-valued functions (velocity, displacement):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto Vh_vec = Pchv&lt;1&gt;(mesh);  // Vector P1 elements
+auto Vh_vec2 = Pchv&lt;2&gt;(mesh); // Vector P2 elements</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mixed_function_spaces"><a class="anchor" href="#_mixed_function_spaces"></a>2.3. Mixed Function Spaces</h3>
+<div class="paragraph">
+<p>For coupled systems (Stokes: velocity + pressure):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto Vh = Pchv&lt;2&gt;(mesh);     // Velocity space
+auto Qh = Pch&lt;1&gt;(mesh);      // Pressure space
+auto Wh = Vh * Qh;           // Mixed space</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_function_space_properties"><a class="anchor" href="#_function_space_properties"></a>3. Function Space Properties</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each function space provides important information:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto Vh = Pch&lt;2&gt;(mesh);
+
+LOG(INFO) &lt;&lt; "Degrees of freedom: " &lt;&lt; Vh-&gt;nDof();
+LOG(INFO) &lt;&lt; "Local DoFs per element: " &lt;&lt; Vh-&gt;nLocalDof();
+LOG(INFO) &lt;&lt; "Polynomial order: " &lt;&lt; Vh-&gt;basis()-&gt;nOrder;
+LOG(INFO) &lt;&lt; "Space dimension: " &lt;&lt; Vh-&gt;worldComm().globalSize();</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creating_and_manipulating_elements"><a class="anchor" href="#_creating_and_manipulating_elements"></a>4. Creating and Manipulating Elements</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Elements are functions that belong to a function space:</p>
+</div>
+<div class="sect2">
+<h3 id="_basic_element_creation"><a class="anchor" href="#_basic_element_creation"></a>4.1. Basic Element Creation</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto Vh = Pch&lt;2&gt;(mesh);
+auto u = Vh-&gt;element("u");      // Create element named "u"
+auto v = Vh-&gt;element();         // Anonymous element</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_element_initialization"><a class="anchor" href="#_element_initialization"></a>4.2. Element Initialization</h3>
+<div class="paragraph">
+<p><strong>From Expressions</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">u.on( _range=elements(mesh), _expr=sin(pi*Px())*cos(pi*Py()) );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>From Functions</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">u.on( _range=elements(mesh), _expr=expr("x*x+y*y:x:y") );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>From Other Elements</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto u2 = Vh-&gt;element();
+u2 = u;  // Copy values</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_projections"><a class="anchor" href="#_projections"></a>5. Projections</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Projections are used to represent continuous functions in discrete function spaces:</p>
+</div>
+<div class="sect2">
+<h3 id="_l_projection"><a class="anchor" href="#_l_projection"></a>5.1. L² Projection</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto Vh = Pch&lt;2&gt;(mesh);
+auto u_proj = vf::project( _space=Vh,
+                          _range=elements(mesh),
+                          _expr=exp(-((Px()-0.5)*(Px()-0.5) + (Py()-0.5)*(Py()-0.5))/0.1) );</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_h_projection"><a class="anchor" href="#_h_projection"></a>5.2. H¹ Projection</h3>
+<div class="paragraph">
+<p>For functions requiring continuity of gradients:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto u_h1 = vf::project( _space=Vh,
+                        _range=elements(mesh),
+                        _expr=sin(2*pi*Px())*sin(2*pi*Py()),
+                        _grad_expr=vec(2*pi*cos(2*pi*Px())*sin(2*pi*Py()),
+                                      2*pi*sin(2*pi*Px())*cos(2*pi*Py())) );</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_working_with_vector_functions"><a class="anchor" href="#_working_with_vector_functions"></a>6. Working with Vector Functions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Vector function spaces handle multi-component fields:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto Vh_vec = Pchv&lt;2&gt;(mesh);
+auto u_vec = Vh_vec-&gt;element("velocity");
+
+// Initialize with vector expression
+u_vec.on( _range=elements(mesh),
+          _expr=vec(cos(Px()), sin(Py())) );
+
+// Access components
+auto u_x = u_vec.comp(X);  // X-component
+auto u_y = u_vec.comp(Y);  // Y-component</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mixed_function_spaces_2"><a class="anchor" href="#_mixed_function_spaces_2"></a>7. Mixed Function Spaces</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Mixed spaces combine multiple function spaces for coupled problems:</p>
+</div>
+<div class="sect2">
+<h3 id="_stokes_system_example"><a class="anchor" href="#_stokes_system_example"></a>7.1. Stokes System Example</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto Vh = Pchv&lt;2&gt;(mesh);    // Velocity (P2 vector)
+auto Qh = Pch&lt;1&gt;(mesh);     // Pressure (P1 scalar)
+auto Wh = Vh * Qh;          // Mixed space
+
+// Create mixed element
+auto U = Wh-&gt;element("(u,p)");
+auto u = U.template element&lt;0&gt;("u");  // Velocity component
+auto p = U.template element&lt;1&gt;("p");  // Pressure component
+
+// Initialize
+u.on( _range=elements(mesh), _expr=vec(sin(Px()), cos(Py())) );
+p.on( _range=elements(mesh), _expr=Px()*Py() );</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_advanced_function_space_features"><a class="anchor" href="#_advanced_function_space_features"></a>8. Advanced Function Space Features</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_marked_elements"><a class="anchor" href="#_marked_elements"></a>8.1. Marked Elements</h3>
+<div class="paragraph">
+<p>Create function spaces on subdomains:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Function space on marked region
+auto Vh_subdomain = Pch&lt;2&gt;( mesh, markedelements(mesh, "fluid") );
+
+// Function space with level set
+auto Vh_levelset = Pch&lt;2&gt;( mesh, elements(mesh, expr("x*x+y*y-0.25&lt;0")) );</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_periodic_boundary_conditions"><a class="anchor" href="#_periodic_boundary_conditions"></a>8.2. Periodic Boundary Conditions</h3>
+<div class="paragraph">
+<p>For problems with periodic domains:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto Vh_periodic = Pch&lt;2&gt;( mesh,
+                          periodicity( Periodic&lt;&gt;(BoundaryCondition("left"), BoundaryCondition("right")) ) );</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_norms_and_error_computation"><a class="anchor" href="#_norms_and_error_computation"></a>9. Norms and Error Computation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Function spaces provide various norm computations:</p>
+</div>
+<div class="sect2">
+<h3 id="_l_and_h_norms"><a class="anchor" href="#_l_and_h_norms"></a>9.1. L² and H¹ Norms</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto u = Vh-&gt;element();
+// ... initialize u ...
+
+// L² norm: ||u||_{L²}
+double l2_norm = normL2( _range=elements(mesh), _expr=idv(u) );
+
+// H¹ norm: ||u||_{H¹} = (||u||²_{L²} + ||∇u||²_{L²})^{1/2}
+double h1_norm = normH1( _range=elements(mesh),
+                        _expr=idv(u),
+                        _grad_expr=gradv(u) );
+
+// H¹ semi-norm: |u|_{H¹} = ||∇u||_{L²}
+double h1_semi = normH1( _range=elements(mesh),
+                        _grad_expr=gradv(u) );</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_error_norms"><a class="anchor" href="#_error_norms"></a>9.2. Error Norms</h3>
+<div class="paragraph">
+<p>Compute errors between solutions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto u_exact = expr("sin(pi*x)*sin(pi*y):x:y");
+auto u_numerical = Vh-&gt;element();
+// ... solve for u_numerical ...
+
+double error_l2 = normL2( _range=elements(mesh),
+                         _expr=idv(u_numerical) - u_exact );
+
+double error_h1 = normH1( _range=elements(mesh),
+                         _expr=idv(u_numerical) - u_exact,
+                         _grad_expr=gradv(u_numerical) - grad&lt;2&gt;(u_exact) );</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_interpolation_vs_projection"><a class="anchor" href="#_interpolation_vs_projection"></a>10. Interpolation vs Projection</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Understanding the difference between interpolation and projection:</p>
+</div>
+<div class="sect2">
+<h3 id="_interpolation"><a class="anchor" href="#_interpolation"></a>10.1. Interpolation</h3>
+<div class="paragraph">
+<p>Point-wise matching at interpolation nodes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto u_interp = Vh-&gt;element();
+u_interp.on( _range=elements(mesh), _expr=sin(pi*Px())*cos(pi*Py()) );</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_projection"><a class="anchor" href="#_projection"></a>10.2. Projection</h3>
+<div class="paragraph">
+<p>Optimal approximation in the function space:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto u_proj = vf::project( _space=Vh,
+                          _range=elements(mesh),
+                          _expr=sin(pi*Px())*cos(pi*Py()) );</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_complete_example"><a class="anchor" href="#_complete_example"></a>11. Complete Example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here&#8217;s a comprehensive example demonstrating function space usage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#include &lt;feel/feel.hpp&gt;
+
+int main( int argc, char** argv )
+{
+    using namespace Feel;
+    using namespace Feel::vf;
+
+    // Initialize Feel++ Environment with command line options
+    po::options_description myoptions( "Function space tutorial options" );
+    myoptions.add_options()
+        ( "order", po::value&lt;int&gt;()-&gt;default_value( 2 ), "polynomial order" )
+        ( "hsize", po::value&lt;double&gt;()-&gt;default_value( 0.1 ), "mesh size" );
+
+    Environment env( _argc=argc, _argv=argv,
+                     _desc=myoptions,
+                     _about=about( _name="functionspace",
+                                   _author="Feel++ Consortium",
+                                   _email="feelpp-devel@feelpp.org" ) );
+
+    // Create mesh
+    auto mesh = loadMesh(_mesh=new Mesh&lt;Simplex&lt;2&gt;&gt;);
+    
+    // Get polynomial order from command line
+    int order = ioption(_name="order");
+    LOG(INFO) &lt;&lt; "Using polynomial order: " &lt;&lt; order;
+
+    // Create function spaces of different types
+    // Scalar function space (temperature, pressure, etc.)
+    auto Vh_scalar = Pch&lt;1&gt;( mesh );           // P1 elements
+    auto Vh_scalar_ho = Pch&lt;2&gt;( mesh );        // P2 elements
+    
+    // Vector function space (velocity, displacement, etc.)
+    auto Vh_vector = Pchv&lt;1&gt;( mesh );          // Vector P1 elements
+    auto Vh_vector_ho = Pchv&lt;2&gt;( mesh );       // Vector P2 elements
+    
+    // Mixed function space (Stokes: velocity + pressure)
+    auto Vh_mixed = Pchv&lt;2&gt;( mesh ) * Pch&lt;1&gt;( mesh );
+    
+    LOG(INFO) &lt;&lt; "Scalar P1 space has " &lt;&lt; Vh_scalar-&gt;nDof() &lt;&lt; " degrees of freedom";
+    LOG(INFO) &lt;&lt; "Scalar P2 space has " &lt;&lt; Vh_scalar_ho-&gt;nDof() &lt;&lt; " degrees of freedom";
+    LOG(INFO) &lt;&lt; "Vector P1 space has " &lt;&lt; Vh_vector-&gt;nDof() &lt;&lt; " degrees of freedom";
+    LOG(INFO) &lt;&lt; "Vector P2 space has " &lt;&lt; Vh_vector_ho-&gt;nDof() &lt;&lt; " degrees of freedom";
+    LOG(INFO) &lt;&lt; "Mixed space has " &lt;&lt; Vh_mixed-&gt;nDof() &lt;&lt; " degrees of freedom";
+
+    // Create elements (functions) in these spaces
+    auto u_scalar = Vh_scalar-&gt;element("u_scalar");
+    auto u_vector = Vh_vector-&gt;element("u_vector");
+    
+    // Initialize with expressions
+    u_scalar.on( _range=elements(mesh), _expr=sin(pi*Px())*cos(pi*Py()) );
+    u_vector.on( _range=elements(mesh), _expr=vec(cos(Px()), sin(Py())) );
+    
+    // Demonstrate projections
+    auto proj_scalar = vf::project( _space=Vh_scalar_ho, 
+                                   _range=elements(mesh), 
+                                   _expr=exp(-((Px()-0.5)*(Px()-0.5) + (Py()-0.5)*(Py()-0.5))/0.1) );
+    
+    // Compute norms
+    double l2_norm_scalar = normL2( _range=elements(mesh), _expr=idv(u_scalar) );
+    double h1_norm_scalar = normH1( _range=elements(mesh), _expr=idv(u_scalar), _grad_expr=gradv(u_scalar) );
+    
+    LOG(INFO) &lt;&lt; "L2 norm of scalar function: " &lt;&lt; l2_norm_scalar;
+    LOG(INFO) &lt;&lt; "H1 norm of scalar function: " &lt;&lt; h1_norm_scalar;
+    
+    // Export results
+    auto e = exporter( _mesh=mesh, _name="functionspace" );
+    e-&gt;add( "u_scalar", u_scalar );
+    e-&gt;add( "u_vector", u_vector );
+    e-&gt;add( "projected", proj_scalar );
+    e-&gt;save();
+    
+    return 0;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_performance_considerations"><a class="anchor" href="#_performance_considerations"></a>12. Performance Considerations</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_memory_usage"><a class="anchor" href="#_memory_usage"></a>12.1. Memory Usage</h3>
+<div class="paragraph">
+<p>Function spaces store basis function information. For large problems:
+- Use appropriate polynomial orders (don&#8217;t over-refine)
+- Consider mixed formulations to reduce total DoFs
+- Use periodic boundary conditions when applicable</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_parallel_distribution"><a class="anchor" href="#_parallel_distribution"></a>12.2. Parallel Distribution</h3>
+<div class="paragraph">
+<p>In parallel computations, function spaces automatically handle:
+- DoF distribution across processes
+- Ghost element communication
+- Consistent global numbering</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_best_practices"><a class="anchor" href="#_best_practices"></a>13. Best Practices</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Choose Appropriate Orders</strong>: Match polynomial order to solution smoothness</p>
+</li>
+<li>
+<p><strong>Use Mixed Formulations</strong>: For coupled physics (Stokes, elasticity)</p>
+</li>
+<li>
+<p><strong>Leverage Auto Types</strong>: Let compiler deduce function space types</p>
+</li>
+<li>
+<p><strong>Initialize Properly</strong>: Always initialize elements before use</p>
+</li>
+<li>
+<p><strong>Check Consistency</strong>: Ensure function spaces match your problem requirements</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Function spaces are the foundation of finite element methods in Feel++. Understanding their creation, manipulation, and properties is essential for effective PDE solving.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="sharethis-inline-share-buttons"></div>
+    <div class="footer-links">
+      <div class="col">
+        <div class="footer-logo">
+          <a href="https://www.cemosis.fr" class="icon">
+            <img src="../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.cemosis.fr" target="_blank" rel="noopener">Projects Documentation</a></li>
+          <li><a href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">Forums(Slack)</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://www.cemosis.fr" target="_blank" rel="noopener">Cemosis</a></li>
+          <li><a href="https://www.cemosis.fr/news" target="_blank" rel="noopener">News</a></li>
+          <li><a href="https://www.cemosis.fr/projects" target="_blank" rel="noopener">Projects</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul>
+          <li><a href="https://docs.feelpp.org" target="_blank" rel="noopener">Feel++ Documentation</a></li>
+          <li><a href="http://docs.feelpp.org/user/">Get Started</a></li>
+          <li><a href="http://docs.feelpp.org/user//install/distributions/">Downloads</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="social-icons">
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="facebook" class="cls-1" d="M29,0H3A2.652,2.652,0,0,0,0,3V29a2.652,2.652,0,0,0,3,3H16V18H12V14h4V12a6.452,6.452,0,0,1,6-6h4v4H22a2.151,2.151,0,0,0-2,2v2h6l-1,4H20V32h9a2.652,2.652,0,0,0,3-3V3A2.652,2.652,0,0,0,29,0Z"/></svg>
+            <a href="https://www.facebook.com/cemosis.fr" class="icon">
+            Facebook
+            </a>
+          </li>
+          <li>
+            <svg  width="14" height="14" viewBox="0 0 32.1 26.1"> <path id="twitter" class="cls-1" d="M32,7.1a11.836,11.836,0,0,1-3.8,1,6.462,6.462,0,0,0,2.9-3.6,12.606,12.606,0,0,1-4.2,1.6A6.492,6.492,0,0,0,22.1,4a6.594,6.594,0,0,0-6.6,6.6,7.719,7.719,0,0,0,.2,1.5A18.458,18.458,0,0,1,2.2,5.2a6.294,6.294,0,0,0-.9,3.3A6.765,6.765,0,0,0,4.2,14a6.109,6.109,0,0,1-3-.8v.1a6.543,6.543,0,0,0,5.3,6.4,4.678,4.678,0,0,1-1.7.2,4.869,4.869,0,0,1-1.2-.1,6.679,6.679,0,0,0,6.1,4.6,12.917,12.917,0,0,1-8.2,2.8,9.151,9.151,0,0,1-1.6-.1,18.438,18.438,0,0,0,10.1,3c12.1,0,18.7-10,18.7-18.7v-.8A13.336,13.336,0,0,0,32,7.2Z" transform="translate(0.1 -4)"/></svg>
+            <a href="https://twitter.com/cemosis" class="icon">
+              Twitter
+            </a>
+          </li>
+          <li>
+          <svg  width="14" height="14" viewBox="0 0 32 32"> <path id="linkedin" class="cls-1" d="M29,0H3A3.076,3.076,0,0,0,0,3V29a3.009,3.009,0,0,0,3,3H29a2.946,2.946,0,0,0,3-3V3A3.009,3.009,0,0,0,29,0ZM12,26H8V12h4ZM10,10a2,2,0,1,1,2-2A2.006,2.006,0,0,1,10,10ZM26,26H22V18a2,2,0,0,0-4,0v8H14V12h4v2.5c.8-1.1,2.1-2.5,3.5-2.5A4.736,4.736,0,0,1,26,17Z"/></svg>
+              <a href="https://www.linkedin.com/company/cemosis" class="icon">
+             Linkedin
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-terms">
+      <div class="footer-terms-copyright">
+          <span>© 2025 Cemosis, Université de Strasbourg</span>
+      </div>
+      <div class="footer-terms-links">
+        <a href="https://www.cemosis.fr/terms-of-use">Terms of Use</a>
+        <a href="https://www.cemosis.fr/privacy-policy">Privacy Policy</a>
+        <a href="https://www.cemosis.fr/cookie-policy">Cookie Policy</a>
+        <a href="https://www.cemosis.fr/support-policy">Support Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+
+
+<!-- Font Awesome JS removed to use webfont icons only -->
+<script async src="../../../_/js/vendor/highlight.js"></script>
+
+<script async id="search-script" src="../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../_/css/vendor/docsearch.css">
+</script>
+
+<script type="text/javascript">
+function toggleFullScreen() {
+   var doc = window.document;
+   var docEl = doc.documentElement;
+
+   var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+   var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+   if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+       requestFullScreen.call(docEl);
+   }
+   else {
+       cancelFullScreen.call(doc);
+   }
+}
+</script>
+  </body>
+</html>

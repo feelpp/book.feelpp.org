@@ -3,10 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Feel++ Docs</title>
+    <title>Operators :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/dev/latest/reference/Keywords/keywords-operators.html">
-    <meta name="generator" content="Antora 3.1.9">
-    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <link rel="prev" href="keywords-algebra.html">
+    <link rel="next" href="keywords-image.html">
+    <meta name="description" content="Operators and differential operators available in the expression language.">
+    <meta name="generator" content="Antora 3.1.12">
+<link rel="stylesheet" href="../../../../_/css/site.css">
+
+<!-- Font Awesome webfont CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <link rel="stylesheet" href="../../../../_/css/listing.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
@@ -173,32 +180,56 @@ MathJax.Hub.Config({
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../../index.html">Developer manual</a></h3>
+    <h3 class="title"><a href="../../index.html">Developer manuals</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming with Feel++</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming environment</span>
+    <span class="nav-text">Programming Environment Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Debugging Feel++</span>
+    <a class="nav-link" href="../../env/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Profiling Feel++</span>
+    <a class="nav-link" href="../../env/debugging.html">Debugging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../env/profiling.html">Profiling</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#tutorial-dev:ROOT:index.adoc">Feel++ Development Tutorial</a>
+</ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#template_project:ROOT:index.adoc">Feel++ Template Project</a>
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Coding Rules Manuals</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/index.html">Overview</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/general.html">General Coding Rules</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/cpp20.html">C++20 and beyond</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/hpc.html">HPC Rules</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/design-patterns.html">Design Patterns</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../fmufeelpp.html">Encapsulating Feel++ models in FMU</a>
+    <a class="nav-link" href="../../tutorial/index.html">Tutorial</a>
   </li>
 </ul>
   </li>
@@ -219,7 +250,7 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../Integrals/README.html">Integrals</a>
+    <a class="nav-link" href="#Integrals/README.adoc">Integrals</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../Integrals/integrate.html">integrate</a>
@@ -296,27 +327,33 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../exporter.html">Post-processing and Visualization</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="README.html">Mathematical keywords</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Developer Reference</span>
+    <a class="nav-link" href="README.html">Mathematical keywords</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../cmake.html">CMake Feel++ macros</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="keywords-mesh.html">Mesh</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../environment.html">Feel++ Environment</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="keywords.html">Mathematical expressions</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../fileformats.html">Feel++ File Formats</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="keywords-geometry.html">Geometry</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../codingrules.html">Feel++ Coding Rules</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="keywords-algebra.html">Vectors and matrices</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="keywords-operators.html">Operators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="keywords-image.html">Image</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="keywords-fit.html">Fitting</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -325,7 +362,7 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Developer manual</span>
+    <span class="title">Developer manuals</span>
     <span class="version">latest</span>
   </div>
   <ul class="components">
@@ -372,7 +409,7 @@ MathJax.Hub.Config({
           </ul>
       </li>
       <li class="component is-current">
-        <a class="title" href="../../index.html">Developer manual</a>
+        <a class="title" href="../../index.html">Developer manuals</a>
           <ul class="versions">
               <li class="version is-current is-latest">
                 <a href="../../index.html">latest</a>
@@ -407,6 +444,12 @@ MathJax.Hub.Config({
   <button class="nav-toggle"></button>
     <a href="../../../../home/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Developer manuals</a></li>
+    <li><a href="../index.html">Mathematical Concepts Reference</a></li>
+    <li><a href="README.html">Mathematical keywords</a></li>
+    <li><a href="keywords-operators.html">Operators</a></li>
+  </ul>
 </nav>
 
   <div class="page-versions">
@@ -438,11 +481,10 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Operators</h1>
 <div class="sect1">
-<h2 id="_operators"><a class="anchor" href="#_operators"></a>1. Operators</h2>
+<h2 id="_operations"><a class="anchor" href="#_operations"></a>1. Operations</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_operations"><a class="anchor" href="#_operations"></a>1.1. Operations</h3>
 <div class="paragraph">
 <p>You can use the usual operations and logical operators.</p>
 </div>
@@ -531,8 +573,10 @@ MathJax.Hub.Config({
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="_differential_operators"><a class="anchor" href="#_differential_operators"></a>1.2. Differential Operators</h3>
+</div>
+<div class="sect1">
+<h2 id="_differential_operators"><a class="anchor" href="#_differential_operators"></a>2. Differential Operators</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Feel++ finit element language use <em>test</em> and <em>trial</em> functions. Keywords are different according to the kind of the manipulated function.<br>
 <strong>Usual operators</strong> are for <strong>test</strong> functions.<br>
@@ -787,8 +831,10 @@ is a finite element space.</p>
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="_two_valued_operators"><a class="anchor" href="#_two_valued_operators"></a>1.3. Two Valued Operators</h3>
+</div>
+<div class="sect1">
+<h2 id="_two_valued_operators"><a class="anchor" href="#_two_valued_operators"></a>3. Two Valued Operators</h2>
+<div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -956,7 +1002,10 @@ is a finite element space.</p>
 </table>
 </div>
 </div>
-</div>
+<nav class="pagination">
+  <span class="prev"><a href="keywords-algebra.html">Vectors and matrices</a></span>
+  <span class="next"><a href="keywords-image.html">Image</a></span>
+</nav>
 </article>
   </div>
 </main>
@@ -1031,8 +1080,7 @@ is a finite element space.</p>
 <script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
 
 
-<script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../../../_/js/vendor/fontawesome.js"></script>
+<!-- Font Awesome JS removed to use webfont icons only -->
 <script async src="../../../../_/js/vendor/highlight.js"></script>
 
 <script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">

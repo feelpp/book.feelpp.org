@@ -3,12 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Feel++ Docs</title>
+    <title>Integrate :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/dev/latest/reference/Integrals/integrate.html">
-    <link rel="prev" href="README.html">
+    <link rel="prev" href="#Integrals/README.adoc">
     <link rel="next" href="mean.html">
-    <meta name="generator" content="Antora 3.1.9">
-    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <meta name="description" content="Describe the `integrate()` primitive and how to use it to compute integrals and assemble forms.">
+    <meta name="generator" content="Antora 3.1.12">
+<link rel="stylesheet" href="../../../../_/css/site.css">
+
+<!-- Font Awesome webfont CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <link rel="stylesheet" href="../../../../_/css/listing.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
@@ -175,32 +180,56 @@ MathJax.Hub.Config({
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../../index.html">Developer manual</a></h3>
+    <h3 class="title"><a href="../../index.html">Developer manuals</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming with Feel++</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming environment</span>
+    <span class="nav-text">Programming Environment Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Debugging Feel++</span>
+    <a class="nav-link" href="../../env/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Profiling Feel++</span>
+    <a class="nav-link" href="../../env/debugging.html">Debugging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../env/profiling.html">Profiling</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#tutorial-dev:ROOT:index.adoc">Feel++ Development Tutorial</a>
+</ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#template_project:ROOT:index.adoc">Feel++ Template Project</a>
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Coding Rules Manuals</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/index.html">Overview</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/general.html">General Coding Rules</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/cpp20.html">C++20 and beyond</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/hpc.html">HPC Rules</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/design-patterns.html">Design Patterns</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../fmufeelpp.html">Encapsulating Feel++ models in FMU</a>
+    <a class="nav-link" href="../../tutorial/index.html">Tutorial</a>
   </li>
 </ul>
   </li>
@@ -221,7 +250,7 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="README.html">Integrals</a>
+    <a class="nav-link" href="#Integrals/README.adoc">Integrals</a>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="3">
     <a class="nav-link" href="integrate.html">integrate</a>
@@ -298,27 +327,33 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../exporter.html">Post-processing and Visualization</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../Keywords/README.html">Mathematical keywords</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Developer Reference</span>
+    <a class="nav-link" href="../Keywords/README.html">Mathematical keywords</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../cmake.html">CMake Feel++ macros</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-mesh.html">Mesh</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../environment.html">Feel++ Environment</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords.html">Mathematical expressions</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../fileformats.html">Feel++ File Formats</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-geometry.html">Geometry</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../codingrules.html">Feel++ Coding Rules</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-algebra.html">Vectors and matrices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-operators.html">Operators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-image.html">Image</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-fit.html">Fitting</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -327,7 +362,7 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Developer manual</span>
+    <span class="title">Developer manuals</span>
     <span class="version">latest</span>
   </div>
   <ul class="components">
@@ -374,7 +409,7 @@ MathJax.Hub.Config({
           </ul>
       </li>
       <li class="component is-current">
-        <a class="title" href="../../index.html">Developer manual</a>
+        <a class="title" href="../../index.html">Developer manuals</a>
           <ul class="versions">
               <li class="version is-current is-latest">
                 <a href="../../index.html">latest</a>
@@ -410,9 +445,9 @@ MathJax.Hub.Config({
     <a href="../../../../home/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../../index.html">Developer manual</a></li>
+    <li><a href="../../index.html">Developer manuals</a></li>
     <li><a href="../index.html">Mathematical Concepts Reference</a></li>
-    <li><a href="README.html">Integrals</a></li>
+    <li><a href="#Integrals/README.adoc">Integrals</a></li>
     <li><a href="integrate.html">integrate</a></li>
   </ul>
 </nav>
@@ -446,50 +481,44 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<div class="sect1">
-<h2 id="_integrals"><a class="anchor" href="#_integrals"></a>1. Integrals</h2>
+<h1 class="page">Integrate</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Feel++ provide the integrate() function to define integral expressions
-which can be used to compute integrals, define linear and bi-linear
-forms.</p>
+<p>Feel++ provides the <code>integrate()</code> function to define integral expressions which can be used to compute integrals and to build linear or bilinear forms.</p>
 </div>
-<div class="sect2">
-<h3 id="_interface"><a class="anchor" href="#_interface"></a>1.1. Interface</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_interface"><a class="anchor" href="#_interface"></a>1. Interface</h2>
+<div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  integrate( _range, _expr, _quad, _geomap );</code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">integrate( _range, _expr, _quad, _geomap );</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Please notice that the order of the parameter is not important, these
-are <code>boost</code> parameters, so you can enter them in the order you
-want. To make it clear, there are two required parameters and 2
-optional and they of course can be entered in any order provided you
-give the parameter name. If you don&#8217;t provide the parameter name (that
-is to say <code>_range</code> = or the others) they must be entered in the order
-they are described below.</p>
+<p>The parameters are Boost-style named parameters; order is not important when names are used. Two parameters are required and two are optional.</p>
 </div>
-<div class="paragraph">
-<p>Required parameters:</p>
-</div>
+<div class="sect2">
+<h3 id="_required_parameters"><a class="anchor" href="#_required_parameters"></a>1.1. Required parameters</h3>
 <div class="ulist">
 <ul>
 <li>
-<p><code>_range</code>  = domain of integration</p>
+<p><code>_range</code> — domain of integration (mesh iterators)</p>
 </li>
 <li>
-<p><code>_expr</code>  = integrand expression</p>
+<p><code>_expr</code> — integrand expression</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>Optional parameters:</p>
 </div>
+<div class="sect2">
+<h3 id="_optional_parameters"><a class="anchor" href="#_optional_parameters"></a>1.2. Optional parameters</h3>
 <div class="ulist">
 <ul>
 <li>
-<p><code>_quad</code>  = quadrature to use instead of the default one. Several ways are possible to pass the quadrature order for backward compatibility</p>
+<p><code>_quad</code> — quadrature to use. Examples:</p>
 </li>
 </ul>
 </div>
@@ -510,25 +539,25 @@ they are described below.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_quad=&lt;n&gt;</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_quad=5</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pass the quadrature order as an integer, the default quadrature is used</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pass the quadrature order as an integer</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">v0.105</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_quad=im&lt;Convex&gt;(&lt;n&gt;)</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_quad=im&lt;Triangle&gt;(5)</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pass the default quadrature formula on a triangle to integrate exactly order 5 polynomials</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use the default quadrature on triangles for polynomials up to order 5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">v0.105</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_quad=im(mesh,&lt;n&gt;)</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_quad=im(mesh,5)</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pass the default quadrature formula on a mesh <code>mesh</code> to integrate exactly order 5 polynomials</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use the mesh&#8217;s default quadrature of order 5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">v0.105</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_quad=_Q&lt;n&gt;()</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_quad=_Q&lt;5&gt;()</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pass the quadrature order at compile time to integrate exactly order 5 polynomials. It will be deprecated in a future release</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compile-time quadrature spec (deprecated as of v0.105)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">up to v0.105</p></td>
 </tr>
 </tbody>
@@ -540,7 +569,7 @@ they are described below.</p>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Starting from v0.105, quadratures are built at runtime and no more at compile time which means that quadrature orders can be adjusted dynamically, <em>e.g</em> from a command line option
+From v0.105 quadratures are built at runtime so quadrature orders can be adjusted dynamically.
 </td>
 </tr>
 </table>
@@ -548,157 +577,87 @@ Starting from v0.105, quadratures are built at runtime and no more at compile ti
 <div class="ulist">
 <ul>
 <li>
-<p><code>_geomap</code>  = type of geometric mapping to use, that is to say:</p>
+<p><code>_geomap</code> — geometric mapping type. Options: <code>GEOMAP_HO</code>, <code>GEOMAP_OPT</code>, <code>GEOMAP_01</code>.</p>
 </li>
 </ul>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Feel Parameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GEOMAP_HO</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High order approximation (same of the mesh)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GEOMAP_OPT</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optimal approximation: high order on boundary elements order 1 in the interior</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GEOMAP_01</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Order 1 approximation (same of the mesh)</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_example"><a class="anchor" href="#_example"></a>1.2. Example</h3>
-<div class="paragraph">
-<p>From <code>doc/manual/tutorial/dar.cpp</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">form1( ... ) = integrate( _range = elements( mesh ),
-                          _expr = f*id( v ) );</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>From <code>doc/manual/tutorial/myintegrals.cpp</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  // compute integral f on boundary
-  double intf_3 = integrate( _range = boundaryfaces( mesh ),
-                             _expr = f );</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>From <code>doc/manual/advection/advection.cpp</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">  // using default quadrature
-  form2( _test = Xh, _trial = Xh, _matrix = D ) +=
-    integrate( _range = internalfaces( mesh ),
-               _quad = 2*Order,
-               _expr = ( averaget( trans( beta )*idt( u ) ) * jump( id( v ) ) )
-               + penalisation*beta_abs*( trans( jumpt( trans( idt( u ) )) )
-               *jump( trans( id( v ) ) ) ),
-               _geomap = geomap );
-  // use deprecated _Q
-  form2( _test = Xh, _trial = Xh, _matrix = D ) +=
-    integrate( _range = internalfaces( mesh ),
-               _quad = _Q&lt;2*Order&gt;(),
-               _expr = ( averaget( trans( beta )*idt( u ) ) * jump( id( v ) ) )
-               + penalisation*beta_abs*( trans( jumpt( trans( idt( u ) )) )
-               *jump( trans( id( v ) ) ) ),
-               _geomap = geomap );</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>From <code>doc/manual/laplacian/laplacian.cpp</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp"> auto l = form1( _test=Xh, _vector=F );
- l = integrate( _range = elements( mesh ),
-                _expr=f*id( v ) ) +
-     integrate( _range = markedfaces( mesh, "Neumann" ),
-                _expr = nu*gradg*vf::N()*id( v ) );</code></pre>
-</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_computing_my_first_integrals"><a class="anchor" href="#_computing_my_first_integrals"></a>2. Computing my first Integrals</h2>
+<h2 id="_examples"><a class="anchor" href="#_examples"></a>2. Examples</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This part explains how to integrate on a mesh with Feel++ (source
-<code>doc/manual/tutorial/myintegrals.cpp</code> ).</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s consider the domain \(\Omega=[0,1]^d\) and associated
-meshes. Here, we want to integrate the following function</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\begin{aligned}
-f(x,y,z) = x^2 + y^2 + z^2
-\end{aligned}\]
-</div>
-</div>
-<div class="paragraph">
-<p>on the whole domain \(\Omega\) and on part of the boundary \(\Omega\).</p>
-</div>
-<div class="paragraph">
-<p>There is the appropriate code:</p>
+<p>From <code>doc/manual/tutorial/dar.cpp</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">int
-main( int argc, char** argv )
-{
-    // Initialize Feel++ Environment
-    Environment env( _argc=argc, _argv=argv,
-                     _desc=feel_options(),
-                     _about=about( _name="myintegrals" ,
-                                   _author="Feel++ Consortium",
-                                   _email="feelpp-devel@feelpp.org" ) );
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">form1( ... ) = integrate( _range = elements(mesh), _expr = f*id(v) );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Compute an integral on the boundary:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// compute integral f on boundary
+double intf_3 = integrate( _range = boundaryfaces(mesh), _expr = f ).evaluate()(0,0);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using a custom quadrature and geomap in a face-based integral:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">form2( _test = Xh, _trial = Xh, _matrix = D ) +=
+  integrate( _range = internalfaces(mesh),
+             _quad = 2*Order,
+             _expr = ( averaget(trans(beta)*idt(u)) * jump(id(v)) )
+             + penalisation*beta_abs*( trans(jumpt(trans(idt(u))))
+             * jump(trans(id(v))) ),
+             _geomap = geomap );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From <code>doc/manual/laplacian/laplacian.cpp</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto l = form1( _test = Xh, _vector = F );
+l = integrate( _range = elements(mesh), _expr = f*id(v) )
+    + integrate( _range = markedfaces(mesh, "Neumann" ), _expr = nu*gradg*vf::N()*id(v) );</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_tutorial_compute_a_simple_integral"><a class="anchor" href="#_quick_tutorial_compute_a_simple_integral"></a>3. Quick tutorial: compute a simple integral</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Consider the domain \Omega = [0,1]^d and the integrand f(x,y,z) = x<sup>2+y</sup>2+z^2.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto mesh = unitHypercube&lt;3&gt;();
+auto f = Px()*Px() + Py()*Py() + Pz()*Pz();
 
-    // create the mesh (specify the dimension of geometric entity)
-    auto mesh = unitHypercube&lt;3&gt;();
+// global integral
+double intf_1 = integrate( _range = elements(mesh), _expr = f ).evaluate()(0,0);
 
-    // our function to integrate
-    auto f = Px()*Px() + Py()*Py() + Pz()*Pz();
+// local (per-element) contributions
+double intf_2 = integrate( _range = elements(mesh), _expr = f ).evaluate(false)(0,0);
 
-    // compute integral of f (global contribution)
-    double intf_1 = integrate( _range = elements( mesh ),
-                               _expr = f ).evaluate()( 0,0 );
+// boundary integral
+double intf_3 = integrate( _range = boundaryfaces(mesh), _expr = f ).evaluate()(0,0);
 
-    // compute integral of f (local contribution)
-    double intf_2 = integrate( _range = elements( mesh ),
-                               _expr = f ).evaluate(false)( 0,0 );
-
-    // compute integral f on boundary
-    double intf_3 = integrate( _range = boundaryfaces( mesh ),
-                               _expr = f ).evaluate()( 0,0 );
-
-    std::cout &lt;&lt; "int global ; local ; boundary" &lt;&lt; std::endl
-              &lt;&lt; intf_1 &lt;&lt; ";" &lt;&lt; intf_2 &lt;&lt; ";" &lt;&lt; intf_3 &lt;&lt; std::endl;
-}</code></pre>
+std::cout &lt;&lt; "int global ; local ; boundary" &lt;&lt; std::endl
+          &lt;&lt; intf_1 &lt;&lt; ";" &lt;&lt; intf_2 &lt;&lt; ";" &lt;&lt; intf_3 &lt;&lt; std::endl;</code></pre>
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="README.html">Integrals</a></span>
+  <span class="prev"><a href="#Integrals/README.adoc">Integrals</a></span>
   <span class="next"><a href="mean.html">mean</a></span>
 </nav>
 </article>
@@ -775,8 +734,7 @@ main( int argc, char** argv )
 <script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
 
 
-<script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../../../_/js/vendor/fontawesome.js"></script>
+<!-- Font Awesome JS removed to use webfont icons only -->
 <script async src="../../../../_/js/vendor/highlight.js"></script>
 
 <script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">

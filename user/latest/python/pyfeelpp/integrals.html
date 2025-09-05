@@ -7,8 +7,12 @@
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/python/pyfeelpp/integrals.html">
     <link rel="prev" href="discr.html">
     <link rel="next" href="filters.html">
-    <meta name="generator" content="Antora 3.1.9">
-    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <meta name="generator" content="Antora 3.1.12">
+<link rel="stylesheet" href="../../../../_/css/site.css">
+
+<!-- Font Awesome webfont CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <link rel="stylesheet" href="../../../../_/css/listing.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
@@ -502,7 +506,7 @@ MathJax.Hub.Config({
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../../../dev/latest/index.html">Developer manual</a>
+        <a class="title" href="../../../../dev/latest/index.html">Developer manuals</a>
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../../../dev/latest/index.html">latest</a>
@@ -599,7 +603,47 @@ app = fppc.Environment(["myapp"],config=fppc.localRepository(""))</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre></pre>
+<pre>---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+File /usr/lib/petsc/lib/python3/dist-packages/petsc4py/PETSc.py:3
+      2 from petsc4py.lib import ImportPETSc  # noqa: E402
+----> 3 PETSc = ImportPETSc(ARCH)
+      4 PETSc._initialize()
+
+File /usr/lib/petsc/lib/python3/dist-packages/petsc4py/lib/__init__.py:29, in ImportPETSc(arch)
+     28 path, arch = getPathArchPETSc(arch)
+---> 29 return Import('petsc4py', 'PETSc', path, arch)
+
+File /usr/lib/petsc/lib/python3/dist-packages/petsc4py/lib/__init__.py:95, in Import(pkg, name, path, arch)
+     94 # import extension module from 'path/arch' directory
+---> 95 module = import_module(pkg, name, path, arch)
+     96 module.__arch__ = arch  # save arch value
+
+File /usr/lib/petsc/lib/python3/dist-packages/petsc4py/lib/__init__.py:73, in Import.<locals>.import_module(pkg, name, path, arch)
+     72 sys.modules[fullname] = module
+---> 73 spec.loader.exec_module(module)
+     74 return module
+
+File petsc4py/PETSc.pyx:1, in init petsc4py.PETSc()
+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
+
+The above exception was the direct cause of the following exception:
+
+SystemError                               Traceback (most recent call last)
+File <ipython-input-1-a4ceb7f52cbe>:1
+----> 1 import feelpp.core as fppc
+      2 import sys
+      3 app = fppc.Environment(["myapp"],config=fppc.localRepository(""))
+
+File /usr/lib/python3/dist-packages/feelpp/core/__init__.py:12
+     10 from ._feelpp import  *
+     11 from ._core import *
+---> 12 from ._alg import *
+     13 from ._mesh import *
+     14 from ._plot import *
+
+SystemError: initialization of _alg raised unreported exception</pre>
 </div>
 </div>
 </div>
@@ -631,7 +675,14 @@ mesh = fppc.load(fppc.mesh(dim=2,realdim=2), geo, 0.1)</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>geo file: /scratch/github-runners/feelpp-actions-runner-0/_work/book.feelpp.org/book.feelpp.org/feelppdb/downloads/feelpp2d.geo</pre>
+<pre>---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+File <ipython-input-1-c69222542804>:1
+----> 1 geo=fppc.download( "github:{repo:feelpp,path:feelpp/quickstart/laplacian/cases/feelpp2d/feelpp2d.geo}", worldComm=app.worldCommPtr() )[0]
+      2 print("geo file: {}".format(geo))
+      3 mesh = fppc.load(fppc.mesh(dim=2,realdim=2), geo, 0.1)
+
+NameError: name 'fppc' is not defined</pre>
 </div>
 </div>
 </div>
@@ -656,7 +707,47 @@ print(f"i1 = {i1}, i2 = {i2}, i3 = {i3}")</code></pre>
 <div class="content">
 <div class="literalblock dynamic-py-result">
 <div class="content">
-<pre>i1 = [0.77395849], i2 = [2.66666667], i3 = [0.]</pre>
+<pre>---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+File /usr/lib/petsc/lib/python3/dist-packages/petsc4py/PETSc.py:3
+      2 from petsc4py.lib import ImportPETSc  # noqa: E402
+----> 3 PETSc = ImportPETSc(ARCH)
+      4 PETSc._initialize()
+
+File /usr/lib/petsc/lib/python3/dist-packages/petsc4py/lib/__init__.py:29, in ImportPETSc(arch)
+     28 path, arch = getPathArchPETSc(arch)
+---> 29 return Import('petsc4py', 'PETSc', path, arch)
+
+File /usr/lib/petsc/lib/python3/dist-packages/petsc4py/lib/__init__.py:95, in Import(pkg, name, path, arch)
+     94 # import extension module from 'path/arch' directory
+---> 95 module = import_module(pkg, name, path, arch)
+     96 module.__arch__ = arch  # save arch value
+
+File /usr/lib/petsc/lib/python3/dist-packages/petsc4py/lib/__init__.py:73, in Import.<locals>.import_module(pkg, name, path, arch)
+     72 sys.modules[fullname] = module
+---> 73 spec.loader.exec_module(module)
+     74 return module
+
+File petsc4py/PETSc.pyx:1, in init petsc4py.PETSc()
+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
+
+The above exception was the direct cause of the following exception:
+
+SystemError                               Traceback (most recent call last)
+File <ipython-input-1-60c7b7a2e03c>:1
+----> 1 from feelpp.core.integrate  import integrate
+      3 i1 = integrate(range=fppc.elements(mesh),expr="sin(x+y):x:y")
+      4 i2 = integrate(range=fppc.boundaryfaces(mesh),expr="x*nx+y*ny+z*nz:x:y:z:nx:ny:nz")
+
+File /usr/lib/python3/dist-packages/feelpp/core/__init__.py:12
+     10 from ._feelpp import  *
+     11 from ._core import *
+---> 12 from ._alg import *
+     13 from ._mesh import *
+     14 from ._plot import *
+
+SystemError: initialization of _alg raised unreported exception</pre>
 </div>
 </div>
 </div>
@@ -756,8 +847,7 @@ print(f"i1 = {i1}, i2 = {i2}, i3 = {i3}")</code></pre>
 <script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
 
 
-<script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../../../_/js/vendor/fontawesome.js"></script>
+<!-- Font Awesome JS removed to use webfont icons only -->
 <script async src="../../../../_/js/vendor/highlight.js"></script>
 
 <script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">

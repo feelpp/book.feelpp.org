@@ -6,8 +6,12 @@
     <title>Toolboxes Manuals :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/index.html">
     <link rel="next" href="cfpdes/index.html">
-    <meta name="generator" content="Antora 3.1.9">
-    <link rel="stylesheet" href="../../_/css/site.css">
+    <meta name="generator" content="Antora 3.1.12">
+<link rel="stylesheet" href="../../_/css/site.css">
+
+<!-- Font Awesome webfont CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <link rel="stylesheet" href="../../_/css/listing.css">
 <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
@@ -99,7 +103,7 @@ MathJax.Hub.Config({
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
 </head>
-<body class="article docs-case-study">
+<body class="article docs-case-study docs-cards-layout ">
 <header class="header">
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
@@ -633,10 +637,10 @@ MathJax.Hub.Config({
     <span class="nav-text">Benchmarks</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="maxwell/Harmonic/index.html">Harmonic Content &amp; Multipoles magnets</a>
+    <a class="nav-link" href="maxwell/Inductor/index.html">Inductor Benchmark</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="maxwell/Inductor/index.html">Inductor Benchmark</a>
+    <a class="nav-link" href="maxwell/Harmonic/index.html">Harmonic Content &amp; Multipoles magnets</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="maxwell/Torus/index.html">Torus Benchmark</a>
@@ -750,7 +754,7 @@ MathJax.Hub.Config({
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../dev/latest/index.html">Developer manual</a>
+        <a class="title" href="../../dev/latest/index.html">Developer manuals</a>
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../dev/latest/index.html">latest</a>
@@ -795,126 +799,162 @@ MathJax.Hub.Config({
     <div class="content">
       <article class="doc">
           <h1 class="page">Toolboxes Manuals</h1>
+        
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p>Welcome to the documentation of the Feel++ Toolboxes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Feel++ provides a powerful environment for modeling and solving scientific and engineering problems. With Feel++ toolboxes, you can extend conventional single-physics models into multiphysics simulations without requiring deep knowledge of mathematics or numerical analysis.</p>
+</div>
+<div class="paragraph">
+<p>Configure and run models using <a href="modeling-analysis-using-json-files.html" class="xref page">JSON</a> and <a href="parametrized-simulation-using-cfg-files.html" class="xref page">CFG</a> files by defining physical quantities such as material properties, loads, constraints, and sources.</p>
+</div>
+<div class="sect2">
+<h3 id="_getting_started"><a class="anchor" href="#_getting_started"></a>1.1. Getting Started</h3>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> <a href="what-is-a-toolbox.html" class="xref page">What is a Toolbox</a> - understand toolbox concepts and configuration</p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> <a href="modeling-analysis-using-json-files.html" class="xref page">JSON Configuration Guide</a> - model setup reference</p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> <a href="parametrized-simulation-using-cfg-files.html" class="xref page">CFG Configuration Guide</a> - parameter reference</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+        
           <h2>Toolboxes</h2>
           <div class="toolboxes">
             <div class="toolbox"><a class="page-card" href="core.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/manual.svg"/>
-    </div>
-    <div class="page-card-body">
-      <h4>1. Core Manuals</h4>
-      <p class="page-card-description">The Toolbox Core Manuals describe (i) what is a toolbox (ii) how to setup simulation models thanks to JSON files and (iii) configure command line options of the toolboxes</p>
-    </div>
+  <div class="page-card-illustration">
+        <img alt="" src="_images/manual.svg"/>
+  </div>
+  <div class="page-card-body">
+    <h4>1. Core Manuals</h4>
+    <p class="page-card-description">The Toolbox Core Manuals describe (i) what is a toolbox (ii) how to setup simulation models thanks to JSON files and (iii) configure command line options of the toolboxes</p>
+  </div>
 </a>
 </div>
             <div class="toolbox"><a class="page-card" href="cfpdes/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="cfpdes/_images/cahn-hilliard/ch-3d-t6e-3-removebg.jpg"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Coefficient Form PDEs</h4>
-      <p class="page-card-description">A coefficient form PDE toolbox to solve N coupled nonlinear PDEs</p>
-    </div>
+  <div class="page-card-illustration">
+        <img alt="" src="cfpdes/_images/cahn-hilliard/ch-3d-t6e-3-removebg.jpg"/>
+  </div>
+  <div class="page-card-body">
+    <h4>Coefficient Form PDEs</h4>
+    <p class="page-card-description">A coefficient form PDE toolbox to solve N coupled nonlinear PDEs</p>
+  </div>
 </a>
 </div>
             <div class="toolbox"><a class="page-card" href="cfd/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/FlowAroundCylinder-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Computational Fluid Mechanics</h4>
-      <p class="page-card-description">The computation fluid mechanics solves from low to high Reynolds number flows and includes some turbulence models.</p>
-    </div>
+  <div class="page-card-illustration">
+        <img alt="" src="_images/FlowAroundCylinder-600x300.png"/>
+  </div>
+  <div class="page-card-body">
+    <h4>Computational Fluid Mechanics</h4>
+    <p class="page-card-description">The computation fluid mechanics solves from low to high Reynolds number flows and includes some turbulence models.</p>
+  </div>
 </a>
 </div>
             <div class="toolbox"><a class="page-card" href="csm/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/torsionbarNeoHookIncompT2-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Computational Solid Mechanics</h4>
-      <p class="page-card-description">A toolbox to solve non-linear elasticity problems that supports (i) Large deformations, (ii) large displacements; (iv) Compressible, nearly incompressible materials and (v) Multi-material</p>
-    </div>
+  <div class="page-card-illustration">
+        <img alt="" src="_images/torsionbarNeoHookIncompT2-600x300.png"/>
+  </div>
+  <div class="page-card-body">
+    <h4>Computational Solid Mechanics</h4>
+    <p class="page-card-description">A toolbox to solve non-linear elasticity problems that supports (i) Large deformations, (ii) large displacements; (iv) Compressible, nearly incompressible materials and (v) Multi-material</p>
+  </div>
 </a>
 </div>
             <div class="toolbox"><a class="page-card" href="electric/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/Magnet_3D_brochure_highresolution2-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Electric</h4>
-      <p class="page-card-description">A Toolbox that solves Gauss's Law equation and compute the electric potential and field of a given charge distribution.</p>
-    </div>
+  <div class="page-card-illustration">
+        <img alt="" src="_images/Magnet_3D_brochure_highresolution2-600x300.png"/>
+  </div>
+  <div class="page-card-body">
+    <h4>Electric</h4>
+    <p class="page-card-description">A Toolbox that solves Gauss's Law equation and compute the electric potential and field of a given charge distribution.</p>
+  </div>
 </a>
 </div>
             <div class="toolbox"><a class="page-card" href="fsi/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/wp3dP3P2G2-struct-disp-t2-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Fluid Structure Interaction</h4>
-      <p class="page-card-description">A toolbox for solving fluid-structure interaction problems using ALE formulation and staggered schemes such as Diriexlet-Neumann, Generalized Robin-Neumann, and Robin-Robin.</p>
-    </div>
+  <div class="page-card-illustration">
+        <img alt="" src="_images/wp3dP3P2G2-struct-disp-t2-600x300.png"/>
+  </div>
+  <div class="page-card-body">
+    <h4>Fluid Structure Interaction</h4>
+    <p class="page-card-description">A toolbox for solving fluid-structure interaction problems using ALE formulation and staggered schemes such as Diriexlet-Neumann, Generalized Robin-Neumann, and Robin-Robin.</p>
+  </div>
 </a>
 </div>
             <div class="toolbox"><a class="page-card" href="heatfluid/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/feelpp-aerothermal-2-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Heat and Fluid</h4>
-      <p class="page-card-description">A toolbox that solves the heat and fluid equations including convection, conduction effects. it is mostly used for aerothermal problems.</p>
-    </div>
+  <div class="page-card-illustration">
+        <img alt="" src="_images/feelpp-aerothermal-2-600x300.png"/>
+  </div>
+  <div class="page-card-body">
+    <h4>Heat and Fluid</h4>
+    <p class="page-card-description">A toolbox that solves the heat and fluid equations including convection, conduction effects. it is mostly used for aerothermal problems.</p>
+  </div>
 </a>
 </div>
             <div class="toolbox"><a class="page-card" href="heat/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/heat-transfer-building-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Heat Transfer</h4>
-      <p class="page-card-description">A toolbox to solve heat transfer problems, including conduction, convection, and black body radiation, including non-linear problems and temperature-dependent properties.</p>
-    </div>
+  <div class="page-card-illustration">
+        <img alt="" src="_images/heat-transfer-building-600x300.png"/>
+  </div>
+  <div class="page-card-body">
+    <h4>Heat Transfer</h4>
+    <p class="page-card-description">A toolbox to solve heat transfer problems, including conduction, convection, and black body radiation, including non-linear problems and temperature-dependent properties.</p>
+  </div>
 </a>
 </div>
             <div class="toolbox"><a class="page-card" href="hdg/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/Magnet_3D_brochure_highresolution2-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Hybridized Discontinuous Galerkin Toolbox</h4>
-      <p class="page-card-description">Hybridized Discontinuous Galerkin Toolbox case studies, supporting elliptic and parabolic problems in 2D and 3D including advection, diffusion and reaction, elasticity, Stokes and coupled problems.</p>
-    </div>
+  <div class="page-card-illustration">
+        <img alt="" src="_images/Magnet_3D_brochure_highresolution2-600x300.png"/>
+  </div>
+  <div class="page-card-body">
+    <h4>Hybridized Discontinuous Galerkin Toolbox</h4>
+    <p class="page-card-description">Hybridized Discontinuous Galerkin Toolbox case studies, supporting elliptic and parabolic problems in 2D and 3D including advection, diffusion and reaction, elasticity, Stokes and coupled problems.</p>
+  </div>
 </a>
 </div>
             <div class="toolbox"><a class="page-card" href="maxwell/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/Magnet_3D_brochure_highresolution2-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Maxwell</h4>
-      <p class="page-card-description">A toolbox for the simulation of electromagnetic fields in 3D including static, low frequency, and high frequency applications and non-linear materials.</p>
-    </div>
+  <div class="page-card-illustration">
+        <img alt="" src="_images/Magnet_3D_brochure_highresolution2-600x300.png"/>
+  </div>
+  <div class="page-card-body">
+    <h4>Maxwell</h4>
+    <p class="page-card-description">A toolbox for the simulation of electromagnetic fields in 3D including static, low frequency, and high frequency applications and non-linear materials.</p>
+  </div>
 </a>
 </div>
             <div class="toolbox"><a class="page-card" href="multifluid/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/drop3d_initial.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Multifluid Flow Toolbox</h4>
-      <p class="page-card-description">A toolbox to solve multuid flow problems using the level set method</p>
-    </div>
+  <div class="page-card-illustration">
+        <img alt="" src="_images/drop3d_initial.png"/>
+  </div>
+  <div class="page-card-body">
+    <h4>Multifluid Flow Toolbox</h4>
+    <p class="page-card-description">A toolbox to solve multuid flow problems using the level set method</p>
+  </div>
 </a>
 </div>
             <div class="toolbox"><a class="page-card" href="thermoelectric/index.html">
-    <div class="page-card-illustration">
-      <img alt="" src="_images/peltiermodule-electricpotential-600x300.png"/>
-    </div>
-    <div class="page-card-body">
-      <h4>Thermo-Electric</h4>
-      <p class="page-card-description">A toolbox to solve the heat equation coupled to the electric currents equation including temperature-dependent material properties.</p>
-    </div>
+  <div class="page-card-illustration">
+        <img alt="" src="_images/peltiermodule-electricpotential-600x300.png"/>
+  </div>
+  <div class="page-card-body">
+    <h4>Thermo-Electric</h4>
+    <p class="page-card-description">A toolbox to solve the heat equation coupled to the electric currents equation including temperature-dependent material properties.</p>
+  </div>
 </a>
 </div>
           </div>
@@ -993,8 +1033,7 @@ MathJax.Hub.Config({
 <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
 
 
-<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../_/js/vendor/fontawesome.js"></script>
+<!-- Font Awesome JS removed to use webfont icons only -->
 <script async src="../../_/js/vendor/highlight.js"></script>
 
 <script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">

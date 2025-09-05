@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+<head>
+      <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/dev/latest/07-SpaceElements.html">
-    <meta name="generator" content="Antora 3.1.9">
-    <link rel="stylesheet" href="../../_/css/site.css">
-    <link rel="stylesheet" href="../../_/css/listing.css">
-<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <title>Integrals :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/dev/latest/reference/Integrals/index.html">
+    <meta name="description" content="Integral computation utilities and examples (integrate, mean, norms, examples)">
+    <meta name="generator" content="Antora 3.1.12">
+<link rel="stylesheet" href="../../../../_/css/site.css">
+
+<!-- Font Awesome webfont CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../../../../_/css/listing.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
-<script src="../../_/js/vendor/tabs-block-extension.js"></script>
-<script src="../../_/js/vendor/tabs-block-behavior.js"></script>
+<script src="../../../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../../../_/js/vendor/tabs-block-behavior.js"></script>
 
 
 
@@ -94,16 +99,16 @@ MathJax.Hub.Config({
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
 <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
-<script>var uiRootPath = '../../_'</script>
+<script>var uiRootPath = '../../../../_'</script>
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
-  </head>
-  <body class="article">
+</head>
+<body class="article docs-manuals-catalog docs-cards-layout ">
 <header class="header">
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
       <div class="navbar-item feelpp-logo">
-        <a href="https://docs.feelpp.org"><img src="../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
+        <a href="https://docs.feelpp.org"><img src="../../../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -129,76 +134,69 @@ MathJax.Hub.Config({
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link" data-title="Support">
-            <span class="icon"><img src="../../_/img/octicons-24.svg#view-comment-discussion"></span>
+            <span class="icon"><img src="../../../../_/img/octicons-24.svg#view-comment-discussion"></span>
           </div>
           <div class="navbar-dropdown is-right">
             <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/slack-icon.svg"></span>
+              <span class="icon"><img src="../../../../_/img/slack-icon.svg"></span>
               <span>Chat</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-discussion-closed"></span>
               <span>Discussions</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-mark-github"></span>
               <span>Source</span>
             </a>
             <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-hash"></span>
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-hash"></span>
               <span>Tweets</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-bug"></span>
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-bug"></span>
               <span>Issues</span>
             </a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable download-item">
-            <div class="navbar-item"><a href="../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
+            <div class="navbar-item"><a href="../../../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
         </div>
         <div class="navbar-item">
           <a class="navbar-brand"  href="https://www.cemosis.fr">
-            <img class="cemosis-logo"  src="../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
+            <img class="cemosis-logo"  src="../../../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
           </a>
         </div>
       </div>
     </div>
   </nav>
 </header>
+
 <div class="body">
-<a href="#" class="menu-expand-toggle"></a>
+  <a href="#" class="menu-expand-toggle"></a>
 <div class="nav-container" data-component="dev" data-version="latest">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Developer manual</a></h3>
+    <h3 class="title"><a href="../../index.html">Developer manuals</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming with Feel++</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming environment</span>
+    <span class="nav-text">Programming Environment Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Debugging Feel++</span>
+    <a class="nav-link" href="../../env/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Profiling Feel++</span>
+    <a class="nav-link" href="../../env/debugging.html">Debugging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../env/profiling.html">Profiling</a>
   </li>
 </ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#tutorial-dev:ROOT:index.adoc">Feel++ Development Tutorial</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#template_project:ROOT:index.adoc">Feel++ Template Project</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="fmufeelpp.html">Encapsulating Feel++ models in FMU</a>
   </li>
 </ul>
   </li>
@@ -206,117 +204,155 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/index.html">Mathematical Concepts Reference</a>
+    <span class="nav-text">Coding Rules Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Mesh/README.html">Mesh</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Mesh/iterators.html">Mesh iterators</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../../codingrules/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Integrals/README.html">Integrals</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/integrate.html">integrate</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/mean.html">mean</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/norms.html">norms</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/project.html">project</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../../codingrules/general.html">General Coding Rules</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Spaces/README.html">Function spaces</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/notations.html">Notations</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/functionspace.html">FunctionSpace</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/projection.html">Projection</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/interpolation.html">Interpolation</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/save.html">Save</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../../codingrules/cpp20.html">C++20 and beyond</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Solver/README.html">Algebraic solutions</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/notations.html">Notations</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/backend.html">Defining a backend</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/preconditioner.html">Defining a preconditioner</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/solving.html">Solving linear systems</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/eigensolver.html">Solving eigenvalue problems</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../../codingrules/hpc.html">HPC Rules</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reference/forms.html">Linear and Bilinear Forms</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Time/README.html">Time Discretization</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Time/bdf.html">BDF</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Time/adaptivestepping.html">Adaptive time stepping</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reference/exporter.html">Post-processing and Visualization</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reference/Keywords/README.html">Mathematical keywords</a>
+    <a class="nav-link" href="../../codingrules/design-patterns.html">Design Patterns</a>
   </li>
 </ul>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Developer Reference</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/cmake.html">CMake Feel++ macros</a>
+    <a class="nav-link" href="../../tutorial/index.html">Tutorial</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/environment.html">Feel++ Environment</a>
+</ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/fileformats.html">Feel++ File Formats</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Mathematical Concepts Reference</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../Mesh/README.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Mesh/iterators.html">Mesh iterators</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/codingrules.html">Feel++ Coding Rules</a>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#Integrals/README.adoc">Integrals</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="integrate.html">integrate</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="mean.html">mean</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="norms.html">norms</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="project.html">project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../Spaces/README.html">Function spaces</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Spaces/notations.html">Notations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Spaces/functionspace.html">FunctionSpace</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Spaces/projection.html">Projection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Spaces/interpolation.html">Interpolation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Spaces/save.html">Save</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../Solver/README.html">Algebraic solutions</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Solver/notations.html">Notations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Solver/backend.html">Defining a backend</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Solver/preconditioner.html">Defining a preconditioner</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Solver/solving.html">Solving linear systems</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Solver/eigensolver.html">Solving eigenvalue problems</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../forms.html">Linear and Bilinear Forms</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../Time/README.html">Time Discretization</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Time/bdf.html">BDF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Time/adaptivestepping.html">Adaptive time stepping</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../exporter.html">Post-processing and Visualization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../Keywords/README.html">Mathematical keywords</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-mesh.html">Mesh</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords.html">Mathematical expressions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-geometry.html">Geometry</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-algebra.html">Vectors and matrices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-operators.html">Operators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-image.html">Image</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-fit.html">Fitting</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -325,279 +361,165 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Developer manual</span>
+    <span class="title">Developer manuals</span>
     <span class="version">latest</span>
   </div>
   <ul class="components">
       <li class="component">
-        <a class="title" href="../../user/latest/index.html">User Manual</a>
+        <a class="title" href="../../../../user/latest/index.html">User Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../user/latest/index.html">latest</a>
+                <a href="../../../../user/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../user/0.110/index.html">0.110</a>
+                <a href="../../../../user/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../user/0.109/index.html">0.109</a>
+                <a href="../../../../user/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../toolboxes/latest/index.html">Toolboxes Manual</a>
+        <a class="title" href="../../../../toolboxes/latest/index.html">Toolboxes Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../toolboxes/latest/index.html">latest</a>
+                <a href="../../../../toolboxes/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../toolboxes/0.110/index.html">0.110</a>
+                <a href="../../../../toolboxes/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../toolboxes/0.109/index.html">0.109</a>
+                <a href="../../../../toolboxes/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../mor/latest/index.html">Model Order Reduction Manual</a>
+        <a class="title" href="../../../../mor/latest/index.html">Model Order Reduction Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../mor/latest/index.html">latest</a>
+                <a href="../../../../mor/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../mor/0.110/index.html">0.110</a>
+                <a href="../../../../mor/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../mor/0.109/index.html">0.109</a>
+                <a href="../../../../mor/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component is-current">
-        <a class="title" href="index.html">Developer manual</a>
+        <a class="title" href="../../index.html">Developer manuals</a>
           <ul class="versions">
               <li class="version is-current is-latest">
-                <a href="index.html">latest</a>
+                <a href="../../index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../0.110/index.html">0.110</a>
+                <a href="../../../0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../0.109/index.html">0.109</a>
+                <a href="../../../0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../feelpp-project/index.html">Template Project</a>
+        <a class="title" href="../../../../feelpp-project/index.html">Template Project</a>
       </li>
       <li class="component">
-        <a class="title" href="../../contribute/index.html">Toolboxes Contribution Guide</a>
+        <a class="title" href="../../../../contribute/index.html">Toolboxes Contribution Guide</a>
       </li>
       <li class="component">
-        <a class="title" href="../../data/index.html">Data Manual</a>
+        <a class="title" href="../../../../data/index.html">Data Manual</a>
       </li>
       <li class="component">
-        <a class="title" href="../../math/index.html">Feel++ Mathematics</a>
+        <a class="title" href="../../../../math/index.html">Feel++ Mathematics</a>
       </li>
   </ul>
 </div>
     </div>
   </aside>
 </div>
-<main class="article">
-<div class="toolbar" role="navigation">
-  <button class="nav-toggle"></button>
-    <a href="../../home/index.html" class="home-link"></a>
-  <nav class="breadcrumbs" aria-label="breadcrumbs">
-</nav>
-
-  <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
-  <div class="version-menu">
-    <a class="version is-current" href="07-SpaceElements.html">latest</a>
-    <a class="version" href="../0.110/07-SpaceElements.html">0.110</a>
-    <a class="version" href="../0.109/07-SpaceElements.html">0.109</a>
-  </div>
-</div>
-
-    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/dev/modules/ROOT/pages/07-SpaceElements.adoc">Edit this Page</a></div>
-  
-  <div class="page-downloads">
-  <span class="label">Download as</span>
-  <ul class="download-options">
-    <li>
-      <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
-         class="pdf-download">
-        <img class="pdf-file-icon icon" src="../../_/img/pdf.svg"/> .pdf
-      </a>
-    </li>
+  <main class="article">
+    <div class="toolbar" role="navigation">
+      <button class="nav-toggle"></button>
+       <a href="../../../../home/index.html" class="home-link"></a> 
+      <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Developer manuals</a></li>
+    <li><a href="index.html">Integrals</a></li>
   </ul>
-</div>
-</div>
+</nav>
+    </div>
 
-  <div class="content">
-<aside class="toc sidebar" data-title="Contents" data-levels="2">
-  <div class="toc-menu"></div>
-</aside>
-<article class="doc">
-<div class="sect1">
-<h2 id="_spaces_and_elements"><a class="anchor" href="#_spaces_and_elements"></a>1. Spaces and elements</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You&#8217;ve learned how to discretize the space you want to compute on.
-You now have to learn how to define and use function spaces and
-elements of functions spaces. For advanced informations on this
-subject, you can look in the <a href="reference/Spaces/functionspace.html" class="xref page">Function Space</a> documentation.</p>
-</div>
-<div class="sect2">
-<h3 id="_constructing_a_function_space"><a class="anchor" href="#_constructing_a_function_space"></a>1.1. Constructing a function space</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Loading a Mesh in 2D</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto mesh = loadMesh(_mesh=new Mesh&lt;Simplex&lt;2&gt;&gt;);</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>For basic function spaces, we have predetermined constructors:</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">auto Xh = Pch&lt;2&gt;( mesh );</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Defining an element</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">auto u = Xh-&gt;element( "u" );
-auto w = Xh-&gt;element( "w" );</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>One can also use :</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>Pdh&lt;ORDER&gt;(mesh)</code> : Polynomial Discontinuous</p>
-</li>
-<li>
-<p><code>Pvh&lt;ORDER&gt;(mesh)</code> : Polynomial Continuous Vectorial</p>
-</li>
-<li>
-<p><code>Pdhv&lt;ORDER&gt;(mesh)</code> : Polynomial Discontinuous Vectorial</p>
-</li>
-<li>
-<p><code>Pchm&lt;ORDER&gt;(mesh)</code> : Polynomial Continuous Matrix</p>
-</li>
-<li>
-<p><code>Dh&lt;ORDER&gt;(mesh)</code> : RaviartThomas function space</p>
-</li>
-<li>
-<p><code>Ned1h&lt;ORDER&gt;(mesh)</code> : Nedelec function spaces</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_implementation"><a class="anchor" href="#_implementation"></a>1.2. Implementation</h3>
-<div class="paragraph">
-<p>The implementation reads are follows</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#include &lt;feel/feel.hpp&gt;
-using namespace Feel;
+    <div class="content">
+      <article class="doc">
+<h1 class="page">Integrals</h1>
 
-int main( int argc, char** argv )
-{
-
-    //Initialize Feel++ Environment
-    Environment env( _argc=argc, _argv=argv,
-                     _about=about( _name="myfunctionspace",
-                                   _author="Feel++ Consortium",
-                                   _email="feelpp-devel@feelpp.org" )  );
-
-    // create the mesh
-    auto mesh = loadMesh(_mesh=new Mesh&lt;Simplex&lt;2&gt;&gt;);
-
-    // function space \( X_h \) using order 2 Lagrange basis functions
-    auto Xh = Pch&lt;2&gt;( mesh );
-
-    auto g = expr&lt;4&gt;( soption(_name="functions.g"));
-    auto gradg = grad&lt;3&gt;(g);
-
-    // elements of \( u,w \in X_h \)
-    auto u = Xh-&gt;element( "u" );
-    auto w = Xh-&gt;element( "w" );
-
-		// build the interpolant of u
-    u.on( _range=elements( mesh ), _expr=g );
-
-		// build the interpolant of the interpolation error
-    w.on( _range=elements( mesh ), _expr=idv( u )-g );
-
-    // compute L2 norms \(||\cdot||_{L^2}\)
-    double L2g = normL2( elements( mesh ), g );
-    double H1g = normL2( elements( mesh ), _expr=g,_grad_expr=gradg );
-    double L2uerror = normL2( elements( mesh ), ( idv( u )-g ) );
-    double H1uerror = normH1( elements( mesh ), _expr=( idv( u )-g ),
-                              _grad_expr=( gradv( u )-gradg ) );
-    if ( Environment::isMasterRank() )
-    {
-        std::cout &lt;&lt; "||u-g||_0 = " &lt;&lt; L2uerror/L2g &lt;&lt; std::endl;
-        std::cout &lt;&lt; "||u-g||_1 = " &lt;&lt; H1uerror/H1g &lt;&lt; std::endl;
-    }
-
-    // export for post-processing
-    auto e = exporter( _mesh=mesh );
-
-	 	// save interpolant
-    e-&gt;add( "g", u );
-
-	 	// save interpolant of interpolation error
-    e-&gt;add( "u-g", w );
-
-    e-&gt;save();
-
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>and the associated config file</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cfg hljs" data-lang="cfg">[gmsh]
-# default is hypercube
-shape=hypercube
-# you can try ellipsoid
-#shape=ellipsoid
-
-[functions]
-g=x*y*(y*2.2+4.3)*(2.1*x-1.3):x:y</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
 </article>
+    </div>
+
+    <div class="content">
+      <article class="doc">
+         <h1 class="page">Integrals</h1> 
+
+                    
+                    
+                      <div class="manuals">
+                            <div class="manual"><a class="page-card" href="integrate.html">
+  <div class="page-card-illustration">
+        <i class="fa-solid fa-calculator"></i>
   </div>
-</main>
+  <div class="page-card-body">
+    <h4>Integrate</h4>
+    <p class="page-card-description">Describe the `integrate()` primitive and how to use it to compute integrals and assemble forms.</p>
+  </div>
+</a>
 </div>
+                            <div class="manual"><a class="page-card" href="mean.html">
+  <div class="page-card-illustration">
+        <i class="fa-solid fa-sigma"></i>
+  </div>
+  <div class="page-card-body">
+    <h4>Mean</h4>
+    <p class="page-card-description">Compute the mean value of a function using the `mean()` helper.</p>
+  </div>
+</a>
+</div>
+                            <div class="manual"><a class="page-card" href="norms.html">
+  <div class="page-card-illustration">
+        <i class="fa-solid fa-ruler"></i>
+  </div>
+  <div class="page-card-body">
+    <h4>Norms</h4>
+    <p class="page-card-description">Helpers to compute common norms (L2, H1, Linf) and related interfaces.</p>
+  </div>
+</a>
+</div>
+                            <div class="manual"><a class="page-card" href="boundary.html">
+  <div class="page-card-illustration">
+        <i class="fa-solid fa-border-all"></i>
+  </div>
+  <div class="page-card-body">
+    <h4>Boundary integrals</h4>
+    <p class="page-card-description">Integrals computed on mesh boundaries and marked faces (fluxes, boundary contributions).</p>
+  </div>
+</a>
+</div>
+                            <div class="manual"><a class="page-card" href="subdomains.html">
+  <div class="page-card-illustration">
+        <img alt="" src="#"/>
+  </div>
+  <div class="page-card-body">
+    <h4>Integrals on subdomains</h4>
+    <p class="page-card-description">Integrals restricted to marked subdomains or regions in a mesh.</p>
+  </div>
+</a>
+</div>
+                      </div>
+      </article>
+    </div>
+  </main>
+</div>
+
 <footer class="footer">
   <div class="container">
     <div class="sharethis-inline-share-buttons"></div>
@@ -605,7 +527,7 @@ g=x*y*(y*2.2+4.3)*(2.1*x-1.3):x:y</code></pre>
       <div class="col">
         <div class="footer-logo">
           <a href="https://www.cemosis.fr" class="icon">
-            <img src="../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
           </a>
         </div>
       </div>
@@ -665,14 +587,13 @@ g=x*y*(y*2.2+4.3)*(2.1*x-1.3):x:y</code></pre>
     </div>
   </div>
 </footer>
-<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
 
 
-<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../_/js/vendor/fontawesome.js"></script>
-<script async src="../../_/js/vendor/highlight.js"></script>
+<!-- Font Awesome JS removed to use webfont icons only -->
+<script async src="../../../../_/js/vendor/highlight.js"></script>
 
-<script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">
+<script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">
 </script>
 
 <script type="text/javascript">
@@ -691,5 +612,5 @@ function toggleFullScreen() {
    }
 }
 </script>
-  </body>
+</body>
 </html>

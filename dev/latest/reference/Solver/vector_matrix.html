@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Vectors and Matrices :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/dev/latest/reference/Solver/vector_matrix.html">
-    <meta name="generator" content="Antora 3.1.9">
-    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <meta name="generator" content="Antora 3.1.12">
+<link rel="stylesheet" href="../../../../_/css/site.css">
+
+<!-- Font Awesome webfont CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <link rel="stylesheet" href="../../../../_/css/listing.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
@@ -173,32 +177,56 @@ MathJax.Hub.Config({
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../../index.html">Developer manual</a></h3>
+    <h3 class="title"><a href="../../index.html">Developer manuals</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming with Feel++</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming environment</span>
+    <span class="nav-text">Programming Environment Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Debugging Feel++</span>
+    <a class="nav-link" href="../../env/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Profiling Feel++</span>
+    <a class="nav-link" href="../../env/debugging.html">Debugging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../env/profiling.html">Profiling</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#tutorial-dev:ROOT:index.adoc">Feel++ Development Tutorial</a>
+</ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#template_project:ROOT:index.adoc">Feel++ Template Project</a>
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Coding Rules Manuals</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/index.html">Overview</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/general.html">General Coding Rules</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/cpp20.html">C++20 and beyond</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/hpc.html">HPC Rules</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../codingrules/design-patterns.html">Design Patterns</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../fmufeelpp.html">Encapsulating Feel++ models in FMU</a>
+    <a class="nav-link" href="../../tutorial/index.html">Tutorial</a>
   </li>
 </ul>
   </li>
@@ -219,7 +247,7 @@ MathJax.Hub.Config({
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../Integrals/README.html">Integrals</a>
+    <a class="nav-link" href="#Integrals/README.adoc">Integrals</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../Integrals/integrate.html">integrate</a>
@@ -296,27 +324,33 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../exporter.html">Post-processing and Visualization</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../Keywords/README.html">Mathematical keywords</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Developer Reference</span>
+    <a class="nav-link" href="../Keywords/README.html">Mathematical keywords</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../cmake.html">CMake Feel++ macros</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-mesh.html">Mesh</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../environment.html">Feel++ Environment</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords.html">Mathematical expressions</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../fileformats.html">Feel++ File Formats</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-geometry.html">Geometry</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../codingrules.html">Feel++ Coding Rules</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-algebra.html">Vectors and matrices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-operators.html">Operators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-image.html">Image</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-fit.html">Fitting</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -325,7 +359,7 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Developer manual</span>
+    <span class="title">Developer manuals</span>
     <span class="version">latest</span>
   </div>
   <ul class="components">
@@ -372,7 +406,7 @@ MathJax.Hub.Config({
           </ul>
       </li>
       <li class="component is-current">
-        <a class="title" href="../../index.html">Developer manual</a>
+        <a class="title" href="../../index.html">Developer manuals</a>
           <ul class="versions">
               <li class="version is-current is-latest">
                 <a href="../../index.html">latest</a>
@@ -408,7 +442,7 @@ MathJax.Hub.Config({
     <a href="../../../../home/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../../index.html">Developer manual</a></li>
+    <li><a href="../../index.html">Developer manuals</a></li>
     <li><a href="vector_matrix.html">Vectors and Matrices</a></li>
   </ul>
 </nav>
@@ -443,16 +477,161 @@ MathJax.Hub.Config({
 </aside>
 <article class="doc">
 <h1 class="page">Vectors and Matrices</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This page documents the main Vector and Matrix data structures used in Feel++ and gives short, copy-pasteable examples adapted from the testsuite.</p>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_vectors"><a class="anchor" href="#_vectors"></a>1. Vectors</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_creating_vectors"><a class="anchor" href="#_creating_vectors"></a>1.1. Creating vectors</h3>
-
+<h3 id="_overview"><a class="anchor" href="#_overview"></a>1.1. Overview</h3>
+<div class="paragraph">
+<p>The Feel++ <code>Vector&lt;T&gt;</code> class (declared in <code>feel/feelalg/vector.hpp</code>) is an abstract, reference-counted numeric vector that provides a uniform interface to several backend implementations (PETSc, Epetra, uBLAS, &#8230;&#8203;).</p>
+</div>
+<div class="paragraph">
+<p>It exposes constructors for allocation, methods to query global/local sizes, element access, common vector operations (zero, setConstant, add, dot, norms) and helpers (clone, createSubVector, save/load, print).</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_vector_interface"><a class="anchor" href="#_vector_interface"></a>1.2. Vector Interface</h3>
-
+<h3 id="_creating_vectors_high_level"><a class="anchor" href="#_creating_vectors_high_level"></a>1.2. Creating vectors (high-level)</h3>
+<div class="paragraph">
+<p>Typical usage when working with a linear algebra backend and a finite-element function space (<code>Xh</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">// create a vector associated with a FunctionSpace Xh using a backend
+auto v = backend-&gt;newVector( Xh );
+v-&gt;setConstant( 0.0 );
+// set an entry on the local process
+v-&gt;set( local_index, 1.234 );
+v-&gt;close(); // finalize before global operations
+// compute norm
+auto n = v-&gt;l2Norm();
+std::cout &lt;&lt; "L2 norm: " &lt;&lt; n &lt;&lt; std::endl;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_vectors_direct"><a class="anchor" href="#_creating_vectors_direct"></a>1.3. Creating vectors (direct)</h3>
+<div class="paragraph">
+<p>You can also create a bare <code>Vector&lt;T&gt;</code> and initialize its size directly:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">// allocate a Vector&lt;double&gt; of global size N and local size N_local
+Vector&lt;double&gt; V( /*N*/ 100, /*N_local*/ 100 );
+V.setConstant( 1.0 );
+V.add( 2.0 );          // add scalar 2 to each entry
+double s = V.sum();    // sum of all entries</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vector_api_selected"><a class="anchor" href="#_vector_api_selected"></a>1.4. Vector API (selected)</h3>
+<div class="paragraph">
+<p>Summary of the most commonly used members (see <code>feel/feelalg/vector.hpp</code> for the full interface):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Constructors:</p>
+</li>
+<li>
+<p><code>Vector( worldcomm_ptr_t const&amp; wc = Environment::worldCommPtr() )</code> — default (empty) vector.</p>
+</li>
+<li>
+<p><code>Vector( datamap_ptrtype const&amp; dm )</code> — construct from a DataMap describing the parallel layout.</p>
+</li>
+<li>
+<p><code>Vector( size_type n, worldcomm_ptr_t const&amp; wc = &#8230;&#8203; )</code> — global size <code>n</code>.</p>
+</li>
+<li>
+<p><code>Vector( size_type n, size_type n_local, &#8230;&#8203; )</code> — global and local sizes.</p>
+</li>
+<li>
+<p>Lifecycle and state:</p>
+</li>
+<li>
+<p><code>bool isInitialized() const</code> — whether <code>init()</code> was called.</p>
+</li>
+<li>
+<p><code>bool closed() const</code> — whether <code>close()</code> was called.</p>
+</li>
+<li>
+<p><code>virtual void close() = 0</code> — finalize assembly (must be called for many global ops).</p>
+</li>
+<li>
+<p>Querying sizes and communicator:</p>
+</li>
+<li>
+<p><code>size_type size() const</code> — global dimension.</p>
+</li>
+<li>
+<p><code>size_type localSize() const</code> — local size (including ghost or not depending on backend).</p>
+</li>
+<li>
+<p><code>size_type firstLocalIndex() const</code>, <code>size_type lastLocalIndex() const</code> — local range.</p>
+</li>
+<li>
+<p><code>worldcomm_ptr_t const&amp; worldCommPtr() const</code> — MPI communicator wrapper.</p>
+</li>
+<li>
+<p>Element access and modification:</p>
+</li>
+<li>
+<p><code>virtual T operator()( size_type i ) const</code> and <code>virtual T&amp; operator()( size_type i )</code> — element get/set.</p>
+</li>
+<li>
+<p><code>virtual void set( size_type i, const value_type&amp; v )</code> — set single entry.</p>
+</li>
+<li>
+<p><code>virtual void add( size_type i, const value_type&amp; v )</code> — add to single entry.</p>
+</li>
+<li>
+<p><code>virtual void setVector( int* i, int n, value_type* v )</code> — set multiple entries by indices.</p>
+</li>
+<li>
+<p><code>virtual void addVector(&#8230;&#8203;)</code> — multiple overloads for local/global adds and sparse product adds.</p>
+</li>
+<li>
+<p>Common operations:</p>
+</li>
+<li>
+<p><code>virtual void zero()</code> / <code>virtual void setZero()</code> — set to zero.</p>
+</li>
+<li>
+<p><code>virtual void setConstant( value_type )</code> — set all entries.</p>
+</li>
+<li>
+<p><code>virtual void scale( T factor )</code> — multiply by scalar.</p>
+</li>
+<li>
+<p><code>virtual value_type dot( Vector&lt;T&gt; const&amp; ) const</code> — inner product.</p>
+</li>
+<li>
+<p><code>virtual real_type l2Norm() const</code>, <code>l1Norm() const</code>, <code>linftyNorm() const</code> — norms.</p>
+</li>
+<li>
+<p><code>virtual value_type sum() const</code> — sum of entries.</p>
+</li>
+<li>
+<p>Utility:</p>
+</li>
+<li>
+<p><code>virtual clone_ptrtype clone() const = 0</code> — deep-copy into a new shared_ptr.</p>
+</li>
+<li>
+<p><code>virtual void print( std::ostream&amp; os=std::cout ) const</code> and <code>printMatlab(&#8230;&#8203;)</code>.</p>
+</li>
+<li>
+<p><code>virtual void save( std::string const&amp; filename, std::string const&amp; format )</code> / <code>load(&#8230;&#8203;)</code> — (de)serialize.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -460,12 +639,114 @@ MathJax.Hub.Config({
 <h2 id="_matrices"><a class="anchor" href="#_matrices"></a>2. Matrices</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_creating_matrices"><a class="anchor" href="#_creating_matrices"></a>2.1. Creating matrices</h3>
-
+<h3 id="_overview_2"><a class="anchor" href="#_overview_2"></a>2.1. Overview</h3>
+<div class="paragraph">
+<p>Feel++ provides several matrix implementations. The header <code>feel/feelalg/matrix.hpp</code> contains uBLAS helpers and lightweight matrix utilities; production sparse/dense matrices are typically provided by backend-specific classes such as <code>MatrixPetsc&lt;T&gt;</code>, <code>MatrixSparse&lt;T&gt;</code>, or <code>MatrixShell&lt;T&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>The usual workflow when assembling linear systems is:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create/initialize a matrix with the desired global / local sizes.</p>
+</li>
+<li>
+<p>Fill entries using <code>set(&#8230;&#8203;)</code> or assembly routines.</p>
+</li>
+<li>
+<p>Call <code>close()</code> to finalize the matrix (for parallel communication and assembly compression).</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_matrix_interface"><a class="anchor" href="#_matrix_interface"></a>2.2. Matrix Interface</h3>
+<h3 id="_creating_matrices_example_using_petsc_backend"><a class="anchor" href="#_creating_matrices_example_using_petsc_backend"></a>2.2. Creating matrices (example using PETSc backend)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">// allocate a PETSc sparse matrix for a 2D finite-difference stencil
+MatrixPetsc&lt;double&gt; A;
+// global size N = m*n, local rows ~ N/nprocs
+A.init( m*n, m*n, /*n_local*/ m*n/nprocs, /*n*/ m*n );
 
+// set entries (illustrative)
+for( auto row : owned_rows )
+{
+		for( auto col : stencil_cols )
+				A.set( row, col, value );
+}
+
+A.close(); // finalize assembly
+
+// multiply matrix by vector
+auto x = backend-&gt;newVector( Xh );
+auto y = backend-&gt;newVector( Xh );
+A.multVector( *x, *y );</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_matrix_api_selected"><a class="anchor" href="#_matrix_api_selected"></a>2.3. Matrix API (selected)</h3>
+<div class="paragraph">
+<p>Common interface members (concrete signatures depend on implementation):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>init( size_type rows, size_type cols, size_type nlocalrows, size_type ncols )</code> — allocate and set parallel layout.</p>
+</li>
+<li>
+<p><code>set( size_type i, size_type j, value_type v )</code> — set an entry (usually accumulating until <code>close()</code>).</p>
+</li>
+<li>
+<p><code>add( size_type i, size_type j, value_type v )</code> — add to an entry.</p>
+</li>
+<li>
+<p><code>close()</code> — finalize assembly (mandatory for many backends).</p>
+</li>
+<li>
+<p><code>multVector( Vector&lt;T&gt; const&amp; x, Vector&lt;T&gt;&amp; y )</code> — matrix-vector product.</p>
+</li>
+<li>
+<p><code>diagonal()</code> / <code>setDiagonal()</code> — access or set diagonal (backend-dependent).</p>
+</li>
+<li>
+<p><code>printMatlab( std::string const&amp; name ) const</code> — dump to Matlab format.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For backend-specific options and advanced methods (PtAP, PAPt, matMatMult, symbolic factorization, preallocation), consult the corresponding implementation header (e.g. <code>MatrixPetsc.hpp</code>, <code>matrixsparse.hpp</code>) and the testsuite examples.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_where_to_find_more_examples"><a class="anchor" href="#_where_to_find_more_examples"></a>2.4. Where to find more examples</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Testsuite: see <code>testsuite/feelalg/test_vector.cpp</code> and <code>testsuite/feelalg/test_matrix.cpp</code> for canonical usage patterns and edge cases.</p>
+</li>
+<li>
+<p>Backend examples: search for <code>MatrixPetsc</code> and <code>Vector</code> usage across <code>testsuite/</code> to see real assemblies and solver workflows.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notes_and_tips"><a class="anchor" href="#_notes_and_tips"></a>2.5. Notes and tips</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Always call <code>close()</code> on vectors/matrices after you finish inserting entries and before global operations (norms, dot, mult).</p>
+</li>
+<li>
+<p>Prefer <code>setConstant</code> / <code>scale</code> for bulk operations rather than looping over indices when possible — backends optimize those operations.</p>
+</li>
+<li>
+<p>Use <code>createSubVector</code> when you need a contiguous view of a subset of DOFs on a process; behavior is backend-specific (implemented for PETSc in the tests).</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -543,8 +824,7 @@ MathJax.Hub.Config({
 <script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
 
 
-<script async src="../../../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../../../_/js/vendor/fontawesome.js"></script>
+<!-- Font Awesome JS removed to use webfont icons only -->
 <script async src="../../../../_/js/vendor/highlight.js"></script>
 
 <script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">

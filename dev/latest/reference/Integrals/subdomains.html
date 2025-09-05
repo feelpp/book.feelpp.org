@@ -3,18 +3,21 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Encapsulating a Feel++ model in a FMU :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/dev/latest/fmufeelpp.html">
-    <link rel="prev" href="#template_project:ROOT:index.adoc">
-    <link rel="next" href="reference/index.html">
-    <meta name="generator" content="Antora 3.1.9">
-    <link rel="stylesheet" href="../../_/css/site.css">
-    <link rel="stylesheet" href="../../_/css/listing.css">
-<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <title>Integrals on subdomains :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/dev/latest/reference/Integrals/subdomains.html">
+    <meta name="description" content="Integrals restricted to marked subdomains or regions in a mesh.">
+    <meta name="generator" content="Antora 3.1.12">
+<link rel="stylesheet" href="../../../../_/css/site.css">
+
+<!-- Font Awesome webfont CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../../../../_/css/listing.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
 
-<script src="../../_/js/vendor/tabs-block-extension.js"></script>
-<script src="../../_/js/vendor/tabs-block-behavior.js"></script>
+<script src="../../../../_/js/vendor/tabs-block-extension.js"></script>
+<script src="../../../../_/js/vendor/tabs-block-behavior.js"></script>
 
 
 
@@ -96,7 +99,7 @@ MathJax.Hub.Config({
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>-->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65761593-1"></script>
 <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-65761593-1')</script>
-<script>var uiRootPath = '../../_'</script>
+<script>var uiRootPath = '../../../../_'</script>
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
   </head>
@@ -105,7 +108,7 @@ MathJax.Hub.Config({
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
       <div class="navbar-item feelpp-logo">
-        <a href="https://docs.feelpp.org"><img src="../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
+        <a href="https://docs.feelpp.org"><img src="../../../../_/img/feelpp-logo.svg" alt="Feel++ logo"/></a>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -131,37 +134,37 @@ MathJax.Hub.Config({
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link" data-title="Support">
-            <span class="icon"><img src="../../_/img/octicons-24.svg#view-comment-discussion"></span>
+            <span class="icon"><img src="../../../../_/img/octicons-24.svg#view-comment-discussion"></span>
           </div>
           <div class="navbar-dropdown is-right">
             <a class="navbar-item has-icon" href="https://join.slack.com/t/feelpp/shared_invite/zt-2qe0q9hw-4pVbhohCXUE6Po9Ma8dbiQ" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/slack-icon.svg"></span>
+              <span class="icon"><img src="../../../../_/img/slack-icon.svg"></span>
               <span>Chat</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/orgs/feelpp/discussions" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-discussion-closed"></span>
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-discussion-closed"></span>
               <span>Discussions</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-mark-github"></span>
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-mark-github"></span>
               <span>Source</span>
             </a>
             <a class="navbar-item has-icon" href="https://twitter.com/feelpp" target="_blank" rel="noopener">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-hash"></span>
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-hash"></span>
               <span>Tweets</span>
             </a>
             <a class="navbar-item has-icon" href="https://github.com/feelpp/book.feelpp.org/issues/new">
-              <span class="icon"><img src="../../_/img/octicons-16.svg#view-bug"></span>
+              <span class="icon"><img src="../../../../_/img/octicons-16.svg#view-bug"></span>
               <span>Issues</span>
             </a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable download-item">
-            <div class="navbar-item"><a href="../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
+            <div class="navbar-item"><a href="../../../../user/latest/install/index.html" class="download-btn">Get Feel++</a></div>
         </div>
         <div class="navbar-item">
           <a class="navbar-brand"  href="https://www.cemosis.fr">
-            <img class="cemosis-logo"  src="../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
+            <img class="cemosis-logo"  src="../../../../_/img/cemosis-logo.svg" alt="Cemosis logo"/>
           </a>
         </div>
       </div>
@@ -175,32 +178,24 @@ MathJax.Hub.Config({
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Developer manual</a></h3>
+    <h3 class="title"><a href="../../index.html">Developer manuals</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming with Feel++</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Programming environment</span>
+    <span class="nav-text">Programming Environment Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Debugging Feel++</span>
+    <a class="nav-link" href="../../env/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <span class="nav-text">Profiling Feel++</span>
+    <a class="nav-link" href="../../env/debugging.html">Debugging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../env/profiling.html">Profiling</a>
   </li>
 </ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#tutorial-dev:ROOT:index.adoc">Feel++ Development Tutorial</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#template_project:ROOT:index.adoc">Feel++ Template Project</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="fmufeelpp.html">Encapsulating Feel++ models in FMU</a>
   </li>
 </ul>
   </li>
@@ -208,117 +203,155 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/index.html">Mathematical Concepts Reference</a>
+    <span class="nav-text">Coding Rules Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Mesh/README.html">Mesh</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Mesh/iterators.html">Mesh iterators</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../../codingrules/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Integrals/README.html">Integrals</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/integrate.html">integrate</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/mean.html">mean</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/norms.html">norms</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Integrals/project.html">project</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../../codingrules/general.html">General Coding Rules</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Spaces/README.html">Function spaces</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/notations.html">Notations</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/functionspace.html">FunctionSpace</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/projection.html">Projection</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/interpolation.html">Interpolation</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Spaces/save.html">Save</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../../codingrules/cpp20.html">C++20 and beyond</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Solver/README.html">Algebraic solutions</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/notations.html">Notations</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/backend.html">Defining a backend</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/preconditioner.html">Defining a preconditioner</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/solving.html">Solving linear systems</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Solver/eigensolver.html">Solving eigenvalue problems</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../../codingrules/hpc.html">HPC Rules</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reference/forms.html">Linear and Bilinear Forms</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="reference/Time/README.html">Time Discretization</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Time/bdf.html">BDF</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="reference/Time/adaptivestepping.html">Adaptive time stepping</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reference/exporter.html">Post-processing and Visualization</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reference/Keywords/README.html">Mathematical keywords</a>
+    <a class="nav-link" href="../../codingrules/design-patterns.html">Design Patterns</a>
   </li>
 </ul>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Developer Reference</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/cmake.html">CMake Feel++ macros</a>
+    <a class="nav-link" href="../../tutorial/index.html">Tutorial</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/environment.html">Feel++ Environment</a>
+</ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/fileformats.html">Feel++ File Formats</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Mathematical Concepts Reference</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../Mesh/README.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Mesh/iterators.html">Mesh iterators</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="reference/codingrules.html">Feel++ Coding Rules</a>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#Integrals/README.adoc">Integrals</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="integrate.html">integrate</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="mean.html">mean</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="norms.html">norms</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="project.html">project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../Spaces/README.html">Function spaces</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Spaces/notations.html">Notations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Spaces/functionspace.html">FunctionSpace</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Spaces/projection.html">Projection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Spaces/interpolation.html">Interpolation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Spaces/save.html">Save</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../Solver/README.html">Algebraic solutions</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Solver/notations.html">Notations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Solver/backend.html">Defining a backend</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Solver/preconditioner.html">Defining a preconditioner</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Solver/solving.html">Solving linear systems</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Solver/eigensolver.html">Solving eigenvalue problems</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../forms.html">Linear and Bilinear Forms</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../Time/README.html">Time Discretization</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Time/bdf.html">BDF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Time/adaptivestepping.html">Adaptive time stepping</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../exporter.html">Post-processing and Visualization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../Keywords/README.html">Mathematical keywords</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-mesh.html">Mesh</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords.html">Mathematical expressions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-geometry.html">Geometry</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-algebra.html">Vectors and matrices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-operators.html">Operators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-image.html">Image</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Keywords/keywords-fit.html">Fitting</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -327,77 +360,77 @@ MathJax.Hub.Config({
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Developer manual</span>
+    <span class="title">Developer manuals</span>
     <span class="version">latest</span>
   </div>
   <ul class="components">
       <li class="component">
-        <a class="title" href="../../user/latest/index.html">User Manual</a>
+        <a class="title" href="../../../../user/latest/index.html">User Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../user/latest/index.html">latest</a>
+                <a href="../../../../user/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../user/0.110/index.html">0.110</a>
+                <a href="../../../../user/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../user/0.109/index.html">0.109</a>
+                <a href="../../../../user/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../toolboxes/latest/index.html">Toolboxes Manual</a>
+        <a class="title" href="../../../../toolboxes/latest/index.html">Toolboxes Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../toolboxes/latest/index.html">latest</a>
+                <a href="../../../../toolboxes/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../toolboxes/0.110/index.html">0.110</a>
+                <a href="../../../../toolboxes/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../toolboxes/0.109/index.html">0.109</a>
+                <a href="../../../../toolboxes/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../mor/latest/index.html">Model Order Reduction Manual</a>
+        <a class="title" href="../../../../mor/latest/index.html">Model Order Reduction Manual</a>
           <ul class="versions">
               <li class="version is-latest">
-                <a href="../../mor/latest/index.html">latest</a>
+                <a href="../../../../mor/latest/index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../../mor/0.110/index.html">0.110</a>
+                <a href="../../../../mor/0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../../mor/0.109/index.html">0.109</a>
+                <a href="../../../../mor/0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component is-current">
-        <a class="title" href="index.html">Developer manual</a>
+        <a class="title" href="../../index.html">Developer manuals</a>
           <ul class="versions">
               <li class="version is-current is-latest">
-                <a href="index.html">latest</a>
+                <a href="../../index.html">latest</a>
               </li>
               <li class="version">
-                <a href="../0.110/index.html">0.110</a>
+                <a href="../../../0.110/index.html">0.110</a>
               </li>
               <li class="version">
-                <a href="../0.109/index.html">0.109</a>
+                <a href="../../../0.109/index.html">0.109</a>
               </li>
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../feelpp-project/index.html">Template Project</a>
+        <a class="title" href="../../../../feelpp-project/index.html">Template Project</a>
       </li>
       <li class="component">
-        <a class="title" href="../../contribute/index.html">Toolboxes Contribution Guide</a>
+        <a class="title" href="../../../../contribute/index.html">Toolboxes Contribution Guide</a>
       </li>
       <li class="component">
-        <a class="title" href="../../data/index.html">Data Manual</a>
+        <a class="title" href="../../../../data/index.html">Data Manual</a>
       </li>
       <li class="component">
-        <a class="title" href="../../math/index.html">Feel++ Mathematics</a>
+        <a class="title" href="../../../../math/index.html">Feel++ Mathematics</a>
       </li>
   </ul>
 </div>
@@ -407,25 +440,24 @@ MathJax.Hub.Config({
 <main class="article">
 <div class="toolbar" role="navigation">
   <button class="nav-toggle"></button>
-    <a href="../../home/index.html" class="home-link"></a>
+    <a href="../../../../home/index.html" class="home-link"></a>
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="index.html">Developer manual</a></li>
-    <li>Programming with Feel++</li>
-    <li><a href="fmufeelpp.html">Encapsulating Feel++ models in FMU</a></li>
+    <li><a href="../../index.html">Developer manuals</a></li>
+    <li><a href="subdomains.html">Integrals on subdomains</a></li>
   </ul>
 </nav>
 
   <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
   <div class="version-menu">
-    <a class="version is-current" href="fmufeelpp.html">latest</a>
-    <a class="version is-missing" href="../0.110/index.html">0.110</a>
-    <a class="version is-missing" href="../0.109/index.html">0.109</a>
+    <a class="version is-current" href="subdomains.html">latest</a>
+    <a class="version is-missing" href="../../../0.110/index.html">0.110</a>
+    <a class="version is-missing" href="../../../0.109/index.html">0.109</a>
   </div>
 </div>
 
-    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/dev/modules/ROOT/pages/fmufeelpp.adoc">Edit this Page</a></div>
+    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/dev/modules/reference/pages/Integrals/subdomains.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -433,7 +465,7 @@ MathJax.Hub.Config({
     <li>
       <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
          class="pdf-download">
-        <img class="pdf-file-icon icon" src="../../_/img/pdf.svg"/> .pdf
+        <img class="pdf-file-icon icon" src="../../../../_/img/pdf.svg"/> .pdf
       </a>
     </li>
   </ul>
@@ -445,129 +477,57 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Encapsulating a Feel++ model in a FMU</h1>
-<div class="sect1">
-<h2 id="_fmi_standard_and_reference_fmus"><a class="anchor" href="#_fmi_standard_and_reference_fmus"></a>1. FMI standard and reference FMUs</h2>
+<h1 class="page">Integrals on subdomains</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Functional Mockup Units (FMUs) provide a standardized interface for communications and interactions among models having different origins via the Functional Mockup Interface (FMI) standard.</p>
+<p>You often need to integrate only on a part of the mesh (a subset of elements) defined by markers or ranges.</p>
 </div>
 <div class="paragraph">
-<p>The FMI standard uses a combination of XML files, binaries and C codes to create a zip file (with .fmu extension) that can be distributed and exchanged.</p>
-</div>
-<div class="paragraph">
-<p>A collection of reference FMUs, written in C, are provided in the Github repository <a href="https://github.com/modelica/Reference-FMUs">Reference-FMUs</a>, and they can be used as a starting point to develop other FMUs.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_create_an_fmu_using_feel"><a class="anchor" href="#_create_an_fmu_using_feel"></a>2. Create an FMU using Feel++</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_c_interface_for_feel_classes"><a class="anchor" href="#_c_interface_for_feel_classes"></a>2.1. C interface for Feel++ classes</h3>
-<div class="paragraph">
-<p>A FMU can be created from Feel++ code by using the <code>extern "C"</code> declaration on parts that need to be compiled in C, and the precompiler directives <code>#ifdef __cplusplus</code> for the C++ parts in C files and headers.</p>
-</div>
-<div class="paragraph">
-<p>The Feel++ model can be a class that provides methods for the solution of the problem of interest and the computation of the desired outputs. Since classes are not defined in C, in order to instantiate, delete, and call the methods of the Feel++ class, C functions are used, and the syntax could be the following</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">C_CLASS_TYPE CLASSNAME_new()
-{
-    return new CPP_CLASS_TYPE;
-}
-void feelppClass_delete(C_CLASS_TYPE hc)
-{
-    auto pHc = reinterpret_cast&lt;CPP_CLASS_TYPE*&gt;(hc);
-    delete pHc;
-}
-void CLASSNAME_f(C_CLASS_TYPE hc)
-{
-    auto pHc = reinterpret_cast&lt;CPP_CLASS_TYPE*&gt;(hc);
-    pHc-&gt;f();
-}</code></pre>
-</div>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-The constructor of the class needs to define the Feel++ environment, and the destructor needs to delete it.
-The name of the C function <code>feelppClass_delete</code> calling the destructor should not be changed: at the end of the cosimulation, this specific function is called to delete the class instances. A modified file (<code>cosimulationFeelpp.c</code>) is compiled with the rest of the sources to create Feel++-FMU models, instead of the <code>cosimulation.c</code> that is compiled with the reference FMUs, in order to ensure the destruction of the Feel++ environment.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_creating_a_feel_fmu_for_cosimulation"><a class="anchor" href="#_creating_a_feel_fmu_for_cosimulation"></a>2.2. Creating a Feel++-FMU for cosimulation</h3>
-<div class="paragraph">
-<p>In order to finalize the creation of the FMU and following the examples in <a href="https://github.com/modelica/Reference-FMUs">Reference-FMUs</a>, the following steps need to be taken:</p>
+<p>Examples of ranges:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>functions associated with the Feel++ class need to be called in the <code>model.c</code> file;</p>
+<p><code>elements(mesh)</code> — whole mesh</p>
 </li>
 <li>
-<p>file <code>config.h</code> needs to be modified to specify the names of the variables and other parameters of the FMU (if cosimulation or model-exchange are possible, a fixed time-step and other);</p>
+<p><code>elements(mesh, "RegionName")</code> — elements marked with <code>RegionName</code> (if your mesh generation set region markers)</p>
 </li>
 <li>
-<p>the XML files that are associated with every version of the FMI standard need to be modified according to the variables that are defined and the options that are available for the FMU being built;</p>
-</li>
-<li>
-<p>a <code>CMakeLists.txt</code> file needs to be created (or updated) to ensure the compilation and construction of the zipped folder.</p>
+<p><code>faces(mesh, "MarkerName")</code> and <code>markedfaces(mesh, "MarkerName")</code> — face-based markers</p>
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_integral_over_a_subregion"><a class="anchor" href="#_example_integral_over_a_subregion"></a>1. Example: integral over a subregion</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">double energy = integrate( _range = elements(mesh, "DomainA"), _expr = 0.5*nu*trans(gradv(u))*gradv(u) ).evaluate()(0,0);</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_assemble_only_on_a_subdomain"><a class="anchor" href="#_example_assemble_only_on_a_subdomain"></a>2. Example: assemble only on a subdomain</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>The <a href="https://fmi-standard.org/">FMI standard</a> specifies the role of each option in the construction of FMUs.</p>
+<p>Use <code>form1</code>/<code>form2</code> and restrict integrals to a region:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">form2( _test = Xh, _trial = Xh, _matrix = A ) +=
+  integrate( _range = elements(mesh, "DomainA"), _expr = trans(gradt(u))*grad(v) );</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>The source files need to be linked with the Feel++ library and, if a reduced order model is simulated, with the Feel++ MOR library.</p>
-</div>
-<div class="paragraph">
-<p>Current versions of these FMUs can be launched successfully using <a href="https://fmpy.readthedocs.io/en/latest/tutorial/">FMPy</a> in the command line or through its graphical interface.</p>
-</div>
-<div class="paragraph">
-<p>Two examples of Feel++-FMUs are created in the repository <a href="https://github.com/feelpp/Reference-FMUs">feelpp/Reference-FMUs</a>: one of them solves the heat equation using Feel++ and the other executes a stationary reduced order model.</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-The <em>.mat</em> file, which contains the results of the execution of the FMU, is automatically saved in the results folder of the Feel++ application. By default, Dymola expects the <em>.mat</em> file to be found in the same folder as the FMU that is executed. In order to show these results, it is necessary to manually load the file via Dymola&#8217;s graphical interface.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_heat_feel_fmu"><a class="anchor" href="#_heat_feel_fmu"></a>2.2.1. Heat Feel++-fmu</h4>
-<div class="paragraph">
-<p>This FMU executes the finite element simulation of the heat equation in a 2D domain in a fixed time interval of 3s. The output is the average temperature of the domain, which is computed at every communication step, and the derivative of the output, which is also computed at every communication step. The code building the FMU is contained in <a href="https://github.com/feelpp/Reference-FMUs/tree/feelpp/feelpp">here</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_reducedbasis_feel_fmu"><a class="anchor" href="#_reducedbasis_feel_fmu"></a>2.2.2. ReducedBasis Feel++-fmu</h4>
-<div class="paragraph">
-<p>This FMU executes the reduced order model for a given value of the parameters. It was constructed from the <code>thermalbuilding</code> MOR example, and parameters can be modified as they are prescribed as <code>input</code> in the FMU interface. It needs the specification of the reduced basis and plugin library at build time, as specified in the <a href="https://github.com/feelpp/Reference-FMUs/blob/feelpp/feelpp_mor/ReducedBasis/README.md">README</a> file.
-The code which builds this FMU is located <a href="https://github.com/feelpp/Reference-FMUs/tree/feelpp/feelpp_mor">here</a>.</p>
+<p>When using external mesh generators, ensure region and boundary markers are exported and preserved in the mesh file.</p>
 </div>
 </div>
 </div>
-</div>
-</div>
-<nav class="pagination">
-  <span class="prev"><a href="#template_project:ROOT:index.adoc">Feel++ Template Project</a></span>
-  <span class="next"><a href="reference/index.html">Mathematical Concepts Reference</a></span>
-</nav>
 </article>
   </div>
 </main>
@@ -579,7 +539,7 @@ The code which builds this FMU is located <a href="https://github.com/feelpp/Ref
       <div class="col">
         <div class="footer-logo">
           <a href="https://www.cemosis.fr" class="icon">
-            <img src="../../_/img/logoCemosisTransparent.png" alt="Cemosis">
+            <img src="../../../../_/img/logoCemosisTransparent.png" alt="Cemosis">
           </a>
         </div>
       </div>
@@ -639,14 +599,13 @@ The code which builds this FMU is located <a href="https://github.com/feelpp/Ref
     </div>
   </div>
 </footer>
-<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
 
 
-<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../_/js/vendor/fontawesome.js"></script>
-<script async src="../../_/js/vendor/highlight.js"></script>
+<!-- Font Awesome JS removed to use webfont icons only -->
+<script async src="../../../../_/js/vendor/highlight.js"></script>
 
-<script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">
+<script async id="search-script" src="../../../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../../../_/css/vendor/docsearch.css">
 </script>
 
 <script type="text/javascript">

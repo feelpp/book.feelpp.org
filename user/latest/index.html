@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+<head>
+      <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>User Manual :: Feel++ Docs</title>
+    <title>User Manuals :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/user/latest/index.html">
     <link rel="next" href="how-feelpp-works.html">
-    <meta name="generator" content="Antora 3.1.9">
-    <link rel="stylesheet" href="../../_/css/site.css">
+    <meta name="generator" content="Antora 3.1.12">
+<link rel="stylesheet" href="../../_/css/site.css">
+
+<!-- Font Awesome webfont CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <link rel="stylesheet" href="../../_/css/listing.css">
 <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
 <script>!function(l,p){if(l.protocol!==p&&l.host=="docs.antora.org"){l.protocol=p}else if(/\.gitlab\.io$/.test(l.host)){l.replace(p+"//docs.antora.org"+l.pathname.substr(l.pathname.indexOf("/",1))+l.search+l.hash)}}(location,"https:")</script>
@@ -98,8 +102,8 @@ MathJax.Hub.Config({
 <script>var uiRootPath = '../../_'</script>
 
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f34e90f94876f0012457ea1&product=sop' async='async'></script>
-  </head>
-  <body class="article">
+</head>
+<body class="article docs-manuals-catalog docs-cards-layout ">
 <header class="header">
   <nav class="navbar  navbar-expand-sm bg-dark navbar-dark">
     <div class="navbar-brand">
@@ -167,8 +171,9 @@ MathJax.Hub.Config({
     </div>
   </nav>
 </header>
+
 <div class="body">
-<a href="#" class="menu-expand-toggle"></a>
+  <a href="#" class="menu-expand-toggle"></a>
 <div class="nav-container" data-component="user" data-version="latest">
   <aside class="nav">
     <div class="panels">
@@ -501,7 +506,7 @@ MathJax.Hub.Config({
           </ul>
       </li>
       <li class="component">
-        <a class="title" href="../../dev/latest/index.html">Developer manual</a>
+        <a class="title" href="../../dev/latest/index.html">Developer manuals</a>
           <ul class="versions">
               <li class="version is-latest">
                 <a href="../../dev/latest/index.html">latest</a>
@@ -531,419 +536,75 @@ MathJax.Hub.Config({
     </div>
   </aside>
 </div>
-<main class="article">
-<div class="toolbar" role="navigation">
-  <button class="nav-toggle"></button>
-    <a href="../../home/index.html" class="home-link"></a>
-  <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <main class="article">
+    <div class="toolbar" role="navigation">
+      <button class="nav-toggle"></button>
+       <a href="../../home/index.html" class="home-link"></a> 
+      <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">User Manual</a></li>
     <li><a href="index.html">Introduction</a></li>
   </ul>
 </nav>
+    </div>
 
-  <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">latest</button>
-  <div class="version-menu">
-    <a class="version is-current" href="index.html">latest</a>
-    <a class="version" href="../0.110/index.html">0.110</a>
-    <a class="version" href="../0.109/index.html">0.109</a>
-  </div>
-</div>
+    <div class="content">
+      <article class="doc">
+<h1 class="page">User Manuals</h1>
 
-    <div class="edit-this-page"><a href="https://github.com/feelpp/book.feelpp.org/edit/develop/docs/user/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
-  
-  <div class="page-downloads">
-  <span class="label">Download as</span>
-  <ul class="download-options">
-    <li>
-      <a onclick="print(this)" href="#" data-toggle="tooltip" data-placement="left" title="Print to PDF"
-         class="pdf-download">
-        <img class="pdf-file-icon icon" src="../../_/img/pdf.svg"/> .pdf
-      </a>
-    </li>
-  </ul>
-</div>
-</div>
-
-  <div class="content">
-<aside class="toc sidebar" data-title="Contents" data-levels="2">
-  <div class="toc-menu"></div>
-</aside>
-<article class="doc">
-<h1 class="page">User Manual</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>This is the Feel++ user manual version latest.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_authors"><a class="anchor" href="#_authors"></a>1. Authors</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Feel++ user manual is actively developed by
-<a href="https://github.com/prudhomm">Christophe Prud&#8217;homme</a>,
-<a href="https://github.com/vincentchabannes">Vincent Chabannes</a>.</p>
-</div>
-<div class="paragraph">
-<p>There are many other and past contributors to  <a href="https://github.com/feelpp/feelpp/graphs/contributors">Feel++</a> and to this <a href="https://github.com/feelpp/book.feelpp.org/graphs/contributors">manual</a>.</p>
-</div>
-<div class="paragraph">
-<p>The Feel++ project is the flagship software of <a href="http://www.cemosis.fr">Cemosis</a>, the Center of Modeling and Simulation in Strasbourg for mathematics, industry and other disciplines, is currently managed by
-<a href="mailto:christophe.prudhomme@feelpp.org">Christophe Prud&#8217;homme</a>, Professor in
-applied mathematic and scientific computing at the
-<a href="www.en.unistra.fr">University of Strasbourg</a>, France.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="feelpp"><a class="anchor" href="#feelpp"></a>2. What is Feel++?</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Feel++ is a unified C++ implementation of Galerkin methods (finite and
-spectral element methods) in 1D, 2D and 3D to solve partial differential
-equations.</p>
-</div>
-<div class="paragraph">
-<p>Feel++ comprises three components:
-Feel++:: the mathematical kernel libraries, applications and tools.
-Feel++ Toolboxes:: the Feel++ mono and multi-physics toolboxes to solve physic based problems
-Feel++ Model Order Reduction:: the Feel++ model order reduction applications, tools and models</p>
-</div>
-<div class="paragraph">
-<p>Each component provides a Python interface to access that mimic the C++ counterpart.</p>
-</div>
-<div class="sect2">
-<h3 id="_feel"><a class="anchor" href="#_feel"></a>2.1. Feel++</h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>a <strong>versatile mathematical kernel</strong> solving easily problems using
-different techniques thus allowing testing and comparing methods, e.g. cG versus dG.</p>
-</li>
-<li>
-<p>a <strong>small</strong> and <strong>manageable</strong> library which nevertheless encompasses a wide
-range of numerical methods and techniques and in particular reduced order
-methods such as the reduced basis method.</p>
-</li>
-<li>
-<p>a software that follows closely the mathematical abstractions
-associated with partial differential equations (PDE) and in
-particular the finite element mathematical framework and
-variational formulations.</p>
-</li>
-<li>
-<p>a library that offers solving strategies that scales up to
-thousands and even tens of thousands of cores.</p>
-</li>
-<li>
-<p>a library entirely in C++ allowing to create C++ complex and typically
-non-linear multi-physics applications currently in industry, physics and
-health-care.</p>
-</li>
-<li>
-<p>pyFeel++ to manipulate Feel++ mathematical objects in Python to solve PDE</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_feel_toolboxes"><a class="anchor" href="#_feel_toolboxes"></a>2.2. Feel++ Toolboxes</h3>
-<div class="paragraph">
-<p>Feel++ Toolboxes provides :</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>libraries to manipulate physics based models and couple them</p>
-</li>
-<li>
-<p>a set of mono and multi-physics application readily available :</p>
-<div class="ulist">
-<ul>
-<li>
-<p>fluid mechanics</p>
-</li>
-<li>
-<p>solid mechanics</p>
-</li>
-<li>
-<p>heat transfer and conjuguate heat transfer</p>
-</li>
-<li>
-<p>fluid structure interaction</p>
-</li>
-<li>
-<p>electro and magnetostatic</p>
-</li>
-<li>
-<p>thermoelectric</p>
-</li>
-<li>
-<p>levelset and multifluid</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>pyFeel++ Toolboxes which provides an interface to the different physical based models and reproduces the main toolbox applications in Python.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_feel_model_order_reduction"><a class="anchor" href="#_feel_model_order_reduction"></a>2.3. Feel++ Model Order Reduction</h3>
-<div class="paragraph">
-<p>Feel++ Model Order Reduction provides:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>tools to manipulate reduced order models</p>
-</li>
-<li>
-<p>examples of reduced order models</p>
-</li>
-<li>
-<p>pyFeel++ MOR to manipulate reduced order models in Python</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="purpose"><a class="anchor" href="#purpose"></a>3. What is the purpose of this manual ?</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The purpose of this manual is to allow the Feel++ user</p>
-</div>
-<div class="ulist checklist">
-<ul class="checklist">
-<li>
-<p><i class="fa fa-check-square-o"></i> get started with Feel++ and its toolboxes using <a href="using/docker.html" class="xref page">Docker</a> or <a href="using/singularity.html" class="xref page">Singularity</a>.</p>
-</li>
-<li>
-<p><i class="fa fa-check-square-o"></i> learn using Feel++ and solving PDE in <a href="cpp/index.html" class="xref page">C++</a> and <a href="python/index.html" class="xref page">Python</a></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="scope"><a class="anchor" href="#scope"></a>4. What is the scope of this manual?</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>We need to define first what is a Feel++ user to define the scope.</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Feel++ User</dt>
-<dd>
-<p>A Feel++ user can be either</p>
-<div class="ulist">
-<ul>
-<li>
-<p>an application-user who runs the applications provided by Feel++ either via Docker or via an installation on a system or infrastructure.</p>
-</li>
-<li>
-<p>a dsel-user  who implements C++ code using Feel++ Galerkin domain specific embdedded language, see <em>e.g.</em> <a href="cpp/laplacian.html" class="xref page">Laplacian</a>.</p>
-</li>
-<li>
-<p>a Python developer who uses pyFeel++ to solve PDEs.</p>
-</li>
-</ul>
-</div>
-</dd>
-</dl>
-</div>
-<div class="paragraph">
-<p>This book discusses the Feel++ user perspective.
-This book does not discuss or present in-depth Feel++ API or internal programming but rather present the principles and essential ingredients to get started.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="target"><a class="anchor" href="#target"></a>5. Who is this book for?</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This book is for students, engineers, scientists and researchers who want to use Feel++:</p>
-</div>
-<div class="ulist checklist">
-<ul class="checklist">
-<li>
-<p><i class="fa fa-check-square-o"></i> solve PDEs using Feel++ <a href="../../toolboxes/latest/index.html" class="xref page">toolboxes</a>;</p>
-</li>
-<li>
-<p><i class="fa fa-check-square-o"></i> solve PDEs using the embedded language for Galerkin methods;</p>
-</li>
-<li>
-<p><i class="fa fa-check-square-o"></i> more generally develop numerical methods in a framework readily available for high performance computing.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="discuss"><a class="anchor" href="#discuss"></a>6. Where to discuss about this manual</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To discuss this manual, we provide Slack channel (recommended)  to announce, support and discuss book modifications.
-Don&#8217;t hesitate to participate to the discussions!</p>
-</div>
-<div class="paragraph">
-<p>Click the button to join the channel <a href="https://feelpp.slack.com/messages/C6AQL4405"><span class="image"><img src="_images/tools/joinslack.svg" alt="joinslack"></span></a></p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Joining Slack channels works by invitation, to receive an invitation send an email to <a href="mailto:support@feelpp.org">support@feelpp.org</a>.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="contribute"><a class="anchor" href="#contribute"></a>7. How to contribute to this manual</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>We&#8217;re always happy to help out with Feel++ or any other questions you might
-have. You can ask a question or signal an issue at the Slack support salon.</p>
-</div>
-<div class="paragraph">
-<div class="title">Join the Feel++ chat</div>
-<p><a href="https://feelpp.slack.com/messages/C6L6B4RE2"><span class="image"><img src="_images/tools/joinslack.svg" alt="joinslack"></span></a></p>
-</div>
-<div class="paragraph">
-<p>If you find an bug or have a feature proposal, please check first the issue
-does not already exist in the
-<a href="https://github.com/feelpp/feelpp/issues">issue list</a>. If not, post
-a <a href="https://github.com/feelpp/feelpp/issues/new">new issue</a> on the github
-repository.
-If you want to go further, you can contribute to the code by forking the repository,
-then proposing a pull request (PR) into the develop branch.</p>
-</div>
-<div class="paragraph">
-<p>For more information about PR, see <a href="https://help.github.com/articles/about-pull-requests/">github documentation</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_licenses"><a class="anchor" href="#_licenses"></a>8. Licenses</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Feel++ and its documentation is copyrighted</p>
-</div>
-<div class="paragraph">
-<p>Copyright &#169; 2010-2018 by Feel++ Consortium<br>
-Copyright &#169; 2005-2015 by Université Joseph Fourier (Grenoble, France)<br>
-Copyright &#169; 2005-2015 by University of Coimbra (Portugal)<br>
-Copyright &#169; 2011-2018 by Université de Strasbourg (France)<br>
-Copyright &#169; 2011-2018 by CNRS (France)<br>
-Copyright &#169; 2005-2006 by Ecole Polytechnique Fédérale de Lausanne (EPFL, Switzerland)<br></p>
-</div>
-<div class="paragraph">
-<p>Free use of this software is granted under the terms of the LGPL License.</p>
-</div>
-<div class="paragraph">
-<p>See the LICENSE file for details</p>
-</div>
-<div class="paragraph">
-<p>This book is  part of Feel++ and is licensed under the LGPL license.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><a class="image" href="http://creativecommons.org/licenses/LGPL/2.1/"><img src="http://creativecommons.org/images/public/cc-LGPL-a.png" alt="cc LGPL a"></a></span>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_conventions"><a class="anchor" href="#_conventions"></a>9. Conventions</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The following typographical conventions are used in the book</p>
-</div>
-<div class="paragraph">
-<p><em>Italic</em> indicates new terms</p>
-</div>
-<div class="paragraph">
-<p><code>typewriter</code> is used on program listings as well as when referring to
-programming elements, <em>e.g.</em> functions, variables, statements, data types,
-environment variables or keywords.</p>
-</div>
-<div class="paragraph">
-<p><code>\$ typewriter</code> or <code>&gt; typewriter</code> displays commands that the user types literally without the <code>\$</code> or <code>&gt;</code>.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-this is a general note.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-this is a general warning.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
-</td>
-<td class="content">
-be cautious
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Hereafter, in the context of tutorial or the documentation of a specific process, four difficulty levels can be displayed:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Difficulty <span class="image"><img src="_images/tools/difficulty_easy.svg" alt="difficulty easy" width="15px"></span> easy!</p>
-</li>
-<li>
-<p>Difficulty <span class="image"><img src="_images/tools/difficulty_average.svg" alt="difficulty average" width="30px"></span> average!</p>
-</li>
-<li>
-<p>Difficulty <span class="image"><img src="_images/tools/difficulty_advanced.svg" alt="difficulty advanced" width="45px"></span> advanced!</p>
-</li>
-<li>
-<p>Difficulty <span class="image"><img src="_images/tools/difficulty_hard.svg" alt="difficulty hard" width="60px"></span> hard!</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
 <nav class="pagination">
   <span class="next"><a href="how-feelpp-works.html">How Feel++ works</a></span>
 </nav>
 </article>
+    </div>
+
+    <div class="content">
+      <article class="doc">
+         <h1 class="page">User Manuals</h1> 
+
+                    
+                    
+                      <div class="catalogs">
+                            <div class="catalog"><a class="page-card" href="install/index.html">
+  <div class="page-card-illustration">
+        <i class="fa-solid fa-download"></i>
   </div>
-</main>
+  <div class="page-card-body">
+    <h4>Installation Instructions for Feel++</h4>
+    <p class="page-card-description"></p>
+  </div>
+</a>
 </div>
+                            <div class="catalog"><a class="page-card" href="using/index.html">
+  <div class="page-card-illustration">
+        <i class="fa-solid fa-user"></i>
+  </div>
+  <div class="page-card-body">
+    <h4>Using Feel++</h4>
+    <p class="page-card-description"></p>
+  </div>
+</a>
+</div>
+                      </div>
+                    
+                    
+                      <div class="manuals">
+                            <div class="manual"><a class="page-card" href="who-what-how.html">
+  <div class="page-card-illustration">
+        <i class="fa-solid fa-question"></i>
+  </div>
+  <div class="page-card-body">
+    <h4>Who, What, How !</h4>
+    <p class="page-card-description"></p>
+  </div>
+</a>
+</div>
+                      </div>
+      </article>
+    </div>
+  </main>
+</div>
+
 <footer class="footer">
   <div class="container">
     <div class="sharethis-inline-share-buttons"></div>
@@ -1014,8 +675,7 @@ be cautious
 <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
 
 
-<script async src="../../_/js/vendor/fontawesome-icon-defs.js"></script>
-<script async src="../../_/js/vendor/fontawesome.js"></script>
+<!-- Font Awesome JS removed to use webfont icons only -->
 <script async src="../../_/js/vendor/highlight.js"></script>
 
 <script async id="search-script" src="../../_/js/vendor/docsearch.js" data-app-id="03CF2L5SFL" data-api-key="53f606259c1ee7b82a42956e0c776c3d" data-index-name="feelpp" data-stylesheet="../../_/css/vendor/docsearch.css">
@@ -1037,5 +697,5 @@ function toggleFullScreen() {
    }
 }
 </script>
-  </body>
+</body>
 </html>
