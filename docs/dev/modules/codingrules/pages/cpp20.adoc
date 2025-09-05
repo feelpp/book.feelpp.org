@@ -1,0 +1,121 @@
+= C++20/23: Prefer This / Prefer That
+:page-tags: manual, coding-rule-cpp
+:parent-catalogs: coding-rules
+:page-illustration: fa-solid fa-code
+:page-description: Modern C++20/23 rules and best practices for Feel++.
+:page-cards-order: 2
+
+This section gathers the modern C++ rules from the original document.
+
+== Special Members: = default / = delete
+* Clear intent, zero boilerplate, follows Rule of 0/5/6.
+[source,cpp]
+----
+class Solver
+{
+public:
+	Solver() = default;
+	~Solver() = default;
+	Solver(Solver const &) = delete;
+	Solver &operator=(Solver const &) = delete;
+};
+----
+
+== override / final
+* Don’t repeat `virtual` in derived classes. Use `override`; consider `final` where relevant.
+[source,cpp]
+----
+class Derived : public Base
+{
+public:
+	void run() override;
+};
+----
+
+== enum class
+* Scoped and type-safe enums.
+[source,cpp]
+----
+enum class Mode { A, B, C };
+----
+
+== <=> defaulted comparisons
+* Generate comparisons with one line.
+[source,cpp]
+----
+struct Point
+{
+	int x{}, y{};
+	friend auto operator<=>(Point const &, Point const &) = default;
+};
+----
+
+== [[nodiscard]]
+* Mark results that must not be ignored.
+[source,cpp]
+----
+[[nodiscard]] double computeEnergy(Mesh const &mesh);
+----
+
+== constexpr / consteval / constinit
+* `constexpr`: usable at compile time; `consteval`: must be compile-time; `constinit`: constant-initialized static (avoids static init order issues).
+[source,cpp]
+----
+constexpr int square(int x) { return x*x; }
+consteval int scaled(int x) { return x*42; }
+constinit static int S_threshold = 10;
+----
+
+== inline constexpr globals
+* Avoid ODR issues for constants in headers.
+[source,cpp]
+----
+inline constexpr double kPi = 3.14159265358979323846;
+----
+
+== string_view / span
+* Accept data without owning/copying.
+[source,cpp]
+----
+void logName(std::string_view name);
+void scale(std::span<double const> v, double factor);
+----
+
+== ranges
+* Clear intent, fewer errors than hand-written loops.
+[source,cpp]
+----
+for (int x : values | std::views::drop(1))
+{
+	std::println("{}", x);
+}
+----
+
+== concepts / requires
+* Express constraints directly; simpler than SFINAE.
+[source,cpp]
+----
+template <std::integral T>
+T gcd(T a, T b);
+----
+
+== auto for type deduction
+* Avoid accidental conversions/copies; clarify intent.
+[source,cpp]
+----
+auto s = getStringLike();
+----
+
+== Formatting & Printing: std::format / std::print (or fmt)
+* `std::format` and `std::print` (C++20/23) are safer and faster than iostreams or `printf`.
+* Feel++ uses `{fmt}` where standard `std::format` is unavailable. Both styles are acceptable.
+[source,cpp]
+----
+// Standard (C++20/23)
+std::string msg = std::format("rank {} of {}", rank, size);
+std::println("{}", msg);
+
+// With {fmt} (used in Feel++)
+std::string msg = fmt::format("rank {} of {}", rank, size);
+fmt::println("{}", msg);
+----

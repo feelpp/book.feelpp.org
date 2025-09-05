@@ -1,0 +1,113 @@
+= Building Feel++
+:page-tags: manual, programming-environment
+:parent-catalogs: programming-environment
+:page-illustration: fa-solid fa-wrench
+:description: Minimal, reproducible build instructions and recommended CMake options for developing and testing Feel++.
+:page-cards-order: 1
+
+This short guide explains how to configure, build and test Feel++ for development.
+
+== Prerequisites
+
+Install the usual development toolchain (CMake, a modern C++ compiler, ninja/make, Python, git) and external libraries required by Feel++ (MPI, Boost, Eigen, fmt, etc.). On Debian/Ubuntu a minimal set is:
+
+[source,sh]
+----
+sudo apt-get update
+sudo apt-get install -y build-essential cmake ninja-build git python3 python3-pip \
+    libboost-all-dev libeigen3-dev libfmt-dev libglog-dev libgoogle-perftools-dev
+----
+
+Check your compiler supports C++20/23 (gcc >= 11 or clang >= 13 recommended).
+
+== Out-of-source build
+
+Always build out-of-source. Create a dedicated build directory per configuration (Debug, Release, RelWithDebInfo).
+
+[source,sh]
+----
+git clone https://github.com/feelpp/feelpp.git feelpp-src
+cd feelpp-src
+mkdir build && cd build
+cmake -S .. -B . -G Ninja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_CXX_COMPILER=g++ \
+  -DENABLE_TESTS=ON \
+  -DENABLE_EXAMPLES=ON
+ninja -j$(nproc)
+----
+
+Notes:
+
+* Use `RelWithDebInfo` for iterative development: optimizations + debug info.
+* For fast incremental builds prefer the Ninja generator.
+
+== Recommended CMake options
+
+These commonly-used flags help development and CI consistency:
+
+[source,cmake]
+----
+# treat warnings as errors in CI
+-DWITH_WARNINGS_AS_ERRORS=ON
+
+# enable sanitizers for debug builds
+-DENABLE_ASAN=ON
+
+# enable Address/Leak/UB sanitizers where applicable
+-DENABLE_UBSAN=OFF
+
+# enable MPI support
+-DENABLE_MPI=ON
+
+# build tests and examples
+-DENABLE_TESTS=ON
+-DENABLE_EXAMPLES=ON
+----
+
+== Debugging and sanitizers
+
+To use AddressSanitizer and UBSan, configure a dedicated build type and enable relevant CMake options. Example:
+
+[source,sh]
+----
+cmake -S .. -B build-asan -G Ninja -DCMAKE_BUILD_TYPE=Debug -DENABLE_ASAN=ON
+ninja -C build-asan -j$(nproc)
+----
+
+Run tests under the sanitizer build and inspect reports. For ASan, set `ASAN_OPTIONS=detect_leaks=1:abort_on_error=1` when debugging.
+
+== Running tests
+
+After building, run the test suite with CTest or the project's test runner:
+
+[source,sh]
+----
+ctest --test-dir build -j 4 --output-on-failure
+----
+
+For MPI-enabled tests, use `mpirun` or `mpiexec` with the desired number of ranks.
+
+== Performance builds and tuning
+
+For profiling or benchmarking use `Release` or `RelWithDebInfo` and build with LTO only when stable:
+
+[source,sh]
+----
+cmake -S .. -B build-release -G Ninja -DCMAKE_BUILD_TYPE=Release -DENABLE_LTO=ON
+ninja -C build-release -j$(nproc)
+----
+
+Use `perf`, `vtune`, or `gprof` (as appropriate) to profile hotspots. Keep debug symbols when possible to make profiling meaningful.
+
+== Tips for contributors
+
+* Keep builds reproducible: pin dependency versions in CI where possible.
+* Use feature branches and a clean build when bisecting regressions.
+* Add small, focused tests for CI to prevent regressions.
+
+== Troubleshooting
+
+If a dependency is missing, inspect CMake output for hints and check that `pkg-config` paths are correct. For MPI problems, ensure consistent MPI implementations between builds and runtime.
+
+If you want, I can add distribution-specific notes (Debian/Ubuntu, macOS Homebrew) — tell me which platforms to target.

@@ -1,6 +1,12 @@
 // -*- mode: adoc -*-
 
 = Preconditioner strategies
+:page-tags: manual, preconditioners
+:page-illustration: fa-solid fa-gears
+:description: Preconditioner strategies available in Feel++.
+:page-cards-order: 2
+:page-cards-tag: manual
+:parent-catalogs: solvers
 
 == Relaxation
 
@@ -165,3 +171,12 @@ Application of multigrid preconditioner (stem:[V]-cycle)
 - Multilevel Schwarz is essentially the same with different language
 
     * assume strong smoothers, emphasize aggressive coarsening.
+
+== Notes and examples
+
+Tests in the repository show how to configure and use preconditioners
+in practice. See `testsuite/feeldiscr/test_mult_petsc.cpp` and
+`testsuite/feeldiscr/test_stokes.cpp` for concrete configurations and
+use with iterative solvers. Typical options include `pc-type=jacobi`,
+`pc-type=ilu`, and block or multigrid-based preconditioners configured
+via the backend options.

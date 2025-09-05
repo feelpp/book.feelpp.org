@@ -1,4 +1,10 @@
 = Algebra Backends
+:page-tags: manual, backends
+:page-illustration: fa-solid fa-database
+:description: Algebra backends in Feel++.
+:page-cards-order: 3
+:page-cards-tag: manual
+:parent-catalogs: solvers
 
 The linear and non-linear algebra backends are crucial components of {feelpp}.
 They provide a uniform interface between {feelpp} data structures and underlying the linear algebra libraries used by {feelpp}.
@@ -56,12 +62,12 @@ They take default values as described in the following table:
 
 === _name
 
-Backends are store in a Backend factory and handled by a manager that
-allows to keep track of allocated backends. They a registered with
-respect to their name and kind. The default name value is en empty
-string (`""`) which names the default Backend. The _name parameter is
-important because it provides also the name for the command
-line/config file option section associated to the associated Backend.
+Backends are stored in a Backend factory and handled by a manager that
+keeps track of allocated backends. They are registered with respect
+to their name and kind. The default name value is an empty
+string (`""`) which names the default Backend. The `_name` parameter
+is important because it also provides the name for the command-line
+and config-file option section associated to that Backend.
 
 Only the command line/config file options for the default backend are
 registered. Developers have to register the option for each new
@@ -163,3 +169,21 @@ auto f = b->newVector(); // sequential Vector
 ----
 
 TIP: The default `WorldComm` is provided by `Environment::worldComm()` and it corresponds to the default MPI communicator `MPI_COMM_WORLD`.
+
+== Minimal backend example
+
+Here's a minimal usage snippet adapted from the testsuite that demonstrates creating a backend and allocating vectors/matrices for a function space `Xh`:
+
+[source,c++]
+----
+// build a PETSc backend
+auto b = backend( _kind = "petsc" );
+
+// create vectors/matrices for a function space `Xh`
+auto x = Xh->element();
+auto petsc_vec = b->newVector( Xh );
+auto petsc_mat = b->newMatrix( _test = Xh, _trial = Xh );
+// fill matrix
+petsc_mat->set( row, col, value );
+petsc_mat->close();
+----

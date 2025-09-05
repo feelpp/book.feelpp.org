@@ -1,0 +1,28 @@
+= Profiling {feelpp}
+:page-tags: manual, programming-environment
+:parent-catalogs: programming-environment
+:page-illustration: fa-solid fa-chart-line
+:description: Profiling tools and methods for Feel++ code.
+:page-cards-order: 3
+
+This manual describes profiling strategies for Feel++.
+
+== Using perf
+
+=== Using perf stats
+
+.Display general performance data out of your application
+----
+perf stats <your {feelpp} application command line>
+----
+
+=== Using perf record/report
+.Record performance data about your application
+----
+perf record -g <your {feelpp} application command line>
+----
+
+.Display performance data in a text user interface
+----
+perf report -g 'graph,0.5,caller'
+----

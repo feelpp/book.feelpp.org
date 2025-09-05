@@ -1,13 +1,151 @@
+// -*- mode: adoc -*-
 = Vectors and Matrices
+:page-illustration: fa-solid fa-vector-square
+== Vectors
+// -*- mode: adoc -*-
+= Vectors and Matrices
+:page-illustration: fa-solid fa-vector-square
+
+This page documents the main Vector and Matrix data structures used in Feel++ and gives short, copy-pasteable examples adapted from the testsuite.
 
 == Vectors
 
-=== Creating vectors
+=== Overview
 
-=== Vector Interface
+The Feel++ `Vector<T>` class (declared in `feel/feelalg/vector.hpp`) is an abstract, reference-counted numeric vector that provides a uniform interface to several backend implementations (PETSc, Epetra, uBLAS, ...).
+
+It exposes constructors for allocation, methods to query global/local sizes, element access, common vector operations (zero, setConstant, add, dot, norms) and helpers (clone, createSubVector, save/load, print).
+
+=== Creating vectors (high-level)
+
+Typical usage when working with a linear algebra backend and a finite-element function space (`Xh`):
+
+[source,c++]
+----
+// create a vector associated with a FunctionSpace Xh using a backend
+auto v = backend->newVector( Xh );
+v->setConstant( 0.0 );
+// set an entry on the local process
+v->set( local_index, 1.234 );
+v->close(); // finalize before global operations
+// compute norm
+auto n = v->l2Norm();
+std::cout << "L2 norm: " << n << std::endl;
+----
+
+=== Creating vectors (direct)
+
+You can also create a bare `Vector<T>` and initialize its size directly:
+
+[source,c++]
+----
+// allocate a Vector<double> of global size N and local size N_local
+Vector<double> V( /*N*/ 100, /*N_local*/ 100 );
+V.setConstant( 1.0 );
+V.add( 2.0 );          // add scalar 2 to each entry
+double s = V.sum();    // sum of all entries
+----
+
+=== Vector API (selected)
+
+Summary of the most commonly used members (see `feel/feelalg/vector.hpp` for the full interface):
+
+- Constructors:
+	- `Vector( worldcomm_ptr_t const& wc = Environment::worldCommPtr() )` — default (empty) vector.
+	- `Vector( datamap_ptrtype const& dm )` — construct from a DataMap describing the parallel layout.
+	- `Vector( size_type n, worldcomm_ptr_t const& wc = ... )` — global size `n`.
+	- `Vector( size_type n, size_type n_local, ... )` — global and local sizes.
+
+- Lifecycle and state:
+	- `bool isInitialized() const` — whether `init()` was called.
+	- `bool closed() const` — whether `close()` was called.
+	- `virtual void close() = 0` — finalize assembly (must be called for many global ops).
+
+- Querying sizes and communicator:
+	- `size_type size() const` — global dimension.
+	- `size_type localSize() const` — local size (including ghost or not depending on backend).
+	- `size_type firstLocalIndex() const`, `size_type lastLocalIndex() const` — local range.
+	- `worldcomm_ptr_t const& worldCommPtr() const` — MPI communicator wrapper.
+
+- Element access and modification:
+	- `virtual T operator()( size_type i ) const` and `virtual T& operator()( size_type i )` — element get/set.
+	- `virtual void set( size_type i, const value_type& v )` — set single entry.
+	- `virtual void add( size_type i, const value_type& v )` — add to single entry.
+	- `virtual void setVector( int* i, int n, value_type* v )` — set multiple entries by indices.
+	- `virtual void addVector(...)` — multiple overloads for local/global adds and sparse product adds.
+
+- Common operations:
+	- `virtual void zero()` / `virtual void setZero()` — set to zero.
+	- `virtual void setConstant( value_type )` — set all entries.
+	- `virtual void scale( T factor )` — multiply by scalar.
+	- `virtual value_type dot( Vector<T> const& ) const` — inner product.
+	- `virtual real_type l2Norm() const`, `l1Norm() const`, `linftyNorm() const` — norms.
+	- `virtual value_type sum() const` — sum of entries.
+
+- Utility:
+	- `virtual clone_ptrtype clone() const = 0` — deep-copy into a new shared_ptr.
+	- `virtual void print( std::ostream& os=std::cout ) const` and `printMatlab(...)`.
+	- `virtual void save( std::string const& filename, std::string const& format )` / `load(...)` — (de)serialize.
 
 == Matrices
 
-=== Creating matrices
+=== Overview
 
-=== Matrix Interface
+Feel++ provides several matrix implementations. The header `feel/feelalg/matrix.hpp` contains uBLAS helpers and lightweight matrix utilities; production sparse/dense matrices are typically provided by backend-specific classes such as `MatrixPetsc<T>`, `MatrixSparse<T>`, or `MatrixShell<T>`.
+
+The usual workflow when assembling linear systems is:
+
+- Create/initialize a matrix with the desired global / local sizes.
+- Fill entries using `set(...)` or assembly routines.
+- Call `close()` to finalize the matrix (for parallel communication and assembly compression).
+
+=== Creating matrices (example using PETSc backend)
+
+[source,c++]
+----
+// allocate a PETSc sparse matrix for a 2D finite-difference stencil
+MatrixPetsc<double> A;
+// global size N = m*n, local rows ~ N/nprocs
+A.init( m*n, m*n, /*n_local*/ m*n/nprocs, /*n*/ m*n );
+
+// set entries (illustrative)
+for( auto row : owned_rows )
+{
+		for( auto col : stencil_cols )
+				A.set( row, col, value );
+}
+
+A.close(); // finalize assembly
+
+// multiply matrix by vector
+auto x = backend->newVector( Xh );
+auto y = backend->newVector( Xh );
+A.multVector( *x, *y );
+----
+
+=== Matrix API (selected)
+
+Common interface members (concrete signatures depend on implementation):
+
+- `init( size_type rows, size_type cols, size_type nlocalrows, size_type ncols )` — allocate and set parallel layout.
+- `set( size_type i, size_type j, value_type v )` — set an entry (usually accumulating until `close()`).
+- `add( size_type i, size_type j, value_type v )` — add to an entry.
+- `close()` — finalize assembly (mandatory for many backends).
+- `multVector( Vector<T> const& x, Vector<T>& y )` — matrix-vector product.
+- `diagonal()` / `setDiagonal()` — access or set diagonal (backend-dependent).
+- `printMatlab( std::string const& name ) const` — dump to Matlab format.
+
+For backend-specific options and advanced methods (PtAP, PAPt, matMatMult, symbolic factorization, preallocation), consult the corresponding implementation header (e.g. `MatrixPetsc.hpp`, `matrixsparse.hpp`) and the testsuite examples.
+
+=== Where to find more examples
+
+- Testsuite: see `testsuite/feelalg/test_vector.cpp` and `testsuite/feelalg/test_matrix.cpp` for canonical usage patterns and edge cases.
+- Backend examples: search for `MatrixPetsc` and `Vector` usage across `testsuite/` to see real assemblies and solver workflows.
+
+=== Notes and tips
+
+- Always call `close()` on vectors/matrices after you finish inserting entries and before global operations (norms, dot, mult).
+- Prefer `setConstant` / `scale` for bulk operations rather than looping over indices when possible — backends optimize those operations.
+- Use `createSubVector` when you need a contiguous view of a subset of DOFs on a process; behavior is backend-specific (implemented for PETSc in the tests).
+
+// End of vector_matrix.adoc

@@ -1,0 +1,370 @@
+= Solving Partial Differential Equations
+:page-tags: manual, tutorial-11
+:parent-catalogs: tutorial-base
+:page-description: Complete guide to solving PDEs using the finite element method in Feel++.
+:page-illustration: fa-solid fa-equals
+:page-cards-order: 11
+
+== Introduction
+
+This tutorial demonstrates how to solve partial differential equations (PDEs) using {feelpp}'s finite element framework. We'll cover the complete workflow from problem formulation to solution visualization.
+
+== The Finite Element Method Workflow
+
+Solving a PDE with {feelpp} follows these steps:
+
+1. **Problem Formulation**: Define the weak form of your PDE
+2. **Mesh Generation**: Create or load a computational domain
+3. **Function Space Creation**: Define trial and test spaces
+4. **Form Assembly**: Build bilinear and linear forms
+5. **Boundary Conditions**: Apply essential and natural BCs
+6. **System Solution**: Solve the resulting linear/nonlinear system
+7. **Post-processing**: Analyze and visualize results
+
+== Example 1: Poisson Equation
+
+Let's solve the Poisson equation as our first example:
+
+----
+-Δu = f    in Ω
+u = g      on ∂Ω
+----
+
+=== Weak Formulation
+
+Find u ∈ V such that:
+∫_Ω ∇u·∇v dx = ∫_Ω fv dx    ∀v ∈ V₀
+
+=== Implementation
+
+[source,cpp]
+----
+include::{examplesdir}/11-laplacian-modern.cpp[]
+----
+
+=== Key Components Explained
+
+**Bilinear Form**: `a(u,v) = ∫ μ ∇u·∇v`
+[source,cpp]
+----
+auto a = form2( _trial=Vh, _test=Vh );
+a = integrate( _range=elements(mesh),
+               _expr=mu * gradt(u) * trans(grad(v)) );
+----
+
+**Linear Form**: `l(v) = ∫ fv`
+[source,cpp]
+----
+auto l = form1( _test=Vh );
+l = integrate( _range=elements(mesh),
+               _expr=f * id(v) );
+----
+
+**Boundary Conditions**: Essential (Dirichlet) BC
+[source,cpp]
+----
+a += on( _range=boundaryfaces(mesh), _rhs=l, _element=u, _expr=g );
+----
+
+== Example 2: Stokes Equations
+
+The Stokes equations model viscous flow:
+
+----
+-ν Δu + ∇p = f    in Ω  (momentum)
+∇·u = 0           in Ω  (continuity)  
+u = g             on ∂Ω (no-slip)
+----
+
+=== Mixed Formulation
+
+Find (u,p) ∈ V × Q such that:
+∫_Ω ν ∇u:∇v dx + ∫_Ω p ∇·v dx = ∫_Ω f·v dx    ∀v ∈ V₀
+∫_Ω q ∇·u dx = 0                               ∀q ∈ Q
+
+=== Implementation
+
+[source,cpp]
+----
+include::{examplesdir}/13-stokes-modern.cpp[]
+----
+
+== Boundary Condition Types
+
+{feelpp} supports various boundary condition types:
+
+=== Essential (Dirichlet) Boundary Conditions
+
+Specify function values on boundaries:
+[source,cpp]
+----
+// Strong enforcement
+a += on( _range=boundaryfaces(mesh), _rhs=l, _element=u, _expr=g );
+
+// Weak enforcement (Nitsche method)
+a += integrate( _range=boundaryfaces(mesh),
+               _expr=-gradt(u)*N()*id(v) - grad(v)*N()*idt(u) 
+                    + penalbc*idt(u)*id(v)/hFace() );
+l += integrate( _range=boundaryfaces(mesh),
+               _expr=-g*grad(v)*N() + penalbc*g*id(v)/hFace() );
+----
+
+=== Natural (Neumann) Boundary Conditions
+
+Specify flux or normal derivatives:
+[source,cpp]
+----
+// Natural BC: ∂u/∂n = h on boundary
+l += integrate( _range=boundaryfaces(mesh),
+               _expr=h * id(v) );
+----
+
+=== Robin Boundary Conditions
+
+Mixed boundary conditions:
+[source,cpp]
+----
+// Robin BC: αu + β∂u/∂n = γ
+a += integrate( _range=boundaryfaces(mesh),
+               _expr=alpha * idt(u) * id(v) );
+l += integrate( _range=boundaryfaces(mesh),
+               _expr=gamma * id(v) );
+----
+
+== Advanced Solution Techniques
+
+=== Nonlinear Problems
+
+For nonlinear PDEs, use Newton's method:
+
+[source,cpp]
+----
+auto a = form2( _trial=Vh, _test=Vh );
+auto l = form1( _test=Vh );
+auto u = Vh->element();
+
+// Newton iteration
+for( int iter = 0; iter < max_iter; ++iter )
+{
+    // Assemble Jacobian and residual
+    a.zero();
+    l.zero();
+    
+    // Add linearized terms
+    a += integrate( _range=elements(mesh),
+                   _expr=/* linearized bilinear form */ );
+    l += integrate( _range=elements(mesh),
+                   _expr=/* residual form */ );
+    
+    // Apply BC and solve
+    a += on( _range=boundaryfaces(mesh), _rhs=l, _element=du, _expr=cst(0.) );
+    auto du = a.solve( _rhs=l, _solution=du );
+    
+    // Update solution
+    u += du;
+    
+    // Check convergence
+    if( du.l2Norm() < tolerance ) break;
+}
+----
+
+=== Time-Dependent Problems
+
+For time evolution, use time stepping schemes:
+
+[source,cpp]
+----
+// BDF2 time scheme for ∂u/∂t - Δu = f
+auto dt = doption("dt");
+auto bdf2 = bdf( _space=Vh, _name="u" );
+
+for( auto time : bdf2 )
+{
+    // Update time-dependent data
+    auto f = expr(soption("f"), symbols, {{"t", time}});
+    
+    // Mass matrix contribution
+    auto a = form2( _trial=Vh, _test=Vh );
+    a = integrate( _range=elements(mesh),
+                   _expr=bdf2.polyDerivCoefficient(0) * idt(u) * id(v) );
+    
+    // Stiffness matrix
+    a += integrate( _range=elements(mesh),
+                   _expr=gradt(u) * trans(grad(v)) );
+    
+    // Right-hand side
+    auto l = form1( _test=Vh );
+    l = integrate( _range=elements(mesh),
+                   _expr=f * id(v) + bdf2.polyDeriv() * id(v) );
+    
+    // Solve and update
+    a.solve( _rhs=l, _solution=u );
+    bdf2.next(u);
+}
+----
+
+== Error Analysis and Validation
+
+=== Manufactured Solutions
+
+Test your implementation with known solutions:
+
+[source,cpp]
+----
+// Define exact solution
+auto u_exact = sin(pi*Px())*sin(pi*Py());
+
+// Compute corresponding source term
+auto f = 2*pi*pi*sin(pi*Px())*sin(pi*Py());
+
+// Solve problem with this source
+// ... problem setup and solve ...
+
+// Compute errors
+double error_l2 = normL2( _range=elements(mesh), 
+                         _expr=idv(u_h) - u_exact );
+double error_h1 = normH1( _range=elements(mesh),
+                         _expr=idv(u_h) - u_exact,
+                         _grad_expr=gradv(u_h) - grad<2>(u_exact) );
+----
+
+=== Convergence Studies
+
+Study how errors decrease with mesh refinement:
+
+[source,cpp]
+----
+std::vector<double> h_values, l2_errors, h1_errors;
+
+for( double h = 0.1; h >= 0.01; h /= 2 )
+{
+    // Generate mesh with characteristic size h
+    auto mesh = createMesh( h );
+    
+    // Solve problem
+    auto u_h = solve_problem( mesh );
+    
+    // Compute errors
+    double error_l2 = compute_l2_error( u_h );
+    double error_h1 = compute_h1_error( u_h );
+    
+    h_values.push_back( h );
+    l2_errors.push_back( error_l2 );
+    h1_errors.push_back( error_h1 );
+}
+
+// Compute convergence rates
+for( int i = 1; i < h_values.size(); ++i )
+{
+    double rate_l2 = log(l2_errors[i]/l2_errors[i-1]) / log(h_values[i]/h_values[i-1]);
+    double rate_h1 = log(h1_errors[i]/h1_errors[i-1]) / log(h_values[i]/h1_values[i-1]);
+    
+    LOG(INFO) << "h=" << h_values[i] << ", L2 rate=" << rate_l2 << ", H1 rate=" << rate_h1;
+}
+----
+
+== Solver Configuration
+
+{feelpp} provides extensive linear solver options:
+
+=== Direct Solvers
+
+For small to medium problems:
+[source,cpp]
+----
+// In config file
+ksp-type=preonly
+pc-type=lu
+pc-factor-mat-solver-package=mumps
+----
+
+=== Iterative Solvers
+
+For large problems:
+[source,cpp]
+----
+// Conjugate Gradient with AMG preconditioner
+ksp-type=cg
+pc-type=gamg
+ksp-rtol=1e-8
+ksp-max_it=1000
+----
+
+=== Problem-Specific Solvers
+
+For Stokes problems:
+[source,cpp]
+----
+// Block preconditioner for Stokes
+pc-type=fieldsplit
+pc-fieldsplit-type=schur
+pc-fieldsplit-schur-factorization-type=diag
+fieldsplit-0-ksp-type=preonly
+fieldsplit-0-pc-type=ml
+fieldsplit-1-ksp-type=preonly  
+fieldsplit-1-pc-type=ml
+----
+
+== Performance Optimization
+
+=== Memory Usage
+
+- Choose appropriate polynomial orders
+- Use discontinuous Galerkin for convection-dominated problems
+- Consider static condensation for high-order methods
+
+=== Parallel Scaling
+
+- Use appropriate mesh partitioning
+- Configure solvers for your problem size
+- Profile communication patterns
+
+=== Assembly Optimization
+
+- Vectorize expressions where possible
+- Use compile-time polynomial orders
+- Consider assembly time vs solution time trade-offs
+
+== Debugging and Troubleshooting
+
+=== Common Issues
+
+**Matrix Singularity**: 
+- Check boundary conditions
+- Verify problem well-posedness
+- Inspect null space
+
+**Poor Convergence**:
+- Improve preconditioners
+- Check mesh quality
+- Verify weak formulation
+
+**Incorrect Results**:
+- Validate with manufactured solutions
+- Check unit consistency
+- Verify boundary condition implementation
+
+=== Diagnostic Tools
+
+[source,cpp]
+----
+// Check matrix properties
+LOG(INFO) << "Matrix rows: " << a.matrixPtr()->size1();
+LOG(INFO) << "Matrix cols: " << a.matrixPtr()->size2();
+LOG(INFO) << "Matrix nnz: " << a.matrixPtr()->nnz();
+
+// Examine solution properties
+LOG(INFO) << "Solution L2 norm: " << u.l2Norm();
+LOG(INFO) << "Solution min/max: " << u.min() << "/" << u.max();
+----
+
+== Best Practices
+
+1. **Start Simple**: Begin with known solutions for validation
+2. **Verify Convergence**: Always check spatial and temporal convergence
+3. **Use Appropriate Orders**: Match polynomial order to solution regularity  
+4. **Monitor Performance**: Profile assembly and solution times
+5. **Document Parameters**: Keep track of solver and discretization parameters
+6. **Validate Physics**: Ensure your formulation matches the physical problem
+
+This comprehensive guide provides the foundation for solving PDEs with {feelpp}. The key is understanding the weak formulation, proper discretization, and effective solution strategies.

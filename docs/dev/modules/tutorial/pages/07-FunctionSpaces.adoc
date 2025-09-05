@@ -1,0 +1,285 @@
+= Function Spaces in {feelpp}
+:page-tags: manual, tutorial-07
+:parent-catalogs: tutorial-base
+:page-description: Understanding and using function spaces for finite element discretization.
+:page-illustration: fa-solid fa-cube
+:page-cards-order: 7
+
+== Introduction
+
+Function spaces are fundamental to finite element methods in {feelpp}. They define the mathematical framework for approximating solutions to partial differential equations using polynomial basis functions over a mesh.
+
+== Basic Function Space Types
+
+{feelpp} provides several pre-defined function space types:
+
+=== Scalar Function Spaces
+
+For scalar-valued functions (temperature, pressure, density):
+
+[source,cpp]
+----
+auto Vh1 = Pch<1>(mesh);  // Continuous piecewise linear (P1)
+auto Vh2 = Pch<2>(mesh);  // Continuous piecewise quadratic (P2)
+auto Vh3 = Pch<3>(mesh);  // Continuous piecewise cubic (P3)
+----
+
+=== Vector Function Spaces
+
+For vector-valued functions (velocity, displacement):
+
+[source,cpp]
+----
+auto Vh_vec = Pchv<1>(mesh);  // Vector P1 elements
+auto Vh_vec2 = Pchv<2>(mesh); // Vector P2 elements
+----
+
+=== Mixed Function Spaces
+
+For coupled systems (Stokes: velocity + pressure):
+
+[source,cpp]
+----
+auto Vh = Pchv<2>(mesh);     // Velocity space
+auto Qh = Pch<1>(mesh);      // Pressure space  
+auto Wh = Vh * Qh;           // Mixed space
+----
+
+== Function Space Properties
+
+Each function space provides important information:
+
+[source,cpp]
+----
+auto Vh = Pch<2>(mesh);
+
+LOG(INFO) << "Degrees of freedom: " << Vh->nDof();
+LOG(INFO) << "Local DoFs per element: " << Vh->nLocalDof();
+LOG(INFO) << "Polynomial order: " << Vh->basis()->nOrder;
+LOG(INFO) << "Space dimension: " << Vh->worldComm().globalSize();
+----
+
+== Creating and Manipulating Elements
+
+Elements are functions that belong to a function space:
+
+=== Basic Element Creation
+
+[source,cpp]
+----
+auto Vh = Pch<2>(mesh);
+auto u = Vh->element("u");      // Create element named "u"
+auto v = Vh->element();         // Anonymous element
+----
+
+=== Element Initialization
+
+**From Expressions**:
+[source,cpp]
+----
+u.on( _range=elements(mesh), _expr=sin(pi*Px())*cos(pi*Py()) );
+----
+
+**From Functions**:
+[source,cpp]
+----
+u.on( _range=elements(mesh), _expr=expr("x*x+y*y:x:y") );
+----
+
+**From Other Elements**:
+[source,cpp]
+----
+auto u2 = Vh->element();
+u2 = u;  // Copy values
+----
+
+== Projections
+
+Projections are used to represent continuous functions in discrete function spaces:
+
+=== L² Projection
+
+[source,cpp]
+----
+auto Vh = Pch<2>(mesh);
+auto u_proj = vf::project( _space=Vh,
+                          _range=elements(mesh),
+                          _expr=exp(-((Px()-0.5)*(Px()-0.5) + (Py()-0.5)*(Py()-0.5))/0.1) );
+----
+
+=== H¹ Projection
+
+For functions requiring continuity of gradients:
+[source,cpp]
+----
+auto u_h1 = vf::project( _space=Vh,
+                        _range=elements(mesh),
+                        _expr=sin(2*pi*Px())*sin(2*pi*Py()),
+                        _grad_expr=vec(2*pi*cos(2*pi*Px())*sin(2*pi*Py()),
+                                      2*pi*sin(2*pi*Px())*cos(2*pi*Py())) );
+----
+
+== Working with Vector Functions
+
+Vector function spaces handle multi-component fields:
+
+[source,cpp]
+----
+auto Vh_vec = Pchv<2>(mesh);
+auto u_vec = Vh_vec->element("velocity");
+
+// Initialize with vector expression
+u_vec.on( _range=elements(mesh), 
+          _expr=vec(cos(Px()), sin(Py())) );
+
+// Access components
+auto u_x = u_vec.comp(X);  // X-component
+auto u_y = u_vec.comp(Y);  // Y-component
+----
+
+== Mixed Function Spaces
+
+Mixed spaces combine multiple function spaces for coupled problems:
+
+=== Stokes System Example
+
+[source,cpp]
+----
+auto Vh = Pchv<2>(mesh);    // Velocity (P2 vector)
+auto Qh = Pch<1>(mesh);     // Pressure (P1 scalar)
+auto Wh = Vh * Qh;          // Mixed space
+
+// Create mixed element
+auto U = Wh->element("(u,p)");
+auto u = U.template element<0>("u");  // Velocity component
+auto p = U.template element<1>("p");  // Pressure component
+
+// Initialize
+u.on( _range=elements(mesh), _expr=vec(sin(Px()), cos(Py())) );
+p.on( _range=elements(mesh), _expr=Px()*Py() );
+----
+
+== Advanced Function Space Features
+
+=== Marked Elements
+
+Create function spaces on subdomains:
+
+[source,cpp]
+----
+// Function space on marked region
+auto Vh_subdomain = Pch<2>( mesh, markedelements(mesh, "fluid") );
+
+// Function space with level set
+auto Vh_levelset = Pch<2>( mesh, elements(mesh, expr("x*x+y*y-0.25<0")) );
+----
+
+=== Periodic Boundary Conditions
+
+For problems with periodic domains:
+
+[source,cpp]
+----
+auto Vh_periodic = Pch<2>( mesh, 
+                          periodicity( Periodic<>(BoundaryCondition("left"), BoundaryCondition("right")) ) );
+----
+
+== Norms and Error Computation
+
+Function spaces provide various norm computations:
+
+=== L² and H¹ Norms
+
+[source,cpp]
+----
+auto u = Vh->element();
+// ... initialize u ...
+
+// L² norm: ||u||_{L²}
+double l2_norm = normL2( _range=elements(mesh), _expr=idv(u) );
+
+// H¹ norm: ||u||_{H¹} = (||u||²_{L²} + ||∇u||²_{L²})^{1/2}
+double h1_norm = normH1( _range=elements(mesh), 
+                        _expr=idv(u), 
+                        _grad_expr=gradv(u) );
+
+// H¹ semi-norm: |u|_{H¹} = ||∇u||_{L²}
+double h1_semi = normH1( _range=elements(mesh), 
+                        _grad_expr=gradv(u) );
+----
+
+=== Error Norms
+
+Compute errors between solutions:
+
+[source,cpp]
+----
+auto u_exact = expr("sin(pi*x)*sin(pi*y):x:y");
+auto u_numerical = Vh->element();
+// ... solve for u_numerical ...
+
+double error_l2 = normL2( _range=elements(mesh), 
+                         _expr=idv(u_numerical) - u_exact );
+
+double error_h1 = normH1( _range=elements(mesh),
+                         _expr=idv(u_numerical) - u_exact,
+                         _grad_expr=gradv(u_numerical) - grad<2>(u_exact) );
+----
+
+== Interpolation vs Projection
+
+Understanding the difference between interpolation and projection:
+
+=== Interpolation
+
+Point-wise matching at interpolation nodes:
+[source,cpp]
+----
+auto u_interp = Vh->element();
+u_interp.on( _range=elements(mesh), _expr=sin(pi*Px())*cos(pi*Py()) );
+----
+
+=== Projection
+
+Optimal approximation in the function space:
+[source,cpp]
+----
+auto u_proj = vf::project( _space=Vh,
+                          _range=elements(mesh),
+                          _expr=sin(pi*Px())*cos(pi*Py()) );
+----
+
+== Complete Example
+
+Here's a comprehensive example demonstrating function space usage:
+
+[source,cpp]
+----
+include::{examplesdir}/07-functionspace-modern.cpp[]
+----
+
+== Performance Considerations
+
+=== Memory Usage
+
+Function spaces store basis function information. For large problems:
+- Use appropriate polynomial orders (don't over-refine)
+- Consider mixed formulations to reduce total DoFs
+- Use periodic boundary conditions when applicable
+
+=== Parallel Distribution
+
+In parallel computations, function spaces automatically handle:
+- DoF distribution across processes
+- Ghost element communication
+- Consistent global numbering
+
+== Best Practices
+
+1. **Choose Appropriate Orders**: Match polynomial order to solution smoothness
+2. **Use Mixed Formulations**: For coupled physics (Stokes, elasticity)
+3. **Leverage Auto Types**: Let compiler deduce function space types
+4. **Initialize Properly**: Always initialize elements before use
+5. **Check Consistency**: Ensure function spaces match your problem requirements
+
+Function spaces are the foundation of finite element methods in {feelpp}. Understanding their creation, manipulation, and properties is essential for effective PDE solving.

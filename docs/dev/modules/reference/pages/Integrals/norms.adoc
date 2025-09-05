@@ -1,190 +1,136 @@
 // -*- mode: adoc -*-
+= Norms
+:page-tags: manual, norms
+:page-illustration: fa-solid fa-ruler
+:description: Helpers to compute common norms (L2, H1, Linf) and related interfaces.
+:parent-catalogs: integrals
+:page-cards-order: 3
+:page-cards-tag: manual
 
-== Norms
+Let stem:[f] be a bounded function on domain stem:[\Omega].
 
-Let stem:[f] a bounded function on domain stem:[\Omega].
+== L2 norms
 
-=== L^2^ norms
-
-Let stem:[f \in L^2(\Omega)] you can evaluate the stem:[L^2] norm using the `normL2()` function:
+For stem:[f \in L^2(\Omega)] use `normL2()`:
 
 [stem]
-++++
-\parallel f\parallel_{L^2(\Omega)}=\sqrt{\int_\Omega |f|^2}
-++++
++++
+\|\| f \|\|_{L^2(\Omega)} = \sqrt{\int_\Omega |f|^2}
++++
 
-==== Interface
-
-[source,cpp]
-----
-  normL2( _range, _expr, _quad, _geomap );
-----
-
-or squared norm:
+=== Interface
 
 [source,cpp]
 ----
-  normL2Squared( _range, _expr, _quad, _geomap );
+normL2( _range, _expr, _quad, _geomap );
+----
+
+Or the squared norm:
+
+[source,cpp]
+----
+normL2Squared( _range, _expr, _quad, _geomap );
 ----
 
 Required parameters:
 
 * `_range` = domain of integration
-
-* `_expr`  = mesurable function
+* `_expr` = measurable function
 
 Optional parameters:
 
-* `_quad`  = quadrature to use.
+* `_quad` = quadrature to use (default: runtime-chosen order)
+* `_geomap` = geometric mapping (default: `GEOMAP_OPT`)
 
-   - Default = `_Q<integer>()`
+=== Example
 
-* `_geomap`  = type of geometric mapping.
-
-   - Default = `GEOMAP_OPT`
-
-==== Example
-
-From `doc/manual/laplacian/laplacian.cpp`
+From `doc/manual/laplacian/laplacian.cpp`:
 
 [source,cpp]
 ----
-  double L2error =normL2( _range=elements( mesh ),
-                          _expr=( idv( u )-g ) );
+double L2error = normL2( _range = elements(mesh), _expr = ( idv(u) - g ) );
 ----
 
-From `doc/manual/stokes/stokes.cpp`
+== H1 norms
 
-.Stokes example using `mean`
-[source,cpp]
-----
-include::example$mystokes.cpp[tag=main]
-----
-
-
-===  H^1 norm
-
-In the same idea, you can evaluate the H1 norm or semi norm, for any function stem:[f \in H^1(\Omega)]:
+H1 norm or semi-norm (for stem:[f \in H^1(\Omega)]) can be computed with `normH1()` and `normSemiH1()`.
 
 [stem]
-++++
++++
 \begin{aligned}
- \parallel f \parallel_{H^1(\Omega)}&=\sqrt{\int_\Omega |f|^2+|\nabla f|^2}\\
-&=\sqrt{\int_\Omega |f|^2+\nabla f * \nabla f^T}\\
-|f|_{H^1(\Omega)}&=\sqrt{\int_\Omega |\nabla f|^2}
+\|\| f \|\|_{H^1(\Omega)} &= \sqrt{\int_\Omega |f|^2 + |\nabla f|^2} \\
+|f|_{H^1(\Omega)} &= \sqrt{\int_\Omega |\nabla f|^2}
 \end{aligned}
-++++
-
-where stem:[*] is the scalar product stem:[\cdot] when stem:[f] is a scalar
-field and the frobenius scalar product stem:[:] when stem:[f] is a vector field.
++++
 
 ==== Interface
 
 [source,cpp]
 ----
-  normH1( _range, _expr, _grad_expr, _quad, _geomap );
+normH1( _range, _expr, _grad_expr, _quad, _geomap );
 ----
 
-or semi norm:
+Or semi-norm:
 
 [source,cpp]
 ----
-  normSemiH1( _range, _grad_expr, _quad, _geomap );
+normSemiH1( _range, _grad_expr, _quad, _geomap );
 ----
 
 Required parameters:
 
 * `_range` = domain of integration
-
-* `_expr` = mesurable function
-
-* `_grad_expr` = gradient of function (Row vector!)
-
-Optional parameters:
-
-* `_quad` = quadrature to use.
-
-   - Default = `_Q<integer>()`
-
-* `_geomap` = type of geometric mapping.
-
-   - Default = `GEOMAP_OPT`
-
-normH1() returns a float containing the $$H^1$$ norm.
+* `_expr` = measurable function
+* `_grad_expr` = gradient expression (row vector)
 
 ==== Example
 
-With expression:
-
 [source,cpp]
 ----
-  auto g = sin(2*pi*Px())*cos(2*pi*Py());
-  auto gradg = 2*pi*cos(2* pi*Px())*cos(2*pi*Py())*oneX()
-            -2*pi*sin(2*pi*Px())*sin(2*pi*Py())*oneY();
-// There gradg is a column vector!
-// Use trans() to get a row vector
-  double normH1_g = normH1( _range=elements(mesh),
-                     _expr=g,
-                   _grad_expr=trans(gradg) );
+auto g = sin(2*pi*Px())*cos(2*pi*Py());
+auto gradg = 2*pi*cos(2*pi*Px())*cos(2*pi*Py())*oneX()
+           - 2*pi*sin(2*pi*Px())*sin(2*pi*Py())*oneY();
+// gradg is a column vector; use trans() to provide a row gradient
+double normH1_g = normH1( _range = elements(mesh), _expr = g, _grad_expr = trans(gradg) );
 ----
 
-With test or trial function `u`
+== L-infinity norm
 
-[source,cpp]
-----
-  double errorH1 = normH1( _range=elements(mesh),
-                    _expr=(u-g),
-                  _grad_expr=(gradv(u)-trans(gradg)) );
-----
-
-=== stem:[L^\infty] norm
-
-You can evaluate the infinity norm using the normLinf() function:
+Use `normLinf()` to approximate the infinity norm by sampling (returns value and coordinates):
 
 [stem]
-++++
-\parallel f \parallel_\infty=\sup_\Omega(|f|)
-++++
++++
+\|\| f \|\|_\infty = \sup_{x \in \Omega} |f(x)|
++++
 
 ==== Interface
 
 [source,cpp]
 ----
-  normLinf( _range, _expr, _pset, _geomap );
+normLinf( _range, _expr, _pset, _geomap );
 ----
 
 Required parameters:
 
 * `_range` = domain of integration
-
-* `_expr` = mesurable function
-
-* `_pset` = set of points (e.g. quadrature points)
+* `_expr` = measurable function
+* `_pset` = set of sampling points (e.g. quadrature points)
 
 Optional parameters:
 
-* `_geomap` = type of geometric mapping.
+* `_geomap` = geometric mapping (default `GEOMAP_OPT`)
 
-   - Default = `GEOMAP_OPT`
+The returned object provides:
 
-The `normLinf()` function returns not only the maximum of the function
-over a sampling of each element thanks to the `_pset` argument but
-also the coordinates of the point where the function is maximum. The
-returned data structure provides the following interface
-
-* `value()`: return the maximum value
-
-* `operator()()`: synonym to `value()`
-
-* `arg()`: coordinates of the point where the function is maximum
+* `value()` — maximum value
+* `operator()()` — synonym to `value()`
+* `arg()` — coordinates where the maximum occurs
 
 ==== Example
 
 [source,cpp]
 ----
-  auto uMax = normLinf( _range=elements(mesh),
-                        _expr=idv(u),
-                        _pset=_Q<5>() );
-  std::cout << "maximum value : " << uMax.value() << std::endl
-            <<  "         arg : " << uMax.arg() << std::endl;
+auto uMax = normLinf( _range = elements(mesh), _expr = idv(u), _pset = _Q<5>() );
+std::cout << "maximum value: " << uMax.value() << std::endl
+          << " arg: " << uMax.arg() << std::endl;
 ----

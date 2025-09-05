@@ -1,0 +1,227 @@
+= General Coding and Naming
+:page-tags: manual, coding-rule-general
+:parent-catalogs: coding-rules
+:page-illustration: fa-solid fa-list-check
+:page-description: Coding rules for Feel++
+:page-cards-order: 1
+
+This section covers formatting, headers, naming, members, reserved identifiers, whitespace, braces, switches, inheritance, comments, variables, and line length.
+
+== Formatting & Tools
+* Use `.clang-format` at the repo root; **Allman** braces, **4 spaces**, **column ≤ 100**.
+* Run `git clang-format` before committing. Style violations fail CI.
+
+*Example (auto-formatted spacing & braces):*
+[source,cpp]
+----
+// Wrong
+if(ok){doWork();}
+
+// Correct
+if (ok)
+{
+    doWork();
+}
+----
+
+[[headers]]
+== Headers & Include Guards
+* Every header uses a **FEELPP-style include guard**.
+
+[source,cpp]
+----
+// feel/mesh/my_header.hpp
+#if !defined(FEELPP_MESH_MY_HEADER_HPP)
+#define FEELPP_MESH_MY_HEADER_HPP 1
+
+// header content
+
+#endif // FEELPP_MESH_MY_HEADER_HPP
+----
+
+*Include order (in .cpp):* own header, C++ std, 3rd-party, Feel++ headers.
+
+[source,cpp]
+----
+// Correct
+#include "feel/mesh/my_header.hpp"
+#include <string>
+#include <vector>
+#include <boost/mpi3/communicator.hpp>
+#include "feel/mesh/mesh.hpp"
+----
+
+== Namespaces
+* Put code in `Feel` (and sub-namespaces). No extra indent inside namespaces.
+
+[source,cpp]
+----
+namespace Feel::mesh
+{
+class A
+{
+public:
+    A() = default;
+};
+} // namespace Feel::mesh
+----
+
+== Naming Conventions
+* **Classes/structs:** PascalCase (`MeshAdaptation`)  
+* **Functions/variables:** camelCase (`getValue`, `counter`)  
+* **Accessors:** property name (e.g., `matrix()`); bool as `isXxx()`/`hasXxx()`  
+* **Acronyms** lowercased inside names (e.g., `isFemEnabled()`)
+
+[source,cpp]
+----
+// Wrong
+class meshadapter {};
+int Counter;
+bool isFEMEnabled();
+
+// Correct
+class MeshAdapter {};
+int counter;
+bool isFemEnabled();
+----
+
+== Data Members & Statics
+* **Official**: non-static members use `M_` (e.g., `int M_value;`).  
+* **Statics**: `S_` (e.g., `static inline int S_counter = 0;`).  
+* A trailing underscore (e.g., `value_`) is **tolerated**, but **`M_` is the rule** for new code.
+
+[source,cpp]
+----
+// Tolerated
+class Foo { int value_; };
+
+// Preferred (official)
+class Foo { int M_value = 0; };
+
+// Static
+class Bar { static inline int S_instances = 0; };
+----
+
+[[reserved-identifiers]]
+== Reserved Identifiers
+* Don’t start identifiers with `_` and never use `__`.
+
+[source,cpp]
+----
+// Wrong
+int _count, __impl;
+
+// Correct
+int count, impl;
+----
+
+== Indentation & Whitespace
+* 4 spaces; no tabs; no extra indent in namespaces.  
+* Space around binary operators; one space after keywords.  
+* Pointer/reference style: `char *p`, `const T &x`.
+
+[source,cpp]
+----
+// Wrong
+if(foo){a=b+1;}
+
+// Correct
+if (foo)
+{
+    a = b + 1;
+}
+----
+
+== Braces & Parentheses
+* **Allman** braces; always use braces for multi-line or complex bodies.  
+* Parenthesize to make precedence explicit.
+
+[source,cpp]
+----
+// Wrong
+if (a && b || c)
+
+// Correct
+if ((a && b) || c)
+----
+
+[[switch]]
+== Switch
+* Align `case` with `switch`; always end each case with `break`/`return` or `[[fallthrough]];`.
+
+[source,cpp]
+----
+switch (mode)
+{
+case Mode::A:
+    doA();
+    break;
+case Mode::B:
+    doB();
+    [[fallthrough]];
+case Mode::C:
+    doC();
+    break;
+default:
+    handleDefault();
+    break;
+}
+----
+
+== Inheritance & Virtuals
+* Don’t repeat `virtual` in overrides; **use `override`**. Consider `final` where relevant.  
+* Polymorphic base classes need a `virtual` (or protected) destructor.
+
+[source,cpp]
+----
+// Wrong
+class Derived : public Base
+{
+    virtual void run();
+};
+
+// Correct
+class Derived : public Base
+{
+    void run() override;
+};
+----
+
+== Comments & Doxygen
+* Prefer `//` comments; reserve `/* ... */` for license blocks.
+* Use `//!` Doxygen for public APIs (`\param`, `\return`, `\tparam`).
+
+[source,cpp]
+----
+//!
+//! \brief Compute flux on a boundary.
+//! \param mesh  input mesh
+//! \param bid   boundary id
+//! \return integrated flux
+double computeFlux(const Mesh &mesh, int bid);
+----
+
+== Declaring Variables
+* One per line; meaningful names; declare near first use.
+
+[source,cpp]
+----
+// Wrong
+int a,b;
+
+// Correct
+int width;
+int height;
+----
+
+== Line Length
+* Keep lines ≤ 100 chars; wrap long expressions/operators on new lines.
+
+[source,cpp]
+----
+if (longExpr
+    + otherExpr
+    + finalExpr)
+{
+}
+----
