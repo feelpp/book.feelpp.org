@@ -566,13 +566,13 @@ MathJax.Hub.Config({
 <div class="sect2">
 <h3 id="sec:modele-1D"><a class="anchor" href="#sec:modele-1D"></a>1.1. Exemple 1-D</h3>
 <div class="paragraph">
-<p>Soit à résoudre le problème (</p>
+<p>Soit à résoudre le problème :</p>
 </div>
 <div id="eq:modele-1D" class="stemblock">
 <div class="content">
 \[({\cal P}) \left\{
 \begin{array}{l}
- -u"(x)+c(x)u(x) = f(x),\quad  a &lt; x &lt; b,\\
+ -u''(x)+c(x)u(x) = f(x),\quad  a &lt; x &lt; b,\\
  u(a)=u(b)=0
 \end{array}\right.\]
 </div>
@@ -591,7 +591,7 @@ MathJax.Hub.Config({
 <div class="title">Définition</div>
 <div class="paragraph">
 <p>Une <strong>solution classique</strong> (ou <strong>solution forte</strong>) de \(({\cal P})\) est une fonction de \({\cal C}^2([a,b])\) telle que \(u(a)=u(b)=0\) et
-\(\forall x \in ]a,b[, \; -u"(x)+c(x)u(x) = f(x)\).</p>
+\(\forall x \in ]a,b[, \; -u''(x)+c(x)u(x) = f(x)\).</p>
 </div>
 </div>
 </div>
@@ -601,14 +601,13 @@ MathJax.Hub.Config({
 </div>
 <div class="stemblock">
 <div class="content">
-\[- \int_a^b u"(x)v(x)\; dx + \int_a^b c(x)u(x)v(x)\; dx = \int_a^b f(x)v(x)\; dx\]
+\[- \int_a^b u''(x)v(x)\; dx + \int_a^b c(x)u(x)v(x)\; dx = \int_a^b f(x)v(x)\; dx\]
 </div>
 </div>
 <div class="paragraph">
 <p>soit, en intégrant par parties le premier terme :</p>
 </div>
-<div class="stemblock">
-<div class="title">Formulation faible</div>
+<div id="eq:Form_faible" class="stemblock">
 <div class="content">
 \[\int_a^b u'(x)v'(x)\; dx + \int_a^b c(x)u(x)v(x)\; dx = \int_a^b f(x)v(x)\; dx\]
 </div>
@@ -620,7 +619,7 @@ MathJax.Hub.Config({
 <p>Chaque terme de cette équation a en fait un sens dès lors que \(v\in H^1_0(]a,b[)\).</p>
 </div>
 <div class="paragraph">
-<p>De plus, \({\cal D}(]a,b[)\) étant dense dans \(H^1_0(]a,b[)\) (§[sec:H10]), cette équation est vérifiée pour tout \(v\in H^1_0(]a,b[)\).</p>
+<p>De plus, \({\cal D}(]a,b[)\) étant dense dans \(H^1_0(]a,b[)\) (<a href="#sec:H10">[sec:H10]</a>), cette équation est vérifiée pour tout \(v\in H^1_0(]a,b[)\).</p>
 </div>
 <div class="paragraph">
 <p>On peut donc définir le nouveau problème :</p>
@@ -657,12 +656,12 @@ MathJax.Hub.Config({
 \left\{
 \begin{array}{ll}
 -\Delta u+u = f &amp; \hbox{ dans }\Omega\\
-\partial_n u=0&amp; \hbox{ sur }\partial\Omega\\
+\partial_n u=\partial u/\partial n=0&amp; \hbox{ sur }\partial\Omega\\
 \end{array}\right.\]
 </div>
 </div>
 <div class="paragraph">
-<p>Une solution classique de ce problème est une fonction de \({\cal C}^2(\bar{\Omega})\) vérifiant ([eq:modele-2D]) en tout point de \(\Omega\).</p>
+<p>Une <em>solution classique</em> de ce problème est une fonction de \({\cal C}^2(\bar{\Omega})\) vérifiant (<a href="#eq:modele-2D">[eq:modele-2D]</a>) en tout point de \(\Omega\).</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -702,13 +701,12 @@ Au passage, on voit que ceci impose que \(f\) soit \({\cal C}^0(\bar{\Omega})\).
 <p>On peut donc définir le nouveau problème :</p>
 </div>
 <div id="eq:FV2" class="stemblock">
-<div class="title">Formulation variationnelle en 2D</div>
 <div class="content">
 \[({\cal Q})\quad
 \left\{
 \begin{array}{l}
 \hbox{Trouver }u\in H^1(\Omega) \hbox{ tel que }\\
- \qquad \ds{ \int_\Omega \nabla u \cdot \nabla v + \int_\Omega u v = \int_\Omega f v \quad\forall v\in H^1(\Omega)}
+ \qquad \ds{ \int_\Omega \nabla u \cdot \nabla v + \int_\Omega u v = \int_\Omega f, v \quad\forall v\in H^1(\Omega)}
 \end{array}
 \right.\]
 </div>
@@ -812,7 +810,7 @@ continue.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
-<div class="title">Lax-Milgram</div>
+<div class="title">Preuve - Lax-Milgram:</div>
 <div class="paragraph">
 <p>La démonstration générale de ce théorème peut être trouvée par exemple
 dans cite:[raviart-thomas-1983].</p>
@@ -883,11 +881,10 @@ C’est de cette propriété que vient l’utilisation du terme “variationnel"
 </div>
 </div>
 <div class="paragraph">
-<p>\(a\) ainsi définie est une forme bilinéaire symétrique continue coercive sur \(H^1_0(a,b) \times H^1_0(a,b)\), et \(l\) est une forme linéaire continue sur \(H^1_0(a,b)\).
-Donc le problème (<a href="#eq:FV">[eq:FV]</a>) admet une solution unique d’après le théorème de Lax-Milgram.
-Cherchons maintenant à interpréter cette solution \(u\) de ([eq:FV]).
-Prenons \(v=\varphi \in {\cal D}(]a,b[)\).
-Alors</p>
+<p>\(a\) ainsi définie est une forme bilinéaire symétrique continue coercive sur \(H^1_0(a,b) \times H^1_0(a,b)\), et \(l\) est une forme linéaire continue sur \(H^1_0(a,b)\).\\
+Donc le problème (<a href="#eq:FV">[eq:FV]</a>) admet une solution unique d’après le théorème de Lax-Milgram. \\
+Cherchons maintenant à interpréter cette solution \(u\) de (<a href="#eq:FV">[eq:FV]</a>).\\
+Prenons \(v=\varphi \in {\cal D}(]a,b[)\), alors</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -899,7 +896,7 @@ Alors</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[- \int_a^b u"(x)\varphi(x)\; dx + \int_a^b c(x)u(x)\varphi(x)\; dx = \int_a^b f(x)\varphi(x)\; dx\]
+\[- \int_a^b u''(x)\varphi(x)\; dx + \int_a^b c(x)u(x)\varphi(x)\; dx = \int_a^b f(x)\varphi(x)\; dx\]
 </div>
 </div>
 <div class="paragraph">
@@ -907,24 +904,24 @@ Alors</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[(-u"+cu,\varphi)_0 = (f,\varphi)_0\; \forall \varphi \in {\cal D}(]a,b[).\]
+\[(-u''+cu,\varphi)_0 = (f,\varphi)_0\; \quad \forall \varphi \in {\cal D}(]a,b[).\]
 </div>
 </div>
 <div class="paragraph">
-<p>\({\cal D}(]a,b[)\) étant dense dans \(L^2(]a,b[)\), on a : \(-u"+cu=f\) dans \(L^2(]a,b[)\).</p>
+<p>\({\cal D}(]a,b[)\) étant dense dans \(L^2(]a,b[)\), on a : \(-u''+cu=f\) dans \(L^2(]a,b[)\).</p>
 </div>
 <div class="paragraph">
-<p>\(u\) étant dans \(L^2(]a,b[)\), et \(f\) et \(c\) étant dans \({\cal C}^0([a,b])\), donc également dans \(L^2(]a,b[)\), on en déduit que \(u"=cu-f\) est
+<p>\(u\) étant dans \(L^2(]a,b[)\), et \(f\) et \(c\) étant dans \({\cal C}^0([a,b])\), donc également dans \(L^2(]a,b[)\), on en déduit que \(u''=cu-f\) est
 aussi dans \(L^2(]a,b[)\).</p>
 </div>
 <div class="paragraph">
-<p>Puisque \(u\) est dans \(H^1_0(]a,b[)\) et que \(u"\) est dans \(L^2(]a,b[)\), on en déduit que \(u\) est dans \(H^2(]a,b[)\).</p>
+<p>Puisque \(u\) est dans \(H^1_0(]a,b[)\) et que \(u''\) est dans \(L^2(]a,b[)\), on en déduit que \(u\) est dans \(H^2(]a,b[)\).</p>
 </div>
 <div class="paragraph">
-<p>Donc \(u\) est dans \({\cal C}^1([a,b])\) (§[sec:sobolev]).</p>
+<p>Donc \(u\) est dans \({\cal C}^1([a,b])\) (<a href="#sec:sobolev">[sec:sobolev]</a>).</p>
 </div>
 <div class="paragraph">
-<p>De ce fait, \(cu-f\), c’est-à-dire \(u"\), est dans \({\cal C}^0([a,b])\).</p>
+<p>De ce fait, \(cu-f\), c’est-à-dire \(u''\), est dans \({\cal C}^0([a,b])\).</p>
 </div>
 <div class="paragraph">
 <p>Donc \(u'\) est dans \({\cal C}^1([a,b])\), donc \(u\) est dans \({\cal C}^2([a,b])\).</p>
@@ -987,28 +984,28 @@ u= 0 &amp; \hbox{ sur }\Gamma_0 \\
 <p>où \(\Gamma_0\) et \(\Gamma_1\) forment une partition de \(\partial\Omega\) (\(\Gamma_0 \cap\Gamma_1 = \emptyset\) et \(\Gamma_0 \cup\Gamma_1 = \partial\Omega\)).</p>
 </div>
 <div class="paragraph">
-<p>Une solution classique de \(({\cal P})\), sous l’hypothèse que \(f\in{\cal C}^0(\bar{\Omega})\) et \(g\in{\cal C}^0(\Gamma_1)\), sera une fonction de \({\cal C}^2(\bar{\Omega})\) vérifiant l’équation en chaque point de \(\Omega\). La formulation variationnelle de \(({\cal P})\) est obtenue par intégration par parties.</p>
+<p>Une solution classique de \(({\cal P})\), sous l’hypothèse que \(f\in{\cal C}^0(\bar{\Omega})\) et \(g\in{\cal C}^0(\Gamma_1)\), sera une fonction de \({\cal C}^2(\bar{\Omega})\) vérifiant l’équation en chaque point de \(\Omega\).</p>
 </div>
 <div class="paragraph">
-<p>Elle s’écrit :</p>
+<p>La formulation variationnelle de \(({\cal P})\) est obtenue par intégration par parties, elle s’écrit :</p>
 </div>
 <div id="eq:FV3" class="stemblock">
 <div class="content">
 \[({\cal Q})\quad
 \left\{
 \begin{array}{l}
-\hbox{Trouver }u\in V \hbox{ tel que }\\
+\hbox{Trouver }u\in V = \left\{ v \in H^1(\Omega) \; , \; v=0 \hbox{ sur }\Gamma_0 \right\} \hbox{ tel que }\\
 \qquad \ds{ \int_\Omega  \left(  \sum_{i,j=1}^n \alpha_{ij} \, \partial_j u\;  \, \partial_i v + \beta\,   u v \right) = \int_\Omega f v +  \int_{\Gamma_1} gv \qquad\forall v\in V}
 \end{array}
 \right.\]
 </div>
 </div>
 <div class="paragraph">
-<p>avec \(\ds{ V = \left\{ v \in H^1(\Omega) \; , \; v=0 \hbox{ sur }\Gamma_0
-\right\} }\).
-Cette formulation est en fait définie dès lors que \(\beta\) et les \(\alpha_{ij}\) sont dans \(L^\infty(\Omega)\), que \(f\) est dans \(L^2(\Omega)\) et que \(g\) est dans
-\(L^2(\Gamma_1)\).
-Posons</p>
+<p>Cette formulation est en fait définie dès lors que \(\beta\) et les \(\alpha_{ij}\) sont dans \(L^\infty(\Omega)\), que \(f\) est dans \(L^2(\Omega)\) et que \(g\) est dans
+\(L^2(\Gamma_1)\).</p>
+</div>
+<div class="paragraph">
+<p>Posons</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -1042,7 +1039,7 @@ presque pour tout \(x\in\Omega\)</p>
 <div class="ulist">
 <ul>
 <li>
-<p>sur \(H^1_0(\Omega)\) dès que \(\ds{\alpha_0 &gt;   \frac{-\alpha}{C(\Omega)^2}}\) (et donc en particulier si \(\beta\ge 0\)) où \(C(\Omega)\) est la constante de l’inégalité de Poincaré, voir le théorème [thr:11].</p>
+<p>sur \(H^1_0(\Omega)\) dès que \(\ds{\alpha_0 &gt;   \frac{-\alpha}{C(\Omega)^2}}\) (et donc en particulier si \(\beta\ge 0\)) où \(C(\Omega)\) est la constante de l’inégalité de Poincaré, voir le théorème <a href="#thr:11">[thr:11]</a>.</p>
 </li>
 <li>
 <p>sur \(H^1(\Omega)\) si \(\beta &gt; 0\)<br></p>
@@ -1087,7 +1084,7 @@ unicité d’une solution à la formulation variationnelle
 <p>où \(V\) est un espace de Hilbert. Sous réserve que l’équation de départ ait de bonnes propriétés, c’est-à-dire par exemple qu’on soit dans les hypothèses du théorème de Lax-Milgram, \(({\cal Q})\) admet une solution unique \(u\).</p>
 </div>
 <div class="paragraph">
-<p>Pour obtenir une approximation numérique de \(u\), on va maintenant remplacer l’espace \(V\) qui est en général de dimension infinie par un sous-espace \(V_h\) de dimension finie, et on va chercher à résoudre le problème approché</p>
+<p>Pour obtenir une approximation numérique de \(u\), on va maintenant remplacer l’espace \(V\) qui est en général de dimension infinie par un sous-espace \(V_h\) de dimension finie, et on va chercher à résoudre le <em>problème approché</em></p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -1096,11 +1093,15 @@ unicité d’une solution à la formulation variationnelle
 </div>
 </div>
 <div class="paragraph">
-<p>\(V_h\) étant de dimension finie, c’est un fermé de \(V\).
-\(V\) étant un espace de Hilbert, \(V_h\) l’est donc aussi.
-D’où l’existence et l’unicité de \(u_h\), à nouveau par exemple d’après le théorème de
+<p>\(V_h\) étant de dimension finie, c’est un fermé de \(V\).</p>
+</div>
+<div class="paragraph">
+<p>\(V\) étant un espace de Hilbert, \(V_h\) l’est donc aussi.</p>
+</div>
+<div class="paragraph">
+<p>D’où l’existence et l’unicité de \(u_h\), à nouveau par le théorème de
 Lax-Milgram.
-L’espace \(V_h\) sera en pratique construit à partir d’un maillage du domaine \(\Omega\), l’indice \(h\) désignant la ``taille typique'' des mailles.</p>
+L’espace \(V_h\) sera en pratique construit à partir d’un maillage du domaine \(\Omega\), l’indice \(h\) désignant la ''taille typique'' des mailles.</p>
 </div>
 <div class="paragraph">
 <p>Lorsque l’on construit des maillages de plus en plus fins, la suite de sous-espaces \((V_h)_h\) formera une <strong>approximation interne</strong> de \(V\), c’est-à-dire que, pour tout élément \(\varphi\) de \(V\), il existe une suite de \(\varphi_h\in
@@ -1122,18 +1123,17 @@ Cette méthode d’approximation interne est également appelée <strong>méthod
 <div class="sect2">
 <h3 id="interprétation-de-u_h"><a class="anchor" href="#interprétation-de-u_h"></a>4.2. Interprétation de \(u_h\)</h3>
 <div class="paragraph">
-<p>On a \(a(u,v)=l(v), \forall v\in V\), donc en particulier \(a(u,v_h)=l(v_h), \forall v_h\in V_h\), car \(V_h\subset V\).</p>
+<p>On a \(a(u,v)=l(v), \forall v\in V\), donc en particulier \(a(u,v_h)=l(v_h), \quad \forall v_h\in V_h\), car \(V_h\subset V\).</p>
 </div>
 <div class="paragraph">
-<p>Par ailleurs, \(a(u_h,v_h)=l(v_h), \forall v_h\in V_h\).</p>
+<p>Par ailleurs, \(a(u_h,v_h)=l(v_h), \quad \forall v_h\in V_h\).</p>
 </div>
 <div class="paragraph">
-<p>Par différence, on en déduit que</p>
+<p>Par différence, on en déduit l'<em>orthogonalité de Galerkin</em> :</p>
 </div>
-<div id="eq:ortho" class="stemblock">
-<div class="title">Orthogonalité de Galerkin</div>
+<div id="eq:ortho-Galerkin" class="stemblock">
 <div class="content">
-\[a(u-u_h,v_h)=0,\quad \forall v_h\in V_h   \label{eq:ortho}\]
+\[a(u-u_h,v_h)=0,\quad \forall v_h\in V_h   \label{eq:ortho-Galerkin}\]
 </div>
 </div>
 <div class="admonitionblock important">
@@ -1144,10 +1144,12 @@ Cette méthode d’approximation interne est également appelée <strong>méthod
 </td>
 <td class="content">
 Dans le cas où \(a(.,.)\) est symétrique, il s’agit d’un produit scalaire sur \(V\).
-\(u_h\) peut alors être interprétée comme la projection orthogonale de \(u\) sur \(V_h\) au sens de \(a(.,.)\).
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>\(u_h\) peut alors être interprétée comme la projection orthogonale de \(u\) sur \(V_h\) au sens de \(a(.,.)\).</p>
 </div>
 </div>
 <div class="sect2">
@@ -1164,7 +1166,10 @@ a(u-u_h,u-u_h) &amp; = a(u-u_h,u-v_h+v_h-u_h) \quad\forall v_h\in V_h\\
 </div>
 </div>
 <div class="paragraph">
-<p>Or \(v_h-u_h \in V_h\). Donc \(a(u-u_h,v_h-u_h)=0\) d’après (<a href="#eq:ortho">Orthogonalité de Galerkin</a>).</p>
+<p>Or \(v_h-u_h \in V_h\).</p>
+</div>
+<div class="paragraph">
+<p>Donc \(a(u-u_h,v_h-u_h)=0\) d’après (<a href="#eq:ortho-Galerkin">[eq:ortho-Galerkin]</a>).</p>
 </div>
 <div class="paragraph">
 <p>On a donc :</p>
@@ -1178,14 +1183,19 @@ a(u-u_h,u-u_h) &amp; = a(u-u_h,u-v_h+v_h-u_h) \quad\forall v_h\in V_h\\
 <p>\(a\) étant coercive, il existe \(\alpha &gt; 0\) tel que \(a(u-u_h,u-u_h) \ge \alpha \|u-u_h\|^2\), où \(\|.\|\) est une norme sur \(V\).</p>
 </div>
 <div class="paragraph">
-<p>Par ailleurs, \(a\) étant continue, il existe \(M &gt; 0\) tel que \(a(u-u_h,u-v_h)\le M \|u-u_h\| \, \|u-v_h\|\).</p>
+<p>Par ailleurs, \(a\) étant continue, il existe \(M &gt; 0\) tel que</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[a(u-u_h,u-v_h)\le M \|u-u_h\| \, \|u-v_h\|.\]
+</div>
 </div>
 <div class="paragraph">
 <p>En réinjectant ces deux inégalités de part et d’autre de <a href="#eq:estim1">[eq:estim1]</a> et en simplifiant par \(\|u-u_h\|\) on obtient</p>
 </div>
 <div id="eq:cea" class="stemblock">
 <div class="content">
-\[\|u-u_h\| \le \frac{M}{\alpha}\; \|u-v_h\| \quad \forall v_h\in V_h\]
+\[\|u-u_h\| \le \frac{M}{\alpha}\; \|u-v_h\| \quad \forall v_h\in V_h, M,\alpha &gt; 0\]
 </div>
 </div>
 <div class="paragraph">
@@ -1238,10 +1248,7 @@ sur chaque maille).</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Soit \((\varphi_1,\ldots,\varphi_{N_h})\) une base de \(V_h\).</p>
-</div>
-<div class="paragraph">
-<p>En décomposant \(u_h\) sur cette base sous la forme</p>
+<p>Soit \((\varphi_1,\ldots,\varphi_{N_h})\) une base de \(V_h\). En décomposant \(u_h\) sur cette base sous la forme</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -1336,7 +1343,7 @@ Déterminer une fonction reviendra alors à déterminer ses valeurs sur ces ddl.
 </dd>
 <dt class="hdlist1">Définition des \(\varphi_i\)</dt>
 <dd>
-<p>On définira les fonctions de base par \(\varphi_i=1\) sur le \(i^{\hbox{\tiny{ème}}}\) ddl, et \(\varphi_i=0\) sur les autres ddl.
+<p>On définira les fonctions de base par \(\varphi_i=1\) sur le \(i^{ème}\) ddl, et \(\varphi_i=0\) sur les autres ddl.
 La manipulation des \(\varphi_i\) sera alors très simplifiée, et les \(\varphi_i\) auront par ailleurs un support réduit à quelques mailles.</p>
 </dd>
 <dt class="hdlist1">La notion de <em>famille affine d’éléments</em></dt>
@@ -1349,13 +1356,10 @@ De ce fait, tous les calculs d’intégrales pourront se ramener à des calculs 
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:retour-a-lexemple"><a class="anchor" href="#sec:retour-a-lexemple"></a>6. Retour à l’exemple 1-D</h2>
+<h2 id="sec:retour-a-lexemple"><a class="anchor" href="#sec:retour-a-lexemple"></a>6. Retour à l’exemple 1-D (encore)</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>On reprend le problème 1-D <a href="#eq:modele-1D">[eq:modele-1D]</a>.</p>
-</div>
-<div class="paragraph">
-<p>On a écrit sa formulation variationnelle <a href="#sec:modele-1D">Exemple 1-D</a> et montré <a href="#sec:modele-1D2">Retour à l’exemple 1-D</a> qu’elle admet une solution unique.</p>
+<p>On reprend le problème 1-D <a href="#eq:modele-1D">[eq:modele-1D]</a>. On a écrit sa formulation variationnelle <a href="#eq:FV">[eq:FV]</a> et montré qu’elle admet une solution unique dans la section (<a href="#sec:modele-1D2">Retour à l’exemple 1-D</a>).</p>
 </div>
 <div class="paragraph">
 <p>On s’intéresse à présent à la construction de l’espace d’approximation \(V_h\).</p>
@@ -1378,17 +1382,14 @@ De ce fait, tous les calculs d’intégrales pourront se ramener à des calculs 
 </div>
 <div id="eq:1" class="stemblock">
 <div class="content">
-\[[a,b]=\cup_{i=1}^\Nma [x_{1,i},x_{2,i}] \quad \mbox{et} \quad
-]x_{1,i},x_{2,i}[ \cap ]x_{1,j},x_{2,j}[ = \emptyset \quad \mbox{ pour } i\neq j\]
+\[[a,b]=\cup_{i=1}^\Nma [x_{1,i},x_{2,i}] \quad \mbox{et} \quad ]x_{1,i},x_{2,i}[ \cap ]x_{1,j},x_{2,j}[ = \emptyset \quad \mbox{ pour } i\neq j\]
 </div>
 </div>
 <div id="def:23" class="sidebarblock">
 <div class="content">
 <div class="title">Définition</div>
 <div class="paragraph">
-<p>Les intervalles \(I_i\) sont appelées de <em>mailles</em> ou
-<em>éléments</em> ou <em>cellules</em> du maillage, on a noté \(\Nma\) le
-nombre de maillage</p>
+<p>Les intervalles \(I_i\) sont appelées <em>mailles</em> ou <em>éléments</em> ou <em>cellules</em> du maillage, on a noté \(\Nma\) le nombre de mailles</p>
 </div>
 </div>
 </div>
@@ -1426,17 +1427,17 @@ En 1D on a \(\Nso = \Nma+1\), en dimension supérieure des relations existent en
 <div class="sect2">
 <h3 id="sec:constr-de-lesp"><a class="anchor" href="#sec:constr-de-lesp"></a>6.2. Construction de l’espace d’approximation</h3>
 <div class="paragraph">
-<p>L’étape suivante est de choisir les <em>fonctions de forme</em> ou <em>fonctions de base</em> sur chaque maillage.</p>
+<p>L’étape suivante est de choisir les <em>fonctions de forme</em> ou <em>fonctions de base</em> sur chaque maille.</p>
 </div>
 <div class="paragraph">
-<p>On choisit les fonctions de \(V_h\) telle que leur restriction sur chaque maillage soit un <em>espace polynomial</em>.</p>
+<p>On choisit les fonctions de \(V_h\) tel que leur restriction sur chaque maille soit un <em>espace polynomial</em>.</p>
 </div>
 <div id="def:24" class="sidebarblock">
 <div class="content">
 <div class="title">Définition: Espaces \(\Pk{k}\)</div>
 <div class="paragraph">
 <p>Soit un entier \(k \leq 1\).
-En dimension 1, on appelle l’espace vectoriel des polynômes à coefficients réels de degré inférieur ou égal à \(k\).</p>
+En dimension 1, on appelle \(\Pk{k}\) l’espace vectoriel des polynômes à coefficients réels de degré inférieur ou égal à \(k\).</p>
 </div>
 </div>
 </div>
@@ -1449,9 +1450,13 @@ En dimension 1, on appelle l’espace vectoriel des polynômes à coefficients r
 </div>
 </div>
 <div class="paragraph">
-<p>\(W_h\) est un espace de dimension finie égale à \((k+1)*\Nma\) mais il n’est pas inclus dans \(H^1_0(\Omega)\) et ne peut donc pas être utilisé pour l’approximation du problème (&lt;&lt;[eq:FV]&gt;&gt;).
-En effet les fonctions de \(w_h \in W_h\) peuvent être discontinues aux interfaces entre les maillages et un résultat d’analyse fonctionnelle montre que dans ces conditions \(w_h \ni H^1(\Omega)\).
-Par ailleurs les fonctions de \(W_h\) ne sont pas nécessairement nulles au bord de \(\Omega\).</p>
+<p>\(W_h\) est un espace de dimension finie égale à \((k+1)*\Nma\) mais il n’est pas inclus dans \(H^1_0(\Omega)\) et ne peut donc pas être utilisé pour l’approximation du problème (<a href="#eq:FV">[eq:FV]</a>).</p>
+</div>
+<div class="paragraph">
+<p>En effet les fonctions de \(w_h \in W_h\) peuvent être discontinues aux interfaces entre les mailles et un résultat d’analyse fonctionnelle montre que dans ces conditions \(w_h \ni H^1(\Omega)\).</p>
+</div>
+<div class="paragraph">
+<p>Par ailleurs les fonctions de \(W_h\) ne sont pas nécessairement nulles au bord de \(\Omega\).</p>
 </div>
 <div class="paragraph">
 <p>On pose donc</p>
@@ -1462,16 +1467,16 @@ Par ailleurs les fonctions de \(W_h\) ne sont pas nécessairement nulles au bord
 </div>
 </div>
 <div class="paragraph">
-<p>en d’autres termes, en dimension, on a</p>
+<p>en d’autres termes, en dimension 1 (\(\Omega=[a,b]\)), on a</p>
 </div>
 <div id="eq:5" class="stemblock">
 <div class="content">
 \[\label{}
-  V_h = \left\{ v_h \in {\cal C}^0 (a,b) \; ; \; {v_h}_{|I_i} \in \Pk{k} \hbox{ et } v_h(a)=v_h(b)=0 \right\}\]
+  V_h = \left\{ v_h \in {\cal C}^0 (a,b) \; ; \; {v_h}_{|I_i} \in \Pk{k} \hbox{ et } v_h(a)=v_h(b)=0 \right\},\]
 </div>
 </div>
 <div class="paragraph">
-<p>Le problème approché sur \(V_h\) est :</p>
+<p>et le problème approché sur \(V_h\) est :</p>
 </div>
 <div id="eq:11" class="stemblock">
 <div class="content">
@@ -1479,17 +1484,17 @@ Par ailleurs les fonctions de \(W_h\) ne sont pas nécessairement nulles au bord
 </div>
 </div>
 <div class="paragraph">
-<p>On s’intéresse à présent à des exemples concrets d’espaces d’approximations dans les deux sections suivantes <a href="#sec:element-fini-de">Element fini de Lagrange</a> et <a href="#sec:element-fini-de-1">Element fini de Lagrange</a>.</p>
+<p>On s’intéresse à présent à des exemples concrets d’espaces d’approximations dans la section suivante <a href="#sec:element-fini-lag">Element fini de Lagrange</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:element-fini-de"><a class="anchor" href="#sec:element-fini-de"></a>6.3. Element fini de Lagrange</h3>
+<h3 id="sec:element-fini-lag"><a class="anchor" href="#sec:element-fini-lag"></a>6.3. Element fini de Lagrange</h3>
 <div class="paragraph">
 <p>On introduit les espaces vectoriels suivants:</p>
 </div>
 <div id="eq:7" class="stemblock">
 <div class="content">
-\[\Pch{1} = \{ v_h \in C^0(\Omega);\; \forall i \in \{ 1,...,\Nma\} {v_h}_{|I_i} \in \Pk{1}  \}\]
+\[  \Pch{1} = \{ v_h \in C^0(\Omega);\; \forall i \in \{ 1,...,\Nma\}, {v_h}_{|I_i} \in \Pk{1}  \}\]
 </div>
 </div>
 <div class="paragraph">
@@ -1572,18 +1577,10 @@ Les fonctions \((\varphi_i)_{i=1,...,\Nso}\) sont dans \(\Pch{1}\) et \((\varphi
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Les fonctions \((\varphi_i)_{i=1,...,\Nso}\) satisfont les relations
+Les fonctions \((\varphi_i)_{i=1,...,\Nso}\) satisfont les relations : \(\quad \varphi_i(x_j) = \delta_{ij}, i,j \in \{1,...,\Nso\},\) où \(\delta_{ij}\) désigne le symbole de Kronecker tel que \(\delta_{ij} = 1\) si \(i=j\) et \(\delta_{ij}=0\) si \(i \neq j\).
 </td>
 </tr>
 </table>
-</div>
-<div class="stemblock">
-<div class="content">
-\[ \varphi_i(x_j) = \delta_{ij},\quad i,j \in \{1,...,\Nso\},\]
-</div>
-</div>
-<div class="paragraph">
-<p>où \(\delta_{ij}\) désigne le symbole de Kronecker tel que \(\delta_{ij} = 1\) si \(i=j\) et \(\delta_{ij}=0\) si \(i \neq j\).</p>
 </div>
 <div class="paragraph">
 <p>Les fonctions \(\varphi_i\) sont appelées <em>fonctions chapeau</em> du fait de leur graphe, voir figure <a href="#fig:chapeau">[fig:chapeau]</a>.</p>
@@ -1608,8 +1605,9 @@ Les fonctions \((\varphi_i)_{i=1,...,\Nso}\) satisfont les relations
 </div>
 <div class="sidebarblock corollary">
 <div class="content">
+<div class="title">Corollaire</div>
 <div class="paragraph">
-<p>\(\dim \Pch{1} = \Nso = \Nma+1\) et \(\dim \Pcho{1} = \Nso-2 = \Nma-1\).</p>
+<p>\(dim(\Pch{1}) = \Nso = \Nma+1\) et \(dim(\Pcho{1}) = \Nso-2 = \Nma-1\).</p>
 </div>
 </div>
 </div>
@@ -1618,7 +1616,7 @@ Les fonctions \((\varphi_i)_{i=1,...,\Nso}\) satisfont les relations
 </div>
 <div id="eq:21" class="stemblock">
 <div class="content">
-\[  \Ich{1} : \Ck{0}(\bar{\Omega}) \ni v \mapsto \sum_{i=1}^\Nso v(x_i)
+\[  \Ich{1} : \quad \Ck{0}(\bar{\Omega}) \ni v \mapsto \sum_{i=1}^\Nso v(x_i)
   \varphi_i \in \Pch{1}.\]
 </div>
 </div>
@@ -1635,15 +1633,10 @@ Les fonctions \((\varphi_i)_{i=1,...,\Nso}\) satisfont les relations
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-En dimension 1, les fonctions de \(H^1(\Omega)\) sont <em>continues</em>, on peut donc voir comme un opérateur de \(H^1(\Omega)\) dans \(H^1(\Omega)\). On montre qu’il est continu et que sa norme \(\|\Ich{1}\|_{\mathcal{L}(H^1(\Omega),H^1(\Omega))}\) est uniformément bornée en \(h\), c’est-à-dire qu’il existe une constante \(c\), indépendante de \(h\), telle que pour tout \(v \in H^1(\Omega)\)
+En dimension 1, les fonctions de \(H^1(\Omega)\) sont <em>continues</em>, on peut donc voir \(\Ich{1}\) comme un opérateur de \(H^1(\Omega)\) dans \(H^1(\Omega)\). On montre qu’il est continu et que sa norme \(\|\Ich{1}\|_{\mathcal{L}(H^1(\Omega),H^1(\Omega))}\) est uniformément bornée en \(h\), c’est-à-dire qu’il existe une constante \(c\), indépendante de \(h\), telle que pour tout \(v \in H^1(\Omega)\) : \(\quad \|\Ich{1} v \|_{1,\Omega} \leq c \|v\|_{1,\Omega}\)]
 </td>
 </tr>
 </table>
-</div>
-<div id="eq:22" class="stemblock">
-<div class="content">
-\[    \|\Ich{1} v \|_{1,\Omega} \leq c \|v\|_{1,\Omega}]\]
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -1666,7 +1659,7 @@ En dimension 1, les fonctions de \(H^1(\Omega)\) sont <em>continues</em>, on peu
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:element-fini-de-1"><a class="anchor" href="#sec:element-fini-de-1"></a>6.5. Element fini de Lagrange</h3>
+<h3 id="sec:element-fini-Pk"><a class="anchor" href="#sec:element-fini-Pk"></a>6.5. Element fini de Lagrange \(P^k\)</h3>
 <div class="paragraph">
 <p>On introduit les espaces vectoriels suivants: \(\label{eq:9}\)</p>
 </div>
@@ -1692,7 +1685,7 @@ En dimension 1, les fonctions de \(H^1(\Omega)\) sont <em>continues</em>, on peu
 <div class="stemblock">
 <div class="content">
 \[\label{eq:24}
-    \Ich{k} : \Ck{0}(\bar{\Omega}) \ni v \mapsto \sum_{i=1}^\Nno v(x_i)  \varphi_i \in \Pch{k}.\]
+    \Ich{k} : \quad \Ck{0}(\bar{\Omega}) \ni v \mapsto \sum_{i=1}^\Nno v(x_i)  \varphi_i \in \Pch{k}.\]
 </div>
 </div>
 <div class="paragraph">
@@ -1711,15 +1704,10 @@ En dimension 1, les fonctions de \(H^1(\Omega)\) sont <em>continues</em>, on peu
 </td>
 <td class="content">
 En dimension 1, les fonctions de \(H^1(\Omega)\) sont <em>continues</em>, on peut donc voir comme un opérateur de \(H^1(\Omega)\) dans \(H^1(\Omega)\).
-On montre qu’il est continu et que sa norme \(\|\Ich{k}{v}\|_{\mathcal{L}(H^1(\Omega),H^1(\Omega))}\) est uniformément bornée en \(h\), c’est-à-dire qu’il existe une constante \(c\), indépendante de \(h\) mais dépendante de \(k\), telle que pour tout
+On montre qu’il est continu et que sa norme \(\|\Ich{k}{v}\|_{\mathcal{L}(H^1(\Omega),H^1(\Omega))}\) est uniformément bornée en \(h\), c’est-à-dire qu’il existe une constante \(c\), indépendante de \(h\) mais dépendante de \(k\), telle que pour tout \(v \in H^1(\Omega)\), \(\quad \|\Ich{k}{v} \|_{1,\Omega} \leq c \|v\|_{1,\Omega}\)
 </td>
 </tr>
 </table>
-</div>
-<div id="eq:25" class="stemblock">
-<div class="content">
-\[v \in H^1(\Omega)   \|\Ich{k}{v} \|_{1,\Omega} \leq c \|v\|_{1,\Omega}\]
-</div>
 </div>
 <div class="paragraph">
 <p>Le résultat suivant permet d’estimer la précision de l’opérateur d’interpolation,</p>
@@ -1861,7 +1849,7 @@ On dit que l’estimation d’erreur <a href="#eq:13">[eq:13]</a> est <em>optim
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-On dit que l’estimation d’erreur <a href="#eq:16">[eq:16]</a> est <em>optimale</em> car elle est du même ordre que l’erreur d’interpolation en norme \(L^2\), voir la proposition <a href="#prop:2">Proposition</a>.
+On dit que l’estimation d’erreur <a href="#eq:16">[eq:16]</a> est <em>optimale</em> car elle est du même ordre que l’erreur d’interpolation en norme \(L^2\), voir la <a href="#prop:2">Proposition</a>.
 </td>
 </tr>
 </table>
@@ -1873,7 +1861,7 @@ On dit que l’estimation d’erreur <a href="#eq:16">[eq:16]</a> est <em>optim
 <h2 id="sec:form-algebr"><a class="anchor" href="#sec:form-algebr"></a>7. Formulation algébrique \(V_h=P_{c,h}^1\)</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>En décomposant la solution approchée \(u_h\) sur cette base sous la forme \({u_h = \sum_{i=1}^N \mu_i \; \varphi_i}\), on obtient, comme au paragraphe <a href="#sec:general">[sec:general]</a>, le système linéaire \(A\mu=b\), avec :</p>
+<p>En décomposant la solution approchée \(u_h\) sur cette base sous la forme \({u_h = \sum_{i=1}^N \mu_i \; \varphi_i}\), on obtient, comme au paragraphe <a href="#sec:fem-overview">Principe général de la méthode des éléments finis</a>, le système linéaire \(A\mu=b\), avec :</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -1908,17 +1896,17 @@ a(\varphi_i,\varphi_{i}) &amp; = &amp; \ds{ \int_{x_{i-1}}^{x_{i+1}} \left[ \var
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Dans le <a href="#sec:lax-milgram">Définitions et théorèmes</a>, montrer que, dans le cas où
+<p>Dans la section <a href="#sec:lax-milgram">Définitions et théorèmes</a>, montrer que, dans le cas où
 \(a\) est symétrique, si \(u\) est solution du
 problème variationnel, alors elle est solution du problème de
 minimisation.</p>
 </li>
 <li>
-<p>Montrer que \(\nabla J[u\)(v) = a(u,v) - l(v)].</p>
+<p>Montrer que \(\nabla J[u](v) = a(u,v) - l(v)\).</p>
 </li>
 <li>
 <p>Montrer que, si \(a\) est coercive, la matrice
-\(A\) de (&lt;&lt;[eq:lin]&gt;&gt;) est inversible. (C’est donc la
+\(A\) de (<a href="#eq:lin">[eq:lin]</a>) est inversible. (C’est donc la
 démonstration du théorème de Lax-Milgram en dimension finie.)</p>
 </li>
 <li>
@@ -1929,12 +1917,12 @@ dans les hypothèses du théorème de Lax-milgram</p>
 <p>Calculer explicitement la matrice \(A\) pour cet exemple.</p>
 </li>
 <li>
-<p>Pour le problème 2-D du §[sec:modele-2D], montrer que la formulation
-variationelle (&lt;&lt;[eq:FV2]&gt;&gt;) admet une solution unique, qui est aussi
+<p>Pour le problème 2-D de la section <a href="#sec:modele-2D">Exemple 2-D</a>, montrer que la formulation
+variationelle (<a href="#eq:FV2">[eq:FV2]</a>) admet une solution unique, qui est aussi
 solution classique si \(f \in H^2(\Omega)\).</p>
 </li>
 <li>
-<p>Démontrer les résultats du §[sec:elliptique]</p>
+<p>Démontrer les résultats de la section <a href="#sec:elliptique">Équations elliptiques d’ordre 2</a></p>
 </li>
 </ol>
 </div>
@@ -2057,7 +2045,7 @@ solution classique si \(f \in H^2(\Omega)\).</p>
     </div>
     <div class="footer-terms">
       <div class="footer-terms-copyright">
-          <span>© 2025 Cemosis, Université de Strasbourg</span>
+          <span>© 2026 Cemosis, Université de Strasbourg</span>
       </div>
       <div class="footer-terms-links">
         <a href="terms-of-use.html">Terms of Use</a>

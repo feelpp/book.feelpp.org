@@ -592,8 +592,13 @@ MathJax.Hub.Config({
 <div class="content">
 <div class="title">Définition</div>
 <div class="paragraph">
-<p>Soit \(\Sigma=\{ a_1,\ldots,a_N\}\) un ensemble de \(N\) points distincts de \(\RR^n\).
-Soit \(P\) un espace vectoriel de dimension finie de fonctions de \(\RR^n\) à valeurs dans \(\RR\).On dit que \(\Sigma\) est \(P\)-unisolvant ssi pour tous réels \(\alpha_1,\ldots,\alpha_N\), il existe un unique élément \(p\) de \(P\) tel que \(p(a_i)=\alpha_i,\; i=1,\ldots,N\).</p>
+<p>Soit \(\Sigma=\{ a_1,\ldots,a_N\}\) un ensemble de \(N\) points distincts de \(\RR^n\).</p>
+</div>
+<div class="paragraph">
+<p>Soit \(P\) un espace vectoriel de dimension finie de fonctions de \(\RR^n\) à valeurs dans \(\RR\).</p>
+</div>
+<div class="paragraph">
+<p>On dit que \(\Sigma\) est \(P\)-unisolvant ssi pour tous réels \(\alpha_1,\ldots,\alpha_N\), il existe un unique élément \(p\) de \(P\) tel que \(p(a_i)=\alpha_i,\; i=1,\ldots,N\).</p>
 </div>
 </div>
 </div>
@@ -625,7 +630,7 @@ la seule fonction de \(P\) s’annulant sur tous les points de
 <div class="paragraph">
 <p>La surjectivité de \({\cal L}\) se démontre en exhibant une famille
 \(p_1,\ldots,p_N\) d’éléments de \(P\) tels que
-\(p_i(a_j)=\delta_{ij}\), c’est à dire un antécédent pour
+\(p_i(a_j)=\delta_{ij},\) c’est à dire un antécédent pour
 \({\cal L}\) de la base canonique de \(\RR^N\).</p>
 </div>
 <div class="paragraph">
@@ -681,7 +686,7 @@ tel que</p>
 <div class="content">
 <div class="title">Définition</div>
 <div class="paragraph">
-<p>On appelle <strong>opérateur de interpolation</strong> (ou encore \(P-\)interpolation) sur \(\Sigma\) l’opérateur \(\pi_K\) qui, à toute fonction \(v\) définie sur \(K\), associe la fonction \(\pi_K v\) de
+<p>On appelle <strong>opérateur d&#8217;interpolation</strong> (ou encore \(P-\)interpolation) sur \(\Sigma\) l’opérateur \(\pi_K\) qui, à toute fonction \(v\) définie sur \(K\), associe la fonction \(\pi_K v\) de
 \(P\) définie par \({\pi_K v =   \sum_{i=1}^N v(a_i)\, p_i}\).</p>
 </div>
 <div class="paragraph">
@@ -702,13 +707,13 @@ tel que</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Sur , \(\Pk{k}=\hbox{Vect} \{ 1,X,\ldots, X^k\}\quad\) et dim \(\Pk{k}=k+1\).</p>
+<p>Sur \(\RR\), \(\quad\Pk{k}=\hbox{Vect} \{ 1,X,\ldots, X^k\}\quad\) et dim \(\Pk{k}=k+1\).</p>
 </li>
 <li>
-<p>Sur \(^2\), \(\Pk{k}=\hbox{Vect} \{ X^i Y^j ; 0\le i+j \le k\}\quad\) et dim \({ \Pk{k}=\frac{(k+1)(k+2)}{2}}\).</p>
+<p>Sur \(\RR^2\), \(\quad\Pk{k}=\hbox{Vect} \{ X^i Y^j ;\quad 0\le i+j \le k\}\quad\) et dim \({ \Pk{k}=\frac{(k+1)(k+2)}{2}}\).</p>
 </li>
 <li>
-<p>Sur \(^3\), \(\Pk{k}=\hbox{Vect} \{ X^i Y^j Z^l ; 0\le i+j+l \le k\}\quad\) et dim \({ \Pk{k}=\frac{(k+1)(k+2)(k+3)}{6}}\).</p>
+<p>Sur \(\RR^3\), \(\quad\Pk{k}=\hbox{Vect} \{ X^i Y^j Z^l ;\quad 0\le i+j+l \le k\}\quad\) et dim \({ \Pk{k}=\frac{(k+1)(k+2)(k+3)}{6}}\).</p>
 </li>
 </ul>
 </div>
@@ -718,13 +723,13 @@ tel que</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Sur \(\RR\), \(\Qk{k}=\Pk{k}\).</p>
+<p>Sur \(\RR\), \(\quad\Qk{k}=\Pk{k}\).</p>
 </li>
 <li>
-<p>Sur \(\RR^2\), \(\Qk{k}=\hbox{Vect} \{ X^i Y^j ; 0\le i,j \le k\}\quad\) et dim \({ \Qk{k}=(k+1)^2}\).</p>
+<p>Sur \(\RR^2\), \(\quad\Qk{k}=\hbox{Vect} \{ X^i Y^j ; \quad 0\le i,j \le k\}\quad\) et dim \({ \Qk{k}=(k+1)^2}\).</p>
 </li>
 <li>
-<p>Sur \(\RR^3\), \(\Qk{k}=\hbox{Vect} \{ X^i Y^j Z^l ; 0\le i,j,l \le k\}\quad\) et dim \({ \Qk{k}=(k+1)^3}\).</p>
+<p>Sur \(\RR^3\), \(\quad\Qk{k}=\hbox{Vect} \{ X^i Y^j Z^l ; \quad 0\le i,j,l \le k\}\quad\) et dim \({ \Qk{k}=(k+1)^3}\).</p>
 </li>
 </ul>
 </div>
@@ -781,7 +786,7 @@ tel que</p>
 <p>\(K=[a,b\)]</p>
 </li>
 <li>
-<p>\({\Sigma=\{a+i\,\frac{b-a}{m},\quad i=0,\ldots,k\}}\)</p>
+<p>\({\Sigma=\{a+i\,\frac{b-a}{k},\quad i=0,\ldots,k\}}\)</p>
 </li>
 <li>
 <p>\(P=\Pk{k}\)</p>
@@ -810,7 +815,7 @@ tel que</p>
 <p>\(P=\Pk{1}\)
 Les fonctions de base sont définies par
 \(p_i(a_j)=\delta_{ij}\). Ce sont donc les coordonnées
-barycentriques : \(p_i=\lambda_i\) (cf annexe [ch:bary]).</p>
+barycentriques : \(p_i=\lambda_i\) (cf annexe <a href="#ch:bary">[ch:bary]</a>).</p>
 </li>
 </ul>
 </div>
@@ -902,7 +907,7 @@ Les fonctions de base sont \({p_i(X,Y)=\frac{(X-x_j)(Y-y_j)}{(x_i-x_j)(y_i-y_j)}
 <p>\(K\)=tétraèdre de sommets \(a_1, a_2, a_3, a_4\)</p>
 </li>
 <li>
-<p>\({ \Sigma=\{a_i\}_{1\le i\le 4} \cup \{a_{ij}\}_{1\le i &lt; j \le 4} }\)</p>
+<p>\({ \Sigma=\{a_i\}_{1\le i\le 4} \cup \{a_{ij}\}_{1\le i &lt; j \le 4} }\), où \({a_{ij}=\frac{a_i+a_j}{2}}\).</p>
 </li>
 <li>
 <p>\(P=\Pk{2}\)</p>
@@ -970,7 +975,16 @@ et \(p_{ij}=4\lambda_i\lambda_j\).</p>
 <div class="content">
 <div class="title">Équivalence affine</div>
 <div class="paragraph">
-<p>Deux éléments finis \((\hat{K},\hat{\Sigma},\hat{P})\) et \((K,\Sigma,P)\) sont <strong>affine-équivalents</strong> ssi il existe une fonction affine \(F\) inversible (\(F: \hat{x} \longrightarrow B\hat{x}+b\)) telle que <em>(i)</em> \(K=F(\hat{K})\) <em>(ii)</em> \(a_i=F(\hat{a}_i) \qquad i=1,\ldots,N\) et <em>(iii)</em> \(P=\{ \hat{p}\circ F^{-1} , \quad \hat{p}\in \hat{P} \}\)</p>
+<p>Deux éléments finis \((\hat{K},\hat{\Sigma},\hat{P})\) et \((K,\Sigma,P)\) sont <strong>affine-équivalents</strong> ssi il existe une fonction affine \(F\) inversible (\(F: \hat{x} \longrightarrow B\hat{x}+b\)) telle que</p>
+</div>
+<div class="paragraph">
+<p><em>(i)</em> \(K=F(\hat{K})\)</p>
+</div>
+<div class="paragraph">
+<p><em>(ii)</em> \(a_i=F(\hat{a}_i), \qquad i=1,\ldots,N\)</p>
+</div>
+<div class="paragraph">
+<p><em>(iii)</em> \(P=\{ \hat{p}\circ F^{-1} , \quad \hat{p}\in \hat{P} \}\)</p>
 </div>
 </div>
 </div>
@@ -1043,18 +1057,16 @@ Si l’on est dans \(\RR^n\), \(B\) est donc une matrice \(n\times n\) inversibl
 <h2 id="sec:maillages"><a class="anchor" href="#sec:maillages"></a>5. Maillages</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Nous étendons ici aux dimension 2 et 3 les notions élémentaires de maillage vues en 1D, voir la figure <a href="#fig:2">Maillage Feel++</a>.</p>
+<p>Nous étendons ici aux dimension 2 et 3 les notions élémentaires de maillage vues en 1D (<a href="#sec:constr-du-maill">[sec:constr-du-maill]</a>), voir la figure <a href="#fig:2">[fig:2]</a>.</p>
 </div>
 <div id="fig:2" class="paragraph">
-<div class="title">Maillage Feel++</div>
-<p><span class="image left"><img src="_images/fem/feelpp-mesh.svg" alt="feelpp mesh" width="400"></span></p>
+<p><span class="image center"><img src="_images/fem/feelpp-mesh.svg" alt="feelpp mesh" width="400"></span></p>
 </div>
 <div id="def:31" class="sidebarblock">
 <div class="content">
 <div class="title">Définition</div>
 <div class="paragraph">
-<p>Un maillage est constituée d’une famille d’éléments(ou mailles
-ou cellules) \(\{K_e\}_{e=1,...,N_e}\) où \(N_e\)
+<p>Un maillage est constitué d’une famille d’éléments (ou mailles ou cellules) \(\{K_e\}_{e=1,...,N_e}\) où \(N_e\)
 est le nombre d’éléments, nous noterons</p>
 </div>
 <div id="eq:32" class="stemblock">
@@ -1128,7 +1140,7 @@ Cela veut dire que les élements sont tous de la même taille pour
 </ol>
 </div>
 <div class="paragraph">
-<p>Nous supposerons que les transformations sont des \(\mathcal{C}^1-\) diffeomorphismes <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>.</p>
+<p>Nous supposerons que ces transformations sont des \(\mathcal{C}^1-\) diffeomorphismes <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>.</p>
 </div>
 <div id="def:32" class="sidebarblock">
 <div class="content">
@@ -1169,12 +1181,10 @@ Cela veut dire que les élements sont tous de la même taille pour
 </div>
 <div class="paragraph">
 <div class="title">Transformation géométrique associée à un triangle</div>
-<p><span class="image left"><img src="_images/fem/geomap_triangle.png" alt="geomap triangle" width="400"></span></p>
+<p><span class="image center"><img src="_images/fem/geomap_triangle.png" alt="geomap triangle" width="400"></span></p>
 </div>
 <div class="paragraph">
-<p>Pour chaque \(K \in \mathcal{T}_h\), on a un \(\ngeo\)-uplet \(\set{g^K_1,\ldots,g^K_\ngeo}\).</p>
-</div>
-<div class="paragraph">
+<div class="title">Pour chaque \(K \in \mathcal{T}_h\), on a un \(\ngeo\)-uplet \(\set{g^K_1,\ldots,g^K_\ngeo}\).</div>
 <p>La transformation géométrique est définie comme suit</p>
 </div>
 <div id="eq:37" class="stemblock">
@@ -1197,7 +1207,7 @@ Cela veut dire que les élements sont tous de la même taille pour
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-On a \(T_K \in [\hat{P}_\geo(\hat{K})\)^d] et que \(\set{g^K_1,\ldots,g^K_\ngeo}\) sont les <em>noeuds géométriques</em> de \(K\).
+On a \(T_K \in [\hat{P}_\geo(\hat{K})q\)^d] et que \(\set{g^K_1,\ldots,g^K_\ngeo}\) sont les <em>noeuds géométriques</em> de \(K\).
 </td>
 </tr>
 </table>
@@ -1212,7 +1222,7 @@ On a \(T_K \in [\hat{P}_\geo(\hat{K})\)^d] et que \(\set{g^K_1,\ldots,g^K_\ngeo}
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-La numérotation locale des entités géométriques dans <strong>doit</strong> être consistente avec la numérotation locale des générateurs de maillage.
+La numérotation locale des entités géométriques dans \(\hat{K}\) <strong>doit</strong> être consistente avec la numérotation locale des générateurs de maillage.
 voir <a href="http://www.geuz.org/gmsh/doc/texinfo/gmsh.html#Node-ordering">\(\triangleright\) format de fichier Gmsh</a> pour une numérotation locale.
 </td>
 </tr>
@@ -1258,10 +1268,13 @@ Si l’élément fini géométrique est \((\hat{K},\poly{P}_1,\Sigma_\ngeo)\) al
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>Mesh&lt;Simplex&lt;d,1&gt; &gt;</code> ou <code>Mesh&lt;Simplex&lt;d&gt; &gt;</code> est le type pour les maillages affines formés de simplexes dans \(\RR^d\). <code>1</code> indique l’ordre de l’<em>élément fini géométrique</em> et est la valeur par défaut.
+Dans Feel++ : <code>Mesh&lt;Simplex&lt;d,1&gt; &gt;</code> ou <code>Mesh&lt;Simplex&lt;d&gt; &gt;</code> est le type pour les maillages affines formés de simplexes dans \(\RR^d\).
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p><code>1</code> indique l’ordre de l’<em>élément fini géométrique</em> et est la valeur par défaut.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1277,7 +1290,7 @@ Si l’élément fini géométrique est \((\hat{K},\poly{P}_1,\Sigma_\ngeo)\) al
 </div>
 </div>
 <div class="paragraph">
-<p>et \(B_K(\xi) = \nabla T_K^{-1}(\xi)\) l’inverse \(\xi\) et finalement \(J_K(\xi)\) le jacobien de \(T_K\) en \(\xi\)</p>
+<p>et \(B_K(\xi) = \nabla T_K^{-1}(\xi)\) l’inverse du gradient de \(T_K\) aux points  \(\xi\) et finalement \(J_K(\xi)\) le jacobien de \(T_K\) en \(\xi\)</p>
 </div>
 <div id="eq:41" class="stemblock">
 <div class="content">
@@ -1391,7 +1404,7 @@ On ne manipule que des maillages conformes dans le cours mais Feel++ peut traite
 <h2 id="sec:espace"><a class="anchor" href="#sec:espace"></a>6. Espaces élément fini de Lagrange</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Soit \(\mathcal{T}_h\) un maillage généré par \((\hat{K},   \hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\mathrm{geo}})\), une cellule \(K \in \mathcal{T}_h\) est alors l’image de \(\hat{K}\) par la transformation géométrique \(T_K\) défini par <a href="#eq:23">[eq:23]</a>.</p>
+<p>Soit \(\mathcal{T}_h\) un maillage généré par \((\hat{K},   \hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\mathrm{geo}})\), une cellule \(K \in \mathcal{T}_h\) est alors l’image de \(\hat{K}\) par la transformation géométrique \(T_K\) défini par <a href="#eq:37">[eq:37]</a>.</p>
 </div>
 <div class="paragraph">
 <p>L’objectif à présent est de générer la famille d’éléments finis de Lagrange grâce à l’élément fini de référence \((\hat{K},\hat{P}, \hat{\Sigma})\)</p>
@@ -1528,7 +1541,7 @@ C^0(K)\).</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Concernant l’implémentation, nous avons besoin de d’indentifier les <em>degrés de liberté communs entre les éléments</em> quand nous construisons la tables des degrés de liberté.</p>
+<p>Concernant l’implémentation, nous avons besoin d’indentifier les <em>degrés de liberté communs entre les éléments</em> quand nous construisons la tables des degrés de liberté.</p>
 </div>
 <div class="paragraph">
 <p>Voici deux exemples d’espace \(H^1\)-conforme</p>
@@ -1916,9 +1929,9 @@ Mesh&lt;Hypercube&lt;d, k_geo&gt;&gt; <i class="conum" data-value="2"></i><b>(2)
 <dd>
 <p>retourne 2 itérateurs sur l’ensemble des éléments du maillage</p>
 </dd>
-<dt class="hdlist1"><code>markedelements(mesh,&lt;int&gt;)</code></dt>
+<dt class="hdlist1"><code>markedelements(mesh,&lt;int&gt;)</code> et <code>markedelements(mesh,&lt;string&gt;)</code></dt>
 <dd>
-<p>et <code>markedelements(mesh,&lt;string&gt;)</code> retourne 2 itérateurs sur les éléments marqués par l’entier <code>&lt;int&gt;</code> et la chaîne des caractères <code>&lt;string&gt;</code> respectivement, cela correspondra typiquement à des propriétés de matériau</p>
+<p>retourne 2 itérateurs sur les éléments marqués par l’entier <code>&lt;int&gt;</code> et la chaîne des caractères <code>&lt;string&gt;</code> respectivement, cela correspondra typiquement à des propriétés de matériau</p>
 </dd>
 <dt class="hdlist1"><code>boundaryfaces(mesh)</code></dt>
 <dd>
@@ -1926,7 +1939,7 @@ Mesh&lt;Hypercube&lt;d, k_geo&gt;&gt; <i class="conum" data-value="2"></i><b>(2)
 </dd>
 <dt class="hdlist1"><code>markedfaces(mesh,&lt;int&gt;)</code> et <code>markedelements(mesh,&lt;string&gt;)</code></dt>
 <dd>
-<p>retourne 2 itérateurs sur les faces marquées par l’entier <code>&lt;int&gt;</code> et la chaîne des caractères <code>&lt;string&gt;</code> respectivement, ca correspondra typiquement aux conditions aux limites</p>
+<p>retourne 2 itérateurs sur les faces marquées par l’entier <code>&lt;int&gt;</code> et la chaîne des caractères <code>&lt;string&gt;</code> respectivement, cela correspondra typiquement aux conditions aux limites</p>
 </dd>
 </dl>
 </div>
@@ -1937,13 +1950,13 @@ Mesh&lt;Hypercube&lt;d, k_geo&gt;&gt; <i class="conum" data-value="2"></i><b>(2)
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-link pending to Feel++ user manual mesh iterators section.
+TODO : link pending to Feel++ user manual mesh iterators section.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>L’espace d’approximation \(V_h\) \(H^1\) conforme (espaces de functions continues sur \(\Omega\) polynomiales par morceaux de degré \(\leq k\)) est défini comme suit</p>
+<p>L’espace d’approximation \(V_h\) \(H^1\)-conforme (espaces de fonctions continues sur \(\Omega\) polynomiales par morceaux de degré \(\leq k\)) est défini comme suit</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1998,7 +2011,7 @@ FunctionSpace&lt;Mesh&lt;Hypercube&lt;d, k_geo&gt; &gt;, bases&lt;Lagrange&lt;k&
 <div id="eq:28b" class="stemblock">
 <div class="title">Fonctions de base globales</div>
 <div class="content">
-\[{\varphi_i}_{|K_j} \in P_j, \quad j=1,\ldots,N_e  \mbox{ et } \varphi_i(a_j)=\delta_{ij},  1\le i,j \le N_h\]
+\[{\varphi_i}_{|K_j} \in P_j, \quad j=1,\ldots,N_e \quad \mbox{ et } \quad \varphi_i(a_j)=\delta_{ij},  1\le i,j \le N_h\]
 </div>
 </div>
 <div class="paragraph">
@@ -2170,7 +2183,7 @@ dimension 2 (ou à un sommet, une arête ou une face en dimension 3).</p>
     </div>
     <div class="footer-terms">
       <div class="footer-terms-copyright">
-          <span>© 2025 Cemosis, Université de Strasbourg</span>
+          <span>© 2026 Cemosis, Université de Strasbourg</span>
       </div>
       <div class="footer-terms-links">
         <a href="terms-of-use.html">Terms of Use</a>

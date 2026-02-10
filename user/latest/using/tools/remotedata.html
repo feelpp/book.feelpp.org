@@ -607,26 +607,97 @@ MathJax.Hub.Config({
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>2. SYNOPSIS</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>{manmanual} is a simple application which can download data, upload data and print remote data listing.</p>
+<p>{manmanual} is a simple application which can download data, upload data and print remote data listing from multiple platforms including GitHub, Girder, and CKAN.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_description"><a class="anchor" href="#_description"></a>3. DESCRIPTION</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>The {manmanual} tool provides a unified interface for managing data across different remote storage platforms. It supports downloading, uploading, and browsing data with comprehensive progress reporting and multiple verbosity levels.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_options"><a class="anchor" href="#_options"></a>4. OPTIONS</h2>
+<h2 id="_supported_platforms"><a class="anchor" href="#_supported_platforms"></a>4. SUPPORTED PLATFORMS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>{manmanual} supports three major remote data platforms:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Platform Support Matrix</caption>
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2858%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Platform</th>
+<th class="tableblock halign-left valign-top">Download</th>
+<th class="tableblock halign-left valign-top">Upload</th>
+<th class="tableblock halign-left valign-top">Contents</th>
+<th class="tableblock halign-left valign-top">List Organizations</th>
+<th class="tableblock halign-left valign-top">Authentication</th>
+<th class="tableblock halign-left valign-top">Progress Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>GitHub</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✗</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✗</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✗</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Token</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓ Enhanced</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Girder</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✗</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API Key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓ Full</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CKAN</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API Key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓ Full</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL/HTTP</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✗</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✗</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✗</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✓ Enhanced</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_options"><a class="anchor" href="#_options"></a>5. OPTIONS</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_options_2"><a class="anchor" href="#_options_2"></a>4.1. Options</h3>
+<h3 id="_common_options"><a class="anchor" href="#_common_options"></a>5.1. Common Options</h3>
 <div class="paragraph">
 <p>{manmanual} requires some options.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Table of command-line {manmanual} options</caption>
+<caption class="title">Table 2. Table of command-line {manmanual} options</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -669,104 +740,95 @@ MathJax.Hub.Config({
 <td class="tableblock halign-left valign-top"><p class="tableblock">specify data contents to print in the terminal</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">list-organizations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">list available organizations (CKAN only)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_progress_and_verbosity_options"><a class="anchor" href="#_progress_and_verbosity_options"></a>5.2. Progress and Verbosity Options</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Progress Control Options</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--quiet, -q</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Suppress progress output, show only errors</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--verbose, -v</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable verbose progress output</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--progress</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show detailed progress information with file sizes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--debug</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable debug output with full API details and responses</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_examples"><a class="anchor" href="#_examples"></a>5. EXAMPLES</h2>
+<h2 id="_github"><a class="anchor" href="#_github"></a>6. GITHUB</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>GitHub integration allows downloading files and folders from public and private repositories with comprehensive progress reporting.</p>
+</div>
 <div class="sect2">
-<h3 id="_download_mode"><a class="anchor" href="#_download_mode"></a>5.1. Download mode</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Download file from an url</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download https://raw.githubusercontent.com/feelpp/feelpp/develop/README.adoc</code></pre>
-</div>
+<h3 id="_enhanced_progress_support"><a class="anchor" href="#_enhanced_progress_support"></a>6.1. Enhanced Progress Support</h3>
+<div class="paragraph">
+<p>GitHub downloads now feature enhanced progress reporting similar to CKAN and Girder:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Download file/folder from Github</p>
+<p><strong>Repository-aware progress</strong>: Shows repository information and branch details</p>
 </li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "github:{repo:feelpp,path:README.adoc}"</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p>Download file/folder from Girder</p>
+<p><strong>File-by-file tracking</strong>: Individual file progress for folders with item counts</p>
 </li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "girder:{file:5b1f8707b0e9570499f66bd0}"</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p>Download into a specific directory</p>
+<p><strong>Real-time status updates</strong>: Live progress updates with file sizes after download</p>
+</li>
+<li>
+<p><strong>Directory processing</strong>: Shows progress when processing subdirectories recursively</p>
+</li>
+<li>
+<p><strong>Debug information</strong>: Full API request details and response debugging in debug mode</p>
 </li>
 </ul>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "girder:{file:5b1f8707b0e9570499f66bd0}" --data $HOME/mydir</code></pre>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Progress reporting works seamlessly for both single files and entire repository folders, providing consistent user experience across all download types.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_upload_mode"><a class="anchor" href="#_upload_mode"></a>5.2. Upload mode</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Upload file/folder on Girder (require an authentication)</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --upload "girder:{folder:&lt;a folder id&gt;}" --data $HOME/mydata</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_contents_mode"><a class="anchor" href="#_contents_mode"></a>5.3. Contents mode</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>With Girder</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --contents "girder:{folder:5ac72871b0e9574027047894}"
-feelpp_remotedata --contents "girder:{file:5b1f8707b0e9570499f66bd0}"
-feelpp_remotedata --contents "girder:{folder:[5ac72871b0e9574027047894,5ad4b75db0e9574027047d70],file:5b1f8707b0e9570499f66bd0}"</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_remote_storage_description"><a class="anchor" href="#_remote_storage_description"></a>6. REMOTE STORAGE DESCRIPTION</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_github"><a class="anchor" href="#_github"></a>6.1. Github</h3>
+<h3 id="_configuration_options"><a class="anchor" href="#_configuration_options"></a>6.2. Configuration Options</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -810,7 +872,164 @@ feelpp_remotedata --contents "girder:{folder:[5ac72871b0e9574027047894,5ad4b75db
 </table>
 </div>
 <div class="sect2">
-<h3 id="_girder"><a class="anchor" href="#_girder"></a>6.2. Girder</h3>
+<h3 id="_authentication"><a class="anchor" href="#_authentication"></a>6.3. Authentication</h3>
+<div class="paragraph">
+<p>GitHub authentication is required for private repositories or to increase API rate limits.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Environment variable:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">export FEELPP_GITHUB_TOKEN=xxxxx</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Inline token:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">github:{repo:feelpp,path:README.adoc,token:xxxx}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_examples"><a class="anchor" href="#_examples"></a>6.4. Examples</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Download file from GitHub:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "github:{repo:feelpp,path:README.adoc}"</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download with progress reporting:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "github:{repo:feelpp,path:toolboxes/}" --progress</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download from private repository with debug output:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "github:{owner:myorg,repo:myrepo,path:data/,token:xxxx}" --debug</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download specific branch with verbose progress:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "github:{repo:feelpp,branch:develop,path:examples/}" --verbose</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_urlhttp_downloads"><a class="anchor" href="#_urlhttp_downloads"></a>7. URL/HTTP DOWNLOADS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Direct URL downloads support various protocols (HTTP, HTTPS, FTP) with enhanced progress reporting.</p>
+</div>
+<div class="sect2">
+<h3 id="_enhanced_progress_support_2"><a class="anchor" href="#_enhanced_progress_support_2"></a>7.1. Enhanced Progress Support</h3>
+<div class="paragraph">
+<p>URL downloads now feature comprehensive progress reporting:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Real-time progress bars</strong>: Live download progress with transfer rates and completion percentages</p>
+</li>
+<li>
+<p><strong>Filename-aware progress</strong>: Shows the actual filename being downloaded</p>
+</li>
+<li>
+<p><strong>Size reporting</strong>: Displays file sizes in human-readable format during and after download</p>
+</li>
+<li>
+<p><strong>Error handling</strong>: Clear error messages for network issues, HTTP status codes, and file creation problems</p>
+</li>
+<li>
+<p><strong>Adaptive progress</strong>: Automatically switches between progress-enabled and standard downloads based on verbosity level</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Progress reporting provides the same detailed information as Girder and CKAN downloads, ensuring consistent user experience across all platforms.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_examples_2"><a class="anchor" href="#_examples_2"></a>7.2. Examples</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Basic URL download:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download https://raw.githubusercontent.com/feelpp/feelpp/develop/README.adoc</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>URL download with progress reporting:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download https://example.com/largefile.zip --progress</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>URL download with custom directory and verbose output:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download https://example.com/data.tar.gz --data $HOME/downloads --verbose</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>URL download with debug information:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download https://example.com/dataset.csv --debug</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_girder"><a class="anchor" href="#_girder"></a>8. GIRDER</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Girder is a data management platform that provides a web-based interface for storing, managing, and sharing scientific data.</p>
+</div>
+<div class="sect2">
+<h3 id="_configuration_options_2"><a class="anchor" href="#_configuration_options_2"></a>8.1. Configuration Options</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -833,61 +1052,194 @@ feelpp_remotedata --contents "girder:{folder:[5ac72871b0e9574027047894,5ad4b75db
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>file</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&lt;no default value&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">one or several file id(s)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">one or several file id(s) or path(s)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>folder</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&lt;no default value&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">one or several folder id(s)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">one or several folder id(s) or path(s)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>item</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;no default value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">one or several item id(s) or path(s)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;no default value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">generic resource path (alternative to file/folder/item)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>api_key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&lt;no default value&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">an authentication key</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;no default value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a direct authentication token</p></td>
+</tr>
 </tbody>
 </table>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_authentication"><a class="anchor" href="#_authentication"></a>7. AUTHENTICATION</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_github_2"><a class="anchor" href="#_github_2"></a>7.1. Github</h3>
+<h3 id="_resource_identification_ids_vs_collection_paths"><a class="anchor" href="#_resource_identification_ids_vs_collection_paths"></a>8.2. Resource Identification: IDs vs Collection Paths</h3>
 <div class="paragraph">
-<p>You need to give a token for access to private repository or increase the for example. Two ways to specify the token :</p>
+<p>Girder resources can be identified in two ways:</p>
+</div>
+<div class="sect3">
+<h4 id="_using_resource_ids"><a class="anchor" href="#_using_resource_ids"></a>8.2.1. Using Resource IDs</h4>
+<div class="paragraph">
+<p>Resource IDs are unique identifiers assigned by Girder:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Define the environment variable FEELPP_GITHUB_TOKEN.</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">export FEELPP_GITHUB_TOKEN=xxxxx</code></pre>
-</div>
-</div>
+<p><strong>File ID</strong>: <code>girder:{file:5b1f8707b0e9570499f66bd0}</code></p>
 </li>
 <li>
-<p>Add token option in the github description.</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">github:{repo:feelpp,path:README.adoc,token:xxxx}</code></pre>
-</div>
-</div>
+<p><strong>Folder ID</strong>: <code>girder:{folder:6743a47bb0e95728eb010c47}</code></p>
+</li>
+<li>
+<p><strong>Item ID</strong>: <code>girder:{item:5ac72871b0e9574027047895}</code></p>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_girder_2"><a class="anchor" href="#_girder_2"></a>7.2. Girder</h3>
+<div class="sect3">
+<h4 id="_using_collection_based_resource_paths"><a class="anchor" href="#_using_collection_based_resource_paths"></a>8.2.2. Using Collection-Based Resource Paths</h4>
 <div class="paragraph">
-<p>You need to give an api key for access to private data or upload data. Two ways to specify the token :</p>
+<p>Resource paths provide a human-readable way to identify resources using their hierarchical location within collections:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Define the environment variable FEELPP_GIRDER_API_KEY.</p>
+<p><strong>Folder collection path</strong>: <code>girder:{folder:/collection/feelpp/testsuite/feelcore/feelpp_test_remotedata}</code></p>
+</li>
+<li>
+<p><strong>File collection path</strong>: <code>girder:{file:/collection/feelpp/data/simulation-results.csv}</code></p>
+</li>
+<li>
+<p><strong>Item collection path</strong>: <code>girder:{item:/collection/feelpp/testsuite/feelcore/feelpp_test_remotedata/dataset}</code></p>
+</li>
+<li>
+<p><strong>Generic collection path</strong>: <code>girder:{path:/collection/feelpp/testsuite/feelcore/feelpp_test_remotedata}</code></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Collection paths must start with <code>/collection/</code> followed by the collection name and resource path. The system automatically converts collection paths to IDs using Girder&#8217;s resource lookup API.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Collection Path Format Examples</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path Type</th>
+<th class="tableblock halign-left valign-top">Example</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/collection/feelpp/testsuite/feelcore/feelpp_test_remotedata</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Folder within Feel++ collection</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/collection/feelpp/data/simulation-results.csv</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File within Feel++ collection</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nested resource</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/collection/feelpp/datasets/cfd/results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deeply nested resource</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Item with files</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/collection/feelpp/testsuite/feelcore/feelpp_test_remotedata</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Item containing multiple files</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_advantages_of_using_paths"><a class="anchor" href="#_advantages_of_using_paths"></a>8.2.3. Advantages of Using Paths</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Human-readable</strong>: Easier to understand and remember</p>
+</li>
+<li>
+<p><strong>Hierarchical</strong>: Shows the organizational structure</p>
+</li>
+<li>
+<p><strong>Stable</strong>: Less likely to change than auto-generated IDs</p>
+</li>
+<li>
+<p><strong>Self-documenting</strong>: Path describes the content location</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_automatic_zip_extraction"><a class="anchor" href="#_automatic_zip_extraction"></a>8.3. Automatic ZIP Extraction</h3>
+<div class="paragraph">
+<p>When downloading folders or items from Girder, the tool automatically handles ZIP archives:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Automatic extraction</strong>: ZIP files are automatically extracted without manual intervention</p>
+</li>
+<li>
+<p><strong>Individual file listing</strong>: Shows progress and details for each extracted file rather than just the ZIP</p>
+</li>
+<li>
+<p><strong>Clean file access</strong>: Extracted files are immediately available for use</p>
+</li>
+<li>
+<p><strong>Progress tracking</strong>: Displays extraction progress and lists all extracted files in verbose mode</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This enhancement provides a seamless experience similar to direct file downloads, eliminating the need for manual ZIP extraction when working with Girder folders and items.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_authentication_2"><a class="anchor" href="#_authentication_2"></a>8.4. Authentication</h3>
+<div class="paragraph">
+<p>Girder authentication is required for private data access and upload operations.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Environment variable:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">export FEELPP_GIRDER_API_KEY=xxxxx</code></pre>
@@ -895,7 +1247,16 @@ feelpp_remotedata --contents "girder:{folder:[5ac72871b0e9574027047894,5ad4b75db
 </div>
 </li>
 <li>
-<p>Add api_key option in the girder description.</p>
+<p>Environment variable (recommended):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">export FEELPP_GIRDER_API_KEY=your-api-key-here
+girder:{folder:5ac72871b0e9574027047894}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Inline API key (deprecated):</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">girder:{folder:5ac72871b0e9574027047894,api_key:xxxx}</code></pre>
@@ -904,19 +1265,595 @@ feelpp_remotedata --contents "girder:{folder:[5ac72871b0e9574027047894,5ad4b75db
 </li>
 </ul>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Using FEELPP_GIRDER_API_KEY environment variable is recommended over inline api_key as it&#8217;s more secure and the remotedata app automatically manages token lifecycle.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_examples_3"><a class="anchor" href="#_examples_3"></a>8.5. Examples</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Download file from Girder using ID:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "girder:{file:5b1f8707b0e9570499f66bd0}" --progress</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download file from Girder using collection path:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "girder:{file:/collection/feelpp/data/simulation-results.csv}" --progress</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download folder with automatic ZIP extraction using ID:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "girder:{folder:5ac72871b0e9574027047894}" --verbose</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>Remark: another possibility for is to give directly the token generated from an api key (replace api_key by token).
-But it&#8217;s quite difficult to get a token from the web interface of Girder, and you a responsible to delete the token.
-With the api key system, the remotedata apps generate and delete token automatically.</p>
+<p>This automatically extracts the folder contents and shows individual file progress.</p>
+</div>
+</li>
+<li>
+<p>Download folder using collection path:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "girder:{folder:/collection/feelpp/testsuite/feelcore/feelpp_test_remotedata}" --verbose</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Downloads entire folder using human-readable collection path.</p>
+</div>
+</li>
+<li>
+<p>Download item with automatic extraction using collection path:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "girder:{item:/collection/feelpp/testsuite/feelcore/feelpp_test_remotedata/dataset}" --progress</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Items containing multiple files are automatically extracted and listed.</p>
+</div>
+</li>
+<li>
+<p>Upload data to Girder using ID:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --upload "girder:{folder:5ac72871b0e9574027047894}" --data $HOME/mydata</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Upload data to Girder using collection path:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --upload "girder:{folder:/collection/feelpp/uploads}" --data $HOME/mydata --verbose</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Browse Girder contents using IDs:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --contents "girder:{folder:5ac72871b0e9574027047894}"
+feelpp_remotedata --contents "girder:{file:5b1f8707b0e9570499f66bd0}"</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Browse Girder contents using collection paths:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --contents "girder:{folder:/collection/feelpp/testsuite/feelcore/feelpp_test_remotedata}"
+feelpp_remotedata --contents "girder:{path:/collection/feelpp/data}"
+feelpp_remotedata --contents "girder:{item:/collection/feelpp/testsuite/feelcore/feelpp_test_remotedata/dataset}"</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Mixed ID and collection path usage:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"># Upload to collection path-specified folder
+feelpp_remotedata --upload "girder:{folder:/collection/feelpp/incoming}" --data results.txt
+
+# Download using generic collection path
+feelpp_remotedata --download "girder:{path:/collection/feelpp/datasets/cfd-simulations}" --data ./downloads</code></pre>
+</div>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_copying"><a class="anchor" href="#_copying"></a>8. COPYING</h2>
+<h2 id="_ckan"><a class="anchor" href="#_ckan"></a>9. CKAN</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Copyright (C) 2017-2024 Feel++ Consortium.<br>
+<p>CKAN (Comprehensive Knowledge Archive Network) is an open-source data management system used for publishing, sharing and finding data.</p>
+</div>
+<div class="sect2">
+<h3 id="_configuration_options_3"><a class="anchor" href="#_configuration_options_3"></a>9.1. Configuration Options</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;from environment&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL of a CKAN instance</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>api_key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;from environment&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API key for authentication</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>organization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;from environment&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">organization name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>dataset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;no default value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dataset name or ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>resource</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;no default value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">resource ID for specific file operations</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_enhanced_progress_reporting"><a class="anchor" href="#_enhanced_progress_reporting"></a>9.2. Enhanced Progress Reporting</h3>
+<div class="paragraph">
+<p>CKAN downloads now feature enhanced progress reporting:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Filename-aware progress</strong>: Shows the actual filename being downloaded instead of just generic progress</p>
+</li>
+<li>
+<p><strong>Real-time updates</strong>: Live progress bars with transfer rates and completion percentages</p>
+</li>
+<li>
+<p><strong>Timeout support</strong>: Configurable timeout handling for robust downloads</p>
+</li>
+<li>
+<p><strong>Detailed progress format</strong>: Progress bars show format like <code>filename.ext: [====&#8658;] 42.3% (1.81 MB/1.81 MB)</code></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This provides the same comprehensive progress reporting as Girder downloads, ensuring consistent user experience across platforms.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_environment_variables"><a class="anchor" href="#_environment_variables"></a>9.3. Environment Variables</h3>
+<div class="paragraph">
+<p>CKAN operations can be configured using environment variables:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">export FEELPP_CKAN_URL="https://ckan.example.com"
+export FEELPP_CKAN_API_KEY="your-api-key"
+export FEELPP_CKAN_ORGANIZATION="your-org"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_authentication_3"><a class="anchor" href="#_authentication_3"></a>9.4. Authentication</h3>
+<div class="paragraph">
+<p>CKAN authentication is required for private datasets and upload operations.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Environment variables (recommended):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">export FEELPP_CKAN_API_KEY=xxxxx
+export FEELPP_CKAN_ORGANIZATION=myorg</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Inline credentials:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">ckan:{url:https://ckan.example.com,api_key:xxxx,organization:myorg}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_examples_4"><a class="anchor" href="#_examples_4"></a>9.5. Examples</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>List available organizations:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --list-organizations="ckan:{}"
+feelpp_remotedata --list-organizations="ckan:{url:https://demo.ckan.org}"</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download entire dataset:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "ckan:{dataset:my-dataset}" --progress</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download specific resource:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "ckan:{resource:resource-id}" --debug</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Upload data to CKAN:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --upload "ckan:{dataset:my-dataset}" --data $HOME/mydata</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Browse dataset contents:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --contents "ckan:{dataset:my-dataset}"</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_general_examples"><a class="anchor" href="#_general_examples"></a>10. GENERAL EXAMPLES</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_download_examples"><a class="anchor" href="#_download_examples"></a>10.1. Download Examples</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Download file from URL with progress:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download https://raw.githubusercontent.com/feelpp/feelpp/develop/README.adoc --progress</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download GitHub repository with progress:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "github:{repo:feelpp,path:examples/}" --verbose</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download with custom directory:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --download "girder:{file:5b1f8707b0e9570499f66bd0}" --data $HOME/mydir</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download with different verbosity levels:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"># Quiet mode (errors only)
+feelpp_remotedata --download "ckan:{dataset:sample}" --quiet
+
+# Normal mode (default) - shows operation status and file names
+feelpp_remotedata --download "github:{repo:feelpp,path:README.adoc}"
+
+# Progress mode (detailed progress) - shows file sizes, transfer rates
+feelpp_remotedata --download "ckan:{dataset:sample}" --progress
+
+# Debug mode (full API details) - shows URLs, API requests/responses
+feelpp_remotedata --download "ckan:{dataset:sample}" --debug</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_upload_examples"><a class="anchor" href="#_upload_examples"></a>10.2. Upload Examples</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Upload to Girder:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --upload "girder:{folder:folder-id}" --data $HOME/mydata --verbose</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Upload to CKAN:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">feelpp_remotedata --upload "ckan:{dataset:my-dataset}" --data $HOME/mydata --progress</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_browse_examples"><a class="anchor" href="#_browse_examples"></a>10.3. Browse Examples</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Browse with different platforms:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"># Girder folder contents
+feelpp_remotedata --contents "girder:{folder:5ac72871b0e9574027047894}"
+
+# CKAN dataset contents
+feelpp_remotedata --contents "ckan:{dataset:my-dataset}"
+
+# Multiple Girder items
+feelpp_remotedata --contents "girder:{folder:[id1,id2],file:id3}"</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_progress_reporting"><a class="anchor" href="#_progress_reporting"></a>11. PROGRESS REPORTING</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The {manmanual} tool provides comprehensive progress reporting with four verbosity levels across all supported platforms (GitHub, Girder, CKAN, and URL/HTTP):</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Progress Levels</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Level</th>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Quiet</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--quiet, -q</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimal output</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Errors only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Normal</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(default)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard progress</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operation status, file names, completion messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verbose</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--verbose, -v</code> or <code>--progress</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detailed progress</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File sizes, transfer rates, detailed status, progress bars</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Debug</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--debug</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Full diagnostic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API requests/responses, URLs, technical details, all verbose output</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_universal_progress_features"><a class="anchor" href="#_universal_progress_features"></a>11.1. Universal Progress Features</h3>
+<div class="paragraph">
+<p>All platforms now support consistent progress reporting:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>File-by-file progress</strong>: Shows individual file download/upload progress with transfer rates</p>
+</li>
+<li>
+<p><strong>Size reporting</strong>: Displays file sizes in human-readable format (KB, MB, GB)</p>
+</li>
+<li>
+<p><strong>Platform-specific information</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>GitHub: Repository details, branch information, directory structure</p>
+</li>
+<li>
+<p>Girder: Item/folder metadata, automatic ZIP extraction progress</p>
+</li>
+<li>
+<p>CKAN: Dataset information, resource details, organization context</p>
+</li>
+<li>
+<p>URL/HTTP: Direct download progress with HTTP status information</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Error handling</strong>: Clear error messages with specific failure reasons and status codes</p>
+</li>
+<li>
+<p><strong>Operation summaries</strong>: Final status with success/failure counts and timing information</p>
+</li>
+<li>
+<p><strong>API debugging</strong>: Full request/response logging in debug mode with URLs and headers</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_platform_specific_enhancements"><a class="anchor" href="#_platform_specific_enhancements"></a>11.2. Platform-Specific Enhancements</h3>
+<div class="ulist">
+<div class="title">GitHub Progress Features</div>
+<ul>
+<li>
+<p>Repository and branch information display</p>
+</li>
+<li>
+<p>Recursive directory download progress with item counts</p>
+</li>
+<li>
+<p>File size reporting after download completion</p>
+</li>
+<li>
+<p>API rate limit and authentication status</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Girder Progress Features</div>
+<ul>
+<li>
+<p>Automatic ZIP extraction with individual file progress</p>
+</li>
+<li>
+<p>Folder/item structure visualization</p>
+</li>
+<li>
+<p>Upload progress with chunk transfer status</p>
+</li>
+<li>
+<p>Authentication token management</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">CKAN Progress Features</div>
+<ul>
+<li>
+<p>Dataset and resource metadata display</p>
+</li>
+<li>
+<p>Organization context information</p>
+</li>
+<li>
+<p>Enhanced filename-aware progress bars</p>
+</li>
+<li>
+<p>Resource listing with detailed information</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">URL/HTTP Progress Features</div>
+<ul>
+<li>
+<p>Real-time download progress bars</p>
+</li>
+<li>
+<p>HTTP status code reporting</p>
+</li>
+<li>
+<p>Network error handling and retry information</p>
+</li>
+<li>
+<p>Protocol-agnostic support (HTTP, HTTPS, FTP)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_error_handling"><a class="anchor" href="#_error_handling"></a>12. ERROR HANDLING</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The tool provides robust error handling:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Network errors</strong>: HTTP status codes and connection issues</p>
+</li>
+<li>
+<p><strong>Authentication errors</strong>: Clear messages for invalid credentials</p>
+</li>
+<li>
+<p><strong>Resource not found</strong>: Specific error messages for missing files/datasets</p>
+</li>
+<li>
+<p><strong>Permission errors</strong>: Access denied messages with suggestions</p>
+</li>
+<li>
+<p><strong>Data validation</strong>: JSON parsing errors and malformed responses</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_copying"><a class="anchor" href="#_copying"></a>13. COPYING</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Copyright (C) 2017-2025 Feel++ Consortium.<br>
 Free use of this software is granted under the terms of the GPLv3 License.</p>
 </div>
 </div>
@@ -985,7 +1922,7 @@ Free use of this software is granted under the terms of the GPLv3 License.</p>
     </div>
     <div class="footer-terms">
       <div class="footer-terms-copyright">
-          <span>© 2025 Cemosis, Université de Strasbourg</span>
+          <span>© 2026 Cemosis, Université de Strasbourg</span>
       </div>
       <div class="footer-terms-links">
         <a href="terms-of-use.html">Terms of Use</a>
