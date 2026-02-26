@@ -266,10 +266,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../csm/NAFEMS-le1/index.html">NAFEMS LE1 Benchmarck</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../csm/TurekHron/index.html">Turek Hron CSM Benchmark</a>
+    <a class="nav-link" href="../csm/NAFEMS-le10/index.html">NAFEMS LE10 Benchmarck</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../csm/NAFEMS-le10/index.html">NAFEMS LE10 Benchmarck</a>
+    <a class="nav-link" href="../csm/TurekHron/index.html">Turek Hron CSM Benchmark</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../csm/solenoid/index.html">Solenoïd Benchmark</a>
@@ -422,10 +422,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../heat/3Dbuilding/index.html">3D Building</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../heat/motor/index.html">Heat Transfer in a BWM Motor</a>
+    <a class="nav-link" href="../heat/cell/index.html">Diffusion and Uptake into a Spherical Cell</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../heat/cell/index.html">Diffusion and Uptake into a Spherical Cell</a>
+    <a class="nav-link" href="../heat/motor/index.html">Heat Transfer in a BWM Motor</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../heat/opus/index.html">Example : Electronic component cooling</a>
@@ -564,6 +564,12 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="busbar/index.html">BusBar</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="convergence-square/index.html">Convergence square</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="electromagnets/index.html">Electromagnets</a>
   </li>
 </ul>
   </li>
@@ -844,9 +850,8 @@ MathJax.Hub.Config({
 <p>Welcome to the Electrostatics toolbox.</p>
 </div>
 <div class="paragraph">
-<p>The Electrostatics toolbox solves a charge conservation equation for the electric potential given the spatial distribution of the electric charge.
-It is used to model charge conservation under static conditions.
-It is often coupled in our applications with the <a href="#toolbox:thermoelectric">Heat Transfert toolbox</a> to model joule heating.</p>
+<p>The Electrostatics toolbox solves a steady charge-conservation conduction model for the electric potential.
+It is often coupled in our applications with the <a href="#toolbox:thermoelectric">Heat Transfer toolbox</a> to model Joule heating.</p>
 </div>
 </div>
 </div>
@@ -855,78 +860,512 @@ It is often coupled in our applications with the <a href="#toolbox:thermoelectri
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_models"><a class="anchor" href="#_models"></a>1.1. Models</h3>
-
+<div class="paragraph">
+<p>The electric toolbox solves a steady conduction model for the electric potential:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\nabla \cdot \left( \sigma \nabla V \right)=0 \quad \text{in } \Omega.\]
+</div>
+</div>
+<div class="paragraph">
+<p>Derived quantities are</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{E}=-\nabla V, \qquad \mathbf{J}=-\sigma\nabla V, \qquad q_J=\sigma|\nabla V|^2.\]
+</div>
+</div>
+<div class="paragraph">
+<p>This corresponds to a DC-like conduction regime.
+You prescribe material conductivity and boundary electrical constraints, then the toolbox computes the potential field and derived quantities used for analysis or multiphysics coupling.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In the current implementation, the volumetric Poisson source term is not assembled.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_materials"><a class="anchor" href="#_materials"></a>1.2. Materials</h3>
-
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Materials properties used by the electric toolbox</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Shape</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric-conductivity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sigma</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electrical conductivity</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>In JSON, the material property can be set with the symbol form used in examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "Materials": {
+    "omega": {
+      "sigma": "4.8e7"
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In practical cases, \(\sigma\) can be uniform per material region or expression-based (for parameter studies and nonlinear constitutive behavior).</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>1.3. Boundary Conditions</h3>
-<div class="sect3">
-<h4 id="_dirichlet"><a class="anchor" href="#_dirichlet"></a>1.3.1. Dirichlet</h4>
-<div class="stemblock">
-<div class="content">
-\[T = g \quad \text{ on } \Gamma\]
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_neumann"><a class="anchor" href="#_neumann"></a>1.3.2. Neumann</h4>
-<div class="stemblock">
-<div class="content">
-\[-k \nabla T \cdot \boldsymbol{n} = g \quad \text{ on } \Gamma\]
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_robin"><a class="anchor" href="#_robin"></a>1.3.3. Robin</h4>
-<div class="stemblock">
-<div class="content">
-\[-k \nabla T \cdot \boldsymbol{n} = h \left( T - g \right) \quad \text{ on } \Gamma\]
-</div>
-</div>
+<h3 id="_fields_and_symbols"><a class="anchor" href="#_fields_and_symbols"></a>1.3. Fields and symbols</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Primary field</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shape</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric-potential</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric potential</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scalar</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The model also provides symbol expressions such as <code>electric_P</code>, <code>electric_grad_P_0</code>, <code>electric_grad_P_1</code>, <code>electric_grad_P_2</code>, and <code>electric_dn_P</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_initial_conditions"><a class="anchor" href="#_initial_conditions"></a>1.4. Initial Conditions</h3>
-
+<h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>1.4. Boundary Conditions</h3>
+<div class="paragraph">
+<p>The boundary-condition setup follows electrical engineering usage:
+voltage-controlled boundaries use Dirichlet constraints, while current-controlled boundaries use Neumann-type conditions.
+Most models also define one reference potential (often <code>ground</code>).</p>
+</div>
+<div class="sect3">
+<h4 id="_electric_potential_imposed"><a class="anchor" href="#_electric_potential_imposed"></a>1.4.1. Electric potential imposed</h4>
+<div class="stemblock">
+<div class="content">
+\[V = g \quad \text{on } \Gamma\]
+</div>
+</div>
+<div class="paragraph">
+<p>JSON keywords: <code>electric_potential</code>, <code>electric_potential_imposed</code></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. JSON properties</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boundary markers where BC is applied</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array</code>, <code>JSON</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BC name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">imposed potential</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "BoundaryConditions": {
+    "electric": {
+      "electric_potential": {
+        "V1": {
+          "markers": ["V1"],
+          "expr": "9"
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ground"><a class="anchor" href="#_ground"></a>1.4.2. Ground</h4>
+<div class="paragraph">
+<p>Ground is a Dirichlet condition with imposed value <code>0</code>.
+Use it to set the potential reference and stabilize models that would otherwise be defined up to an additive constant.</p>
+</div>
+<div class="paragraph">
+<p>JSON keyword: <code>ground</code></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. JSON properties</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boundary markers where ground is applied</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array</code>, <code>JSON</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "BoundaryConditions": {
+    "electric": {
+      "ground": {
+        "markers": ["V0"]
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_surface_charge_density_normal_current_density"><a class="anchor" href="#_surface_charge_density_normal_current_density"></a>1.4.3. Surface charge density / normal current density</h4>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{J}\cdot\mathbf{n}=g
+\quad \Leftrightarrow \quad
+-\sigma \nabla V\cdot\mathbf{n}=g\]
+</div>
+</div>
+<div class="paragraph">
+<p>JSON keywords: <code>surface_charge_density</code>, <code>charge_density</code></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. JSON properties</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boundary markers where condition is applied</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>array</code>, <code>JSON</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BC name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>expr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">imposed value <code>g</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code>, <code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "BoundaryConditions": {
+    "electric": {
+      "surface_charge_density": {
+        "inlet_flux": {
+          "markers": ["GammaIn"],
+          "expr": "1e5"
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If a boundary has no explicit condition, the natural insulation condition (<code>J.n = 0</code>) applies.
+This is useful for external boundaries where no current exchange is intended.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_post_processing"><a class="anchor" href="#_post_processing"></a>1.5. Post Processing</h3>
-<div class="sect3">
-<h4 id="_exports"><a class="anchor" href="#_exports"></a>1.5.1. Exports</h4>
 <div class="paragraph">
-<p>The fields allowed to be exported in the <code>fields</code> section are:</p>
+<p>Post-processing is split into three complementary mechanisms:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>pid</p>
+<p><code>Exports</code> for visualization fields (Paraview/Ensight workflows),</p>
+</li>
+<li>
+<p><code>Save</code> for controlled field persistence,</p>
+</li>
+<li>
+<p><code>Measures</code> for scalar/table outputs used in verification and regression checks.</p>
 </li>
 </ul>
+</div>
+<div class="sect3">
+<h4 id="_outputs_short_json_block"><a class="anchor" href="#_outputs_short_json_block"></a>1.5.1. Outputs (short JSON block)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "PostProcess": {
+    "electric": {
+      "Exports": {
+        "fields": ["electric-potential", "electric-field", "current-density", "joules-losses", "pid"]
+      },
+      "Save": {
+        "Fields": {
+          "names": ["electric-potential", "electric-field", "current-density"],
+          "format": "default"
+        }
+      },
+      "Measures": {
+        "Statistics": {
+          "meanVout": {
+            "type": "mean",
+            "field": "electric-potential",
+            "markers": ["V1"]
+          }
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_measures"><a class="anchor" href="#_measures"></a>1.5.2. Measures</h4>
-<div class="sect4">
-<h5 id="_normal_electric_flux"><a class="anchor" href="#_normal_electric_flux"></a>Normal-Electric-Flux</h5>
-
+<h4 id="_exports"><a class="anchor" href="#_exports"></a>1.5.2. Exports</h4>
+<div class="paragraph">
+<p>Fields available in <code>PostProcess.electric.Exports.fields</code>:</p>
 </div>
-<div class="sect4">
-<h5 id="_evaluation_at_points"><a class="anchor" href="#_evaluation_at_points"></a>Evaluation at points</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>electric field</p>
+<p><code>electric-potential</code></p>
 </li>
 <li>
-<p>current</p>
+<p><code>electric-field</code></p>
+</li>
+<li>
+<p><code>current-density</code></p>
+</li>
+<li>
+<p><code>joules-losses</code></p>
+</li>
+<li>
+<p><code>pid</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Short JSON example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "PostProcess": {
+    "electric": {
+      "Exports": {
+        "fields": ["electric-potential", "electric-field", "current-density", "pid"]
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_save"><a class="anchor" href="#_save"></a>1.5.3. Save</h4>
+<div class="paragraph">
+<p>Fields available in <code>PostProcess.electric.Save.Fields.names</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>electric-potential</code></p>
+</li>
+<li>
+<p><code>electric-field</code></p>
+</li>
+<li>
+<p><code>electric-conductivity</code></p>
+</li>
+<li>
+<p><code>current-density</code></p>
+</li>
+<li>
+<p><code>joules-losses</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Short JSON example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "PostProcess": {
+    "electric": {
+      "Save": {
+        "Fields": {
+          "names": ["electric-potential", "electric-field", "electric-conductivity"],
+          "format": "default"
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_measures"><a class="anchor" href="#_measures"></a>1.5.4. Measures</h4>
+<div class="paragraph">
+<p>Generic post-processing measures are available:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Norm</code>/<code>Norms</code></p>
+</li>
+<li>
+<p><code>Statistic</code>/<code>Statistics</code></p>
+</li>
+<li>
+<p><code>Points</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>Norm</code> and <code>Statistics</code> can be applied to fields or expressions.</p>
+</div>
+<div class="paragraph">
+<p>Short JSON example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "PostProcess": {
+    "electric": {
+      "Measures": {
+        "Norm": {
+          "errV": {
+            "field": "electric-potential",
+            "type": ["L2-error"],
+            "solution": "v_exact:v_exact"
+          }
+        },
+        "Statistics": {
+          "meanV1": {
+            "type": "mean",
+            "field": "electric-potential",
+            "markers": ["V1"]
+          }
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solver_and_runtime_notes"><a class="anchor" href="#_solver_and_runtime_notes"></a>1.6. Solver and runtime notes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>case.dimension</code> supports 2 or 3.</p>
+</li>
+<li>
+<p><code>case.discretization</code> supports <code>P&lt;k&gt;</code> (dynamic order for potential). <code>G1</code> geometry is currently required.</p>
+</li>
+<li>
+<p>The implementation is steady-state (no transient electric solve yet).</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_see_also"><a class="anchor" href="#_see_also"></a>2. See also</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="theory.html" class="xref page">Theory</a></p>
+</li>
+<li>
+<p><a href="examples.html" class="xref page">Examples and coverage</a></p>
+</li>
+<li>
+<p><a href="electric.html" class="xref page">Application manual page (<code>feelpp_toolbox_electric</code>)</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>

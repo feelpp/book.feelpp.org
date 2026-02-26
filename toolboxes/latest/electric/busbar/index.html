@@ -6,7 +6,7 @@
     <title>BusBar :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/electric/busbar/index.html">
     <link rel="prev" href="../theory.html">
-    <link rel="next" href="../quarterturn/index.html">
+    <link rel="next" href="../convergence-square/index.html">
     <meta name="description" content="We simulate the electrical potential in a busbar conductor.">
     <meta name="generator" content="Antora 3.1.12">
 <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -266,10 +266,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../../csm/NAFEMS-le1/index.html">NAFEMS LE1 Benchmarck</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/TurekHron/index.html">Turek Hron CSM Benchmark</a>
+    <a class="nav-link" href="../../csm/NAFEMS-le10/index.html">NAFEMS LE10 Benchmarck</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../csm/NAFEMS-le10/index.html">NAFEMS LE10 Benchmarck</a>
+    <a class="nav-link" href="../../csm/TurekHron/index.html">Turek Hron CSM Benchmark</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../csm/solenoid/index.html">Solenoïd Benchmark</a>
@@ -422,10 +422,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../../heat/3Dbuilding/index.html">3D Building</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heat/motor/index.html">Heat Transfer in a BWM Motor</a>
+    <a class="nav-link" href="../../heat/cell/index.html">Diffusion and Uptake into a Spherical Cell</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heat/cell/index.html">Diffusion and Uptake into a Spherical Cell</a>
+    <a class="nav-link" href="../../heat/motor/index.html">Heat Transfer in a BWM Motor</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../heat/opus/index.html">Example : Electronic component cooling</a>
@@ -564,6 +564,12 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="3">
     <a class="nav-link" href="index.html">BusBar</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../convergence-square/index.html">Convergence square</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../electromagnets/index.html">Electromagnets</a>
   </li>
 </ul>
   </li>
@@ -841,7 +847,8 @@ MathJax.Hub.Config({
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this example, we will model a busbar simply modeled as rectangular parallelepiped.A differential electrical potential is applied to the entry/exit of the busbar. We note respectively \(V_0\) the electrical potential on the entry and  and \(V_1\) on the exit.</p>
+<p>In this example, we model a busbar as a rectangular conductor.
+A differential electrical potential is applied to the entry and exit.</p>
 </div>
 </div>
 </div>
@@ -922,23 +929,23 @@ In 3D, this is the same geometry, but extruded along the z axis.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(Lx\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">internal radius</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">length</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(m\)</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(Ly\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">external radius</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">width</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(m\)</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(Lz\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">angle</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\pi/2\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(rad\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thickness (3D)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(m\)</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -955,7 +962,7 @@ In 3D, this is the same geometry, but extruded along the z axis.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>This problem is fully described by the Electric model, namely a poisson equation for the electrical potential \(V\) with Dirichlet boundary conditions on entry /exit.</p>
+<p>This problem is described by a steady electric conduction model for \(V\) with Dirichlet boundary conditions on entry/exit.</p>
 </li>
 <li>
 <p><strong>toolbox</strong>:  electric</p>
@@ -999,7 +1006,8 @@ In 3D, this is the same geometry, but extruded along the z axis.</p>
 <div class="sect2">
 <h3 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>3.3. Boundary conditions</h3>
 <div class="paragraph">
-<p>The boundary conditions for the electrical probleme are introduced as simple Dirichlet boundary conditions for the electric potential on the entry/exit of the conductor. For the remaining faces, as no current is flowing througth these faces, we add Homogeneous Neumann conditions.</p>
+<p>The boundary conditions are imposed electric potential on entry/exit (<code>V0</code>, <code>V1</code>).
+On the other boundaries, zero normal current is applied through the natural homogeneous Neumann condition.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1047,7 +1055,23 @@ In 3D, this is the same geometry, but extruded along the z axis.</p>
 <h2 id="_outputs"><a class="anchor" href="#_outputs"></a>4. Outputs</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The main fields of concern are the electric potential \(V\), the current density \(\mathbf{j}\) and the electric field \(\mathbf{E}\). // presented in the following figure.</p>
+<p>The main fields of concern are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>electric potential \(V\)</p>
+</li>
+<li>
+<p>current density \(\mathbf{j}\)</p>
+</li>
+<li>
+<p>electric field \(\mathbf{E}\)</p>
+</li>
+<li>
+<p>Joule losses density</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1059,7 +1083,7 @@ In 3D, this is the same geometry, but extruded along the z axis.</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[V(x) = V_0 + (\frac{x}{L}-1) (V_1-V_0)\]
+\[V(x) = V_0 + \left(\frac{x}{Lx}-1\right) (V_1-V_0)\]
 </div>
 </div>
 <div class="paragraph">
@@ -1109,7 +1133,7 @@ flowing in the busbar (\(V_D\) corresponds to the differential applied voltage).
 </div>
 <nav class="pagination">
   <span class="prev"><a href="../theory.html">Electrostatics toolbox</a></span>
-  <span class="next"><a href="../quarterturn/index.html">Quarter-Turn</a></span>
+  <span class="next"><a href="../convergence-square/index.html">Convergence square</a></span>
 </nav>
 </article>
   </div>

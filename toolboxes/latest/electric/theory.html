@@ -266,10 +266,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../csm/NAFEMS-le1/index.html">NAFEMS LE1 Benchmarck</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../csm/TurekHron/index.html">Turek Hron CSM Benchmark</a>
+    <a class="nav-link" href="../csm/NAFEMS-le10/index.html">NAFEMS LE10 Benchmarck</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../csm/NAFEMS-le10/index.html">NAFEMS LE10 Benchmarck</a>
+    <a class="nav-link" href="../csm/TurekHron/index.html">Turek Hron CSM Benchmark</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../csm/solenoid/index.html">Solenoïd Benchmark</a>
@@ -422,10 +422,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../heat/3Dbuilding/index.html">3D Building</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../heat/motor/index.html">Heat Transfer in a BWM Motor</a>
+    <a class="nav-link" href="../heat/cell/index.html">Diffusion and Uptake into a Spherical Cell</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../heat/cell/index.html">Diffusion and Uptake into a Spherical Cell</a>
+    <a class="nav-link" href="../heat/motor/index.html">Heat Transfer in a BWM Motor</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../heat/opus/index.html">Example : Electronic component cooling</a>
@@ -564,6 +564,12 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="busbar/index.html">BusBar</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="convergence-square/index.html">Convergence square</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="electromagnets/index.html">Electromagnets</a>
   </li>
 </ul>
   </li>
@@ -841,23 +847,119 @@ MathJax.Hub.Config({
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This toolbox is dedicated to the resolution of electrostatics problems.</p>
-</div>
-<div class="paragraph">
-<p>The starting point is the <a href="../maxwell/Maxwell.html" class="xref page">Maxwell equations</a>.</p>
+<p>This toolbox solves a quasi-static conduction model for the electric potential \(V\) in conducting materials.
+The starting point is the <a href="../maxwell/Maxwell.html" class="xref page">Maxwell equations</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_quasi_static_approximation_electrostatics"><a class="anchor" href="#_quasi_static_approximation_electrostatics"></a>1. Quasi static approximation, Electrostatics</h2>
+<h2 id="_fields_and_parameters_names_and_units"><a class="anchor" href="#_fields_and_parameters_names_and_units"></a>1. Fields and parameters (names and units)</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>A consequence of Maxwell’s equations is that changes in time of currents and charges are not synchronized with changes of the electromagnetic fields.
-There is a delay between the changes of the sources and the changes of the fields.
-The electromagnetic waves propagate at finite speed.
-If we ignore this effect, we obtain the electromagnetic fields by considering stationary currents at every instant.
-In other words, it is the study of electromagnetism with charges at rest.</p>
+<div class="sect2">
+<h3 id="_fields"><a class="anchor" href="#_fields"></a>1.1. Fields</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Physical name</th>
+<th class="tableblock halign-left valign-top">Toolbox field name</th>
+<th class="tableblock halign-left valign-top">SI unit</th>
+<th class="tableblock halign-left valign-top">Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(V\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric potential</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>electric-potential</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(V\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">primary unknown</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mathbf{E}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric field</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>electric-field</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(V.m^{-1}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">derived from \(-\nabla V\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mathbf{J}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">current density</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>current-density</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(A.m^{-2}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">derived from \(-\sigma \nabla V\)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(q_J\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Joule losses density</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>joules-losses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(W.m^{-3}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">derived from stem:[\sigma</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\nabla V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">^2]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mathbf{D}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric displacement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not exported</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(C.m^{-2}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">used in transient formulation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\rho\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric charge density</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not exported</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="sect2">
+<h3 id="_required_material_properties_and_units"><a class="anchor" href="#_required_material_properties_and_units"></a>1.2. Required material properties and units</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">SI unit</th>
+<th class="tableblock halign-left valign-top">Required in steady model</th>
+<th class="tableblock halign-left valign-top">Required in transient model</th>
+<th class="tableblock halign-left valign-top">Possible dependency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric conductivity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\sigma\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(S.m^{-1}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">may depend on \(\mathbf{E}\) (e.g. \(\sigma=\sigma(\mathbf{E})\)), and more generally on model symbols</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric permittivity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\epsilon\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(F.m^{-1}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">may depend on \(\mathbf{E}\) (e.g. \(\epsilon=\epsilon(\mathbf{E})\)) for nonlinear dielectrics</p></td>
+</tr>
+</tbody>
+</table>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -865,206 +967,120 @@ In other words, it is the study of electromagnetism with charges at rest.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-It is called the <strong>quasi-static approximation</strong> also called electrostatics and magnetostatics approximations
+In the current toolbox implementation, \(\sigma\) is available as material property while \(\epsilon\) is not yet assembled in the electric solver.
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>The approximation is valid provided that the variations in time are small or absent and that the studied geometries are considerably smaller than the wavelength.
-The quasi-static approximation implies that the equation of continuity can be written as</p>
 </div>
-<div class="stemblock">
-<div class="content">
-\[\nabla \cdot \mathbf{j} = 0\]
-</div>
-</div>
-<div class="paragraph">
-<p>and that the time derivative of the electric displacement \(\partial D/ \partial t\) can be disregarded in Maxwell-Ampère’s law.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_notations_and_units"><a class="anchor" href="#_notations_and_units"></a>2. Notations and Units</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_parameters_and_boundary_data"><a class="anchor" href="#_parameters_and_boundary_data"></a>1.3. Parameters and boundary data</h3>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Name and units of symbols and variables of the Maxwell&#8217;s equations</caption>
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Notation</th>
-<th class="tableblock halign-left valign-top">Quantity</th>
-<th class="tableblock halign-left valign-top">Unit</th>
-<th class="tableblock halign-left valign-top">SI</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">JSON name/key</th>
+<th class="tableblock halign-left valign-top">SI unit</th>
+<th class="tableblock halign-left valign-top">Comment</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mathbf{E}(\mathbf{x},t)\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">electric field intensity</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(V\cdot m^{-1}\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(kg\cdot m \cdot s^{-3}\cdot A^{-1}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\sigma\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric conductivity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">material property <code>sigma</code> (<code>electric-conductivity</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(S.m^{-1}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">required in current implementation, can be nonlinear (e.g. \(\sigma(\mathbf{E})\))</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(V(\mathbf{x},t)\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">electric potential</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\epsilon\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">electric permittivity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">planned transient material property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(F.m^{-1}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">transient target model property, can be nonlinear (e.g. \(\epsilon(\mathbf{E})\)); not yet assembled in current implementation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(V_D\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">imposed potential</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BC <code>electric_potential</code> / <code>electric_potential_imposed</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(V\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(kg\cdot m^2 \cdot s^{-3}\cdot A^{-1}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dirichlet boundary data</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mathbf{D}(\mathbf{x},t)\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">electric flux density</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(C\cdot m^{-2}\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(A\cdot s\cdot m^{-2}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(g\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">imposed normal current density</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BC <code>surface_charge_density</code> / <code>charge_density</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(A.m^{-2}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Neumann-type boundary data</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mathbf{J}(\mathbf{x},t)\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">electric current density</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(A\cdot m^{-2}\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(A\cdot m^{-2}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(I\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">imposed total current</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integral-current condition</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(A\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">currently unavailable in this toolbox</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\rho(\mathbf{x},t)\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">electric charge density</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(C\cdot m^{-3}\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(A\cdot s\cdot m^{-3}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(t\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">model parameter <code>t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(s\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">used in transient expressions</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mathbf{E}_i(\mathbf{x},t)\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">impressed electric  field</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(V\cdot m^{-1}\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(kg\cdot m \cdot s^{-3}\cdot A^{-1}\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mathbf{J}_i(\mathbf{x},t)\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">impressed electric  current</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(A\cdot m^{-2}\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(A\cdot m^{-2}\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\sigma(\mathbf{x},t)\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">conductivity</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(S\cdot m^{-1}\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(kg^{-1}\cdot m^{-3}\cdot s^3\cdot A^2\)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(\epsilon_0(\mathbf{x},t)\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">permittivity of vacuum</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(F\cdot m^{-1}\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\(kg^{-1}\cdot m^{-3}\cdot s^4\cdot A^2\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(\mathbf{n}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">outward unit normal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">geometric quantity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dimensionless</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boundary orientation</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_equations"><a class="anchor" href="#_equations"></a>3. Equations</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Consider that</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>we are in quasi-electrostatics approximation,</p>
-</li>
-<li>
-<p>we have \(N\) conducting materials whose respective domains are denoted \(\Omega_i,i=1...N\) and their electric conductivity \(\sigma_i\).</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The electric potential is solution of the following equation</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[- \nabla \cdot \left(\sigma_i V\right) = \frac{q}{\varepsilon_0}, \quad \mbox{ in } \Omega_i, i=1...N\]
-</div>
-</div>
-<div class="paragraph">
-<p>where \(q\) is the charge density and \(\varepsilon_0\) is the vacuum permittivity.
-This relationship is a form of Poisson&#8217;s equation.
-In the absence of electric charge, the equation becomes Laplace&#8217;s equation:</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\nabla \cdot \left( \sigma_i \nabla V \right) =0, \quad \mbox{ in } \Omega_i, i=1,...,N\]
-</div>
-</div>
-<div class="paragraph">
-<p>We have the following relations:</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\mathbf{E} = -\nabla{V},\quad \mathbf{j} = - \sigma\nabla{V}.\]
-</div>
-</div>
-<div class="paragraph">
-<p>where \(\sigma=\sigma_i,i=1...N\).</p>
-</div>
-</div>
 </div>
 <div class="sect1">
-<h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>4. Boundary Conditions</h2>
+<h2 id="_quasi_static_electric_model"><a class="anchor" href="#_quasi_static_electric_model"></a>2. Quasi-static electric model</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The boundary conditions can be of three types: Dirichlet(Essential), Neumann(Natural) or Integral.</p>
-</div>
-<div class="sect2">
-<h3 id="_dirichlet"><a class="anchor" href="#_dirichlet"></a>4.1. Dirichlet</h3>
-<div class="paragraph">
-<p>Consider two surfaces \(\Gamma_\mbox{in}\) and \(\Gamma_\mbox{out}\).
-We impose a difference of electric potential.</p>
+<p>In quasi-static conditions, the charge conservation equation is</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[V=V_{\Gamma_\mbox{in}}, \quad V=V_{\Gamma_\mbox{out}}\]
+\[\nabla \cdot \mathbf{J} = 0\]
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_neumann"><a class="anchor" href="#_neumann"></a>4.2. Neumann</h3>
 <div class="paragraph">
-<p>Denote \(\Gamma_N\), the surface where the Neumann condition is imposed.</p>
-</div>
-<div class="sect3">
-<h4 id="_insulation"><a class="anchor" href="#_insulation"></a>4.2.1. Insulation</h4>
-<div class="paragraph">
-<p>In this case, we have no normal flux, hence we have</p>
+<p>with Ohm&#8217;s law</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[- \sigma \frac{\partial V}{\partial n} = - \sigma \nabla V \cdot \mathbf{n} = \mathbf{j} \cdot \mathbf{n} = 0\]
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_normal_flux"><a class="anchor" href="#_normal_flux"></a>4.2.2. Normal flux</h4>
-<div class="stemblock">
-<div class="content">
-\[- \sigma \frac{\partial V}{\partial n} = - \sigma \nabla V \cdot \mathbf{n} = \mathbf{j} \cdot \mathbf{n} = j_N\]
+\[\mathbf{J} = -\sigma \nabla V\]
 </div>
 </div>
 <div class="paragraph">
-<p>where \(j_N\) is the flux density to be imposed.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_integral"><a class="anchor" href="#_integral"></a>4.3. Integral</h3>
-<div class="paragraph">
-<p>On \(\Gamma_I\), we wish to impose the current \(I\) (not the current density) which sets at the same time the electric potential \(V_I\) which is, in that particular case, constant but unknown.
-We have then</p>
+<p>which gives the strong form solved in this toolbox:</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\[\int_{\Gamma_I} \mathbf{j} \cdot \mathbf{n} = I_N, \quad V_I \mbox{ is constant}.\]
+\[\nabla \cdot \left( \sigma \nabla V \right) = 0 \quad \text{in } \Omega.\]
 </div>
+</div>
+<div class="paragraph">
+<p>The unknown is the scalar potential \(V\). The electric field and current density are then recovered from \(V\).
+From a physical viewpoint, this is a conduction model: currents are driven by potential differences and weighted locally by the conductivity.</p>
+</div>
+<div class="paragraph">
+<p>For multiple materials \(\Omega_i\), the conductivity \(\sigma_i\) is piecewise defined.
+The implementation enforces continuity through the conforming finite-element space across interfaces.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1073,7 +1089,190 @@ We have then</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-this boundary condition is only available in the HdG formulation.
+A volumetric electric source term (Poisson right-hand side) is currently not assembled in this toolbox implementation.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_derived_quantities"><a class="anchor" href="#_derived_quantities"></a>3. Derived quantities</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After solving for \(V\), the toolbox computes</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{E} = -\nabla V, \qquad
+\mathbf{J} = -\sigma \nabla V, \qquad
+q_J = \sigma |\nabla V|^2.\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(q_J\) is the Joule losses density.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_boundary_conditions"><a class="anchor" href="#_boundary_conditions"></a>4. Boundary conditions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Boundary conditions encode how the device is electrically connected to its environment.
+In practice, one usually combines potential constraints (to drive current and fix the reference level) with natural/flux conditions on other boundaries.</p>
+</div>
+<div class="sect2">
+<h3 id="_electric_potential_imposed_dirichlet"><a class="anchor" href="#_electric_potential_imposed_dirichlet"></a>4.1. Electric potential imposed (Dirichlet)</h3>
+<div class="paragraph">
+<p>On \(\Gamma_D\):</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[V = V_D.\]
+</div>
+</div>
+<div class="paragraph">
+<p>This is exposed in JSON with <code>electric_potential</code> (or alias <code>electric_potential_imposed</code>).
+This boundary condition is typically used on terminals where voltage is controlled.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ground"><a class="anchor" href="#_ground"></a>4.2. Ground</h3>
+<div class="paragraph">
+<p>Ground is a specialized Dirichlet condition:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[V = 0 \quad \text{on } \Gamma_g.\]
+</div>
+</div>
+<div class="paragraph">
+<p>This is exposed with the JSON key <code>ground</code>.
+It provides a potential reference and avoids the constant-offset indeterminacy of pure Neumann problems.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_surface_charge_density_normal_current_density_neumann"><a class="anchor" href="#_surface_charge_density_normal_current_density_neumann"></a>4.3. Surface charge density / normal current density (Neumann)</h3>
+<div class="paragraph">
+<p>On \(\Gamma_N\):</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{J} \cdot \mathbf{n} = g
+\quad \Leftrightarrow \quad
+-\sigma \nabla V \cdot \mathbf{n} = g.\]
+</div>
+</div>
+<div class="paragraph">
+<p>This is exposed with <code>surface_charge_density</code> (alias <code>charge_density</code>).
+It models injected/extracted normal current density on a boundary.
+If no such condition is set on a boundary part, the natural homogeneous condition applies:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{J}\cdot\mathbf{n}=0.\]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integral_current_condition"><a class="anchor" href="#_integral_current_condition"></a>4.4. Integral current condition</h3>
+<div class="paragraph">
+<p>The integral-current boundary condition</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\int_{\Gamma_I}\mathbf{J}\cdot\mathbf{n}\,d\Gamma = I\]
+</div>
+</div>
+<div class="paragraph">
+<p>is not available in this standard electric toolbox implementation (it is an HDG-oriented feature).
+Conceptually, this condition is useful for terminal-driven models where total current is prescribed instead of pointwise flux.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_time_dependence"><a class="anchor" href="#_time_dependence"></a>5. Time dependence</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For time-dependent electric evolution in conducting media, a transient electro-quasistatic model can be considered.
+Compared with the steady model, it introduces capacitive effects through the displacement field.</p>
+</div>
+<div class="paragraph">
+<p>Starting from charge conservation:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\partial_t \rho + \nabla\cdot\mathbf{J}=0\]
+</div>
+</div>
+<div class="paragraph">
+<p>with</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{E}=-\nabla V,\qquad
+\mathbf{D}=\epsilon\mathbf{E}=-\epsilon\nabla V,\qquad
+\rho=\nabla\cdot\mathbf{D},\]
+</div>
+</div>
+<div class="paragraph">
+<p>and conductive current</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{J}=-\sigma\nabla V,\]
+</div>
+</div>
+<div class="paragraph">
+<p>the transient electro-quasistatic PDE reads</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\nabla\cdot\left(\sigma\nabla V + \epsilon\,\partial_t\nabla V\right)=0.\]
+</div>
+</div>
+<div class="paragraph">
+<p>When \(\epsilon\to 0\), this model reduces to the steady conduction equation.</p>
+</div>
+<div class="sect2">
+<h3 id="_initial_condition_transient_case"><a class="anchor" href="#_initial_condition_transient_case"></a>5.1. Initial condition (transient case)</h3>
+<div class="paragraph">
+<p>A transient solve requires an initial state, for example:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[V(\mathbf{x},0)=V_0(\mathbf{x}).\]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_boundary_condition_interpretation_in_transient_mode"><a class="anchor" href="#_boundary_condition_interpretation_in_transient_mode"></a>5.2. Boundary-condition interpretation in transient mode</h3>
+<div class="paragraph">
+<p>Potential (Dirichlet) conditions keep the same form as in steady mode.
+For Neumann-like boundaries, one must choose whether the imposed normal quantity is:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>conductive current only: \(\mathbf{J}\cdot\mathbf{n}\)</p>
+</li>
+<li>
+<p>or total current including displacement: \((\mathbf{J}+\partial_t\mathbf{D})\cdot\mathbf{n}\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This choice must be fixed consistently in model equations, weak form, and user-facing boundary-condition semantics.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The current electric toolbox implementation remains steady-state only. The transient formulation above is a target model for future implementation.
 </td>
 </tr>
 </table>
