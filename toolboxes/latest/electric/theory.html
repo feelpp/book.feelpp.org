@@ -901,21 +901,21 @@ The starting point is the <a href="../maxwell/Maxwell.html" class="xref page">Ma
 <td class="tableblock halign-left valign-top"><p class="tableblock">Joule losses density</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>joules-losses</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(W.m^{-3}\)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">derived from stem:[\sigma</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">derived from \(\sigma \lVert \nabla V \rVert^2\)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">\nabla V</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">^2]</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(\mathbf{D}\)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">electric displacement</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">not exported</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(C.m^{-2}\)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">used in transient formulation</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(\rho\)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">electric charge density</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">not exported</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">\(C.m^{-3}\)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">used in transient formulation</p></td>
 </tr>
 </tbody>
 </table>
@@ -1106,11 +1106,34 @@ A volumetric electric source term (Poisson right-hand side) is currently not ass
 <div class="content">
 \[\mathbf{E} = -\nabla V, \qquad
 \mathbf{J} = -\sigma \nabla V, \qquad
-q_J = \sigma |\nabla V|^2.\]
+q_J = \sigma \lVert \nabla V \rVert^2.\]
 </div>
 </div>
 <div class="paragraph">
 <p>where \(q_J\) is the Joule losses density.</p>
+</div>
+<div class="sect2">
+<h3 id="_boundary_flux_and_power_quantities"><a class="anchor" href="#_boundary_flux_and_power_quantities"></a>3.1. Boundary flux and power quantities</h3>
+<div class="paragraph">
+<p>For boundary interpretations, it is useful to name explicitly the normal current flux and its integrated value on a surface \(\Gamma\):</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[j_n = \mathbf{J}\cdot\mathbf{n} \quad [A.m^{-2}], \qquad
+I_\Gamma = \int_\Gamma \mathbf{J}\cdot\mathbf{n}\,d\Gamma \quad [A].\]
+</div>
+</div>
+<div class="paragraph">
+<p>The electrical power flux density through a boundary is</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[p_e = V\,\mathbf{J}\cdot\mathbf{n} \quad [W.m^{-2}]\]
+</div>
+</div>
+<div class="paragraph">
+<p>and the associated terminal power is \(P_\Gamma=\int_\Gamma p_e\,d\Gamma\) with unit \(W\).</p>
+</div>
 </div>
 </div>
 </div>
