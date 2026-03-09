@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Maxwell quasi static :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/maxwell/mqs/AV.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="../Tws/index.html">
     <meta name="generator" content="Antora 3.1.12">
 <link rel="stylesheet" href="../../../../_/css/site.css">
 
@@ -428,10 +430,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="../../heat/opus/index.html">Example : Electronic component cooling</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heat/radiative_cavity/index.html">Radiative cavity examples</a>
+    <a class="nav-link" href="../../heat/stent/index.html">Drug Delivery in a Coronary Stent</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../heat/stent/index.html">Drug Delivery in a Coronary Stent</a>
+    <a class="nav-link" href="../../heat/radiative_cavity/index.html">Radiative cavity examples</a>
   </li>
 </ul>
   </li>
@@ -636,13 +638,67 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../manual.html">Theory and Formulations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Maxwell.html">Modeling</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../resistive-magnets-coupling.html">Coupled \(A-V-J-E-T\) Resistive Magnet Model</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Strategy.html">Variational Formulations and Solver Strategy</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../benchmarking.html">Benchmarking and Validation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Maxwell Quasi-Static Models</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="AV.html">\(A-V\) formulation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Benchmarks</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Tws/index.html">TEAM Workshop 13</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Torus/index.html">Torus</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Inductor/index.html">Inductor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../Harmonic/index.html">Harmonic Content and Multipoles</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
     <span class="nav-text">Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../Maxwell.html">Maxwell modeling and theory</a>
+    <a class="nav-link" href="../Maxwell.html">Maxwell modeling</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../manual.html">Maxwell</a>
+    <a class="nav-link" href="../Strategy.html">Variational formulations and resolution strategy</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../benchmarking.html">Benchmarking and validation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../manual.html">Maxwell Theory And Formulations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../resistive-magnets-coupling.html">Coupled \(A-V-J-E-T\) model for resistive magnets</a>
   </li>
 </ul>
   </li>
@@ -805,7 +861,9 @@ MathJax.Hub.Config({
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../../index.html">Toolboxes Manual</a></li>
-    <li><a href="AV.html">Maxwell quasi static</a></li>
+    <li><a href="../index.html">Maxwell</a></li>
+    <li><a href="index.html">Maxwell Quasi-Static Models</a></li>
+    <li><a href="AV.html">\(A-V\) formulation</a></li>
   </ul>
 </nav>
 
@@ -841,6 +899,9 @@ MathJax.Hub.Config({
 <h1 class="page">Maxwell quasi static</h1>
 <div id="preamble">
 <div class="sectionbody">
+<div class="paragraph">
+<p>For a practical high-field resistive magnet model with temperature-dependent properties, see <a href="../resistive-magnets-coupling.html" class="xref page">Coupled \(A-V-J-E-T\) model for resistive magnets</a>.</p>
+</div>
 <div class="paragraph">
 <p>The divergence-free magnetic flux density vector can be described by the curl of the magnetic vector potential \(\boldsymbol{A},\) since \(\nabla \cdot \nabla \times \boldsymbol{u} \equiv 0,\) for any vector function \(\boldsymbol{u}=\boldsymbol{u}(\boldsymbol{r}),\) or \(\boldsymbol{u}=\boldsymbol{u}(\boldsymbol{r}, t),\) i.e.</p>
 </div>
@@ -1068,6 +1129,10 @@ V&amp;=V_{0}, \quad on \quad \Gamma_{E}\\
 
 </div>
 </div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html">Maxwell Quasi-Static Models</a></span>
+  <span class="next"><a href="../Tws/index.html">TEAM Workshop 13</a></span>
+</nav>
 </article>
   </div>
 </main>

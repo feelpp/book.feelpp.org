@@ -6,7 +6,7 @@
     <title>Example : Electronic component cooling :: Feel++ Docs</title>
     <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/heat/opus/index.html">
     <link rel="prev" href="../motor/index.html">
-    <link rel="next" href="../radiative_cavity/index.html">
+    <link rel="next" href="../stent/index.html">
     <meta name="description" content="We simulate a 2D model representative of the neighboring of an electronic component submitted to a cooling air flow.">
     <meta name="generator" content="Antora 3.1.12">
 <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -433,10 +433,10 @@ MathJax.Hub.Config({
     <a class="nav-link" href="index.html">Example : Electronic component cooling</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../radiative_cavity/index.html">Radiative cavity examples</a>
+    <a class="nav-link" href="../stent/index.html">Drug Delivery in a Coronary Stent</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../stent/index.html">Drug Delivery in a Coronary Stent</a>
+    <a class="nav-link" href="../radiative_cavity/index.html">Radiative cavity examples</a>
   </li>
 </ul>
   </li>
@@ -641,13 +641,67 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../maxwell/manual.html">Theory and Formulations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../maxwell/Maxwell.html">Modeling</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../maxwell/resistive-magnets-coupling.html">Coupled \(A-V-J-E-T\) Resistive Magnet Model</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../maxwell/Strategy.html">Variational Formulations and Solver Strategy</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../maxwell/benchmarking.html">Benchmarking and Validation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../maxwell/mqs/index.html">Maxwell Quasi-Static Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../maxwell/mqs/AV.html">\(A-V\) formulation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Benchmarks</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../maxwell/Tws/index.html">TEAM Workshop 13</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../maxwell/Torus/index.html">Torus</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../maxwell/Inductor/index.html">Inductor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../maxwell/Harmonic/index.html">Harmonic Content and Multipoles</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
     <span class="nav-text">Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../maxwell/Maxwell.html">Maxwell modeling and theory</a>
+    <a class="nav-link" href="../../maxwell/Maxwell.html">Maxwell modeling</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../maxwell/manual.html">Maxwell</a>
+    <a class="nav-link" href="../../maxwell/Strategy.html">Variational formulations and resolution strategy</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../maxwell/benchmarking.html">Benchmarking and validation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../maxwell/manual.html">Maxwell Theory And Formulations</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../maxwell/resistive-magnets-coupling.html">Coupled \(A-V-J-E-T\) model for resistive magnets</a>
   </li>
 </ul>
   </li>
@@ -1350,7 +1404,7 @@ ICs.</p>
 <p>As the periodicity helps to dissipate the heat in both directions of the PCB, the reference results
 are attended to be lower than the results obtained with Feel++ on these testcases.</p>
 </div>
-<div id="ploty_843bd658-f369-43d1-b1e0-64c9faea0c31"></div>
+<div id="ploty_8b067399-a78b-4a46-a7a1-88570f02bd92"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -1391,7 +1445,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_843bd658-f369-43d1-b1e0-64c9faea0c31', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_8b067399-a78b-4a46-a7a1-88570f02bd92', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -1573,7 +1627,7 @@ else GitHub can refuse the access.</p>
 </tr>
 </tbody>
 </table>
-<div id="ploty_55bfb149-67c9-474c-a247-6df3250a5dfc"></div>
+<div id="ploty_c50e7f67-1737-4792-84f6-5a01526709d8"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -1614,7 +1668,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_55bfb149-67c9-474c-a247-6df3250a5dfc', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_c50e7f67-1737-4792-84f6-5a01526709d8', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -1683,7 +1737,7 @@ gmsh.hsize=1e-3</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="ploty_c75d75a5-6582-4ab1-90b5-8bc0039340b3"></div>
+<div id="ploty_764b40b5-bbd6-49c2-88a4-a6f5359d2acf"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -1724,7 +1778,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_c75d75a5-6582-4ab1-90b5-8bc0039340b3', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_764b40b5-bbd6-49c2-88a4-a6f5359d2acf', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -1793,7 +1847,7 @@ gmsh.hsize=2e-4</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="ploty_dc58fddf-952c-4583-a7e5-5a36299a0ff1"></div>
+<div id="ploty_c1c5f138-9f36-4261-a32a-d6fd419c1f49"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -1834,7 +1888,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_dc58fddf-952c-4583-a7e5-5a36299a0ff1', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_c1c5f138-9f36-4261-a32a-d6fd419c1f49', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -1903,7 +1957,7 @@ gmsh.hsize=1e-4</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="ploty_e2dad7f6-54ef-4d57-bd3f-6160dfc9cdfb"></div>
+<div id="ploty_22372fec-c85e-476d-a881-6af3f2f4b8eb"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -1944,7 +1998,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_e2dad7f6-54ef-4d57-bd3f-6160dfc9cdfb', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_22372fec-c85e-476d-a881-6af3f2f4b8eb', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -2012,7 +2066,7 @@ const layout = {
 </tr>
 </tbody>
 </table>
-<div id="ploty_b83e0e84-2d90-49f0-9e02-e304d6596a4e"></div>
+<div id="ploty_e33987dd-db2e-4a83-b47a-e1ff1e40c429"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -2053,7 +2107,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_b83e0e84-2d90-49f0-9e02-e304d6596a4e', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_e33987dd-db2e-4a83-b47a-e1ff1e40c429', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -2225,7 +2279,7 @@ order=2</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="ploty_5fb0caf4-ca96-454c-85e9-564422a4b987"></div>
+<div id="ploty_9a82ff07-97ba-44cf-9f95-b665b5605d28"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -2266,7 +2320,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_5fb0caf4-ca96-454c-85e9-564422a4b987', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_9a82ff07-97ba-44cf-9f95-b665b5605d28', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -2335,7 +2389,7 @@ velocity-convection={0,(2e-3+2e-3&lt;x)*(x&lt;2e-3+4e-3)*1e-3*(3/2/(4e-3-2e-3))*
 </tr>
 </tbody>
 </table>
-<div id="ploty_ed2dfbbb-8290-440c-8bc6-960c167c8a88"></div>
+<div id="ploty_d117ca3a-eabe-44ee-933e-e8ce47cba6f5"></div>
 <script>
   d3.csv("https://girder.math.unistra.fr/api/v1/file/5afea86fb0e957402704804a/download")
     .then((d) => {
@@ -2376,7 +2430,7 @@ const layout = {
   title: 'Temperature'
 }
 
-      Plotly.newPlot('ploty_ed2dfbbb-8290-440c-8bc6-960c167c8a88', data, layout, { showLink: false, responsive: true })
+      Plotly.newPlot('ploty_d117ca3a-eabe-44ee-933e-e8ce47cba6f5', data, layout, { showLink: false, responsive: true })
     })
     .catch((err) => {
       console.log('Unable to get data', err)
@@ -2421,7 +2475,7 @@ stabilization-gls=0</code></pre>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="../motor/index.html">Heat Transfer in a BWM Motor</a></span>
-  <span class="next"><a href="../radiative_cavity/index.html">Radiative cavity examples</a></span>
+  <span class="next"><a href="../stent/index.html">Drug Delivery in a Coronary Stent</a></span>
 </nav>
 </article>
   </div>

@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Feel++ Docs</title>
-    <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/hdg/hdg_coupledpoisson.html">
-    <link rel="prev" href="index.html">
-    <link rel="next" href="hdg_elasticity.html">
-    <meta name="description" content="HDG coupled poisson application manual">
+    <title>Coupled \(A-V-J-E-T\) model for resistive magnets :: Feel++ Docs</title>
+    <link rel="canonical" href="https://docs.feelpp.org/toolboxes/latest/maxwell/resistive-magnets-coupling.html">
+    <link rel="prev" href="Maxwell.html">
+    <link rel="next" href="Strategy.html">
+    <meta name="description" content="Full electro-magnetic and thermal model for high-field resistive magnets with temperature-dependent material properties.">
     <meta name="generator" content="Antora 3.1.12">
 <link rel="stylesheet" href="../../../_/css/site.css">
 
@@ -635,32 +635,32 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../maxwell/index.html">Maxwell</a>
+    <a class="nav-link" href="index.html">Maxwell</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../maxwell/manual.html">Theory and Formulations</a>
+    <a class="nav-link" href="manual.html">Theory and Formulations</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Maxwell.html">Modeling</a>
+    <a class="nav-link" href="Maxwell.html">Modeling</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="resistive-magnets-coupling.html">Coupled \(A-V-J-E-T\) Resistive Magnet Model</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/resistive-magnets-coupling.html">Coupled \(A-V-J-E-T\) Resistive Magnet Model</a>
+    <a class="nav-link" href="Strategy.html">Variational Formulations and Solver Strategy</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Strategy.html">Variational Formulations and Solver Strategy</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/benchmarking.html">Benchmarking and Validation</a>
+    <a class="nav-link" href="benchmarking.html">Benchmarking and Validation</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../maxwell/mqs/index.html">Maxwell Quasi-Static Models</a>
+    <a class="nav-link" href="mqs/index.html">Maxwell Quasi-Static Models</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/mqs/AV.html">\(A-V\) formulation</a>
+    <a class="nav-link" href="mqs/AV.html">\(A-V\) formulation</a>
   </li>
 </ul>
   </li>
@@ -669,16 +669,16 @@ MathJax.Hub.Config({
     <span class="nav-text">Benchmarks</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Tws/index.html">TEAM Workshop 13</a>
+    <a class="nav-link" href="Tws/index.html">TEAM Workshop 13</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Torus/index.html">Torus</a>
+    <a class="nav-link" href="Torus/index.html">Torus</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Inductor/index.html">Inductor</a>
+    <a class="nav-link" href="Inductor/index.html">Inductor</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Harmonic/index.html">Harmonic Content and Multipoles</a>
+    <a class="nav-link" href="Harmonic/index.html">Harmonic Content and Multipoles</a>
   </li>
 </ul>
   </li>
@@ -687,19 +687,19 @@ MathJax.Hub.Config({
     <span class="nav-text">Manuals</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Maxwell.html">Maxwell modeling</a>
+    <a class="nav-link" href="Maxwell.html">Maxwell modeling</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Strategy.html">Variational formulations and resolution strategy</a>
+    <a class="nav-link" href="Strategy.html">Variational formulations and resolution strategy</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/benchmarking.html">Benchmarking and validation</a>
+    <a class="nav-link" href="benchmarking.html">Benchmarking and validation</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/manual.html">Maxwell Theory And Formulations</a>
+    <a class="nav-link" href="manual.html">Maxwell Theory And Formulations</a>
   </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/resistive-magnets-coupling.html">Coupled \(A-V-J-E-T\) model for resistive magnets</a>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="resistive-magnets-coupling.html">Coupled \(A-V-J-E-T\) model for resistive magnets</a>
   </li>
 </ul>
   </li>
@@ -708,16 +708,16 @@ MathJax.Hub.Config({
     <span class="nav-text">Benchmarks</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Harmonic/index.html">Harmonic Content &amp; Multipoles magnets</a>
+    <a class="nav-link" href="Harmonic/index.html">Harmonic Content &amp; Multipoles magnets</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Inductor/index.html">Inductor Benchmark</a>
+    <a class="nav-link" href="Inductor/index.html">Inductor Benchmark</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Torus/index.html">Torus Benchmark</a>
+    <a class="nav-link" href="Torus/index.html">Torus Benchmark</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../maxwell/Tws/index.html">Team Workshop 13 Benchmark</a>
+    <a class="nav-link" href="Tws/index.html">Team Workshop 13 Benchmark</a>
   </li>
 </ul>
   </li>
@@ -729,20 +729,20 @@ MathJax.Hub.Config({
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Hybrized Discontinuous Galerkin</a>
+    <a class="nav-link" href="../hdg/index.html">Hybrized Discontinuous Galerkin</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Manuals</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="3">
-  </li>
   <li class="nav-item" data-depth="3">
   </li>
   <li class="nav-item" data-depth="3">
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="manual.html">Hybrid Discontinuous Galerkin User Manual</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../hdg/manual.html">Hybrid Discontinuous Galerkin User Manual</a>
   </li>
   <li class="nav-item" data-depth="3">
   </li>
@@ -753,10 +753,10 @@ MathJax.Hub.Config({
     <span class="nav-text">Benchmarks</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="red/index.html">RED: floating-gate nMOS transistor</a>
+    <a class="nav-link" href="../hdg/red/index.html">RED: floating-gate nMOS transistor</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="usquare/index.html">Examples of 2D Darcy flows</a>
+    <a class="nav-link" href="../hdg/usquare/index.html">Examples of 2D Darcy flows</a>
   </li>
 </ul>
   </li>
@@ -765,7 +765,7 @@ MathJax.Hub.Config({
     <span class="nav-text">Cases</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="2Dchannel/index.html">Darcy flow through a channel</a>
+    <a class="nav-link" href="../hdg/2Dchannel/index.html">Darcy flow through a channel</a>
   </li>
 </ul>
   </li>
@@ -862,22 +862,22 @@ MathJax.Hub.Config({
   <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Toolboxes Manual</a></li>
-    <li><a href="index.html">Hybrized Discontinuous Galerkin</a></li>
-    <li>Manuals</li>
-    <li><a href="hdg_coupledpoisson.html"></a></li>
+    <li><a href="index.html">Maxwell</a></li>
+    <li><a href="manual.html">Theory and Formulations</a></li>
+    <li><a href="resistive-magnets-coupling.html">Coupled \(A-V-J-E-T\) Resistive Magnet Model</a></li>
   </ul>
 </nav>
 
   <div class="page-versions">
   <button class="version-menu-toggle" title="Show other versions of page">latest</button>
   <div class="version-menu">
-    <a class="version is-current" href="hdg_coupledpoisson.html">latest</a>
-    <a class="version" href="../../0.110/hdg/hdg_coupledpoisson.html">0.110</a>
-    <a class="version" href="../../0.109/hdg/hdg_coupledpoisson.html">0.109</a>
+    <a class="version is-current" href="resistive-magnets-coupling.html">latest</a>
+    <a class="version is-missing" href="../../0.110/index.html">0.110</a>
+    <a class="version is-missing" href="../../0.109/index.html">0.109</a>
   </div>
 </div>
 
-    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/develop/toolboxes/modules/hdg/pages/hdg_coupledpoisson.adoc">Edit this Page</a></div>
+    <div class="edit-this-page"><a href="https://github.com/feelpp/toolbox/edit/develop/toolboxes/modules/maxwell/pages/resistive-magnets-coupling.adoc">Edit this Page</a></div>
   
   <div class="page-downloads">
   <span class="label">Download as</span>
@@ -897,307 +897,306 @@ MathJax.Hub.Config({
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<div class="sect1">
-<h2 id="_name"><a class="anchor" href="#_name"></a>1. NAME</h2>
+<h1 class="page">Coupled \(A-V-J-E-T\) model for resistive magnets</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>feelpp_toolbox_hdg_coupledpoisson - hybridized discontinuous Galerkin Coupled Poisson(3D0D) toolbox application</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>2. SYNOPSIS</h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre>feelpp_toolbox_hdg_coupledpoisson
-  [--hdg_coupledpoisson.filename  &lt;path to .json specification file&gt;]
-  [--config-file &lt;path to .cfg file]
-  [--case &lt;directory to model case&gt;]
-  [--case.dim 3]
-  [--case.discretization ]
-  [--hdg_coupledpoisson.ksp-monitor=&lt;0,1&gt;]
-  [--hdg_coupledpoisson.ksp-view=&lt;0,1&gt;]
-  [--hdg_coupledpoisson.ksp-type=&lt;see below&gt;]
-  [--hdg_coupledpoisson.pc-view=&lt;0,1&gt;]
-  [--hdg_coupledpoisson.pc-type=&lt;see below&gt;]
-  [--hdg_coupledpoisson.snes-monitor=&lt;0,1&gt;]
-  [--hdg_coupledpoisson.ksp-type=&lt;see below&gt;]</pre>
-</div>
+<p>This page summarizes the coupled model used for high-field resistive magnets where electrical and magnetic quantities are solved together with temperature.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_description"><a class="anchor" href="#_description"></a>3. DESCRIPTION</h2>
+<h2 id="_scope_and_assumptions"><a class="anchor" href="#_scope_and_assumptions"></a>1. Scope and assumptions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>feelpp_toolbox_hdg_coupledpoisson is an application which can run hybridized discontinuous Galerkin Coupled Poisson(3D0D) model defined by a set of files : a geometry or mesh, a config file(<code>.cfg</code>) and  a model file(<code>.json</code>)</p>
-</div>
-<div class="paragraph">
-<p>The execution steps are as follows:</p>
+<p>We use a Maxwell quasi-static (MQS) setting:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>load the model</p>
+<p>displacement currents are neglected,</p>
 </li>
 <li>
-<p>load the mesh</p>
+<p>magnetic flux is represented by the vector potential \(\mathbf{A}\),</p>
 </li>
 <li>
-<p>setup model (materials, initial and boundary condition)</p>
+<p>electric field is represented by \(\mathbf{A}\) and scalar potential \(V\),</p>
 </li>
 <li>
-<p>execute the steady or unsteady simulation</p>
-</li>
-<li>
-<p>post-process the results, viewable in paraview or ensight</p>
+<p>material properties depend on temperature \(T\) (and optionally on field magnitude).</p>
 </li>
 </ul>
 </div>
-<div class="sect2">
-<h3 id="_options"><a class="anchor" href="#_options"></a>3.1. Options</h3>
 <div class="paragraph">
-<p>feelpp_toolbox_hdg_coupledpoisson requires some options.</p>
+<p>We denote by \(\Omega_c\) the conducting regions (coils, inserts) and \(\Omega_n\) the non-conducting regions (air, insulation), with \(\Omega=\Omega_c\cup\Omega_n\).</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Table of command-line feelpp_toolbox_hdg_coupledpoisson options</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-<th class="tableblock halign-left valign-top">Possible Values</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">case.dim</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dimension of problem</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2,3</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">case.discretization</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">discretization of problem</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hdg_coupledpoisson.filename</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">path to the .json specification case file</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>no default value</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>required from user</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hdg_coupledpoisson.ksp-monitor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">monitor the Krylov Subspace iterations</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0,1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hdg_coupledpoisson.ksp-view</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">view the Krylov Subspace structure</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0,1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hdg_coupledpoisson.ksp-type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">change the Krylov Subspace method</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gmres</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.mcs.anl.gov/petsc/documentation/linearsolvertable.html">see PETSc documentation</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hdg_coupledpoisson.pc-view</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">view the Krylov Subspace structure</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0,1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hdg_coupledpoisson.pc-type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">change the Krylov Subspace strategy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>lu</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.mcs.anl.gov/petsc/documentation/linearsolvertable.html">see PETSc documentation</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hdg_coupledpoisson.snes-monitor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">if applicable, monitor the non-linear solver iterations</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0,1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">hdg_coupledpoisson.snes-type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">if applicable, change the non-linear solver iterations</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>newtonls</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/SNES/SNESType.html">see PETSc documentation</a></p></td>
-</tr>
-</tbody>
-</table>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">NOTE</dt>
-<dd>
-<p>0 as option value means that the option is not enabled, 1 means it is enabled.</p>
-</dd>
-</dl>
-</div>
+<div class="paragraph">
+<p>For resistive high-field magnets considered here, surrounding materials are a-magnetic, hence in void/non-magnetic regions:
+\(\mu=\mu_0\) (equivalently \(\nu=\nu_0=1/\mu_0\)).</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_examples"><a class="anchor" href="#_examples"></a>4. EXAMPLES</h2>
+<h2 id="_kinematics_and_constitutive_relations"><a class="anchor" href="#_kinematics_and_constitutive_relations"></a>2. Kinematics and constitutive relations</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>We are now using the <code>feelpp/feelpp-toolboxes:latest</code> docker images as described in <a href="http://docs.feelpp.org/user/0.110.0-rc.5/install/containers/#_docker" class="bare">docs.feelpp.org/user/0.110.0-rc.5/install/containers/#_docker</a> to demonstrate feelpp_toolbox_hdg_coupledpoisson usage.</p>
-</div>
-<div class="listingblock">
-<div class="title">Starting the docker <code>feelpp/feelpp-toolboxes:latest</code></div>
+<div class="stemblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">docker run --rm -ti -v $HOME/feel:/feel ghcr.io/feelpp/feelpp-toolboxes:v0.110.0-rc.5</code></pre>
+\[\mathbf{B} = \nabla \times \mathbf{A}, \qquad
+\mathbf{E} = -\frac{\partial \mathbf{A}}{\partial t} - \nabla V\]
 </div>
 </div>
-<div class="listingblock">
-<div class="title">Explanations about the command line</div>
+<div class="stemblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">docker run <i class="conum" data-value="1"></i><b>(1)</b>
---rm <i class="conum" data-value="2"></i><b>(2)</b>
--ti <i class="conum" data-value="3"></i><b>(3)</b>
--v $HOME/feel:/feel <i class="conum" data-value="4"></i><b>(4)</b>
-feelpp/feelpp-toolboxes <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+\[\mathbf{H} = \nu(\mathbf{x},T,\mathbf{B})\,\mathbf{B}, \qquad
+\mathbf{J} = \chi_c \,\sigma(T,\mathbf{B})\,\mathbf{E}\]
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>run docker executable</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>remove container from docker once execution is done</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>run in interactive mode and enter the docker container</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>mount <code>$HOME/feel</code> on host to <code>/feel/</code> in docker: the results will be exported there</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>the docker container to execute, by default it uses the <code>latest</code> tag</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="title">Example of a command line to execute feelpp_toolbox_hdg_coupledpoisson</div>
-<div class="content">
-<pre>mpirun --bind-to core -np 10 feelpp_toolbox_hdg_coupledpoisson --case "github:{path:toolboxes/hdg/cases/coupledpoisson/1-linear/}"</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Explanation of the command line to execute feelpp_toolbox_hdg_coupledpoisson</div>
-<div class="content">
-<pre>mpirun --bind-to core <i class="conum" data-value="1"></i><b>(1)</b>
-  -np 10 <i class="conum" data-value="2"></i><b>(2)</b>
-  <i class="conum" data-value="3"></i><b>(3)</b>
-  --case "github:{path:toolboxes/hdg/cases/coupledpoisson/1-linear/}" <i class="conum" data-value="4"></i><b>(4)</b></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>execute in parallel using MPI with processes bound to cores</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>execute in parallel usisng 10 processes</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>the name of the toolbox application</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>case directory containing the model files (geometry, config and json). This case file is available remotely on github.</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
-<p>Other test cases can be found</p>
+<p>with</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\nu(\mathbf{x},T,\mathbf{B})=
+\begin{cases}
+\nu_0 &amp; \text{in void / non-magnetic regions},\\
+\nu_c(T) &amp; \text{in a-magnetic conductors (coils, inserts)},\\
+\nu(\mathbf{B},T) &amp; \text{in magnetic materials (if present)}.
+\end{cases}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\chi_c\) is the indicator of conducting regions (1 in \(\Omega_c\), 0 otherwise).</p>
+</div>
+<div class="paragraph">
+<p>Typical temperature-dependent laws for resistive magnets are:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>locally in /usr/share/feelpp/data/testcases/toolboxes/hdg_coupledpoisson.</p>
+<p>\(\sigma=\sigma(T)\) in copper alloys,</p>
 </li>
 <li>
-<p>on-line <a href="http://docs.feelpp.org/cases/latest//README" class="bare">docs.feelpp.org/cases/latest//README</a></p>
+<p>\(\mu=\mu_0\) (or \(\nu=\nu_0\)) in void/a-magnetic regions,</p>
+</li>
+<li>
+<p>\(k=k(T)\) and \(C_p=C_p(T)\) in the thermal model.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_resources"><a class="anchor" href="#_resources"></a>5. RESOURCES</h2>
-<div class="sectionbody">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Feel++ Docs</dt>
-<dd>
-<p><a href="http://docs.feelpp.org/toolboxes/latest/" class="bare">docs.feelpp.org/toolboxes/latest/</a></p>
-</dd>
-<dt class="hdlist1">Feel++ Cases for feelpp_toolbox_hdg_coupledpoisson</dt>
-<dd>
-<p><a href="http://docs.feelpp.org/cases/latest//README" class="bare">docs.feelpp.org/cases/latest//README</a></p>
-</dd>
-<dt class="hdlist1">Feel++ Toolbox Docs for feelpp_toolbox_hdg_coupledpoisson</dt>
-<dd>
-<p><a href="http://docs.feelpp.org/toolboxes/latest//" class="bare">docs.feelpp.org/toolboxes/latest//</a></p>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_see_also"><a class="anchor" href="#_see_also"></a>6. SEE ALSO</h2>
-<div class="sectionbody">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Feel++ Mesh Partitioner</dt>
-<dd>
-<p>Mesh partitioner for Feel++ Toolboxes
-<a href="http://docs.feelpp.org/user/latest/using/mesh_partitioner/" class="bare">docs.feelpp.org/user/latest/using/mesh_partitioner/</a></p>
-</dd>
-<dt class="hdlist1">Feel++ Remote Tool</dt>
-<dd>
-<p>Access remote data(model cases, meshes) on Github and Girder in Feel++ applications.
-<a href="http://docs.feelpp.org/user/latest/using/remotedata/" class="bare">docs.feelpp.org/user/latest/using/remotedata/</a></p>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_copying"><a class="anchor" href="#_copying"></a>7. COPYING</h2>
+<h2 id="_coupled_electromagnetic_model_mqs"><a class="anchor" href="#_coupled_electromagnetic_model_mqs"></a>3. Coupled electromagnetic model (MQS)</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Copyright (C) 2020 Feel++ Consortium.<br>
-Free use of this software is granted under the terms of the GPLv3 License.</p>
+<p>Ampere&#8217;s law with impressed/source current \(\mathbf{J}_{src}\) gives</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\nabla\times\left(\nu(\mathbf{x},T,\mathbf{B})\nabla\times\mathbf{A}\right)
++ \chi_c\,\sigma(T,\mathbf{B})\left(\frac{\partial \mathbf{A}}{\partial t}+\nabla V\right)
+= \mathbf{J}_{src}
+\qquad \text{in } \Omega\]
+</div>
+</div>
+<div class="paragraph">
+<p>Charge conservation in conducting regions gives</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[-\nabla\cdot\left(
+\chi_c\,\sigma(T,\mathbf{B})\left(\frac{\partial \mathbf{A}}{\partial t}+\nabla V\right)
+\right)=0
+\qquad \text{in } \Omega\]
+</div>
+</div>
+<div class="paragraph">
+<p>Useful derived quantities:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{J} = -\chi_c\,\sigma(T,\mathbf{B})\left(\frac{\partial \mathbf{A}}{\partial t}+\nabla V\right),
+\qquad
+\mathbf{B}=\nabla\times\mathbf{A},
+\qquad
+\mathbf{E}=-\frac{\partial \mathbf{A}}{\partial t}-\nabla V\]
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_thermal_model_and_joule_coupling"><a class="anchor" href="#_thermal_model_and_joule_coupling"></a>4. Thermal model and Joule coupling</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The temperature is driven by Joule heating and cooling conditions:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\rho(T)\,C_p(T)\,\frac{\partial T}{\partial t}
+- \nabla\cdot\left(k(T)\nabla T\right)
+= Q_J + Q_{ext}
+\qquad \text{in } \Omega_T\]
+</div>
+</div>
+<div class="paragraph">
+<p>with</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[Q_J = \mathbf{J}\cdot\mathbf{E}
+= \chi_c\,\sigma(T,\mathbf{B})
+\left\lVert \frac{\partial \mathbf{A}}{\partial t}+\nabla V \right\rVert^2\]
+</div>
+</div>
+<div class="paragraph">
+<p>and typical cooling boundary condition on water-cooled boundaries \(\Gamma_{cool}\):</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[-k(T)\nabla T\cdot\mathbf{n}=h\,(T-T_{cool})
+\qquad \text{on } \Gamma_{cool}\]
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dcslow_ramp_simplification"><a class="anchor" href="#_dcslow_ramp_simplification"></a>5. DC/slow-ramp simplification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For slowly varying or quasi-stationary operation, \(\partial\mathbf{A}/\partial t \approx 0\):</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\nabla\times\left(\nu(\mathbf{x},T,\mathbf{B})\nabla\times\mathbf{A}\right)
++ \chi_c\,\sigma(T,\mathbf{B})\,\nabla V
+= \mathbf{J}_{src}\]
+</div>
+</div>
+<div class="stemblock">
+<div class="content">
+\[-\nabla\cdot\left(\chi_c\,\sigma(T,\mathbf{B})\,\nabla V\right)=0\]
+</div>
+</div>
+<div class="stemblock">
+<div class="content">
+\[- \nabla\cdot\left(k(T)\nabla T\right)=\chi_c\,\sigma(T,\mathbf{B})\left\lVert\nabla V\right\rVert^2 + Q_{ext}\]
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_boundary_and_excitation_examples"><a class="anchor" href="#_boundary_and_excitation_examples"></a>6. Boundary and excitation examples</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Electromagnetic side:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>magnetic insulation \(\mathbf{n}\times\mathbf{A}=0\) on outer truncation boundaries,</p>
+</li>
+<li>
+<p>electric insulation \(\mathbf{J}\cdot\mathbf{n}=0\) on insulated conductor boundaries,</p>
+</li>
+<li>
+<p>terminal excitation by prescribed voltage/current on electrode boundaries for coil powering.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Thermal side:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>convection on cooling channels or cooled surfaces,</p>
+</li>
+<li>
+<p>prescribed temperature on selected supports/interfaces,</p>
+</li>
+<li>
+<p>adiabatic boundaries when heat exchange is negligible.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_far_field_boundary_condition_using_biot_savart"><a class="anchor" href="#_far_field_boundary_condition_using_biot_savart"></a>7. Far-field boundary condition using Biot-Savart</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For resistive magnets, a better truncation condition can be obtained by prescribing the far magnetic field from source currents using a Biot-Savart background field.</p>
+</div>
+<div class="paragraph">
+<p>Given the source current density \(\mathbf{J}_{src}\) in the coil region \(\Omega_{src}\), the far magnetic field is</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{B}_{BS}(\mathbf{x})
+= \frac{\mu_0}{4\pi}
+\int_{\Omega_{src}}
+\mathbf{J}_{src}(\mathbf{x}')
+\times
+\frac{\mathbf{x}-\mathbf{x}'}{\lVert \mathbf{x}-\mathbf{x}' \rVert^3}
+\,d\Omega'\]
+</div>
+</div>
+<div class="paragraph">
+<p>Introduce a background potential \(\mathbf{A}_{BS}\) such that \(\nabla\times\mathbf{A}_{BS}=\mathbf{B}_{BS}\), and decompose</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{A} = \mathbf{A}_{BS} + \mathbf{A}_{c}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Then on the truncation boundary \(\Gamma_{\infty}\), apply homogeneous boundary conditions to the correction field:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\mathbf{n}\times\mathbf{A}_{c}=0
+\qquad \text{on } \Gamma_{\infty}\]
+</div>
+</div>
+<div class="paragraph">
+<p>This is equivalent to enforcing the Biot-Savart far field on \(\Gamma_{\infty}\) through the lifted/background part, and usually reduces boundary-condition error compared to a pure \(\mathbf{n}\times\mathbf{A}=0\) condition.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practical_coupling_strategy"><a class="anchor" href="#_practical_coupling_strategy"></a>8. Practical coupling strategy</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A robust workflow for resistive magnets uses staggered coupling at each time step:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>solve \((\mathbf{A},V)\) with current material fields \(\sigma(T),\nu(\mathbf{x},T,\mathbf{B})\);</p>
+</li>
+<li>
+<p>compute \(\mathbf{E}\), \(\mathbf{J}\), and \(Q_J=\mathbf{J}\cdot\mathbf{E}\);</p>
+</li>
+<li>
+<p>solve temperature \(T\) using \(Q_J\) and cooling boundary conditions;</p>
+</li>
+<li>
+<p>update \(\sigma,k,C_p,\nu\) from the new \(T\) (and \(\mathbf{B}\) if needed);</p>
+</li>
+<li>
+<p>iterate until coupled convergence.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>For complete MQS details, see <a href="mqs/AV.html" class="xref page">\(A-V\) formulation</a>.
+For nonlinear solver and variational strategies, see <a href="Strategy.html" class="xref page">Variational formulations and resolution strategy</a>.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="index.html">Hybrized Discontinuous Galerkin</a></span>
-  <span class="next"><a href="hdg_elasticity.html"></a></span>
+  <span class="prev"><a href="Maxwell.html">Modeling</a></span>
+  <span class="next"><a href="Strategy.html">Variational Formulations and Solver Strategy</a></span>
 </nav>
 </article>
   </div>
