@@ -19,8 +19,9 @@ The main channel is called `latest`.
 .Command lines to install the {channel} {feelpp} channel on {flavor}/{dist}
 [source,bash]
 --
-wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
-echo "deb http://apt.feelpp.org/{flavor}/{dist} {dist} {channel}" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+sudo install -d -m 0755 /etc/apt/keyrings
+wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg >/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/{flavor}/{dist} {dist} {channel}" | sudo tee /etc/apt/sources.list.d/feelpp.list >/dev/null
 sudo apt update
 --
 ----
