@@ -16,7 +16,10 @@ On va présenter dans ce chapitre le type le plus simple et le plus classique d�
 .Définition
 ****
 Soit stem:[\Sigma=\{ a_1,\ldots,a_N\}] un ensemble de stem:[N] points distincts de stem:[\RR^n].
-Soit stem:[P] un espace vectoriel de dimension finie de fonctions de stem:[\RR^n] à valeurs dans stem:[\RR].On dit que stem:[\Sigma] est stem:[P]-unisolvant ssi pour tous réels stem:[\alpha_1,\ldots,\alpha_N], il existe un unique élément stem:[p] de stem:[P] tel que stem:[p(a_i)=\alpha_i,\; i=1,\ldots,N].
+
+Soit stem:[P] un espace vectoriel de dimension finie de fonctions de stem:[\RR^n] à valeurs dans stem:[\RR].
+
+On dit que stem:[\Sigma] est stem:[P]-unisolvant ssi pour tous réels stem:[\alpha_1,\ldots,\alpha_N], il existe un unique élément stem:[p] de stem:[P] tel que stem:[p(a_i)=\alpha_i,\; i=1,\ldots,N].
 ****
 
 Ceci revient à dire que la fonction :
@@ -40,7 +43,7 @@ stem:[\Sigma] est la fonction nulle.
 
 La surjectivité de stem:[{\cal L}] se démontre en exhibant une famille
 stem:[p_1,\ldots,p_N] d’éléments de stem:[P] tels que
-stem:[p_i(a_j)=\delta_{ij}], c’est à dire un antécédent pour
+stem:[p_i(a_j)=\delta_{ij},] c’est à dire un antécédent pour
 stem:[{\cal L}] de la base canonique de stem:[\RR^N].
 
 En effet, étant donnés des réels stem:[\alpha_1,\ldots,\alpha_N], la fonction stem:[{p=\sum_{i=1}^N \alpha_i p_i}] vérifie alors stem:[p(a_j)=\alpha_j,\;
@@ -81,7 +84,7 @@ On vérifie aisément que stem:[(p_1,\ldots,p_N)] ainsi définie forme bien une 
 [[def:27]]
 .Définition
 ****
-On appelle *opérateur de interpolation* (ou encore stem:[P-]interpolation) sur stem:[\Sigma] l’opérateur stem:[\pi_K] qui, à toute fonction stem:[v] définie sur stem:[K], associe la fonction stem:[\pi_K v] de
+On appelle *opérateur d'interpolation* (ou encore stem:[P-]interpolation) sur stem:[\Sigma] l’opérateur stem:[\pi_K] qui, à toute fonction stem:[v] définie sur stem:[K], associe la fonction stem:[\pi_K v] de
 stem:[P] définie par stem:[{\pi_K v =   \sum_{i=1}^N v(a_i)\, p_i}].
 
 stem:[\pi_K v] est donc l’unique élément de stem:[P] qui prend les mêmes valeurs que stem:[v] sur les points de stem:[\Sigma].
@@ -95,19 +98,19 @@ stem:[\pi_K v] est donc l’unique élément de stem:[P] qui prend les mêmes va
 
 On notera stem:[\Pk{k}] l’espace vectoriel des polynômes de degré total inférieur ou égal à stem:[k].
 
-* Sur , stem:[\Pk{k}=\hbox{Vect} \{ 1,X,\ldots, X^k\}\quad] et dim stem:[\Pk{k}=k+1].
+* Sur stem:[\RR], stem:[\quad\Pk{k}=\hbox{Vect} \{ 1,X,\ldots, X^k\}\quad] et dim stem:[\Pk{k}=k+1].
 
-* Sur stem:[^2], stem:[\Pk{k}=\hbox{Vect} \{ X^i Y^j ; 0\le i+j \le k\}\quad] et dim stem:[{ \Pk{k}=\frac{(k+1)(k+2)}{2}}].
+* Sur stem:[\RR^2], stem:[\quad\Pk{k}=\hbox{Vect} \{ X^i Y^j ;\quad 0\le i+j \le k\}\quad] et dim stem:[{ \Pk{k}=\frac{(k+1)(k+2)}{2}}].
 
-* Sur stem:[^3], stem:[\Pk{k}=\hbox{Vect} \{ X^i Y^j Z^l ; 0\le i+j+l \le k\}\quad] et dim stem:[{ \Pk{k}=\frac{(k+1)(k+2)(k+3)}{6}}].
+* Sur stem:[\RR^3], stem:[\quad\Pk{k}=\hbox{Vect} \{ X^i Y^j Z^l ;\quad 0\le i+j+l \le k\}\quad] et dim stem:[{ \Pk{k}=\frac{(k+1)(k+2)(k+3)}{6}}].
 
 On notera stem:[\Qk{k}] l’espace vectoriel des polynômes de degré inférieur ou égal à stem:[k] par rapport à chaque variable.
 
-* Sur stem:[\RR], stem:[\Qk{k}=\Pk{k}].
+* Sur stem:[\RR], stem:[\quad\Qk{k}=\Pk{k}].
 
-* Sur stem:[\RR^2], stem:[\Qk{k}=\hbox{Vect} \{ X^i Y^j ; 0\le i,j \le k\}\quad] et dim stem:[{ \Qk{k}=(k+1)^2}].
+* Sur stem:[\RR^2], stem:[\quad\Qk{k}=\hbox{Vect} \{ X^i Y^j ; \quad 0\le i,j \le k\}\quad] et dim stem:[{ \Qk{k}=(k+1)^2}].
 
-* Sur stem:[\RR^3], stem:[\Qk{k}=\hbox{Vect} \{ X^i Y^j Z^l ; 0\le i,j,l \le k\}\quad] et dim stem:[{ \Qk{k}=(k+1)^3}].
+* Sur stem:[\RR^3], stem:[\quad\Qk{k}=\hbox{Vect} \{ X^i Y^j Z^l ; \quad 0\le i,j,l \le k\}\quad] et dim stem:[{ \Qk{k}=(k+1)^3}].
 
 [[par:ex1d]]
 === Exemples 1-D
@@ -127,7 +130,7 @@ Elément stem:[P_2]::
 [[elément-pk]]
 Elément stem:[\Pk{k}]::
 ** stem:[K=[a,b]]
-** stem:[{\Sigma=\{a+i\,\frac{b-a}{m},\quad i=0,\ldots,k\}}]
+** stem:[{\Sigma=\{a+i\,\frac{b-a}{k},\quad i=0,\ldots,k\}}]
 ** stem:[P=\Pk{k}]
 
 [[exemples-2-d-triangulaires]]
@@ -140,7 +143,7 @@ Elément stem:[\Pk{1}]::
 ** stem:[P=\Pk{1}]
 Les fonctions de base sont définies par
 stem:[p_i(a_j)=\delta_{ij}]. Ce sont donc les coordonnées
-barycentriques : stem:[p_i=\lambda_i] (cf annexe [ch:bary]).
+barycentriques : stem:[p_i=\lambda_i] (cf annexe <<ch:bary>>).
 
 [[elément-pk2]]
 Elément stem:[\Pk{2}]::
@@ -176,7 +179,7 @@ Elément tétraèdrique stem:[\Pk{1}]::
 [[elément-tétraèdrique-pk2]]
 Elément tétraèdrique stem:[\Pk{2}]::
 * stem:[K]=tétraèdre de sommets stem:[a_1, a_2, a_3, a_4]
-* stem:[{ \Sigma=\{a_i\}_{1\le i\le 4} \cup \{a_{ij}\}_{1\le i < j \le 4} }]
+* stem:[{ \Sigma=\{a_i\}_{1\le i\le 4} \cup \{a_{ij}\}_{1\le i < j \le 4} }], où stem:[{a_{ij}=\frac{a_i+a_j}{2}}].
 * stem:[P=\Pk{2}]
 
 Les fonctions de base sont stem:[p_i=\lambda_i (2\lambda_i -1)]
@@ -206,7 +209,13 @@ image:fem/elements-3D.jpg[]
 [env.definition]
 .Équivalence affine
 ****
-Deux éléments finis stem:[(\hat{K},\hat{\Sigma},\hat{P})] et stem:[(K,\Sigma,P)] sont *affine-équivalents* ssi il existe une fonction affine stem:[F] inversible (stem:[F: \hat{x} \longrightarrow B\hat{x}+b]) telle que _(i)_ stem:[K=F(\hat{K})] _(ii)_ stem:[a_i=F(\hat{a}_i) \qquad i=1,\ldots,N] et _(iii)_ stem:[P=\{ \hat{p}\circ F^{-1} , \quad \hat{p}\in \hat{P} \}]
+Deux éléments finis stem:[(\hat{K},\hat{\Sigma},\hat{P})] et stem:[(K,\Sigma,P)] sont *affine-équivalents* ssi il existe une fonction affine stem:[F] inversible (stem:[F: \hat{x} \longrightarrow B\hat{x}+b]) telle que 
+
+_(i)_ stem:[K=F(\hat{K})] 
+
+_(ii)_ stem:[a_i=F(\hat{a}_i), \qquad i=1,\ldots,N] 
+
+_(iii)_ stem:[P=\{ \hat{p}\circ F^{-1} , \quad \hat{p}\in \hat{P} \}]
 ****
 
 [[rem:10]]
@@ -243,17 +252,16 @@ stem:[(0,1,1)], stem:[(1,0,1)].
 [[sec:maillages]]
 == Maillages
 
-Nous étendons ici aux dimension 2 et 3 les notions élémentaires de maillage vues en 1D, voir la figure <<fig:2>>.
+Nous étendons ici aux dimension 2 et 3 les notions élémentaires de maillage vues en 1D (<<sec:constr-du-maill>>), voir la figure <<fig:2>>.
 
 [[fig:2]]
-.Maillage {feelpp}
-image:fem/feelpp-mesh.svg[align=center,float=left,width=400]
+image:fem/feelpp-mesh.svg[align=center,float=center,width=400]
+
 
 [[def:31]]
 .Définition
 ****
-Un maillage est constituée d’une famille d’éléments(ou mailles
-ou cellules) stem:[\{K_e\}_{e=1,...,N_e}] où stem:[N_e]
+Un maillage est constitué d’une famille d’éléments (ou mailles ou cellules) stem:[\{K_e\}_{e=1,...,N_e}] où stem:[N_e]
 est le nombre d’éléments, nous noterons
 [[eq:32]]
 [stem]
@@ -302,7 +310,7 @@ Un maillage est généré par
  . un _élément de reference_ noté stem:[\hat{K}]
  . une famille de _transformations géométriques_ mappant stem:[\hat{K}] vers les éléments stem:[K_e, e=1,\ldots,\Ne] dans le maillage
 
-Nous supposerons que les transformations sont des stem:[\mathcal{C}^1-] diffeomorphismes footnote:[la transformation et son inverse sont stem:[\mathcal{C}^1] et bijectives].
+Nous supposerons que ces transformations sont des stem:[\mathcal{C}^1-] diffeomorphismes footnote:[la transformation et son inverse sont stem:[\mathcal{C}^1] et bijectives].
 
 [[def:32]]
 .Définition
@@ -329,9 +337,10 @@ On dit que stem:[(\hat{K},\hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\geo})] est l’
 ****
 
 .Transformation géométrique associée à un triangle
-image:fem/geomap_triangle.png[width=400,float=left]
+image:fem/geomap_triangle.png[align=center,width=400,float=center]
 
-Pour chaque stem:[K \in \mathcal{T}_h], on a un stem:[\ngeo]-uplet stem:[\set{g^K_1,\ldots,g^K_\ngeo}].
+
+.Pour chaque stem:[K \in \mathcal{T}_h], on a un stem:[\ngeo]-uplet stem:[\set{g^K_1,\ldots,g^K_\ngeo}].
 
 La transformation géométrique est définie comme suit
 [[eq:37]]
@@ -349,12 +358,12 @@ et en particulier on a
 ++++
 
 [[rem:13]]
-NOTE: On a stem:[T_K \in [\hat{P}_\geo(\hat{K})]^d] et que stem:[\set{g^K_1,\ldots,g^K_\ngeo}] sont les _noeuds géométriques_ de stem:[K].
+NOTE: On a stem:[T_K \in [\hat{P}_\geo(\hat{K})q]^d] et que stem:[\set{g^K_1,\ldots,g^K_\ngeo}] sont les _noeuds géométriques_ de stem:[K].
 
 stem:[T_K] est un stem:[\mathcal{C}^1]-diffeomorphism donc la _numérotation_ des noeuds stem:[\set{g^K_1,\ldots,g^K_\ngeo}] doit être _compatible_ avec les noeuds de l’élément finit géométrique.
 
 [[rem:15]]
-NOTE: La numérotation locale des entités géométriques dans *doit* être consistente avec la numérotation locale des générateurs de maillage.
+NOTE: La numérotation locale des entités géométriques dans stem:[\hat{K}] *doit* être consistente avec la numérotation locale des générateurs de maillage.
 voir link:http://www.geuz.org/gmsh/doc/texinfo/gmsh.html#Node-ordering[stem:[\triangleright] format de fichier Gmsh] pour une numérotation locale.
 
 Un cas particulier est la *transformation géométrique affine*.
@@ -377,7 +386,9 @@ On dit que le maillage est _affine_.
 NOTE: Si l’élément fini géométrique est stem:[(\hat{K},\poly{P}_1,\Sigma_\ngeo)] alors les éléments stem:[K] sont soit des triangles soit des tétrahèdres.
 
 [[rem:17]]
-NOTE: `Mesh<Simplex<d,1> >` ou `Mesh<Simplex<d> >` est le type pour les maillages affines formés de simplexes dans stem:[\RR^d]. `1` indique l’ordre de l’_élément fini géométrique_ et est la valeur par défaut.
+NOTE: Dans {feelpp} : `Mesh<Simplex<d,1> >` ou `Mesh<Simplex<d> >` est le type pour les maillages affines formés de simplexes dans stem:[\RR^d].
+
+`1` indique l’ordre de l’_élément fini géométrique_ et est la valeur par défaut.
 
 [[sec:quelq-calc-avec]]
 === Quelques calculs avec la transformation géométrique
@@ -392,7 +403,7 @@ On note stem:[\xi] un ensemble de stem:[n] points dans stem:[\hat{K}] et on note
 ++++
   \nabla T_K( \xi )\ =\ \sum_{i=0}^{\ngeo}\ g^K_i\ \nabla \psi_i (\xi)
 ++++
-et stem:[B_K(\xi) = \nabla T_K^{-1}(\xi)] l’inverse stem:[\xi] et finalement stem:[J_K(\xi)] le jacobien de stem:[T_K] en stem:[\xi]
+et stem:[B_K(\xi) = \nabla T_K^{-1}(\xi)] l’inverse du gradient de stem:[T_K] aux points  stem:[\xi] et finalement stem:[J_K(\xi)] le jacobien de stem:[T_K] en stem:[\xi]
 
 [[eq:41]]
 [stem]
@@ -480,7 +491,7 @@ NOTE: On ne manipule que des maillages conformes dans le cours mais {feelpp} peu
 [[sec:espace]]
 == Espaces élément fini de Lagrange
 
-Soit stem:[\mathcal{T}_h] un maillage généré par stem:[(\hat{K},   \hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\mathrm{geo}})], une cellule stem:[K \in \mathcal{T}_h] est alors l’image de stem:[\hat{K}] par la transformation géométrique stem:[T_K] défini par <<eq:23>>.
+Soit stem:[\mathcal{T}_h] un maillage généré par stem:[(\hat{K},   \hat{P}_{\mathrm{geo}}, \hat{\Sigma}_{\mathrm{geo}})], une cellule stem:[K \in \mathcal{T}_h] est alors l’image de stem:[\hat{K}] par la transformation géométrique stem:[T_K] défini par <<eq:37>>.
 
 L’objectif à présent est de générer la famille d’éléments finis de Lagrange grâce à l’élément fini de référence stem:[(\hat{K},\hat{P}, \hat{\Sigma})]
 
@@ -579,7 +590,7 @@ mais ce n’est pas suffisant: _les fonctions stem:[W_h] peuvent avoir des sauts
 V_h = W_h \cap C^0(\Omega_h) = \{ v_h \in W_h; \forall F \in  \mathcal{F}^i_h. \jump{v_h}_F = 0\}
 ++++
 
-Concernant l’implémentation, nous avons besoin de d’indentifier les _degrés de liberté communs entre les éléments_ quand nous construisons la tables des degrés de liberté.
+Concernant l’implémentation, nous avons besoin d’indentifier les _degrés de liberté communs entre les éléments_ quand nous construisons la tables des degrés de liberté.
 
 Voici deux exemples d’espace stem:[H^1]-conforme
 [[eq:54]]
@@ -860,15 +871,15 @@ Ain de parcourir les éléments et faces du maillage, {feelpp} fournit des fonct
 
 `elements(mesh)`:: retourne 2 itérateurs sur l’ensemble des éléments du maillage
 
-`markedelements(mesh,<int>)`:: et `markedelements(mesh,<string>)` retourne 2 itérateurs sur les éléments marqués par l’entier `<int>` et la chaîne des caractères `<string>` respectivement, cela correspondra typiquement à des propriétés de matériau
+`markedelements(mesh,<int>)` et `markedelements(mesh,<string>)`:: retourne 2 itérateurs sur les éléments marqués par l’entier `<int>` et la chaîne des caractères `<string>` respectivement, cela correspondra typiquement à des propriétés de matériau
 
 `boundaryfaces(mesh)`:: retourne 2 itérateurs sur les faces au bord du maillage
 
-`markedfaces(mesh,<int>)` et `markedelements(mesh,<string>)`:: retourne 2 itérateurs sur les faces marquées par l’entier `<int>` et la chaîne des caractères `<string>` respectivement, ca correspondra typiquement aux conditions aux limites
+`markedfaces(mesh,<int>)` et `markedelements(mesh,<string>)`:: retourne 2 itérateurs sur les faces marquées par l’entier `<int>` et la chaîne des caractères `<string>` respectivement, cela correspondra typiquement aux conditions aux limites
 
-NOTE: link pending to {feelpp} user manual mesh iterators section.
+NOTE: TODO : link pending to {feelpp} user manual mesh iterators section.
 
-L’espace d’approximation stem:[V_h] stem:[H^1] conforme (espaces de functions continues sur stem:[\Omega] polynomiales par morceaux de degré stem:[\leq k]) est défini comme suit
+L’espace d’approximation stem:[V_h] stem:[H^1]-conforme (espaces de fonctions continues sur stem:[\Omega] polynomiales par morceaux de degré stem:[\leq k]) est défini comme suit
 
 [source,cpp]
 ----
@@ -903,7 +914,7 @@ On va construire une base de stem:[V_h] en associant à chaque ddl stem:[a_i] un
 [stem]
 .Fonctions de base globales
 ++++
-{\varphi_i}_{|K_j} \in P_j, \quad j=1,\ldots,N_e  \mbox{ et } \varphi_i(a_j)=\delta_{ij},  1\le i,j \le N_h
+{\varphi_i}_{|K_j} \in P_j, \quad j=1,\ldots,N_e \quad \mbox{ et } \quad \varphi_i(a_j)=\delta_{ij},  1\le i,j \le N_h
 ++++
 
 L’espace d’approximation interne est donc alors :
@@ -917,7 +928,7 @@ V_h = \hbox{Vect }\left\{\varphi_1,\ldots,\varphi_{N_h}\right\}
 ****
 [[fig:fnglob]]
 .Exemple de fonction de base globale (élément triangulaire stem:[P_1])
-image:fem/fonction-globale.jpg[width=400]
+image:fem/fonction-globale.jpg[width=400, align=center]
 ****
 
 NOTE: On remarque qu’une telle fonction stem:[\varphi_i] est nulle partout, sauf sur les éléments dont stem:[a_i] est un noeud.
