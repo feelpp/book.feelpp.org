@@ -622,8 +622,9 @@ MathJax.Hub.Config({
 <div class="listingblock">
 <div class="title">Command lines to install the latest Feel++ channel on ubuntu/noble</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
-echo "deb http://apt.feelpp.org/ubuntu/noble noble latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
+wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/ubuntu/noble noble latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
 sudo apt update</code></pre>
 </div>
 </div>
@@ -631,8 +632,9 @@ sudo apt update</code></pre>
 <div class="listingblock">
 <div class="title">Command lines to install the latest Feel++ channel on ubuntu/jammy</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
-echo "deb http://apt.feelpp.org/ubuntu/jammy jammy latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
+wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/ubuntu/jammy jammy latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
 sudo apt update</code></pre>
 </div>
 </div>
@@ -640,8 +642,9 @@ sudo apt update</code></pre>
 <div class="listingblock">
 <div class="title">Command lines to install the latest Feel++ channel on ubuntu/focal</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
-echo "deb http://apt.feelpp.org/ubuntu/focal focal latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
+wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/ubuntu/focal focal latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
 sudo apt update</code></pre>
 </div>
 </div>
@@ -846,8 +849,9 @@ sudo apt update</code></pre>
 <div class="listingblock">
 <div class="title">Command lines to install the latest Feel++ channel on debian/bookworm</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
-echo "deb http://apt.feelpp.org/debian/bookworm bookworm latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
+wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/debian/bookworm bookworm latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
 sudo apt update</code></pre>
 </div>
 </div>
@@ -855,8 +859,9 @@ sudo apt update</code></pre>
 <div class="listingblock">
 <div class="title">Command lines to install the latest Feel++ channel on debian/bullseye</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
-echo "deb http://apt.feelpp.org/debian/bullseye bullseye latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
+wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/debian/bullseye bullseye latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
 sudo apt update</code></pre>
 </div>
 </div>
@@ -864,8 +869,9 @@ sudo apt update</code></pre>
 <div class="listingblock">
 <div class="title">Command lines to install the latest Feel++ channel on debian/testing</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
-echo "deb http://apt.feelpp.org/debian/testing testing latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
+wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/debian/testing testing latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
 sudo apt update</code></pre>
 </div>
 </div>
@@ -873,8 +879,9 @@ sudo apt update</code></pre>
 <div class="listingblock">
 <div class="title">Command lines to install the latest Feel++ channel on debian/sid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -qO - http://apt.feelpp.org/apt.gpg | sudo apt-key add
-echo "deb http://apt.feelpp.org/debian/sid sid latest" | sudo tee -a /etc/apt/sources.list.d/feelpp.list
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
+wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/debian/sid sid latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
 sudo apt update</code></pre>
 </div>
 </div>
