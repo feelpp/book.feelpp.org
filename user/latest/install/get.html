@@ -628,26 +628,6 @@ echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/ubuntu/
 sudo apt update</code></pre>
 </div>
 </div>
-<h3 id="jammy" class="discrete">Jammy LTS (22.04)</h3>
-<div class="listingblock">
-<div class="title">Command lines to install the latest Feel++ channel on ubuntu/jammy</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
-wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
-echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/ubuntu/jammy jammy latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
-sudo apt update</code></pre>
-</div>
-</div>
-<h3 id="focal" class="discrete">Focal LTS (20.04)</h3>
-<div class="listingblock">
-<div class="title">Command lines to install the latest Feel++ channel on ubuntu/focal</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
-wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
-echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/ubuntu/focal focal latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
-sudo apt update</code></pre>
-</div>
-</div>
 <div class="paragraph">
 <p>The supported systems are described below</p>
 </div>
@@ -674,20 +654,6 @@ sudo apt update</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ubuntu</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">noble</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">24.04</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">LTS</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ubuntu</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jammy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">22.04</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">LTS</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ubuntu</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">focal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">20.04</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">LTS</p></td>
 </tr>
@@ -824,64 +790,20 @@ sudo apt update</code></pre>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">debian</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">bookworm</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trixie</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">LTS</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">debian</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">testing</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">testing</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">debian</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">latest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">unstable</p></td>
-</tr>
 </tbody>
 </table>
-<h3 id="_bookworm_12" class="discrete">Bookworm (12)</h3>
+<h3 id="_trixie_13" class="discrete">Trixie (13)</h3>
 <div class="listingblock">
-<div class="title">Command lines to install the latest Feel++ channel on debian/bookworm</div>
+<div class="title">Command lines to install the latest Feel++ channel on debian/trixie</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
 wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
-echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/debian/bookworm bookworm latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
-sudo apt update</code></pre>
-</div>
-</div>
-<h3 id="_bullseye_11" class="discrete">Bullseye (11)</h3>
-<div class="listingblock">
-<div class="title">Command lines to install the latest Feel++ channel on debian/bullseye</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
-wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
-echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/debian/bullseye bullseye latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
-sudo apt update</code></pre>
-</div>
-</div>
-<h3 id="_testing_testing" class="discrete">Testing (testing)</h3>
-<div class="listingblock">
-<div class="title">Command lines to install the latest Feel++ channel on debian/testing</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
-wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
-echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/debian/testing testing latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
-sudo apt update</code></pre>
-</div>
-</div>
-<h3 id="_sid_unstable" class="discrete">Sid (unstable)</h3>
-<div class="listingblock">
-<div class="title">Command lines to install the latest Feel++ channel on debian/sid</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo install -d -m 0755 /etc/apt/keyrings
-wget -qO - http://apt.feelpp.org/feelpp-archive-keyring.gpg | sudo tee /etc/apt/keyrings/feelpp.gpg &gt;/dev/null
-echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/debian/sid sid latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/feelpp.gpg] http://apt.feelpp.org/debian/trixie trixie latest" | sudo tee /etc/apt/sources.list.d/feelpp.list &gt;/dev/null
 sudo apt update</code></pre>
 </div>
 </div>
